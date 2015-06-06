@@ -1,7 +1,8 @@
 <!doctype html>
 <html class="theme-next use-motion theme-next-mist">
 <head>
-  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -135,6 +136,91 @@
         <div id="content" class="content">
           
   <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/05/ios-cfstringtransform/">
+                ios CFStringTransform
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/05/ios-cfstringtransform/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-cfstringtransform/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var mutableString = <span class="built_in">NSMutableString</span>(string: <span class="string">"Hello! こんにちは! สวัสดี! مرحبا! 您好!"</span>) as <span class="built_in">CFMutableStringRef</span></span><br><span class="line"><span class="built_in">CFStringTransform</span>(mutableString, <span class="literal">nil</span>, k<span class="built_in">CFStringTransformToLatin</span>, Boolean(<span class="number">0</span>))</span><br><span class="line"><span class="comment">//Hello! こんにちは! สวัสดี! مرحبا! 您好! → Hello! kon'nichiha! s̄wạs̄dī! mrḥbạ! nín hǎo!</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CFStringTransform</span>(mutableString, <span class="literal">nil</span>, k<span class="built_in">CFStringTransformStripCombiningMarks</span>, Boolean(<span class="number">0</span>))</span><br><span class="line"><span class="comment">//Hello! kon'nichiha! s̄wạs̄dī! mrḥbạ! nín hǎo! → Hello! kon'nichiha! swasdi! mrhba! nin hao!</span></span><br><span class="line"></span><br><span class="line">let tokenizer = <span class="built_in">CFStringTokenizerCreate</span>(<span class="literal">nil</span>, mutableString, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="built_in">CFStringGetLength</span>(mutableString)), <span class="number">0</span>, <span class="built_in">CFLocaleCopyCurrent</span>())</span><br><span class="line"></span><br><span class="line">var mutableTokens: [String] = []</span><br><span class="line">var type: <span class="built_in">CFStringTokenizerTokenType</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    type = <span class="built_in">CFStringTokenizerAdvanceToNextToken</span>(tokenizer)</span><br><span class="line">    let range = <span class="built_in">CFStringTokenizerGetCurrentTokenRange</span>(tokenizer)</span><br><span class="line">    let token = <span class="built_in">CFStringCreateWithSubstring</span>(<span class="literal">nil</span>, mutableString, range) as <span class="built_in">NSString</span></span><br><span class="line">    mutableTokens<span class="variable">.append</span>(token)</span><br><span class="line">&#125; <span class="keyword">while</span> type != <span class="variable">.None</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//(hello, kon'nichiha, swasdi, mrhba, nin, hao)</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
     
       
 
@@ -917,98 +1003,6 @@ apt-<span class="built_in">get</span> upgrade
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/recently-readings/">
-                最近阅读资料
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Study/">Study</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/recently-readings/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/recently-readings/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="book">book</h2><ol>
-<li>Functional Programming Patterns in Scala and Clojure- Write Lean Programs for the JVM</li>
-<li>iOS.8.by.Tutorials.2014.12</li>
-<li>Leanpub.Functional Reactive Programming on iOS.2014</li>
-<li>Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X</li>
-<li></li>
-</ol>
-<h2 id="links">links</h2><ol>
-<li><a href="http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients" target="_blank" rel="external">http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients</a></li>
-<li><a href="http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers" target="_blank" rel="external">http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers</a></li>
-<li><a href="http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths" target="_blank" rel="external">http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths</a></li>
-<li><a href="http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob" target="_blank" rel="external">http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob</a></li>
-<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1</a></li>
-<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2</a></li>
-<li><a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3" target="_blank" rel="external">http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3</a></li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1047,21 +1041,21 @@ apt-<span class="built_in">get</span> upgrade
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -1151,6 +1145,15 @@ apt-<span class="built_in">get</span> upgrade
 
 
 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
       </div>
     </div>
 
