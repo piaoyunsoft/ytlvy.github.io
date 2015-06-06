@@ -1,0 +1,581 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> git tutorials -- workflows // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              git tutorials -- workflows
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-workflows/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-workflows/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="git_tutorials">git tutorials</h2><h3 id="Centralized_workflow">Centralized workflow</h3><p><img src="https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/centralized-workflow/01.svg" alt=""><br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//Someone initializes <span class="operator">the</span> central repository</span><br><span class="line">ssh user@host git init <span class="comment">--bare /path/to/repo.git</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//Everybody clones the central repository</span></span><br><span class="line">git clone ssh://user@host/path/<span class="built_in">to</span>/repo.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit stage commits</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//origin is the remote connection to the central repository</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line"><span class="comment"></span><br><span class="line">//another push</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line">error: failed <span class="built_in">to</span> push some refs <span class="built_in">to</span> <span class="string">'/path/to/repo.git'</span></span><br><span class="line">hint: Updates were rejected because <span class="operator">the</span> tip <span class="operator">of</span> your current branch is behind</span><br><span class="line">hint: its remote counterpart. Merge <span class="operator">the</span> remote changes (e.g. <span class="string">'git pull'</span>)</span><br><span class="line">hint: <span class="keyword">before</span> pushing again.</span><br><span class="line">hint: See <span class="operator">the</span> <span class="string">'Note about fast-forwards'</span> <span class="operator">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line">git pull <span class="comment">--rebase origin master</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Unmerged paths:</span></span><br><span class="line"><span class="comment"># (use "git reset HEAD &lt;some-file&gt;..." to unstage)</span></span><br><span class="line"><span class="comment"># (use "git add/rm &lt;some-file&gt;..." as appropriate to mark resolution)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># both modified: &lt;some-file&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the file</span></span><br><span class="line">git <span class="built_in">add</span> &lt;some-<span class="built_in">file</span>&gt; </span><br><span class="line">git rebase <span class="comment">--continue</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//you can abort and roll back</span><span class="comment"></span><br><span class="line">//right back to where you started before you ran [git pull --rebase]</span></span><br><span class="line">git rebase <span class="comment">--abort</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//or push</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="Feature_Branch_workflow">Feature Branch workflow</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">git</span> checkout -<span class="keyword">b </span><span class="keyword">marys-feature </span>master</span><br><span class="line"></span><br><span class="line"><span class="label">#Mary</span> edits, stages, <span class="keyword">and </span>commits changes</span><br><span class="line"><span class="label">git</span> status</span><br><span class="line"><span class="label">git</span> <span class="keyword">add </span>&lt;some-file&gt;</span><br><span class="line"><span class="label">git</span> commit</span><br><span class="line"></span><br><span class="line">//This command <span class="keyword">pushes </span><span class="keyword">marys-feature </span>to the central repository (origin), <span class="keyword">and </span>the -u flag <span class="keyword">adds </span><span class="keyword">it </span>as a remote tracking <span class="keyword">branch. </span>After setting up the tracking <span class="keyword">branch, </span><span class="keyword">Mary </span>can call git <span class="keyword">push </span>without any parameters to <span class="keyword">push </span>her feature.</span><br><span class="line"></span><br><span class="line"><span class="label">git</span> <span class="keyword">push </span>-u origin <span class="keyword">marys-feature </span>//first time</span><br><span class="line"><span class="label">git</span> <span class="keyword">push </span>origin <span class="keyword">marys-feature </span>   // after</span><br><span class="line"></span><br><span class="line"><span class="label">git</span> <span class="keyword">push</span><br><span class="line"></span></span><br><span class="line">// merge the feature into the stable project </span><br><span class="line"><span class="label">git</span> checkout master</span><br><span class="line"><span class="label">git</span> pull</span><br><span class="line"><span class="label">git</span> pull origin <span class="keyword">marys-feature</span><br><span class="line"></span><span class="label">git</span> <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
+<p>First, whoever’s performing the merge needs to check out their master branch and make sure it’s up to date. Then, git pull origin marys-feature merges the central repository’s copy of marys-feature. You could also use a simple git merge marys-feature, but the command shown above makes sure you’re always pulling the most up-to-date version of the feature branch. Finally, the updated master needs to get pushed back to origin.</p>
+<h3 id="Gitflow_Workflow">Gitflow Workflow</h3><h4 id="Historical_Branches">Historical Branches</h4><p>Instead of a single master branch, this workflow uses two branches to record the history of the project. The master branch stores the official release history, and the develop branch serves as an integration branch for features. It’s also convenient to tag all commits in the master branch with a version number.</p>
+<h4 id="Feature_Branches">Feature Branches</h4><p>Each new feature should reside in its own branch, which can be pushed to the central repository for backup/collaboration. But, instead of branching off of master, feature branches use develop as their parent branch. When a feature is complete, it gets merged back into develop. Features should never interact directly with master.</p>
+<h4 id="Example">Example</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">//1. one developer to <span class="operator"><span class="keyword">create</span> an empty develop branch locally <span class="keyword">and</span> push it <span class="keyword">to</span> the <span class="keyword">server</span></span><br><span class="line">git branch develop</span><br><span class="line">git push -u origin develop</span><br><span class="line"></span><br><span class="line">//<span class="number">2</span>  Other developers should <span class="keyword">now</span> clone the central repository <span class="keyword">and</span> <span class="keyword">create</span> a tracking branch <span class="keyword">for</span> develop</span><br><span class="line">git clone ssh://<span class="keyword">user</span>@host/path/<span class="keyword">to</span>/repo.git</span><br><span class="line">git checkout -b develop origin/develop</span><br><span class="line"></span><br><span class="line">// <span class="number">3</span> <span class="keyword">create</span> branche <span class="keyword">for</span> features develop</span><br><span class="line">git checkout -b <span class="keyword">some</span>-feature develop</span><br><span class="line"></span><br><span class="line">// <span class="number">4</span> edit, stage, <span class="keyword">commit</span></span><br><span class="line">git <span class="keyword">status</span></span><br><span class="line">git <span class="keyword">add</span> &lt;<span class="keyword">some</span>-file&gt;</span><br><span class="line">git <span class="keyword">commit</span></span><br><span class="line"></span><br><span class="line">// <span class="number">5</span> makes sure the develop branch <span class="keyword">is</span> up <span class="keyword">to</span> <span class="built_in">date</span> </span><br><span class="line">git pull origin develop</span><br><span class="line"></span><br><span class="line">// <span class="number">6</span> <span class="keyword">merge</span> <span class="keyword">or</span> rebase</span><br><span class="line">git checkout develop</span><br><span class="line">git <span class="keyword">merge</span> <span class="keyword">some</span>-feature</span><br><span class="line">git push</span><br><span class="line">git branch -d <span class="keyword">some</span>-feature</span><br><span class="line"></span><br><span class="line">//<span class="number">7</span> <span class="keyword">prepare</span> a <span class="keyword">release</span></span><br><span class="line">//clean up the <span class="keyword">release</span>, test everything, <span class="keyword">update</span> the documentation, <span class="keyword">and</span> <span class="keyword">do</span> <span class="keyword">any</span> other kind <span class="keyword">of</span> preparation <span class="keyword">for</span> the upcoming <span class="keyword">release</span></span><br><span class="line">git checkout -b <span class="keyword">release</span>-<span class="number">0.1</span> develop</span><br><span class="line"></span><br><span class="line">//<span class="number">8</span> merges it <span class="keyword">into</span> <span class="keyword">master</span> <span class="keyword">and</span> develop, <span class="keyword">then</span> deletes the <span class="keyword">release</span> branch</span><br><span class="line">git checkout <span class="keyword">master</span></span><br><span class="line">git <span class="keyword">merge</span> <span class="keyword">release</span>-<span class="number">0.1</span></span><br><span class="line">git push</span><br><span class="line">git checkout develop</span><br><span class="line">git <span class="keyword">merge</span> <span class="keyword">release</span>-<span class="number">0.1</span></span><br><span class="line">git push</span><br><span class="line">git branch -d <span class="keyword">release</span>-<span class="number">0.1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//<span class="number">9</span> tag the <span class="keyword">commit</span> <span class="keyword">for</span> easy reference</span><br><span class="line">git tag -a <span class="number">0.1</span> -m <span class="string">"Initial public release"</span> <span class="keyword">master</span></span><br><span class="line">git push <span class="comment">--tags</span></span><br><span class="line"></span><br><span class="line">//<span class="number">10</span> creates a maintenance branch off <span class="keyword">of</span> <span class="keyword">master</span>, </span><br><span class="line">//fixes the issue <span class="keyword">with</span> <span class="keyword">as</span> many commits <span class="keyword">as</span> necessary, </span><br><span class="line">//<span class="keyword">then</span> merges it directly back <span class="keyword">into</span> <span class="keyword">master</span> <span class="keyword">and</span> develop</span><br><span class="line"></span><br><span class="line">git checkout -b issue-#<span class="number">001</span> <span class="keyword">master</span></span><br><span class="line"># Fix the bug</span><br><span class="line">git checkout <span class="keyword">master</span></span><br><span class="line">git <span class="keyword">merge</span> issue-#<span class="number">001</span></span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git checkout develop</span><br><span class="line">git <span class="keyword">merge</span> issue-#<span class="number">001</span></span><br><span class="line">git push</span><br><span class="line">git branch -d issue-#<span class="number">001</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Forking_WorkFlow">Forking WorkFlow</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Example</span><br><span class="line">//1. <span class="operator"><span class="keyword">create</span> an official repository <span class="keyword">on</span> a <span class="keyword">server</span></span><br><span class="line">ssh <span class="keyword">user</span>@host</span><br><span class="line">git init <span class="comment">--bare /path/to/repo.git</span></span><br><span class="line"></span><br><span class="line">//<span class="number">2.</span> fork</span><br><span class="line"></span><br><span class="line">//<span class="number">3</span> clone</span><br><span class="line">git clone https://<span class="keyword">user</span>@bitbucket.org/<span class="keyword">user</span>/repo.git</span><br><span class="line">git remote <span class="keyword">add</span> upstream https://bitbucket.org/maintainer/repo</span><br><span class="line">git remote <span class="keyword">add</span> upstream https://<span class="keyword">user</span>@bitbucket.org/maintainer/repo.git</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//<span class="number">4.</span>  edit, <span class="keyword">commit</span> branches</span><br><span class="line">git checkout -b <span class="keyword">some</span>-feature</span><br><span class="line"># Edit <span class="keyword">some</span> code</span><br><span class="line">git <span class="keyword">commit</span> -a -m <span class="string">"Add first draft of some feature"</span></span><br><span class="line"></span><br><span class="line">//<span class="number">5.</span> <span class="keyword">update</span> <span class="keyword">master</span></span><br><span class="line">git pull upstream <span class="keyword">master</span> </span><br><span class="line"></span><br><span class="line">//<span class="number">6.</span> </span><br><span class="line">git push origin feature-branch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//<span class="number">7.</span> maintainer <span class="keyword">view</span> a diff <span class="keyword">of</span> the changes, comment <span class="keyword">on</span> it, <span class="keyword">and</span> perform the <span class="keyword">merge</span></span><br><span class="line">git <span class="keyword">fetch</span> https://bitbucket.org/<span class="keyword">user</span>/repo feature-branch</span><br><span class="line"># Inspect the changes</span><br><span class="line">git checkout <span class="keyword">master</span></span><br><span class="line">git <span class="keyword">merge</span> FETCH_HEAD</span><br><span class="line"></span><br><span class="line">//<span class="number">8.</span> <span class="keyword">merge</span> publish</span><br><span class="line">git push origin <span class="keyword">master</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//<span class="number">9.</span> others <span class="keyword">update</span></span><br><span class="line">git pull upstream <span class="keyword">master</span></span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/30/ios-reverse/">ios reverse</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/29/git-tutorials-advanced-tips/">git tutorials -- Advanced Tips</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git_tutorials"><span class="nav-number">1.</span> <span class="nav-text">git tutorials</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Centralized_workflow"><span class="nav-number">1.1.</span> <span class="nav-text">Centralized workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature_Branch_workflow"><span class="nav-number">1.2.</span> <span class="nav-text">Feature Branch workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitflow_Workflow"><span class="nav-number">1.3.</span> <span class="nav-text">Gitflow Workflow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Historical_Branches"><span class="nav-number">1.3.1.</span> <span class="nav-text">Historical Branches</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Feature_Branches"><span class="nav-number">1.3.2.</span> <span class="nav-text">Feature Branches</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">1.3.3.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forking_WorkFlow"><span class="nav-number">1.4.</span> <span class="nav-text">Forking WorkFlow</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/05/29/git-tutorials-workflows/';
+      var disqus_title = 'git tutorials -- workflows';
+      var disqus_url = 'http://ytlvy.com/2015/05/29/git-tutorials-workflows/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

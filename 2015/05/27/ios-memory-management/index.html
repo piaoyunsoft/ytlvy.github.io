@@ -1,0 +1,663 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> ios 内存管理 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              ios 内存管理
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-memory-management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-memory-management/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h4 id="__autoreleasing关键字">__autoreleasing关键字</h4><ol>
+<li>ARC下使用__autoreleasing修饰符修饰的变量会被注册到autoreleasepool中，和非ARC下调用autorelease方法的效果相同</li>
+<li>当方法名不是alloc/new/copy/mutableCopy时，使用return返回的对象强引用会被自动注册到autoreleasepool<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)array  &#123;  </span><br><span class="line">  <span class="keyword">id</span> obj = [[<span class="built_in">NSArray</span> alloc] init];  </span><br><span class="line">  <span class="keyword">return</span> obj;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上述代码中，因为没有指定所有权修饰符，id obj就是默认的id __strong obj，即obj是强引用，这时，obj就会被添加到autoreleasepool中</p>
+<a id="more"></a>
+<ol>
+<li>访问附有__weak修饰符的变量时，该变量会被自动注册到autoreleasepool中，比如<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> __<span class="keyword">weak</span> obj1 = obj0;  </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">"class=%@"</span>, [obj1 class]);  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//等价于以下代码  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">id</span> __<span class="keyword">weak</span> obj1 = obj0;  </span><br><span class="line"><span class="keyword">id</span> __autoreleasing tmp = obj1;  </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">"class=%@"</span>, [tmp class]);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这种等价是编译器自动做的转换，原因是__weak修饰符支持有对象的弱引用，在访问引用对象的过程中，该对象可能被释放。而如果将该对象加入到autoreleasepool中，在pool被释放之前，tmp对该对象的引用都是有效的</p>
+<ol>
+<li>_objc_autoreleasePoolPrint()</li>
+</ol>
+<h4 id="__weak关键字">__weak关键字</h4><p>实际上，objc_storeWeak函数会把第二个参数的对象的地址作为key，并将第一个参数（<strong>weak关键字修饰的指针的地址）作为值，注册到weak表中。如果第二个参数为0（说明对应的对象被释放了），则将weak表中将整个key-value键值对删除，这就是</strong>weak关键字的核心思想！</p>
+<p>weak表和引用计数表类似，都是通过hash表实现的。如果使用weak表，将被释放的对象地址作为key去检索，就能很高效的获取对应的指向该对象的类型为<strong>weak的指针变量的地址。同时很容易理解，一个对象可能有多个</strong>weak指针指向，因此一个对象地址key可能对应多个值</p>
+<p>在调用对象的release方法时，会在其中一步调用objc_clear_deallocating函数，该函数会执行以下操作</p>
+<ul>
+<li>以当前对象的地址作为key，从weak表中获取对应的值——指向该对象的__weak类型的指针变量；</li>
+<li>将取到的所有指针变量的值赋值为nil</li>
+<li>从weak表中删除该key对应的整条记录</li>
+</ul>
+<h4 id="arc_rules">arc rules</h4><ol>
+<li>You have ownership of any objects you create</li>
+<li>You can take ownership of an object using retain</li>
+<li>When you no longer need it, you must relinquish ownership of an<br>object of which you have ownership</li>
+<li>You must not relinquish ownership of an object of which you don’t have ownership</li>
+</ol>
+<h4 id="注意问题">注意问题</h4><ol>
+<li><p>__weake 与alloc copy mutablecopy new 不能一起用</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> __weake obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line"><span class="comment">//obj为nil，因为weak不能持有对象，所以生成后马上释放</span></span><br><span class="line"><span class="keyword">id</span> __unsafe_unretained obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line"><span class="comment">//obj is nil</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NSAutoReleasePool 对象不能调用 autorelease 方法  因为NSAutoReleasePool类重载了该方法</p>
+</li>
+<li><p>arc 使用autoreleasepool</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span>&#123;</span><br><span class="line">    <span class="keyword">id</span> __autoreleasing obj2;</span><br><span class="line">    obj2 = obj;<span class="comment">// equivalent to [obj autorelease];</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>When a variable with a __weak qualifier is used, the object is always registered in autoreleasepool</p>
+</li>
+<li><p>默认标志</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>; <span class="comment">//__strong</span></span><br><span class="line"><span class="built_in">NSError</span> **pError = &amp;error;<span class="comment">//error because __autoreleasing</span></span><br><span class="line"><span class="built_in">NSError</span> * __<span class="keyword">strong</span> *pError = &amp;error;<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>arc可以用dealloc， 不需要写[super dealloc]</p>
+</li>
+<li>ARC forbids Objective-C objs in structs or unions ; it is impossible for the compiler to perform memory management for C struct<br>you can do this way<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span> </span>&#123;</span><br><span class="line">NSMutableArray __unsafe_unretained *array;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">arc</th>
+<th style="text-align:right">mrc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">id obj</td>
+<td style="text-align:right">id __strong obj</td>
+</tr>
+<tr>
+<td style="text-align:left">id *obj</td>
+<td style="text-align:right">id __autoreleasing *obj</td>
+</tr>
+<tr>
+<td style="text-align:left">NSObject **obj</td>
+<td style="text-align:right">NSObject __autoreleasing **obj</td>
+</tr>
+</tbody>
+</table>
+<h4 id="__bridge_cast">__bridge cast</h4><pre><code><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init]; 
+<span class="keyword">void</span> *p = (__bridge <span class="keyword">void</span> *)obj; 
+<span class="keyword">id</span> o = (__bridge <span class="keyword">id</span>)p
+</code></pre><h4 id="__bridge_retained_cast">__bridge_retained cast</h4><p><strong>bridge_retained cast works as if the assigned variable has ownership of the object；</strong>bridge_retained cast is replaced with retain</p>
+<pre><code><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];
+<span class="keyword">void</span> *p = (__bridge_retained <span class="keyword">void</span> *)obj;
+</code></pre><h4 id="__bridge_transfer_cast">__bridge_transfer cast</h4><p>__bridge_transfer cast is replaced with release</p>
+<pre><code><span class="keyword">id</span> obj = (__bridge_transfer <span class="keyword">id</span>)p；
+
+<span class="comment">/* non-ARC */</span>
+<span class="keyword">id</span> obj = (<span class="keyword">id</span>)p; 
+[obj retain]; 
+[(<span class="keyword">id</span>)p release];
+</code></pre><h4 id="CFBridging">CFBridging</h4><pre><code><span class="built_in">CFMutableArrayRef</span> cfObject = <span class="literal">NULL</span>; {
+<span class="keyword">id</span> obj = [[<span class="built_in">NSMutableArray</span> alloc] init];
+cfObject = <span class="built_in">CFBridgingRetain</span>(obj);
+<span class="built_in">CFShow</span>(cfObject);
+printf(<span class="string">"retain count = %d\n"</span>, <span class="built_in">CFGetRetainCount</span>(cfObject));
+}
+printf(<span class="string">"retain count after the scope = %d\n"</span>, <span class="built_in">CFGetRetainCount</span>(cfObject)); <span class="built_in">CFRelease</span>(cfObject);
+</code></pre>
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/27/appstore-reject/">appstore 被拒</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/27/ios-third-party-frameworks/">工程 第三方类库</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#__autoreleasing关键字"><span class="nav-number">1.</span> <span class="nav-text">__autoreleasing关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__weak关键字"><span class="nav-number">2.</span> <span class="nav-text">__weak关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arc_rules"><span class="nav-number">3.</span> <span class="nav-text">arc rules</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意问题"><span class="nav-number">4.</span> <span class="nav-text">注意问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__bridge_cast"><span class="nav-number">5.</span> <span class="nav-text">__bridge cast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__bridge_retained_cast"><span class="nav-number">6.</span> <span class="nav-text">__bridge_retained cast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__bridge_transfer_cast"><span class="nav-number">7.</span> <span class="nav-text">__bridge_transfer cast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CFBridging"><span class="nav-number">8.</span> <span class="nav-text">CFBridging</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/05/27/ios-memory-management/';
+      var disqus_title = 'ios 内存管理';
+      var disqus_url = 'http://ytlvy.com/2015/05/27/ios-memory-management/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

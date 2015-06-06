@@ -1,0 +1,851 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> ios 多线程操作 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              ios 多线程操作
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-multi-thread-example/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-multi-thread-example/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="多线程操作">多线程操作</h3><ol>
+<li>创建一个NSOperation不应该直接调用start方法（如果直接start则会在主线程中调用）而是应该放到NSOperationQueue中启动</li>
+<li>NSOperation进行多线程开发可以控制线程总数及线程依赖关系</li>
+<li>相比NSInvocationOperation推荐使用NSBlockOperation，代码简单，同时由于闭包性使它没有传参问题。</li>
+<li>NSOperation是对GCD面向对象的ObjC封装，但是相比GCD基于C语言开发，效率却更高，建议如果任务之间有依赖关系或者想要监听任务完成状态的情况下优先选择NSOperation否则使用GCD</li>
+<li>在GCD中串行队列中的任务被安排到一个单一线程执行（不是主线程），可以方便地控制执行顺序；并发队列在多个线程中执行（前提是使用异步方法），顺序控制相对复杂，但是更高效</li>
+<li>在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行（如果是并行队列使用同步方法调用则会在主线程中执行）</li>
+<li>相比使用NSLock，@synchronized更加简单，推荐使用后者</li>
+</ol>
+<a id="more"></a>
+<h4 id="NSThread">NSThread</h4><p>不能控制执行顺序 参数一个</p>
+<pre><code>-(<span class="typename">void</span>)loadImageWithMultiThread{
+    <span class="comment">//方法1：使用对象方法</span>
+    <span class="comment">//创建一个线程，第一个参数是请求的操作，第二个参数是操作方法的参数</span>
+    <span class="comment">//    NSThread *thread=[[NSThread alloc]initWithTarget:self selector:@selector(loadImage) object:nil];</span>
+    <span class="comment">//    //启动一个线程，注意启动一个线程并非就一定立即执行，而是处于就绪状态，当系统调度时才真正执行</span>
+    <span class="comment">//    [thread start];</span>
+
+    <span class="comment">//方法2：使用类方法</span>
+    [NSThread <span class="string">detachNewThreadSelector:</span><span class="annotation">@selector</span>(loadImage) <span class="string">toTarget:</span>self <span class="string">withObject:</span>nil];
+}
+
+
+-(<span class="typename">void</span>)loadImageWithMultiThread{
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="typename">int</span> i=<span class="number">0</span>; i&lt;ROW_COUNT*COLUMN_COUNT; ++i) {
+        <span class="comment">// [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:[NSNumber numberWithInt:i]];</span>
+        NSThread *thread=[[NSThread alloc]<span class="string">initWithTarget:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(<span class="string">loadImage:</span>) <span class="string">object:</span>[NSNumber <span class="string">numberWithInt:</span>i]];
+        thread.name=[NSString <span class="string">stringWithFormat:</span>@<span class="string">"myThread%i"</span>,i];<span class="comment">//设置线程名称</span>
+        [thread start];
+    }
+}
+
+
+-(<span class="typename">void</span>)loadImageWithMultiThread{
+    NSMutableArray *threads=[NSMutableArray array];
+    <span class="typename">int</span> count=ROW_COUNT*COLUMN_COUNT;
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="typename">int</span> i=<span class="number">0</span>; i&lt;count; ++i) {
+<span class="comment">//        [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:[NSNumber numberWithInt:i]];</span>
+        NSThread *thread=[[NSThread alloc]<span class="string">initWithTarget:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(<span class="string">loadImage:</span>) <span class="string">object:</span>[NSNumber <span class="string">numberWithInt:</span>i]];
+        thread.name=[NSString <span class="string">stringWithFormat:</span>@<span class="string">"myThread%i"</span>,i];<span class="comment">//设置线程名称</span>
+        <span class="keyword">if</span>(i==(count-<span class="number">1</span>)){
+            thread.threadPriority=<span class="number">1.0</span>;
+        }<span class="keyword">else</span>{
+            thread.threadPriority=<span class="number">0.0</span>;
+        }
+        [threads <span class="string">addObject:</span>thread];
+    }
+
+    <span class="keyword">for</span> (<span class="typename">int</span> i=<span class="number">0</span>; i&lt;count; i++) {
+        NSThread *thread=threads[i];
+        [thread start];
+    }
+}
+</code></pre><h4 id="NSThread_stop">NSThread stop</h4><pre><code><span class="preprocessor">#pragma mark 停止加载图片</span>
+-(<span class="keyword">void</span>)stopLoadImage{
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;ROW_COUNT*COLUMN_COUNT; i++) {
+        <span class="built_in">NSThread</span> *thread= _threads[i];
+        <span class="comment">//判断线程是否完成，如果没有完成则设置为取消状态</span>
+        <span class="comment">//注意设置为取消状态仅仅是改变了线程状态而言，并不能终止线程</span>
+        <span class="keyword">if</span> (!thread<span class="variable">.isFinished</span>) {
+            [thread cancel];
+
+        }
+    }
+}
+
+<span class="preprocessor">#pragma mark 加载图片</span>
+-(<span class="keyword">void</span>)loadImage:(<span class="built_in">NSNumber</span> *)index{
+    <span class="keyword">int</span> i=[index integerValue];
+
+    <span class="built_in">NSData</span> *data= [<span class="keyword">self</span> requestData:i];
+
+
+    <span class="built_in">NSThread</span> *currentThread=[<span class="built_in">NSThread</span> currentThread];
+
+<span class="comment">//    如果当前线程处于取消状态，则退出当前线程</span>
+    <span class="keyword">if</span> (currentThread<span class="variable">.isCancelled</span>) {
+        <span class="built_in">NSLog</span>(<span class="string">@"thread(%@) will be cancelled!"</span>,currentThread);
+        [<span class="built_in">NSThread</span> exit];<span class="comment">//取消当前线程</span>
+    }
+
+    K<span class="built_in">CImageData</span> *imageData=[[K<span class="built_in">CImageData</span> alloc]init];
+    imageData<span class="variable">.index</span>=i;
+    imageData<span class="variable">.data</span>=data;
+    [<span class="keyword">self</span> performSelectorOnMainThread:<span class="keyword">@selector</span>(updateImage:) withObject:imageData waitUntilDone:<span class="literal">YES</span>];
+}
+
+<span class="preprocessor">#pragma mark 多线程下载图片</span>
+-(<span class="keyword">void</span>)loadImageWithMultiThread{
+    <span class="keyword">int</span> count=ROW_COUNT*COLUMN_COUNT;
+    _threads=[<span class="built_in">NSMutableArray</span> arrayWithCapacity:count];
+
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count; ++i) {
+        <span class="built_in">NSThread</span> *thread=[[<span class="built_in">NSThread</span> alloc]initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(loadImage:) object:[<span class="built_in">NSNumber</span> numberWithInt:i]];
+        thread<span class="variable">.name</span>=[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"myThread%i"</span>,i];<span class="comment">//设置线程名称</span>
+        [_threads addObject:thread];
+    }
+    <span class="comment">//循环启动线程</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count; ++i) {
+        <span class="built_in">NSThread</span> *thread= _threads[i];
+        [thread start];
+    }
+}
+</code></pre><h4 id="NSInvocationOperation">NSInvocationOperation</h4><pre><code><span class="preprocessor">#pragma mark 请求图片数据</span>
+-(<span class="built_in">NSData</span> *)requestData:(<span class="keyword">int</span> )index{
+    <span class="comment">//对于多线程操作建议把线程操作放到@autoreleasepool中</span>
+    <span class="keyword">@autoreleasepool</span> {
+        <span class="built_in">NSURL</span> *url=[<span class="built_in">NSURL</span> URLWithString:_imageNames[index]];
+        <span class="built_in">NSData</span> *data=[<span class="built_in">NSData</span> dataWithContentsOfURL:url];
+
+        <span class="keyword">return</span> data;
+    }
+}
+
+-(<span class="keyword">void</span>)loadImageWithMultiThread{
+    <span class="comment">/*创建一个调用操作
+     object:调用方法参数
+    */</span>
+    <span class="built_in">NSInvocationOperation</span> *invocationOperation=[[<span class="built_in">NSInvocationOperation</span> alloc]initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(loadImage) object:<span class="literal">nil</span>];
+    <span class="comment">//创建完NSInvocationOperation对象并不会调用，它由一个start方法启动操作，但是注意如果直接调用start方法，则此操作会在主线程中调用，一般不会这么操作,而是添加到NSOperationQueue中</span>
+<span class="comment">//    [invocationOperation start];</span>
+
+    <span class="comment">//创建操作队列</span>
+    <span class="built_in">NSOperationQueue</span> *operationQueue=[[<span class="built_in">NSOperationQueue</span> alloc]init];
+    <span class="comment">//注意添加到操作队后，队列会开启一个线程执行此操作</span>
+    [operationQueue addOperation:invocationOperation];
+}
+</code></pre><h4 id="NSBlockOperation">NSBlockOperation</h4><pre><code><span class="preprocessor">#pragma mark 多线程下载图片</span>
+-(<span class="keyword">void</span>)loadImageWithMultiThread{
+    <span class="keyword">int</span> count=ROW_COUNT*COLUMN_COUNT;
+    <span class="comment">//创建操作队列</span>
+    <span class="built_in">NSOperationQueue</span> *operationQueue=[[<span class="built_in">NSOperationQueue</span> alloc]init];
+    operationQueue<span class="variable">.maxConcurrentOperationCount</span>=<span class="number">5</span>;<span class="comment">//设置最大并发线程数</span>
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count; ++i) {
+        <span class="comment">//方法1：创建操作块添加到队列</span>
+<span class="comment">//        //创建多线程操作</span>
+<span class="comment">//        NSBlockOperation *blockOperation=[NSBlockOperation blockOperationWithBlock:^{</span>
+<span class="comment">//            [self loadImage:[NSNumber numberWithInt:i]];</span>
+<span class="comment">//        }];</span>
+<span class="comment">//        //创建操作队列</span>
+<span class="comment">//</span>
+<span class="comment">//        [operationQueue addOperation:blockOperation];</span>
+
+        <span class="comment">//方法2：直接使用操队列添加操作</span>
+        [operationQueue addOperationWithBlock:^{
+            [<span class="keyword">self</span> loadImage:[<span class="built_in">NSNumber</span> numberWithInt:i]];
+        }];
+
+    }
+}
+<span class="keyword">@end</span>
+</code></pre><h4 id="线程执行顺序">线程执行顺序</h4><pre><code>-(<span class="keyword">void</span>)loadImageWithMultiThread{
+    <span class="keyword">int</span> count=ROW_COUNT*COLUMN_COUNT;
+    <span class="comment">//创建操作队列</span>
+    <span class="built_in">NSOperationQueue</span> *operationQueue=[[<span class="built_in">NSOperationQueue</span> alloc]init];
+    operationQueue<span class="variable">.maxConcurrentOperationCount</span>=<span class="number">5</span>;<span class="comment">//设置最大并发线程数</span>
+
+    <span class="built_in">NSBlockOperation</span> *lastBlockOperation=[<span class="built_in">NSBlockOperation</span> blockOperationWithBlock:^{
+        [<span class="keyword">self</span> loadImage:[<span class="built_in">NSNumber</span> numberWithInt:(count-<span class="number">1</span>)]];
+    }];
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count-<span class="number">1</span>; ++i) {
+        <span class="comment">//方法1：创建操作块添加到队列</span>
+        <span class="comment">//创建多线程操作</span>
+        <span class="built_in">NSBlockOperation</span> *blockOperation=[<span class="built_in">NSBlockOperation</span> blockOperationWithBlock:^{
+            [<span class="keyword">self</span> loadImage:[<span class="built_in">NSNumber</span> numberWithInt:i]];
+        }];
+        <span class="comment">//设置依赖操作为最后一张图片加载操作</span>
+        [blockOperation addDependency:lastBlockOperation];
+
+        [operationQueue addOperation:blockOperation];
+
+    }
+    <span class="comment">//将最后一个图片的加载操作加入线程队列</span>
+    [operationQueue addOperation:lastBlockOperation];
+}
+</code></pre><h4 id="GCD">GCD</h4><p>GCD中多线程操作方法不需要使用@autoreleasepool，GCD会管理内存</p>
+<pre><code><span class="preprocessor">#pragma mark 多线程下载图片</span>
+-(<span class="keyword">void</span>)loadImageWithMultiThread{
+    <span class="keyword">int</span> count=ROW_COUNT*COLUMN_COUNT;
+
+    <span class="comment">/*创建一个串行队列
+     第一个参数：队列名称
+     第二个参数：队列类型
+    */</span>
+    <span class="built_in">dispatch_queue_t</span> serialQueue=dispatch_queue_create(<span class="string">"myThreadQueue1"</span>, DISPATCH_QUEUE_SERIAL);<span class="comment">//注意queue对象不是指针类型</span>
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count; ++i) {
+        <span class="comment">//异步执行队列任务</span>
+        <span class="built_in">dispatch_async</span>(serialQueue, ^{
+            [<span class="keyword">self</span> loadImage:[<span class="built_in">NSNumber</span> numberWithInt:i]];
+        });
+
+    }
+    <span class="comment">//非ARC环境请释放</span>
+<span class="comment">//    dispatch_release(seriQueue);</span>
+}
+</code></pre><h4 id="并发队列">并发队列</h4><pre><code>-(<span class="keyword">void</span>)loadImageWithMultiThread{
+    <span class="keyword">int</span> count=ROW_COUNT*COLUMN_COUNT;
+
+    <span class="comment">/*取得全局队列
+     第一个参数：线程优先级
+     第二个参数：标记参数，目前没有用，一般传入0
+    */</span>
+    <span class="built_in">dispatch_queue_t</span> globalQueue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>);
+    <span class="comment">//创建多个线程用于填充图片</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count; ++i) {
+        <span class="comment">//异步执行队列任务</span>
+        <span class="built_in">dispatch_async</span>(globalQueue, ^{
+            [<span class="keyword">self</span> loadImage:[<span class="built_in">NSNumber</span> numberWithInt:i]];
+        });
+    }
+}
+</code></pre><h4 id="NSLock">NSLock</h4><pre><code>-(NSData *)requestData:(<span class="built_in">int</span> )<span class="built_in">index</span>{
+    NSData *<span class="type">data</span>;
+    NSString *<span class="keyword">name</span>;
+    //加锁
+    [_lock lock];
+    <span class="keyword">if</span> (_imageNames.<span class="built_in">count</span>&gt;<span class="number">0</span>) {
+        <span class="keyword">name</span>=[_imageNames lastObject];
+        [_imageNames removeObject:<span class="keyword">name</span>];
+    }
+    //使用完解锁
+    [_lock unlock];
+    <span class="keyword">if</span>(<span class="keyword">name</span>){
+        NSURL *url=[NSURL URLWithString:<span class="keyword">name</span>];
+        <span class="type">data</span>=[NSData dataWithContentsOfURL:url];
+    }
+    <span class="keyword">return</span> <span class="type">data</span>;
+}
+</code></pre><h4 id="@synchronized代码块">@synchronized代码块</h4><pre><code>-(NSData *)requestData:(<span class="built_in">int</span> )<span class="built_in">index</span>{
+    NSData *<span class="type">data</span>;
+    NSString *<span class="keyword">name</span>;
+    //线程同步
+    @synchronized(self){
+        <span class="keyword">if</span> (_imageNames.<span class="built_in">count</span>&gt;<span class="number">0</span>) {
+            <span class="keyword">name</span>=[_imageNames lastObject];
+            [NSThread sleepForTimeInterval:<span class="number">0.</span>01f];
+            [_imageNames removeObject:<span class="keyword">name</span>];
+        }
+    }
+    <span class="keyword">if</span>(<span class="keyword">name</span>){
+        NSURL *url=[NSURL URLWithString:<span class="keyword">name</span>];
+        <span class="type">data</span>=[NSData dataWithContentsOfURL:url];
+    }
+    <span class="keyword">return</span> <span class="type">data</span>;
+}
+</code></pre><h4 id="使用GCD解决资源抢占问题">使用GCD解决资源抢占问题</h4><pre><code>dispatch_semaphore_t _semaphore;//定义一个信号量
+semaphore=dispatch_semaphore_create(<span class="number">1</span>);
+
+-(NSData *)requestData:(<span class="built_in">int</span> )<span class="built_in">index</span>{
+    NSData *<span class="type">data</span>;
+    NSString *<span class="keyword">name</span>;
+
+    /*信号等待
+     第二个参数：等待时间
+     */
+    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    <span class="keyword">if</span> (_imageNames.<span class="built_in">count</span>&gt;<span class="number">0</span>) {
+        <span class="keyword">name</span>=[_imageNames lastObject];
+        [_imageNames removeObject:<span class="keyword">name</span>];
+    }
+    //信号通知
+    dispatch_semaphore_signal(_semaphore);
+
+
+    <span class="keyword">if</span>(<span class="keyword">name</span>){
+        NSURL *url=[NSURL URLWithString:<span class="keyword">name</span>];
+        <span class="type">data</span>=[NSData dataWithContentsOfURL:url];
+    }
+
+    <span class="keyword">return</span> <span class="type">data</span>;
+}
+</code></pre><h4 id="扩展—控制线程通信">扩展—控制线程通信</h4><p>由于线程的调度是透明的，程序有时候很难对它进行有效的控制，为了解决这个问题iOS提供了NSCondition来控制线程通信(同前面GCD的信号机制类似)NSCondition实现了NSLocking协议，所以它本身也有lock和unlock方法，因此也可以将它作为NSLock解决线程同步问题    </p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/27/block/">Block</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/27/ios-debug/">ios 调试</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程操作"><span class="nav-number">1.</span> <span class="nav-text">多线程操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NSThread"><span class="nav-number">1.1.</span> <span class="nav-text">NSThread</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSThread_stop"><span class="nav-number">1.2.</span> <span class="nav-text">NSThread stop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSInvocationOperation"><span class="nav-number">1.3.</span> <span class="nav-text">NSInvocationOperation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSBlockOperation"><span class="nav-number">1.4.</span> <span class="nav-text">NSBlockOperation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程执行顺序"><span class="nav-number">1.5.</span> <span class="nav-text">线程执行顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GCD"><span class="nav-number">1.6.</span> <span class="nav-text">GCD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发队列"><span class="nav-number">1.7.</span> <span class="nav-text">并发队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSLock"><span class="nav-number">1.8.</span> <span class="nav-text">NSLock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#@synchronized代码块"><span class="nav-number">1.9.</span> <span class="nav-text">@synchronized代码块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用GCD解决资源抢占问题"><span class="nav-number">1.10.</span> <span class="nav-text">使用GCD解决资源抢占问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展—控制线程通信"><span class="nav-number">1.11.</span> <span class="nav-text">扩展—控制线程通信</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/05/27/ios-multi-thread-example/';
+      var disqus_title = 'ios 多线程操作';
+      var disqus_url = 'http://ytlvy.com/2015/05/27/ios-multi-thread-example/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

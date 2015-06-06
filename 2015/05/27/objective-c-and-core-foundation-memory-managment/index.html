@@ -1,0 +1,604 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Objective-C 和 Core Foundation 对象相互转换的内存管理总结 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Objective-C 和 Core Foundation 对象相互转换的内存管理总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/objective-c-and-core-foundation-memory-managment/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Objective-C_和_Core_Foundation_对象相互转换的内存管理总结">Objective-C 和 Core Foundation 对象相互转换的内存管理总结</h2><p>iOS允许Objective-C 和 Core Foundation 对象之间可以轻松的转换，拿 NSString 和 CFStringRef 来说，直接转换豪无压力：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (<span class="built_in">CFStringRef</span>)a<span class="built_in">NSString</span>;  </span><br><span class="line"><span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = (<span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;</span><br></pre></td></tr></table></figure>
+<p>针对内存管理问题，ARC 可以帮忙管理 Objective-C 对象, 但是不支持 Core Foundation 对象的管理，所以转换后要注意一个问题：谁来释放使用后的对象。 本文重点总结一下类型转换后的内存管理。</p>
+<a id="more"></a>
+<h3 id="非ARC的内存管理">非ARC的内存管理</h3><p>倘若不使用ARC，手动管理内存，思路比较清晰，使用完，release转换后的对象即可。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//NSString 转 CFStringRef  </span></span><br><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (<span class="built_in">CFStringRef</span>) [[<span class="built_in">NSString</span> alloc] initWithFormat:<span class="string">@"%@"</span>, string];  </span><br><span class="line"><span class="comment">//...  </span></span><br><span class="line"><span class="built_in">CFRelease</span>(a<span class="built_in">CFString</span>);  </span><br><span class="line"></span><br><span class="line"><span class="comment">//CFStringRef 转 NSString  </span></span><br><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, bytes, <span class="built_in">NSUTF8StringEncoding</span>);  </span><br><span class="line"><span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = (<span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//...  </span></span><br><span class="line">[a<span class="built_in">NSString</span> release];</span><br></pre></td></tr></table></figure>
+<h3 id="ARC下的内存管理">ARC下的内存管理</h3><p>ARC的诞生大大简化了我们针对内存管理的开发工作，但是只支持管理 Objective-C 对象, 不支持 Core Foundation 对象。Core Foundation 对象必须使用CFRetain和CFRelease来进行内存管理。那么当使用Objective-C 和 Core Foundation 对象相互转换的时候，必须让编译器知道，到底由谁来负责释放对象，是否交给ARC处理。只有正确的处理，才能避免内存泄漏和double free导致程序崩溃。</p>
+<p>根据不同需求，有3种转换方式</p>
+<blockquote>
+<ul>
+<li>__bridge                                               （不改变对象所有权） </li>
+<li>__bridge_retained 或者 CFBridgingRetain()                （解除 ARC 所有权）  </li>
+<li>__bridge_transfer 或者    CFBridgingRelease()                （给予 ARC 所有权）</li>
+</ul>
+</blockquote>
+<h4 id="__bridge_retained_或者_CFBridgingRetain()">__bridge_retained 或者 CFBridgingRetain()</h4><p>__bridge_retained 或者 CFBridgingRetain()  将Objective-C对象转换为Core Foundation对象，把对象所有权桥接给Core Foundation对象，同时剥夺ARC的管理权，后续需要开发者使用CFRelease或者相关方法手动来释放对象。</p>
+<p>来看个例子：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad  </span><br><span class="line">&#123;  </span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];  </span><br><span class="line">      </span><br><span class="line">    <span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = [[<span class="built_in">NSString</span> alloc]initWithFormat:<span class="string">@"test"</span>];  </span><br><span class="line">    <span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (__bridge_retained <span class="built_in">CFStringRef</span>) a<span class="built_in">NSString</span>;  </span><br><span class="line">      </span><br><span class="line">    (<span class="keyword">void</span>)a<span class="built_in">CFString</span>;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">//正确的做法应该执行CFRelease  </span></span><br><span class="line">    <span class="comment">//CFRelease(aCFString);   </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序没有执行CFRelease，造成内存泄漏：<br><img src="http://img.my.csdn.net/uploads/201301/30/1359547398_2147.png" alt=""></p>
+<p>CFBridgingRetain()  是 __bridge_retained 的宏方法，下面两行代码等价：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (__bridge_retained <span class="built_in">CFStringRef</span>) a<span class="built_in">NSString</span>;  </span><br><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (<span class="built_in">CFStringRef</span>) <span class="built_in">CFBridgingRetain</span>(a<span class="built_in">NSString</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="__bridge_transfer_或者_CFBridgingRelease()">__bridge_transfer 或者 CFBridgingRelease()</h4><p>__bridge_transfer 或者 CFBridgingRelease()  将非Objective-C对象转换为Objective-C对象，同时将对象的管理权交给ARC，开发者无需手动管理内存。</p>
+<p>接着上面那个内存泄漏的例子，再转成OC对象交给ARC来管理内存，无需手动管理，也不会出现内存泄漏：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad  </span><br><span class="line">&#123;  </span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];  </span><br><span class="line">      </span><br><span class="line">    <span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = [[<span class="built_in">NSString</span> alloc]initWithFormat:<span class="string">@"test"</span>];  </span><br><span class="line">    <span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (__bridge_retained <span class="built_in">CFStringRef</span>) a<span class="built_in">NSString</span>;  </span><br><span class="line">    a<span class="built_in">NSString</span> = (__bridge_transfer <span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CFBridgingRelease() 是__bridge_transfer的宏方法，下面两行代码等价：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a<span class="built_in">NSString</span> = (__bridge_transfer <span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;  </span><br><span class="line">a<span class="built_in">NSString</span> = (<span class="built_in">NSString</span> *)<span class="built_in">CFBridgingRelease</span>(a<span class="built_in">CFString</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="__bridge">__bridge</h4><p>__bridge 只做类型转换，不改变对象所有权，是我们最常用的转换符。</p>
+<p>从OC转CF，ARC管理内存：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad  </span><br><span class="line">&#123;  </span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];  </span><br><span class="line">      </span><br><span class="line">    <span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = [[<span class="built_in">NSString</span> alloc]initWithFormat:<span class="string">@"test"</span>];  </span><br><span class="line">    <span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (__bridge <span class="built_in">CFStringRef</span>)a<span class="built_in">NSString</span>;  </span><br><span class="line">      </span><br><span class="line">    (<span class="keyword">void</span>)a<span class="built_in">CFString</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从CF转OC，需要开发者手动释放，不归ARC管：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad  </span><br><span class="line">&#123;  </span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];  </span><br><span class="line">      </span><br><span class="line">    <span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = <span class="built_in">CFStringCreateWithCString</span>(<span class="literal">NULL</span>, <span class="string">"test"</span>, k<span class="built_in">CFStringEncodingASCII</span>);  </span><br><span class="line">    <span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = (__bridge <span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;  </span><br><span class="line">      </span><br><span class="line">    (<span class="keyword">void</span>)a<span class="built_in">NSString</span>;  </span><br><span class="line">      </span><br><span class="line">    <span class="built_in">CFRelease</span>(a<span class="built_in">CFString</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/27/bloomfilter-bigdata-tool/">BloomFilter–大规模数据处理利器(解决空查问题)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/">非零环绕数规则和奇-偶规则(Non-Zero Winding Number Rule&amp;&amp;Odd-even Rule)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C_和_Core_Foundation_对象相互转换的内存管理总结"><span class="nav-number">1.</span> <span class="nav-text">Objective-C 和 Core Foundation 对象相互转换的内存管理总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非ARC的内存管理"><span class="nav-number">1.1.</span> <span class="nav-text">非ARC的内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARC下的内存管理"><span class="nav-number">1.2.</span> <span class="nav-text">ARC下的内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#__bridge_retained_或者_CFBridgingRetain()"><span class="nav-number">1.2.1.</span> <span class="nav-text">__bridge_retained 或者 CFBridgingRetain()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__bridge_transfer_或者_CFBridgingRelease()"><span class="nav-number">1.2.2.</span> <span class="nav-text">__bridge_transfer 或者 CFBridgingRelease()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__bridge"><span class="nav-number">1.2.3.</span> <span class="nav-text">__bridge</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/05/27/objective-c-and-core-foundation-memory-managment/';
+      var disqus_title = 'Objective-C 和 Core Foundation 对象相互转换的内存管理总结';
+      var disqus_url = 'http://ytlvy.com/2015/05/27/objective-c-and-core-foundation-memory-managment/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

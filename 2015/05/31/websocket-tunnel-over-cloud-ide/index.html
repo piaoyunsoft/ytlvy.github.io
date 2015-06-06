@@ -1,0 +1,634 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Websocket Tunnel Over Cloud IDE // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Websocket Tunnel Over Cloud IDE
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-31
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/FQ/">FQ</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/31/websocket-tunnel-over-cloud-ide/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/31/websocket-tunnel-over-cloud-ide/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="bbs">bbs</h3><blockquote>
+<p><a href="https://groups.google.com/forum/#!forum/go-gost" target="_blank" rel="external">https://groups.google.com/forum/#!forum/go-gost</a></p>
+</blockquote>
+<h3 id="原理">原理</h3><blockquote>
+<p>在平台中建立websocket服务器，将数据通过websocket传输给客户端实现一个tunnel</p>
+</blockquote>
+<h3 id="cloud_Ide">cloud Ide</h3><ul>
+<li>Cloud 9：<a href="https://c9.io" target="_blank" rel="external">https://c9.io</a></li>
+<li>Koding：<a href="https://koding.com/" target="_blank" rel="external">https://koding.com/</a></li>
+<li>Nitrous：<a href="https://lite.nitrous.io/" target="_blank" rel="external">https://lite.nitrous.io/</a></li>
+</ul>
+<a id="more"></a>
+<h3 id="server">server</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>wget <span class="symbol">https:</span>/<span class="regexp">/bintray.com/artifact</span><span class="regexp">/download/ginuerzh</span><span class="regexp">/gost/gost</span>_1.<span class="number">2_</span>linux_amd64.tar.gz</span><br><span class="line"><span class="variable">$ </span>tar zxf gost_1.<span class="number">2_</span>linux_amd64.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd gost_1.<span class="number">2_</span>linux_amd64/</span><br><span class="line"><span class="variable">$ </span>./gost -ws /<span class="regexp">/no output</span></span><br></pre></td></tr></table></figure>
+<h3 id="client">client</h3><blockquote>
+<p>wget <a href="https://bintray.com/ginuerzh/gost/gost/" target="_blank" rel="external">https://bintray.com/ginuerzh/gost/gost/</a></p>
+</blockquote>
+<h4 id="c9">c9</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gost -L :<span class="number">8899</span> -S demo-project-gostwebsocket<span class="class">.c9</span><span class="class">.io</span> -ws</span><br></pre></td></tr></table></figure>
+<!-- 
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./gost -L :<span class="number">8899</span> -S ytlvy-ytlvy<span class="class">.c9</span><span class="class">.io</span> -ws</span><br><span class="line">./gost -L :<span class="number">8899</span> -S demo-project-ytlvy<span class="class">.c9</span><span class="class">.io</span> -ws  <span class="comment">//now</span></span><br></pre></td></tr></table></figure>
+<p>—&gt;</p>
+<h4 id="Koding">Koding</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">52<span class="class">.74</span><span class="class">.10</span><span class="class">.210</span><span class="pseudo">:8080</span></span><br></pre></td></tr></table></figure>
+<h4 id="nitrousbox">nitrousbox</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gost -L :<span class="number">8899</span> -S appName-appid<span class="class">.apne1</span><span class="class">.nitrousbox</span><span class="class">.com</span>:<span class="number">8080</span> -<span class="tag">p</span> <span class="string">'password'</span> -m `encrypt type` -ws</span><br></pre></td></tr></table></figure>
+<!-- 
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./gost -L :<span class="number">8899</span> -S ytlvy-<span class="number">228959</span><span class="class">.apne1</span><span class="class">.nitrousbox</span><span class="class">.com</span>:<span class="number">8080</span> -ws</span><br><span class="line">./gost -L :<span class="number">8899</span> -S ytlvy-<span class="number">228959</span><span class="class">.apne1</span><span class="class">.nitrousbox</span><span class="class">.com</span>:<span class="number">8080</span> -m=rc4-md5 -p=<span class="number">123456</span> -ws</span><br></pre></td></tr></table></figure>
+<p>—&gt;</p>
+<h3 id="behind_proxy">behind proxy</h3><p>如果处在http代理环境中(代理要支持websocket)，可增加上层代理(-P参数)：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gost -L :<span class="number">8899</span> -S demo-project-gostwebsocket<span class="class">.c9</span><span class="class">.io</span> -P your_proxy_ip:port -ws</span><br></pre></td></tr></table></figure></p>
+<h3 id="安全处理">安全处理</h3><blockquote>
+<p>更改gost文件名，防止自动重启</p>
+</blockquote>
+<h3 id="Android设置">Android设置</h3><blockquote>
+<p>gost支持作为shadowsocks服务器运行(-ss参数)，这样就可以让android手机通过shadowsocks(影梭)使用代理了。</p>
+</blockquote>
+<h4 id="相关参数：">相关参数：</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">ss    开启shadowsocks模式</span><br><span class="line"></span>-<span class="ruby">sm   设置shadowsocks加密方式(默认为rc4-md5)</span><br><span class="line"></span>-<span class="ruby">sp    设置shadowsocks加密密码(默认为ginuerzh<span class="variable">@gmail</span>.com)</span></span><br></pre></td></tr></table></figure>
+<p>当无-ss参数时，-sm, -sp参数无效。<br>以上三个参数对服务端无效。</p>
+<h4 id="相关命令：">相关命令：</h4><h5 id="服务端：">服务端：</h5><blockquote>
+<p>无需特殊设置<br>shadowsocks模式只与客户端有关，与服务端无关。</p>
+</blockquote>
+<h5 id="客户端：">客户端：</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gost -L :<span class="number">8899</span> -S demo-project-gostwebsocket<span class="class">.c9</span><span class="class">.io</span> -ws -sm=rc4-md5 -sp=ginuerzh@gmail<span class="class">.com</span> -ss</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在手机的shadowsocks软件中设置好服务器(运行gost电脑的IP)，端口(8899)，加密方法和密码就可以使用了。<br>注：shadowsocks模式与正常模式是不兼容的，当作为shadowsocks模式使用时(有-ss参数)，浏览器不能使用</p>
+</blockquote>
+<h3 id="encryt_type">encryt type</h3><blockquote>
+<p>websocket加密功能需要客户端和服务端gost版本都为1.2版及以上</p>
+</blockquote>
+<h4 id="目前支持的加密方法">目前支持的加密方法</h4><blockquote>
+<p>tls, aes-128-cfb, aes-192-cfb, aes-256-cfb, des-cfb, bf-cfb, cast5-cfb, rc4-md5, rc4, table</p>
+</blockquote>
+<h4 id="Client端设置">Client端设置</h4><ol>
+<li>Client端通过-m参数设置加密方式，默认为不加密(-m参数为空)。</li>
+<li>如果设置的加密方式不被支持，则默认为不加密。</li>
+<li>当设置的加密方式为tls时，-p参数无效。</li>
+<li>当设置的加密方式为非tls时，通过-p参数设置加密密码，且不能为空，默认密码为ginuerzh@gmail.com；-p参数必须与Server端的-p参数相同。</li>
+</ol>
+<h4 id="Server端设置">Server端设置</h4><ol>
+<li>Server端通过-m参数设置加密方式，默认为不加密(-m参数为空)。</li>
+<li>如果设置的加密方式不被支持，默认为不处理 (此情形被视为错误，须用户自行改正)。</li>
+<li>如果没有设置加密方式(-m参数为空)，则由client端控制加密方式，即client端可通过-m参数指定Server端使用哪种加密方式。</li>
+<li>如果设置了加密方式(-m参数不为空)，client端必须使用与Server端相同的加密方式。</li>
+<li>当设置的加密方式为tls时，-p参数无效；-key参数可手动指定公钥文件，-cert参数可手动指定私钥文件，如果未指定，则使用默认的公钥与私钥。</li>
+<li>当设置的加密方式为非tls时，-key，-cert参数无效；通过-p参数设置加密密码，且不能为空，默认密码为ginuerzh@gmail.com</li>
+</ol>
+-->
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/05/ios-cfstringtransform/">ios CFStringTransform</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/30/ios-send-sms/">ios send SMS</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#bbs"><span class="nav-number">1.</span> <span class="nav-text">bbs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cloud_Ide"><span class="nav-number">3.</span> <span class="nav-text">cloud Ide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#server"><span class="nav-number">4.</span> <span class="nav-text">server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#client"><span class="nav-number">5.</span> <span class="nav-text">client</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c9"><span class="nav-number">5.1.</span> <span class="nav-text">c9</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/05/31/websocket-tunnel-over-cloud-ide/';
+      var disqus_title = 'Websocket Tunnel Over Cloud IDE';
+      var disqus_url = 'http://ytlvy.com/2015/05/31/websocket-tunnel-over-cloud-ide/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

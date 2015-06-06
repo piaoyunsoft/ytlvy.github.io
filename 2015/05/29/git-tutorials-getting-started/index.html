@@ -1,0 +1,647 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> git tutorials -- Getting Started // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              git tutorials -- Getting Started
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-getting-started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-getting-started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="git_tutorials">git tutorials</h2><h3 id="setup_a_repository">setup a repository</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialize an local repository</span></span><br><span class="line">git <span class="keyword">init</span></span><br><span class="line">git <span class="keyword">init</span> &lt;directory&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//initialize a Central repositories or server </span></span><br><span class="line">git <span class="keyword">init</span> --bare &lt;directory&gt;.git</span><br><span class="line"></span><br><span class="line">ssh &lt;user&gt;@&lt;host&gt;</span><br><span class="line">cd path/above/repo </span><br><span class="line">git <span class="keyword">init</span> --bare my-project.git</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="clone">clone</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="tag">&lt;<span class="title">repo</span>&gt;</span></span><br><span class="line">git clone <span class="tag">&lt;<span class="title">repo</span>&gt;</span> <span class="tag">&lt;<span class="title">directory</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="config">config</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//edit config</span></span><br><span class="line">git config --<span class="keyword">global</span> --<span class="keyword">edit</span></span><br></pre></td></tr></table></figure>
+<h4 id="config_options_file">config options file</h4><ol>
+<li><repo>/.git/config – Repository-specific settings.</repo></li>
+<li>~/.gitconfig – User-specific settings. This is where options set with the —global flag are stored</li>
+<li>$(prefix)/etc/gitconfig – System-wide settings.</li>
+</ol>
+<h3 id="Saving_changes_—————_edit/stage/commit">Saving changes  ————— edit/stage/commit</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">add</span> &lt;<span class="keyword">file</span>&gt;         // Stage <span class="keyword">all</span> <span class="keyword">changes</span> in &lt;<span class="keyword">file</span>&gt; <span class="keyword">for</span> the <span class="keyword">next</span> commit.</span><br><span class="line">git <span class="built_in">add</span> &lt;directory&gt;    // Stage <span class="keyword">all</span> <span class="keyword">changes</span> in &lt;directory&gt; <span class="keyword">for</span> the <span class="keyword">next</span> commit</span><br><span class="line">git <span class="built_in">add</span> <span class="keyword">p</span>              //  interactive staging</span><br><span class="line">git <span class="built_in">add</span> .              // stage <span class="keyword">all</span> <span class="keyword">changes</span> in current directory</span><br></pre></td></tr></table></figure>
+<h3 id="log">log</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br><span class="line">git <span class="built_in">log</span> -n &lt;limit&gt;</span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--oneline</span></span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--stat // include which files were altered and the relative number of lines that modified</span></span><br><span class="line">git <span class="built_in">log</span> -p    <span class="comment"> //  shows the full diff of each commit,</span></span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--author="&lt;pattern&gt;"</span></span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--grep="&lt;pattern&gt;"</span></span><br><span class="line">git <span class="built_in">log</span> &lt;since&gt;..&lt;<span class="keyword">until</span>&gt;    <span class="comment"> //Both arguments can be either a commit ID, a branch name, HEAD</span></span><br><span class="line">git <span class="built_in">log</span> &lt;<span class="built_in">file</span>&gt;</span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--graph --decorate --oneline</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--author="John Smith" -p hello.py</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//The .. syntax is a very useful tool for comparing branches</span></span><br><span class="line">git <span class="built_in">log</span> <span class="comment">--oneline master..branch</span></span><br></pre></td></tr></table></figure>
+<p>commit 3157ee3718e180a9476bf2e5cab8e3f1e78a73b7   —— SHA-1 checksum of the commit’s contents<br>The ~ character is useful for making relative references to the parent of a commit. For example, 3157e~1 refers to the commit before 3157e, and HEAD~3 is the great-grandparent of the current commit.</p>
+<h3 id="view_old_commits_—_checkout">view old commits — checkout</h3><p>checking out files,<br>checking out commits<br>checking out branches. </p>
+<p>Checking out a commit makes the entire working directory match that commit. This can be used to view an old state of your project without altering your current state in any way. Checking out a file lets you see an old version of that particular file, leaving the rest of your working directory untouched.</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout</span><br><span class="line"></span><br><span class="line">git checkout master   // return <span class="keyword">to</span> master branch</span><br><span class="line"></span><br><span class="line">git checkout <span class="variable">&lt;commit&gt;</span> <span class="variable">&lt;file&gt;</span></span><br><span class="line"></span><br><span class="line">//You can use either a commit hash or a <span class="keyword">tag</span> as the <span class="variable">&lt;commit&gt;</span> argument. </span><br><span class="line">//This will put you <span class="keyword">in</span> a detached HEAD <span class="keyword">state</span></span><br><span class="line">git checkout <span class="variable">&lt;commit&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">git checkout a1e8fb5</span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git checkout a1e8fb5 hello.<span class="keyword">py</span></span><br><span class="line">git checkout HEAD hello.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
+<h3 id="Undo">Undo</h3><h3 id="git_revert">git revert</h3><p>git revert is a “safe” way to undo changes<br>Generate a new commit that undoes all of the changes introduced in <commit>, then apply it to the current branch.<br>Reverting should be used when you want to remove an entire commit from your project history.</commit></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">git</span> <span class="keyword">revert </span>&lt;commit&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Reverting_vs-_Resetting">Reverting vs. Resetting</h3><p>It’s important to understand that git revert undoes a single commit—it does not “revert” back to the previous state of a project by removing all subsequent commits. In Git, this is actually called a reset, not a revert.</p>
+<p>Reverting has two important advantages over resetting. First, it doesn’t change the project history, which makes it a “safe” operation for commits that have already been published to a shared repository. For details about why altering shared history is dangerous, please see the git reset page.</p>
+<p>Second, git revert is able to target an individual commit at an arbitrary point in the history, whereas git reset can only work backwards from the current commit. For example, if you wanted to undo an old commit with git reset, you would have to remove all of the commits that occurred after the target commit, remove it, then re-commit all of the subsequent commits. Needless to say, this is not an elegant undo solution.</p>
+<figure class="highlight mizar"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git commit -m "Make some changes <span class="keyword">that</span> will <span class="keyword">be</span> undone</span><br><span class="line">git revert HEAD</span><br></pre></td></tr></table></figure>
+<h3 id="git_reset">git reset</h3><p>dangerous method</p>
+<h4 id="use">use</h4><ol>
+<li>remove committed snapshots, </li>
+<li>undo changes in the staging area and the working directory</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git <span class="operator"><span class="keyword">reset</span> &lt;file&gt;</span><br><span class="line">//Remove the specified file <span class="keyword">from</span> the staging area, but leave the working directory unchanged. This unstages a file without overwriting <span class="keyword">any</span> changes</span><br><span class="line"></span><br><span class="line">git <span class="keyword">reset</span></span><br><span class="line">//<span class="keyword">Reset</span> the staging area <span class="keyword">to</span> <span class="keyword">match</span> the most recent <span class="keyword">commit</span>, but leave the working directory unchanged. This unstages <span class="keyword">all</span> files without overwriting <span class="keyword">any</span> changes, giving you the opportunity <span class="keyword">to</span> re-build the staged <span class="keyword">snapshot</span> <span class="keyword">from</span> scratch</span><br><span class="line"></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard</span></span><br><span class="line">//<span class="keyword">Reset</span> the staging area <span class="keyword">and</span> the working directory <span class="keyword">to</span> <span class="keyword">match</span> the most recent <span class="keyword">commit</span>. <span class="keyword">In</span> addition <span class="keyword">to</span> unstaging changes, the <span class="comment">--hard flag tells Git to overwrite all changes in the working directory, too. Put another way: this obliterates all uncommitted changes, so make sure you really want to throw away your local developments before using it.</span></span><br><span class="line"></span><br><span class="line">git <span class="keyword">reset</span> &lt;<span class="keyword">commit</span>&gt;</span><br><span class="line"></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard &lt;commit&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>All of the above invocations are used to remove changes from a repository. Without the —hard flag, git reset is a way to clean up a repository by unstaging changes or uncommitting a series of snapshots and re-building them from scratch. The —hard flag comes in handy when an experiment has gone horribly wrong and you need a clean slate to work with</p>
+<p>Whereas reverting is designed to safely undo a public commit, git reset is designed to undo local changes. Because of their distinct goals, the two commands are implemented differently: resetting completely removes a changeset, whereas reverting maintains the original changeset and uses a new commit to apply the undo</p>
+<h3 id="Don’t_Reset_Public_History">Don’t Reset Public History</h3><p>You should never use git reset <commit> when any snapshots after <commit> have been pushed to a public repository</commit></commit></p>
+<p>The point is, make sure that you’re using git reset <commit> on a local experiment that went wrong—not on published changes. If you need to fix a public commit, the git revert command was designed specifically for this purpose.</commit></p>
+<h3 id="Examples">Examples</h3><h4 id="Unstaging_a_File">Unstaging a File</h4><p>The git reset command is frequently encountered while preparing the staged snapshot. The next example assumes you have two files called hello.py and main.py that you’ve already added to the repository.<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Edit both hello.<span class="keyword">py</span> <span class="built_in">and</span> main.<span class="keyword">py</span></span><br><span class="line"></span><br><span class="line">// Stage everything in the current directory</span><br><span class="line">git <span class="built_in">add</span> .</span><br><span class="line"></span><br><span class="line">// Realize that the <span class="keyword">changes</span> in hello.<span class="keyword">py</span> <span class="built_in">and</span> main.<span class="keyword">py</span></span><br><span class="line">//should <span class="keyword">be</span> committed in different snapshots</span><br><span class="line"></span><br><span class="line">// Unstage main.<span class="keyword">py</span></span><br><span class="line">git reset main.<span class="keyword">py</span></span><br><span class="line"></span><br><span class="line">// Commit <span class="keyword">only</span> hello.<span class="keyword">py</span></span><br><span class="line">git commit -<span class="keyword">m</span> <span class="string">"Make some changes to hello.py"</span></span><br><span class="line"></span><br><span class="line">// Commit main.<span class="keyword">py</span> in <span class="keyword">a</span> separate snapshot</span><br><span class="line">git <span class="built_in">add</span> main.<span class="keyword">py</span></span><br><span class="line">git commit -<span class="keyword">m</span> <span class="string">"Edit main.py"</span></span><br></pre></td></tr></table></figure></p>
+<p>As you can see, git reset helps you keep your commits highly-focused by letting you unstage changes that aren’t related to the next commit.</p>
+<h4 id="Removing_Local_Commits">Removing Local Commits</h4><p> It demonstrates what happens when you’ve been working on a new experiment for a while, but decide to completely throw it away after committing a few snapshots.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// <span class="operator"><span class="keyword">Create</span> a new file called <span class="string">`foo.py`</span> <span class="keyword">and</span> <span class="keyword">add</span> <span class="keyword">some</span> code <span class="keyword">to</span> it</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Commit</span> it <span class="keyword">to</span> the project history</span><br><span class="line">git <span class="keyword">add</span> foo.py</span><br><span class="line">git <span class="keyword">commit</span> -m <span class="string">"Start developing a crazy feature"</span></span><br><span class="line"></span><br><span class="line"># Edit <span class="string">`foo.py`</span> again <span class="keyword">and</span> <span class="keyword">change</span> <span class="keyword">some</span> other tracked files, too</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Commit</span> another <span class="keyword">snapshot</span></span><br><span class="line">git <span class="keyword">commit</span> -a -m <span class="string">"Continue my crazy feature"</span></span><br><span class="line"></span><br><span class="line"># Decide <span class="keyword">to</span> scrap the feature <span class="keyword">and</span> remove the associated commits</span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard HEAD~2</span></span></span><br></pre></td></tr></table></figure>
+<p>The git reset HEAD~2 command moves the current branch backward by two commits, effectively removing the two snapshots we just created from the project history. Remember that this kind of reset should only be used on unpublished commits. Never perform the above operation if you’ve already pushed your commits to a shared repository.</p>
+<h3 id="git_clean">git clean</h3><p>removes untracked files from your working directory</p>
+<p>The git clean command is often executed in conjunction with git reset —hard. Remember that resetting only affects tracked files, so a separate command is required for cleaning up untracked ones. Combined, these two commands let you return the working directory to the exact state of a particular commit.</p>
+<figure class="highlight mizar"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//Perform a “dry run” <span class="keyword">of</span> git clean. This will show you which files are going to <span class="keyword">be</span> removed without actually doing it.</span><br><span class="line">git clean -n</span><br><span class="line"></span><br><span class="line">//Remove untracked files <span class="keyword">from</span> the current directory. The -f (force) flag <span class="keyword">is</span> required unless the clean.requireForce configuration option <span class="keyword">is</span> <span class="keyword">set</span> to false (it's true <span class="keyword">by</span> default). This will <span class="keyword">not</span> remove untracked folders <span class="keyword">or</span> files specified <span class="keyword">by</span> .gitignore.</span><br><span class="line">git clean -f</span><br><span class="line"></span><br><span class="line">git clean -f &lt;path&gt;</span><br><span class="line"></span><br><span class="line">//Remove untracked files <span class="keyword">and</span> untracked directories <span class="keyword">from</span> the current directory.</span><br><span class="line">git clean -df</span><br><span class="line"></span><br><span class="line">//Remove untracked files <span class="keyword">from</span> the current directory <span class="keyword">as</span> well <span class="keyword">as</span> any files <span class="keyword">that</span> Git usually ignores.</span><br><span class="line">git clean -xf</span><br></pre></td></tr></table></figure>
+<p>The git reset —hard and git clean -f commands are your best friends after you’ve made some embarrassing developments in your local repository and want to burn the evidence. Running both of them will make your working directory match the most recent commit, giving you a clean slate to work with.</p>
+<p>he git clean command can also be useful for cleaning up the working directory after a build. For example, it can easily remove the .o and .exe binaries generated by a C compiler. This is occasionally a necessary step before packaging a project for release. The -x option is particularly convenient for this purpose.</p>
+<p>Keep in mind that, along with git reset, git clean is one of the only Git commands that has the potential to permanently delete commits, so be careful with it</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Edit some existing files</span></span><br><span class="line"><span class="preprocessor"># Add some new files</span></span><br><span class="line"><span class="preprocessor"># Realize you have no idea what you're doing</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># Undo changes in tracked files</span></span><br><span class="line">git reset --hard</span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># Remove untracked files</span></span><br><span class="line">git clean -df</span><br></pre></td></tr></table></figure>
+<h2 id="Rewriting_history">Rewriting history</h2><h3 id="git_commit_—amend">git commit —amend</h3><p>never amend commits that have been pushed to a public repository.<br>Amended commits are actually entirely new commits, and the previous commit is removed from the project history. This has the same consequences as resetting a public snapshot</p>
+<p>The git commit —amend command is a convenient way to fix up the most recent commit. It lets you combine staged changes with the previous commit instead of committing it as an entirely new snapshot. It can also be used to simply edit the previous commit message without changing its snapshot</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Edit hello.<span class="keyword">py</span> <span class="built_in">and</span> main.<span class="keyword">py</span></span><br><span class="line">git <span class="built_in">add</span> hello.<span class="keyword">py</span></span><br><span class="line">git commit</span><br><span class="line"></span><br><span class="line"># Realize you forgot <span class="keyword">to</span> <span class="built_in">add</span> the <span class="keyword">changes</span> from main.<span class="keyword">py</span></span><br><span class="line">git <span class="built_in">add</span> main.<span class="keyword">py</span></span><br><span class="line">git commit --amend --<span class="keyword">no</span>-<span class="keyword">edit</span></span><br></pre></td></tr></table></figure>
+<p>Combine the staged changes with the previous commit and replace the previous commit with the resulting snapshot. Running this when there is nothing staged lets you edit the previous commit’s message without altering its snapshot</p>
+<h3 id="git_rebase">git rebase</h3><p>Don’t Rebase Public History</p>
+<p>Rebasing is the process of moving a branch to a new base commit. </p>
+<p>From a content perspective, rebasing really is just moving a branch from one commit to another. But internally, Git accomplishes this by creating new commits and applying them to the specified base—it’s literally rewriting your project history. It’s very important to understand that, even though the branch looks the same, it’s composed of entirely new commits.</p>
+<p><code>git rebase &lt;base&gt;</code><br>Rebase the current branch onto <base>, which can be any kind of commit reference (an ID, a branch name, a tag, or a relative reference to HEAD).</p>
+<h4 id="Discussion">Discussion</h4><p>The primary reason for rebasing is to maintain a linear project history. For example, consider a situation where the master branch has progressed since you started working on a feature:</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Start a<span class="instruction"> new </span>feature</span><br><span class="line">git checkout -b<span class="instruction"> new-feature </span>master</span><br><span class="line"><span class="comment"># Edit files</span></span><br><span class="line">git commit -a -m <span class="string">"Start developing a feature"</span></span><br></pre></td></tr></table></figure>
+<p>In the middle of our feature, we realize there’s a security hole in our project</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// <span class="operator"><span class="keyword">Create</span> a hotfix branch based off <span class="keyword">of</span> <span class="keyword">master</span></span><br><span class="line">git checkout -b hotfix <span class="keyword">master</span></span><br><span class="line"># Edit files</span><br><span class="line">git <span class="keyword">commit</span> -a -m <span class="string">"Fix security hole"</span></span><br><span class="line"># <span class="keyword">Merge</span> back <span class="keyword">into</span> <span class="keyword">master</span></span><br><span class="line">git checkout <span class="keyword">master</span></span><br><span class="line">git <span class="keyword">merge</span> hotfix</span><br><span class="line">git branch -d hotfix</span></span><br></pre></td></tr></table></figure>
+<p>After merging the hotfix into master, we have a forked project history. Instead of a plain git merge, we’ll integrate the feature branch with a rebase to maintain a linear history:</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout<span class="instruction"> new-feature</span><br><span class="line"></span>git rebase master</span><br></pre></td></tr></table></figure>
+<p>This moves new-feature to the tip of master, which lets us do a standard fast-forward merge from master:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git <span class="built_in">merge</span> <span class="built_in">new</span>-feature</span><br></pre></td></tr></table></figure>
+<h3 id="git_rebase_-i">git rebase -i</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">an</span> interactive rebasing session</span><br></pre></td></tr></table></figure>
+<h4 id="Examples-1">Examples</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Start a<span class="instruction"> new </span>feature</span><br><span class="line">git checkout -b<span class="instruction"> new-feature </span>master</span><br><span class="line"><span class="comment"># Edit files</span></span><br><span class="line">git commit -a -m <span class="string">"Start developing a feature"</span></span><br><span class="line"><span class="comment"># Edit more files</span></span><br><span class="line">git commit -a -m <span class="string">"Fix something from the previous commit"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Add a commit directly to master</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="comment"># Edit files</span></span><br><span class="line">git commit -a -m <span class="string">"Fix security hole"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Begin an interactive rebasing session</span></span><br><span class="line">git checkout<span class="instruction"> new-feature</span><br><span class="line"></span>git rebase -i master</span><br></pre></td></tr></table></figure>
+<p>The last command will open an editor populated with the two commits from new-feature, along with some instructions:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pick <span class="number">32618</span>c4 Start developing <span class="operator">a</span> feature</span><br><span class="line">pick <span class="number">62</span>eed47 Fix something <span class="built_in">from</span> <span class="operator">the</span> previous commit</span><br></pre></td></tr></table></figure>
+<p>You can change the pick commands before each commit to determine how it gets moved during the rebase. In our case, let’s just combine the two commits with a squash command:<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pick <span class="number">32618</span>c4 Start developing <span class="operator">a</span> feature</span><br><span class="line">squash <span class="number">62</span>eed47 Fix something <span class="built_in">from</span> <span class="operator">the</span> previous commit</span><br></pre></td></tr></table></figure></p>
+<p>Save and close the editor to begin the rebase. This will open another editor asking for the commit message for the combined snapshot. After defining the commit message, the rebase is complete and you should be able to see the squashed commit in your git log output. </p>
+<p>Note that the squashed commit has a different ID than either of the original commits, which tells us that it is indeed a brand new commit.</p>
+<p>Finally, you can do a fast-forward merge to integrate the polished feature branch into the main code base:<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git <span class="built_in">merge</span> <span class="built_in">new</span>-feature</span><br></pre></td></tr></table></figure></p>
+<h3 id="git_reflog">git reflog</h3><p>Git keeps track of updates to the tip of branches using a mechanism called reflog. This allows you to go back to changesets even though they are not referenced by any branch or tag. After rewriting history, the reflog contains information about the old state of branches and allows you to go back to that state if necessary.</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line"></span><br><span class="line">git reflog <span class="comment">--relative-date</span></span><br></pre></td></tr></table></figure>
+<p>Every time the current HEAD gets updated (by switching branches, pulling in new changes, rewriting history or simply by adding new commits) a new entry will be added to the reflog</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0a2e358 HEAD@&#123;0&#125;: <span class="operator"><span class="keyword">reset</span>: moving <span class="keyword">to</span> HEAD~<span class="number">2</span></span><br><span class="line"><span class="number">0254</span>ea7 HEAD@&#123;<span class="number">1</span>&#125;: checkout: moving <span class="keyword">from</span> <span class="number">2.2</span> <span class="keyword">to</span> <span class="keyword">master</span></span><br><span class="line">c10f740 HEAD@&#123;<span class="number">2</span>&#125;: checkout: moving <span class="keyword">from</span> <span class="keyword">master</span> <span class="keyword">to</span> <span class="number">2.2</span></span></span><br></pre></td></tr></table></figure>
+<p>The reflog above shows a checkout from master to the 2.2 branch and back. From there, there’s a hard reset to an older commit. The latest activity is represented at the top labeled HEAD@{0}.</p>
+<p>If it turns out that you accidentially moved back, the reflog will contain the commit master pointed to (0254ea7) before you accidentially dropped 2 commits.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/29/git-tutorials-collaborating/">git tutorials -- Collaborating</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/27/recently-readings/">最近阅读资料</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git_tutorials"><span class="nav-number">1.</span> <span class="nav-text">git tutorials</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setup_a_repository"><span class="nav-number">1.1.</span> <span class="nav-text">setup a repository</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clone"><span class="nav-number">1.2.</span> <span class="nav-text">clone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#config"><span class="nav-number">1.3.</span> <span class="nav-text">config</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#config_options_file"><span class="nav-number">1.3.1.</span> <span class="nav-text">config options file</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saving_changes_—————_edit/stage/commit"><span class="nav-number">1.4.</span> <span class="nav-text">Saving changes  ————— edit/stage/commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#log"><span class="nav-number">1.5.</span> <span class="nav-text">log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#view_old_commits_—_checkout"><span class="nav-number">1.6.</span> <span class="nav-text">view old commits — checkout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo"><span class="nav-number">1.7.</span> <span class="nav-text">Undo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git_revert"><span class="nav-number">1.8.</span> <span class="nav-text">git revert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reverting_vs-_Resetting"><span class="nav-number">1.9.</span> <span class="nav-text">Reverting vs. Resetting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git_reset"><span class="nav-number">1.10.</span> <span class="nav-text">git reset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#use"><span class="nav-number">1.10.1.</span> <span class="nav-text">use</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Don’t_Reset_Public_History"><span class="nav-number">1.11.</span> <span class="nav-text">Don’t Reset Public History</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Examples"><span class="nav-number">1.12.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unstaging_a_File"><span class="nav-number">1.12.1.</span> <span class="nav-text">Unstaging a File</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Removing_Local_Commits"><span class="nav-number">1.12.2.</span> <span class="nav-text">Removing Local Commits</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git_clean"><span class="nav-number">1.13.</span> <span class="nav-text">git clean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rewriting_history"><span class="nav-number">2.</span> <span class="nav-text">Rewriting history</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git_commit_—amend"><span class="nav-number">2.1.</span> <span class="nav-text">git commit —amend</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git_rebase"><span class="nav-number">2.2.</span> <span class="nav-text">git rebase</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Discussion"><span class="nav-number">2.2.1.</span> <span class="nav-text">Discussion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git_rebase_-i"><span class="nav-number">2.3.</span> <span class="nav-text">git rebase -i</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Examples-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">Examples</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git_reflog"><span class="nav-number">2.4.</span> <span class="nav-text">git reflog</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/05/29/git-tutorials-getting-started/';
+      var disqus_title = 'git tutorials -- Getting Started';
+      var disqus_url = 'http://ytlvy.com/2015/05/29/git-tutorials-getting-started/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

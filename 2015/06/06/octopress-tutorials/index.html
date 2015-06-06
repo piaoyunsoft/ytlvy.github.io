@@ -1,0 +1,670 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="blog," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> octopress tutorials // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              octopress tutorials
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Other/">Other</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/octopress-tutorials/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/octopress-tutorials/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Octopress">Octopress</h2><h3 id="官方文档">官方文档</h3><p><a href="http://octopress.org/docs/setup/" target="_blank" rel="external">官方文档</a></p>
+<h3 id="准备环境">准备环境</h3><p>需要ruby1.9以上,可以选择用rbenv来安装多版本ruby.</p>
+<h4 id="安装rbenv">安装rbenv</h4> <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>update</span><br><span class="line"><span class="keyword">brew </span>install rbenv</span><br><span class="line"><span class="keyword">brew </span>install ruby-<span class="keyword">build</span><br><span class="line"></span></span><br><span class="line"><span class="label">rbenv</span> install <span class="number">1</span>.<span class="number">9</span>.<span class="number">3</span>-<span class="literal">p0</span></span><br><span class="line"><span class="label">rbenv</span> local <span class="number">1</span>.<span class="number">9</span>.<span class="number">3</span>-<span class="literal">p0</span></span><br><span class="line"><span class="label">rbenv</span> rehash</span><br></pre></td></tr></table></figure>
+<p>你有可能需要安装老版本的GCC编译器才能顺利安装Ruby 1.9.3:<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>tap homebrew/dupes</span><br><span class="line"><span class="keyword">brew </span>install apple-gcc42</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="安装Octopress">安装Octopress</h3><h4 id="下载代码">下载代码</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="string">git:</span><span class="comment">//github.com/imathis/octopress.git octopress</span></span><br></pre></td></tr></table></figure>
+<p>修改Gemfile源为:<a href="http://ruby.taobao.org" target="_blank" rel="external">http://ruby.taobao.org</a><br>修改系统gem源<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gem sources -l</span><br><span class="line">gem sources -r <span class="keyword">https</span>://rubygems.org    <span class="comment">#删除 http://rubygems.org</span></span><br><span class="line">gem sources -<span class="operator">a</span> <span class="keyword">http</span>://ruby.taobao.org  <span class="comment">#添加 http://ruby.taobao.org</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="安装依赖库">安装依赖库</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">cd</span> octopress</span><br><span class="line"><span class="label">gem</span> install <span class="keyword">bundler</span><br><span class="line"></span><span class="keyword">bundle </span>install</span><br></pre></td></tr></table></figure>
+<p>如使用rbenv<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">gem</span> install <span class="keyword">bundler</span><br><span class="line"></span><span class="label">rbenv</span> rehash</span><br><span class="line"><span class="keyword">bundle </span>install</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装默认主题">安装默认主题</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rake <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<h4 id="新文章">新文章</h4><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rake <span class="keyword">new</span><span class="number">_p</span>ost[<span class="string">"Welcome"</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="编译预览">编译预览</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">rake</span> generate </span><br><span class="line">rake preview</span><br></pre></td></tr></table></figure>
+<h3 id="部署到github">部署到github</h3><h4 id="github_创建同名仓库">github 创建同名仓库</h4><h4 id="本地设置">本地设置</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">rake</span> setup_github_pages</span><br></pre></td></tr></table></figure>
+<p>根据提示, 输入项目路径: git@github.com:superman/super.github.io.git</p>
+<h4 id="同步代码到github">同步代码到github</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">git</span> <span class="keyword">add </span>.</span><br><span class="line"><span class="label">git</span> commit -m <span class="string">"first commit"</span></span><br><span class="line"><span class="label">git</span> <span class="keyword">push </span>origin source   </span><br><span class="line"><span class="label">rake</span> deploy <span class="label">#rake</span> deploy 会直接 <span class="keyword">push </span>Octopress目录中 master 分支</span><br></pre></td></tr></table></figure>
+<h3 id="写博流程">写博流程</h3><p>Octopress 博文必须存储在<code>source/_posts</code>目录下，并且需要按照Jekyll的命名规范对文章进行命名：<code>YYYY-MM-DD-post-title.markdown</code>。文章的名字会被当做url的一部分，而其中的日期用于对博文的区分和排序。创建和部署博文的一个完整流程：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rake new_post[<span class="string">"New Post"</span>]</span><br><span class="line"><span class="variable">$ </span>rake generate</span><br><span class="line"><span class="variable">$ </span>git add .</span><br><span class="line"><span class="variable">$ </span>git commit -am <span class="string">"add comment here."</span> </span><br><span class="line"><span class="variable">$ </span>git push origin source</span><br><span class="line"><span class="variable">$ </span>rake deploy</span><br></pre></td></tr></table></figure></p>
+<h3 id="Octopress_DIY_定制">Octopress DIY 定制</h3><h4 id="添加侧边栏文章分类">添加侧边栏文章分类</h4><ol>
+<li>在 plugins 目录中创建<code>category_list_tag.rb</code>文件，文件内容如下：<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Jekyll</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">CategoryListTag</span> <span class="inheritance">&lt; <span class="parent">Liquid::Tag</span></span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> </span>render(context)</span><br><span class="line">      html = <span class="string">""</span></span><br><span class="line">      categories = context.registers[<span class="symbol">:site</span>].categories.keys</span><br><span class="line">      categories.sort.each <span class="keyword">do</span> |category|</span><br><span class="line">        posts_in_category = context.registers[<span class="symbol">:site</span>].categories[category].size</span><br><span class="line">        category_dir = context.registers[<span class="symbol">:site</span>].config[<span class="string">'category_dir'</span>]</span><br><span class="line">        category_url = <span class="constant">File</span>.join(category_dir, category.gsub(<span class="regexp">/_|\P&#123;Word&#125;/</span>, <span class="string">'-'</span>).gsub(<span class="regexp">/-&#123;2,&#125;/</span>, <span class="string">'-'</span>).downcase)</span><br><span class="line">        html &lt;&lt; <span class="string">"&lt;li class='category'&gt;&lt;a href='/<span class="subst">#&#123;category_url&#125;</span>/'&gt;<span class="subst">#&#123;category&#125;</span> (<span class="subst">#&#123;posts_in_category&#125;</span>)&lt;/a&gt;&lt;/li&gt;\n"</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">      html</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Liquid::Template</span>.register_tag(<span class="string">'category_list'</span>, <span class="constant">Jekyll::CategoryListTag</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>侧边栏的 DIY 定制一般都是新建一个 xxx.html 文件，放在source<code>\_includes\custom\asides</code>目录下，然后文件模板必须为：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">section</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">h1</span>&gt;</span>xxx<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">     <span class="comment">&lt;!--添加代码--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后在 <code>_config.yml</code>文件中，找到default_asides数组，添加<code>custom/asides/xxx.html</code> 。侧边栏的排序就根据数组的排序进行 DIY</p>
+<ol>
+<li><p>把下面内容添加到<code>source/_includes/asides/category_list.html</code>文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">section</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="title">h1</span>&gt;</span>文章分类<span class="tag">&lt;/<span class="title">h1</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">id</span>=<span class="value">"categories"</span>&gt;</span> </span><br><span class="line">    大括号%   category_list  %大括号 </span><br><span class="line">    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>_config.yml</code>文件，用 command+f 找到<code>default_asides</code>，然后添加<code>asides/category_list.html</code>，值之间以逗号隔开。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">default_asides:</span> [asides<span class="regexp">/category_list.html, asides/</span>recent_posts.html]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="添加社会化评论">添加社会化评论</h4><h5 id="Disqus">Disqus</h5><ol>
+<li><p>登录 Disqus，创建一个账号，然后点击 <code>Add Disqus to your site</code>，输入 <code>Site name</code> ，例如 boy，然后点击 Finish registration。这里页面会自动生成shortname，记起来，待会有用。</p>
+</li>
+<li><p>打开_config.yml文件，找到</p>
+</li>
+</ol>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Disqus Comments </span></span><br><span class="line"><span class="label">disqus_short_name:</span>  </span><br><span class="line"><span class="label">disqus_show_comment_count:</span> false</span><br></pre></td></tr></table></figure>
+<p>设置 disqus_short_name 为刚刚创建的 Disqus 生成的 shortname，例如 boy，<br>把<code>false</code>改为<code>true</code>。特别注意，冒号后面要空出一个空格。</p>
+<h5 id="多说">多说</h5><p>用微博登陆多说，然后创建个人站点<br>在 _config.yml 中添加</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># duoshuo comments</span></span><br><span class="line"><span class="label">duoshuo_comments:</span> true</span><br><span class="line"><span class="label">duoshuo_short_name:</span> yourshortname</span><br></pre></td></tr></table></figure>
+<p>在 <code>source/_layouts/post.html</code> 中的 disqus代码<br><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"></span><span class="template_tag">&#123;% <span class="keyword">if</span> site.disqus_short_name and page.comments == true %&#125;</span><span class="xml"> </span><br><span class="line">     <span class="tag">&lt;<span class="title">section</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Comments<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"disqus_thread"</span> <span class="attribute">aria-live</span>=<span class="value">"polite"</span>&gt;</span></span><span class="template_tag">&#123;% <span class="keyword">include</span> post/disqus_thread.html %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br><span class="line">   </span><span class="template_tag">&#123;% <span class="keyword">endif</span> %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></figure></p>
+<p>下方添加多说评论模块</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"></span><br><span class="line"></span><span class="template_tag">&#123;% <span class="keyword">if</span> site.duoshuo_short_name and site.duoshuo_comments == true and page.comments == true %&#125;</span><span class="xml"></span><br><span class="line">  <span class="tag">&lt;<span class="title">section</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Comments<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"comments"</span> <span class="attribute">aria-live</span>=<span class="value">"polite"</span>&gt;</span></span><span class="template_tag">&#123;% <span class="keyword">include</span> post/duoshuo.html %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br><span class="line"></span><span class="template_tag">&#123;% <span class="keyword">endif</span> %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></figure>
+<p>在<code>/source/_includes/post/</code>目录下创建<code>duoshuo.html</code>， 添加代码</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"ds-thread"</span> <span class="attribute">data-title</span>=<span class="value">"</span></span></span><span class="template_tag">&#123;% <span class="keyword">if</span> site.titlecase %&#125;</span><span class="xml"><span class="tag"><span class="value"></span></span></span><span class="variable">&#123;&#123; page.title | titlecase &#125;&#125;</span><span class="xml"><span class="tag"><span class="value"></span></span></span><span class="template_tag">&#123;% <span class="keyword">else</span> %&#125;</span><span class="xml"><span class="tag"><span class="value"></span></span></span><span class="variable">&#123;&#123; page.title &#125;&#125;</span><span class="xml"><span class="tag"><span class="value"></span></span></span><span class="template_tag">&#123;% <span class="keyword">endif</span> %&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="kotlin"></span><br><span class="line">      <span class="variable"><span class="keyword">var</span> duoshuoQuery</span> = &#123;short_name:<span class="string">"</span></span></span><span class="variable">&#123;&#123; site.duoshuo_short_name &#125;&#125;</span><span class="xml"><span class="vim"><span class="string">"&#125;;</span><br><span class="line"></span>      (<span class="function"><span class="keyword">function</span><span class="params">()</span> &#123;</span></span><br><span class="line">        var <span class="keyword">ds</span> = document.createElement(<span class="string">'script'</span>);</span><br><span class="line">        <span class="keyword">ds</span>.<span class="built_in">type</span> = <span class="string">'text/javascript'</span>;<span class="keyword">ds</span>.async = true;</span><br><span class="line">        <span class="keyword">ds</span>.src = <span class="string">'http://static.duoshuo.com/embed.js'</span>;</span><br><span class="line">        <span class="keyword">ds</span>.charset = <span class="string">'UTF-8'</span>;</span><br><span class="line">        (document.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>] </span><br><span class="line">        || document.getElementsByTagName(<span class="string">'body'</span>)[<span class="number">0</span>]).appendChild(<span class="keyword">ds</span>);</span><br><span class="line">      &#125;)();</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>修改_includes/article.html 文件，在</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> site.disqus_short_name and page.comments != <span class="literal">false</span> and post.comments != <span class="literal">false</span> and site.disqus_show_comment_count == <span class="literal">true</span> %&#125;</span><br><span class="line">        | <span class="xml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"&#123;% if index %&#125;&#123;&#123; root_url &#125;&#125;&#123;&#123; post.url &#125;&#125;&#123;% endif %&#125;#disqus_thread"</span>&gt;</span>Comments<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">       &#123;% endif %&#125;</span></span><br></pre></td></tr></table></figure>
+<p>下面添加如下代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;% if site.duoshuo_short_name and page.comments != false and post.comments != false and site.duoshuo_comments == true %&#125;</span><br><span class="line">   &lt;a href="&#123;% if index %&#125;&#123;&#123; root_url &#125;&#125;&#123;&#123; post.url &#125;&#125;&#123;% endif %&#125;#comments"&gt;Comments&lt;/a&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="首页样式修改">首页样式修改</h4><p>source/index.html</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- This loops through the paginated posts</span><br><span class="line">&#123;% <span class="keyword">for</span> post <span class="keyword">in</span> paginator.posts %&#125;</span><br><span class="line">  &lt;h1&gt;<span class="xml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"&#123;&#123; post.url &#125;&#125;"</span>&gt;</span>&#123;&#123; post.title &#125;&#125;<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">"author"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"date"</span>&gt;</span>&#123;&#123; post.date &#125;&#125;<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">    &#123;&#123; post.content &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125; --&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="修改导航栏">修改导航栏</h4><p>导航栏的setting在<code>source\_includes\custom\navigation.html</code></p>
+<p>我们可以将 Blog 和 Archives 修改为首页和归档，也可以在此添加一个标签页，此时应使用命令<code>rake new_page[&#39;about&#39;]</code>创建一个页面，页面路径为<code>source\about\index.markdown</code>;</p>
+<p>修改后的文件如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"main-navigation"</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/"</span>&gt;</span>首页<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/blog/archives"</span>&gt;</span>归档<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/about"</span>&gt;</span>关于<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="添加个人二维码">添加个人二维码</h4><p>在侧边栏显示二维码，下载<img src="https://github.com/sailor79/Octopress-dynamic-QR-Code-aside" alt="插件">， 将 <code>qrcode.html</code> 放入 <code>source/_includes/custom/asides/</code>中， 在 <code>_config.yml</code> 中<code>default_asides</code> 添加 <code>custom/asides/qrcode.html</code>。 然后打开<code>qrcode.html</code>，做<code>image src</code>的修改.或者将 <code>qrcode.html</code> 代码添加到你想展示的页面的HTML文件中亦可。</p>
+<h4 id="添加社会化分享">添加社会化分享</h4><p>在www.addthis.com上获取分享按钮代码，粘贴到 <code>source/_includes/post/sharing.html</code> 中，例如我的代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"sharing"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- AddThis Button BEGIN --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"addthis_toolbox addthis_default_style addthis_32x32_style"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_button_sinaweibo"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_button_facebook"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_button_twitter"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_button_google_plusone_share"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_button_delicious"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_button_compact"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"addthis_counter addthis_bubble_style"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"</span> <span class="attribute">async</span>=<span class="value">"async"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- AddThis Button END --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="文章只显示部分正文">文章只显示部分正文</h4><p>在markdown非代码段, 添加<!--more-->, 其后的内容将不会显示，只会显示<!--more-->以上部分，而且会在文章尾部添加 Read On超链接，如果要更改超链接内容，可以在 <code>_config.yml</code>中找到 <code>Read On</code>，然后修改为“<code>继续阅读</code>”。</p>
+<h4 id="添加百度统计或CNZZ统计">添加百度统计或CNZZ统计</h4><p>到百度统计或CNZZ统计上注册账号，然后添加脚本文件到<code>source/_includes/after_footer.html</code>文件中</p>
+<h4 id="安装第三方主题">安装第三方主题</h4><p>比较常见的有<code>slash</code>主题。Slash is a minimal theme for Octopress.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> octopress</span><br><span class="line">$ git <span class="built_in">clone</span> git://github.com/tommy351/Octopress-Theme-Slash.git .themes/slash</span><br><span class="line">$ rake install[<span class="string">'slash'</span>]</span><br><span class="line">$ rake generate</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes" alt="第三方主题汇总"></p>
+<h3 id="Octopress_优化">Octopress 优化</h3><h4 id="替换Google_JS公共库">替换Google JS公共库</h4><p>Octopress 默认使用的是 Google 的 JS 公共库地址，加载的过程特别的慢。所以我们要把它改为百度的 JS 公共库 ，需要把<code>/source/_includes/head.html</code> 文件中的 Google 公共库地址改为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"//libs.baidu.com/jquery/1.7.2/jquery.min.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h4 id="去掉Twitter">去掉Twitter</h4><p>把在根目录下的 <code>_config.yml</code>文件中 Twitter 内容给注释掉。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Twitter</span><br><span class="line">#twitter_user:</span><br><span class="line">#twitter_tweet_button: <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>把 <code>\source\_includes\after_footer.html</code> 文件中的 Twitter 内容给注释掉：</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!--</span></span><span class="template_tag">&#123;% <span class="keyword">include</span> twitter_sharing.html %&#125;</span><span class="xml"><span class="comment">--&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="删除_Google_font">删除 Google font</h4><p>把在<code>\source\_includes\custom\head.html</code> 中的Google font样式给删除：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="variable">href=</span><span class="string">"//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"</span> <span class="variable">rel=</span><span class="string">"stylesheet"</span> <span class="variable">type=</span><span class="string">"text/css"</span>&gt;</span><br><span class="line">&lt;link <span class="variable">href=</span><span class="string">"//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"</span> <span class="variable">rel=</span><span class="string">"stylesheet"</span> <span class="variable">type=</span><span class="string">"text/css"</span>&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="搜索优化">搜索优化</h4><p>为了让自己搭建的博客更容易被搜索引擎搜到，最好将网站地址提交给各大搜索引擎，下面有两个连接搜集了各个搜索引擎的网站提交入口：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//urlc.cn/tool/addurl.html</span></span><br><span class="line"><span class="string">http:</span><span class="comment">//tool.lusongsong.com/addurl.html</span></span><br></pre></td></tr></table></figure></p>
+<p>markdown添加SEO信息</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tags</span>: <span class="string">[octopress,seo]</span></span><br><span class="line"><span class="attribute">keywords</span>: <span class="string"> octopress, analytics</span></span><br><span class="line"><span class="attribute">description</span>: <span class="string">如何搭建Octopress博客</span></span><br></pre></td></tr></table></figure>
+<h3 id="GitCafe_备份">GitCafe 备份</h3><p><img src="https://gitcafe.com/GitCafe/Help/wiki/Pages-%E7%9B%B8%E5%85%B3%E5%B8%AE%E5%8A%A9#wiki" alt="官方教程"></p>
+<h4 id="在GitCafe上新建一个博客项目">在GitCafe上新建一个博客项目</h4><p>创建与用户名相同名称的项目</p>
+<h4 id="提交到_gitcafe">提交到 gitcafe</h4><p>方法一 设置多个Git Remote源<br>对于Octopress，我们只需要每次提交网站内容时，执行完 rake deploy之后，再执行以下脚本即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> _deploy</span><br><span class="line">git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">git push -u gitcafe master:gitcafe-pages</span><br></pre></td></tr></table></figure>
+<p>方法二 修改Rakefile<br>在Rakefile第269行后增加如下代码, <code>rake deploy</code>自动提交</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">system <span class="string">"git remote add gitcafe git@gitcafe.com:tangqiaoboy/tangqiaoboy.git &gt;&gt; /dev/null 2&gt;&amp;1"</span></span><br><span class="line">system <span class="string">"git push -u gitcafe master:gitcafe-pages"</span></span><br></pre></td></tr></table></figure>
+<h4 id="gitcafe_设置域名">gitcafe 设置域名</h4><p>GitCafe的自定义域名设置比github要友好得多，它不但提供了图形界面设置，并且支持同时设置多个域名。在<code>项目管理</code>–&gt;<code>域名管理</code>中，我们可以找到相应的设置项，如下所示：<br><img src="http://blog.devtang.com/images/gitcafe-set-domain.jpg" alt=""><br>在设置完之后，我们需要去域名解析的服务商那儿，将对应的域名用A记录类型，解析到117.79.146.98即可</p>
+<h4 id="gitcafe">gitcafe</h4><p>270 line</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">system <span class="string">"git remote add gitcafe git@gitcafe.com:ytlvy/ytlvy.git &gt;&gt; /dev/null 2&gt;&amp;1"</span></span><br><span class="line">system <span class="string">"git push -u gitcafe master:gitcafe-pages"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Bug">Bug</h3><h4 id="当文章有多个标签时候，执行_rake_generate会出现下面情况">当文章有多个标签时候，执行 rake generate会出现下面情况</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">AppledeiMac:octopress apple$ rake generate</span><br><span class="line"><span class="comment">##Generating Site with Jekyll</span></span><br><span class="line">    write <span class="built_in">source</span>/stylesheets/screen.css</span><br><span class="line">Configuration file: /Users/apple/octopress/_config.yml</span><br><span class="line">            Source: <span class="built_in">source</span></span><br><span class="line">       Destination: public</span><br><span class="line">      Generating...</span><br><span class="line">  Liquid Exception: comparison of Array with Array failed <span class="keyword">in</span> _layouts/page.html</span><br></pre></td></tr></table></figure>
+<p>解决办法是，在<code>source/_includes/custom/asides/tags.html</code>中把<code>limit</code>参数去掉。 </p>
+<h4 id="另外，如果执行_rake_generate出现_Layout_&#39;nil&#39;">另外，如果执行 rake generate出现 <code>Layout &#39;nil&#39;</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Build Warning: Layout <span class="string">'nil'</span> requested <span class="keyword">in</span> tags/octopress/atom.xml does not exist.</span><br><span class="line">     Build Warning: Layout <span class="string">'nil'</span> requested <span class="keyword">in</span> tags/ios/atom.xml does not exist.</span><br></pre></td></tr></table></figure>
+<p>修改以下文件中得 <code>layout: nil</code> 为 <code>layout: null</code></p>
+<ul>
+<li>source/atom.xml</li>
+<li>source/robots.txt</li>
+<li>source/_includes/custom/category_feed.xml</li>
+</ul>
+<h4 id="翻页bug">翻页bug</h4><p>修改<code>_config.yml</code> 中 <code>paginate_path</code> 由<code>\post\:num</code> 为 <code>:num</code></p>
+<h4 id="typekit_加载403error">typekit 加载403error</h4><p>注册typekit账号, 在typekit中添加你自己域名信息<br><img src="http://help.typekit.com/customer/portal/attachments/62656" alt=""></p>
+<p>获得自己的资源代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"//use.typekit.net/ilg6roq.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="julia"><span class="keyword">try</span>&#123;Typekit.load();&#125;<span class="keyword">catch</span>(<span class="literal">e</span>)&#123;&#125;</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/blog/"> #blog </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/06/ios-encodings/">ios encodings</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/05/ios-bool-slash-bool-slash-boolean-slash-nscfboolean/">ios BOOL / bool /   Boolean / NSCFBoolean</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
+          <p class="site-author-name">Y.t</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Octopress"><span class="nav-number">1.</span> <span class="nav-text">Octopress</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档"><span class="nav-number">1.1.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备环境"><span class="nav-number">1.2.</span> <span class="nav-text">准备环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装rbenv"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装rbenv</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Octopress"><span class="nav-number">1.3.</span> <span class="nav-text">安装Octopress</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载代码"><span class="nav-number">1.3.1.</span> <span class="nav-text">下载代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装依赖库"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装依赖库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装默认主题"><span class="nav-number">1.3.3.</span> <span class="nav-text">安装默认主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新文章"><span class="nav-number">1.3.4.</span> <span class="nav-text">新文章</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译预览"><span class="nav-number">1.3.5.</span> <span class="nav-text">编译预览</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署到github"><span class="nav-number">1.4.</span> <span class="nav-text">部署到github</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#github_创建同名仓库"><span class="nav-number">1.4.1.</span> <span class="nav-text">github 创建同名仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地设置"><span class="nav-number">1.4.2.</span> <span class="nav-text">本地设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步代码到github"><span class="nav-number">1.4.3.</span> <span class="nav-text">同步代码到github</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写博流程"><span class="nav-number">1.5.</span> <span class="nav-text">写博流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Octopress_DIY_定制"><span class="nav-number">1.6.</span> <span class="nav-text">Octopress DIY 定制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加侧边栏文章分类"><span class="nav-number">1.6.1.</span> <span class="nav-text">添加侧边栏文章分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加社会化评论"><span class="nav-number">1.6.2.</span> <span class="nav-text">添加社会化评论</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Disqus"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">Disqus</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多说"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">多说</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#首页样式修改"><span class="nav-number">1.6.3.</span> <span class="nav-text">首页样式修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改导航栏"><span class="nav-number">1.6.4.</span> <span class="nav-text">修改导航栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加个人二维码"><span class="nav-number">1.6.5.</span> <span class="nav-text">添加个人二维码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加社会化分享"><span class="nav-number">1.6.6.</span> <span class="nav-text">添加社会化分享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文章只显示部分正文"><span class="nav-number">1.6.7.</span> <span class="nav-text">文章只显示部分正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加百度统计或CNZZ统计"><span class="nav-number">1.6.8.</span> <span class="nav-text">添加百度统计或CNZZ统计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装第三方主题"><span class="nav-number">1.6.9.</span> <span class="nav-text">安装第三方主题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Octopress_优化"><span class="nav-number">1.7.</span> <span class="nav-text">Octopress 优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#替换Google_JS公共库"><span class="nav-number">1.7.1.</span> <span class="nav-text">替换Google JS公共库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#去掉Twitter"><span class="nav-number">1.7.2.</span> <span class="nav-text">去掉Twitter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除_Google_font"><span class="nav-number">1.7.3.</span> <span class="nav-text">删除 Google font</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索优化"><span class="nav-number">1.7.4.</span> <span class="nav-text">搜索优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitCafe_备份"><span class="nav-number">1.8.</span> <span class="nav-text">GitCafe 备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在GitCafe上新建一个博客项目"><span class="nav-number">1.8.1.</span> <span class="nav-text">在GitCafe上新建一个博客项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提交到_gitcafe"><span class="nav-number">1.8.2.</span> <span class="nav-text">提交到 gitcafe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gitcafe_设置域名"><span class="nav-number">1.8.3.</span> <span class="nav-text">gitcafe 设置域名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gitcafe"><span class="nav-number">1.8.4.</span> <span class="nav-text">gitcafe</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug"><span class="nav-number">1.9.</span> <span class="nav-text">Bug</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#当文章有多个标签时候，执行_rake_generate会出现下面情况"><span class="nav-number">1.9.1.</span> <span class="nav-text">当文章有多个标签时候，执行 rake generate会出现下面情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#另外，如果执行_rake_generate出现_Layout_'nil'"><span class="nav-number">1.9.2.</span> <span class="nav-text">另外，如果执行 rake generate出现 Layout 'nil'</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#翻页bug"><span class="nav-number">1.9.3.</span> <span class="nav-text">翻页bug</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#typekit_加载403error"><span class="nav-number">1.9.4.</span> <span class="nav-text">typekit 加载403error</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Y.t</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/06/06/octopress-tutorials/';
+      var disqus_title = 'octopress tutorials';
+      var disqus_url = 'http://ytlvy.com/2015/06/06/octopress-tutorials/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
