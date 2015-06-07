@@ -148,6 +148,100 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios-autolayout/">
+                ios 自动布局
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-autolayout/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-autolayout/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="自动布局">自动布局</h3><h4 id="IOS7_UIlabel_高度bug">IOS7 UIlabel 高度bug</h4><pre><code><span class="comment">//需要设置</span>
+lb1<span class="variable">.lineBreakMode</span> = <span class="built_in">NSLineBreakByCharWrapping</span>;
+</code></pre><h4 id="自动布局bug">自动布局bug</h4><pre><code>使用autolayout时 <span class="keyword">button不能点击 </span>可能是因为<span class="keyword">button的parentView </span>没有自动扩展开
+</code></pre><h4 id="系统自带autolayout">系统自带autolayout</h4><pre><code>viewsDictionary = NSDictionaryOfVariableBindings(scrollView, imageView);
+[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[scrollView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[scrollView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[imageView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[imageView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+</code></pre><h4 id="AutoLayout_priority">AutoLayout priority</h4><pre><code>[UIView <span class="string">autoSetPriority:</span>UILayoutPriorityRequired <span class="string">forConstraints:</span>^{
+    [self.titleLabel <span class="string">autoSetContentCompressionResistancePriorityForAxis:</span>ALAxisVertical];
+}];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTop <span class="string">withInset:</span>kLabelVerticalInsets];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeLeading <span class="string">withInset:</span>kLabelHorizontalInsets];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTrailing <span class="string">withInset:</span>kLabelHorizontalInsets];
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios-is-modal/">
                 ios 是否模态弹出
               </a>
@@ -914,79 +1008,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/appstore-reject/">
-                appstore 被拒
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/appstore-reject/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appstore-reject/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="appstore_被拒原因">appstore 被拒原因</h2><ol>
-<li>解释虚拟货币的用途、获取途径</li>
-<li>有米等诱导用户下载应用，影响排名的</li>
-<li>微信、qq第三方登录不能让用户下载后，进行注册</li>
-<li>大转盘应用 没有声明次活动与苹果无关</li>
-<li>截图与具体应用不符，例如多按钮</li>
-<li>禁止的类库，没有从工程彻底删除，只是在xcode不可见</li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1025,7 +1046,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1039,7 +1060,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
