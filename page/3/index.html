@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<html class="theme-next use-motion ">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: '',
     analytics: {
       google: ''
     },
@@ -136,6 +136,163 @@
         <div id="content" class="content">
           
   <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-advanced-tips/">
+                git tutorials -- Advanced Tips
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-advanced-tips/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-advanced-tips/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="Splitting_a_Commit">Splitting a Commit</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br><span class="line"></span><br><span class="line">// edit second to edit</span><br><span class="line">pick f7f3f6d changed my name a bit</span><br><span class="line">edit 310154e updated README formatting and added blame</span><br><span class="line">pick a5f4a0d added cat-file</span><br><span class="line"></span><br><span class="line">//<span class="operator"><span class="keyword">do</span> a mixed <span class="keyword">reset</span> <span class="keyword">of</span> that <span class="keyword">commit</span> <span class="keyword">with</span> <span class="string">`git reset HEAD^`</span> effectively undoes that <span class="keyword">commit</span> <span class="keyword">and</span> <span class="keyword">leaves</span> the modified files unstaged</span><br><span class="line">$ git <span class="keyword">reset</span> HEAD^</span><br><span class="line">$ git <span class="keyword">add</span> README</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'updated README formatting'</span></span><br><span class="line">$ git <span class="keyword">add</span> lib/simplegit.rb</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'added blame'</span></span><br><span class="line">$ git rebase <span class="comment">--continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ git <span class="keyword">log</span> -<span class="number">4</span> <span class="comment">--pretty=format:"%h %s"</span></span><br><span class="line"><span class="number">1</span>c002dd added cat-file</span><br><span class="line"><span class="number">9</span>b29157 added blame</span><br><span class="line"><span class="number">35</span>cfb2b updated README formatting</span><br><span class="line">f3cc40e <span class="keyword">changed</span> my name a <span class="built_in">bit</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="The_Nuclear_Option:_filter-branch">The Nuclear Option: filter-branch</h3><h4 id="Removing_a_File_from_Every_Commit">Removing a File from Every Commit</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//<span class="built_in">remove</span> passwords.txt form <span class="keyword">all</span> <span class="keyword">history</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD</span><br><span class="line"></span><br><span class="line">//<span class="built_in">remove</span> <span class="keyword">all</span> accidentally committed editor backup <span class="keyword">files</span></span><br><span class="line">git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f *~'</span> HEAD.</span><br><span class="line"></span><br><span class="line">//To run <span class="built_in">filter</span>-branch <span class="keyword">on</span> <span class="keyword">all</span> your branches, you can pass --<span class="keyword">all</span> <span class="keyword">to</span> the <span class="keyword">command</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD --<span class="keyword">all</span></span><br></pre></td></tr></table></figure>
+<h3 id="important">important</h3><ol>
+<li>you should always create a new branch before adding commits to a detached HEAD</li>
+<li>For this reason, git revert should be used to undo changes on a public branch, and git reset should be reserved for undoing changes on a private branch</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-advanced-tips/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-collaborating/">
+                git tutorials -- Collaborating
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-collaborating/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-collaborating/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="git_remote">git remote</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//List <span class="operator">the</span> remote connections you have <span class="built_in">to</span> other repositories</span><br><span class="line">git remote</span><br><span class="line"><span class="comment"></span><br><span class="line">//List the remote connections you have to other repositories, include the URL</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">add</span> &lt;name&gt; &lt;url&gt;</span><br><span class="line">git remote rm &lt;name&gt;</span><br><span class="line">git remote <span class="built_in">rename</span> &lt;old-name&gt; &lt;<span class="built_in">new</span>-name&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="The_origin_Remote">The origin Remote</h4><p>When you clone a repository with git clone, it automatically creates a remote connection called origin pointing back to the cloned repository. This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits. This behavior is also why most Git-based projects call their central repository origin.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-collaborating/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
     
       
 
@@ -839,157 +996,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/vim-one-click-config/">
-                一键配置vim
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Vim/">Vim</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/vim-one-click-config/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/vim-one-click-config/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="一键配置vim">一键配置vim</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/spf13/spf13-<span class="keyword">vim</span>/<span class="number">3.0</span>/bootstrap.<span class="keyword">sh</span> -L &gt; spf13-<span class="keyword">vim</span>.<span class="keyword">sh</span> &amp;&amp; <span class="keyword">sh</span> spf13-<span class="keyword">vim</span>.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-<h3 id="bug更正">bug更正</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sublime </span>vundle-vimfiles/plugin/settings/CtrlP.vim</span><br></pre></td></tr></table></figure>
-<hr>
-<p>before <code>let g:ctrlp_custom_ignore = ..</code> insert below code</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unlet</span> <span class="variable">g:ctrlp_custom_ignore</span></span><br></pre></td></tr></table></figure>
-<p>参考自: <a href="https://github.com/spf13/spf13-vim/issues/444" target="_blank" rel="external">https://github.com/spf13/spf13-vim/issues/444</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-open-urls/">
-                iOS 跳转设置界面
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-open-urls/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-open-urls/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="SDK_iOS5-1_可用API：">SDK iOS5.1 可用API：</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>About</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>ACCESSIBILITY</span><br><span class="line">prefs:<span class="variable">root=</span>AIRPLANE_MODE</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>AUTOLOCK</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>USAGE/CELLULAR_USAGE</span><br><span class="line">prefs:<span class="variable">root=</span>Brightness</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Bluetooth</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>DATE_AND_TIME</span><br><span class="line">prefs:<span class="variable">root=</span>FACETIME</span><br><span class="line">prefs:<span class="variable">root=</span>General</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Keyboard</span><br><span class="line">prefs:<span class="variable">root=</span>CASTLE</span><br><span class="line">prefs:<span class="variable">root=</span>CASTLE&amp;<span class="variable">path=</span>STORAGE_AND_BACKUP</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>INTERNATIONAL</span><br><span class="line">prefs:<span class="variable">root=</span>LOCATION_SERVICES</span><br><span class="line">prefs:<span class="variable">root=</span>ACCOUNT_SETTINGS</span><br><span class="line">prefs:<span class="variable">root=</span>MUSIC</span><br><span class="line">prefs:<span class="variable">root=</span>MUSIC&amp;<span class="variable">path=</span>EQ</span><br><span class="line">prefs:<span class="variable">root=</span>MUSIC&amp;<span class="variable">path=</span>VolumeLimit</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Network</span><br><span class="line">prefs:<span class="variable">root=</span>NIKE_PLUS_IPOD</span><br><span class="line">prefs:<span class="variable">root=</span>NOTES</span><br><span class="line">prefs:<span class="variable">root=</span>NOTIFICATIONS_ID</span><br><span class="line">prefs:<span class="variable">root=</span>Phone</span><br><span class="line">prefs:<span class="variable">root=</span>Photos</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>ManagedConfigurationList</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Reset</span><br><span class="line">prefs:<span class="variable">root=</span>Sounds&amp;<span class="variable">path=</span>Ringtone</span><br><span class="line">prefs:<span class="variable">root=</span>Safari</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Assistant</span><br><span class="line">prefs:<span class="variable">root=</span>Sounds</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>SOFTWARE_UPDATE_LINK</span><br><span class="line">prefs:<span class="variable">root=</span>STORE</span><br><span class="line">prefs:<span class="variable">root=</span>TWITTER</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>USAGE</span><br><span class="line">prefs:<span class="variable">root=</span>VIDEO</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Network/VPN</span><br><span class="line">prefs:<span class="variable">root=</span>Wallpaper</span><br><span class="line">prefs:<span class="variable">root=</span>WIFI</span><br><span class="line">prefs:<span class="variable">root=</span>INTERNET_TETHERING</span><br></pre></td></tr></table></figure>
-<p>例：<code>[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@&quot;prefs:root=LOCATION_SERVICES&quot;]];</code><br>SDK &gt;= 8.0 可用API：<br>UIApplicationOpenSettingsURLString 跳转到Setting界面</p>
-<p>例：<code>[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];</code></p>
-<p>参考: <a href="http://itony.me/875.html" target="_blank" rel="external">http://itony.me/875.html</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1021,14 +1027,14 @@
 
       <div class="site-overview">
         <div class="site-author motion-element">
-          <img class="site-author-image" src="/avatar.png" alt="Y.t" />
-          <p class="site-author-name">Y.t</p>
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
         </div>
         <p class="site-description motion-element">notes for study</p>
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">89</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1042,7 +1048,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -1116,7 +1122,7 @@
   <span class="with-love">
     <i class="icon-heart"></i>
   </span>
-  <span class="author">Y.t</span>
+  <span class="author">Yt</span>
 </div>
 
 <div class="powered-by">
@@ -1126,7 +1132,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT
   </a>
 </div>
 
