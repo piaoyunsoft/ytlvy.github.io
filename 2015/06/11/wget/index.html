@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="IOS," />
 
 
 
@@ -58,7 +58,7 @@
 
 
 
-  <title> 手动让编译器报警 // Yt's Blog </title>
+  <title> wget // Yt's Blog </title>
 </head>
 
 <body>
@@ -146,7 +146,7 @@
           
           
             
-              手动让编译器报警
+              wget
             
           
         </h1>
@@ -154,14 +154,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-06-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/linux/">linux</a>
 
               
               
@@ -174,8 +174,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-warning/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-warning/"></span>
+            <a href="/2015/06/11/wget/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/11/wget/"></span>
             </a>
           </span>
           
@@ -189,29 +189,55 @@
       
 
       
-        <h2 id="手动让编译器报警">手动让编译器报警</h2><pre><code><span class="id">#warning</span> sunnyxx
-<span class="id">#error</span> sunnyxx
-<span class="id">#pragma</span> message <span class="string">"sunnyxx"</span>
-<span class="id">#pragma</span> GCC warning <span class="string">"sunnyxx"</span>
-<span class="id">#pragma</span> GCC error <span class="string">"sunnyxx"</span>
-</code></pre>
+        <h2 id="wget">wget</h2><h3 id="用wget做站点镜像">用wget做站点镜像</h3><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">wget</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">mirror</span> <span class="literal">-</span><span class="comment">p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">convert</span><span class="literal">-</span><span class="comment">links</span> <span class="literal">-</span><span class="comment">P</span> <span class="title">[</span><span class="comment">本地目录</span><span class="title">]</span> <span class="title">[</span><span class="comment">网站地址</span><span class="title">]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -np -nd <span class="string">http:</span><span class="comment">//appinn.com</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -<span class="tag">p</span> -np -k http:<span class="comment">//dsec.pku.edu.cn/~usr_name/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -m <span class="string">http:</span><span class="comment">//www.tldp.org/LDP/abs/html/</span></span><br></pre></td></tr></table></figure>
+<h3 id="在不稳定的网络上下载一个部分下载的文件，以及在空闲时段下载">在不稳定的网络上下载一个部分下载的文件，以及在空闲时段下载</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -t <span class="number">0</span> -w <span class="number">31</span> -c <span class="string">http:</span><span class="comment">//dsec.pku.edu.cn/BBC.avi -o down.log &amp;</span></span><br></pre></td></tr></table></figure>
+<h3 id="从filelist读入要下载的文件列表">从filelist读入要下载的文件列表</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -t <span class="number">0</span> -w <span class="number">31</span> -c -B <span class="string">ftp:</span><span class="comment">//dsec.pku.edu.cn/linuxsoft -i filelist.txt -o down.log &amp;</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码还可以用来在网络比较空闲的时段进行下载。我的用法是:在mozilla中将不方便当时下载的URL链接拷贝到内存中然后粘贴到文件filelist.txt中，在晚上要出去前执行上面代码</p>
+<h3 id="详细参数">详细参数</h3><h4 id="启动">启动</h4><blockquote>
+<p> -V,  —version           显示wget的版本后退出<br>  -h,  —help              打印语法帮助<br>  -b,  —background        启动后转入后台执行<br>  -e,  —execute=COMMAND   执行`.wgetrc’格式的命令，wgetrc格式参见/etc/wgetrc或~/.wgetrc</p>
+</blockquote>
+<h4 id="记录和输入文件">记录和输入文件</h4><blockquote>
+<p> -o,  —output-file=FILE     把记录写到FILE文件中<br>  -a,  —append-output=FILE   把记录追加到FILE文件中<br>  -d,  —debug                打印调试输出<br>  -q,  —quiet                安静模式(没有输出)<br>  -v,  —verbose              冗长模式(这是缺省设置)<br>  -nv, —non-verbose          关掉冗长模式，但不是安静模式<br>  -i,  —input-file=FILE      下载在FILE文件中出现的URLs<br>  -F,  —force-html           把输入文件当作HTML格式文件对待<br>  -B,  —base=URL             将URL作为在-F -i参数指定的文件中出现的相对链接的前缀<br>   —sslcertfile=FILE     可选客户端证书<br>   —sslcertkey=KEYFILE   可选客户端证书的KEYFILE<br>   —egd-file=FILE        指定EGD socket的文件名</p>
+</blockquote>
+<h4 id="下载">下载</h4><blockquote>
+<p> —bind-address=ADDRESS   指定本地使用地址(主机名或IP，当本地有多个IP或名字时使用)<br>  -t,  —tries=NUMBER           设定最大尝试链接次数(0 表示无限制).<br>  -O   —output-document=FILE   把文档写到FILE文件中<br>  -nc, —no-clobber             不要覆盖存在的文件或使用.#前缀<br>  -c,  —continue               接着下载没下载完的文件<br>  —progress=TYPE          设定进程条标记<br>  -N,  —timestamping           不要重新下载文件除非比本地文件新<br>  -S,  —server-response        打印服务器的回应<br>  —spider                 不下载任何东西<br>  -T,  —timeout=SECONDS        设定响应超时的秒数<br>  -w,  —wait=SECONDS           两次尝试之间间隔SECONDS秒<br>  —waitretry=SECONDS      在重新链接之间等待1…SECONDS秒<br>  —random-wait            在下载之间等待0…2*WAIT秒<br>  -Y,  —proxy=on/off           打开或关闭代理<br>  -Q,  —quota=NUMBER           设置下载的容量限制<br>  —limit-rate=RATE        限定下载输率</p>
+</blockquote>
+<h4 id="目录">目录</h4><p>  -nd  —no-directories            不创建目录<br>  -x,  —force-directories         强制创建目录<br>  -nH, —no-host-directories       不创建主机目录<br>  -P,  —directory-prefix=PREFIX   将文件保存到目录 PREFIX/…<br>       —cut-dirs=NUMBER           忽略 NUMBER层远程目录</p>
+<h4 id="HTTP_选项">HTTP 选项</h4><pre><code>--http-<span class="built_ins">user</span>=<span class="built_ins">USER</span>      设定HTTP用户名为 <span class="built_ins">USER</span>.
+--http-passwd=PASS    设定http密码为 PASS.
+</code></pre><p>  -C,  —cache=on/off        允许/不允许服务器端的数据缓存 (一般情况下允许).<br>  -E,  —html-extension      将所有text/html文档以.html扩展名保存<br>       —ignore-length       忽略 <code>Content-Length&#39;头域
+       --header=STRING       在headers中插入字符串 STRING
+       --proxy-user=USER     设定代理的用户名为 USER
+       --proxy-passwd=PASS   设定代理的密码为 PASS
+       --referer=URL         在HTTP请求中包含</code>Referer: URL’头<br>  -s,  —save-headers        保存HTTP头到文件<br>  -U,  —user-agent=AGENT    设定代理的名称为 AGENT而不是 Wget/VERSION.<br>       —no-http-keep-alive  关闭 HTTP活动链接 (永远链接).<br>       —cookies=off         不使用 cookies.<br>       —load-cookies=FILE   在开始会话前从文件 FILE中加载cookie<br>       —save-cookies=FILE   在会话结束后将 cookies保存到 FILE文件中</p>
+<h4 id="FTP_选项">FTP 选项</h4><p>  -nr, —dont-remove-listing   不移走 `.listing’文件<br>  -g,  —glob=on/off           打开或关闭文件名的 globbing机制<br>       —passive-ftp           使用被动传输模式 (缺省值).<br>       —active-ftp            使用主动传输模式<br>       —retr-symlinks         在递归的时候，将链接指向文件(而不是目录)</p>
+<h4 id="递归下载">递归下载</h4><p>  -r,  —recursive          递归下载－－慎用!<br>  -l,  —level=NUMBER       最大递归深度 (inf 或 0 代表无穷).<br>       —delete-after       在现在完毕后局部删除文件<br>  -k,  —convert-links      转换非相对链接为相对链接<br>  -K,  —backup-converted   在转换文件X之前，将之备份为 X.orig<br>  -m,  —mirror             等价于 -r -N -l inf -nr.<br>  -p,  —page-requisites    下载显示HTML文件的所有图片</p>
+<h4 id="递归下载中的包含和不包含(accept/reject)">递归下载中的包含和不包含(accept/reject)</h4><p>  -A,  —accept=LIST                分号分隔的被接受扩展名的列表<br>  -R,  —reject=LIST                分号分隔的不被接受的扩展名的列表<br>  -D,  —domains=LIST               分号分隔的被接受域的列表<br>       —exclude-domains=LIST       分号分隔的不被接受的域的列表<br>       —follow-ftp                 跟踪HTML文档中的FTP链接<br>       —follow-tags=LIST           分号分隔的被跟踪的HTML标签的列表<br>  -G,  —ignore-tags=LIST           分号分隔的被忽略的HTML标签的列表<br>  -H,  —span-hosts                 当递归时转到外部主机<br>  -L,  —relative                   仅仅跟踪相对链接<br>  -I,  —include-directories=LIST   允许目录的列表<br>  -X,  —exclude-directories=LIST   不被包含目录的列表<br>  -np, —no-parent                  不要追溯到父目录</p>
+
       
     </div>
 
     <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
       
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/27/ios-system-service/">ios系统服务</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/27/sublime-text-shortcut/">Sublime text shortcut</a>
+              <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/">AutoLayout -- Content Compression Resistance & Content Hugging</a>
             
           </div>
         </div>
@@ -352,7 +378,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动让编译器报警"><span class="nav-number">1.</span> <span class="nav-text">手动让编译器报警</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wget"><span class="nav-number">1.</span> <span class="nav-text">wget</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用wget做站点镜像"><span class="nav-number">1.1.</span> <span class="nav-text">用wget做站点镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在不稳定的网络上下载一个部分下载的文件，以及在空闲时段下载"><span class="nav-number">1.2.</span> <span class="nav-text">在不稳定的网络上下载一个部分下载的文件，以及在空闲时段下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从filelist读入要下载的文件列表"><span class="nav-number">1.3.</span> <span class="nav-text">从filelist读入要下载的文件列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#详细参数"><span class="nav-number">1.4.</span> <span class="nav-text">详细参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-number">1.4.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#记录和输入文件"><span class="nav-number">1.4.2.</span> <span class="nav-text">记录和输入文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载"><span class="nav-number">1.4.3.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">1.4.4.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP_选项"><span class="nav-number">1.4.5.</span> <span class="nav-text">HTTP 选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FTP_选项"><span class="nav-number">1.4.6.</span> <span class="nav-text">FTP 选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#递归下载"><span class="nav-number">1.4.7.</span> <span class="nav-text">递归下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#递归下载中的包含和不包含(accept/reject)"><span class="nav-number">1.4.8.</span> <span class="nav-text">递归下载中的包含和不包含(accept/reject)</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -589,9 +615,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'ytlvy';
-      var disqus_identifier = '2015/05/27/ios-warning/';
-      var disqus_title = '手动让编译器报警';
-      var disqus_url = 'http://ytlvy.com/2015/05/27/ios-warning/';
+      var disqus_identifier = '2015/06/11/wget/';
+      var disqus_title = 'wget';
+      var disqus_url = 'http://ytlvy.com/2015/06/11/wget/';
 
       (function(){
         var dsq = document.createElement('script');
