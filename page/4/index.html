@@ -148,6 +148,92 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/">
+                <Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X>笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="读书笔记">读书笔记</h1><h2 id="weake___unsafe_unretained">weake __unsafe_unretained</h2><pre><code><span class="keyword">id</span> __weake obj = [[<span class="built_in">NSObject</span> alloc] init];
+<span class="comment">//obj为nil，因为weak不能持有对象，所以生成后马上释放</span>
+<span class="keyword">id</span> __unsafe_unretained obj = [[<span class="built_in">NSObject</span> alloc] init];
+<span class="comment">//obj is nil</span>
+
+<span class="built_in">NSAutoReleasePool</span> 对象不能调用 autorelease 方法 因为<span class="built_in">NSAutoReleasePool</span>类重载了该方法
+</code></pre><h2 id="AutoReleasePool">AutoReleasePool</h2><pre><code><span class="comment">//arc</span>
+<span class="keyword">@autoreleasepool</span>{
+    <span class="keyword">id</span> __autoreleasing obj2;
+}
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/xcode-plugins-update-tool/">
                 更新XcodePlugins脚本
               </a>
@@ -981,97 +1067,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/">
-                非零环绕数规则和奇-偶规则(Non-Zero Winding Number Rule&amp;&amp;Odd-even Rule)
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>参考</p>
-<p>[1]<a href="http://www.cs.rit.edu/~icss571/filling/alt_parity.html">http://www.cs.rit.edu/~icss571/filling/alt_parity.html</a><br>[2]<a href="http://cs.hust.edu.cn/webroot/courses/csgraphics/jiaocai.php?bookpage=5_c_c">http://cs.hust.edu.cn/webroot/courses/csgraphics/jiaocai.php?bookpage=5_c_c</a><br>[3]<a href="http://en.wikipedia.org/wiki/Nonzero-rule">http://en.wikipedia.org/wiki/Nonzero-rule</a></p>
-<blockquote>
-<p>在图形学中判断一个点是否在多边形内，若多边形不是自相交的，那么可以简单的判断这个点在多边形内部还是外部；若多边形是自相交的，那么就需要根据非零环绕数规则和奇-偶规则判断。<br>  判断多边形是否是自相交的：多边形在平面内除顶点外还有其他公共点</p>
-</blockquote>
-<h2 id="内-外测试">内-外测试</h2><blockquote>
-<p>不自交的多边形：多边形仅在顶点处连接，而在平面内没有其他公共点，此时可以直接划分内-外部分。<br> 自相交的多边形：多边形在平面内除顶点外还有其他公共点，此时划分内-外部分需要采用以下的方法。</p>
-</blockquote>
-<h3 id="1-_奇-偶规则（Odd-even_Rule）：奇数表示在多边形内，偶数表示在多边形外">1. 奇-偶规则（Odd-even Rule）：奇数表示在多边形内，偶数表示在多边形外</h3><blockquote>
-<p>从任意位置p作一条射线，若与该射线相交的多边形边的数目为奇数，则p是多边形内部点，否则是外部点。</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1110,21 +1105,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">94</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
