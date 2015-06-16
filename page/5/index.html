@@ -148,6 +148,162 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios-cgimage-bugfix/">
+                CGImage绘制倒置修复
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-cgimage-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cgimage-bugfix/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* mars = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.png"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> sz = [mars size];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsCG = [mars <span class="built_in">CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> szCG = <span class="built_in">CGSizeMake</span>(<span class="built_in">CGImageGetWidth</span>(marsCG), <span class="built_in">CGImageGetHeight</span>(marsCG));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsLeft = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsRight = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(szCG<span class="variable">.width</span>/<span class="number">2.0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="built_in">CGSizeMake</span>(sz<span class="variable">.width</span>*<span class="number">1.5</span>, sz<span class="variable">.height</span>), <span class="literal">NO</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsLeft scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsRight scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(sz<span class="variable">.width</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* im = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(marsLeft); <span class="built_in">CGImageRelease</span>(marsRight);</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/">
+                Using SWRevealViewController Together With RBStoryboardLink
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>://samwize.com/<span class="number">2015</span>/<span class="number">03</span>/<span class="number">26</span>/<span class="keyword">using</span>-swrevealviewcontroller-together-<span class="operator">with</span>-rbstoryboardlink/</span><br></pre></td></tr></table></figure>
+<p>I posted about how to modularize storyboard using RBStoryboardLink and how to use SWRevealViewController.<br>But to use both of them together is not straight forward.<br>This is because both library makes use of custom segues to do what they want to do. And it is not possible for you to customize 1 segue to satisfy both!<br>To make them work together:<br>Create the <code>RBStoryboardLink</code> suggorate view controller and setup <code>storyboardName</code> as per normal, but don’t create any segue to it. It will be alone.<br>Give it a storyboard ID eg. “surrogate”<br>Don’t use <code>SWRevealViewControllerSeguePushController</code> segue too<br>Instead, call the revealViewController’s <code>pushFrontViewController</code> method manually.<br>The code:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">IBAction</span>)buttonTapped:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *vc = [<span class="keyword">self</span><span class="variable">.storyboard</span> instantiateViewControllerWithIdentifier:<span class="string">@"surrogate"</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.revealViewController</span> pushFrontViewController:vc animated:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If the view controller is not getting behind the status bar correctly, set <code>needsTopLayoutGuide</code> key to NO in the suggorate.</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/">
                 Pitfall: NSLayoutConstraint Breaking in UICollectionView
               </a>
@@ -789,176 +945,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-debug/">
-                ios 调试
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-debug/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-debug/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="调试">调试</h3><h4 id="检测是否为主线程">检测是否为主线程</h4><pre><code>[NSThread isMainThread]
-</code></pre><h4 id="lldb_增强">lldb 增强</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew install chisel</span><br><span class="line"></span><br><span class="line">vim ~/.lldbinit</span><br><span class="line">command script <span class="keyword">import</span> <span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>chisel<span class="regexp">/1.1.0/</span>libexec/fblldb.py</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-debug/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-audio/">
-                ios 声音
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-audio/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-audio/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="声音">声音</h3><h4 id="震动">震动</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#<span class="preprocessor"><span class="keyword">import</span> &lt;AudioToolbox/AudioToolbox.h&gt;</span><br><span class="line">AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);</span></span><br></pre></td></tr></table></figure>
-<h4 id="系统声音">系统声音</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AudioServicesPlaySystemSound(<span class="number">1007</span>); </span><br><span class="line"><span class="string">http:</span><span class="comment">//iphonedevwiki.net/index.php/AudioServices</span></span><br></pre></td></tr></table></figure>
-<h4 id="用户音效">用户音效</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//音效文件路径  </span></span><br><span class="line"><span class="built_in">NSString</span> *path = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"message"</span> ofType:<span class="string">@"wav"</span>];  </span><br><span class="line"><span class="comment">//组装并播放音效  </span></span><br><span class="line">SystemSoundID soundID;  </span><br><span class="line"><span class="built_in">NSURL</span> *filePath = [<span class="built_in">NSURL</span> fileURLWithPath:path isDirectory:<span class="literal">NO</span>];  </span><br><span class="line">AudioServicesCreateSystemSoundID((__bridge <span class="built_in">CFURLRef</span>)filePath, &amp;soundID);  </span><br><span class="line">AudioServicesPlaySystemSound(soundID);  </span><br><span class="line"><span class="comment">//声音停止</span></span><br><span class="line">AudioServicesDisposeSystemSoundID(soundID);</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-audio/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/">&raquo;</a>
   </div>
 
 
@@ -992,7 +983,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">90</span>
+              <span class="site-state-item-count">92</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1006,7 +997,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

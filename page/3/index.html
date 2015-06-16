@@ -148,6 +148,205 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/30/ios-reverse-tutorial/">
+                ios reverse tutorial
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/reverse/">reverse</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/30/ios-reverse-tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse-tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="setting_platform">setting platform</h2><h3 id="jailbreak">jailbreak</h3><h3 id="add_sources">add sources</h3><pre><code><span class="number">1</span>. apt.<span class="number">178</span><span class="class">.com</span>
+<span class="number">2</span>. apt<span class="class">.weiphone</span><span class="class">.com</span>
+</code></pre><h3 id="install_tools">install tools</h3><pre><code><span class="label">openssh</span>
+<span class="keyword">BigBoss </span>Recommended tools
+<span class="label">MobileTerminal</span>
+</code></pre><h3 id="ssh_login">ssh login</h3><pre><code><span class="keyword">user</span>: <span class="literal">root</span> pwd:alpine
+change <span class="literal">password</span> <span class="constant">G</span>JJ123456
+</code></pre><h3 id="update">update</h3><pre><code>apt-<span class="built_in">get</span> <span class="keyword">update</span>
+apt-<span class="built_in">get</span> upgrade
+</code></pre>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/30/ios-reverse-tutorial/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/30/ios-reverse/">
+                ios reverse
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/reverse/">reverse</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/30/ios-reverse/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="class-dump-z">class-dump-z</h3><h4 id="下载配置class_dump_z">下载配置class_dump_z</h4><p>前往 <a href="https://code.google.com/p/networkpx/wiki/class_dump_z">https://code.google.com/p/networkpx/wiki/class_dump_z</a> ，下载tar包，然后解压配置到本地环境<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>tar -zxvf <span class="class"><span class="keyword">class</span>-<span class="title">dump</span>-<span class="title">z_0</span>.2<span class="title">a</span>.<span class="title">tar</span>.<span class="title">gz</span>  </span></span><br><span class="line"><span class="variable">$ </span>sudo cp mac_x86/<span class="class"><span class="keyword">class</span>-<span class="title">dump</span>-<span class="title">z</span> /<span class="title">usr</span>/<span class="title">bin</span>/</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="class_dump_分文件">class_dump 分文件</h4><pre><code><span class="keyword">class</span>-dump-z <span class="keyword">App</span> -<span class="keyword">H</span> -o outputdir
+</code></pre><h4 id="class_dump支付宝app">class_dump支付宝app</h4><pre><code>$ class-dump-z Portal &gt; Portal-dump.txt  
+
+@protocol XXEncryptedProtocol_10764b0  
+-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109df</span>;  
+</span>-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109d3</span>;  
+</span>-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109c7</span>;  
+</span>-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109bf</span>;  
+</span>@optional  
+-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109eb</span>;  
+</span>@end  
+</code></pre><p>查看得到的信息是加过密的，这个加密操作是苹果在部署到app store时做的，所以我们还需要做一步解密操作</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/30/ios-reverse/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/29/git-tutorials-workflows/">
                 git tutorials -- workflows
               </a>
@@ -807,180 +1006,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/">
-                IOS8.3 NSMutableURLRequest需手动设置Content-Type
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios8-nsmutableurlrequest-bugfix/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>引用：<a href="http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update" target="_blank" rel="external">http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update</a></p>
-<p>IOS8.3开始 NSMutableURLRequest需要手动设置Content-Type，否则导致服务器接受参数失败的错误，请添加如下代码:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[request <span class="built_in">set</span>Value:@<span class="string">"application/json"</span> <span class="keyword">for</span>HTTPHeaderField:@<span class="string">"Content-Type"</span>];</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-third-party-frames-conflict-bugfix/">
-                第三方类库重复冲突解决
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-third-party-frames-conflict-bugfix/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-third-party-frames-conflict-bugfix/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="第三方类库重复冲突解决">第三方类库重复冲突解决</h2><h3 id="复制-a文件">复制.a文件</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/ &amp;&amp; <span class="built_in">mkdir</span> librepack &amp;&amp; <span class="keyword">cd</span> librepack</span><br><span class="line"><span class="keyword">cp</span> /Users/tony/Desktop/XXXProject/Lib/libMiPushSDK.<span class="keyword">a</span> ./libx.<span class="keyword">a</span></span><br></pre></td></tr></table></figure>
-<h3 id="查看包信息">查看包信息</h3><p><code>lipo -info libx.a</code></p>
-<h3 id="解包">解包</h3><p>如果提示fat file，那么代表这个包是支持多平台的，例如armv7，armv7s，i386等，这需要我们逐一做解包重打包操作。否则我们只需要做一次[1-6]操作即可</p>
-<ol>
-<li>创建临时文件夹，用于存放armv7平台解压后的.o文件：<code>mkdir armv7</code></li>
-<li>取出armv7平台的包：<code>lipo libx.a -thin armv7 -output armv7/libx-armv7.a</code></li>
-<li>查看库中所包含的文件列表：<code>ar -t armv7/libx-armv7.a</code></li>
-<li>解压出object file（即.o后缀文件）：<code>cd armv7 &amp;&amp; ar xv libx-armv7.a</code></li>
-<li>找到冲突的包（JSONKit），删除掉<code>rm JSONKit.o</code></li>
-<li>重新打包object file：<code>cd .. &amp;&amp; ar rcs libx-armv7.a armv7/*.o</code>，可以再次使用[2]中命令确认是否已成功将文件去除</li>
-<li>将其他几个平台(armv7s, i386)包逐一做上述[1-6]操作</li>
-<li>重新合并为fat file的.a文件：<br><code>lipo -create libx-armv7.a libx-armv7s.a libx-i386.a -output libMiPushSDK-new.a</code></li>
-<li>拷贝到项目中覆盖源文件：<br><code>cp libMiPushSDK-new.a /Users/tony/Desktop/XXXProject/Lib/libMiPushSDK.a</code></li>
-</ol>
-<p>参考:<a href="http://itony.me/674.html" target="_blank" rel="external">http://itony.me/674.html</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </div>
 
 
@@ -1014,7 +1044,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">90</span>
+              <span class="site-state-item-count">92</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1028,7 +1058,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
