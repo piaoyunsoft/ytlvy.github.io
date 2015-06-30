@@ -5,7 +5,7 @@
   <subtitle><![CDATA[Valar Morghulis]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://ytlvy.com//"/>
-  <updated>2015-06-30T01:22:44.000Z</updated>
+  <updated>2015-06-30T07:45:06.000Z</updated>
   <id>http://ytlvy.com//</id>
   
   <author>
@@ -14,6 +14,83 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[DispatchOnce]]></title>
+    <link href="http://ytlvy.com/2015/06/30/DispatchOnce/"/>
+    <id>http://ytlvy.com/2015/06/30/DispatchOnce/</id>
+    <published>2015-06-30T07:31:31.000Z</published>
+    <updated>2015-06-30T07:45:06.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="/images/DispatchOnce.jpg" alt=""></p>
+<h2 id="Dispatch_Once">Dispatch_Once</h2><p>四种场景如上图</p>
+<ol>
+<li>第一次执行，<code>block调用</code>，调用结束后需要置标记变量</li>
+<li>非第一次执行，而此时#1<code>block调用</code>尚未完成(预执行拿到的 obj 为 nil, 此时需要废弃此次预执行)，线程需进入等待#1状态</li>
+<li>非第一次执行，而此时#1<code>block调用</code>已经完成(预执行拿到的 obj 已经初始化完毕)此时线程的预执行是正确的, 之后可能继续执行,也可能由于时间问题,废弃此次预执行进入等待</li>
+<li>非第一次执行，而此时#1已经完成，线程预执行后, 直接跳过block而进行后续任务</li>
+</ol>
+<p>Dispatch_Once 保证了当第一个线程在进行alloc 对象时，有其他线程发起, 会废弃此线程的预执行，进入等待。在第一个线程结束时，将正在等待的线程唤醒。而实现这一机制的方法是在生成对象和变更identifier之间加入一个大于预执行时间的等待来实现的。</p>
+<h3 id="Dispatch_Once实现用到的技术">Dispatch_Once实现用到的技术</h3><ul>
+<li>原子操作 “原子比较交换函数” __sync_bool_compare_and_swap</li>
+<li>cpuid指令 实现大于预执行时间的延迟等待</li>
+<li>dispatch_thread_semaphore 来实现线程之间的等待和唤醒</li>
+</ul>
+<h3 id="cpu的分支预测和预执行">cpu的分支预测和预执行</h3><blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;流水线特性使得CPU能更快地执行线性指令序列，但是当遇到条件判断分支时，麻烦来了，在判定语句返回结果之前，cpu不知道该执行哪个分支，那就得等着（术语叫做pipeline stall），这怎么能行呢，所以，CPU会进行预执行，cpu先猜测一个可能的分支，然后开始执行分支中的指令。现代CPU一般都能做到超过90%的猜测命中率，这可比NBA选手发球命中率高多了。然后当判定语句返回，加入cpu猜错分支，那么之前进行的执行都会被抛弃，然后从正确的分支重新开始执行。<br>&nbsp;&nbsp;&nbsp;&nbsp;在dispatch_once中，唯一一个判断分支就是predicate，dispatch_once会让CPU预执行条件不成立的分支，这样可以大大提升函数执行速度。但是这样的预执行导致的结果是使用了未初始化的obj并将函数返回，这显然不是预期结果。</p>
+</blockquote>
+<h3 id="不对称barrier">不对称barrier</h3><blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;在intel的CPU上，dispatch_once动用了cpuid指令来达成这个目的。cpuid本来是用作取得cpu的信息，但是这个指令也同时强制将指令流串行化，并且这个指令是需要比较长的执行时间的(在某些cpu上，甚至需要几百圈cpu时钟).这个指令保证了, 当其他线程预执行读取到 nil时,可以废弃当前的预执行操作,从而进入 dispatch_once 的 else 方法进入等待.</p>
+</blockquote>
+<h3 id="dispatch_once读取端的实现">dispatch_once读取端的实现</h3><blockquote>
+<p>DISPATCH_EXPECT 是用来告诉cpu *predicate等于~0l是更有可能的判定结果，这就使得cpu能猜测到更正确的分支，并提高效率</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DISPATCH_INLINE DISPATCH_ALWAYS_INLINE DISPATCH_NONNULL_ALL DISPATCH_NOTHROW</span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">_dispatch_once(<span class="keyword">dispatch_once_t</span> *predicate, <span class="keyword">dispatch_block_t</span> block)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (DISPATCH_EXPECT(*predicate, ~<span class="number">0l</span>) != ~<span class="number">0l</span>) &#123;</span><br><span class="line">        dispatch_once(predicate, block);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> dispatch_once _dispatch_once</span></span><br></pre></td></tr></table></figure>
+<h3 id="dispatch_once的实现">dispatch_once的实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> _dispatch_once_waiter_s &#123;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">struct</span> _dispatch_once_waiter_s *<span class="keyword">volatile</span> dow_next;</span><br><span class="line">    <span class="keyword">_dispatch_thread_semaphore_t</span> dow_sema;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> DISPATCH_ONCE_DONE ((struct _dispatch_once_waiter_s *)~0l)</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor">#ifdef __BLOCKS__</span></span><br><span class="line"><span class="function"><span class="keyword">void</span></span><br><span class="line"><span class="title">dispatch_once</span><span class="params">(dispatch_once_t *val, dispatch_block_t block)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">struct</span> Block_basic *bb = (<span class="keyword">void</span> *)block;</span><br><span class="line"> </span><br><span class="line">    dispatch_once_f(val, block, (<span class="keyword">void</span> *)bb-&gt;Block_invoke);</span><br><span class="line">&#125;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function">DISPATCH_NOINLINE</span><br><span class="line"><span class="keyword">void</span></span><br><span class="line"><span class="title">dispatch_once_f</span><span class="params">(dispatch_once_t *val, <span class="keyword">void</span> *ctxt, dispatch_function_t func)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">struct</span> _dispatch_once_waiter_s * <span class="keyword">volatile</span> *vval = (<span class="keyword">struct</span> _dispatch_once_waiter_s**)val;</span><br><span class="line">    <span class="keyword">struct</span> _dispatch_once_waiter_s dow = &#123; NULL, <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">struct</span> _dispatch_once_waiter_s *tail, *tmp;</span><br><span class="line">    <span class="keyword">_dispatch_thread_semaphore_t</span> sema;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (dispatch_atomic_cmpxchg(vval, NULL, &amp;dow)) &#123;</span><br><span class="line">        dispatch_atomic_acquire_barrier();<span class="comment">//这是一个空的宏函数，什么也不做</span></span><br><span class="line">        _dispatch_client_callout(ctxt, func);</span><br><span class="line">        dispatch_atomic_maximally_synchronizing_barrier();</span><br><span class="line">        <span class="comment">//dispatch_atomic_release_barrier(); // assumed contained in above</span></span><br><span class="line">        tmp = dispatch_atomic_xchg(vval, DISPATCH_ONCE_DONE);</span><br><span class="line">        tail = &amp;dow;</span><br><span class="line">        <span class="keyword">while</span> (tail != tmp) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!tmp-&gt;dow_next) &#123;</span><br><span class="line">                _dispatch_hardware_pause();</span><br><span class="line">            &#125;</span><br><span class="line">            sema = tmp-&gt;dow_sema;</span><br><span class="line">            tmp = (<span class="keyword">struct</span> _dispatch_once_waiter_s*)tmp-&gt;dow_next;</span><br><span class="line">            <span class="keyword">_dispatch_t</span>hread_semaphore_signal(sema);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        dow.dow_sema = <span class="keyword">_dispatch_get_t</span>hread_semaphore();</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            tmp = *vval;</span><br><span class="line">            <span class="keyword">if</span> (tmp == DISPATCH_ONCE_DONE) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            dispatch_atomic_store_barrier();</span><br><span class="line">            <span class="keyword">if</span> (dispatch_atomic_cmpxchg(vval, tmp, &amp;dow)) &#123;</span><br><span class="line">                dow.dow_next = tmp;</span><br><span class="line">                <span class="keyword">_dispatch_t</span>hread_semaphore_wait(dow.dow_sema);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">_dispatch_put_t</span>hread_semaphore(dow.dow_sema);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>dispatch_atomic_cmpxchg 是 “原子比较交换函数”__sync_bool_compare_and_swap的宏替换</p>
+</blockquote>
+<h4 id="执行block的分支">执行block的分支</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;当dispatch_once第一次执行时，predicate也即val为0，那么此“原子比较交换函数”将返回true并将vval指向值赋值为&amp;dow，即为“等待中”，_dispatch_client_callout其内部做了一些判定，但实际上是调用了func而已。到此，block中的用户代码执行完毕。<br>&nbsp;&nbsp;&nbsp;&nbsp; 接下来就是上篇提及的cpuid指令等待，使得其他线程的【读取到未初始化值的】预执行能被判定为猜测未命中，从而使得这些线程能够进入dispatch_once_f里的另一个分支从而进行等待。<br>&nbsp;&nbsp;&nbsp;&nbsp; cpuid指令完毕后，调用dispatch_atomic_xchg进行赋值，置其为DISPATCH_ONCE_DONE，即“完成”，这里dispatch_atomic_xchg是内建“原子交换函数”__sync_swap的优化版宏替换，其将第二个参数的值赋给第一个参数（解引用指针），然后返回第一个参数被赋值前的解引用值，其原型为：</p>
+<blockquote>
+<p>type __sync_swap(type *ptr, type value, …)</p>
+</blockquote>
+<p>接下来是对信号量链的处理：</p>
+<ol>
+<li>在block执行过程中，没有其他线程进入本函数来等待，则vval指向值保持为&amp;dow，即tmp被赋值为&amp;dow，即下方while循环不会被执行，此分支结束。</li>
+<li>在block执行过程中，有其他线程进入本函数来等待，那么会构造一个信号量链表（vval指向值变为信号量链的头部，链表的尾部为&amp;dow），此时就会进入while循环，在此while循环中，遍历链表，逐个signal每个信号量，然后结束循环。</li>
+</ol>
+<blockquote>
+<p>while (!tmp-&gt;dow_next)此循环是等待在&amp;dow上，因为线程等待分支#2会中途将val赋值为&amp;dow，然后为-&gt;dow_next赋值，这期间-&gt;dow_next值为NULL，需要等待，详见下面线程等待分支#2的描述<br>_dispatch_hardware_pause此句是为了提示cpu减少额外处理，提升性能，节省电力</p>
+</blockquote>
+<h4 id="线程等待分支">线程等待分支</h4><p>当执行block分支#1未完成，且有线程再进入本函数时，将进入线程等待分支：</p>
+<ol>
+<li>先调用_dispatch_get_thread_semaphore创建一个信号量，此信号量被赋值给dow.dow_sema</li>
+<li>然后进入一个无限for循环，假如发现vval的指向值已经为DISPATCH_ONCE_DONE，即“完成”，则直接break，然后调用_dispatch_put_thread_semaphore函数销毁信号量并退出函数</li>
+</ol>
+<blockquote>
+<p>_dispatch_get_thread_semaphore内部使用的是“有即取用，无即创建”策略来获取信号量。<br>_dispatch_put_thread_semaphore内部使用的是“销毁旧的，存储新的”策略来缓存信号量。</p>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 假如vval的解引用值并非DISPATCH_ONCE_DONE，则进行一个“原子比较并交换”操作（此操作可以避免两个等待线程同时操作链表带来的问题），假如此时vval指向值已不再是tmp（这种情况发生在多个线程同时进入线程等待分支#2，并交错修改链表）则for循环重新开始，再尝试重新获取一次vval来进行同样的操作；若指向值还是tmp，则将vval的指向值赋值为&amp;dow，此时val-&gt;dow_next值为NULL，可能会使得block执行分支#1进行while等待（如前述），紧接着执行dow.dow_next = tmp这句来增加链表节点（同时也使得block执行分支#1的while等待结束），然后等待在信号量上，当block执行分支#1完成并遍历链表来signal时，唤醒、释放信号量，然后一切就完成了。</p>
+<h3 id="小结">小结</h3><ol>
+<li>线程A执行Block时，任何其它线程都需要等待。</li>
+<li>线程A执行完Block应该立即标记任务完成状态，然后遍历信号量链来唤醒所有等待线程。</li>
+<li>线程A遍历信号量链来signal时，任何其他新进入函数的线程都应该直接返回而无需等待。</li>
+<li>线程A遍历信号量链来signal时，若有其它等待线程B仍在更新或试图更新信号量链，应该保证此线程B能正确_完成其任务：a.直接返回 b.等待在信号量上并很快又被唤醒。</li>
+<li>线程B构造信号量时，应该考虑线程A随时可能改变状态（“等待”、“完成”、“遍历信号量链”）。</li>
+<li>线程B构造信号量时，应该考虑到另一个线程C也可能正在更新或试图更新信号量链，应该保证B、C都能正常_完成其任务：a.增加链节并等待在信号量上 b.发现线程A已经标记“完成”然后直接销毁信号量并退出函数。</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[Dispatch Once 解析]]>
+    
+    </summary>
+    
+      <category term="Dispatch Once" scheme="http://ytlvy.com/tags/Dispatch-Once/"/>
+    
+      <category term="IOS" scheme="http://ytlvy.com/tags/IOS/"/>
+    
+      <category term="IOS" scheme="http://ytlvy.com/categories/IOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[UITableView Cancel Request]]></title>
@@ -1028,245 +1105,6 @@
     </summary>
     
       <category term="C" scheme="http://ytlvy.com/categories/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[ios encodings]]></title>
-    <link href="http://ytlvy.com/2015/06/06/ios-encodings/"/>
-    <id>http://ytlvy.com/2015/06/06/ios-encodings/</id>
-    <published>2015-06-06T12:48:05.000Z</published>
-    <updated>2015-06-06T16:05:15.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Type_Encodings">Type Encodings</h2><table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Meaning   </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> c</td>
-<td>A char                                           </td>
-</tr>
-<tr>
-<td> i</td>
-<td>An int                                           </td>
-</tr>
-<tr>
-<td> s</td>
-<td>A short                                          </td>
-</tr>
-<tr>
-<td> l</td>
-<td>A longl is treated as a 32-bit quantity on 64-bit programs.</td>
-</tr>
-<tr>
-<td> q</td>
-<td>A long long                                      </td>
-</tr>
-<tr>
-<td> C</td>
-<td>An unsigned char                                 </td>
-</tr>
-<tr>
-<td> I</td>
-<td>An unsigned int                                  </td>
-</tr>
-<tr>
-<td> S</td>
-<td>An unsigned short                                </td>
-</tr>
-<tr>
-<td> L</td>
-<td>An unsigned long                                 </td>
-</tr>
-<tr>
-<td> Q</td>
-<td>An unsigned long long                            </td>
-</tr>
-<tr>
-<td> f</td>
-<td>A float                                          </td>
-</tr>
-<tr>
-<td> d</td>
-<td>A double                                         </td>
-</tr>
-<tr>
-<td> B</td>
-<td>A C++ bool or a C99 _Bool                        </td>
-</tr>
-<tr>
-<td> v</td>
-<td>A void                                           </td>
-</tr>
-<tr>
-<td> *</td>
-<td>A character string (char *)                      </td>
-</tr>
-<tr>
-<td> @</td>
-<td>An object (whether statically typed or typed id) </td>
-</tr>
-<tr>
-<td> #</td>
-<td>A class object (Class)                           </td>
-</tr>
-<tr>
-<td> :</td>
-<td>A method selector (SEL)                          </td>
-</tr>
-<tr>
-<td> [array type]</td>
-<td>An array                                         </td>
-</tr>
-<tr>
-<td> {name=type…}</td>
-<td>A structure                                      </td>
-</tr>
-<tr>
-<td> (name=type…)</td>
-<td>A union                                          </td>
-</tr>
-<tr>
-<td> bnum</td>
-<td>A bit field of num bits                          </td>
-</tr>
-<tr>
-<td> ^type</td>
-<td>A pointer to type                                </td>
-</tr>
-<tr>
-<td> ?</td>
-<td>An unknown type (used for function pointers)     </td>
-</tr>
-</tbody>
-</table>
-<a id="more"></a>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"int         : %s"</span>, @encode(<span class="keyword">int</span>));                       <span class="comment">//i</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"float       : %s"</span>, @encode(<span class="keyword">float</span>));                     <span class="comment">//f</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"float *     : %s"</span>, @encode(<span class="keyword">float</span>*));                    <span class="comment">//^f</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"char        : %s"</span>, @encode(<span class="keyword">char</span>));                      <span class="comment">//c</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"char *      : %s"</span>, @encode(<span class="keyword">char</span> *));                    <span class="comment">//*</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"BOOL        : %s"</span>, @encode(<span class="built_in">BOOL</span>));                      <span class="comment">//c</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"void        : %s"</span>, @encode(<span class="keyword">void</span>));                      <span class="comment">//v</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"void *      : %s"</span>, @encode(<span class="keyword">void</span> *));                    <span class="comment">//^v</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"NSObject *  : %s"</span>, @encode(<span class="built_in">NSObject</span> *));                <span class="comment">//@</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"NSObject    : %s"</span>, @encode(<span class="built_in">NSObject</span>));                  <span class="comment">//#</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"[NSObject class]  : %s"</span>, @encode(<span class="keyword">typeof</span>([<span class="built_in">NSObject</span> class])));  <span class="comment">//&#123;NSObject=#&#125;</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"NSError **  : %s"</span>, @encode(<span class="keyword">typeof</span>(<span class="built_in">NSError</span> **)));        <span class="comment">//^@</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> intArray[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"int[]       : %s"</span>, @encode(<span class="keyword">typeof</span>(intArray)));          <span class="comment">//[5i]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">float</span> floatArray[<span class="number">3</span>] = &#123;<span class="number">0.1</span>f, <span class="number">0.2</span>f, <span class="number">0.3</span>f&#125;; </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"float[]     : %s"</span>, @encode(<span class="keyword">typeof</span>(floatArray)));        <span class="comment">//[3f]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> _<span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="keyword">short</span> a;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> b;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> c;</span><br><span class="line">&#125; Struct;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"struct     : %s"</span>, @encode(<span class="keyword">typeof</span>(Struct)));             <span class="comment">//&#123;_struct=sqQ&#125;</span></span><br></pre></td></tr></table></figure>
-<p>There are some interesting takeaways from this:</p>
-<ol>
-<li><p>Whereas the standard encoding for pointers is a preceding ^, char <em> gets its own code: </em>. This makes sense conceptually, since C strings are thought to be entities in and of themselves, rather than a pointer to something else.</p>
-</li>
-<li><p>BOOL is c, rather than i, as one might expect. Reason being, char is smaller than an int, and when Objective-C was originally designed in the 80’s, bits (much like the US Dollar) were more valuable than they are today.</p>
-</li>
-<li><p>Passing NSObject directly yields #. However, passing [NSObject class] yields a struct named NSObject with a single class field. That is, of course, the isa field, which all NSObject instances have to signify their type.</p>
-</li>
-</ol>
-<h2 id="Method_Encodings">Method Encodings</h2><p>type qualifiers for methods declared in a protocol<br> Code    | Meaning<br> ————|————<br> r       | const<br> n       | in<br> N       | inout<br> o       | out<br> O       | bycopy<br> R       | byref<br> V       | oneway   </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Type_Encodings">Type Encodings</h2><table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Meaning   </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> c</td>
-<td>A char                                           </td>
-</tr>
-<tr>
-<td> i</td>
-<td>An int                                           </td>
-</tr>
-<tr>
-<td> s</td>
-<td>A short                                          </td>
-</tr>
-<tr>
-<td> l</td>
-<td>A longl is treated as a 32-bit quantity on 64-bit programs.</td>
-</tr>
-<tr>
-<td> q</td>
-<td>A long long                                      </td>
-</tr>
-<tr>
-<td> C</td>
-<td>An unsigned char                                 </td>
-</tr>
-<tr>
-<td> I</td>
-<td>An unsigned int                                  </td>
-</tr>
-<tr>
-<td> S</td>
-<td>An unsigned short                                </td>
-</tr>
-<tr>
-<td> L</td>
-<td>An unsigned long                                 </td>
-</tr>
-<tr>
-<td> Q</td>
-<td>An unsigned long long                            </td>
-</tr>
-<tr>
-<td> f</td>
-<td>A float                                          </td>
-</tr>
-<tr>
-<td> d</td>
-<td>A double                                         </td>
-</tr>
-<tr>
-<td> B</td>
-<td>A C++ bool or a C99 _Bool                        </td>
-</tr>
-<tr>
-<td> v</td>
-<td>A void                                           </td>
-</tr>
-<tr>
-<td> *</td>
-<td>A character string (char *)                      </td>
-</tr>
-<tr>
-<td> @</td>
-<td>An object (whether statically typed or typed id) </td>
-</tr>
-<tr>
-<td> #</td>
-<td>A class object (Class)                           </td>
-</tr>
-<tr>
-<td> :</td>
-<td>A method selector (SEL)                          </td>
-</tr>
-<tr>
-<td> [array type]</td>
-<td>An array                                         </td>
-</tr>
-<tr>
-<td> {name=type…}</td>
-<td>A structure                                      </td>
-</tr>
-<tr>
-<td> (name=type…)</td>
-<td>A union                                          </td>
-</tr>
-<tr>
-<td> bnum</td>
-<td>A bit field of num bits                          </td>
-</tr>
-<tr>
-<td> ^type</td>
-<td>A pointer to type                                </td>
-</tr>
-<tr>
-<td> ?</td>
-<td>An unknown type (used for function pointers)     </td>
-</tr>
-</tbody>
-</table>]]>
-    
-    </summary>
-    
-      <category term="IOS" scheme="http://ytlvy.com/categories/IOS/"/>
     
   </entry>
   

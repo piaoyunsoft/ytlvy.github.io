@@ -148,6 +148,88 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios-animation/">
+                ios 动画
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-animation/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-animation/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="动画保持结果">动画保持结果</h4><pre><code><span class="attribute">fillMode </span>=<span class="string"> kCAFillModeForwards</span>
+</code></pre><h4 id="CAKeyframeAnimation_动画使用_开始、暂停动画">CAKeyframeAnimation 动画使用 开始、暂停动画</h4><h5 id="开始一个帧动画">开始一个帧动画</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)showAlertAnimation &#123;  </span><br><span class="line">    <span class="built_in">CAKeyframeAnimation</span> *animation = [<span class="built_in">CAKeyframeAnimation</span></span><br><span class="line">                       animationWithKeyPath:<span class="string">@"transform"</span>]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//方式1：放大再缩小（类似系统alert）  </span></span><br><span class="line">    <span class="comment">//如果需要更好的效果  </span></span><br><span class="line">    <span class="comment">//可以添加 .keyTimes 属性。  </span></span><br><span class="line">    <span class="built_in">NSMutableArray</span> *values = [<span class="built_in">NSMutableArray</span> array]; </span><br><span class="line">    [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.1</span>, <span class="number">0.1</span>, <span class="number">1.0</span>)]];</span><br><span class="line">    [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">1.2</span>, <span class="number">1.2</span>, <span class="number">1.0</span>)]]; </span><br><span class="line">     [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.9</span>, <span class="number">0.9</span>, <span class="number">0.9</span>)]];</span><br><span class="line">      [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>)]]; </span><br><span class="line">      animation<span class="variable">.values</span> = values; </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="comment">//方式2:直接缩小  </span></span><br><span class="line">    animation<span class="variable">.fillMode</span> = k<span class="built_in">CAFillModeForwards</span>;  </span><br><span class="line">    animation<span class="variable">.removedOnCompletion</span> = <span class="literal">NO</span>;  </span><br><span class="line">    animation<span class="variable">.duration</span> = .<span class="number">3</span>;  </span><br><span class="line">      </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.alertView</span><span class="variable">.layer</span> addAnimation:animation forKey:<span class="string">@"showAlert"</span>];  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-animation/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios-uitableview/">
                 UITableview
               </a>
@@ -902,98 +984,11 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-muti-thread/">
-                ios 多线程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-muti-thread/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-muti-thread/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="dispatch_queue_create">dispatch_queue_create</h4><pre><code>dispatch_queue_create生成的queue需要手动内存管理
-dispatch_release
-dispatch_retain
-dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create( <span class="string">"com.example.gcd.MyConcurrentDispatchQueue"</span>, DISPATCH_QUEUE_CONCURRENT);
-dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="string">"com.example.gcd.MySerialDispatchQueue"</span>, NULL);
-<span class="keyword">global</span> dispatch queues. They are concurrent dispatch queues <span class="keyword">that</span> are usable anywhere <span class="keyword">in</span> <span class="keyword">the</span> <span class="type">application</span>
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-muti-thread/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/">&raquo;</a>
   </div>
 
 
@@ -1027,7 +1022,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">100</span>
+              <span class="site-state-item-count">101</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1041,7 +1036,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
