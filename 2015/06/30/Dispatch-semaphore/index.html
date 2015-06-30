@@ -189,7 +189,8 @@
       
 
       
-        <h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
+        <p><img src="/images/DispatchSemaphore.jpg" alt=""></p>
+<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
 <h3 id="functions">functions</h3><ul>
 <li>dispatch_semaphore_create</li>
 <li>dispatch_semaphore_wait (减少一个信号量)</li>

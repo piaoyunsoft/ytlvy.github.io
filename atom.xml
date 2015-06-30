@@ -5,7 +5,7 @@
   <subtitle><![CDATA[Valar Morghulis]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://ytlvy.com//"/>
-  <updated>2015-06-30T08:28:51.000Z</updated>
+  <updated>2015-06-30T12:05:45.000Z</updated>
   <id>http://ytlvy.com//</id>
   
   <author>
@@ -20,8 +20,9 @@
     <link href="http://ytlvy.com/2015/06/30/Dispatch-semaphore/"/>
     <id>http://ytlvy.com/2015/06/30/Dispatch-semaphore/</id>
     <published>2015-06-30T08:28:07.000Z</published>
-    <updated>2015-06-30T08:28:51.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
+    <updated>2015-06-30T12:05:45.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="/images/DispatchSemaphore.jpg" alt=""></p>
+<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
 <h3 id="functions">functions</h3><ul>
 <li>dispatch_semaphore_create</li>
 <li>dispatch_semaphore_wait (减少一个信号量)</li>
@@ -252,11 +253,11 @@
     <link href="http://ytlvy.com/2015/06/30/Cancel-a-NSBlockOperation/"/>
     <id>http://ytlvy.com/2015/06/30/Cancel-a-NSBlockOperation/</id>
     <published>2015-06-30T01:08:23.000Z</published>
-    <updated>2015-06-30T01:25:10.000Z</updated>
+    <updated>2015-06-30T13:27:03.000Z</updated>
     <content type="html"><![CDATA[<h3 id="make_NSBlockOperation_cancelable">make NSBlockOperation cancelable</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSBlockOperation</span> *operation = [[<span class="built_in">NSBlockOperation</span> alloc] init];</span><br><span class="line">__<span class="keyword">weak</span> <span class="built_in">NSBlockOperation</span> *weakOperation = operation;</span><br><span class="line">[operation addExecutionBlock:^&#123;</span><br><span class="line">   <span class="keyword">while</span>( ! [weakOperation isCancelled])&#123;</span><br><span class="line">      <span class="comment">//do something...</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 ]]></content>
     <summary type="html">
-    <![CDATA[你对本页的描述]]>
+    <![CDATA[make NSBlockOperation cancelable]]>
     
     </summary>
     
