@@ -1,0 +1,621 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS,UITableView," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> UITableView Cancel Request // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              UITableView Cancel Request
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/UITableView-Cancel-Request/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/UITableView-Cancel-Request/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="仅加载可见Cell的图片">仅加载可见Cell的图片</h3><p>load images for just the visible rows in viewDidLoad and when the user stops scrolling<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(void)<span class="tag">viewDidLoad</span>&#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">-</span>(void)<span class="tag">scrollViewDidEndDecelerating</span>:(UIScrollView *)<span class="tag">scrollView</span> &#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="取消Request_—-_NSBlockOperation">取消Request —- NSBlockOperation</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span><span class="variable">.operationQueue</span> = [[<span class="built_in">NSOperationQueue</span> alloc] init];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.operationQueue</span> setMaxConcurrentOperationCount:<span class="built_in">NSOperationQueueDefaultMaxConcurrentOperationCount</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)loadImageForCellAtPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    __block <span class="built_in">NSBlockOperation</span> *operation = [<span class="built_in">NSBlockOperation</span> blockOperationWithBlock:^&#123;</span><br><span class="line">        <span class="keyword">if</span> (![operation isCancelled]) &#123;</span><br><span class="line">            <span class="built_in">NSString</span> *galleryTinyImageUrl = [[<span class="keyword">self</span><span class="variable">.smapi</span> getImageUrls:imageId imageKey:imageKey] objectForKey:<span class="string">@"TinyURL"</span>];</span><br><span class="line">            <span class="built_in">NSData</span> *imageData = [[<span class="built_in">NSData</span> alloc] initWithContentsOfURL:[<span class="built_in">NSURL</span> URLWithString:galleryTinyImageUrl]];</span><br><span class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                <span class="keyword">if</span> (imageData != <span class="literal">nil</span>) &#123;</span><br><span class="line">                    <span class="built_in">UITableViewCell</span> *cell = [tableView cellForRowAtIndexPath:indexPath];</span><br><span class="line">                    cell<span class="variable">.imageView</span><span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageWithData:imageData];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSValue</span> *nonRetainedOperation = [<span class="built_in">NSValue</span> valueWithNonretainedObjectValue:operation];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.operations</span> addObject:nonRetainedOperation forKey:indexPath];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.operationQueue</span> addOperation:operation];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here operations is an NSMutableDictionary. When you want to cancel an operation, you retrieve it by the cell’s indexPath, cancel it, and remove it from the dictionary:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSValue *operationHolder = [self.operations objectForKey:indexPath]<span class="comment">;</span></span><br><span class="line">NSOperation *operation = [operationHolder nonretainedObjectValue]<span class="comment">;</span></span><br><span class="line">[operation cancel]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="prefetch_the_images_—-_SDWebImagePrefetcher">prefetch the images —-  SDWebImagePrefetcher</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[self.tableView reloadData]</span>;</span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self prefetchImagesForTableView:self.tableView]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>anytime I stop scrolling, I do the same:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidEndDecelerating:(<span class="built_in">UIScrollView</span> *)scrollView &#123;</span><br><span class="line">    [<span class="keyword">self</span> prefetchImagesForTableView:<span class="keyword">self</span><span class="variable">.tableView</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)scrollViewDidEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView willDecelerate:(<span class="built_in">BOOL</span>)decelerate &#123;</span><br><span class="line">    <span class="keyword">if</span> (!decelerate)</span><br><span class="line">        [<span class="keyword">self</span> prefetchImagesForTableView:<span class="keyword">self</span><span class="variable">.tableView</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#pragma mark - Prefetch cells</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSInteger</span> <span class="keyword">const</span> kPrefetchRowCount = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Prefetch a certain number of images for rows prior to and subsequent to the currently visible cells</span><br><span class="line"> *</span><br><span class="line"> * @param  tableView   The tableview for which we're going to prefetch images.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)prefetchImagesForTableView:(<span class="built_in">UITableView</span> *)tableView</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *indexPaths = [<span class="keyword">self</span><span class="variable">.tableView</span> indexPathsForVisibleRows];</span><br><span class="line">    <span class="keyword">if</span> ([indexPaths count] == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSIndexPath</span> *minimumIndexPath = indexPaths[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">NSIndexPath</span> *maximumIndexPath = [indexPaths lastObject];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// they should be sorted already, but if not, update min and max accordingly</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSIndexPath</span> *indexPath <span class="keyword">in</span> indexPaths) &#123;</span><br><span class="line">        <span class="keyword">if</span> ([minimumIndexPath compare:indexPath] == <span class="built_in">NSOrderedDescending</span>)</span><br><span class="line">            minimumIndexPath = indexPath;</span><br><span class="line">        <span class="keyword">if</span> ([maximumIndexPath compare:indexPath] == <span class="built_in">NSOrderedAscending</span>)</span><br><span class="line">            maximumIndexPath = indexPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// build array of imageURLs for cells to prefetch</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSMutableArray</span> *imageURLs = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSArray</span> *precedingRows = [<span class="keyword">self</span> tableView:tableView indexPathsForPrecedingRows:kPrefetchRowCount fromIndexPath:minimumIndexPath];</span><br><span class="line">    [imageURLs addObjectsFromArray:precedingRows];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSArray</span> *followingRows = [<span class="keyword">self</span> tableView:tableView indexPathsForFollowingRows:kPrefetchRowCount fromIndexPath:maximumIndexPath];</span><br><span class="line">    [imageURLs addObjectsFromArray:followingRows];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// now prefetch</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ([imageURLs count] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:imageURLs];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Retrieve NSIndexPath for a certain number of rows preceding particular NSIndexPath in the table view.</span><br><span class="line"> *</span><br><span class="line"> * @param  tableView  The tableview for which we're going to retrieve indexPaths.</span><br><span class="line"> * @param  count      The number of rows to retrieve</span><br><span class="line"> * @param  indexPath  The indexPath where we're going to start (presumably the first visible indexPath)</span><br><span class="line"> *</span><br><span class="line"> * @return            An array of indexPaths.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSArray</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView indexPathsForPrecedingRows:(<span class="built_in">NSInteger</span>)count fromIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *indexPaths = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">    <span class="built_in">NSInteger</span> row = indexPath<span class="variable">.row</span>;</span><br><span class="line">    <span class="built_in">NSInteger</span> section = indexPath<span class="variable">.section</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (row == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (section == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> indexPaths;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                section--;</span><br><span class="line">                row = [tableView numberOfRowsInSection:section] - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            row--;</span><br><span class="line">        &#125;</span><br><span class="line">        [indexPaths addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:row inSection:section]];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> indexPaths;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Retrieve NSIndexPath for a certain number of following particular NSIndexPath in the table view.</span><br><span class="line"> *</span><br><span class="line"> * @param  tableView  The tableview for which we're going to retrieve indexPaths.</span><br><span class="line"> * @param  count      The number of rows to retrieve</span><br><span class="line"> * @param  indexPath  The indexPath where we're going to start (presumably the last visible indexPath)</span><br><span class="line"> *</span><br><span class="line"> * @return            An array of indexPaths.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSArray</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView indexPathsForFollowingRows:(<span class="built_in">NSInteger</span>)count fromIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *indexPaths = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">    <span class="built_in">NSInteger</span> row = indexPath<span class="variable">.row</span>;</span><br><span class="line">    <span class="built_in">NSInteger</span> section = indexPath<span class="variable">.section</span>;</span><br><span class="line">    <span class="built_in">NSInteger</span> rowCountForSection = [tableView numberOfRowsInSection:section];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        row++;</span><br><span class="line">        <span class="keyword">if</span> (row == rowCountForSection) &#123;</span><br><span class="line">            row = <span class="number">0</span>;</span><br><span class="line">            section++;</span><br><span class="line">            <span class="keyword">if</span> (section == [tableView numberOfSections]) &#123;</span><br><span class="line">                <span class="keyword">return</span> indexPaths;</span><br><span class="line">            &#125;</span><br><span class="line">            rowCountForSection = [tableView numberOfRowsInSection:section];</span><br><span class="line">        &#125;</span><br><span class="line">        [indexPaths addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:row inSection:section]];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> indexPaths;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+            <a href="/tags/UITableView/"> #UITableView </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/30/CFRunLoop-examples/">CFRunLoop examples</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">100</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#仅加载可见Cell的图片"><span class="nav-number">1.</span> <span class="nav-text">仅加载可见Cell的图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消Request_—-_NSBlockOperation"><span class="nav-number">2.</span> <span class="nav-text">取消Request —- NSBlockOperation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prefetch_the_images_—-_SDWebImagePrefetcher"><span class="nav-number">3.</span> <span class="nav-text">prefetch the images —-  SDWebImagePrefetcher</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/06/30/UITableView-Cancel-Request/';
+      var disqus_title = 'UITableView Cancel Request';
+      var disqus_url = 'http://ytlvy.com/2015/06/30/UITableView-Cancel-Request/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

@@ -148,6 +148,513 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-workflows/">
+                git tutorials -- workflows
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-workflows/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-workflows/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="Centralized_workflow">Centralized workflow</h3><p><img src="https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/centralized-workflow/01.svg" alt=""><br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//Someone initializes <span class="operator">the</span> central repository</span><br><span class="line">ssh user@host git init <span class="comment">--bare /path/to/repo.git</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//Everybody clones the central repository</span></span><br><span class="line">git clone ssh://user@host/path/<span class="built_in">to</span>/repo.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit stage commits</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//origin is the remote connection to the central repository</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line"><span class="comment"></span><br><span class="line">//another push</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line">error: failed <span class="built_in">to</span> push some refs <span class="built_in">to</span> <span class="string">'/path/to/repo.git'</span></span><br><span class="line">hint: Updates were rejected because <span class="operator">the</span> tip <span class="operator">of</span> your current branch is behind</span><br><span class="line">hint: its remote counterpart. Merge <span class="operator">the</span> remote changes (e.g. <span class="string">'git pull'</span>)</span><br><span class="line">hint: <span class="keyword">before</span> pushing again.</span><br><span class="line">hint: See <span class="operator">the</span> <span class="string">'Note about fast-forwards'</span> <span class="operator">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line">git pull <span class="comment">--rebase origin master</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Unmerged paths:</span></span><br><span class="line"><span class="comment"># (use "git reset HEAD &lt;some-file&gt;..." to unstage)</span></span><br><span class="line"><span class="comment"># (use "git add/rm &lt;some-file&gt;..." as appropriate to mark resolution)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># both modified: &lt;some-file&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the file</span></span><br><span class="line">git <span class="built_in">add</span> &lt;some-<span class="built_in">file</span>&gt; </span><br><span class="line">git rebase <span class="comment">--continue</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//you can abort and roll back</span><span class="comment"></span><br><span class="line">//right back to where you started before you ran [git pull --rebase]</span></span><br><span class="line">git rebase <span class="comment">--abort</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//or push</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-workflows/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-advanced-tips/">
+                git tutorials -- Advanced Tips
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-advanced-tips/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-advanced-tips/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="Splitting_a_Commit">Splitting a Commit</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br><span class="line"></span><br><span class="line">// edit second to edit</span><br><span class="line">pick f7f3f6d changed my name a bit</span><br><span class="line">edit 310154e updated README formatting and added blame</span><br><span class="line">pick a5f4a0d added cat-file</span><br><span class="line"></span><br><span class="line">//<span class="operator"><span class="keyword">do</span> a mixed <span class="keyword">reset</span> <span class="keyword">of</span> that <span class="keyword">commit</span> <span class="keyword">with</span> <span class="string">`git reset HEAD^`</span> effectively undoes that <span class="keyword">commit</span> <span class="keyword">and</span> <span class="keyword">leaves</span> the modified files unstaged</span><br><span class="line">$ git <span class="keyword">reset</span> HEAD^</span><br><span class="line">$ git <span class="keyword">add</span> README</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'updated README formatting'</span></span><br><span class="line">$ git <span class="keyword">add</span> lib/simplegit.rb</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'added blame'</span></span><br><span class="line">$ git rebase <span class="comment">--continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ git <span class="keyword">log</span> -<span class="number">4</span> <span class="comment">--pretty=format:"%h %s"</span></span><br><span class="line"><span class="number">1</span>c002dd added cat-file</span><br><span class="line"><span class="number">9</span>b29157 added blame</span><br><span class="line"><span class="number">35</span>cfb2b updated README formatting</span><br><span class="line">f3cc40e <span class="keyword">changed</span> my name a <span class="built_in">bit</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="The_Nuclear_Option:_filter-branch">The Nuclear Option: filter-branch</h3><h4 id="Removing_a_File_from_Every_Commit">Removing a File from Every Commit</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//<span class="built_in">remove</span> passwords.txt form <span class="keyword">all</span> <span class="keyword">history</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD</span><br><span class="line"></span><br><span class="line">//<span class="built_in">remove</span> <span class="keyword">all</span> accidentally committed editor backup <span class="keyword">files</span></span><br><span class="line">git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f *~'</span> HEAD.</span><br><span class="line"></span><br><span class="line">//To run <span class="built_in">filter</span>-branch <span class="keyword">on</span> <span class="keyword">all</span> your branches, you can pass --<span class="keyword">all</span> <span class="keyword">to</span> the <span class="keyword">command</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD --<span class="keyword">all</span></span><br></pre></td></tr></table></figure>
+<h3 id="important">important</h3><ol>
+<li>you should always create a new branch before adding commits to a detached HEAD</li>
+<li>For this reason, git revert should be used to undo changes on a public branch, and git reset should be reserved for undoing changes on a private branch</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-advanced-tips/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-collaborating/">
+                git tutorials -- Collaborating
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-collaborating/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-collaborating/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="git_remote">git remote</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//List <span class="operator">the</span> remote connections you have <span class="built_in">to</span> other repositories</span><br><span class="line">git remote</span><br><span class="line"><span class="comment"></span><br><span class="line">//List the remote connections you have to other repositories, include the URL</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">add</span> &lt;name&gt; &lt;url&gt;</span><br><span class="line">git remote rm &lt;name&gt;</span><br><span class="line">git remote <span class="built_in">rename</span> &lt;old-name&gt; &lt;<span class="built_in">new</span>-name&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="The_origin_Remote">The origin Remote</h4><p>When you clone a repository with git clone, it automatically creates a remote connection called origin pointing back to the cloned repository. This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits. This behavior is also why most Git-based projects call their central repository origin.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-collaborating/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-getting-started/">
+                git tutorials -- Getting Started
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-getting-started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-getting-started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="setup_a_repository">setup a repository</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialize an local repository</span></span><br><span class="line">git <span class="keyword">init</span></span><br><span class="line">git <span class="keyword">init</span> &lt;directory&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//initialize a Central repositories or server </span></span><br><span class="line">git <span class="keyword">init</span> --bare &lt;directory&gt;.git</span><br><span class="line"></span><br><span class="line">ssh &lt;user&gt;@&lt;host&gt;</span><br><span class="line">cd path/above/repo </span><br><span class="line">git <span class="keyword">init</span> --bare my-project.git</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-getting-started/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/recently-readings/">
+                最近阅读资料
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Study/">Study</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/recently-readings/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/recently-readings/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="book">book</h2><ol>
+<li>Functional Programming Patterns in Scala and Clojure- Write Lean Programs for the JVM</li>
+<li>iOS.8.by.Tutorials.2014.12</li>
+<li>Leanpub.Functional Reactive Programming on iOS.2014</li>
+<li>Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X</li>
+<li></li>
+</ol>
+<h2 id="links">links</h2><ol>
+<li><a href="http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients" target="_blank" rel="external">http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients</a></li>
+<li><a href="http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers" target="_blank" rel="external">http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers</a></li>
+<li><a href="http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths" target="_blank" rel="external">http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths</a></li>
+<li><a href="http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob" target="_blank" rel="external">http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob</a></li>
+<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1</a></li>
+<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2</a></li>
+<li><a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3" target="_blank" rel="external">http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3</a></li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/reactivecocoa/">
+                Reactivecocoa
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/FP/">FP</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/reactivecocoa/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="Reactivecocoa">Reactivecocoa</h3><h4 id="zip">zip</h4><pre><code><span class="collection">[<span class="collection">[<span class="collection">[<span class="collection">[RACSignal zip:@<span class="collection">[RACObserve<span class="list">(<span class="keyword">self</span>, minimum)</span>, RACObserve<span class="list">(<span class="keyword">self</span>, maximum)</span>,
+    RACObserve<span class="list">(<span class="keyword">self</span>, average)</span>]</span>]</span> skip:1]</span> reduceEach:<span class="comment">^id</span><span class="collection">{
+        return <span class="literal">nil</span><span class="comment">;</span>
+    }</span>]</span> subscribeNext:^<span class="list">(<span class="keyword">id</span> x)</span> <span class="collection">{
+        <span class="collection">[self buildView]</span><span class="comment">; //called once, while all three values were changed.</span>
+}</span>]</span><span class="comment">;</span>
+</code></pre><h4 id="RACTuple">RACTuple</h4><pre><code><span class="collection">[<span class="collection">[RACSignal  combineLatest:signals]</span> map:^<span class="list">(<span class="keyword">RACTuple</span> *strings)</span> <span class="collection">{
+    for <span class="list">(<span class="keyword">NSString</span> *string in strings)</span> <span class="collection">{
+        // Do whatever here.
+    }</span>
+    return <span class="literal">nil</span><span class="comment">;</span>
+}</span>]</span><span class="comment">;</span>
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/">
                 <Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X>笔记
               </a>
@@ -469,604 +976,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/bss-data-pragma/">
-                [译]BSS数据段的意义
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/Base/">Base</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/bss-data-pragma/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/bss-data-pragma/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>摘录：<a href="http://stackoverflow.com/questions/9535250/why-is-the-bss-segment-required" target="_blank" rel="external">http://stackoverflow.com/questions/9535250/why-is-the-bss-segment-required</a></p>
-<h2 id="一个典型的_C_程序内存特征将会有如下几个区域：">一个典型的 C 程序内存特征将会有如下几个区域：</h2><blockquote>
-<ul>
-<li>文本段（Text segment）</li>
-<li>已初始化数据段（Initialized data segment）</li>
-<li>未初始化数据段（Uninitialized data segment）</li>
-<li>栈（Stack）</li>
-<li>堆（Heap）</li>
-</ul>
-</blockquote>
-<p><img src="http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/Memory-Layout-300x255.gif" alt=""></p>
-<h3 id=""> </h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdlib.h&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化 存放在`已初始化数据段`也叫data段</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> b[<span class="number">20</span>]; <span class="comment">/* 未初始化 存放在 BSS数据段 */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">   ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="BSS数据段的意义—-减少程序大小">BSS数据段的意义—-减少程序大小</h3><p>在嵌入式系统中，数据和常量存储在真实的ROM（闪存）中。嵌入式系统启动时，首先要设置好所有静态存贮持久对象，然后才会调用main函数。伪代码如下：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">for</span>(i<span class="number">=0</span><span class="comment">; i&lt;all_explicitly_initialized_objects; i++)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="preprocessor">.data</span>[i] = init_value[i]<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="label">memset</span>(.<span class="keyword">bss, </span> <span class="number">0</span>,  all_implicitly_initialized_objects)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>此时，data段和bss段存储于RAM，而init_value则存贮于ROM。如果只有一个数据段的话，ROM中将存贮好多0，从而增加ROM的大小。</p>
-<h3 id="效率">效率</h3><p>由于BSS段的存在，在设置初始化数据时，可以线性操作，从而避免了需要到ROM中取init_value的操作，节省时间。</p>
-<p>memset 执行效率高</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/vim-one-click-config/">
-                一键配置vim
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Vim/">Vim</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/vim-one-click-config/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/vim-one-click-config/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="一键配置vim">一键配置vim</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/spf13/spf13-<span class="keyword">vim</span>/<span class="number">3.0</span>/bootstrap.<span class="keyword">sh</span> -L &gt; spf13-<span class="keyword">vim</span>.<span class="keyword">sh</span> &amp;&amp; <span class="keyword">sh</span> spf13-<span class="keyword">vim</span>.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-<h3 id="bug更正">bug更正</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sublime </span>vundle-vimfiles/plugin/settings/CtrlP.vim</span><br></pre></td></tr></table></figure>
-<hr>
-<p>before <code>let g:ctrlp_custom_ignore = ..</code> insert below code</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unlet</span> <span class="variable">g:ctrlp_custom_ignore</span></span><br></pre></td></tr></table></figure>
-<p>参考自: <a href="https://github.com/spf13/spf13-vim/issues/444" target="_blank" rel="external">https://github.com/spf13/spf13-vim/issues/444</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-open-urls/">
-                iOS 跳转设置界面
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-open-urls/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-open-urls/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="SDK_iOS5-1_可用API：">SDK iOS5.1 可用API：</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>About</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>ACCESSIBILITY</span><br><span class="line">prefs:<span class="variable">root=</span>AIRPLANE_MODE</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>AUTOLOCK</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>USAGE/CELLULAR_USAGE</span><br><span class="line">prefs:<span class="variable">root=</span>Brightness</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Bluetooth</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>DATE_AND_TIME</span><br><span class="line">prefs:<span class="variable">root=</span>FACETIME</span><br><span class="line">prefs:<span class="variable">root=</span>General</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Keyboard</span><br><span class="line">prefs:<span class="variable">root=</span>CASTLE</span><br><span class="line">prefs:<span class="variable">root=</span>CASTLE&amp;<span class="variable">path=</span>STORAGE_AND_BACKUP</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>INTERNATIONAL</span><br><span class="line">prefs:<span class="variable">root=</span>LOCATION_SERVICES</span><br><span class="line">prefs:<span class="variable">root=</span>ACCOUNT_SETTINGS</span><br><span class="line">prefs:<span class="variable">root=</span>MUSIC</span><br><span class="line">prefs:<span class="variable">root=</span>MUSIC&amp;<span class="variable">path=</span>EQ</span><br><span class="line">prefs:<span class="variable">root=</span>MUSIC&amp;<span class="variable">path=</span>VolumeLimit</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Network</span><br><span class="line">prefs:<span class="variable">root=</span>NIKE_PLUS_IPOD</span><br><span class="line">prefs:<span class="variable">root=</span>NOTES</span><br><span class="line">prefs:<span class="variable">root=</span>NOTIFICATIONS_ID</span><br><span class="line">prefs:<span class="variable">root=</span>Phone</span><br><span class="line">prefs:<span class="variable">root=</span>Photos</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>ManagedConfigurationList</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Reset</span><br><span class="line">prefs:<span class="variable">root=</span>Sounds&amp;<span class="variable">path=</span>Ringtone</span><br><span class="line">prefs:<span class="variable">root=</span>Safari</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Assistant</span><br><span class="line">prefs:<span class="variable">root=</span>Sounds</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>SOFTWARE_UPDATE_LINK</span><br><span class="line">prefs:<span class="variable">root=</span>STORE</span><br><span class="line">prefs:<span class="variable">root=</span>TWITTER</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>USAGE</span><br><span class="line">prefs:<span class="variable">root=</span>VIDEO</span><br><span class="line">prefs:<span class="variable">root=</span>General&amp;<span class="variable">path=</span>Network/VPN</span><br><span class="line">prefs:<span class="variable">root=</span>Wallpaper</span><br><span class="line">prefs:<span class="variable">root=</span>WIFI</span><br><span class="line">prefs:<span class="variable">root=</span>INTERNET_TETHERING</span><br></pre></td></tr></table></figure>
-<p>例：<code>[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@&quot;prefs:root=LOCATION_SERVICES&quot;]];</code><br>SDK &gt;= 8.0 可用API：<br>UIApplicationOpenSettingsURLString 跳转到Setting界面</p>
-<p>例：<code>[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];</code></p>
-<p>参考: <a href="http://itony.me/875.html" target="_blank" rel="external">http://itony.me/875.html</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/alibaba-miao-sha-xi-tong-bi-ji/">
-                阿里巴巴秒杀系统笔记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Bigdata/">Bigdata</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/alibaba-miao-sha-xi-tong-bi-ji/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/alibaba-miao-sha-xi-tong-bi-ji/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="技术挑战">技术挑战</h2><h3 id="瞬间高并发">瞬间高并发</h3><ol>
-<li>8000并发</li>
-<li>风险：带宽耗尽</li>
-<li>服务器：崩溃<h3 id="秒杀器">秒杀器</h3></li>
-<li>秒杀前不断刷新秒杀页面，直到秒杀开始</li>
-<li>跳过秒杀页面，直接进入下单页面</li>
-</ol>
-<h2 id="准备">准备</h2><h3 id="服务器">服务器</h3><ul>
-<li>style服务器（lighttpd集群）        5台</li>
-<li>图片服务器（Nginx集群）            5台</li>
-<li>静态服务器（Apache集群）          10台</li>
-<li>交易服务器（Jboss动态集群）      10台</li>
-</ul>
-<h3 id="带宽">带宽</h3><ul>
-<li>图片出口带宽上限：2.5G </li>
-<li>CDN准备：Chinacache沟通；借用Taobao CDN</li>
-</ul>
-<h2 id="设计原则">设计原则</h2><ul>
-<li>静态化： 采用<strong>JS自动更新技术</strong>将动态页面转化为静态页面</li>
-<li>并发控制，防秒杀器：设置阀门，只放<strong>最前面的一部分人</strong>进入秒杀系统</li>
-<li>简化流程：砍掉不重要的分支流程，如下单页面的所有数据库查询；以下单成功作为秒杀成功标志。支付流程只要在1天内完成即可</li>
-<li>前端优化</li>
-</ul>
-<h2 id="其他">其他</h2><ul>
-<li>HTML静态化</li>
-<li>CDN内容分发网络</li>
-<li>应用层分布式设计</li>
-<li>硬件四层交换 F5</li>
-<li>软件四层交换 LVS</li>
-<li>Squid集群</li>
-<li>服务器分离：和主业务服务器隔离，同时做垂直切分</li>
-<li>数据库集群和库表散列</li>
-<li>缓存</li>
-<li>负载均衡</li>
-<li>七层交换 Haproxy Nginx</li>
-<li></li>
-</ul>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/bloomfilter-bigdata-tool/">
-                BloomFilter–大规模数据处理利器(解决空查问题)
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Bigdata/">Bigdata</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/bloomfilter-bigdata-tool/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/bloomfilter-bigdata-tool/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="BloomFilter–大规模数据处理利器">BloomFilter–大规模数据处理利器</h2><p>Bloom Filter是由Bloom在1970年提出的一种多哈希函数映射的快速查找算法。通常应用在一些需要快速判断某个元素是否属于集合，但是并不严格要求100%正确的场合</p>
-<hr>
-<h3 id="一-_实例">一. 实例</h3><p>为了说明Bloom Filter存在的重要意义，举一个实例：</p>
-<blockquote>
-<p>假设要你写一个网络爬虫程序（web crawler）。由于网络间的链接错综复杂，爬虫在网络间爬行很可能会形成“环”。为了避免形成“环”，就需要知道爬虫程序已经访问过那些URL。给一个URL，怎样知道爬虫程序是否已经访问过呢？稍微想想，就会有如下几种方案：</p>
-</blockquote>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 将访问过的<span class="keyword">URL</span>保存到数据库。</span><br><span class="line"><span class="number">2.</span> 用HashSet将访问过的<span class="keyword">URL</span>保存起来。那只需接近<span class="keyword">O</span>(<span class="number">1</span>)的代价就可以查到一个<span class="keyword">URL</span>是否被访问过了。</span><br><span class="line"><span class="number">3.</span> <span class="keyword">URL</span>经过MD5或SHA-<span class="number">1</span>等单向哈希后再保存到HashSet或数据库。</span><br><span class="line"><span class="number">4.</span> Bit-<span class="keyword">Map</span>方法。建立一个<span class="keyword">BitSet</span>，将每个<span class="keyword">URL</span>经过一个哈希函数映射到某一位。</span><br></pre></td></tr></table></figure>
-<p>方法1~3都是将访问过的URL完整保存，方法4则只标记URL的一个映射位。</p>
-<h4 id="缺点">缺点</h4><p>以上方法在数据量较小的情况下都能完美解决问题，但是当数据量变得非常庞大时问题就来了。<br>　　方法1的缺点：数据量变得非常庞大后关系型数据库查询的效率会变得很低。而且每来一个URL就启动一次数据库查询是不是太小题大做了？<br>　　方法2的缺点：太消耗内存。随着URL的增多，占用的内存会越来越多。就算只有1亿个URL，每个URL只算50个字符，就需要5GB内存。<br>　　方法3：由于字符串经过MD5处理后的信息摘要长度只有128Bit，SHA-1处理后也只有160Bit，因此方法3比方法2节省了好几倍的内存。<br>　　方法4消耗内存是相对较少的，但缺点是单一哈希函数发生冲突的概率太高。还记得数据结构课上学过的Hash表冲突的各种解决方法么？若要降低冲突发生的概率到1%，就要将BitSet的长度设置为URL个数的100倍。</p>
-<h3 id="二-_Bloom_Filter的算法">二. Bloom Filter的算法</h3><blockquote>
-<p>废话说到这里，下面引入本篇的主角–Bloom Filter。其实上面方法4的思想已经很接近Bloom Filter了。方法四的致命缺点是冲突概率高，为了降低冲突的概念，Bloom Filter使用了多个哈希函数，而不是一个。</p>
-</blockquote>
-<h4 id="Bloom_Filter算法如下：">Bloom Filter算法如下：</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建一个<span class="keyword">m</span>位BitSet，先将所有位初始化为0，然后选择k个不同的哈希函数。第i个哈希函数对字符串str哈希的结果记为<span class="keyword">h</span>（i，str），且<span class="keyword">h</span>（i，str）的范围是0到<span class="keyword">m</span>-1 。</span><br></pre></td></tr></table></figure>
-<h4 id="(1)_加入字符串过程">(1) 加入字符串过程</h4><p>　　下面是每个字符串处理的过程，首先是将字符串str“记录”到BitSet中的过程：</p>
-<blockquote>
-<p>对于字符串str，分别计算h（1，str），h（2，str）…… h（k，str）。然后将BitSet的第h（1，str）、h（2，str）…… h（k，str）位设为1。<br> <img src="http://www.dbafree.net/wp-content/uploads/2011/05/clip_image0012-300x115.jpg" alt=""></p>
-</blockquote>
-<p>很简单吧？这样就将字符串str映射到BitSet中的k个二进制位了。</p>
-<h4 id="(2)_检查字符串是否存在的过程">(2) 检查字符串是否存在的过程</h4><p>下面是检查字符串str是否被BitSet记录过的过程：</p>
-<blockquote>
-<p>对于字符串str，分别计算h（1，str），h（2，str）…… h（k，str）。然后检查BitSet的第h（1，str）、h（2，str）…… h（k，str）位是否为1，若其中任何一位不为1则可以判定str一定没有被记录过。若全部位都是1，则“认为”字符串str存在。</p>
-<p>若一个字符串对应的Bit不全为1，则可以肯定该字符串一定没有被Bloom Filter记录过。（这是显然的，因为字符串被记录过，其对应的二进制位肯定全部被设为1了）</p>
-<p>但是若一个字符串对应的Bit全为1，实际上是不能100%的肯定该字符串被Bloom Filter记录过的。（因为有可能该字符串的所有位都刚好是被其他字符串所对应）这种将该字符串划分错的情况，称为false positive 。</p>
-</blockquote>
-<h4 id="(3)_删除字符串过程">(3) 删除字符串过程</h4><blockquote>
-<p>字符串加入了就被不能删除了，因为删除会影响到其他字符串。实在需要删除字符串的可以使用Counting bloomfilter(CBF)，这是一种基本Bloom Filter的变体，CBF将基本Bloom Filter每一个Bit改为一个计数器，这样就可以实现删除字符串的功能了。</p>
-</blockquote>
-<p>Bloom Filter跟单哈希函数Bit-Map不同之处在于：Bloom Filter使用了k个哈希函数，每个字符串跟k个bit对应。从而降低了冲突的概率。</p>
-<h3 id="三-_Bloom_Filter参数选择">三. Bloom Filter参数选择</h3><h4 id="(1)哈希函数选择">(1)哈希函数选择</h4><blockquote>
-<p>哈希函数的选择对性能的影响应该是很大的，一个好的哈希函数要能近似等概率的将字符串映射到各个Bit。选择k个不同的哈希函数比较麻烦，一种简单的方法是选择一个哈希函数，然后送入k个不同的参数。</p>
-</blockquote>
-<h4 id="(2)_m,n,k值，我们如何取值">(2) m,n,k值，我们如何取值</h4><p>我们定义：</p>
-<blockquote>
-<p>可能把不属于这个集合的元素误认为属于这个集合（False Positive）<br>不会把属于这个集合的元素误认为不属于这个集合（False Negative）。</p>
-<p>哈希函数的个数k、位数组大小m、加入的字符串数量n的关系。哈希函数个数k取10，位数组大小m设为字符串个数n的20倍时，false positive发生的概率是0.0000889 ，即10万次的判断中，会存在9次误判，对于一天1亿次的查询，误判的次数为9000次。 </p>
-</blockquote>
-<h4 id="算法分析：">算法分析：</h4><blockquote>
-<p>我们假设 <code>kn&lt;m</code> 且各个哈希函数是完全随机的。当集合<code>S={x1, x2,…,xn}</code>的所有元素都被k个哈希函数映射到m位的位数组中时，这个位数组中某一位还是0的概率是：<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/1.jpg" alt=""></p>
-<p>False Positive的概率是：<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/2-300x62.jpg" alt=""></p>
-<p>p’表示1的概率,k次方表示8次hash都为1的概率。<br> 当 k = ln 2 * m/n 时，右边的等式值最小，此时等式转变成:<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/3.jpg" alt=""> </p>
-</blockquote>
-<h3 id="四-_Bloom_Filter实现代码（简易版）">四. Bloom Filter实现代码（简易版）</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">package org.magnus.utils;</span><br><span class="line"><span class="keyword">import</span> java.util.<span class="type">BitSet</span>;</span><br><span class="line">//传统的<span class="type">Bloom</span> filter 不支持从集合中删除成员。</span><br><span class="line">//<span class="type">Counting</span> <span class="type">Bloom</span> filter由于采用了计数，因此支持remove操作。</span><br><span class="line">//基于<span class="type">BitSet</span>来实现，性能上可能存在问题</span><br><span class="line">public class <span class="type">SimpleBloomFilter</span> &#123;</span><br><span class="line">    //<span class="type">DEFAULT_SIZE</span>为<span class="number">2</span>的<span class="number">25</span>次方</span><br><span class="line">    private <span class="keyword">static</span> final <span class="type">int</span> <span class="type">DEFAULT_SIZE</span> = <span class="number">2</span> &lt;&lt; <span class="number">24</span>;</span><br><span class="line">    /* 不同哈希函数的种子，一般应取质数,seeds数据共有<span class="number">7</span>个值，则代表采用<span class="number">7</span>种不同的<span class="type">HASH</span>算法 */</span><br><span class="line">    private <span class="keyword">static</span> final <span class="type">int</span>[] seeds = new <span class="type">int</span>[] &#123; <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">31</span>, <span class="number">37</span>, <span class="number">61</span> &#125;;</span><br><span class="line">    //<span class="type">BitSet</span>实际是由“二进制位”构成的一个<span class="type">Vector</span>。假如希望高效率地保存大量“开－关”信息，就应使用<span class="type">BitSet</span>.</span><br><span class="line">    //<span class="type">BitSet</span>的最小长度是一个长整数（<span class="type">Long</span>）的长度：<span class="number">64</span>位</span><br><span class="line">    private <span class="type">BitSet</span> bits = new <span class="type">BitSet</span>(<span class="type">DEFAULT_SIZE</span>);</span><br><span class="line">    /* 哈希函数对象 */</span><br><span class="line">    private <span class="type">SimpleHash</span>[] func = new <span class="type">SimpleHash</span>[seeds.length];</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) &#123;</span><br><span class="line">       <span class="type">String</span> value = <span class="string">"stone2083@yahoo.cn"</span>;</span><br><span class="line">       //定义一个filter，定义的时候会调用构造函数，即初始化七个hash函数对象所需要的信息。</span><br><span class="line">       <span class="type">SimpleBloomFilter</span> filter = new <span class="type">SimpleBloomFilter</span>();</span><br><span class="line">       //判断是否包含在里面。因为没有调用add方法，所以肯定是返回<span class="literal">false</span></span><br><span class="line">       <span class="type">System</span>.<span class="keyword">out</span>.println(filter.contains(value));</span><br><span class="line">       filter.add(value);</span><br><span class="line">       <span class="type">System</span>.<span class="keyword">out</span>.println(filter.contains(value));</span><br><span class="line">    &#125;</span><br><span class="line">    //构造函数</span><br><span class="line">    public <span class="type">SimpleBloomFilter</span>() &#123;</span><br><span class="line">       <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; seeds.length; i++) &#123;</span><br><span class="line">           //给出所有的hash值，共计seeds.length个hash值。共<span class="number">7</span>位。</span><br><span class="line">           //通过调用<span class="type">SimpleHash</span>.hash(),可以得到根据<span class="number">7</span>种hash函数计算得出的hash值。</span><br><span class="line">           //传入<span class="type">DEFAULT_SIZE</span>(最终字符串的长度），seeds[i](一个指定的质数)即可得到需要的那个hash值的位置。</span><br><span class="line">           func[i] = new <span class="type">SimpleHash</span>(<span class="type">DEFAULT_SIZE</span>, seeds[i]);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 将字符串标记到bits中，即设置字符串的<span class="number">7</span>个hash值函数为<span class="number">1</span></span><br><span class="line">    public <span class="type">void</span> add(<span class="type">String</span> value) &#123;</span><br><span class="line">       <span class="keyword">for</span> (<span class="type">SimpleHash</span> f : func) &#123;</span><br><span class="line">           bits.<span class="type">set</span>(f.hash(value), <span class="literal">true</span>);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //判断字符串是否已经被bits标记</span><br><span class="line">    public boolean contains(<span class="type">String</span> value) &#123;</span><br><span class="line">       //确保传入的不是空值</span><br><span class="line">       <span class="keyword">if</span> (value == null) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       boolean ret = <span class="literal">true</span>;</span><br><span class="line">       //计算<span class="number">7</span>种hash算法下各自对应的hash值，并判断</span><br><span class="line">       <span class="keyword">for</span> (<span class="type">SimpleHash</span> f : func) &#123;</span><br><span class="line">           //&amp;&amp;是boolen运算符，只要有一个为<span class="number">0</span>，则为<span class="number">0</span>。即需要所有的位都为<span class="number">1</span>，才代表包含在里面。</span><br><span class="line">           //f.hash(value)返回hash对应的位数值</span><br><span class="line">           //bits.get函数返回bitset中对应position的值。即返回hash值是否为<span class="number">0</span>或<span class="number">1</span>。</span><br><span class="line">           ret = ret &amp;&amp; bits.get(f.hash(value));</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    /* 哈希函数类 */</span><br><span class="line">    public <span class="keyword">static</span> class <span class="type">SimpleHash</span> &#123;</span><br><span class="line">       //cap为<span class="type">DEFAULT_SIZE</span>的值，即用于结果的最大的字符串长度。</span><br><span class="line">       //seed为计算hash值的一个给定key，具体对应上面定义的seeds数组</span><br><span class="line">       private <span class="type">int</span> cap;</span><br><span class="line">       private <span class="type">int</span> seed;</span><br><span class="line"></span><br><span class="line">       public <span class="type">SimpleHash</span>(<span class="type">int</span> cap, <span class="type">int</span> seed) &#123;</span><br><span class="line">           this.cap = cap;</span><br><span class="line">           this.seed = seed;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       //计算hash值的具体算法,hash函数，采用简单的加权和hash</span><br><span class="line">       public <span class="type">int</span> hash(<span class="type">String</span> value) &#123;</span><br><span class="line">           //<span class="type">int</span>的范围最大是<span class="number">2</span>的<span class="number">31</span>次方减<span class="number">1</span>，或超过值则用负数来表示</span><br><span class="line">           <span class="type">int</span> <span class="literal">result</span> = <span class="number">0</span>;</span><br><span class="line">           <span class="type">int</span> len = value.length();</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">              //数字和字符串相加，字符串转换成为<span class="type">ASCII</span>码</span><br><span class="line">              <span class="literal">result</span> = seed * <span class="literal">result</span> + value.charAt(i);</span><br><span class="line">              //<span class="type">System</span>.<span class="keyword">out</span>.println(<span class="literal">result</span>+<span class="string">"--"</span>+seed+<span class="string">"*"</span>+<span class="literal">result</span>+<span class="string">"+"</span>+value.charAt(i));</span><br><span class="line">           &#125;</span><br><span class="line">       //  <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"result="</span>+<span class="literal">result</span>+<span class="string">";"</span>+((cap - <span class="number">1</span>) &amp; <span class="literal">result</span>));</span><br><span class="line">       //  <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="number">414356308</span>*<span class="number">61</span>+'h');  执行此运算结果为负数，为什么？</span><br><span class="line">           //&amp;是java中的位逻辑运算，用于过滤负数（负数与进算转换成反码进行）。</span><br><span class="line">           <span class="keyword">return</span> (cap - <span class="number">1</span>) &amp; <span class="literal">result</span>;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="五：Bloom_Filter的优点及应用">五：Bloom Filter的优点及应用</h3><h4 id="优点：">优点：</h4><ul>
-<li>节约缓存空间（空值的映射），不再需要空值映射。</li>
-<li>减少数据库或缓存的请求次数。</li>
-<li>提升业务的处理效率以及业务隔离性。</li>
-</ul>
-<h4 id="缺点：">缺点：</h4><ul>
-<li>存在误判的概率。</li>
-<li>传统的Bloom Filter不能作删除操作。</li>
-</ul>
-<h4 id="使用场景">使用场景</h4><p>适用于特定场景，能够有效的解决数据库空查问题。</p>
-<blockquote>
-<p>以公司的某小表查询为例，该表每天查询量20亿次左右，且数据库中存在大量的下面的空查:<br>目前表中的记录为8w,即n的值为8w, m=20*n=160w，占用空间大小195KB。以type||CONTENT复合键作为key值，假设HASH次数k取值为6,误判率为:0.0303%(10000次中存在3次误判)。HASH次数的最优解为14，当k=14时，误判率为：0.014%(10000次中存在1-2次误判)。</p>
-</blockquote>
-<p>测试过程及结果如下（源代码见附件）：</p>
-<blockquote>
-<p>测试场景1：m=1600000;n=80000;最优解k=14;m/n=20;k的次数为:6;对1000w数据进行判定:<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/4-300x174.jpg" alt=""><br>测试结果：<br>2000w数据误判的记录为：3035，误判率约为0.03035%（和理论值0.0303%相差不大）。判断2000万数据的时间为25秒。平均一次判断时间为:2.5微秒。平均一次hash时间为0.417微秒。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>测试场景2：m=1600000;n=80000;最优解k=14;m/n=20;k的次数为:6;对2000w数据进行判定:<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/5-300x176.jpg" alt=""><br>测试结果：2000w数据误判的记录为：5839，误判率约为0.029%（理论值为0. 0303%）。判断1000万数据的时间为51秒。平均一次判断时间为:2.55微秒。平均一次hash时间为0.425微秒。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>测试场景3：m=1600000;n=80000;最优解k=14;m/n=20;k的次数为:14;对1000w数据进行判定 :<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/61-300x174.jpg" alt=""><br>测试结果：1000w数据误判的记录为：605，误判率约为0.00605%（和理论值0. 014%相差不大）。判断1000万数据的时间为37秒。平均一次判断时间为:3.7微秒。平均一次hash时间为0.265微秒。 </p>
-</blockquote>
-<hr>
-<blockquote>
-<p>测试场景4：m=1600000;n=80000;最优解k=14;m/n=20;k的次数为:14;对2000w数据进行判定:<br><img src="http://www.dbafree.net/wp-content/uploads/2011/05/7-300x172.jpg" alt=""><br>测试结果：2000w数据误判的记录为：1224，误判率约为0.00612%（理论值为0.014%）。判断1000万数据的时间为84秒。平均一次判断时间为:4.2微秒。平均一次hash时间为0.3微秒。</p>
-</blockquote>
-<h3 id="六：实施方案思考">六：实施方案思考</h3><blockquote>
-<p>适用于一些黑名单,垃圾邮件等的过滤。<br>当位数组较小时，可以作本地jvm缓存。<br>当位数组较大时，可以做基于tair的缓存，此时可能需要开辟单独的应用来提供查询支持。<br>此方案，适用的应用场景需要能够容忍，位数组和的延时。</p>
-</blockquote>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/objective-c-and-core-foundation-memory-managment/">
-                Objective-C 和 Core Foundation 对象相互转换的内存管理总结
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/objective-c-and-core-foundation-memory-managment/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Objective-C_和_Core_Foundation_对象相互转换的内存管理总结">Objective-C 和 Core Foundation 对象相互转换的内存管理总结</h2><p>iOS允许Objective-C 和 Core Foundation 对象之间可以轻松的转换，拿 NSString 和 CFStringRef 来说，直接转换豪无压力：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (<span class="built_in">CFStringRef</span>)a<span class="built_in">NSString</span>;  </span><br><span class="line"><span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = (<span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;</span><br></pre></td></tr></table></figure>
-<p>针对内存管理问题，ARC 可以帮忙管理 Objective-C 对象, 但是不支持 Core Foundation 对象的管理，所以转换后要注意一个问题：谁来释放使用后的对象。 本文重点总结一下类型转换后的内存管理。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1105,7 +1014,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">94</span>
+              <span class="site-state-item-count">100</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1119,7 +1028,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

@@ -1,0 +1,626 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="CFRunLoop,IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> CFRunLoop examples // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              CFRunLoop examples
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/default/">default</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/CFRunLoop-examples/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/CFRunLoop-examples/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="第一个">第一个</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include <span class="title">&lt;CoreFoundation/CoreFoundation.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_perform(<span class="keyword">void</span> *info __unused)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">"hello\n"</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_timer(<span class="built_in">CFRunLoopTimerRef</span> timer __unused, <span class="keyword">void</span> *info)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceSignal</span>(info);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">int</span>  </span><br><span class="line">main()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceRef</span> source;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceContext</span> source_context;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerRef</span> timer;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerContext</span> timer_context;  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;source_context, <span class="keyword">sizeof</span>(source_context));  </span><br><span class="line">    source_context<span class="variable">.perform</span> = _perform;  </span><br><span class="line">    source = <span class="built_in">CFRunLoopSourceCreate</span>(<span class="literal">NULL</span>, <span class="number">0</span>, &amp;source_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddSource</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), source, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;timer_context, <span class="keyword">sizeof</span>(timer_context));  </span><br><span class="line">    timer_context<span class="variable">.info</span> = source;  </span><br><span class="line">    timer = <span class="built_in">CFRunLoopTimerCreate</span>(<span class="literal">NULL</span>, <span class="built_in">CFAbsoluteTimeGetCurrent</span>(), <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, </span><br><span class="line">    _timer, &amp;timer_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddTimer</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), timer, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">CFRunLoopRun</span>();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="第二个：">第二个：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;dispatch/dispatch.h&gt;  </span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">int  </span><br><span class="line"><span class="function"><span class="title">main</span></span>()  </span><br><span class="line">&#123;  </span><br><span class="line">    dispatch_<span class="built_in">source</span>_t <span class="built_in">source</span>, timer;  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">source</span> = dispatch_<span class="built_in">source</span>_create(DISPATCH_SOURCE_TYPE_DATA_ADD, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>));  </span><br><span class="line">    dispatch_<span class="built_in">source</span>_<span class="built_in">set</span>_event_handler(<span class="built_in">source</span>, ^&#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"hello\n"</span>);  </span><br><span class="line">    &#125;);  </span><br><span class="line">    dispatch_resume(<span class="built_in">source</span>);  </span><br><span class="line">  </span><br><span class="line">    timer = dispatch_<span class="built_in">source</span>_create(DISPATCH_SOURCE_TYPE_TIMER, <span class="number">0</span>, <span class="number">0</span>, </span><br><span class="line">    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>));  </span><br><span class="line">    dispatch_<span class="built_in">source</span>_<span class="built_in">set</span>_timer(timer, DISPATCH_TIME_NOW, <span class="number">1</span>ull * NSEC_PER_SEC, <span class="number">0</span>);  </span><br><span class="line">    dispatch_<span class="built_in">source</span>_<span class="built_in">set</span>_event_handler(timer, ^&#123;  </span><br><span class="line">        dispatch_<span class="built_in">source</span>_merge_data(<span class="built_in">source</span>, <span class="number">1</span>);  </span><br><span class="line">    &#125;);  </span><br><span class="line">    dispatch_resume(timer);  </span><br><span class="line">  </span><br><span class="line">    dispatch_main();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>功能是向main线程中加入两个input source，一个是timer，一个是自定义input source，然后这个timer中触发自定义source，于是调用其回调方法。 在这儿timer触发source来调用回调方法，显得有点多此一举。但是在多线程开发当中，这就很有用了，我们可以把这个自定义的source加入到子线程的runloop中，然后在主线程中触发source，这样在子线程中就可以调用回调方法了。  这样做的好久是什么呀？ 节约用电，因为runloop一般情况下是休眠的，只有事件触发的时候才开始工作。 这与windows下的waitforsingleobject有点类似， 与多线程中的信号量，事件也有些雷同。</p>
+<p>上面说到的input source（输入源例）到底是什么呢？输入源样例可能包括用户输入设备（如点击button）、网络链接(socket收到数据)、定期或时间延迟事件（NSTimer），还有异步回调(NSURLConnection的异步请求)。然后我们对其进行了分类，有三类可以被runloop监控，分别是sources、timers、observers。<br>在苹果文档中对runloop有详细介绍，下面参考中有中文版。那文档中的代码关于NSPort的部份在iOS上是不行的，不过可以用其CF方法实现，在我的demo中有展示。</p>
+<p>每一个线程都有自己的runloop, 主线程是默认开启的，创建的子线程要手动开启，因为NSApplication 只启动main applicaiton thread。<br>没有source的runloop会自动结束。<br>事件由NSRunLoop 类处理。<br>RunLoop监视操作系统的输入源，如果没有事件数据， 不消耗任何CPU 资源。<br>如果有事件数据，run loop 就发送消息，通知各个对象。<br>用 currentRunLoop 获得 runloop的 reference<br>给 runloop 发送run 消息启动它。</p>
+<p>文档中介绍下面四种情况是使用runloop的场合：<br> 1.使用端口或自定义输入源和其他线程通信<br> 2.子线程中使用了定时器<br> 3.cocoa中使用任何performSelector到了线程中运行方法<br> 4.使线程履行周期性任务，（我把这个理解与2相同）<br>如果我们在子线程中用了NSURLConnection异步请求，那也需要用到runloop，不然线程退出了，相应的delegate方法就不能触发。</p>
+<h3 id="用户事件事例：累计更新">用户事件事例：累计更新</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dispatch_source_t source = dispatch_source_create<span class="list">(<span class="keyword">DISPATCH_SOURCE_TYPE_DATA_ADD</span>, <span class="number">0</span>, <span class="number">0</span>, dispatch_get_main_queue<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">dispatch_source_set_event_handler<span class="list">(<span class="keyword">source</span>, ^&#123;</span><br><span class="line">    [progressIndicator incrementBy<span class="keyword">:dispatch_source_get_data</span><span class="list">(<span class="keyword">source</span>)</span>]<span class="comment">;</span></span><br><span class="line">&#125;)</span><span class="comment">;</span></span><br><span class="line">dispatch_resume<span class="list">(<span class="keyword">source</span>)</span><span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">dispatch_apply<span class="list">([array count], globalQueue, ^<span class="list">(<span class="keyword">size_t</span> index)</span> &#123;</span><br><span class="line">    // do some work on data at index</span><br><span class="line">    dispatch_source_merge_data<span class="list">(<span class="keyword">source</span>, <span class="number">1</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>假设你已经将进度条的min/max值设置好了，那么这段代码就完美了。数据会被并发处理。当每一段数据完成后，会通知dispatch source并将dispatch source data加1，这样我们就认为一个单元的工作完成了。事件句柄根据已完成的工作单元来更新进度条。若主线程比较空闲并且这些工作单元进行的比较慢，那么事件句柄会在每个工作单元完成的时候被调用，实时更新。如果主线程忙于其他工作，或者工作单元完成速度很快，那么完成事件会被联结起来，导致进度条只在主线程变得可用时才被更新，并且一次将积累的改变更新至GUI。使用的dispatch source而不使用dispatch_async的唯一原因就是利用联结的优势。</p>
+<h3 id="内建事件">内建事件</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t globalQueue = dispatch_get_global_queue<span class="list">(<span class="keyword">DISPATCH_QUEUE_PRIORITY_DEFAULT</span>, <span class="number">0</span>)</span><span class="comment">;</span></span><br><span class="line">dispatch_source_t stdinSource = dispatch_source_create<span class="list">(<span class="keyword">DISPATCH_SOURCE_TYPE_READ</span>,</span><br><span class="line">                                                       STDIN_FILENO,</span><br><span class="line">                                                       <span class="number">0</span>,</span><br><span class="line">                                                       globalQueue)</span><span class="comment">;</span></span><br><span class="line">dispatch_source_set_event_handler<span class="list">(<span class="keyword">stdinSource</span>, ^&#123;</span><br><span class="line">    char buf[<span class="number">1024</span>]<span class="comment">;</span></span><br><span class="line">    int len = read<span class="list">(<span class="keyword">STDIN_FILENO</span>, buf, sizeof<span class="list">(<span class="keyword">buf</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">    if<span class="list">(<span class="keyword">len</span> &gt; <span class="number">0</span>)</span></span><br><span class="line">        NSLog<span class="list">(@<span class="string">"Got data from stdin: %.*s"</span>, len, buf)</span><span class="comment">;</span></span><br><span class="line">&#125;)</span><span class="comment">;</span></span><br><span class="line">dispatch_resume<span class="list">(<span class="keyword">stdinSource</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这是标准的UNIX方式来处理事务的好处，不用去写loop。如果使用经典的 read调用，我们还得万分留神，因为返回的数据可能比请求的少，还得忍受无厘头的“errors”，比如 EINTR (系统调用中断)。使用GCD，我们啥都不用管，就从这些蛋疼的情况里解脱了。如果我们在文件描述符中留下了未读取的数据，GCD会再次调用我们的句柄。<br>对于标准输入，这没什么问题，但是对于其他文件描述符，我们必须考虑在完成读写之后怎样清除描述符。对于dispatch source还处于活跃状态时，我们决不能关闭描述符。如果另一个文件描述符被创建了（可能是另一个线程创建的）并且新的描述符刚好被分配了相同的数字，那么你的dispatch source可能会在不应该的时候突然进入读写状态。de这个bug可不是什么好玩的事儿。<br>适当的清除方式是使用 dispatch_source_set_cancel_handler，并传入一个block来关闭文件描述符。然后我们使用 dispatch_source_cancel来取消dispatch source，使得句柄被调用，然后文件描述符被关闭。<br>使用其他dispatch source类型也差不多。总的来说，你提供一个source（mach port、文件描述符、进程ID等等）的区分符来作为diapatch source的句柄。mask参数通常不会被使用，但是对于 DISPATCH_SOURCE_TYPE_PROC 来说mask指的是我们想要接受哪一种进程事件。然后我们提供一个句柄，然后恢复这个source（前面我加粗字体所说的，得先恢复），搞定。dispatch source也提供一个特定于source的data，我们使用 dispatch_source_get_data函数来访问它。例如，文件描述符会给出大致可用的字节数。进程source会给出上次调用之后发生的事件的mask。具体每种source给出的data的含义，</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CFRunLoop/"> #CFRunLoop </a>
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/30/UITableView-Cancel-Request/">UITableView Cancel Request</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/30/Dispatch-Sources/">Dispatch Sources</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">100</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一个"><span class="nav-number">1.</span> <span class="nav-text">第一个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二个："><span class="nav-number">2.</span> <span class="nav-text">第二个：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户事件事例：累计更新"><span class="nav-number">3.</span> <span class="nav-text">用户事件事例：累计更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内建事件"><span class="nav-number">4.</span> <span class="nav-text">内建事件</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/06/30/CFRunLoop-examples/';
+      var disqus_title = 'CFRunLoop examples';
+      var disqus_url = 'http://ytlvy.com/2015/06/30/CFRunLoop-examples/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
