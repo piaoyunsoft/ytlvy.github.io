@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="autolayout," />
+  <meta name="keywords" content="IOS,dispatch semaphore," />
 
 
 
@@ -58,7 +58,7 @@
 
 
 
-  <title> AutoLayout -- Content Compression Resistance & Content Hugging // Yt's Blog </title>
+  <title> Dispatch_semaphore // Yt's Blog </title>
 </head>
 
 <body>
@@ -146,7 +146,7 @@
           
           
             
-              AutoLayout -- Content Compression Resistance & Content Hugging
+              Dispatch_semaphore
             
           
         </h1>
@@ -154,7 +154,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-08
+          發表於 2015-06-30
         </span>
 
         
@@ -174,8 +174,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/"></span>
+            <a href="/2015/06/30/Dispatch-semaphore/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-semaphore/"></span>
             </a>
           </span>
           
@@ -189,20 +189,14 @@
       
 
       
-        <h2 id="Content_Compression_Resistance_&amp;&amp;_Content_Hugging">Content Compression Resistance &amp;&amp; Content Hugging</h2><p>Auto Layout中, 存在Content Compression Resistance 和 Content Hugging 这两个概念.这两个概念是在<code>固有内容尺寸</code>（Intrinsic Content Size）之上起作用的.</p>
-<h3 id="Intrinsic_Content_Size">Intrinsic Content Size</h3><p>包含内容的UI控件, 由内容多少而决定的大小规则.</p>
-<h3 id="Content_Compression_Resistance_&amp;_Content_Hugging">Content Compression Resistance &amp; Content Hugging</h3><ol>
-<li>内容大小改变是指, 内容显示内容所占空间的长度来说的.</li>
-<li><code>内容抗压指数</code>，在父视图变小时, 会根据抗压指数来缩小各子控件;</li>
-<li><code>内容拥抱指数</code>, 内容越集中于控件中心, 周围空白越小.</li>
-</ol>
-<h3 id="例子">例子</h3><p>假设，你有一个下面这样的按钮：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[       Click Me        ]</span><br></pre></td></tr></table></figure></p>
-<p>按钮与其父视图之间的边距约束优先级是500。<br>然后，如果按钮的吸附性优先级（Hugging priority）大于500，按钮看起来会是这样：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Click Me]</span><br></pre></td></tr></table></figure>
-<p>如果，吸附性优先级小于500，按钮会是这样：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[       Click Me        ]</span><br></pre></td></tr></table></figure></p>
-<p>然后，如果现在父视图收缩了，按钮的压缩阻力优先级（Compression Resistance priority）大于500，它看起来会是这样：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Click Me]</span><br></pre></td></tr></table></figure></p>
-<p>否则，如果压缩阻力优先级小于500，它会是这样：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Cli..]</span><br></pre></td></tr></table></figure></p>
-<p>如果不是这样，则很可能是有一些其他的约束扰乱了你的整个布局！ 例如，可能你的边距约束优先级是1000。或者你可能有一个优先级较高的宽度约束。如果遇到这种情况，可以试试“Editor &gt; Size to Fit Content”菜单命令。</p>
+        <h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
+<h3 id="functions">functions</h3><ul>
+<li>dispatch_semaphore_create</li>
+<li>dispatch_semaphore_wait (减少一个信号量)</li>
+<li>dispatch_semaphore_signal (增加一个信号量)</li>
+</ul>
+<h3 id="实例">实例</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)test4&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">3</span>;</span><br><span class="line">    __block <span class="keyword">int</span> mainData = <span class="number">0</span>;</span><br><span class="line">    __block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</span><br><span class="line">    __block dispatch_semaphore_t sem = dispatch_semaphore_create(<span class="number">2</span>);</span><br><span class="line">    dispatch_queue_t ioQueue = dispatch_queue_create(<span class="string">"com.dreamingwish.imagegcd.io"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue = dispatch_queue_create(<span class="string">"StudyBlocks"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_group_t <span class="keyword">group</span> = dispatch_group_create();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt;<span class="number">100</span>; i++) &#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);  <span class="comment">// -1 非零即通过</span></span><br><span class="line">            dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line"><span class="comment">//                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">                dispatch_group_async(<span class="keyword">group</span>, queue, ^&#123;</span><br><span class="line">                    <span class="keyword">sum</span> += data;</span><br><span class="line">                    </span><br><span class="line">                    __block <span class="keyword">int</span> nsum = <span class="keyword">sum</span>;</span><br><span class="line">                    dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line">                        NSLog(@<span class="string">" &gt;&gt; Sum: %d"</span>, nsum);</span><br><span class="line">                        </span><br><span class="line">                        dispatch_semaphore_signal(sem);  <span class="comment">// +1</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                    </span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dispatch_group_wait(<span class="keyword">group</span>, DISPATCH_TIME_FOREVER);</span><br><span class="line"><span class="comment">//    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>; j&lt;<span class="number">5</span>; j++) &#123;</span><br><span class="line">        mainData++;</span><br><span class="line">        NSLog(@<span class="string">" &gt;&gt; MainData: %d"</span>, mainData);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    dispatch_semaphore_signal(sem);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)test3&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">3</span>;</span><br><span class="line">    __block <span class="keyword">int</span> mainData = <span class="number">0</span>;</span><br><span class="line">    __block <span class="keyword">dispatch_semaphore_t</span> sem = dispatch_semaphore_create(<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">dispatch_queue_t</span> <span class="built_in">queue</span> = dispatch_queue_create(<span class="string">"StudyBlocks"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    </span><br><span class="line">    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span><br><span class="line">    </span><br><span class="line">    dispatch_async(<span class="built_in">queue</span>, ^&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            sum += data;</span><br><span class="line">            NSLog(@<span class="string">" &gt;&gt; Sum: %d"</span>, sum);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        dispatch_semaphore_signal(sem);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>; j&lt;<span class="number">5</span>; j++) &#123;</span><br><span class="line">        mainData++;</span><br><span class="line">        NSLog(@<span class="string">" &gt;&gt; MainData: %d"</span>, mainData);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -211,7 +205,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/autolayout/"> #autolayout </a>
+            <a href="/tags/IOS/"> #IOS </a>
+          
+            <a href="/tags/dispatch-semaphore/"> #dispatch semaphore </a>
           
         </div>
       
@@ -220,13 +216,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/11/wget/">wget</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/08/objc-runtime-method-Cache/">objc runtime method Cache</a>
+              <a href="/2015/06/30/DispatchOnce/">DispatchOnce</a>
             
           </div>
         </div>
@@ -367,7 +361,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Content_Compression_Resistance_&&_Content_Hugging"><span class="nav-number">1.</span> <span class="nav-text">Content Compression Resistance && Content Hugging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intrinsic_Content_Size"><span class="nav-number">1.1.</span> <span class="nav-text">Intrinsic Content Size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content_Compression_Resistance_&_Content_Hugging"><span class="nav-number">1.2.</span> <span class="nav-text">Content Compression Resistance & Content Hugging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">1.3.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dispatch_semaphore"><span class="nav-number">1.</span> <span class="nav-text">Dispatch_semaphore</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#functions"><span class="nav-number">1.1.</span> <span class="nav-text">functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">1.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -604,9 +598,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'ytlvy';
-      var disqus_identifier = '2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/';
-      var disqus_title = 'AutoLayout -- Content Compression Resistance & Content Hugging';
-      var disqus_url = 'http://ytlvy.com/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/';
+      var disqus_identifier = '2015/06/30/Dispatch-semaphore/';
+      var disqus_title = 'Dispatch_semaphore';
+      var disqus_url = 'http://ytlvy.com/2015/06/30/Dispatch-semaphore/';
 
       (function(){
         var dsq = document.createElement('script');

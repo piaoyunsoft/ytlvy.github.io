@@ -148,6 +148,84 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/">
+                IOS8.3 NSMutableURLRequest需手动设置Content-Type
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios8-nsmutableurlrequest-bugfix/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>引用：<a href="http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update" target="_blank" rel="external">http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update</a></p>
+<p>IOS8.3开始 NSMutableURLRequest需要手动设置Content-Type，否则导致服务器接受参数失败的错误，请添加如下代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[request <span class="built_in">set</span>Value:@<span class="string">"application/json"</span> <span class="keyword">for</span>HTTPHeaderField:@<span class="string">"Content-Type"</span>];</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios-third-party-frames-conflict-bugfix/">
                 第三方类库重复冲突解决
               </a>
@@ -996,82 +1074,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-cgimage-bugfix/">
-                CGImage绘制倒置修复
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-cgimage-bugfix/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cgimage-bugfix/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* mars = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.png"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> sz = [mars size];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsCG = [mars <span class="built_in">CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> szCG = <span class="built_in">CGSizeMake</span>(<span class="built_in">CGImageGetWidth</span>(marsCG), <span class="built_in">CGImageGetHeight</span>(marsCG));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsLeft = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsRight = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(szCG<span class="variable">.width</span>/<span class="number">2.0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="built_in">CGSizeMake</span>(sz<span class="variable">.width</span>*<span class="number">1.5</span>, sz<span class="variable">.height</span>), <span class="literal">NO</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsLeft scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsRight scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(sz<span class="variable">.width</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* im = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(marsLeft); <span class="built_in">CGImageRelease</span>(marsRight);</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1110,7 +1112,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">101</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1124,7 +1126,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

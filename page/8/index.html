@@ -148,6 +148,115 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios-global-style/">
+                全局样式
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-global-style/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-global-style/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="全局样式">全局样式</h3><pre><code>- (<span class="keyword">void</span>)setStyle{
+    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle: <span class="built_in">UIStatusBarStyleLightContent</span>];
+
+    [[<span class="built_in">UIBarButtonItem</span> appearanceWhenContainedIn:[<span class="built_in">UINavigationBar</span> class], <span class="literal">nil</span>] setTitleTextAttributes:
+     @{<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> blackColor],
+       <span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>]
+       } forState:<span class="built_in">UIControlStateNormal</span>];
+
+    [[<span class="built_in">UIBarButtonItem</span> appearanceWhenContainedIn:[<span class="built_in">UINavigationBar</span> class], <span class="literal">nil</span>] setTitleTextAttributes:
+     @{<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> whiteColor],
+       <span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>]
+       } forState:<span class="built_in">UIControlStateHighlighted</span>];
+
+    <span class="comment">// [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xFC6259)];</span>
+
+    <span class="comment">// Uncomment to change the color of back button</span>
+    [[<span class="built_in">UINavigationBar</span> appearance] setTintColor:[<span class="built_in">UIColor</span> whiteColor]];
+
+    <span class="comment">// Uncomment to assign a custom backgroung image</span>
+    <span class="comment">// [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavBar-Background"] forBarMetrics:UIBarMetricsDefault];</span>
+
+    <span class="comment">// Uncomment to change the back indicator image</span>
+    <span class="comment">// [[UINavigationBar appearance] setBackgroundColor:[UIColor blackColor]];</span>
+    <span class="comment">// [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@""]];</span>
+
+    <span class="comment">// Uncomment to change the font style of the title</span>
+    <span class="built_in">NSShadow</span> *shadow = [[<span class="built_in">NSShadow</span> alloc] init];
+    shadow<span class="variable">.shadowColor</span> = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.0</span> green:<span class="number">0.0</span> blue:<span class="number">0.0</span> alpha:<span class="number">0.8</span>];
+    shadow<span class="variable">.shadowOffset</span> = <span class="built_in">CGSizeMake</span>(<span class="number">0</span>, <span class="number">1</span>);
+
+    [[<span class="built_in">UINavigationBar</span> appearance] setTitleTextAttributes: [<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys:[<span class="built_in">UIColor</span> colorWithRed:<span class="number">245.0</span>/<span class="number">255.0</span> green:<span class="number">245.0</span>/<span class="number">255.0</span> blue:<span class="number">245.0</span>/<span class="number">255.0</span> alpha:<span class="number">1.0</span>], <span class="built_in">NSForegroundColorAttributeName</span>,shadow, <span class="built_in">NSShadowAttributeName</span>,[<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>], <span class="built_in">NSFontAttributeName</span>, <span class="literal">nil</span>]];
+    [[<span class="built_in">UINavigationBar</span> appearance] setTitleVerticalPositionAdjustment:<span class="number">0.0</span> forBarMetrics:<span class="built_in">UIBarMetricsDefault</span>];
+}
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios-animation/">
                 ios 动画
               </a>
@@ -905,85 +1014,6 @@ fileURL = [ <span class="built_in">NSURL</span> fileURLWithPath: <span class="st
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/duan-dian-xu-chuan/">
-                断点续传
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/duan-dian-xu-chuan/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/duan-dian-xu-chuan/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <pre><code>[request <span class="string">addValue:</span>@<span class="string">"bytes=500-"</span> <span class="string">forHTTPHeaderField:</span>@<span class="string">"Range"</span>];
-_fileHandle = [NSFileHandle <span class="string">fileHandleForWritingAtPath:</span>_tempFilePath];
-_fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number">0</span>;
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1022,7 +1052,7 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">101</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1036,7 +1066,7 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

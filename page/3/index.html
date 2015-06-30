@@ -148,6 +148,93 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/06/c-storage-classes/">
+                C Storage Classes
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/C/">C</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/c-storage-classes/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/c-storage-classes/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="C_Storage_Classes">C Storage Classes</h2><p>There are 4 storage classes in C: auto, register, static &amp; extern.</p>
+<h3 id="static">static</h3><p>When it comes to storage classes, static means one of two things.</p>
+<ol>
+<li>A static variable inside a method or function retains its value between invocations.</li>
+<li>A static variable declared globally can called by any function or method, so long as those functions appear in the same file as the static variable. The same goes for static functions.</li>
+</ol>
+<h3 id="Static_Singletons">Static Singletons</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">id</span> _sharedInstance = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    dispath_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">        <span class="comment">//any config</span></span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="keyword">return</span> _sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/c-storage-classes/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/06/ios-encodings/">
                 ios encodings
               </a>
@@ -1002,104 +1089,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/30/ios-reverse-tutorial/">
-                ios reverse tutorial
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/reverse/">reverse</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/30/ios-reverse-tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse-tutorial/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="setting_platform">setting platform</h2><h3 id="jailbreak">jailbreak</h3><h3 id="add_sources">add sources</h3><pre><code><span class="number">1</span>. apt.<span class="number">178</span><span class="class">.com</span>
-<span class="number">2</span>. apt<span class="class">.weiphone</span><span class="class">.com</span>
-</code></pre><h3 id="install_tools">install tools</h3><pre><code><span class="label">openssh</span>
-<span class="keyword">BigBoss </span>Recommended tools
-<span class="label">MobileTerminal</span>
-</code></pre><h3 id="ssh_login">ssh login</h3><pre><code><span class="keyword">user</span>: <span class="literal">root</span> pwd:alpine
-change <span class="literal">password</span> <span class="constant">G</span>JJ123456
-</code></pre><h3 id="update">update</h3><pre><code>apt-<span class="built_in">get</span> <span class="keyword">update</span>
-apt-<span class="built_in">get</span> upgrade
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/30/ios-reverse-tutorial/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1138,7 +1127,7 @@ apt-<span class="built_in">get</span> upgrade
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">101</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1152,7 +1141,7 @@ apt-<span class="built_in">get</span> upgrade
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
