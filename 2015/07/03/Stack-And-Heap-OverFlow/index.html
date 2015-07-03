@@ -1,0 +1,662 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Heap,OverFlow,Stack," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Stack And Heap OverFlow // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Stack And Heap OverFlow
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-03
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/03/Stack-And-Heap-OverFlow/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/03/Stack-And-Heap-OverFlow/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>翻译自<a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html" target="_blank" rel="external">https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html</a></p>
+<h2 id="栈溢出">栈溢出</h2><blockquote>
+<p>在大部分操作系统中, 每个程序拥有一个<strong><em>栈</em></strong>(多线程程序,每个线程拥有一个单独的栈), 栈用于局部变量的存储.<br>栈被划分为单元, 此单元被成为帧(frame), 每个帧包含了某个函数的某一调用的全部数据.这些数据包含: 函数参数, 全部的临时变量,和 linkage 信息(就是调用函数的地址. 以便当前代码执行完毕后, 返回原位置继续执行). 通过配置编译参数,也可以包含下一帧的顶部地址.数据的布局以及排序,由操作系统决定,不同系统略有差异.<br>当函数被调用的时候, 一个新的栈帧被添加到栈的顶部. 当函数返回时,顶部的栈帧被移除.在执行过程中, 程序只能直接访问栈顶帧得数据(指针除外, 但是不建议如此设计).这种设计,方便了递归调用的实现, 因为每个子递归调用拥有独立的临时变量和参数备份.<br>下图介绍了栈的组织结构.(这只是示意图, 实际情况要根据 cpu设计来决定)</p>
+</blockquote>
+<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/stack.gif" alt=""></p>
+<p><img src="http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/Memory-Layout-300x255.gif" alt="Memory Layout of C Programs"></p>
+<blockquote>
+<p>通常情况下, 程序应该检测所有的输入数据, 来确认此数据是否符合需求.不幸的是, 很多情况下, 程序员都假定用户输入是没有危害的.<br>当程序需要将数据存入固定大小的 buffer 时, 将发生灾难性后果. 恶意的攻击者可能提供大于存储区大小的数据, 因为函数只是在栈帧中分配了有限的空间, 这个数据会覆盖栈帧中得其他数据.<br>下面的例子, 演示了一个聪明的攻击者,可以通过这个技术来覆盖函数的返回值区域,来指向他自己的代码块.然后当此函数执行完毕,将不会按照原设计返回调用函数 funcB, 而是跳转到了攻击者的恶意代码.</p>
+</blockquote>
+<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/cracked_stack.jpg" alt="Figure 2-2  Stack after malicious buffer overflow"></p>
+<p>除了攻击函数执行链( linkage )外, 攻击者可以通过更改临时变量的值,以及函数参数的方式来造成破坏.</p>
+<h3 id="个人理解">个人理解</h3><ol>
+<li>由于栈是从高地址到低地址(high -&gt; low)增长的</li>
+<li><code>main</code> 函数作为入口, 系统调用 main 函数的栈帧(只是部分数据, 因为系统函数的变量等已经入栈不再考虑)将第一个入栈.因此位于栈底,也就是说位于高地址位, 同时位于下图的顶部位置.</li>
+<li>此栈帧入栈顺序 <code>main 函数参数列表</code>(逆序入栈) ==&gt; <code>main 函数返回地址</code> (被调用的下一条语句的地址)</li>
+<li><code>main</code> 函数栈帧 生成并入栈数据: <code>系统函数 EBP 地址</code>  ==&gt; <code>main 函数临时变量列表</code>(正序入栈)</li>
+<li><code>main</code> 调用 <code>test</code> 入栈顺序: <code>test 参数列表</code>(逆序入栈,先入栈最后一个, 方便 EBP 计算获取) ==&gt; <code>test 返回地址</code></li>
+<li><code>test</code>函数栈帧 生成并入栈: <code>main 函数 EBP 地址</code> ==&gt; <code>test 临时变量</code>(正序入栈)</li>
+</ol>
+<h4 id="返回地址和EBP_入栈的意义">返回地址和EBP 入栈的意义</h4><ul>
+<li>返回地址用来当前调用执行完毕后, 进行下一代码执行.</li>
+<li>EBP需要保留和恢复, 是因为 当前函数的三种主要数据需要依靠 EBP 来计算获得:</li>
+<li><strong><em>临时变量</em></strong>(EBP - 4..  向下 低地址) -4为第一个临时变量</li>
+<li><strong><em>返回地址</em></strong>(EBP + 4)</li>
+<li><strong><em>参数列表</em></strong>( EBP + 8 .. 向上高地址) +8 为第一个参数</li>
+</ul>
+<p>所以当输入数据超过分配大小的时候, 数据会向高地址覆盖,而当前函数的执行的返回地址位于<br><img src="/images/stackLayout.gif" alt=""></p>
+<h4 id="函数调用栈">函数调用栈</h4><p>以下转自(<a href="http://hutaow.com/blog/2013/10/15/dump-stack/" target="_blank" rel="external">http://hutaow.com/blog/2013/10/15/dump-stack/</a>)</p>
+<p>要了解调用栈，首先需要了解函数的调用过程，下面用一段代码作为例子：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> test(<span class="type">int</span> a, <span class="type">int</span> b) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="literal">result</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="literal">result</span> = a + b;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> main(<span class="type">int</span> argc, <span class="type">char</span> *argv[]) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="literal">result</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="literal">result</span> = test(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    printf(<span class="string">"result = %d \r\n"</span>, <span class="literal">result</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用gcc编译，然后gdb反汇编main函数，看看它是如何调用add函数的：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(gdb) disassemble main </span><br><span class="line">Dump of assembler code for function main:</span><br><span class="line">   <span class="number">0x08048439</span> &lt;+<span class="number">0</span>&gt;:     <span class="keyword">push</span>   %<span class="literal">ebp</span></span><br><span class="line">   <span class="number">0x0804843a</span> &lt;+<span class="number">1</span>&gt;:     <span class="keyword">mov</span>    %<span class="literal">esp</span>,%<span class="literal">ebp</span></span><br><span class="line">   <span class="number">0x0804843c</span> &lt;+<span class="number">3</span>&gt;:     <span class="keyword">and</span>    <span class="number">$0</span>xfffffff0,%<span class="literal">esp</span></span><br><span class="line">   <span class="number">0x0804843f</span> &lt;+<span class="number">6</span>&gt;:     <span class="keyword">sub</span>    <span class="number">$0</span>x20,%<span class="literal">esp</span>       # 分配栈空间(栈向低地址方向生长)</span><br><span class="line">   <span class="number">0x08048442</span> &lt;+<span class="number">9</span>&gt;:     movl   <span class="number">$0</span>x0,<span class="number">0x1c</span>(%<span class="literal">esp</span>)  # 给result变量赋<span class="number">0</span>值</span><br><span class="line">   <span class="number">0x0804844a</span> &lt;+<span class="number">17</span>&gt;:    movl   <span class="number">$0</span>x2,<span class="number">0x4</span>(%<span class="literal">esp</span>)   # 将第<span class="number">2</span>个参数压栈(该参数偏移为<span class="literal">esp</span>+<span class="number">0x04</span>)</span><br><span class="line">   <span class="number">0x08048452</span> &lt;+<span class="number">25</span>&gt;:    movl   <span class="number">$0</span>x1,(%<span class="literal">esp</span>)      # 将第<span class="number">1</span>个参数压栈(该参数偏移为<span class="literal">esp</span>+<span class="number">0x00</span>)</span><br><span class="line">   <span class="number">0x08048459</span> &lt;+<span class="number">32</span>&gt;:    <span class="keyword">call</span>   <span class="number">0x804841c</span> &lt;<span class="keyword">add</span>&gt;  # 调用<span class="keyword">add</span>函数</span><br><span class="line">   <span class="number">0x0804845e</span> &lt;+<span class="number">37</span>&gt;:    <span class="keyword">mov</span>    %<span class="number">eax</span>,<span class="number">0x1c</span>(%<span class="literal">esp</span>)  # 将<span class="keyword">add</span>函数的返回值赋给result变量</span><br><span class="line">   <span class="number">0x08048462</span> &lt;+<span class="number">41</span>&gt;:    <span class="keyword">mov</span>    <span class="number">0x1c</span>(%<span class="literal">esp</span>),%<span class="number">eax</span></span><br><span class="line">   <span class="number">0x08048466</span> &lt;+<span class="number">45</span>&gt;:    <span class="keyword">mov</span>    %<span class="number">eax</span>,<span class="number">0x4</span>(%<span class="literal">esp</span>)</span><br><span class="line">   <span class="number">0x0804846a</span> &lt;+<span class="number">49</span>&gt;:    movl   <span class="number">$0</span>x8048510,(%<span class="literal">esp</span>)</span><br><span class="line">   <span class="number">0x08048471</span> &lt;+<span class="number">56</span>&gt;:    <span class="keyword">call</span>   <span class="number">0x80482f0</span> &lt;printf@plt&gt;</span><br><span class="line">   <span class="number">0x08048476</span> &lt;+<span class="number">61</span>&gt;:    <span class="keyword">mov</span>    <span class="number">$0</span>x0,%<span class="number">eax</span></span><br><span class="line">   <span class="number">0x0804847b</span> &lt;+<span class="number">66</span>&gt;:    <span class="keyword">leave</span>  </span><br><span class="line">   <span class="number">0x0804847c</span> &lt;+<span class="number">67</span>&gt;:    <span class="keyword">ret</span>    </span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，参数是在add函数调用前压栈，换句话说，参数压栈由调用者进行，参数存储在调用者的栈空间中，下面再看一下进入add函数后都做了什么：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(gdb) disassemble <span class="keyword">add</span></span><br><span class="line">Dump of assembler code for function <span class="keyword">add</span>:</span><br><span class="line">   <span class="number">0x0804841c</span> &lt;+<span class="number">0</span>&gt;:     <span class="keyword">push</span>   %<span class="literal">ebp</span>             # 将<span class="literal">ebp</span>压栈(保存函数调用者的栈基址)</span><br><span class="line">   <span class="number">0x0804841d</span> &lt;+<span class="number">1</span>&gt;:     <span class="keyword">mov</span>    %<span class="literal">esp</span>,%<span class="literal">ebp</span>        # 将<span class="literal">ebp</span>指向栈顶<span class="literal">esp</span>(设置当前函数的栈基址)</span><br><span class="line">   <span class="number">0x0804841f</span> &lt;+<span class="number">3</span>&gt;:     <span class="keyword">sub</span>    <span class="number">$0</span>x10,%<span class="literal">esp</span>       # 分配栈空间(栈向低地址方向生长)</span><br><span class="line">   <span class="number">0x08048422</span> &lt;+<span class="number">6</span>&gt;:     movl   <span class="number">$0</span>x0,-<span class="number">0x4</span>(%<span class="literal">ebp</span>)  # 给result变量赋<span class="number">0</span>值(该变量偏移为<span class="literal">ebp</span>-<span class="number">0x04</span>)</span><br><span class="line">   <span class="number">0x08048429</span> &lt;+<span class="number">13</span>&gt;:    <span class="keyword">mov</span>    <span class="number">0xc</span>(%<span class="literal">ebp</span>),%<span class="number">eax</span>   # 将第<span class="number">2</span>个参数的值赋给<span class="number">eax</span>(准备运算)</span><br><span class="line">   <span class="number">0x0804842c</span> &lt;+<span class="number">16</span>&gt;:    <span class="keyword">mov</span>    <span class="number">0x8</span>(%<span class="literal">ebp</span>),%<span class="number">edx</span>   # 将第<span class="number">1</span>个参数的值赋给<span class="number">edx</span>(准备运算)</span><br><span class="line">   <span class="number">0x0804842f</span> &lt;+<span class="number">19</span>&gt;:    <span class="keyword">add</span>    %<span class="number">edx</span>,%<span class="number">eax</span>        # 加法运算(<span class="number">edx</span>+<span class="number">eax</span>)，结果保存在<span class="number">eax</span>中</span><br><span class="line">   <span class="number">0x08048431</span> &lt;+<span class="number">21</span>&gt;:    <span class="keyword">mov</span>    %<span class="number">eax</span>,-<span class="number">0x4</span>(%<span class="literal">ebp</span>)  # 将运算结果<span class="number">eax</span>赋给result变量</span><br><span class="line">   <span class="number">0x08048434</span> &lt;+<span class="number">24</span>&gt;:    <span class="keyword">mov</span>    -<span class="number">0x4</span>(%<span class="literal">ebp</span>),%<span class="number">eax</span>  # 将result变量的值赋给<span class="number">eax</span>(<span class="number">eax</span>将作为函数返回值)</span><br><span class="line">   <span class="number">0x08048437</span> &lt;+<span class="number">27</span>&gt;:    <span class="keyword">leave</span>                   # 恢复函数调用者的栈基址(<span class="keyword">pop</span> %<span class="literal">ebp</span>)</span><br><span class="line">   <span class="number">0x08048438</span> &lt;+<span class="number">28</span>&gt;:    <span class="keyword">ret</span>                     # 返回(准备执行下条指令)</span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure></p>
+<p>进入add函数后，首先进行的操作是将当前的栈基址ebp压栈(此栈基址是调用者main函数的)，然后将ebp指向栈顶esp，接下来再进行函数内的处理流程。函数结束前，会将函数调用者的栈基址恢复，然后返回准备执行下一指令。这个过程中，栈上的空间会是下面的样子：<br><img src="/images/dia_function_stack.png" alt=""></p>
+<p>可以发现，每调用一次函数，都会对调用者的栈基址(ebp)进行压栈操作，并且由于栈基址是由当时栈顶指针(esp)而来，会发现，各层函数的栈基址很巧妙的构成了一个链，即当前的栈基址指向下一层函数栈基址所在的位置，如下图所示：<br><img src="/images/dia_dump_stack.png" alt=""></p>
+<p>了解了函数的调用过程，想要回溯调用栈也就很简单了，首先获取当前函数的栈基址(寄存器ebp)的值，然后获取该地址所指向的栈的值，该值也就是下层函数的栈基址，找到下层函数的栈基址后，重复刚才的动作，即可以将每一层函数的栈基址都找出来，这也就是我们所需要的调用栈了。</p>
+<p>下面是根据原理实现的一段获取函数调用栈的代码，供参考。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 打印调用栈的最大深度 */</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> DUMP_STACK_DEPTH_MAX 16</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 获取寄存器ebp的值 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_ebp</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> *ebp)</span> </span>&#123;</span><br><span class="line">    __asm__ __volatile__ (</span><br><span class="line">        <span class="string">"mov %%ebp, %0"</span></span><br><span class="line">        :<span class="string">"=m"</span>(*ebp)</span><br><span class="line">        ::<span class="string">"memory"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 获取调用栈 */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dump_stack</span><span class="params">(<span class="keyword">void</span> **<span class="built_in">stack</span>, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> ebp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> depth = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 1.得到首层函数的栈基址 */</span></span><br><span class="line">    get_ebp(&amp;ebp);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 2.逐层回溯栈基址 */</span></span><br><span class="line">    <span class="keyword">for</span> (depth = <span class="number">0</span>; (depth &lt; size) &amp;&amp; (<span class="number">0</span> != ebp) &amp;&amp; (<span class="number">0</span> != *(<span class="keyword">unsigned</span> <span class="keyword">long</span> *)ebp) &amp;&amp; (ebp != *(<span class="keyword">unsigned</span> <span class="keyword">long</span> *)ebp); ++depth) &#123;</span><br><span class="line">        <span class="built_in">stack</span>[depth] = (<span class="keyword">void</span> *)(*(<span class="keyword">unsigned</span> <span class="keyword">long</span> *)(ebp + <span class="keyword">sizeof</span>(<span class="keyword">unsigned</span> <span class="keyword">long</span>)));</span><br><span class="line">        ebp = *(<span class="keyword">unsigned</span> <span class="keyword">long</span> *)ebp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> depth;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 测试函数 2 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_meloner</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">void</span> *<span class="built_in">stack</span>[DUMP_STACK_DEPTH_MAX] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> stack_depth = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 获取调用栈 */</span></span><br><span class="line">    stack_depth = dump_stack(<span class="built_in">stack</span>, DUMP_STACK_DEPTH_MAX);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 打印调用栈 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" Stack Track: \r\n"</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; stack_depth; ++i) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">" [%d] %p \r\n"</span>, i, <span class="built_in">stack</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 测试函数 1 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_hutaow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    test_meloner();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 主函数 */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    test_hutaow();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行gcc dumpstack.c -o dumpstack编译并运行，执行结果如下：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stack Track: </span><br><span class="line"> [0] <span class="number">0x8048475</span> </span><br><span class="line"> [1] <span class="number">0x8048508</span> </span><br><span class="line"> [2] <span class="number">0x804855</span>c </span><br><span class="line"> [3] <span class="number">0x804856</span>a</span><br></pre></td></tr></table></figure></p>
+<h2 id="堆溢出">堆溢出</h2><p>堆, 用来在程序运行时动态分配内存. 当使用<code>malloc</code>相关函数, 来分配一块地址空间或初始化一个对象时, 内存地址就是在堆上分配的.</p>
+<p>因为堆只是被用来存储数据, 而没有用于存储函数返回地址( returnAddress ), 并且由于堆上的数据的变化,在程序运行中难于监控, 所以攻击者对堆溢出的攻击很难发现.正因如此, 堆溢出备受攻击者青睐.</p>
+<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/heap_overflow.gif" alt="Heap overflow"></p>
+<p>通常来说, 堆溢出的难度远大于栈溢出. 然而, 现在有很多成功的脚本都涉及堆溢出.堆溢出有两种实现方式:修改数据以及修改对象.</p>
+<p>攻击者可以利用堆上的 buffer 溢出来覆盖敏感区域数据.很多语言中, 比如 C++和 Objective-C, 对象(包含函数列表 function vtable和数据指针)是分配在堆上的. 通过利用堆溢出来修改这些指针的方式, 攻击者可以替换成不同的数据, 甚至替换函数的实现. </p>
+<p>利用堆溢出可能极其困难, 但正因如此才更具吸引力, 某些攻击者甚至将此当做了挑战的目标.比如:</p>
+<ol>
+<li>解码图片的代码中, 通过堆溢出可以允许远程攻击者执行随意指令</li>
+<li>攻击者, 通过构造一个无效的 <code>&quot;Content-Length&quot; header</code> 发送 HTTP POST 请求 到存在堆溢出漏洞的网络服务器, 来执行任意指令 </li>
+</ol>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Heap/"> #Heap </a>
+          
+            <a href="/tags/OverFlow/"> #OverFlow </a>
+          
+            <a href="/tags/Stack/"> #Stack </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/30/Dispatch-semaphore/">Dispatch_semaphore</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">103</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈溢出"><span class="nav-number">1.</span> <span class="nav-text">栈溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#个人理解"><span class="nav-number">1.1.</span> <span class="nav-text">个人理解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#返回地址和EBP_入栈的意义"><span class="nav-number">1.1.1.</span> <span class="nav-text">返回地址和EBP 入栈的意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数调用栈"><span class="nav-number">1.1.2.</span> <span class="nav-text">函数调用栈</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆溢出"><span class="nav-number">2.</span> <span class="nav-text">堆溢出</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/03/Stack-And-Heap-OverFlow/';
+      var disqus_title = 'Stack And Heap OverFlow';
+      var disqus_url = 'http://ytlvy.com/2015/07/03/Stack-And-Heap-OverFlow/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

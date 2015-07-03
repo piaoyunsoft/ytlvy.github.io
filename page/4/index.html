@@ -148,6 +148,97 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/30/ios-reverse-myapp/">
+                ios reverse myapp
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/reverse/">reverse</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/30/ios-reverse-myapp/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse-myapp/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="reverseMyApp">reverseMyApp</h2><h3 id="download_tools_and_install">download tools and install</h3><p><a href="https://code.google.com/p/networkpx/wiki/class_dump_z">class-dump-z</a><br><a href="http://www.charlesproxy.com/download/">Charles</a></p>
+<h3 id="Edit_Scheme">Edit Scheme</h3><p>Select <code>Run</code> panel, then in <code>info</code> tab, select <code>Release</code> under <code>Build Configuration</code>;</p>
+<h3 id="enter_Simulator_App_directory">enter Simulator App directory</h3><p>you can use <code>SimPholders2</code></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/30/ios-reverse-myapp/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/30/ios-reverse-tutorial/">
                 ios reverse tutorial
               </a>
@@ -929,83 +1020,6 @@ apt-<span class="built_in">get</span> upgrade
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/xcode-plugins-update-tool/">
-                更新XcodePlugins脚本
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Xcode/">Xcode</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/xcode-plugins-update-tool/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-plugins-update-tool/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>ios8.2  ——— A16FF353-8441-459E-A50C-B071F53F51B7<br>ios8.3 ———- 9F75337B-21B4-4ADC-B558-F9CADF7073A7</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line">PLIST_BUDDY=/usr/libexec/PlistBuddy</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">add_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="string">"<span class="variable">$PLIST_BUDDY</span>"</span> -c <span class="string">"Add DVTPlugInCompatibilityUUIDs:10 string <span class="variable">$2</span>"</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">has_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="variable">$PLIST_BUDDY</span> -c <span class="string">'Print DVTPlugInCompatibilityUUIDs'</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span>|grep -q <span class="string">"<span class="variable">$2</span>"</span></span><br><span class="line">  <span class="built_in">return</span> $?</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$HOME</span>/Library/Application Support/Developer/Shared/Xcode/Plug-ins"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> `ls <span class="operator">-d</span> *`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> `has_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7`</span><br><span class="line">  <span class="keyword">then</span></span><br><span class="line">    <span class="literal">true</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Plugin <span class="variable">$file</span> is now compatible with Xcode 6.0 GM"</span></span><br><span class="line">    add_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1044,7 +1058,7 @@ apt-<span class="built_in">get</span> upgrade
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">103</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1058,7 +1072,7 @@ apt-<span class="built_in">get</span> upgrade
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

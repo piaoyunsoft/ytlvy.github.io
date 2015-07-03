@@ -148,6 +148,83 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/xcode-plugins-update-tool/">
+                更新XcodePlugins脚本
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Xcode/">Xcode</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/xcode-plugins-update-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-plugins-update-tool/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>ios8.2  ——— A16FF353-8441-459E-A50C-B071F53F51B7<br>ios8.3 ———- 9F75337B-21B4-4ADC-B558-F9CADF7073A7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line">PLIST_BUDDY=/usr/libexec/PlistBuddy</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">add_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="string">"<span class="variable">$PLIST_BUDDY</span>"</span> -c <span class="string">"Add DVTPlugInCompatibilityUUIDs:10 string <span class="variable">$2</span>"</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">has_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="variable">$PLIST_BUDDY</span> -c <span class="string">'Print DVTPlugInCompatibilityUUIDs'</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span>|grep -q <span class="string">"<span class="variable">$2</span>"</span></span><br><span class="line">  <span class="built_in">return</span> $?</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$HOME</span>/Library/Application Support/Developer/Shared/Xcode/Plug-ins"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> `ls <span class="operator">-d</span> *`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> `has_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7`</span><br><span class="line">  <span class="keyword">then</span></span><br><span class="line">    <span class="literal">true</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Plugin <span class="variable">$file</span> is now compatible with Xcode 6.0 GM"</span></span><br><span class="line">    add_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/">
                 IOS8.3 NSMutableURLRequest需手动设置Content-Type
               </a>
@@ -995,85 +1072,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/coreimage-example/">
-                Core Image使用
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/coreimage-example/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/coreimage-example/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>首先创建一个径向渐变的滤镜，该滤镜是从白到黑的渐变方式，白色区域的半径默认是100。接着将其与一张使用CIDarkenBlendMode滤镜的图片合成。CIDarkenBlendMode的作用是背景图片样本将被源图片的黑色部分替换掉。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* moi = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.jpeg"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIImage</span>* moi2 = [[<span class="built_in">CIImage</span> alloc] initWith<span class="built_in">CGImage</span>:moi<span class="variable">.CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIFilter</span>* grad = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIRadialGradient"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIVector</span>* center = [<span class="built_in">CIVector</span> vectorWithX:moi<span class="variable">.size</span><span class="variable">.width</span> / <span class="number">2.0</span> Y:moi<span class="variable">.size</span><span class="variable">.height</span> / <span class="number">2.0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用setValue：forKey：方法设置滤镜属性</span></span><br><span class="line">[grad setValue:center forKey:<span class="string">@"inputCenter"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定滤镜名时提供所有滤镜键值对</span></span><br><span class="line"><span class="built_in">CIFilter</span>* dark = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIDarkenBlendMode"</span> keysAndValues:<span class="string">@"inputImage"</span>, grad<span class="variable">.outputImage</span>, <span class="string">@"inputBackgroundImage"</span>, moi2, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIContext</span>* c = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> moi3 = [c create<span class="built_in">CGImage</span>:dark<span class="variable">.outputImage</span> fromRect:moi2<span class="variable">.extent</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* moi4 = [<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:moi3 scale:moi<span class="variable">.scale</span> orientation:moi<span class="variable">.imageOrientation</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(moi3);</span><br></pre></td></tr></table></figure>
-<p><img src="http://images.cnitblog.com/blog/429321/201212/27103647-2fcd19d1ca1e4a0d9f42e2c79687e881.png" alt="图片合成图"></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1112,7 +1110,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">103</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1126,7 +1124,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
