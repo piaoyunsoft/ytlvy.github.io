@@ -148,6 +148,326 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios-file-handler/">
+                ios 文件处理
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-file-handler/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-file-handler/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="path">path</h4><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">NSMutableArray</span> *<span class="atom">marray</span>=[<span class="name">NSMutableArray</span> <span class="atom">array</span>];</span><br><span class="line"><span class="name">NSString</span> *<span class="atom">path</span>=[<span class="name">NSString</span> <span class="atom">pathWithComponents</span>:<span class="atom">marray</span>];</span><br><span class="line"></span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathComponents</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">isAbsolutePath</span>]</span><br><span class="line"><span class="name">NSLog</span>(@<span class="string">"%@"</span>,[<span class="atom">path</span> <span class="atom">lastPathComponent</span>]);//取得最后一个目录</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingLastPathComponent</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByAppendingPathComponent</span>:@<span class="string">"Documents"</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathExtension</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingPathExtension</span>]</span><br><span class="line">[@<span class="string">"Users/KenshinCui/Desktop/test"</span> <span class="atom">stringByAppendingPathExtension</span>:@<span class="string">"mp3"</span>]</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-file-handler/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-system-service/">
+                ios系统服务
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-system-service/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-system-service/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="AddressBook">AddressBook</h4><p>AddressBook不能使用arc</p>
+<ol>
+<li>ABAddressBookRef 通讯录对象</li>
+<li>ABRecordRef  联系人或群组 ABRecordGetRecordType() ABRecordGetRecordID()</li>
+<li>ABPersonRef</li>
+<li>ABGroupRef</li>
+<li>ABPersonCreate():创建一个类型为“kABPersonType”的ABRecordRef</li>
+<li>ABRecordCopyValue():取得指定属性的值</li>
+<li>ABRecordCopyCompositeName():取得联系人（或群组）的复合信息（对于联系人则包括：姓、名、公司等信息，对于群组则返回组名称）</li>
+<li>ABRecordSetValue():设置ABRecordRef的属性值</li>
+<li>ABMutableMultiValueRef ABMultiValueAddValueAndLabel()方法依次添加属性值</li>
+<li>ABRecordRemoveValue():删除指定的属性值</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-system-service/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-warning/">
+                手动让编译器报警
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-warning/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-warning/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="手动让编译器报警">手动让编译器报警</h2><pre><code><span class="id">#warning</span> sunnyxx
+<span class="id">#error</span> sunnyxx
+<span class="id">#pragma</span> message <span class="string">"sunnyxx"</span>
+<span class="id">#pragma</span> GCC warning <span class="string">"sunnyxx"</span>
+<span class="id">#pragma</span> GCC error <span class="string">"sunnyxx"</span>
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/sublime-text-shortcut/">
+                Sublime text shortcut
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/sublime-text-shortcut/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/sublime-text-shortcut/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/mrc-and-and-arc/">
                 MRC &amp;&amp; ARC
               </a>
@@ -540,294 +860,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-autostart-plist/">
-                mac 自启动plist文件
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-autostart-plist/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-autostart-plist/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~/<span class="keyword">Library</span>/LaunchAgents</span><br><span class="line">~/<span class="keyword">Library</span>/LaunchDaemons</span><br><span class="line"></span><br><span class="line">/<span class="keyword">Library</span>/LaunchAgents</span><br><span class="line">/<span class="keyword">Library</span>/LaunchDaemons</span><br><span class="line"></span><br><span class="line">/System/<span class="keyword">Library</span>/LaunchAgents</span><br><span class="line">/System/<span class="keyword">Library</span>/LaunchDaemons</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-cocoapods/">
-                Pod 管理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-cocoapods/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cocoapods/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-command-line-proxy/">
-                Command line proxy
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/OSX/">OSX</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-command-line-proxy/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-command-line-proxy/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Command_line_proxy">Command line proxy</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">"http://127.0.0.1:8087"</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">"http://127.0.0.1:8087"</span></span><br><span class="line"><span class="built_in">unset</span> http_proxy</span><br><span class="line"><span class="built_in">unset</span> https_proxy</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/register/">
-                寄存器
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Base/">Base</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/register/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/register/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="寄存器">寄存器</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">EAX Extended Accumulator X          累加寄存器。A代表Accumulator</span><br><span class="line">ECX Extended Counting X             计数寄存器。<span class="keyword">C</span>代表counting</span><br><span class="line">EDI Extended Destination Indexing   目的索引寄存器。<span class="keyword">D</span>代表destnation，<span class="keyword">I</span>代表Indexing</span><br><span class="line">ESI Extended Source Indexing        源索引寄存器。S代表Source，<span class="keyword">I</span>代表Indexing</span><br><span class="line">ESP Extended <span class="keyword">Stack</span> Pointer          栈指针寄存器。S代表<span class="keyword">Stack</span></span><br><span class="line">EBP Extended (<span class="keyword">Stack</span>) Base Pointer   栈基指针寄存器。B代表Base</span><br><span class="line">EIP Extended Instructions Pointer   指令寄存器。<span class="keyword">I</span>代表Instruction</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/register/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -866,7 +898,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">104</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -880,7 +912,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

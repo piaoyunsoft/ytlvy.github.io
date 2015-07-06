@@ -148,6 +148,346 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/">
+                ios nil  Nil NULL NSNull
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="nil_Nil_NULL_NSNull">nil Nil NULL NSNull</h2><blockquote>
+<p>C represents nothing as 0 for primitive values, and NULL for pointers (which is equivalent to 0 in a pointer context)<br>Objective-C builds on C’s representation of nothing by adding nil. nil is an object pointer to nothing. Although semantically distinct from NULL, they are equivalent to one another.<br>On the framework level, Foundation defines the NSNull class, which defines a single class method, +null, which returns a singleton NSNull instance. NSNull is different from nil or NULL, in that it is an actual object, rather than a zero value.<br>Additionally, in Foundation/NSObjCRuntime.h, Nil is defined as a class pointer to nothing. This lesser-known title- case cousin of nil doesn’t show up much very often, but it’s at least worth noting.</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/05/ios-static-formatter/">
+                ios static formatter
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/05/ios-static-formatter/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-static-formatter/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="Re-Using_Formatter_Instances">Re-Using Formatter Instances</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)fooWithNumber: (<span class="built_in">NSNumber</span> *)num&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="built_in">NSNumberFormatter</span> *_formatter = <span class="literal">nil</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">  <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">    _formatter = [[<span class="built_in">NSNumberFormatter</span> alloc] init];</span><br><span class="line">    [_formatter setNumberStyle: <span class="built_in">NSNumberFormatterDecimalStyle</span>];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSString</span> *string = [_formatter stringFromNumber: number];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/05/ios-static-formatter/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/05/ios-cfstringtransform/">
+                ios CFStringTransform
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/05/ios-cfstringtransform/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-cfstringtransform/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var mutableString = <span class="built_in">NSMutableString</span>(string: <span class="string">"Hello! こんにちは! สวัสดี! مرحبا! 您好!"</span>) as <span class="built_in">CFMutableStringRef</span></span><br><span class="line"><span class="built_in">CFStringTransform</span>(mutableString, <span class="literal">nil</span>, k<span class="built_in">CFStringTransformToLatin</span>, Boolean(<span class="number">0</span>))</span><br><span class="line"><span class="comment">//Hello! こんにちは! สวัสดี! مرحبا! 您好! → Hello! kon'nichiha! s̄wạs̄dī! mrḥbạ! nín hǎo!</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CFStringTransform</span>(mutableString, <span class="literal">nil</span>, k<span class="built_in">CFStringTransformStripCombiningMarks</span>, Boolean(<span class="number">0</span>))</span><br><span class="line"><span class="comment">//Hello! kon'nichiha! s̄wạs̄dī! mrḥbạ! nín hǎo! → Hello! kon'nichiha! swasdi! mrhba! nin hao!</span></span><br><span class="line"></span><br><span class="line">let tokenizer = <span class="built_in">CFStringTokenizerCreate</span>(<span class="literal">nil</span>, mutableString, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="built_in">CFStringGetLength</span>(mutableString)), <span class="number">0</span>, <span class="built_in">CFLocaleCopyCurrent</span>())</span><br><span class="line"></span><br><span class="line">var mutableTokens: [String] = []</span><br><span class="line">var type: <span class="built_in">CFStringTokenizerTokenType</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    type = <span class="built_in">CFStringTokenizerAdvanceToNextToken</span>(tokenizer)</span><br><span class="line">    let range = <span class="built_in">CFStringTokenizerGetCurrentTokenRange</span>(tokenizer)</span><br><span class="line">    let token = <span class="built_in">CFStringCreateWithSubstring</span>(<span class="literal">nil</span>, mutableString, range) as <span class="built_in">NSString</span></span><br><span class="line">    mutableTokens<span class="variable">.append</span>(token)</span><br><span class="line">&#125; <span class="keyword">while</span> type != <span class="variable">.None</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//(hello, kon'nichiha, swasdi, mrhba, nin, hao)</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/31/websocket-tunnel-over-cloud-ide/">
+                Websocket Tunnel Over Cloud IDE
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-31
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/FQ/">FQ</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/31/websocket-tunnel-over-cloud-ide/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/31/websocket-tunnel-over-cloud-ide/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="bbs">bbs</h3><blockquote>
+<p><a href="https://groups.google.com/forum/#!forum/go-gost">https://groups.google.com/forum/#!forum/go-gost</a></p>
+</blockquote>
+<h3 id="原理">原理</h3><blockquote>
+<p>在平台中建立websocket服务器，将数据通过websocket传输给客户端实现一个tunnel</p>
+</blockquote>
+<h3 id="cloud_Ide">cloud Ide</h3><ul>
+<li>Cloud 9：<a href="https://c9.io">https://c9.io</a></li>
+<li>Koding：<a href="https://koding.com/">https://koding.com/</a></li>
+<li>Nitrous：<a href="https://lite.nitrous.io/">https://lite.nitrous.io/</a></li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/31/websocket-tunnel-over-cloud-ide/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/30/ios-send-sms/">
                 ios send SMS
               </a>
@@ -664,357 +1004,6 @@ apt-<span class="built_in">get</span> upgrade
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/29/git-tutorials-collaborating/">
-                git tutorials -- Collaborating
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-29
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Git/">Git</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/29/git-tutorials-collaborating/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-collaborating/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="git_tutorials">git tutorials</h2><h3 id="git_remote">git remote</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//List <span class="operator">the</span> remote connections you have <span class="built_in">to</span> other repositories</span><br><span class="line">git remote</span><br><span class="line"><span class="comment"></span><br><span class="line">//List the remote connections you have to other repositories, include the URL</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">add</span> &lt;name&gt; &lt;url&gt;</span><br><span class="line">git remote rm &lt;name&gt;</span><br><span class="line">git remote <span class="built_in">rename</span> &lt;old-name&gt; &lt;<span class="built_in">new</span>-name&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="The_origin_Remote">The origin Remote</h4><p>When you clone a repository with git clone, it automatically creates a remote connection called origin pointing back to the cloned repository. This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits. This behavior is also why most Git-based projects call their central repository origin.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/29/git-tutorials-collaborating/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/29/git-tutorials-getting-started/">
-                git tutorials -- Getting Started
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-29
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Git/">Git</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/29/git-tutorials-getting-started/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-getting-started/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="git_tutorials">git tutorials</h2><h3 id="setup_a_repository">setup a repository</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialize an local repository</span></span><br><span class="line">git <span class="keyword">init</span></span><br><span class="line">git <span class="keyword">init</span> &lt;directory&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//initialize a Central repositories or server </span></span><br><span class="line">git <span class="keyword">init</span> --bare &lt;directory&gt;.git</span><br><span class="line"></span><br><span class="line">ssh &lt;user&gt;@&lt;host&gt;</span><br><span class="line">cd path/above/repo </span><br><span class="line">git <span class="keyword">init</span> --bare my-project.git</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/29/git-tutorials-getting-started/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/recently-readings/">
-                最近阅读资料
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Study/">Study</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/recently-readings/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/recently-readings/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="book">book</h2><ol>
-<li>Functional Programming Patterns in Scala and Clojure- Write Lean Programs for the JVM</li>
-<li>iOS.8.by.Tutorials.2014.12</li>
-<li>Leanpub.Functional Reactive Programming on iOS.2014</li>
-<li>Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X</li>
-<li></li>
-</ol>
-<h2 id="links">links</h2><ol>
-<li><a href="http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients" target="_blank" rel="external">http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients</a></li>
-<li><a href="http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers" target="_blank" rel="external">http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers</a></li>
-<li><a href="http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths" target="_blank" rel="external">http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths</a></li>
-<li><a href="http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob" target="_blank" rel="external">http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob</a></li>
-<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1</a></li>
-<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2</a></li>
-<li><a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3" target="_blank" rel="external">http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3</a></li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/reactivecocoa/">
-                Reactivecocoa
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/FP/">FP</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/reactivecocoa/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="Reactivecocoa">Reactivecocoa</h3><h4 id="zip">zip</h4><pre><code><span class="collection">[<span class="collection">[<span class="collection">[<span class="collection">[RACSignal zip:@<span class="collection">[RACObserve<span class="list">(<span class="keyword">self</span>, minimum)</span>, RACObserve<span class="list">(<span class="keyword">self</span>, maximum)</span>,
-    RACObserve<span class="list">(<span class="keyword">self</span>, average)</span>]</span>]</span> skip:1]</span> reduceEach:<span class="comment">^id</span><span class="collection">{
-        return <span class="literal">nil</span><span class="comment">;</span>
-    }</span>]</span> subscribeNext:^<span class="list">(<span class="keyword">id</span> x)</span> <span class="collection">{
-        <span class="collection">[self buildView]</span><span class="comment">; //called once, while all three values were changed.</span>
-}</span>]</span><span class="comment">;</span>
-</code></pre><h4 id="RACTuple">RACTuple</h4><pre><code><span class="collection">[<span class="collection">[RACSignal  combineLatest:signals]</span> map:^<span class="list">(<span class="keyword">RACTuple</span> *strings)</span> <span class="collection">{
-    for <span class="list">(<span class="keyword">NSString</span> *string in strings)</span> <span class="collection">{
-        // Do whatever here.
-    }</span>
-    return <span class="literal">nil</span><span class="comment">;</span>
-}</span>]</span><span class="comment">;</span>
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1053,7 +1042,7 @@ apt-<span class="built_in">get</span> upgrade
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">104</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1067,7 +1056,7 @@ apt-<span class="built_in">get</span> upgrade
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

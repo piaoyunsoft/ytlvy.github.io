@@ -1,0 +1,666 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Autorelease,IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Autorelease // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Autorelease
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/06/Autorelease/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Autorelease/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Autorelease">Autorelease</h2><p><img src="http://blog.sunnyxx.com/tags/objc%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95/page/3/" alt="转自"></p>
+<h3 id="Autorelease对象什么时候释放">Autorelease对象什么时候释放</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;在没有手加Autorelease Pool的情况下，Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop</p>
+<p>小实验<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *str = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"sunnyxx"</span>];</span><br><span class="line">    <span class="comment">// str是一个autorelease对象，设置一个weak的引用来观察它</span></span><br><span class="line">    reference = str;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: sunnyxx</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于这个vc在loadView之后便add到了window层级上，所以viewDidLoad和viewWillAppear是在同一个runloop调用的，因此在viewWillAppear中，这个autorelease的变量依然有值。</p>
+<h3 id="手动干预Autorelease对象的释放时机：">手动干预Autorelease对象的释放时机：</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *str = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"sunnyxx"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, str); <span class="comment">// Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Autorelease原理">Autorelease原理</h3><p>ARC下，我们使用@autoreleasepool{}来使用一个AutoreleasePool，随后编译器将其改写成下面的样子：<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">*</span>context = objc_autoreleasePoolPush<span class="params">()</span>;</span><br><span class="line"><span class="comment">// &#123;&#125;中的代码</span></span><br><span class="line">objc_autoreleasePoolPop<span class="params">(context)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>而这两个函数都是对<code>AutoreleasePoolPage</code>的简单封装，所以自动释放机制的核心就在于这个类。</p>
+<p><code>AutoreleasePoolPage</code>是一个C++实现的类</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">AutoreleasePoolPage&#123;</span><br><span class="line">    <span class="keyword">magic_t</span> <span class="keyword">const</span> magic;</span><br><span class="line">    id *next;</span><br><span class="line">    <span class="keyword">pthread_t</span> <span class="keyword">const</span> thread;</span><br><span class="line">    AutoreleasePoolPage *<span class="keyword">const</span> parent;</span><br><span class="line">    AutoreleasePoolPage *child;</span><br><span class="line">    <span class="keyword">uint32_t</span> <span class="keyword">const</span> depth;</span><br><span class="line">    <span class="keyword">uint32_t</span> hiwat;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>AutoreleasePool</code>并没有单独的结构，而是由若干个<code>AutoreleasePoolPage</code>以双向链表的形式组合而成（分别对应结构中的<code>parent</code>指针和<code>child</code>指针）</li>
+<li><code>AutoreleasePool</code>是按线程一一对应的（结构中的thread指针指向当前线程）</li>
+<li><code>AutoreleasePoolPage</code>每个对象会开辟4096字节内存（也就是虚拟内存一页的大小），除了上面的实例变量所占空间，剩下的空间全部用来储存<code>autorelease</code>对象的地址</li>
+<li>上面的<code>id *next</code>指针作为游标指向栈顶最新<code>add</code>进来的<code>autorelease</code>对象的下一个位置</li>
+<li>一个<code>AutoreleasePoolPage</code>的空间被占满时，会新建一个<code>AutoreleasePoolPage</code>对象，连接链表，后来的<code>autorelease</code>对象在新的page加入</li>
+</ol>
+<p>所以，若当前线程中只有一个<code>AutoreleasePoolPage</code>对象，并记录了很多<code>autorelease</code>对象地址时内存如下图：</p>
+<p><img src="http://ww2.sinaimg.cn/mw690/51530583gw1elj5gvphtqj20dy0cx756.jpg" alt=""></p>
+<p>图中的情况，这一页再加入一个autorelease对象就要满了（也就是next指针马上指向栈顶），这时就要执行上面说的操作，建立下一页page对象，与这一页链表连接完成后，新page的next指针被初始化在栈底（begin的位置），然后继续向栈顶添加新对象。</p>
+<p>所以，向一个对象发送- autorelease消息，就是将这个对象加入到当前AutoreleasePoolPage的栈顶next指针指向的位置</p>
+<h3 id="释放时刻">释放时刻</h3><p>每当进行一次<code>objc_autoreleasePoolPush</code>调用时，runtime向当前的<code>AutoreleasePoolPage</code>中<code>add</code>进一个哨兵对象，值为0（也就是个nil），那么这一个<code>page</code>就变成了下面的样子：</p>
+<p><img src="http://ww2.sinaimg.cn/large/51530583gw1elj5z7hawej20ji0dewff.jpg" alt=""></p>
+<p><code>objc_autoreleasePoolPush</code>的返回值正是这个哨兵对象的地址，被<code>objc_autoreleasePoolPop</code>(哨兵对象)作为入参，于是：</p>
+<ol>
+<li>根据传入的哨兵对象地址找到哨兵对象所处的page</li>
+<li>在当前page中，将晚于哨兵对象插入的所有<code>autorelease</code>对象都发送一次- <code>release</code>消息，并向回移动<code>next</code>指针到正确位置</li>
+<li>补充2：从最新加入的对象一直向前清理，可以向前跨越若干个page，直到哨兵所在的page</li>
+</ol>
+<p>刚才的objc_autoreleasePoolPop执行后，最终变成了下面的样子:<br><img src="http://ww3.sinaimg.cn/mw690/51530583gw1elj6u2i3fyj20dz0bqdgi.jpg" alt=""></p>
+<h3 id="嵌套的AutoreleasePool">嵌套的AutoreleasePool</h3><p>知道了上面的原理，嵌套的AutoreleasePool就非常简单了，pop的时候总会释放到上次push的位置为止，多层的pool就是多个哨兵对象而已，就像剥洋葱一样，每次一层，互不影响。</p>
+<h3 id="Autorelease返回值的快速释放机制">Autorelease返回值的快速释放机制</h3><p>值得一提的是，ARC下，runtime有一套对autorelease返回值的优化策略。<br>比如一个工厂方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)createSark &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> <span class="keyword">new</span>]; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// caller</span></span><br><span class="line">Sark *sark = [Sark createSark];</span><br></pre></td></tr></table></figure>
+<p>秉着谁创建谁释放的原则，返回值需要是一个<code>autorelease</code>对象才能配合调用方正确管理内存，于是乎编译器改写成了形如下面的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)createSark &#123;</span><br><span class="line">    <span class="keyword">id</span> tmp = [<span class="keyword">self</span> new];</span><br><span class="line">    <span class="keyword">return</span> objc_autoreleaseReturnValue(tmp); <span class="comment">// 代替我们调用autorelease</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// caller</span></span><br><span class="line"><span class="keyword">id</span> tmp = objc_retainAutoreleasedReturnValue([Sark createSark]) <span class="comment">// 代替我们调用retain</span></span><br><span class="line">Sark *sark = tmp;</span><br><span class="line">objc_storeStrong(&amp;sark, <span class="literal">nil</span>); <span class="comment">// 相当于代替我们调用了release</span></span><br></pre></td></tr></table></figure>
+<p>一切看上去都很好，不过既然编译器知道了这么多信息，干嘛还要劳烦autorelease这个开销不小的机制呢？于是乎，runtime使用了一些黑魔法将这个问题解决了</p>
+<h4 id="黑魔法之Thread_Local_Storage">黑魔法之Thread Local Storage</h4><p><code>Thread Local Storage（TLS）</code>线程局部存储，目的很简单，将一块内存作为某个线程专有的存储，以<code>key-value</code>的形式进行读写，比如在非arm架构下，使用<code>pthread</code>提供的方法实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>* pthread_getspecific(<span class="keyword">pthread_key_t</span>);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_setspecific</span><span class="params">(pthread_key_t , <span class="keyword">const</span> <span class="keyword">void</span> *)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>说它是黑魔法可能被懂pthread的笑话- -</p>
+<p>在返回值身上调用<code>objc_autoreleaseReturnValue</code>方法时，<code>runtime</code>将这个返回值<code>object</code>储存在TLS中，然后直接返回这个<code>object</code>（不调用<code>autorelease</code>）；同时，在外部接收这个返回值的<code>objc_retainAutoreleasedReturnValue</code>里，发现TLS中正好存了这个对象，那么直接返回这个<code>object</code>（不调用<code>retain</code>）。<br>于是乎，调用方和被调方利用TLS做中转，很有默契的免去了对返回值的内存管理。</p>
+<p>于是问题又来了，假如被调方和主调方只有一边是ARC环境编译的该咋办？（比如我们在ARC环境下用了非ARC编译的第三方库，或者反之）<br>只能动用更高级的黑魔法。</p>
+<h4 id="黑魔法之__builtin_return_address">黑魔法之__builtin_return_address</h4><p>这个内建函数原型是<code>char *__builtin_return_address(int level)</code>，作用是得到函数的返回地址，参数表示层数，如<code>__builtin_return_address(0)</code>表示当前函数体返回地址，传1是调用这个函数的外层函数的返回值地址，以此类推。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">int</span>)foo &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%p"</span>, __builtin_return_address(<span class="number">0</span>)); <span class="comment">// 根据这个地址能找到下面ret的地址</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// caller</span></span><br><span class="line"><span class="keyword">int</span> ret = [sark foo];</span><br></pre></td></tr></table></figure>
+<p>看上去也没啥厉害的，不过要知道，函数的返回值地址，也就对应着调用者结束这次调用的地址（或者相差某个固定的偏移量，根据编译器决定）</p>
+<p>也就是说，被调用的函数也有翻身做地主的机会了，可以反过来对主调方干点坏事。<br>回到上面的问题，<strong><em>如果一个函数返回前知道调用方是ARC还是非ARC，就有机会对于不同情况做不同的处理</em></strong></p>
+<h4 id="黑魔法之反查汇编指令">黑魔法之反查汇编指令</h4><p>通过上面的__builtin_return_address加某些偏移量，被调方可以定位到主调方在返回值后面的<code>汇编指令</code>：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// caller </span></span><br><span class="line"><span class="keyword">int</span> ret = [sark foo];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 内存中接下来的汇编指令（x86，我不懂汇编，瞎写的）</span></span><br><span class="line">movq ??? ???</span><br><span class="line">callq ???</span><br></pre></td></tr></table></figure></p>
+<p>而这些汇编指令在内存中的值是固定的，比如movq对应着0x48。<br>于是乎，就有了下面的这个函数，入参是调用方<code>__builtin_return_address</code>传入值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">callerAcceptsFastAutorelease</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> * <span class="keyword">const</span> ra0)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">uint8_t</span> *ra1 = (<span class="keyword">const</span> <span class="keyword">uint8_t</span> *)ra0;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">uint16_t</span> *ra2;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">uint32_t</span> *ra4 = (<span class="keyword">const</span> <span class="keyword">uint32_t</span> *)ra1;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">void</span> **sym;</span><br><span class="line">    <span class="comment">// 48 89 c7    movq  %rax,%rdi</span></span><br><span class="line">    <span class="comment">// e8          callq symbol</span></span><br><span class="line">    <span class="keyword">if</span> (*ra4 != <span class="number">0xe8c78948</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ra1 += (<span class="keyword">long</span>)*(<span class="keyword">const</span> <span class="keyword">int32_t</span> *)(ra1 + <span class="number">4</span>) + <span class="number">8l</span>;</span><br><span class="line">    ra2 = (<span class="keyword">const</span> <span class="keyword">uint16_t</span> *)ra1;</span><br><span class="line">    <span class="comment">// ff 25       jmpq *symbol@DYLDMAGIC(%rip)</span></span><br><span class="line">    <span class="keyword">if</span> (*ra2 != <span class="number">0x25ff</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ra1 += <span class="number">6l</span> + (<span class="keyword">long</span>)*(<span class="keyword">const</span> <span class="keyword">int32_t</span> *)(ra1 + <span class="number">2</span>);</span><br><span class="line">    sym = (<span class="keyword">const</span> <span class="keyword">void</span> **)ra1;</span><br><span class="line">    <span class="keyword">if</span> (*sym != objc_retainAutoreleasedReturnValue)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它检验了主调方在返回值之后是否紧接着调用了<code>objc_retainAutoreleasedReturnValue</code>，如果是，就知道了外部是ARC环境，反之就走没被优化的老逻辑。</p>
+<h3 id="其他Autorelease相关知识点">其他Autorelease相关知识点</h3><p>使用容器的block版本的枚举器时，内部会自动添加一个AutoreleasePool：<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="collection">[array enumerateObjectsUsingBlock:^<span class="list">(<span class="keyword">id</span> obj, NSUInteger idx, BOOL *stop)</span> <span class="collection">&#123;</span><br><span class="line">    // 这里被一个局部@autoreleasepool包围着</span><br><span class="line">&#125;</span>]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>当然，在普通for循环和for in循环中没有，所以，还是新版的block版本枚举器更加方便。for循环中遍历产生大量autorelease变量时，就需要手加局部<code>AutoreleasePool</code>咯。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Autorelease/"> #Autorelease </a>
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/06/what-happen-before-main/">what happen before main</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/04/IOS-进阶工具篇/">IOS 进阶工具篇</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Autorelease"><span class="nav-number">1.</span> <span class="nav-text">Autorelease</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Autorelease对象什么时候释放"><span class="nav-number">1.1.</span> <span class="nav-text">Autorelease对象什么时候释放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动干预Autorelease对象的释放时机："><span class="nav-number">1.2.</span> <span class="nav-text">手动干预Autorelease对象的释放时机：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autorelease原理"><span class="nav-number">1.3.</span> <span class="nav-text">Autorelease原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#释放时刻"><span class="nav-number">1.4.</span> <span class="nav-text">释放时刻</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套的AutoreleasePool"><span class="nav-number">1.5.</span> <span class="nav-text">嵌套的AutoreleasePool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autorelease返回值的快速释放机制"><span class="nav-number">1.6.</span> <span class="nav-text">Autorelease返回值的快速释放机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#黑魔法之Thread_Local_Storage"><span class="nav-number">1.6.1.</span> <span class="nav-text">黑魔法之Thread Local Storage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#黑魔法之__builtin_return_address"><span class="nav-number">1.6.2.</span> <span class="nav-text">黑魔法之__builtin_return_address</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#黑魔法之反查汇编指令"><span class="nav-number">1.6.3.</span> <span class="nav-text">黑魔法之反查汇编指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他Autorelease相关知识点"><span class="nav-number">1.7.</span> <span class="nav-text">其他Autorelease相关知识点</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/06/Autorelease/';
+      var disqus_title = 'Autorelease';
+      var disqus_url = 'http://ytlvy.com/2015/07/06/Autorelease/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
