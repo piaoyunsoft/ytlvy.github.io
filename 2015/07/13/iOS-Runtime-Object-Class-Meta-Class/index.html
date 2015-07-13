@@ -1,0 +1,674 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS,Meta Class," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Runtime Object & Class & Meta Class // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Runtime Object & Class & Meta Class
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Object-Class-Meta-Class/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="习题内容">习题内容</h3><p>下面代码的运行结果是?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">BOOL</span> res1 = [(<span class="keyword">id</span>)[<span class="built_in">NSObject</span> class] isKindOfClass:[<span class="built_in">NSObject</span> class]];</span><br><span class="line">        <span class="built_in">BOOL</span> res2 = [(<span class="keyword">id</span>)[<span class="built_in">NSObject</span> class] isMemberOfClass:[<span class="built_in">NSObject</span> class]];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">BOOL</span> res3 = [(<span class="keyword">id</span>)[Sark class] isKindOfClass:[Sark class]];</span><br><span class="line">        <span class="built_in">BOOL</span> res4 = [(<span class="keyword">id</span>)[Sark class] isMemberOfClass:[Sark class]];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d %d %d %d"</span>, res1, res2, res3, res4);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-05</span> 14<span class="pseudo">:45</span><span class="pseudo">:08</span><span class="class">.474</span> <span class="tag">Test</span><span class="attr_selector">[9412:721945]</span> 1 0 0 0</span><br></pre></td></tr></table></figure>
+<h3 id="什么是_id">什么是 id</h3><p>id 在 objc.h 中定义如下:<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/// A pointer to an<span class="instruction"> instance </span>of a class.</span><br><span class="line">typedef struct objc_object *id;</span><br></pre></td></tr></table></figure></p>
+<p>就像注释中所说的这样 id 是指向一个 objc_object 结构体的指针。</p>
+<blockquote>
+<p>id 这个struct的定义本身就带了一个 <em>, 所以我们在使用其他NSObject类型的实例时需要在前面加上 </em>， 而使用 id 时<br>却不用。</p>
+</blockquote>
+<h3 id="那么objc_object又是什么呢">那么objc_object又是什么呢</h3><p>objc_object 在 objc.h 中定义如下:<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/// Represents an<span class="instruction"> instance </span>of a class.</span><br><span class="line">struct objc_object &#123;</span><br><span class="line">    Class isa;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这个时候我们知道Objective-C中的object在最后会被转换成C的结构体，而在这个struct中有一个 isa 指针，指向它的类别 Class。</p>
+<h3 id="那么什么是Class呢">那么什么是Class呢</h3><p>在 objc.h 中定义如下:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// An opaque type that represents an Objective-C class.</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到 Class本身指向的也是一个C的<code>struct objc_class</code>。</p>
+<p>继续看在runtime.h中<code>objc_class</code>定义如下:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_<span class="built_in">AVAILABILITY</span>;</span><br><span class="line">    <span class="preprocessor">#if !__OBJC2__</span></span><br><span class="line">    Class super_class                                        OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                                         OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">long</span> version                                             OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">long</span> info                                                OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">long</span> instance_size                                       OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars                             OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_method_list **methodLists                    OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_cache *cache                                 OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols                     OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="preprocessor">#endif</span></span><br><span class="line">&#125; OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br></pre></td></tr></table></figure></p>
+<p>该结构体中，isa 指向所属Class， super_class指向父类别。</p>
+<p>下载objc源代码，在 objc-runtime-new.h 中，我们发现 objc_class有如下定义:<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class : objc_object &#123;</span><br><span class="line">    // <span class="class"><span class="keyword">Class</span> <span class="title">ISA</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">Class</span> <span class="title">superclass</span>;   </span></span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>豁然开朗，我们看到在Objective-C的设计哲学中，一切都是对象。Class在设计中本身也是一个对象。而这个Class对象的对应的类，我们叫它 <code>Meta Class</code>。即Class结构体中的 isa 指向的就是它的 Meta Class。</p>
+<h3 id="Meta_Class">Meta Class</h3><p>根据上面的描述，我们可以把Meta Class理解为 一个Class对象的Class。简单的说：</p>
+<ul>
+<li>当我们发送一个消息给一个NSObject对象时，这条消息会在对象的类的方法列表里查找</li>
+<li>当我们发送一个消息给一个类时，这条消息会在类的Meta Class的方法列表里查找</li>
+</ul>
+<p>而 Meta Class本身也是一个Class，它跟其他Class一样也有自己的 isa 和 super_class 指针。看下图：<br><img src="http://106.186.113.24:8888/other/Class%26MetaClass.001.jpg" alt=""></p>
+<ul>
+<li>每个Class都有一个isa指针指向一个唯一的Meta Class</li>
+<li>每一个Meta Class的isa指针都指向最上层的<code>Meta Class</code>（图中的NSObject的Meta Class）</li>
+<li>最上层的<code>Meta Class</code>的<code>isa</code>指针指向自己，形成一个回路</li>
+<li>每一个<code>Meta Class</code>的<code>super class</code>指针指向它原本Class的 <code>Super Class</code>的<code>Meta Class</code>。但是最上层的<code>Meta Class</code>的 <code>Super Class</code>指向<code>NSObject Class</code>本身</li>
+<li>最上层的NSObject Class的super class指向 nil</li>
+</ul>
+<h3 id="解惑">解惑</h3><p>为了更加清楚的知道整个函数调用过程，我们使用<code>clang -rewrite-objc main.m</code>重写，可获得如下代码：<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BOOL res1 = <span class="params">(<span class="params">(BOOL <span class="params">(*)</span><span class="params">(id, SEL, Class)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span><span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>, sel_registerName<span class="params">(<span class="string">"isKindOfClass:"</span>)</span>, <span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>)</span>;</span><br><span class="line"></span><br><span class="line"> BOOL res2 = <span class="params">(<span class="params">(BOOL <span class="params">(*)</span><span class="params">(id, SEL, Class)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span><span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>, sel_registerName<span class="params">(<span class="string">"isMemberOfClass:"</span>)</span>, <span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>)</span>;</span><br><span class="line"></span><br><span class="line"> BOOL res3 = <span class="params">(<span class="params">(BOOL <span class="params">(*)</span><span class="params">(id, SEL, Class)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span><span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"Sark"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>, sel_registerName<span class="params">(<span class="string">"isMemberOfClass:"</span>)</span>, <span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>)</span>;</span><br><span class="line"></span><br><span class="line"> BOOL res4 = <span class="params">(<span class="params">(BOOL <span class="params">(*)</span><span class="params">(id, SEL, Class)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span><span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"Sark"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>, sel_registerName<span class="params">(<span class="string">"isMemberOfClass:"</span>)</span>, <span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>先看前两个调用：</p>
+<ul>
+<li>最外层是 objc_msgSend函数，转发消息。</li>
+<li>函数第一个参数是 <code>(id)((Class (*)(id, SEL))(void *)objc_msgSend)((id)objc_getClass(&quot;NSObject&quot;), sel_registerName(&quot;class&quot;))</code></li>
+<li>函数第二个参数是转发的selector</li>
+<li>函数第三个参数是 <code>((Class (*)(id, SEL))(void *)objc_msgSend)((id)objc_getClass(&quot;NSObject&quot;), sel_registerName(&quot;class&quot;))</code></li>
+</ul>
+<p>我们注意到第一个参数和第三个参数对应重写的是[NSObject class]，即使用<code>objc_msgSend</code>向 <code>NSObject Class</code> 发送 <code>@selector(class)</code> 这个消息</p>
+<p>打开objc源代码，在 Object.mm 中发现<code>+ (Class)class</code>实现如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="constant">Class</span>)<span class="class"><span class="keyword">class</span> &#123;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所以即返回Class类的对象本身。看如下输出:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">NSLog</span>(<span class="at_rule">@<span class="keyword">"%p",</span> [NSObject class])</span>;</span><br><span class="line"><span class="tag">NSLog</span>(<span class="at_rule">@<span class="keyword">"%p",</span> [NSObject class])</span>;</span><br><span class="line"></span><br><span class="line">2014<span class="tag">-11-05</span> 18<span class="pseudo">:48</span><span class="pseudo">:30</span><span class="class">.939</span> <span class="tag">Test</span><span class="attr_selector">[11682:865988]</span> 0<span class="tag">x7fff768d40f0</span></span><br><span class="line">2014<span class="tag">-11-05</span> 18<span class="pseudo">:48</span><span class="pseudo">:30</span><span class="class">.940</span> <span class="tag">Test</span><span class="attr_selector">[11682:865988]</span> 0<span class="tag">x7fff768d40f0</span></span><br></pre></td></tr></table></figure></p>
+<p>继续打开objc源代码，在 <code>Object.mm</code> 中，我们发现 <code>isKindOfClass</code>的实现如下:<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isKindOf:aClass</span><br><span class="line">&#123;</span><br><span class="line">    Class <span class="built_in">cls</span>;</span><br><span class="line">    <span class="flow">for</span> (<span class="built_in">cls</span> = isa; <span class="built_in">cls</span>; <span class="built_in">cls</span> = <span class="built_in">cls</span>-&gt;superclass) </span><br><span class="line">        <span class="flow">if</span> (<span class="built_in">cls</span> == (Class)aClass)</span><br><span class="line">            return YES;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对着上面Meta Class的图和实现，我们可以看出</p>
+<ul>
+<li>当 NSObject Class对象第一次进行比较时，得到它的isa为 NSObject的Meta Class， 这个时候 NSObject Meta Class 和 NSObject Class不相等。</li>
+<li>然后取NSObject 的Meta Class 的Super class，这个时候又变成了 NSObject Class， 所以返回相等</li>
+</ul>
+<p>所以上述第一个输出结果是 YES 。</p>
+<p>我们在看下 ‘isMemberOfClass’的实现:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (<span class="tag">BOOL</span>)<span class="rule"><span class="attribute">isMemberOf</span>:<span class="value">aClass</span><br><span class="line">&#123;</span><br><span class="line">    return isa == (Class)aClass</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>综上所述，当前的 isa 指向 NSObject 的 <code>Meta Class</code>， 所以和 <code>NSObject Class</code>不相等。</p>
+<p>所以上述第二个输出结果为 NO 。</p>
+<p>继续看后面两个调用:</p>
+<ul>
+<li>Sark Class 的isa指向的是 Sark的Meta Class，和Sark Class不相等</li>
+<li>Sark Meta Class的super class 指向的是 NSObject Meta Class， 和 Sark Class不相等</li>
+<li>NSObject Meta Class的 super class 指向 NSObject Class，和 Sark Class 不相等</li>
+<li>NSObject Class 的super class 指向 nil， 和 Sark Class不相等</li>
+</ul>
+<p>所以后面两个调用的结果都输出为 NO 。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+            <a href="/tags/Meta-Class/"> #Meta Class </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/13/iOS-Runtime-Message-And-Category/">iOS Runtime Message And Category</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/13/iOS-Runtime-Self-Super/">iOS Runtime Self & Super</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">118</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#习题内容"><span class="nav-number">1.</span> <span class="nav-text">习题内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是_id"><span class="nav-number">2.</span> <span class="nav-text">什么是 id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#那么objc_object又是什么呢"><span class="nav-number">3.</span> <span class="nav-text">那么objc_object又是什么呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#那么什么是Class呢"><span class="nav-number">4.</span> <span class="nav-text">那么什么是Class呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Meta_Class"><span class="nav-number">5.</span> <span class="nav-text">Meta Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解惑"><span class="nav-number">6.</span> <span class="nav-text">解惑</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/13/iOS-Runtime-Object-Class-Meta-Class/';
+      var disqus_title = 'iOS Runtime Object & Class & Meta Class';
+      var disqus_url = 'http://ytlvy.com/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

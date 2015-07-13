@@ -1,0 +1,673 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS,Property,iVar," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Runtime 成员变量与属性 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Runtime 成员变量与属性
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Runtime-成员变量与属性/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-成员变量与属性/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="习题内容">习题内容</h3><p>下面代码会? Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)speak &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"my name is %@"</span>, <span class="keyword">self</span><span class="variable">.name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Test</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">id</span> cls = [Sark class];</span><br><span class="line">        <span class="keyword">void</span> *obj = &amp;cls;</span><br><span class="line">        [(__bridge <span class="keyword">id</span>)obj speak];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [[Test alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>答案：代码正常输出，输出结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-07</span> 14<span class="pseudo">:08</span><span class="pseudo">:25</span><span class="class">.698</span> <span class="tag">Test</span><span class="attr_selector">[1097:57255]</span> <span class="tag">my</span> <span class="tag">name</span> <span class="tag">is</span> &lt;<span class="rule"><span class="attribute">Test</span>:<span class="value"> <span class="number">0</span>x1001002d0&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="为什么呢?">为什么呢?</h3><p>前几节博文中多次讲到了<code>objc_class</code>结构体，今天我们再拿出来看一下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_<span class="built_in">AVAILABILITY</span>;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#if !__OBJC2__</span></span><br><span class="line">    Class super_class                                        OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                                         OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">long</span> version                                             OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">long</span> info                                                OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">long</span> instance_size                                       OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars                             OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_method_list **methodLists                    OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_cache *cache                                 OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols                     OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br></pre></td></tr></table></figure>
+<p>其中<code>objc_ivar_list</code>结构体存储着<code>objc_ivar</code>数组列表，而<code>objc_ivar</code>结构体存储了类的单个成员变量的信息。</p>
+<p>那么什么是Ivar呢？</p>
+<p>Ivar 在objc中被定义为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_ivar *Ivar;</span><br></pre></td></tr></table></figure>
+<p>它是一个指向objc_ivar结构体的指针，结构体有如下定义：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_ivar &#123;</span><br><span class="line">    <span class="keyword">char</span> *ivar_name                                          OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">char</span> *ivar_type                                          OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line">    <span class="keyword">int</span> ivar_offset                                          OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line"><span class="preprocessor">#ifdef __LP64__</span></span><br><span class="line">    <span class="keyword">int</span> space                                                OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line">&#125;                                                            OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们注意第三个成员 <code>ivar_offset</code>。它表示基地址偏移字节。</p>
+<p>在编译我们的类时，编译器生成了一个<code>ivar</code>布局，显示了在类中从哪可以访问我们的 ivars 。看下图:</p>
+<p><img src="http://106.186.113.24:8888/other/2014031602.png" alt=""></p>
+<p>上图中，左侧的数据就是地址偏移字节，我们对 ivar 的访问就可以通过 <code>对象地址 ＋ ivar偏移字节</code>的方法。但是这又引发一个问题，看下图:</p>
+<p><img src="http://106.186.113.24:8888/other/2014031603.png" alt=""></p>
+<p>我们增加了父类的ivar，这个时候布局就出错了，我们就不得不重新编译子类来恢复兼容性。</p>
+<p>而Objective－C Runtime中使用了<code>Non Fragile ivars</code>，看下图:</p>
+<p><img src="http://106.186.113.24:8888/other/2014031604.png" alt=""></p>
+<p>使用<code>Non Fragile ivars</code>时，Runtime会进行检测来调整类中新增的ivar的偏移量。 这样我们就可以通过 <code>对象地址 + ivar偏移字节</code>的方法来计算出ivar相应的地址，并访问到相应的ivar。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Student</span> : <span class="title">NSObject</span></span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">@private</span></span><br><span class="line">    <span class="built_in">NSInteger</span> age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Student</span></span></span><br><span class="line">- (<span class="built_in">NSString</span> *)description</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"age = %d"</span>, age];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        Student *student = [[Student alloc] init];</span><br><span class="line">        student-&gt;age = <span class="number">24</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码，Student有两个被标记为private的ivar，这个时候当我们使用 -&gt; 访问时，编译器会报错。那么我们如何设置一个被标记为private的ivar的值呢?</p>
+<p>通过上面的描述，我们知道ivar是通过计算字节偏量来确定地址，并访问的。我们可以改成这样:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Student</span> : <span class="title">NSObject</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">@private</span></span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Student</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)description &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"current pointer = %p"</span>, <span class="keyword">self</span>);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"age pointer = %p"</span>, &amp;age);</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"age = %d"</span>, age];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        Student *student = [[Student alloc] init];</span><br><span class="line">        Ivar age_ivar = class_getInstanceVariable(object_getClass(student), <span class="string">"age"</span>);</span><br><span class="line">        <span class="keyword">int</span> *age_pointer = (<span class="keyword">int</span> *)((__bridge <span class="keyword">void</span> *)(student) + ivar_getOffset(age_ivar));</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"age ivar offset = %td"</span>, ivar_getOffset(age_ivar));</span><br><span class="line">        *age_pointer = <span class="number">10</span>;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, student);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的输出结果为:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2014-11-08</span> <span class="number">18:24:38.89</span>2 Test[<span class="number">4143:46686</span>4] age ivar offset = 8</span><br><span class="line"><span class="number">2014-11-08</span> <span class="number">18:24:38.89</span>3 Test[<span class="number">4143:46686</span>4] current pointer = <span class="number">0x1001002</span>d0</span><br><span class="line"><span class="number">2014-11-08</span> <span class="number">18:24:38.89</span>3 Test[<span class="number">4143:46686</span>4] age pointer = <span class="number">0x1001002</span>d8</span><br><span class="line"><span class="number">2014-11-08</span> <span class="number">18:24:38.89</span>4 Test[<span class="number">4143:46686</span>4] age = 10</span><br></pre></td></tr></table></figure>
+<p>我们可以清晰的看到指针地址的变化和偏移量，和我们上述描述一致</p>
+<h3 id="说完了Ivar，_那Property又是怎么样的呢？">说完了Ivar， 那Property又是怎么样的呢？</h3><p>使用 <code>clang -rewrite-objc main.m</code> 重写题目中的代码，我们发现<code>Sark</code>类中的<code>name</code>属性被转换成了如下代码:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Sark_I<span class="built_in">MPL</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="built_in">NSObject_IMPL</span> <span class="built_in">NSObject_IVARS</span>;</span><br><span class="line">    <span class="built_in">NSString</span> *_name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// @property (nonatomic, copy) NSString *name;</span></span><br><span class="line"><span class="comment">/* @end */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// @implementation Sark</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> * _I_Sark_name(Sark * <span class="keyword">self</span>, SEL _cmd) &#123; <span class="keyword">return</span> (*(<span class="built_in">NSString</span> **)((<span class="keyword">char</span> *)<span class="keyword">self</span> + OBJC_IVAR_$_Sark$_name)); &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> _I_Sark_setName_(Sark * <span class="keyword">self</span>, SEL _cmd, <span class="built_in">NSString</span> *name) &#123; objc_setProperty (<span class="keyword">self</span>, _cmd, __OFFSETOFIVAR__(<span class="keyword">struct</span> Sark, _name), (<span class="keyword">id</span>)name, <span class="number">0</span>, <span class="number">1</span>); &#125;</span><br></pre></td></tr></table></figure></p>
+<p>类中的 <code>Property</code> 属性被编译器转换成了<code>Ivar</code>，并且自动添加了我们熟悉的<code>Set</code>和<code>Get</code>方法。</p>
+<p>我们这个时候回头看一下<code>objc_class</code>结构体中的内容，并没有发现用来专门记录<code>Property</code>的list。我们翻开objc源代码，在<code>objc-runtime-new.h</code>中，发现最终还是会通过在<code>class_ro_t</code>结构体中使用property_list_t存储对应的propertyies。</p>
+<p>而在刚刚重写的代码中，我们可以找到这个<code>property_list_t</code>:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> <span class="comment">/*_prop_list_t*/</span> &#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> entsize;  <span class="comment">// sizeof(struct _prop_t)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count_of_properties;</span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">_prop_t</span> prop_list[<span class="number">1</span>];</span><br><span class="line">    &#125; _OBJC_$_PROP_LIST_Sark __attribute__ ((used, section (<span class="string">"__DATA,__objc_const"</span>))) = &#123;</span><br><span class="line">        <span class="keyword">sizeof</span>(<span class="keyword">_prop_t</span>),</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        name</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> <span class="keyword">_class_ro_t</span> _OBJC_CLASS_RO_$_Sark __attribute__ ((used, section (<span class="string">"__DATA,__objc_const"</span>))) = &#123;</span><br><span class="line">    <span class="number">0</span>, __OFFSETOFIVAR__(<span class="keyword">struct</span> Sark, _name), <span class="keyword">sizeof</span>(<span class="keyword">struct</span> Sark_IMPL), </span><br><span class="line">    (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="number">0</span>, </span><br><span class="line">    <span class="number">0</span>, </span><br><span class="line">    <span class="string">"Sark"</span>,</span><br><span class="line">    (<span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *)&amp;_OBJC_$_INSTANCE_METHODS_Sark,</span><br><span class="line">    <span class="number">0</span>, </span><br><span class="line">    (<span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_ivar_list_t</span> *)&amp;_OBJC_$_INSTANCE_VARIABLES_Sark,</span><br><span class="line">    <span class="number">0</span>, </span><br><span class="line">    (<span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_prop_list_t</span> *)&amp;_OBJC_$_PROP_LIST_Sark,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="解惑">解惑</h3><p>1）为什么能够正常运行，并调用到<code>speak</code>方法？<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="property">id</span> cls = [Sark <span class="type">class</span>];</span><br><span class="line">void *obj = &amp;cls;</span><br><span class="line">[(__bridge <span class="property">id</span>)obj speak];</span><br></pre></td></tr></table></figure></p>
+<p>obj被转换成了一个指向<code>cls</code>的指针，而 <code>cls</code> 又指向<code>[Sark Class]</code>, 此时<code>cls</code> 起到了类似<code>isa</code> 指针的作用, 因为<code>isa</code>也是指向一个类. 之后当<code>obj</code>被强制转换为<code>objc_object</code>类型时, <code>obj</code>就被当做了一个<code>[Sark Class]</code>的对象, 但是此对象和实际的对象是有差别的, 实际的对象时分配在堆上的, 而这个变量是临时变量, 本身分配在栈上, 强制转换后, 也同样还在栈上. 同时此对象除了有<code>isa</code> 指针相对应的类能提供的特性外, 其他的一切都是假的.</p>
+<p>也正因为<code>obj</code> 此时被强制转换为<code>[Sark Class]</code>, 所以它可以调用<code>speak</code>方法.</p>
+<p>2) 为什么self.name的输出为 <test: 0x1001002d0=""> ?<br>在<code>speak</code>方法中, 关于<code>self.name</code>的调用, 由上面的<code>ivar</code> 的获取方法<code>对象地址 + ivar偏移字节</code>,  可以推导出此时 self.name的调用地址为 <code>obj</code>指向对象的地址 + 偏移8(64位系统)而得出.  </test:></p>
+<p><code>obj</code>指向的对象地址, 由上面的代码<code>void *obj = &amp;cls;</code> 可知, 是<code>cls</code>变量的地址, 而此局部变量是分配在栈上的. 同时所有的局部变量是按照出现顺序从高到底一个个入栈的.可以参考<a href="/2015/07/06/progress-memory-map/">这篇文章</a>. 而 <code>cls</code> 变量地址+8是 <code>cls</code>局部变量上一个局部变量.</p>
+<p>具体的情况,我们在下面来分析</p>
+<p>我们在测试代码中加入一些调试代码和Log如下:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)speak</span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> numberOfIvars = <span class="number">0</span>;</span><br><span class="line">    Ivar *ivars = class_copyIvarList([<span class="keyword">self</span> class], &amp;numberOfIvars);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">const</span> Ivar *p = ivars; p &lt; ivars+numberOfIvars; p++) &#123;</span><br><span class="line">        Ivar <span class="keyword">const</span> ivar = *p;</span><br><span class="line">        ptrdiff_t offset = ivar_getOffset(ivar);</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *name = ivar_getName(ivar);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Sark ivar name = %s, offset = %td"</span>, name, offset);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_name变量 本身的地址 %p"</span>, &amp;_name);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_name变量 指向地址 %p"</span>, _name);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_name 变量指向对象的内容 %@"</span>, _name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)init</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"self变量 指向对象的地址 = %p ========"</span>, <span class="keyword">self</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"self变量 本身的地址 = %p"</span>, &amp;<span class="keyword">self</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"select address %p"</span>, <span class="keyword">@selector</span>(initWithAttribute:));</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"_cmd address %p"</span>, _cmd);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">id</span> cls = [Sark class];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"cls变量 指向的地址 = %p"</span>, cls);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"cls变量 本身地址 = %p"</span>, &amp;cls);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">void</span> *obj = &amp;cls;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"obj变量 指向的虚假对象地址 = %@"</span>, obj);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"obj变量 本身地址 = %p"</span>, &amp;obj);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line"></span><br><span class="line">        [(__bridge <span class="keyword">id</span>)obj speak];</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>5 iTest[<span class="number">13990:49503</span>5] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>7 iTest[<span class="number">13990:49503</span>5] self变量 指向对象的地址 = <span class="number">0x7f8d32</span>700050 ========</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>7 iTest[<span class="number">13990:49503</span>5] self变量 本身的地址 = 0x7fff5cb8f408</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>7 iTest[<span class="number">13990:49503</span>5] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>8 iTest[<span class="number">13990:49503</span>5] select address <span class="number">0x103071b4</span>e</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>8 iTest[<span class="number">13990:49503</span>5] _cmd address <span class="number">0x10603733</span>b</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>9 iTest[<span class="number">13990:49503</span>5] cls变量 指向的地址 = <span class="number">0x103075760</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>9 iTest[<span class="number">13990:49503</span>5] cls变量 本身地址 = 0x7fff5cb8f3e8</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.48</span>9 iTest[<span class="number">13990:49503</span>5] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>0 iTest[<span class="number">13990:49503</span>5] obj变量 指向的虚假对象地址 = &lt;Sark: 0x7fff5cb8f3e8&gt;</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>0 iTest[<span class="number">13990:49503</span>5] obj变量 本身地址 = 0x7fff5cb8f3e0</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>0 iTest[<span class="number">13990:49503</span>5] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>1 iTest[<span class="number">13990:49503</span>5] Sark ivar name = _name, offset = 8</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>1 iTest[<span class="number">13990:49503</span>5] _name变量 本身的地址 0x7fff5cb8f3f0</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>2 iTest[<span class="number">13990:49503</span>5] _name变量 指向地址 <span class="number">0x7f8d32</span>700050</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:24:31.49</span>2 iTest[<span class="number">13990:49503</span>5] _name 变量指向对象的内容 &lt;Test: <span class="number">0x7f8d32</span>700050&gt;</span><br></pre></td></tr></table></figure>
+<p>由上面的分析可知 <code>_name</code>指针本身的地址为<code>0x7fff5cb8f3f0</code> 正好是指针<code>cls</code>本身地址<code>0x7fff5cb8f3e8</code> + <code>8</code>得到的。而此地址由Debug 输出可知为<code>&lt;Test: 0x7f8d32700050&gt;</code>. 但是我们发现<code>cls</code>的上一个变量是<code>self</code>, 而<code>self</code> 的地址确是<code>0x7fff5cb8f408</code>, 是<code>cls</code>地址+<code>32</code>.</p>
+<p><img src="http://7jpswx.com1.z0.glb.clouddn.com/iOS%20Runtime%20成员变量与属性1.png" alt=""><br><img src="http://7jpswx.com1.z0.glb.clouddn.com/iOS%20Runtime%20成员变量与属性2.png" alt=""></p>
+<p>通过在Xcode自带的内存浏览器中查看, 并通过 <code>LLDB</code> 打印输出3个多出的变量, 分别为 <code>Test对象指针地址</code>, <code>Test类</code>, <code>_cmd</code>. </p>
+<h3 id="进一步分析">进一步分析</h3><p>将代码注释如下:<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    self = [super init];</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//    if (self) &#123;</span></span><br><span class="line"></span><br><span class="line">    ....</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    &#125;</span></span><br><span class="line"><span class="comment">//    return self;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="constant">nil</span>;</span><br></pre></td></tr></table></figure></p>
+<p>在<code>NSLog(@&quot;cls变量 本身地址 = %p&quot;, &amp;cls);</code>句下面断点, 输出如下:<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>7 iTest[<span class="number">14251:506168</span>] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>8 iTest[<span class="number">14251:506168</span>] self变量 指向对象的地址 = 0x7fda40f02c20 ========</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>8 iTest[<span class="number">14251:506168</span>] self变量 本身的地址 = 0x7fff<span class="number">5f003408</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>8 iTest[<span class="number">14251:506168</span>] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>9 iTest[<span class="number">14251:506168</span>] select address 0x100bfdb4e</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>9 iTest[<span class="number">14251:506168</span>] _cmd address 0x103bc333b</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>9 iTest[<span class="number">14251:506168</span>] cls变量 指向的地址 = <span class="number">0x100c01758</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">20:43:05.37</span>9 iTest[<span class="number">14251:506168</span>] cls变量 本身地址 = 0x7fff<span class="number">5f0033f8</span></span><br></pre></td></tr></table></figure></p>
+<p>此时<code>cls</code> 和<code>self</code>相差 <code>0x7fff5f003408 - 0x7fff5f0033f8 = 16</code> 恰好为两个变量地址, 而我们由 runtime 调用知道, 每个方法都默认隐藏传入了两个变量<code>self</code> 和 <code>_cmd</code>. 从内存浏览器可以看出此时 <code>self</code>变量的上一个地址 <code>0x7fff5f003400</code>恰好为<code>0x103bc333b</code> 是<code>_ cmd</code>的地址. 而此时由于<code>self.name</code>指向了 <code>_cmd</code>的地址, 程序继续运行报错<code>EXC_BAD_ACCESS</code><br><img src="http://7jpswx.com1.z0.glb.clouddn.com/iOS%20Runtime%20成员变量与属性3.png" alt=""></p>
+<p>由此可以推论出:<br>1) <code>_cmd</code> 为隐藏参数自动传入, </p>
+<p>2)<code>Test类</code>和另外一个<code>Test对象指针地址</code> 应该是 <code>[super init]</code>语句产生的, 经过编译后, <code>objc_super</code>结构体正好包含两个变量分别为<code>(id)self</code>, <code>objc_getClass(&quot;Test&quot;)</code>.</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self = <span class="list">(<span class="list">(<span class="keyword">Test</span> <span class="variable">*(*</span>)</span><span class="list">(<span class="keyword">__rw_objc_super</span> <span class="variable">*, SEL, NSInteger))(void *</span>)</span>objc_msgSendSuper)</span><span class="list">(<span class="list">(<span class="keyword">__rw_objc_super</span>)</span>&#123; <span class="list">(<span class="keyword">id</span>)</span>self, <span class="list">(<span class="keyword">id</span>)</span>class_getSuperclass<span class="list">(<span class="keyword">objc_getClass</span><span class="list">(<span class="string">"Test"</span>)</span>)</span> &#125;, sel_registerName<span class="list">(<span class="string">"init"</span>)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>看下图，可以清楚的展示整个计算的过程：</p>
+<p><img src="http://7jpswx.com1.z0.glb.clouddn.com/iOS%20Runtime%20成员变量与属性.jpg" alt=""></p>
+<p>我们可以做一个另外的实验，把<code>Test Class</code> 的<code>init</code>方法改为如下代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Father</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Father</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)init</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"self变量 指向对象的地址 = %p ========"</span>, <span class="keyword">self</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"self变量 本身的地址 = %p"</span>, &amp;<span class="keyword">self</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSString</span> *ss = <span class="string">@"hello world"</span>;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"ss变量 指向对象的地址 = %p ========"</span>, ss);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"ss变量 本身的地址 = %p"</span>, &amp;ss);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">id</span> cls = [Sark class];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"cls变量 指向的地址 = %p"</span>, cls);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"cls变量 本身地址 = %p"</span>, &amp;cls);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">void</span> *obj = &amp;cls;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"obj变量 指向的虚假对象地址 = %@"</span>, obj);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"obj变量 本身地址 = %p"</span>, &amp;obj);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"================================="</span>);</span><br><span class="line"></span><br><span class="line">        [(__bridge <span class="keyword">id</span>)obj speak];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>你会发现这个时候的输出变成了:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>1 iTest[<span class="number">11586:38183</span>0] self变量 指向对象的地址 = 0x7fa<span class="number">3325007b0</span> ========</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>3 iTest[<span class="number">11586:38183</span>0] self变量 本身的地址 = 0x7fff<span class="number">57c6e408</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>3 iTest[<span class="number">11586:38183</span>0] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>4 iTest[<span class="number">11586:38183</span>0] ss变量 指向对象的地址 = <span class="number">0x107f944</span>e0 ========</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>4 iTest[<span class="number">11586:38183</span>0] ss变量 本身的地址 = 0x7fff<span class="number">57c6e3e8</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>4 iTest[<span class="number">11586:38183</span>0] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>5 iTest[<span class="number">11586:38183</span>0] cls变量 指向的地址 = <span class="number">0x107f966</span>d8</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>5 iTest[<span class="number">11586:38183</span>0] cls变量 本身地址 = 0x7fff<span class="number">57c6e3e0</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>6 iTest[<span class="number">11586:38183</span>0] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>6 iTest[<span class="number">11586:38183</span>0] obj变量 指向的虚假对象地址 = &lt;Sark: 0x7fff<span class="number">57c6e3e0</span>&gt;</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>6 iTest[<span class="number">11586:38183</span>0] obj变量 本身地址 = 0x7fff<span class="number">57c6e3d8</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>7 iTest[<span class="number">11586:38183</span>0] =================================</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>7 iTest[<span class="number">11586:38183</span>0] Sark ivar name = _name, offset = 8</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>7 iTest[<span class="number">11586:38183</span>0] _name变量 本身的地址 0x7fff<span class="number">57c6e3e8</span></span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>8 iTest[<span class="number">11586:38183</span>0] _name变量 指向地址 <span class="number">0x107f944</span>e0</span><br><span class="line"><span class="number">2015-07-13</span> <span class="number">14:16:23.28</span>8 iTest[<span class="number">11586:38183</span>0] _name 变量指向对象的内容 hello world</span><br></pre></td></tr></table></figure>
+<h3 id="参考">参考</h3><p><a href="http://chun.tips/blog/2014/11/08/bao-gen-wen-di-objective%5Bnil%5Dc-runtime(4)%5Bnil%5D-cheng-yuan-bian-liang-yu-shu-xing/" target="_blank" rel="external">http://chun.tips/blog/2014/11/08/bao-gen-wen-di-objective%5Bnil%5Dc-runtime(4)%5Bnil%5D-cheng-yuan-bian-liang-yu-shu-xing/</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+            <a href="/tags/Property/"> #Property </a>
+          
+            <a href="/tags/iVar/"> #iVar </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/">iOS Event Delivery/ The Responder Chain</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/13/iOS-Runtime-Message-And-Category/">iOS Runtime Message And Category</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">118</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#习题内容"><span class="nav-number">1.</span> <span class="nav-text">习题内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么呢?"><span class="nav-number">2.</span> <span class="nav-text">为什么呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说完了Ivar，_那Property又是怎么样的呢？"><span class="nav-number">3.</span> <span class="nav-text">说完了Ivar， 那Property又是怎么样的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解惑"><span class="nav-number">4.</span> <span class="nav-text">解惑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进一步分析"><span class="nav-number">5.</span> <span class="nav-text">进一步分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/13/iOS-Runtime-成员变量与属性/';
+      var disqus_title = 'iOS Runtime 成员变量与属性';
+      var disqus_url = 'http://ytlvy.com/2015/07/13/iOS-Runtime-成员变量与属性/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

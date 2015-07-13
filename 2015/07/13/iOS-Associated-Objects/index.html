@@ -1,0 +1,689 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Associated,IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Associated Objects // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Associated Objects
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Associated-Objects/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Associated-Objects/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="iOS_Associated_Objects">iOS Associated Objects</h2><p>关注以下三个问题:</p>
+<ol>
+<li>关联对象被存储在什么地方，是不是存放在被关联对象本身的内存中？</li>
+<li>关联对象的五种关联策略有什么区别，有什么坑？</li>
+<li>关联对象的生命周期是怎样的，什么时候被释放，什么时候被移除？</li>
+</ol>
+<h3 id="使用场景:">使用场景:</h3><p>按照 Mattt Thompson 大神的文章 Associated Objects 中的说法，<a href="http://nshipster.com/associated-objects/" target="_blank" rel="external">Associated Objects</a> 主要有以下三个使用场景</p>
+<ol>
+<li>为现有的类添加私有变量以帮助实现细节；</li>
+<li>为现有的类添加公有属性；</li>
+<li>为 KVO 创建一个关联的观察者。</li>
+</ol>
+<p>从本质上看，第 1 、2 个场景其实是一个意思，唯一的区别就在于新添加的这个属性是公有的还是私有的而已。就目前来说，我在实际工作中使用得最多的是第 2 个场景，而第 3 个场景我还没有使用过</p>
+<h3 id="相关函数">相关函数</h3><p>与 Associated Objects 相关的函数主要有三个，我们可以在 runtime 源码的 runtime.h 文件中找到它们的声明：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_setAssociatedObject</span>(<span class="params">id <span class="keyword">object</span>, <span class="keyword">const</span> <span class="keyword">void</span> *key, id <span class="keyword">value</span>, objc_AssociationPolicy policy</span>)</span>;</span><br><span class="line"><span class="function">id <span class="title">objc_getAssociatedObject</span>(<span class="params">id <span class="keyword">object</span>, <span class="keyword">const</span> <span class="keyword">void</span> *key</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_removeAssociatedObjects</span>(<span class="params">id <span class="keyword">object</span></span>)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这三个函数的命名对程序员非常友好，可以让我们一眼就看出函数的作用：</p>
+<ol>
+<li>objc_setAssociatedObject 用于给对象添加关联对象，传入 nil 则可以移除已有的关联对象；</li>
+<li>objc_getAssociatedObject 用于获取关联对象；</li>
+<li>objc_removeAssociatedObjects 用于移除一个对象的所有关联对象。</li>
+</ol>
+<blockquote>
+<p>objc_removeAssociatedObjects 函数我们一般是用不上的，因为这个函数会移除一个对象的所有关联对象，将该对象恢复成“原始”状态。这样做就很有可能把别人添加的关联对象也一并移除，这并不是我们所希望的。所以一般的做法是通过给 objc_setAssociatedObject 函数传入 nil 来移除某个已有的关联对象。</p>
+</blockquote>
+<h3 id="key_值">key 值</h3><p>关于前两个函数中的 key 值是我们需要重点关注的一个点，这个 key 值必须保证是一个对象级别（为什么是对象级别？看完下面的章节你就会明白了）的唯一常量。一般来说，有以下三种推荐的 key 值</p>
+<ol>
+<li>声明 <code>static char kAssociatedObjectKey;</code> ，使用 <code>&amp;kAssociatedObjectKey</code> 作为 key 值;</li>
+<li>声明 <code>static void *kAssociatedObjectKey = &amp;kAssociatedObjectKey;</code>，使用 <code>kAssociatedObjectKey</code> 作为 key 值；</li>
+<li>用 selector ，使用 getter 方法的名称作为 key 值</li>
+</ol>
+<p>我个人最喜欢的（没有之一）是第 3 种方式，因为它省掉了一个变量名，非常优雅地解决了计算科学中的两大世界难题之一（命名）</p>
+<h3 id="关联策略">关联策略</h3><p>在给一个对象添加关联对象时有五种关联策略可供选择：<br><img src="http://cc.cocimg.com/api/uploads/20150629/1435542766477905.png" alt=""></p>
+<p>其中，第 2 种与第 4 种、第 3 种与第 5 种关联策略的唯一差别就在于操作是否具有原子性。由于操作的原子性不在本文的讨论范围内，所以下面的实验和讨论就以前三种以例进行展开</p>
+<h3 id="实现原理">实现原理</h3><p>在探究 Associated Objects 的实现原理前，我们还是先来动手做一个小实验，研究一下关联对象什么时候会被释放。本实验主要涉及 ViewController 类和它的分类 ViewController+AssociatedObjects 。注：本实验的完整代码可以在这里 <a href="https://github.com/leichunfeng/AssociatedObjects" target="_blank" rel="external">AssociatedObjects</a> 找到，其中关键代码如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *associatedObject_assign;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *associatedObject_retain;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>,   <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *associatedObject_copy;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span> (<span class="title">AssociatedObjects</span>)</span></span><br><span class="line">- (<span class="built_in">NSString</span> *)associatedObject_assign &#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, _cmd);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)setAssociatedObject_assign:(<span class="built_in">NSString</span> *)associatedObject_assign &#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="keyword">@selector</span>(associatedObject_assign), associatedObject_assign, OBJC_ASSO<span class="built_in">CIATION_ASSIGN</span>);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="built_in">NSString</span> *)associatedObject_retain &#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, _cmd);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)setAssociatedObject_retain:(<span class="built_in">NSString</span> *)associatedObject_retain &#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="keyword">@selector</span>(associatedObject_retain), associatedObject_retain, OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="built_in">NSString</span> *)associatedObject_copy &#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, _cmd);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)setAssociatedObject_copy:(<span class="built_in">NSString</span> *)associatedObject_copy &#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="keyword">@selector</span>(associatedObject_copy), associatedObject_copy, OBJC_ASSO<span class="built_in">CIATION_COPY_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>在 ViewController+AssociatedObjects.h 中声明了三个属性，限定符分别为 assign, nonatomic 、strong, nonatomic 和 copy, nonatomic ，而在 ViewController+AssociatedObjects.m 中相应的分别用 OBJC_ASSOCIATION_ASSIGN 、OBJC_ASSOCIATION_RETAIN_NONATOMIC 、OBJC_ASSOCIATION_COPY_NONATOMIC 三种关联策略为这三个属性添加“实例变量”。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="built_in">NSString</span> *string_weak_retain = <span class="literal">nil</span>;</span><br><span class="line">__<span class="keyword">weak</span> <span class="built_in">NSString</span> *string_weak_copy   = <span class="literal">nil</span>;</span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.associatedObject_assign</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"leichunfeng1"</span>];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.associatedObject_retain</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"leichunfeng2"</span>];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.associatedObject_copy</span>   = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"leichunfeng3"</span>];</span><br><span class="line">    string_weak_assign = <span class="keyword">self</span><span class="variable">.associatedObject_assign</span>;</span><br><span class="line">    string_weak_retain = <span class="keyword">self</span><span class="variable">.associatedObject_retain</span>;</span><br><span class="line">    string_weak_copy   = <span class="keyword">self</span><span class="variable">.associatedObject_copy</span>;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line"><span class="comment">//    NSLog(@"self.associatedObject_assign: %@", self.associatedObject_assign); // Will Crash</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"self.associatedObject_retain: %@"</span>, <span class="keyword">self</span><span class="variable">.associatedObject_retain</span>);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"self.associatedObject_copy:   %@"</span>, <span class="keyword">self</span><span class="variable">.associatedObject_copy</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>在 ViewController 的 viewDidLoad 方法中，我们对三个属性进行了赋值，并声明了三个全局的 __weak 变量来观察相应对象的释放时机。此外，我们重写了 touchesBegan:withEvent: 方法，在方法中分别打印了这三个属性的当前值。</p>
+<p>在继续阅读下面章节前，建议读者先自行思考一下 <code>self.associatedObject_assign</code> 、<code>self.associatedObject_retain</code> 和 <code>self.associatedObject_cop</code>y 指向的对象分别会在什么时候被释放，以加深理解。</p>
+<h3 id="实验">实验</h3><p>我们先在 viewDidLoad 方法的第 28 行打上断点，然后运行程序，点击导航栏右上角的按钮 Push 到 ViewController 界面，程序将停在断点处。接着，我们使用 lldb 的 watchpoint 命令来设置观察点，观察全局变量 string_weak_assign 、string_weak_retain 和 string_weak_copy 的值的变化(<code>watch set variable string_weak_retain</code>)。正确设置好观察点后，将会在 console 中看到如下的类似输出：<br><img src="http://blog.leichunfeng.com/images/AssociatedObjects1.jpg" alt=""></p>
+<p>点击继续运行按钮，有一个观察点将被命中。我们先查看 console 中的输出，通过将这一步打印的 old value 和上一步的 new value 进行对比，我们可以知道本次命中的观察点是 string_weak_assign ，string_weak_assign 的值变成了 0x0000000000000000 ，也就是 nil 。换句话说 self.associatedObject_assign 指向的对象已经被释放了，而通过查看左侧调用栈我们可以知道，这个对象是由于其所在的 autoreleasepool 被 drain 而被释放的，这与我前面的文章<a href="http://www.cocoachina.com/ios/20150610/12093.html" target="_blank" rel="external">《Objective-C Autorelease Pool 的实现原理》</a>中的表述是一致的。提示，待会你也可以放开 touchesBegan:withEvent: 中第 31 行的注释，在 ViewController 出现后，点击一下它的 view ，进一步验证一下这个结论。<br><img src="http://blog.leichunfeng.com/images/AssociatedObjects2.jpg" alt=""><br>接下来，我们点击 ViewController 导航栏左上角的按钮，返回前一个界面，此时，又将有一个观察点被命中。同理，我们可以知道这个观察点是 string_weak_retain 。我们查看左侧的调用栈，将会发现一个非常敏感的函数调用 _object_remove_assocations ，调用这个函数后 ViewController 的所有关联对象被全部移除。最终，self.associatedObject_retain 指向的对象被释放。<br><img src="http://blog.leichunfeng.com/images/AssociatedObjects3.jpg" alt=""></p>
+<p>点击继续运行按钮，最后一个观察点 string_weak_copy 被命中。同理，self.associatedObject_copy 指向的对象也由于关联对象的移除被最终释放。</p>
+<p><img src="http://blog.leichunfeng.com/images/AssociatedObjects4.jpg" alt=""></p>
+<h2 id="结论">结论</h2><p>由这个实验，我们可以得出以下结论：</p>
+<ol>
+<li>关联对象的释放时机与被移除的时机并不总是一致的，比如上面的 self.associatedObject_assign 所指向的对象在 ViewController 出现后就被释放了，但是 self.associatedObject_assign 仍然有值，还是保存的原对象的地址。如果之后再使用 self.associatedObject_assign 就会造成 Crash ，所以我们在使用弱引用的关联对象时要非常小心</li>
+<li>一个对象的所有关联对象是在这个对象被释放时调用的 _object_remove_assocations 函数中被移除的。</li>
+</ol>
+<p>接下来，我们就一起看看 runtime 中的源码，来验证下我们的实验结论。</p>
+<h3 id="objc_setAssociatedObject">objc_setAssociatedObject</h3><p>们可以在 objc-references.mm 文件中找到 objc_setAssociatedObject 函数最终调用的函数：<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// retain the new value (if any) outside the lock.</span></span><br><span class="line">    ObjcAssociation old_association<span class="params">(<span class="number">0</span>, nil)</span>;</span><br><span class="line">    id new_value = value ? acquireValue<span class="params">(value, policy)</span> : nil;</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager;</span><br><span class="line">        AssociationsHashMap &amp;associations<span class="params">(manager.associations<span class="params">()</span>)</span>;</span><br><span class="line">        disguised_ptr_t disguised_object = DISGUISE<span class="params">(object)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(new_value)</span> &#123;</span><br><span class="line">            <span class="comment">// break any existing association.</span></span><br><span class="line">            AssociationsHashMap::iterator i = associations.find<span class="params">(disguised_object)</span>;</span><br><span class="line">            <span class="keyword">if</span> <span class="params">(i != associations.end<span class="params">()</span>)</span> &#123;</span><br><span class="line">                <span class="comment">// secondary table exists</span></span><br><span class="line">                ObjectAssociationMap <span class="built_in">*</span>refs = i-&gt;second;</span><br><span class="line">                ObjectAssociationMap::iterator j = refs-&gt;find<span class="params">(key)</span>;</span><br><span class="line">                <span class="keyword">if</span> <span class="params">(j != refs-&gt;end<span class="params">()</span>)</span> &#123;</span><br><span class="line">                    old_association = j-&gt;second;</span><br><span class="line">                    j-&gt;second = ObjcAssociation<span class="params">(policy, new_value)</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="params">(*refs)</span>[key] = ObjcAssociation<span class="params">(policy, new_value)</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// create the new association (first time).</span></span><br><span class="line">                ObjectAssociationMap <span class="built_in">*</span>refs = new ObjectAssociationMap;</span><br><span class="line">                associations[disguised_object] = refs;</span><br><span class="line">                <span class="params">(*refs)</span>[key] = ObjcAssociation<span class="params">(policy, new_value)</span>;</span><br><span class="line">                object-&gt;setHasAssociatedObjects<span class="params">()</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// setting the association to nil breaks the association.</span></span><br><span class="line">            AssociationsHashMap::iterator i = associations.find<span class="params">(disguised_object)</span>;</span><br><span class="line">            <span class="keyword">if</span> <span class="params">(i !=  associations.end<span class="params">()</span>)</span> &#123;</span><br><span class="line">                ObjectAssociationMap <span class="built_in">*</span>refs = i-&gt;second;</span><br><span class="line">                ObjectAssociationMap::iterator j = refs-&gt;find<span class="params">(key)</span>;</span><br><span class="line">                <span class="keyword">if</span> <span class="params">(j != refs-&gt;end<span class="params">()</span>)</span> &#123;</span><br><span class="line">                    old_association = j-&gt;second;</span><br><span class="line">                    refs-&gt;erase<span class="params">(j)</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// release the old value (outside of the lock).</span></span><br><span class="line">    <span class="keyword">if</span> <span class="params">(old_association.hasValue<span class="params">()</span>)</span> ReleaseValue<span class="params">()</span><span class="params">(old_association)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在看这段代码前，我们需要先了解一下几个数据结构以及它们之间的关系：</p>
+<ol>
+<li>AssociationsManager 是顶级的对象，维护了一个从 spinlock_t 锁到 AssociationsHashMap 哈希表的单例键值对映射；</li>
+<li>AssociationsHashMap 是一个无序的哈希表，维护了从对象地址到 ObjectAssociationMap 的映射；</li>
+<li>ObjectAssociationMap 是一个 C++ 中的 map ，维护了从 key 到 ObjcAssociation 的映射，即关联记录；</li>
+<li>ObjcAssociation 是一个 C++ 的类，表示一个具体的关联结构，主要包括两个实例变量，_policy 表示关联策略，_value 表示关联对象。</li>
+</ol>
+<p>每一个对象地址对应一个 ObjectAssociationMap 对象，而一个 ObjectAssociationMap 对象保存着这个对象的若干个关联记录。<br>弄清楚这些数据结构之间的关系后，再回过头来看上面的代码就不难了。我们发现，在苹果的底层代码中一般都会充斥着各种 if else ，可见写好 if else 后我们就距离成为高手不远了。开个玩笑，我们来看下面的流程图，一图胜千言：<br><img src="http://blog.leichunfeng.com/images/objc_setAssociatedObject.png" alt=""></p>
+<h3 id="objc_getAssociatedObject">objc_getAssociatedObject</h3><p>同样的，我们也可以在 objc-references.mm 文件中找到 objc_getAssociatedObject 函数最终调用的函数：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">id _object_get_associative_reference<span class="list">(<span class="keyword">id</span> object, void <span class="variable">*key) &#123;</span><br><span class="line">    id value = nil;</span><br><span class="line">    uintptr_t policy = OBJC_ASSOCIATION_ASSIGN;</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager;</span><br><span class="line">        AssociationsHashMap &amp;associations(manager.associations());</span><br><span class="line">        disguised_ptr_t disguised_object = DISGUISE(object);</span><br><span class="line">        AssociationsHashMap::iterator i = associations.find(disguised_object);</span><br><span class="line">        if (i != associations.end()) &#123;</span><br><span class="line">            ObjectAssociationMap *</span>refs = i-&gt;second<span class="comment">;</span></span><br><span class="line">            ObjectAssociationMap:<span class="keyword">:iterator</span> j = refs-&gt;find<span class="list">(<span class="keyword">key</span>)</span><span class="comment">;</span></span><br><span class="line">            if <span class="list">(<span class="keyword">j</span> != refs-&gt;end<span class="list">()</span>)</span> &#123;</span><br><span class="line">                ObjcAssociation <span class="keyword">&amp;entry</span> = j-&gt;second<span class="comment">;</span></span><br><span class="line">                value = entry.value<span class="list">()</span><span class="comment">;</span></span><br><span class="line">                policy = entry.policy<span class="list">()</span><span class="comment">;</span></span><br><span class="line">                if <span class="list">(<span class="keyword">policy</span> &amp; OBJC_ASSOCIATION_GETTER_RETAIN)</span> <span class="list">(<span class="list">(<span class="keyword">id</span><span class="list">(<span class="keyword">*</span>)</span><span class="list">(<span class="keyword">id</span>, SEL)</span>)</span>objc_msgSend)</span><span class="list">(<span class="keyword">value</span>, SEL_retain)</span><span class="comment">;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if <span class="list">(<span class="keyword">value</span> <span class="keyword">&amp;&amp;</span> <span class="list">(<span class="keyword">policy</span> &amp; OBJC_ASSOCIATION_GETTER_AUTORELEASE)</span>)</span> &#123;</span><br><span class="line">        <span class="list">(<span class="list">(<span class="keyword">id</span><span class="list">(<span class="keyword">*</span>)</span><span class="list">(<span class="keyword">id</span>, SEL)</span>)</span>objc_msgSend)</span><span class="list">(<span class="keyword">value</span>, SEL_autorelease)</span><span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">    return value<span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>看懂了 objc_setAssociatedObject 函数后，objc_getAssociatedObject 函数对我们来说就是小菜一碟了。这个函数先根据对象地址在 AssociationsHashMap 中查找其对应的 ObjectAssociationMap 对象，如果能找到则进一步根据 key 在 ObjectAssociationMap 对象中查找这个 key 所对应的关联结构 ObjcAssociation ，如果能找到则返回 ObjcAssociation 对象的 value 值，否则返回 nil 。</p>
+<h3 id="objc_removeAssociatedObjects">objc_removeAssociatedObjects</h3><p>同理，我们也可以在 objc-references.mm 文件中找到 objc_removeAssociatedObjects 函数最终调用的函数：<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void _object_remove_assocations<span class="params">(id object)</span> &#123;</span><br><span class="line">    vector&lt; ObjcAssociation,ObjcAllocator &gt; elements;</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager;</span><br><span class="line">        AssociationsHashMap &amp;associations<span class="params">(manager.associations<span class="params">()</span>)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(associations.size<span class="params">()</span> == <span class="number">0</span>)</span> return;</span><br><span class="line">        disguised_ptr_t disguised_object = DISGUISE<span class="params">(object)</span>;</span><br><span class="line">        AssociationsHashMap::iterator i = associations.find<span class="params">(disguised_object)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(i != associations.end<span class="params">()</span>)</span> &#123;</span><br><span class="line">            <span class="comment">// copy all of the associations that need to be removed.</span></span><br><span class="line">            ObjectAssociationMap <span class="built_in">*</span>refs = i-&gt;second;</span><br><span class="line">            <span class="keyword">for</span> <span class="params">(ObjectAssociationMap::iterator j = refs-&gt;begin<span class="params">()</span>, end = refs-&gt;end<span class="params">()</span>; j != end; ++j)</span> &#123;</span><br><span class="line">                elements.push_back<span class="params">(j-&gt;second)</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// remove the secondary table.</span></span><br><span class="line">            delete refs;</span><br><span class="line">            associations.erase<span class="params">(i)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// the calls to releaseValue() happen outside of the lock.</span></span><br><span class="line">    for_each<span class="params">(elements.begin<span class="params">()</span>, elements.end<span class="params">()</span>, ReleaseValue<span class="params">()</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个函数负责移除一个对象的所有关联对象，具体实现也是先根据对象的地址获取其对应的 ObjectAssociationMap 对象，然后将所有的关联结构保存到一个 vector 中，最终释放 vector 中保存的所有关联对象。根据前面的实验观察到的情况，在一个对象被释放时，也正是调用的这个函数来移除其所有的关联对象。</p>
+<h3 id="给类对象添加关联对象">给类对象添加关联对象</h3><p>看完源代码后，我们知道对象地址与 AssociationsHashMap 哈希表是一一对应的。那么我们可能就会思考这样一个问题，是否可以给类对象添加关联对象呢？答案是肯定的。我们完全可以用同样的方式给类对象添加关联对象，只不过我们一般情况下不会这样做，因为更多时候我们可以通过 static 变量来实现类级别的变量。我在分类 ViewController+AssociatedObjects 中给 ViewController 类对象添加了一个关联对象 associatedObject ，读者可以亲自在 viewDidLoad 方法中调用一下以下两个方法验证一下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="tag">NSString</span> *)<span class="tag">associatedObject</span>;</span><br><span class="line">+ (<span class="tag">void</span>)<span class="rule"><span class="attribute">setAssociatedObject</span>:<span class="value">(NSString *)associatedObject</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结">总结</h2><p>读到这里，相信你对开篇的那三个问题已经有了一定的认识，下面我们再梳理一下：</p>
+<ol>
+<li>关联对象与被关联对象本身的存储并没有直接的关系，它是存储在单独的哈希表中的；</li>
+<li>关联对象的五种关联策略与属性的限定符非常类似，在绝大多数情况下，我们都会使用 OBJC_ASSOCIATION_RETAIN_NONATOMIC 的关联策略，这可以保证我们持有关联对象；</li>
+<li>关联对象的释放时机与移除时机并不总是一致，比如实验中用关联策略 OBJC_ASSOCIATION_ASSIGN 进行关联的对象，很早就已经被释放了，但是并没有被移除，而再使用这个关联对象时就会造成 Crash </li>
+</ol>
+<p>在弄懂 Associated Objects 的实现原理后，可以帮助我们更好地使用它，在出现问题时也能尽快地定位问题，最后希望本文能够对你有所帮助。</p>
+<h3 id="参考链接">参考链接</h3><ul>
+<li><a href="http://nshipster.com/associated-objects/" target="_blank" rel="external">http://nshipster.com/associated-objects/</a> </li>
+<li><a href="http://kingscocoa.com/tutorials/associated-objects/" target="_blank" rel="external">http://kingscocoa.com/tutorials/associated-objects/</a></li>
+</ul>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Associated/"> #Associated </a>
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/13/NSRunLoop深入理解/">NSRunLoop深入理解</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/13/iOS-Category/">iOS Category</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">118</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS_Associated_Objects"><span class="nav-number">1.</span> <span class="nav-text">iOS Associated Objects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景:"><span class="nav-number">1.1.</span> <span class="nav-text">使用场景:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关函数"><span class="nav-number">1.2.</span> <span class="nav-text">相关函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key_值"><span class="nav-number">1.3.</span> <span class="nav-text">key 值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联策略"><span class="nav-number">1.4.</span> <span class="nav-text">关联策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">1.5.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验"><span class="nav-number">1.6.</span> <span class="nav-text">实验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#objc_setAssociatedObject"><span class="nav-number">2.1.</span> <span class="nav-text">objc_setAssociatedObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objc_getAssociatedObject"><span class="nav-number">2.2.</span> <span class="nav-text">objc_getAssociatedObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objc_removeAssociatedObjects"><span class="nav-number">2.3.</span> <span class="nav-text">objc_removeAssociatedObjects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给类对象添加关联对象"><span class="nav-number">2.4.</span> <span class="nav-text">给类对象添加关联对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">3.1.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/13/iOS-Associated-Objects/';
+      var disqus_title = 'iOS Associated Objects';
+      var disqus_url = 'http://ytlvy.com/2015/07/13/iOS-Associated-Objects/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
