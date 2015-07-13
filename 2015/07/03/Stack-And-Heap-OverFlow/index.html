@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -193,8 +193,7 @@
 <h2 id="栈溢出">栈溢出</h2><blockquote>
 <p>在大部分操作系统中, 每个程序拥有一个<strong><em>栈</em></strong>(多线程程序,每个线程拥有一个单独的栈), 栈用于局部变量的存储.<br>栈被划分为单元, 此单元被成为帧(frame), 每个帧包含了某个函数的某一调用的全部数据.这些数据包含: 函数参数, 全部的临时变量,和 linkage 信息(就是调用函数的地址. 以便当前代码执行完毕后, 返回原位置继续执行). 通过配置编译参数,也可以包含下一帧的顶部地址.数据的布局以及排序,由操作系统决定,不同系统略有差异.<br>当函数被调用的时候, 一个新的栈帧被添加到栈的顶部. 当函数返回时,顶部的栈帧被移除.在执行过程中, 程序只能直接访问栈顶帧得数据(指针除外, 但是不建议如此设计).这种设计,方便了递归调用的实现, 因为每个子递归调用拥有独立的临时变量和参数备份.<br>下图介绍了栈的组织结构.(这只是示意图, 实际情况要根据 cpu设计来决定)</p>
 </blockquote>
-<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/stack.gif" alt=""></p>
-<p><img src="http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/Memory-Layout-300x255.gif" alt="Memory Layout of C Programs"></p>
+<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/stack.gif" alt=""><br><a id="more"></a><br><img src="http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/Memory-Layout-300x255.gif" alt="Memory Layout of C Programs"></p>
 <blockquote>
 <p>通常情况下, 程序应该检测所有的输入数据, 来确认此数据是否符合需求.不幸的是, 很多情况下, 程序员都假定用户输入是没有危害的.<br>当程序需要将数据存入固定大小的 buffer 时, 将发生灾难性后果. 恶意的攻击者可能提供大于存储区大小的数据, 因为函数只是在栈帧中分配了有限的空间, 这个数据会覆盖栈帧中得其他数据.<br>下面的例子, 演示了一个聪明的攻击者,可以通过这个技术来覆盖函数的返回值区域,来指向他自己的代码块.然后当此函数执行完毕,将不会按照原设计返回调用函数 funcB, 而是跳转到了攻击者的恶意代码.</p>
 </blockquote>
@@ -340,7 +339,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -435,7 +434,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

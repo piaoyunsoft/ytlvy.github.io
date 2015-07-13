@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="Category,IOS," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -200,6 +200,7 @@
 <p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
 <p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
 </blockquote>
+<a id="more"></a>
 <h3 id="category_声明">category 声明</h3><p>objc-runtime-new.h文件中</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="keyword">category_t</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;    <span class="comment">//类的名字</span></span><br><span class="line">    <span class="keyword">classref_t</span> cls;      <span class="comment">//类</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">method_list_t</span> *instanceMethods;</span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">method_list_t</span> *classMethods;</span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">protocol_list_t</span> *protocols;</span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">property_list_t</span> *instanceProperties;</span><br><span class="line">&#125; <span class="keyword">category_t</span>;</span><br></pre></td></tr></table></figure>
 <p>MyClass.h：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyClass</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)printName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyClass</span>(<span class="title">MyAddition</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)printName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
@@ -242,14 +243,6 @@
     </div>
 
     <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Category/"> #Category </a>
-          
-            <a href="/tags/IOS/"> #IOS </a>
-          
-        </div>
       
 
       
@@ -340,7 +333,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -435,7 +428,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

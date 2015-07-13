@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -200,7 +200,7 @@
 <li>serial dispath queue  顺序派发队列</li>
 <li>concurrent dispath queue  并发派发队列</li>
 </ol>
-<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的</p>
+<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的<br><a id="more"></a></p>
 <h4 id="创建队列">创建队列</h4><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dispath_queue_t mySerialDispatchQueue = dispatch_queue_create<span class="list">(<span class="string">"com.example.gcd.MySerialDispatchQueue"</span>, NULL)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">dispatch_queue_t myConcurrentDispathQueue = dispatch_queue_create<span class="list">(<span class="string">"com.ytlvy.gcd.MyConcurrentDispatchQueue"</span>, DISPATCH_QUEUE_CONCURRENT)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">dispatch_async<span class="list">(<span class="keyword">myConcurrentQueue</span>, ^&#123;</span><br><span class="line">  //do staff</span><br><span class="line">  &#125;)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">dispatch_release<span class="list">(<span class="keyword">mySerialDispatchQueue</span>)</span><span class="comment">;</span></span><br><span class="line">dispatch_retain<span class="list">(<span class="keyword">myConcurrentDispatchQueue</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>当并发队列添加任务后，队列被release，是没有问题的。因为block在添加到队列时，会触发dispatch_retain操作来持有队列，在block结束时，会自动触发dispatch_release来释放队列</p>
 <h4 id="Main_Dispatch_Queue_/_Global_Dispatch_Queue">Main Dispatch Queue / Global Dispatch Queue</h4><p>可以采用系统方法来获取派发队列。<br> NAME                              | Type        | Description<br> ————————————          | ——————| ————————<br> Main dispatch queue               | Serial      | Executed on the main thread<br> Global dispatch queue(Hight)      | Concurrent  | Priority High<br> Global dispatch queue(default)    | Concurrent  | Priority Normal<br> Global dispatch queue(low)        | Concurrent  | Priority Low<br> Global dispatch queue(background) | Concurrent  | Priority Background</p>
@@ -331,7 +331,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -426,7 +426,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

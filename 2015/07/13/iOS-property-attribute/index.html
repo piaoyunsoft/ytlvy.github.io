@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="iOS,property," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -202,6 +202,7 @@
 <li>可变数据类型, 当你想阻止其他拥有者变更数据时.</li>
 </ol>
 <h3 id="尽量使用_copy_关键字">尽量使用 copy 关键字</h3><p>任何实现了<code>NSCopying</code>协议的类型, 都应该尽量采用<code>copy</code>. 因为我们定义的属性,在使用时可能是用一个可变的子属性来赋值的, 例如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Book</span> : <span class="title">NSObject</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stringExample &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSMutableString</span> *bookTitle = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"Best book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    Book *book = [[Book alloc] init];</span><br><span class="line">    book<span class="variable">.title</span> = bookTitle;</span><br><span class="line"> </span><br><span class="line">    [bookTitle setString:<span class="string">@"Worst book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"book title %@"</span>, book<span class="variable">.title</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="@dynamic">@dynamic</h3><p>@synthesize 会自动生成 getter setter方法, @dynamic 只是告诉编译器 getter setter方法 已经定义, 但是不在当前类中(比如在父类中, 或者由 runtime 动态生成).</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">property</span> (nonatomic, retain) NSButton *someButton</span>;</span><br><span class="line">...</span><br><span class="line"><span class="at_rule">@<span class="keyword">synthesize</span> someButton</span>;</span><br></pre></td></tr></table></figure>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, retain) <span class="keyword">IBOutlet</span> <span class="built_in">NSButton</span> *someButton;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">@dynamic</span> someButton;</span><br></pre></td></tr></table></figure>
@@ -210,14 +211,6 @@
     </div>
 
     <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/iOS/"> #iOS </a>
-          
-            <a href="/tags/property/"> #property </a>
-          
-        </div>
       
 
       
@@ -306,7 +299,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -401,7 +394,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

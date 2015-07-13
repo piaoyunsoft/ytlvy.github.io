@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="Category,IOS," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -191,6 +191,7 @@
       
         <h3 id="习题内容">习题内容</h3><p>下面的代码会？Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSObject</span> (<span class="title">Sark</span>)</span></span><br><span class="line">+ (<span class="keyword">void</span>)foo;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSObject</span> (<span class="title">Sark</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)foo</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"IMP: -[NSObject(Sark) foo]"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [<span class="built_in">NSObject</span> foo];</span><br><span class="line">        [[<span class="built_in">NSObject</span> new] foo];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>答案：代码正常输出，输出结果如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-06</span> 13<span class="pseudo">:11</span><span class="pseudo">:46</span><span class="class">.694</span> <span class="tag">Test</span><span class="attr_selector">[14872:1110786]</span> <span class="rule"><span class="attribute">IMP</span>:<span class="value"> -[<span class="function">NSObject</span>(Sark) foo]</span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">06</span> <span class="number">13</span>:<span class="number">11</span>:<span class="number">46.695</span> Test[<span class="number">14872</span>:<span class="number">1110786</span>] IMP: -[<span class="function">NSObject</span>(Sark) foo]</span></span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>使用<code>clang -rewrite-objc main.m</code>重写，我们可以发现 main 函数中两个方法调用被转换成如下代码：<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="list">(<span class="keyword">void</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span>)</span><span class="list">(<span class="keyword">id</span>, SEL)</span>)</span><span class="list">(<span class="keyword">void</span> *)</span>objc_msgSend)</span><span class="list">(<span class="list">(<span class="keyword">id</span>)</span>objc_getClass<span class="list">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="list">(<span class="string">"foo"</span>)</span>)</span><span class="comment">;</span></span><br><span class="line"> <span class="list">(<span class="list">(<span class="keyword">void</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span>)</span><span class="list">(<span class="keyword">id</span>, SEL)</span>)</span><span class="list">(<span class="keyword">void</span> *)</span>objc_msgSend)</span><span class="list">(<span class="list">(<span class="keyword">id</span>)</span><span class="list">(<span class="list">(<span class="keyword">NSObject</span> *<span class="list">(<span class="keyword"><span class="built_in">*</span></span>)</span><span class="list">(<span class="keyword">id</span>, SEL)</span>)</span><span class="list">(<span class="keyword">void</span> *)</span>objc_msgSend)</span><span class="list">(<span class="list">(<span class="keyword">id</span>)</span>objc_getClass<span class="list">(<span class="string">"NSObject"</span>)</span>, sel_registerName<span class="list">(<span class="string">"new"</span>)</span>)</span>, sel_registerName<span class="list">(<span class="string">"foo"</span>)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
 <p>我们发现上述两个方法最终转换成使用 <code>objc_msgSend</code> 函数传递消息</p>
 <h3 id="这里先看几个概念">这里先看几个概念</h3><p><code>objc_msgSend</code>函数定义如下:</p>
@@ -291,14 +292,6 @@
 
     <div class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Category/"> #Category </a>
-          
-            <a href="/tags/IOS/"> #IOS </a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
@@ -388,7 +381,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -483,7 +476,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

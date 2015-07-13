@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -192,8 +192,7 @@
         <p><a href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/" target="_blank" rel="external">转自</a></p>
 <h2 id="iOS程序main函数之前发生了什么">iOS程序main函数之前发生了什么</h2><h3 id="前言">前言</h3><p>一个iOS app的<code>main()</code>函数位于<code>main.m</code>中，这是我们熟知的程序入口。但对objc了解更多之后发现，程序在进入我们的main函数前已经执行了很多代码，比如熟知的<code>+ load</code>方法等。本文将跟随程序执行顺序，刨根问底，从<code>dyld</code>到<code>runtime</code>，看看main函数之前都发生了什么。</p>
 <h3 id="从dyld开始">从dyld开始</h3><h4 id="动态链接库">动态链接库</h4><p>iOS中用到的所有系统<code>framework</code>都是动态链接的，类比成插头和插排，静态链接的代码在编译后的静态链接过程就将插头和插排一个个插好，运行时直接执行二进制文件；而动态链接需要在程序启动时去完成“插插销”的过程，所以在我们写的代码执行前，动态连接器需要完成准备工作。</p>
-<p>这个是在xcode中看到的Link列表：<br><img src="http://ww4.sinaimg.cn/mw600/51530583jw1ejx4ul5susj20wg0803zh.jpg" alt=""></p>
-<p>这些<code>framework</code>将会在动态链接过程中被加载，另外还有隐含<code>link</code>的<code>framework</code>，可以测试出来：先找到可执行文件，我这里叫TestMain的工程，模拟器路径下找到<code>TestMain.app</code>，可执行文件默认同名，再通过<code>otool</code>命令：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>otool -<span class="constant">L TestMain</span></span><br></pre></td></tr></table></figure></p>
+<p>这个是在xcode中看到的Link列表：<br><img src="http://ww4.sinaimg.cn/mw600/51530583jw1ejx4ul5susj20wg0803zh.jpg" alt=""><br><a id="more"></a><br>这些<code>framework</code>将会在动态链接过程中被加载，另外还有隐含<code>link</code>的<code>framework</code>，可以测试出来：先找到可执行文件，我这里叫TestMain的工程，模拟器路径下找到<code>TestMain.app</code>，可执行文件默认同名，再通过<code>otool</code>命令：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>otool -<span class="constant">L TestMain</span></span><br></pre></td></tr></table></figure></p>
 <p>-L参数打印出所有link的framework<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">TestMain:</span></span><br><span class="line">    <span class="regexp">/System/</span>Library<span class="regexp">/Frameworks/</span>CoreGraphics.framework/CoreGraphics </span><br><span class="line">    <span class="regexp">/System/</span>Library<span class="regexp">/Frameworks/</span>UIKit.framework/UIKit</span><br><span class="line">    <span class="regexp">/System/</span>Library<span class="regexp">/Frameworks/</span>Foundation.framework/Foundation</span><br><span class="line">    <span class="regexp">/System/</span>Library<span class="regexp">/Frameworks/</span>CoreFoundation.framework/CoreFoundation </span><br><span class="line">    <span class="regexp">/usr/</span>lib/libobjc.A.dylib </span><br><span class="line">    <span class="regexp">/usr/</span>lib/libSystem.dylib</span><br></pre></td></tr></table></figure></p>
 <p>除了多了的<code>CoreGraphics</code>（被<code>UIKit</code>依赖）外，有两个默认添加的<code>lib</code>。<code>libobjc</code>即<code>objc</code>和<code>runtime</code>，<code>libSystem</code>中包含了很多系统级别<code>lib</code>，列几个熟知的：<code>libdispatch(GCD)</code>，<code>libsystem_c(C语言库)</code>，<code>libsystem_blocks(Block)</code>，<code>libcommonCrypto</code>(常用的md5函数)等等。这些lib都是dylib格式（如windows中的dll），系统使用动态链接有几点好处：</p>
 <ul>
@@ -353,7 +352,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -448,7 +447,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

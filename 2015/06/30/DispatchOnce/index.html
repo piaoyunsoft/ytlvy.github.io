@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -201,11 +201,12 @@
 <h3 id="Dispatch_Once实现用到的技术">Dispatch_Once实现用到的技术</h3><ul>
 <li>原子操作 “原子比较交换函数” __sync_bool_compare_and_swap</li>
 <li>cpuid指令 实现大于预执行时间的延迟等待</li>
-<li>dispatch_thread_semaphore 来实现线程之间的等待和唤醒</li>
-</ul>
+<li>dispatch_thread_semaphore 来实现线程之间的等待和唤醒<a id="more"></a>
 <h3 id="cpu的分支预测和预执行">cpu的分支预测和预执行</h3><blockquote>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;流水线特性使得CPU能更快地执行线性指令序列，但是当遇到条件判断分支时，麻烦来了，在判定语句返回结果之前，cpu不知道该执行哪个分支，那就得等着（术语叫做pipeline stall），这怎么能行呢，所以，CPU会进行预执行，cpu先猜测一个可能的分支，然后开始执行分支中的指令。现代CPU一般都能做到超过90%的猜测命中率，这可比NBA选手发球命中率高多了。然后当判定语句返回，加入cpu猜错分支，那么之前进行的执行都会被抛弃，然后从正确的分支重新开始执行。<br>&nbsp;&nbsp;&nbsp;&nbsp;在dispatch_once中，唯一一个判断分支就是predicate，dispatch_once会让CPU预执行条件不成立的分支，这样可以大大提升函数执行速度。但是这样的预执行导致的结果是使用了未初始化的obj并将函数返回，这显然不是预期结果。</p>
 </blockquote>
+</li>
+</ul>
 <h3 id="不对称barrier">不对称barrier</h3><blockquote>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;在intel的CPU上，dispatch_once动用了cpuid指令来达成这个目的。cpuid本来是用作取得cpu的信息，但是这个指令也同时强制将指令流串行化，并且这个指令是需要比较长的执行时间的(在某些cpu上，甚至需要几百圈cpu时钟).这个指令保证了, 当其他线程预执行读取到 nil时,可以废弃当前的预执行操作,从而进入 dispatch_once 的 else 方法进入等待.</p>
 </blockquote>
@@ -349,7 +350,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -444,7 +445,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

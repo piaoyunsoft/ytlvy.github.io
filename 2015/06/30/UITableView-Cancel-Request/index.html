@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -190,6 +190,7 @@
 
       
         <h3 id="仅加载可见Cell的图片">仅加载可见Cell的图片</h3><p>load images for just the visible rows in viewDidLoad and when the user stops scrolling<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(void)<span class="tag">viewDidLoad</span>&#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">-</span>(void)<span class="tag">scrollViewDidEndDecelerating</span>:(UIScrollView *)<span class="tag">scrollView</span> &#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="取消Request_—-_NSBlockOperation">取消Request —- NSBlockOperation</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span><span class="variable">.operationQueue</span> = [[<span class="built_in">NSOperationQueue</span> alloc] init];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.operationQueue</span> setMaxConcurrentOperationCount:<span class="built_in">NSOperationQueueDefaultMaxConcurrentOperationCount</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)loadImageForCellAtPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    __block <span class="built_in">NSBlockOperation</span> *operation = [<span class="built_in">NSBlockOperation</span> blockOperationWithBlock:^&#123;</span><br><span class="line">        <span class="keyword">if</span> (![operation isCancelled]) &#123;</span><br><span class="line">            <span class="built_in">NSString</span> *galleryTinyImageUrl = [[<span class="keyword">self</span><span class="variable">.smapi</span> getImageUrls:imageId imageKey:imageKey] objectForKey:<span class="string">@"TinyURL"</span>];</span><br><span class="line">            <span class="built_in">NSData</span> *imageData = [[<span class="built_in">NSData</span> alloc] initWithContentsOfURL:[<span class="built_in">NSURL</span> URLWithString:galleryTinyImageUrl]];</span><br><span class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                <span class="keyword">if</span> (imageData != <span class="literal">nil</span>) &#123;</span><br><span class="line">                    <span class="built_in">UITableViewCell</span> *cell = [tableView cellForRowAtIndexPath:indexPath];</span><br><span class="line">                    cell<span class="variable">.imageView</span><span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageWithData:imageData];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSValue</span> *nonRetainedOperation = [<span class="built_in">NSValue</span> valueWithNonretainedObjectValue:operation];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.operations</span> addObject:nonRetainedOperation forKey:indexPath];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.operationQueue</span> addOperation:operation];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Here operations is an NSMutableDictionary. When you want to cancel an operation, you retrieve it by the cell’s indexPath, cancel it, and remove it from the dictionary:</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSValue *operationHolder = [self.operations objectForKey:indexPath]<span class="comment">;</span></span><br><span class="line">NSOperation *operation = [operationHolder nonretainedObjectValue]<span class="comment">;</span></span><br><span class="line">[operation cancel]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
@@ -299,7 +300,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -394,7 +395,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

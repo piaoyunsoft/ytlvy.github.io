@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -217,6 +217,7 @@
 </tbody>
 </table>
 <h4 id="调用者持有">调用者持有</h4><p>Relinquishing Ownership of a Retained Object. 下面的例子将函数将自己持有的obj, 通过return传递给了调用者,由调用者来来持有此变量<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (id)allocObject</span><br><span class="line">&#123;</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">You</span> create an <span class="keyword">object</span> <span class="keyword">and</span> have ownership. */</span><br><span class="line">  id obj = [[<span class="type">NSObject</span> alloc] init];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">At</span> this moment, this <span class="keyword">method</span> has ownership <span class="keyword">of</span> the <span class="keyword">object</span>. */</span><br><span class="line">  <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h4 id="调用者不持有">调用者不持有</h4><p>通过autorelease, 可以让调用者不持有该对象. Autorelease offers a mechanism to relinquish objects properly when the lifetime of the objects has ended.自动释放提供了一种, 当对象生命周期结束时,自动释放的机制.<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (id)<span class="keyword">object</span></span><br><span class="line">&#123;</span><br><span class="line">  id obj = [[<span class="type">NSObject</span> alloc] init];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">At</span> this moment, this <span class="keyword">method</span> has ownership <span class="keyword">of</span> the <span class="keyword">object</span>. */</span><br><span class="line">  [obj autorelease];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">The</span> <span class="keyword">object</span> exists, <span class="keyword">and</span> you don’t have ownership <span class="keyword">of</span> it. */</span><br><span class="line">  <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="autorelease">autorelease</h4><p>通过autorelease将对象注册到 最近的autoReleasePool中,当pool调用<code>drain</code>时, 该对象的release被调用.</p>
 <h4 id="不要释放,_非你持有的对象">不要释放, 非你持有的对象</h4><p>app crash<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id obj = <span class="comment">[<span class="comment">[NSObject alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[obj release]</span>;</span><br><span class="line"><span class="comment">[obj release]</span>;</span><br></pre></td></tr></table></figure></p>
@@ -542,7 +543,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -637,7 +638,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

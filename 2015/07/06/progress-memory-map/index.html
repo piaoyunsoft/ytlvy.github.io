@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -195,8 +195,7 @@
 <p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
 <p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
 <p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
-<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""></p>
-<p>当程序安全, 正常运行时, 几乎所有程序的段的起始位置, 都和上图一致.然而这是很不安全的.攻击脚本需要引用内存的某些绝对地址,例如栈中某个地址, 库函数中得某个地址等.攻击者可以很容易的计算出这些地址.正因此, 地址随机技术变的流行起来.linux通过给起始地址增加随机偏移的方法, 来实现栈, 堆, memory mapping segment等的随机化.然而不幸的是, 32位地址空间太紧凑了, 为随机化留存的空间太少, 从而大大削弱了这一功能.</p>
+<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br><a id="more"></a><br>当程序安全, 正常运行时, 几乎所有程序的段的起始位置, 都和上图一致.然而这是很不安全的.攻击脚本需要引用内存的某些绝对地址,例如栈中某个地址, 库函数中得某个地址等.攻击者可以很容易的计算出这些地址.正因此, 地址随机技术变的流行起来.linux通过给起始地址增加随机偏移的方法, 来实现栈, 堆, memory mapping segment等的随机化.然而不幸的是, 32位地址空间太紧凑了, 为随机化留存的空间太少, 从而大大削弱了这一功能.</p>
 <h3 id="栈">栈</h3><p>栈, 处于程序地址空间的最上层, 在大部分语言中用于存储临时变量和函数参数.每调用一个函数或方法就会生成一个新的栈帧, 并 push 入栈中. 在函数返回时, 栈帧被自动销毁. 如此简单的设计, 可能因为数据遵从后进先出的原则, 意味着没有复杂的数据结构需要被跟踪监控, 一个简单的栈顶指针就可以搞定一切了.压栈和出栈因此非常快和确定. 同时, 常量栈分区的复用(在 cpu caches中保持), 也大大加速了访问效率.每个进程拥有独立的栈空间.</p>
 <p>如果压栈数据大于栈能接纳的容量, 栈空间可能被耗尽.这会激发一个页面错误, 此错误会被 linux 系统接受, 并调用<code>expand_stack()</code>命令, 此命令会进一步调用<code>acct_stack_growth()</code>来检测是否可以对栈进行扩容. 如果栈空间大小低于<code>RLIMIT_STACK</code>(通常为8M) , 通常栈会自动增加, 程序会继续运行, 就像什么都没有发生一样. 这是栈扩展的通常情况.然而, 如果栈大小达到了限制, 我们就制造了一个栈溢出, 程序会收到一个段错误. 此外, 映射的栈空间只会根据需求扩展, 当栈变小时, 并不会自动减少.就像联邦经费一样, 他仅仅是扩展.</p>
 <p>动态栈增长是唯一合法的存取未映射内存区域的途径, 其他任何方式都会引起页面错.</p>
@@ -318,7 +317,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -413,7 +412,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -194,13 +194,9 @@
 
       
         
-          objc运行时, 函数缓存更新机制
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/08/objc-runtime-method-Cache/">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          
+          <h3 id="method_cache_更新机制">method cache 更新机制</h3><p>为了方便函数的查找, objc在运行时,引入了method cache机制,来快速定位函数.method cache的大小是动态更新的,在更新时, 将直接生成新容量的缓存, 并将旧的缓存放入到垃圾队列中,等待时机释放. 而时机的选择, 采用检测每个线程的program counter,来查看是否处于objc_msgSend.如果都不在,则释放.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BOOL ThreadsInMsgSend<span class="params">(void)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(thread in GetAllThreads<span class="params">()</span>)</span> &#123;</span><br><span class="line">        uintptr_t pc = thread.GetPC<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">if</span><span class="params">(pc &gt;= objc_msgSend_startAddress &amp;&amp; pc &lt;= objc_msgSend_endAddress)</span> &#123;</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bucket_t <span class="built_in">*</span>oldCache = class-&gt;cache;</span><br><span class="line">class-&gt;cache = malloc<span class="params">(newSize)</span>;</span><br><span class="line"></span><br><span class="line">append<span class="params">(gOldCachesList, oldCache)</span>;</span><br><span class="line"><span class="keyword">if</span><span class="params">(!ThreadsInMsgSend<span class="params">()</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(cache in gOldCachesList)</span> &#123;</span><br><span class="line">        free<span class="params">(cache)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    gOldCachesList.clear<span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
       
     </div>
 
@@ -275,13 +271,14 @@
 
       
         
-          ios 多线程以及内存管理笔记
+          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
+<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/">
+            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/#more">
               閱讀全文 &raquo;
             </a>
           </div>
-          
+        
       
     </div>
 
@@ -355,39 +352,39 @@
       
         <div class="post-gallery">
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" />
             </a>
           
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" rel="gallery_cic1yke3f004y6qp3v7m77yfy">
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" rel="gallery_cic1z2qa0004yprp36qzmz8i2">
               <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" />
             </a>
           
@@ -396,13 +393,8 @@
 
       
         
-          冰之魔女
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/07/ice-girl/">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          
+          <h2 id="冰之魔女">冰之魔女</h2>
+        
       
     </div>
 
@@ -1169,7 +1161,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -1253,7 +1245,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

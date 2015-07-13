@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="IOS,NSRunLoop," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -194,8 +194,7 @@
 <h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
 <figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;OSX/iOS 系统中，提供了两个这样的对象：NSRunLoop 和 CFRunLoopRef。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br><a id="more"></a><br>&nbsp;&nbsp;&nbsp;&nbsp;OSX/iOS 系统中，提供了两个这样的对象：NSRunLoop 和 CFRunLoopRef。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;CFRunLoopRef 是在 CoreFoundation 框架内的，它提供了纯 C 函数的 API，所有这些 API 都是线程安全的。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;NSRunLoop 是基于 CFRunLoopRef 的封装，提供了面向对象的 API，但是这些 API 不是线程安全的。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;CFRunLoopRef 的代码是开源的，你可以在这里 <a href="http://opensource.apple.com/tarballs/CF/CF-855.17.tar.gz" target="_blank" rel="external">http://opensource.apple.com/tarballs/CF/CF-855.17.tar.gz</a> 下载到整个 CoreFoundation 的源码。为了方便跟踪和查看，你可以新建一个 Xcode 工程，把这堆源码拖进去看。</p>
@@ -320,14 +319,6 @@
 
     <div class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/IOS/"> #IOS </a>
-          
-            <a href="/tags/NSRunLoop/"> #NSRunLoop </a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
@@ -417,7 +408,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -512,7 +503,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -202,6 +202,7 @@
 <li>Custom event.</li>
 </ul>
 <h3 id="Custom_Events">Custom Events</h3><p>通过<code>dispatch_source_merge_data</code>来发送消息，此方法取名<code>merge</code>的原因是，在事件回调执行前，GCD会自动合并累计的消息，直到对应的运行Queue有空闲，可以运行回调Block。所以，这是一种提高效率的方式，将多次消息合并成一个。<br>自定义事件分为：<code>DISPATCH_SOURCE_TYPE_DATA_ADD</code> 和 <code>DISPATCH_SOURCE_TYPE_DATA_OR</code>, 每个event Source有一个<code>unsigned long data</code>属性，用来合并<code>dispatch_source_merge_data</code>的参数。<code>dispatch_source_get_data</code>可以获取到当前的<code>data</code>数据。</p>
+<a id="more"></a>
 <h3 id="举例">举例</h3><p>异步更新progressBar的状态<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dispatch_source_t source = dispatch_source_create<span class="list">(<span class="keyword">DISPATCH_SOURCE_TYPE_DATA_ADD</span>, </span><br><span class="line">                                                <span class="number">0</span>, </span><br><span class="line">                                                <span class="number">0</span>,</span><br><span class="line">                                                dispatch_get_main_queue<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">dispatch_source_set_event_handler<span class="list">(<span class="keyword">source</span>, ^&#123;</span><br><span class="line">    [progressIndicator incrementBy<span class="keyword">:dispatch_source_get_data</span><span class="list">(<span class="keyword">source</span>)</span>]<span class="comment">;</span></span><br><span class="line">    &#125;)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">dispatch_apply<span class="list">([array count], globalQueue, ^&#123;</span><br><span class="line">    dispatch_source_merge_data<span class="list">(<span class="keyword">source</span>, <span class="number">1</span>)</span><span class="comment">;</span></span><br><span class="line">    &#125;)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
 
       
@@ -306,7 +307,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -401,7 +402,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

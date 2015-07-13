@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="IOS,Self,Super," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -194,7 +194,7 @@
 <h3 id="messaging_super">messaging <code>super</code></h3><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_super</span> </span>&#123;</span><br><span class="line">    __unsafe_unretained id receiver;</span><br><span class="line">    __unsafe_unretained Class super_class;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">methodWithArgument</span>:(id)<span class="tag">arg</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr_selector">[super otherMethodWithArgument:arg]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)methodWithArgument:(id)arg</span><br><span class="line">&#123;</span><br><span class="line">    struct objc<span class="number">_</span><span class="keyword">super</span> <span class="keyword">super</span> = &#123;.receiver = self, .<span class="keyword">super</span><span class="number">_</span><span class="keyword">class</span> = <span class="number">0</span>xC<span class="number">0</span>FFEE&#125;;</span><br><span class="line"></span><br><span class="line">    objc<span class="number">_m</span>sgSendSuper(&amp;<span class="keyword">super</span>, <span class="annotation">@selector</span>(otherMethodWithArgument:), arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>objc_msgSendSuper</code> 将从父类的定义开始查找方法的实现. <code>super_class</code>是在 runtime 时, 动态生成的.</p>
+<p><code>objc_msgSendSuper</code> 将从父类的定义开始查找方法的实现. <code>super_class</code>是在 runtime 时, 动态生成的.<br><a id="more"></a></p>
 <h4 id="objc_msgSendSuper_例子">objc_msgSendSuper 例子</h4><p><img src="http://cdn.macoscope.com/blog/wp-content/uploads/2015/02/how-does-super-work-1.png" alt=""></p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/message.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">A</span> : <span class="title">NSObject</span> @<span class="title">end</span></span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">B</span> : <span class="title">A</span> @<span class="title">end</span></span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">C</span> : <span class="title">B</span> @<span class="title">end</span></span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">X</span> : <span class="title">NSObject</span> @<span class="title">end</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">A</span> </span></span><br><span class="line">- (<span class="keyword">void</span>)abc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"-[A abc] called from class %@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">B</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">C</span></span></span><br><span class="line">- (<span class="keyword">void</span>)abc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"-[C abc] called from class %@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">X</span></span></span><br><span class="line">-(<span class="keyword">void</span>)A_abc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">struct</span> objc_super sup = &#123;<span class="keyword">self</span>, [A class]&#125;;</span><br><span class="line">    objc_msgSendSuper(&amp;sup, <span class="keyword">@selector</span>(abc));</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)B_abc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">struct</span> objc_super sup = &#123;<span class="keyword">self</span>, [B class]&#125;;</span><br><span class="line">    objc_msgSendSuper(&amp;sup, <span class="keyword">@selector</span>(abc));</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)C_abc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">struct</span> objc_super sup = &#123;<span class="keyword">self</span>, [C class]&#125;;</span><br><span class="line">    objc_msgSendSuper(&amp;sup, <span class="keyword">@selector</span>(abc));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [[X new] A_abc];</span><br><span class="line">        [[X new] B_abc];</span><br><span class="line">        [[X new] C_abc];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Output:</p>
@@ -229,16 +229,6 @@
     </div>
 
     <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/IOS/"> #IOS </a>
-          
-            <a href="/tags/Self/"> #Self </a>
-          
-            <a href="/tags/Super/"> #Super </a>
-          
-        </div>
       
 
       
@@ -329,7 +319,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -424,7 +414,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

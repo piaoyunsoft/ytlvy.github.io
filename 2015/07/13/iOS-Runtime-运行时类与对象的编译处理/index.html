@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="IOS,runtime," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -195,7 +195,7 @@
 <li>封装：在这个库中，对象可以用C语言中的结构体表示，而方法可以用C函数来实现，另外再加上了一些额外的特性。这些结构体和函数被runtime函数封装后，我们就可以在程序运行时创建，检查，修改类、对象和它们的方法了。</li>
 <li>找出方法的最终执行代码：当程序执行[object doSomething]时，会向消息接收者(object)发送一条消息(doSomething)，runtime会根据消息接收者是否能响应该消息而做出不同的反应。这将在后面详细介绍。</li>
 </ol>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。<br><a id="more"></a></p>
 <h3 id="类与对象基础数据结构">类与对象基础数据结构</h3><h4 id="Class">Class</h4><p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。它的定义如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</span><br></pre></td></tr></table></figure></p>
 <p>查看objc/runtime.h中objc_class结构体的定义如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_<span class="built_in">AVAILABILITY</span>;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#if !__OBJC2__</span></span><br><span class="line">    Class super_class                       OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 父类</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                        OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 类名</span></span><br><span class="line">    <span class="keyword">long</span> version                            OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 类的版本信息，默认为0</span></span><br><span class="line">    <span class="keyword">long</span> info                               OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 类信息，供运行期使用的一些位标识</span></span><br><span class="line">    <span class="keyword">long</span> instance_size                      OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 该类的实例变量大小</span></span><br><span class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars            OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 该类的成员变量链表</span></span><br><span class="line">    <span class="keyword">struct</span> objc_method_list **methodLists   OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 方法定义的链表</span></span><br><span class="line">    <span class="keyword">struct</span> objc_cache *cache                OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 方法缓存</span></span><br><span class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols    OBJC2_UN<span class="built_in">AVAILABLE</span>;  <span class="comment">// 协议链表</span></span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UN<span class="built_in">AVAILABLE</span>;</span><br></pre></td></tr></table></figure></p>
 <p>在这个定义中，下面几个字段是我们感兴趣的</p>
@@ -323,14 +323,6 @@
 
     <div class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/IOS/"> #IOS </a>
-          
-            <a href="/tags/runtime/"> #runtime </a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
@@ -420,7 +412,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -515,7 +507,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 

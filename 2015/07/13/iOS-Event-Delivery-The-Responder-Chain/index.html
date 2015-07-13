@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="IOS,Responder Chain," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     analytics: {
       google: ''
     },
@@ -200,9 +200,9 @@
 <ol>
 <li>点击在视图 A 的范围内, 然后检测 子视图 B 和 C</li>
 <li>点击不再视图 B 范围内, 但是在视图 C 范围内, 继续检测 子视图 D 和 E</li>
-<li>点击不再视图 D 里, 但是在视图 E 中.</li>
+<li>点击不再视图 D 里, 但是在视图 E 中.<a id="more"></a>
+视图 E 是最下层且包含 <code>touch</code>的视图树, 所以就是<code>hit-test</code></li>
 </ol>
-<p>视图 E 是最下层且包含 <code>touch</code>的视图树, 所以就是<code>hit-test</code></p>
 <p><img src="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/Art/hit_testing_2x.png" alt=""></p>
 <p><code>hitTest:withEvent:</code> 方法接受参数<code>CGPoint</code> 和 <code>UIEvent</code>, 返回<code>hit-test</code> 视图. <code>hitTest:withEvent:</code>方法首先<code>调用</code>在调用者自身使用<code>pointInside:withEvent:</code> 方法. 如果传入的参数<code>point</code> 包含在视图的<code>bounds</code>中, 返回 YES , 然后继续递归调用所有子视图.</p>
 <p>如果传入的参数点位置不在当前视图的范围内, 第一次调用<code>pointInside:withEvent:</code>返回 NO. 然后该点将被忽略, 然后<code>hitTest:withEvent:</code>将返回<code>nil</code>. 如意一个子视图返回 NO, 之后的视图树将被忽略, 因为该点如果不再这个子视图, 也必将不会在子视图的子视图. 这意味着<em>任何</em>超出父视图范围的子视图内的所有点, 将不能接受到<code>touch</code>事件,  因为点击的位置要同时位于父视图和子视图中. 在子视图的<code>clipsToBounds</code> 属性被设置为 NO, 可能发生.</p>
@@ -307,14 +307,6 @@
 
     <div class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/IOS/"> #IOS </a>
-          
-            <a href="/tags/Responder-Chain/"> #Responder Chain </a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
@@ -404,7 +396,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -499,7 +491,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 
