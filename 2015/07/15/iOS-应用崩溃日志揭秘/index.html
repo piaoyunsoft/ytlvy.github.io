@@ -1,0 +1,805 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS 应用崩溃日志揭秘 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS 应用崩溃日志揭秘
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-应用崩溃日志揭秘/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-应用崩溃日志揭秘/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://www.raywenderlich.com/23704/demystifying-ios-application-crash-logs" target="_blank" rel="external">翻译自</a></p>
+<h1 id="iOS应用崩溃日志揭秘1">iOS应用崩溃日志揭秘1</h1><p>作为一名应用开发者，你是否有过如下经历?</p>
+<p>为确保你的应用正确无误，在将其提交到应用商店之前，你必定进行了大量的测试工作。它在你的设备上也运行得很好，但是，上了应用商店后，还是有用户抱怨会闪退 !</p>
+<p>如果你跟我一样是个完美主义者，你肯定想将应用做到尽善尽美。于是你打开代码准备修复闪退的问题……但是，从何处着手呢？ 这时iOS崩溃日志派上用场了。在大多数情况下，你能从中了解到关于闪退的详尽、有用的信息。</p>
+<p>通过本教程，你将学习到一些常见的崩溃日志案例，以及如何从开发设备和iTunes Connect上获取崩溃日志文件。你还将学习到符号化（ symbolication）,从日志追踪到代码 。你还将学习调试一个在待定情况下会闪退的应用。</p>
+<p>让我们开始动手吧!</p>
+<h2 id="什么是崩溃日志，从哪里能得它?">什么是崩溃日志，从哪里能得它?</h2><p>iOS设备上的应用闪退时，操作系统会生成一个崩溃报告，也叫崩溃日志，保存在设备上。 崩溃日志上有很多有用的信息，包括应用是什么情况下闪退的。通常，上面有每个正在执行线程的完整堆栈跟踪信息，所以你能从中了解到闪退发生时各线程都在做什么，并分辨出闪退发生在哪个线程上。</p>
+<p>有几种方法可以从设备上获取崩溃日志。 设备与电脑上的iTunes Store同步后，会将崩溃日志保存在电脑上。根据电脑操作系统的不同，崩溃日志将保存在以下位置:</p>
+<p>Mac OS X:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/Library/</span>Logs<span class="regexp">/CrashReporter/M</span>obileDevice<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>当用户抱怨闪退时，你可以要求他让设备与iTunes同步，并根据操作系统的不同，到上述位置把崩溃日志下载下来，然后通过电子邮件发送给你。 你必需尽量获取用户设备生成的所有崩溃日志。因为崩溃日志越多，就越容易诊断问题所在!</p>
+<p>另外，如果你装了Xcode，也能很容易通过Xcode从你的设备上获得崩溃日志。将iOS设备连接到电脑上，然后打开Xcode。从菜单栏上选择 Window  菜单, 然后选择 Organizer (快捷方式是 Shift-CMD-2).</p>
+<p>在 <code>Organizer</code> 窗口上, 选中 <code>Devices</code> 标签栏. 在左侧的导航面板上，选中 <code>Device Logs</code>, 如下图所示:</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2012/11/Organizer-Devices.png" alt=""></p>
+<p>看看上图，左侧有好几个 <code>Device Logs</code> 菜单项. LIBRARY 下面的Device Logs是你所有设备（曾经连接到Xcode的）的日志 。每个设备下面的 Device Logs 是对应设备的日志。 应用提交到App Store后，你也能从<code>iTunes Connect</code> 获取到用户的崩溃日志. 登录到 iTunes Connect 上, 选择 <code>Manage Your Applications</code>, 点击相应的应用, 点击应用图标下面的 View Details 按钮, 然后点击右栏Links部分的  Crash Reports 。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2012/12/CrashReports-700x234.png" alt=""></p>
+<p>如果没有崩溃日志，试试点击Refresh 按钮刷新一下。如果你的应用还卖得不多，或者刚上架不久，iTunes Connect账号上也可能还没有任何崩溃日志。 如果iTunes Connect上有崩溃日志，你将看到如下图:</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2012/11/Firefox.png" alt=""></p>
+<p>有时，尽管有用户报告闪退，你仍然看不到崩溃报告。这时，最好让用户直接把崩溃报告发送给你。</p>
+<h2 id="什么情况下会产生崩溃日志?">什么情况下会产生崩溃日志?</h2><p>两种主要情况会产生崩溃日志:</p>
+<ol>
+<li>应用违反操作系统规则。</li>
+<li>应用中有Bug。</li>
+</ol>
+<p>违反iOS规则包括在启动、恢复、挂起、退出时watchdog超时、用户强制退出和低内存终止。让我们详细了解一下吧。</p>
+<h2 id="Watchdog_超时机制">Watchdog 超时机制</h2><p>从iOS 4.x开始，退出应用时，应用不会立即终止，而是退到后台。 但是，如果你的应用响应不够快，操作系统有可能会终止你的应用，并产生一个崩溃日志。这些事件与下列UIApplicationDelegate方法相对应:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">application:</span><span class="string">didFinishLaunchingWithOptions:</span></span><br><span class="line"><span class="string">applicationWillResignActive:</span></span><br><span class="line"><span class="string">applicationDidEnterBackground:</span></span><br><span class="line"><span class="string">applicationWillEnterForeground:</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span></span><br><span class="line"><span class="string">applicationWillTerminate:</span></span><br></pre></td></tr></table></figure>
+<p>上面所有这些方法，应用只有有限的时间去完成处理。如果花费时间太长，操作系统将终止应用。</p>
+<blockquote>
+<p>注意: 如果你没有把需要花费时间比较长的操作(如网络访问）放在后台线程上就很容易发生这种情况。关于如果避免这种情况的信息，请参考我们的另外两篇教程： Grand Central Dispatch 和 NSOperations。</p>
+</blockquote>
+<h3 id="用户强制退出">用户强制退出</h3><p>iOS 4.x开始支持多任务。如果应用阻塞界面并停止响应， 用户可以通过在主屏幕上双击Home按钮来终止应用。此时，操作应用将生成一个崩溃日志。</p>
+<blockquote>
+<p>注意: 双击Home按钮后，你将看到运行过的所有应用。那些应用不一定是正在运行，也不一定是被挂起。 通常，用户点击Home按钮时，应用将在后台保留约10分钟，然后操作系统自动将其终止。 所以双击Home按钮显示的应用列表只是表明那是一系列过去打开过的应用。删除那些应用的图标不会产生任何崩溃日志。</p>
+</blockquote>
+<h3 id="低内存终止">低内存终止</h3><p>子类化UIViewController时,你或许已经注意到<code>didReceiveMemoryWarning</code>方法。</p>
+<p>在前台运行的应用拥有访问和使用内存的最高优化级。然而，这并不意味着该应用能使用设备的所有可用内存 ——每个应用只能使用一部分可用内存。 当内存使用达到一定程度时，操作系统将发出一个<code>UIApplicationDidReceiveMemoryWarningNotification</code> 通知。同时,调用 <code>didReceiveMemoryWarning</code> 方法。</p>
+<p>此时，为了让应用继续正常运行，操作系统开始终止在后台的其他应用以释放一些内存。所有后台应用被终止后，如果你的应用还需要更多内存，操作系统会将你的应用也终止掉，并产生一个崩溃日志。而在这种情况下被终止的后台应用，不会产生崩溃日志。</p>
+<blockquote>
+<p>注意: 根据 <a href="http://developer.apple.com/library/ios/#qa/qa1747/_index.html" target="_blank" rel="external">苹果文档</a> Xcode不会自动添加低内存日志。你必需手动获取日志。 然而，根据我的个人经验，使用 Xcode 4.5.2, 低内存日志也会自动导入，只是”Process”和”Type”属性都被标为Unknown(未知)。 另外，值得一提的是在极短时间内分配一大块内存将给系统内存带来巨大负担。这样，也会产生内存警告的通知。</p>
+</blockquote>
+<h3 id="应用中有Bug">应用中有Bug</h3><p>如你所想，大多数闪退都是由于应用中有Bug，因此大多数崩溃日志的产生都是因为应用中的Bug。Bug的种类的有很多。</p>
+<p><img src="http://www.raywenderlich.com/?attachment_id=27450" alt=""></p>
+<p>在本教程的后半部分，你将通过调试一个会产生崩溃日志的含有Bug的应用，学习如何找到问题所在并进行修复!</p>
+<h2 id="崩溃日志的实例">崩溃日志的实例</h2><p>让我们看看一个崩溃日志的实例，以使你在处理一些实际问题之前心里有谱。</p>
+<p>事不宜迟，见见你的新朋友吧:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">/// 1: Process Information</span><br><span class="line">Incident Identifier: <span class="number">30E46451-53</span>FD-<span class="number">4965-896</span><span class="keyword">A</span>-457FC11AD05F</span><br><span class="line">CrashReporter Key:   <span class="number">5a56599d83</span><span class="number">6c4f867</span>f6eec76afee451bf9ae5f31</span><br><span class="line">Hardware Model:      iPhone4,1</span><br><span class="line">Process:         Rage Masters [4155]</span><br><span class="line">Path:            /var/mobile/Applications/A5635B22-F5EF-4CEB-94B6-FE<span class="number">158D885014</span>/Rage Masters.app/Rage Masters</span><br><span class="line">Identifier:      Rage Masters</span><br><span class="line">Version:         ??? (???)</span><br><span class="line">Code Type:       ARM (Native)</span><br><span class="line">Parent Process:  launchd [1]</span><br><span class="line"></span><br><span class="line">// 2: Basic Information</span><br><span class="line">Date/Time:       <span class="number">2012-10-17</span> <span class="number">21:39:06.96</span>7 -0400</span><br><span class="line">OS Version:      iOS 6.0 (10A403)</span><br><span class="line">Report Version:  104</span><br><span class="line"></span><br><span class="line">// 3: Exception</span><br><span class="line">Exception Type:  <span class="number">00000020</span></span><br><span class="line">Exception Codes: <span class="number">0x00000000</span>8badf00d</span><br><span class="line">Highlighted Thread:  0</span><br><span class="line"></span><br><span class="line">// 4: Threads backtraces</span><br><span class="line">Thread 0 name:  Dispatch queue: com.apple.main-thread</span><br><span class="line">Thread 0:</span><br><span class="line">0   libsystem_kernel.dylib          <span class="number">0x327f2</span>eb4 mach_msg_trap + 20</span><br><span class="line">1   libsystem_kernel.dylib          <span class="number">0x327f30</span>48 mach_msg + 36</span><br><span class="line">2   CoreFoundation                  0x36bd4040 __CFRunLoopServiceMachPort + 124</span><br><span class="line">3   CoreFoundation                  0x36bd2d9e __CFRunLoopRun + 878</span><br><span class="line">4   CoreFoundation                  0x36b45eb8 CFRunLoopRunSpecific + 352</span><br><span class="line">5   CoreFoundation                  <span class="number">0x36b45d44</span> CFRunLoopRunInMode + 100</span><br><span class="line">6   CFNetwork                       0x32ac343e CFURLConnectionSendSynchronousRequest + 330</span><br><span class="line">7   Foundation                      <span class="number">0x346e69</span>ba +[NSURLConnection sendSynchronousRequest:returningResponse:error:] + 242</span><br><span class="line">8   Rage Masters                    <span class="number">0x000d40</span>46 0xd2000 + 8262</span><br><span class="line"></span><br><span class="line">Thread 1:</span><br><span class="line">0   libsystem_kernel.dylib          <span class="number">0x32803d98</span> __workq_kernreturn + 8</span><br><span class="line">1   libsystem_c.dylib               <span class="number">0x3a987</span>cf6 _pthread_workq_return + 14</span><br><span class="line">2   libsystem_c.dylib               <span class="number">0x3a987</span>a12 _pthread_wqthread + 362</span><br><span class="line">3   libsystem_c.dylib               <span class="number">0x3a9878</span>a0 start_wqthread + 4</span><br><span class="line"></span><br><span class="line">// 5: Thread state</span><br><span class="line">Thread 0 crashed with ARM Thread State (32-bit):</span><br><span class="line">    r0: <span class="number">0x00000000</span>    r1: <span class="number">0x00000000</span>      r2: <span class="number">0x00000001</span>      r3: <span class="number">0x39529</span>fc8</span><br><span class="line">    r4: 0xffffffff    r5: 0x2fd7d301      r6: 0x2fd7d300      r7: 0x2fd7d9d0</span><br><span class="line">    r8: 0x2fd7d330    r9: 0x3adbf8a8     r10: 0x2fd7d308     r11: <span class="number">0x00000032</span></span><br><span class="line">    ip: <span class="number">0x00000025</span>    sp: 0x2fd7d2ec      lr: 0x001bdb25      pc: <span class="number">0x30301838</span></span><br><span class="line">  cpsr: <span class="number">0x00000010</span></span><br><span class="line"></span><br><span class="line">// 6: Binary images</span><br><span class="line">Binary Images:</span><br><span class="line">0xd2000 -    0xd7fff +Rage Masters armv7  &lt;f37ee<span class="number">6d2c7b33</span><span class="number">4868972e0</span>e<span class="number">9c54f7062</span>&gt; /var/mobile/Applications/A5635B22-F5EF-4CEB-94B6-FE<span class="number">158D885014</span>/Rage Masters.app/Rage Masters</span><br><span class="line">0x2fe41000 - 0x2fe61fff  dyld armv7  &lt;<span class="number">75594988728</span><span class="number">831d98e1</span>f<span class="number">7c4c7b7</span>ca29d&gt; /usr/lib/dyld</span><br><span class="line"><span class="number">0x327f200</span>0 - <span class="number">0x32808</span>fff  libsystem_kernel.dylib armv7  &lt;f167dacec<span class="number">44b3a86a8</span>eee73400ff7a83&gt; /usr/lib/system/libsystem_kernel.dylib</span><br><span class="line"><span class="number">0x328a80</span>00 - 0x328bdfff  libresolv.9.dylib armv7  &lt;e<span class="number">79b59a3406</span>f<span class="number">34d9b37f80</span><span class="number">85955115</span>ce&gt; /usr/lib/libresolv.9.dylib</span><br><span class="line"><span class="number">0x32a70000</span> - 0x32b35fff  CFNetwork armv7  &lt;<span class="number">3e973794</span>a<span class="number">4d13428</span>bb974edcb<span class="number">2027139</span>&gt; /System/Library/Frameworks/CFNetwork.framework/CFNetwork</span><br><span class="line"><span class="number">0x32b7a00</span>0 - 0x32cc3fff  libicucore.<span class="keyword">A</span>.dylib armv7  &lt;<span class="number">0253932c1</span>b<span class="number">9038a0849</span>ef<span class="number">73c38e076</span>ca&gt; /usr/lib/libicucore.<span class="keyword">A</span>.dylib</span><br><span class="line">0x32cc4000 - 0x32cc5fff  CoreSurface armv7  &lt;b<span class="number">3f9d4e8</span>dd<span class="number">803a48b88</span>c<span class="number">58a0663d92</span>a3&gt; /System/Library/PrivateFrameworks/CoreSurface.framework/CoreSurface</span><br><span class="line"><span class="number">0x32f65000</span> - 0x32f8afff  OpenCL armv7  &lt;f<span class="number">770650101243</span>0fc94ed<span class="number">99006419</span>fba9&gt; /System/Library/PrivateFrameworks/OpenCL.framework/OpenCL</span><br></pre></td></tr></table></figure>
+<p>这报告看起来像天书。:) 我们分几部分来解读吧:</p>
+<h3 id="进程信息">进程信息</h3><p>第一部分是闪退进程的相关信息。</p>
+<ul>
+<li><code>Incident Identifier</code>是崩溃报告的唯一标识符。</li>
+<li><code>CrashReporter Key</code> 是与设备标识相对应的唯一键值。虽然它不是真正的设备标识符，但也是一个非常有用的情报:如果你看到100个崩溃日志的<code>CrashReporter Key</code>值都是相同的，或者只有少数几个不同的CrashReport值，说明这不是一个普遍的问题，只发生在一个或少数几个设备上。</li>
+<li><code>Hardware Model</code>标识设备类型。 如果很多崩溃日志都是来自相同的设备类型，说明应用只在某特定类型的设备上有问题。上面的日志里，崩溃日志产生的设备是<code>iPhone 4s</code>。</li>
+<li>Process 是应用名称。中括号里面的数字是闪退时应用的进程ID。</li>
+<li>接下来几行不言自明，无需赘述。</li>
+</ul>
+<h3 id="基本信息">基本信息</h3><p>这部分给出了一些基本信息，包括闪退发生的日期和时间，设备的iOS版本。如果有很多崩溃日志都来自iOS 6.0，说明问题只发生在iOS 6.0上。</p>
+<h3 id="异常">异常</h3><p>在这部分，你可以看到闪退发生时抛出的异常类型。还能看到异常编码和抛出异常的线程。根据崩溃报告类型的不同，在这部分你还能看到一些另外的信息。</p>
+<h3 id="线程回溯">线程回溯</h3><p>这部分提供应用中所有线程的回溯日志。 回溯是闪退发生时所有活动帧清单。它包含闪退发生时调用函数的清单。看下面这行日志:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2    XYZLib    <span class="number">0x34648e88</span>    <span class="number">0x83000</span> + 8740</span><br></pre></td></tr></table></figure>
+<p>它包括四列:</p>
+<ol>
+<li>帧编号—— 此处是2。</li>
+<li>二进制库的名称 ——此处是 <code>XYZLib</code>.</li>
+<li>调用方法的地址 ——此处是 <code>0x34648e88</code>.</li>
+<li>第四列分为两个子列，一个基本地址和一个偏移量。此处是<code>0×83000 + 8740</code>, 第一个数字指向文件，第二个数字指向文件中的代码行。</li>
+</ol>
+<h3 id="线程状态">线程状态</h3><p>这部分是闪退时寄存器中的值。一般不需要这部分的信息，因为回溯部分的信息已经足够让你找出问题所在。</p>
+<h3 id="二进制映像">二进制映像</h3><p>这部分列出了闪退时已经加载的二进制文件</p>
+<h2 id="符号化Symbolication">符号化Symbolication</h2><p>第一次看到崩溃日志上的回溯时，你或许会觉得它没什么意义。我们习惯使用方法名和行数，而非像这样的神秘位置:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6    Rage Masters    <span class="number">0x0001625</span>c    <span class="number">0x2a000</span> + 3003</span><br></pre></td></tr></table></figure>
+<p>将这些十六进制地址转化成方法名称和行数的过程称之为符号化。 从Xcode的Organizer窗口获取崩溃日志后过几秒钟，崩溃日志将被自动符号化。上面那行被符号化后的版本如下 :</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span>    Rage Masters    <span class="number">0x0001625c</span>    -[RMAppDelegate <span class="string">application:</span><span class="string">didFinishLaunchingWithOptions:</span>] (RMAppDelegate.<span class="string">m:</span><span class="number">35</span>)</span><br></pre></td></tr></table></figure>
+<p>Xcode符号化崩溃日志时，需要访问与App Store上对应的应用二进制文件以及生成二进制文件时产生的 .dSYM 文件。必需完全匹配才行。否则，日志将无法被完全符号化。</p>
+<p>所以，保留每个分发给用户的编译版本非常重要。提交应用前进行归档时，Xcode将保存应用的二进制文件。可以在Xcode Organizer的Archives标签栏下找到所有已归档的应用文件。</p>
+<p>在发现崩溃日志时，如果有相匹配的.dSYM文件和应用二进制文件，Xcode会自动对崩溃日志进行符号化。如果你换到别的电脑或创建新的账户，务必将所有二进制文件移动到正确的位置，使Xcode能找到它们。</p>
+<blockquote>
+<p>注意: 你必需同时保留应用二进制文件和.dSYM文件才能将崩溃日志完整符号化。每次提交到iTunes Connect的构建都必需归档。 .dSYM文件和二进制文件是特定绑定于每一次构建和后续构建的，即使来自相同的源代码文件，每一次构建也与其他构建不同，不能相互替换。 如果你使用Build 和 Archive 命令,这些文件会自动放在适当位置。 如果不是使用Build 和 Archive命令，放在Spotlight能够搜索到的位置（比如Home目录）即可。</p>
+</blockquote>
+<h2 id="低内存闪退">低内存闪退</h2><p>因为低内存崩溃日志与普通崩溃日志略有不同，所以本教程特别分开说明一下。:]</p>
+<p>iOS设备检测到低内存时，虚拟内存系统发出通知请求应用释放内存。这些通知发送到所有正在运行的应用和进程，试图收回一些内存。</p>
+<p>如果内存使用依然居高不下，系统将会终止后台线程以缓解内存压力。如果可用内存足够，应用将能够继续运行而不会产生崩溃报告。否则，应用将被iOS终止，并产生低内存崩溃报告。</p>
+<p>低内存崩溃日志上没有应用线程的堆栈回溯。相反，上面显示的是以内存页数为单位的各进程内存使用量。(在撰写本文的时候，一个内存页的大小是4KB。)</p>
+<p>被iOS因释放内存页终止的进程名称后面你会看到<code>jettisoned</code> 字样。如果看到它出现在你的应用名称后面，说明你的应用因使用太多内存而被终止了。</p>
+<p>低内存崩溃日志看起来像这样：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Incident Identifier: <span class="number">30E46451-53</span>FD-<span class="number">4965-896</span><span class="keyword">A</span>-457FC11AD05F</span><br><span class="line">CrashReporter Key:   <span class="number">5a56599d83</span><span class="number">6c4f867</span>f6eec76afee451bf9ae5f31</span><br><span class="line">OS Version:          iPhone OS 3.1.3 (7E18)</span><br><span class="line">Date/Time:           <span class="number">2012-10-17</span> <span class="number">21:39:06.96</span>7 -0400</span><br><span class="line"></span><br><span class="line">Free pages:        96</span><br><span class="line">Wired pages:       10558</span><br><span class="line">Purgeable pages:   0</span><br><span class="line">Largest process:   Rage Masters</span><br><span class="line"></span><br><span class="line">Processes</span><br><span class="line">         Name                 UUID                    Count resident pages</span><br><span class="line">    Rage Masters &lt;cc527ca<span class="number">9b51937c5</span>adbe035fe27a7b12&gt;    9320 (jettisoned) (active)</span><br><span class="line">    mediaserverd &lt;<span class="number">3d3800d6</span>acfff<span class="number">050e4d0</span>ed91cbe2467e&gt;     255</span><br><span class="line">     dataaccessd &lt;<span class="number">13d80b2e70</span>7acc91f9aa3ec<span class="number">4c715b9</span>cc&gt;     505</span><br><span class="line">         syslogd &lt;8eddddc<span class="number">00294d5615</span>afded36ee3f1b62&gt;      71</span><br><span class="line">            apsd &lt;<span class="number">32070d91b216</span>d<span class="number">806973c8</span>f<span class="number">1b1d8077</span>a4&gt;     171</span><br><span class="line">       securityd &lt;b<span class="number">9e51062610</span>d<span class="number">27f727c51</span>19b8f80dcdf&gt;     243</span><br><span class="line">         notifyd &lt;591dd4dd<span class="number">804b4b87</span><span class="number">41f52335</span>ea1fa4ab&gt;    2027</span><br><span class="line">      CommCenter &lt;b<span class="number">4b87526</span>ae086bb<span class="number">62c982f107</span>8f43f81&gt;     189</span><br><span class="line">     SpringBoard &lt;<span class="number">324939a43</span>7d1cca1fa4af<span class="number">72d9f5d0</span>eba&gt;    2158 (active)</span><br><span class="line">      accessoryd &lt;<span class="number">8f21c8b37</span>6d16e2ccb95ed<span class="number">6d21d8317</span>a&gt;      91</span><br><span class="line">         configd &lt;85efd41aceac34ccc0019df<span class="number">76623c7a9</span>&gt;     371</span><br><span class="line">       fairplayd &lt;a2eaf<span class="number">736b3e07</span>c<span class="number">7c9a2c82</span>e9eb893555&gt;      93</span><br><span class="line">   mDNSResponder &lt;df1cd275e4ad<span class="number">434e05759</span>90e8e1da4cb&gt;     292</span><br><span class="line">       lockdownd &lt;80d2bd44c0bcca273d48ce<span class="number">52010f7e65</span>&gt;    1204</span><br><span class="line">         launchd &lt;a<span class="number">5988245</span>aade809bf<span class="number">77576f1d9</span>de42c5&gt;      72</span><br></pre></td></tr></table></figure>
+<p>当应用发生低内存闪退时，你必需看看应用中内存使用的方式，以及是如何处理低内存警告的。你可以使用<code>Instruments</code>工具中使用<code>Allocations</code> 和 <code>Leaks</code>来发现内存分配问题和内存泄漏问题。如果你不知道如何利用 Instruments 检查内存问题，可以看看<a href="http://www.raywenderlich.com/2696/instruments-tutorial-for-ios-how-to-debug-memory-leaks" target="_blank" rel="external">这个教程</a> 。</p>
+<p>还有，别忘记虚拟内存！ Instruments工具的<code>Leaks</code> 和 <code>Allocations</code> 不能跟踪显存使用情况。必需使用 VM Tracker 才能查看显存使用情况。 VM Tracker 默认是关闭的。打开Instrument,手动 选中<code>Automatic Snapshotting</code> 标志或者按下<code>Snapshot Now</code> 按钮。 本教程后面将会学习如何研究低内存崩溃日志。</p>
+<h2 id="异常编码">异常编码</h2><p>在研究真实闪退场景之前，还有一点需要重点介绍一下：就是那些有趣的异常编码 。</p>
+<p>你可以在报告的异常部分——前面代码的第3部分找到异常编码。有些编码比较常见。</p>
+<p>通常，异常编码以一些文字开头，紧接着是一个或多个十六进制值，此数值正是说明闪退根本性质的所在。  从这些编码中，可以区分出闪退是因为程序错误、非法内存访问或者是其他原因。</p>
+<p>下面是一些常见的异常编码:</p>
+<ul>
+<li><p>0x8badf00d: 读做 “ate bad food”! (把数字换成字母，是不是很像 :p)该编码表示应用是因为发生watchdog超时而被iOS终止的。  通常是应用花费太多时间而无法启动、终止或响应用系统事件。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2013/01/badfood.jpg" alt=""></p>
+</li>
+<li><p><code>0xbad22222</code>: 该编码表示 VoIP 应用因为过于频繁重启而被终止。</p>
+</li>
+<li><code>0xdead10cc</code>: 读做 “dead lock”!该代码表明应用因为在后台运行时占用系统资源，如通讯录数据库不释放而被终止</li>
+<li><code>0xdeadfa11</code>: 读做 “dead fall”! 该代码表示应用是被用户强制退出的。根据苹果文档, 强制退出发生在用户长按开关按钮直到出现 “滑动来关机”, 然后长按 Home按钮。强制退出将产生 包含0xdeadfa11 异常编码的崩溃日志, 因为大多数是强制退出是因为应用阻塞了界面。</li>
+</ul>
+<blockquote>
+<p>注意: 在后台任务列表中关闭已挂起的应用不会产生崩溃日志。 一旦应用被挂起，它何时被终止都是合理的。所以不会产生崩溃日志。</p>
+</blockquote>
+<h2 id="大展身手的时候到了!">大展身手的时候到了!</h2><p>好了! 你已经学习了所有分析崩溃日志和修复错误的基础知识!</p>
+<p>假设你刚进入Rage-O-Rage有限公司工作。该公司有一个在App Store上热销的应用，叫 Rage Masters。</p>
+<p>你的老板安迪要你帮忙解决几个用户经常抱怨闪退问题。你的任务就是研究这些闪退，符号化用户提供的崩溃日志，查找问题所在，并修复之。</p>
+<p>你可以从 <a href="http://cdn1.raywenderlich.com/downloads/RageMasters-Buggy.zip" target="_blank" rel="external">这里</a>下载应用的源代码。</p>
+<blockquote>
+<p>注意: 如果你想自己重新生成崩溃报告，请遵照以下指引：</p>
+<ol>
+<li>下载源码然后在Xcode中打开工程文件。</li>
+<li>使用正确的provisioning profile连接到iOS设备。</li>
+<li>从Xcode工具栏上选择iOS设备——不是模拟器作为target，然后构建应用。</li>
+<li>当你在设备上到默认页面（应用的全屏图片）时，立即在Xcode上点击停止按钮。</li>
+<li>关闭 Xcode。</li>
+<li>在设备上直接打开应用。</li>
+<li>测试场景，完成后连接设备到电脑上，通过Xcode获取崩溃日志。</li>
+</ol>
+</blockquote>
+<h3 id="场景_1:_糟糕的代码">场景 1: 糟糕的代码</h3><p>一封来自用户的邮件: “大哥，你的应用就是一坨屎! 我将其下载到我自己的iPod Touch和iPhone上，还下载到我儿子的iPod Touch上。在所有的设备上，都是还没打开就闪退了……”</p>
+<p>别一封来自用户的邮件说, “我下载了你们的应用，一打开就闪退。真悲催…”</p>
+<p>另一封邮件说得更明确：”你们的应用不能运行。我把它下载到我和妻子的设备上。所有设备都是 一打开就闪退了…”</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2012/12/YourAppSucks.png" alt=""></p>
+<p>好吧，别灰心! 这些意见藏着什么玄机呢？让我们看看崩溃日志吧:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">Incident <span class="string">Identifier:</span> <span class="number">85833</span>DBA-<span class="number">3</span>DF7-<span class="number">43</span>EE-AF80-<span class="number">4E5</span>C51091F42</span><br><span class="line">CrashReporter <span class="string">Key:</span>   <span class="number">5</span>a56599d836c4f867f6eec76afee451bf9ae5f31</span><br><span class="line">Hardware <span class="string">Model:</span>      iPhone4,<span class="number">1</span></span><br><span class="line"><span class="string">Process:</span>         Rage Masters [<span class="number">20067</span>]</span><br><span class="line"><span class="string">Path:</span>            <span class="regexp">/var/</span>mobile<span class="regexp">/Applications/</span>B2121A89-<span class="number">3</span>D1F-<span class="number">4E61</span>-BB18-<span class="number">5511E1</span>DC150F<span class="regexp">/Rage Masters.app/</span>Rage Masters</span><br><span class="line"><span class="string">Identifier:</span>      Rage Masters</span><br><span class="line"><span class="string">Version:</span>         ??? (???)</span><br><span class="line">Code Type:       ARM (Native)</span><br><span class="line">Parent <span class="string">Process:</span>  launchd [<span class="number">1</span>]</span><br><span class="line">Date/<span class="string">Time:</span>       <span class="number">2012</span>-<span class="number">11</span>-<span class="number">03</span> <span class="number">13</span>:<span class="number">37</span>:<span class="number">31.148</span> -<span class="number">0400</span></span><br><span class="line">OS <span class="string">Version:</span>      iOS <span class="number">6.0</span> (<span class="number">10</span>A403)</span><br><span class="line">Report <span class="string">Version:</span>  <span class="number">104</span></span><br><span class="line">Exception <span class="string">Type:</span>  <span class="number">00000020</span></span><br><span class="line">Exception <span class="string">Codes:</span> <span class="number">0x000000008badf00d</span></span><br><span class="line">Highlighted <span class="string">Thread:</span>  <span class="number">0</span></span><br><span class="line">Application Specific <span class="string">Information:</span></span><br><span class="line">Soheil-Azarpour.Rage-Masters failed to launch <span class="keyword">in</span> time</span><br><span class="line">Elapsed total CPU time (seconds): <span class="number">8.030</span> (user <span class="number">8.030</span>, system <span class="number">0.000</span>), <span class="number">20</span>% CPU</span><br><span class="line">Elapsed application CPU time (seconds): <span class="number">3.840</span>, <span class="number">10</span>% CPU</span><br><span class="line">Thread <span class="number">0</span> <span class="string">name:</span>  Dispatch <span class="string">queue:</span> com.apple.main-thread</span><br><span class="line">Thread <span class="number">0</span>:</span><br><span class="line"><span class="number">0</span>   libsystem_kernel.dylib          <span class="number">0x327f2eb4</span> mach_msg_trap + <span class="number">20</span></span><br><span class="line"><span class="number">1</span>   libsystem_kernel.dylib          <span class="number">0x327f3048</span> mach_msg + <span class="number">36</span></span><br><span class="line"><span class="number">2</span>   CoreFoundation                  <span class="number">0x36bd4040</span> __CFRunLoopServiceMachPort + <span class="number">124</span></span><br><span class="line"><span class="number">3</span>   CoreFoundation                  <span class="number">0x36bd2d9e</span> __CFRunLoopRun + <span class="number">878</span></span><br><span class="line"><span class="number">4</span>   CoreFoundation                  <span class="number">0x36b45eb8</span> CFRunLoopRunSpecific + <span class="number">352</span></span><br><span class="line"><span class="number">5</span>   CoreFoundation                  <span class="number">0x36b45d44</span> CFRunLoopRunInMode + <span class="number">100</span></span><br><span class="line"><span class="number">6</span>   CFNetwork                       <span class="number">0x32ac343e</span> CFURLConnectionSendSynchronousRequest + <span class="number">330</span></span><br><span class="line"><span class="number">7</span>   Foundation                      <span class="number">0x346e69ba</span> +[NSURLConnection <span class="string">sendSynchronousRequest:</span><span class="string">returningResponse:</span><span class="string">error:</span>] + <span class="number">242</span></span><br><span class="line"><span class="number">8</span>   Rage Masters                    <span class="number">0x000ea1c4</span> -[RMAppDelegate <span class="string">application:</span><span class="string">didFinishLaunchingWithOptions:</span>] (RMAppDelegate.<span class="string">m:</span><span class="number">36</span>)</span><br><span class="line"><span class="number">9</span>   UIKit                           <span class="number">0x37f30ad4</span> -[UIApplication <span class="string">_handleDelegateCallbacksWithOptions:</span><span class="string">isSuspended:</span><span class="string">restoreState:</span>] + <span class="number">248</span></span><br><span class="line"><span class="number">10</span>  UIKit                           <span class="number">0x37f3065e</span> -[UIApplication <span class="string">_callInitializationDelegatesForURL:</span><span class="string">payload:</span><span class="string">suspended:</span>] + <span class="number">1186</span></span><br><span class="line"><span class="number">11</span>  UIKit                           <span class="number">0x37f28846</span> -[UIApplication <span class="string">_runWithURL:</span><span class="string">payload:</span><span class="string">launchOrientation:</span><span class="string">statusBarStyle:</span><span class="string">statusBarHidden:</span>] + <span class="number">694</span></span><br><span class="line"><span class="number">12</span>  UIKit                           <span class="number">0x37ed0c3c</span> -[UIApplication <span class="string">handleEvent:</span><span class="string">withNewEvent:</span>] + <span class="number">1000</span></span><br><span class="line"><span class="number">13</span>  UIKit                           <span class="number">0x37ed06d0</span> -[UIApplication <span class="string">sendEvent:</span>] + <span class="number">68</span></span><br><span class="line"><span class="number">14</span>  UIKit                           <span class="number">0x37ed011e</span> _UIApplicationHandleEvent + <span class="number">6150</span></span><br><span class="line"><span class="number">15</span>  GraphicsServices                <span class="number">0x370835a0</span> _PurpleEventCallback + <span class="number">588</span></span><br><span class="line"><span class="number">16</span>  GraphicsServices                <span class="number">0x370831ce</span> PurpleEventCallback + <span class="number">30</span></span><br><span class="line"><span class="number">17</span>  CoreFoundation                  <span class="number">0x36bd4170</span> __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__ + <span class="number">32</span></span><br><span class="line"><span class="number">18</span>  CoreFoundation                  <span class="number">0x36bd4112</span> __CFRunLoopDoSource1 + <span class="number">134</span></span><br><span class="line"><span class="number">19</span>  CoreFoundation                  <span class="number">0x36bd2f94</span> __CFRunLoopRun + <span class="number">1380</span></span><br><span class="line"><span class="number">20</span>  CoreFoundation                  <span class="number">0x36b45eb8</span> CFRunLoopRunSpecific + <span class="number">352</span></span><br><span class="line"><span class="number">21</span>  CoreFoundation                  <span class="number">0x36b45d44</span> CFRunLoopRunInMode + <span class="number">100</span></span><br><span class="line"><span class="number">22</span>  UIKit                           <span class="number">0x37f27480</span> -[UIApplication _run] + <span class="number">664</span></span><br><span class="line"><span class="number">23</span>  UIKit                           <span class="number">0x37f242fc</span> UIApplicationMain + <span class="number">1116</span></span><br><span class="line"><span class="number">24</span>  Rage Masters                    <span class="number">0x000ea004</span> main (main.<span class="string">m:</span><span class="number">16</span>)</span><br><span class="line"><span class="number">25</span>  libdyld.dylib                   <span class="number">0x3b630b1c</span> start + <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>发现问题了吗? 异常编码是<code>0x000000008badf00d</code>,还有后面的报告:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Application Specific Information:</span><br><span class="line">Soheil-Azarpour<span class="class">.Rage-Masters</span> failed to launch <span class="keyword">in</span> <span class="tag">time</span></span><br><span class="line">Elapsed total CPU <span class="tag">time</span> (seconds): <span class="number">8.030</span> (user <span class="number">8.030</span>, system <span class="number">0.000</span>), <span class="number">20%</span> CPU</span><br><span class="line">Elapsed application CPU <span class="tag">time</span> (seconds): <span class="number">3.840</span>, <span class="number">10%</span> CPU</span><br></pre></td></tr></table></figure>
+<p>这说明应用在启动时就闪退了，iOS的<code>watchdog</code>机制终止了应用。帅! 找到问题了，但是为什会发生这样的事呢？</p>
+<p>接着往下看日志。 从下向上读回溯日志。最底下的帧 (frame 25: <code>libdyld.dylib</code>)是最先调用的，然后是帧24,<code>Rage Masters</code>, main (main.m:16) ，依此类推。</p>
+<p>跟应用源代码相关的帧是最重要的。忽略掉系统库和框架。下一个与代码相关的帧是:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span>    Rage Masters    <span class="number">0x0009f244</span> -[RMAppDelegate <span class="string">application:</span><span class="string">didFinishLaunchingWithOptions:</span>] (RMAppDelegate.<span class="string">m:</span><span class="number">35</span>)</span><br></pre></td></tr></table></figure>
+<p>应用在执行<code>RMAppDelegate</code> (RMAppDelegate.m:35) 类<code>application:didFinishLaunchingWithOptions:</code>方法第35 行代码时闪退。打开Xcode看看那行代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSData</span> *directoryData = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
+<p>就是它了! 同步调用web服务?! 在主线程上?! 在 <code>application:didFinishLaunchingWithOptions:</code> 方法上?!! 谁写的代码呀?!</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2012/12/iStock_000020175708XSmall.jpg" alt="Network calls on the main thread makes kittens sad."></p>
+<p>不管如何，问题得你来修复了。这个调用必需异步进行，甚至更理想的情况是，在<code>application:didFinishLaunchingWithOptions:</code>返回YES之后的其他部分再执行Web服务。</p>
+<p>在其他地方调用可能需要比较多的修改。当下，我们只要使应用不闪退就行。可以在日后再实现更好的设计。 将上面那行讨厌的代码（及其下面的三行代码）换成下面这个异步的版本吧:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request</span><br><span class="line">                                           queue:[<span class="built_in">NSOperationQueue</span> mainQueue]</span><br><span class="line">                               completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="built_in">NSURL</span> *cacheDirectory = [[[<span class="built_in">NSFileManager</span> defaultManager] URLsForDirectory:<span class="built_in">NSUserDirectory</span> inDomains:<span class="built_in">NSCachesDirectory</span>] lastObject];</span><br><span class="line">             <span class="built_in">NSURL</span> *filePath = [<span class="built_in">NSURL</span> URLWithString:kDirectoryFile relativeToURL:cacheDirectory];</span><br><span class="line">             [data writeToFile:[filePath absoluteString] atomically:<span class="literal">YES</span>];</span><br><span class="line">         &#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="场景_2:_无法响应事件的按钮">场景 2: 无法响应事件的按钮</h3><p>一名用户说: “我不能将某个rage master添加到书签里面。我想添加的时候应用就闪退…”</p>
+<p>用一名用户说 ：”书签不能用 … 在详细页面上，点击书签按钮,应用就闪退了!”</p>
+<p>上面的抱怨说得不是很清楚，引起问题的原因肯定有多样。看看崩溃日志:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Incident <span class="string">Identifier:</span> <span class="number">3</span>AAA63CC-<span class="number">3088</span>-<span class="number">41</span>CC-<span class="number">84</span>D9-<span class="number">82</span>FE03F9F354</span><br><span class="line">CrashReporter <span class="string">Key:</span>   <span class="number">5</span>a56599d836c4f867f6eec76afee451bf9ae5f31</span><br><span class="line">Hardware <span class="string">Model:</span>      iPhone4,<span class="number">1</span></span><br><span class="line"><span class="string">Process:</span>         Rage Masters [<span class="number">20090</span>]</span><br><span class="line"><span class="string">Path:</span>            <span class="regexp">/var/</span>mobile<span class="regexp">/Applications/</span>B2121A89-<span class="number">3</span>D1F-<span class="number">4E61</span>-BB18-<span class="number">5511E1</span>DC150F<span class="regexp">/Rage Masters.app/</span>Rage Masters</span><br><span class="line"><span class="string">Identifier:</span>      Rage Masters</span><br><span class="line"><span class="string">Version:</span>         ??? (???)</span><br><span class="line">Code Type:       ARM (Native)</span><br><span class="line">Parent <span class="string">Process:</span>  launchd [<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">Date/<span class="string">Time:</span>       <span class="number">2012</span>-<span class="number">11</span>-<span class="number">03</span> <span class="number">13</span>:<span class="number">39</span>:<span class="number">00.081</span> -<span class="number">0400</span></span><br><span class="line">OS <span class="string">Version:</span>      iOS <span class="number">6.0</span> (<span class="number">10</span>A403)</span><br><span class="line">Report <span class="string">Version:</span>  <span class="number">104</span></span><br><span class="line"></span><br><span class="line">Exception <span class="string">Type:</span>  EXC_CRASH (SIGABRT)</span><br><span class="line">Exception <span class="string">Codes:</span> <span class="number">0x0000000000000000</span>, <span class="number">0x0000000000000000</span></span><br><span class="line">Crashed <span class="string">Thread:</span>  <span class="number">0</span></span><br><span class="line"></span><br><span class="line">Last Exception <span class="string">Backtrace:</span></span><br><span class="line"><span class="number">0</span>   CoreFoundation                  <span class="number">0x36bff29e</span> __exceptionPreprocess + <span class="number">158</span></span><br><span class="line"><span class="number">1</span>   libobjc.A.dylib                 <span class="number">0x34f0f97a</span> objc_exception_throw + <span class="number">26</span></span><br><span class="line"><span class="number">2</span>   CoreFoundation                  <span class="number">0x36c02e02</span> -[NSObject(NSObject) <span class="string">doesNotRecognizeSelector:</span>] + <span class="number">166</span></span><br><span class="line"><span class="number">3</span>   CoreFoundation                  <span class="number">0x36c0152c</span> ___forwarding___ + <span class="number">388</span></span><br><span class="line"><span class="number">4</span>   CoreFoundation                  <span class="number">0x36b58f64</span> _CF_forwarding_prep_0 + <span class="number">20</span></span><br><span class="line"><span class="number">5</span>   UIKit                           <span class="number">0x37fbb0a8</span> -[UIApplication <span class="string">sendAction:</span><span class="string">to:</span><span class="string">from:</span><span class="string">forEvent:</span>] + <span class="number">68</span></span><br><span class="line"><span class="number">6</span>   UIKit                           <span class="number">0x37fbb05a</span> -[UIApplication <span class="string">sendAction:</span><span class="string">toTarget:</span><span class="string">fromSender:</span><span class="string">forEvent:</span>] + <span class="number">26</span></span><br><span class="line"><span class="number">7</span>   UIKit                           <span class="number">0x37fbb038</span> -[UIControl <span class="string">sendAction:</span><span class="string">to:</span><span class="string">forEvent:</span>] + <span class="number">40</span></span><br><span class="line"><span class="number">8</span>   UIKit                           <span class="number">0x37fba8ee</span> -[UIControl(Internal) <span class="string">_sendActionsForEvents:</span><span class="string">withEvent:</span>] + <span class="number">498</span></span><br><span class="line"><span class="number">9</span>   UIKit                           <span class="number">0x37fbade4</span> -[UIControl <span class="string">touchesEnded:</span><span class="string">withEvent:</span>] + <span class="number">484</span></span><br><span class="line"><span class="number">10</span>  UIKit                           <span class="number">0x37ee35f4</span> -[UIWindow <span class="string">_sendTouchesForEvent:</span>] + <span class="number">520</span></span><br><span class="line"><span class="number">11</span>  UIKit                           <span class="number">0x37ed0804</span> -[UIApplication <span class="string">sendEvent:</span>] + <span class="number">376</span></span><br><span class="line"><span class="number">12</span>  UIKit                           <span class="number">0x37ed011e</span> _UIApplicationHandleEvent + <span class="number">6150</span></span><br><span class="line"><span class="number">13</span>  GraphicsServices                <span class="number">0x3708359e</span> _PurpleEventCallback + <span class="number">586</span></span><br><span class="line"><span class="number">14</span>  GraphicsServices                <span class="number">0x370831ce</span> PurpleEventCallback + <span class="number">30</span></span><br><span class="line"><span class="number">15</span>  CoreFoundation                  <span class="number">0x36bd416e</span> __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__ + <span class="number">30</span></span><br><span class="line"><span class="number">16</span>  CoreFoundation                  <span class="number">0x36bd4112</span> __CFRunLoopDoSource1 + <span class="number">134</span></span><br><span class="line"><span class="number">17</span>  CoreFoundation                  <span class="number">0x36bd2f94</span> __CFRunLoopRun + <span class="number">1380</span></span><br><span class="line"><span class="number">18</span>  CoreFoundation                  <span class="number">0x36b45eb8</span> CFRunLoopRunSpecific + <span class="number">352</span></span><br><span class="line"><span class="number">19</span>  CoreFoundation                  <span class="number">0x36b45d44</span> CFRunLoopRunInMode + <span class="number">100</span></span><br><span class="line"><span class="number">20</span>  GraphicsServices                <span class="number">0x370822e6</span> GSEventRunModal + <span class="number">70</span></span><br><span class="line"><span class="number">21</span>  UIKit                           <span class="number">0x37f242fc</span> UIApplicationMain + <span class="number">1116</span></span><br><span class="line"><span class="number">22</span>  Rage Masters                    <span class="number">0x000ca004</span> main (main.<span class="string">m:</span><span class="number">16</span>)</span><br><span class="line"><span class="number">23</span>  libdyld.dylib                   <span class="number">0x3b630b1c</span> start + <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>异常代码是<code>SIGABRT</code>。通常,  <code>SIGABRT</code> 异常是由于<strong><em>某个对象接收到未实现的消息</em></strong>引起的。 或者，用简单的话说，在某个对象上<strong><em>调用了不存在的方法</em></strong>。</p>
+<p>这种情况一般不会发生，因为A对象调用了B方法，如果B方法不存在，编译器会报错。但是，如果你是使用selector间接调用方法的，编译器则无法检测对象是否存在该方法了。</p>
+<p>回到崩溃日志。它指出闪退发生在编号为0的线程上。 这意味着很可能是在主线程上调用了某个对象没有实现的方法。</p>
+<p>如果你接着阅读回溯日志，会发现跟你的代码相关的只有帧22, main.m:16. 这没有多大帮助。 :[</p>
+<p>继续向上查看框架调用，出现这个:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>    CoreFoundation    <span class="number">0</span>x36c02e02 -[<span class="function"><span class="title">NSObject</span><span class="params">(NSObject)</span></span> doesNotRecognizeSelector:] + <span class="number">166</span></span><br></pre></td></tr></table></figure>
+<p>这不是你自己写的代码。但至少它确认了是对象调用了一个没有实现的方法。</p>
+<p>回到<code>RMDetailViewController.m</code>文件, 因为那是书签按钮实现动作的地方。 找到书签功能代码:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">IBAction</span>)bookmarkButtonPressed &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.master</span><span class="variable">.isBookmarked</span> = !<span class="keyword">self</span><span class="variable">.master</span><span class="variable">.isBookmarked</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update shared bookmarks</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.master</span><span class="variable">.isBookmarked</span>)</span><br><span class="line">        [[RMBookmarks sharedBookmarks] bookmarkMaster:<span class="keyword">self</span><span class="variable">.master</span>];</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        [[RMBookmarks sharedBookmarks] unbookmarkMaster:<span class="keyword">self</span><span class="variable">.master</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update UI</span></span><br><span class="line">    [<span class="keyword">self</span> updateBookmarkImage];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看起来没什么问题，再检查一下storyboard (XIB文件) ，确认按钮连接的正确性。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2012/10/Scenario_2-700x290.png" alt=""></p>
+<p>就是它了! 在 <code>MainStoryboard.storyboard</code>,按钮连接的是 <code>bookmarkButtonPressed:</code> 而不是<code>bookmarkButtonPressed</code> (注意后面的分号说明方法有一个参数）。 只要将上面的方法签名修改成这样就能修复问题了:</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(IBAction)<span class="tag">bookmarkButtonPressed</span>:(id)<span class="tag">sender</span> &#123;</span><br><span class="line">    <span class="comment">// Remain unchanged..</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，你也可以简单地在XIB文件上删除错误的连接，然后重新连接方法，使XIB文件连接到正确的方法上。两者方法都行。 又处理了一个闪退问题，好样的。:]</p>
+<h3 id="场景_3:_表格上的Bug">场景 3: 表格上的Bug</h3><p>另一用户抱怨道, “在书签视图上无法删除书签…” 还有另一用户抱怨同样的问题, “当我试图删除书签时，应用闪退…” 这些邮件没什么作用，还是看看崩溃日志!</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">Incident <span class="string">Identifier:</span> <span class="number">5</span>B62D681-D8FE-<span class="number">41</span>FE-<span class="number">8</span>D52-AB7E6D6B2AC7</span><br><span class="line">CrashReporter <span class="string">Key:</span>   <span class="number">5</span>a56599d836c4f867f6eec76afee451bf9ae5f31</span><br><span class="line">Hardware <span class="string">Model:</span>      iPhone4,<span class="number">1</span></span><br><span class="line"><span class="string">Process:</span>         Rage Masters [<span class="number">20088</span>]</span><br><span class="line"><span class="string">Path:</span>            <span class="regexp">/var/</span>mobile<span class="regexp">/Applications/</span>B2121A89-<span class="number">3</span>D1F-<span class="number">4E61</span>-BB18-<span class="number">5511E1</span>DC150F<span class="regexp">/Rage Masters.app/</span>Rage Masters</span><br><span class="line"><span class="string">Identifier:</span>      Rage Masters</span><br><span class="line"><span class="string">Version:</span>         ??? (???)</span><br><span class="line">Code Type:       ARM (Native)</span><br><span class="line">Parent <span class="string">Process:</span>  launchd [<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">Date/<span class="string">Time:</span>       <span class="number">2012</span>-<span class="number">11</span>-<span class="number">03</span> <span class="number">13</span>:<span class="number">38</span>:<span class="number">45.762</span> -<span class="number">0400</span></span><br><span class="line">OS <span class="string">Version:</span>      iOS <span class="number">6.0</span> (<span class="number">10</span>A403)</span><br><span class="line">Report <span class="string">Version:</span>  <span class="number">104</span></span><br><span class="line"></span><br><span class="line">Exception <span class="string">Type:</span>  EXC_CRASH (SIGABRT)</span><br><span class="line">Exception <span class="string">Codes:</span> <span class="number">0x0000000000000000</span>, <span class="number">0x0000000000000000</span></span><br><span class="line">Crashed <span class="string">Thread:</span>  <span class="number">0</span></span><br><span class="line"></span><br><span class="line">Last Exception <span class="string">Backtrace:</span></span><br><span class="line"><span class="number">0</span>   CoreFoundation                  <span class="number">0x36bff29e</span> __exceptionPreprocess + <span class="number">158</span></span><br><span class="line"><span class="number">1</span>   libobjc.A.dylib                 <span class="number">0x34f0f97a</span> objc_exception_throw + <span class="number">26</span></span><br><span class="line"><span class="number">2</span>   CoreFoundation                  <span class="number">0x36bff158</span> +[NSException <span class="string">raise:</span><span class="string">format:</span><span class="string">arguments:</span>] + <span class="number">96</span></span><br><span class="line"><span class="number">3</span>   Foundation                      <span class="number">0x346812aa</span> -[NSAssertionHandler <span class="string">handleFailureInMethod:</span><span class="string">object:</span><span class="string">file:</span><span class="string">lineNumber:</span><span class="string">description:</span>] + <span class="number">86</span></span><br><span class="line"><span class="number">4</span>   UIKit                           <span class="number">0x37f04b7e</span> -[UITableView(_UITableViewPrivate) <span class="string">_endCellAnimationsWithContext:</span>] + <span class="number">7690</span></span><br><span class="line"><span class="number">5</span>   UIKit                           <span class="number">0x3803a4a2</span> -[UITableView <span class="string">deleteRowsAtIndexPaths:</span><span class="string">withRowAnimation:</span>] + <span class="number">22</span></span><br><span class="line"><span class="number">6</span>   Rage Masters                    <span class="number">0x000fd9ca</span> -[RMBookmarksViewController <span class="string">tableView:</span><span class="string">commitEditingStyle:</span><span class="string">forRowAtIndexPath:</span>] (RMBookmarksViewController.<span class="string">m:</span><span class="number">68</span>)</span><br><span class="line"><span class="number">7</span>   UIKit                           <span class="number">0x3809a5d4</span> -[UITableView(UITableViewInternal) <span class="string">animateDeletionOfRowWithCell:</span>] + <span class="number">80</span></span><br><span class="line"><span class="number">8</span>   UIKit                           <span class="number">0x37fbb0a8</span> -[UIApplication <span class="string">sendAction:</span><span class="string">to:</span><span class="string">from:</span><span class="string">forEvent:</span>] + <span class="number">68</span></span><br><span class="line"><span class="number">9</span>   UIKit                           <span class="number">0x37fbb05a</span> -[UIApplication <span class="string">sendAction:</span><span class="string">toTarget:</span><span class="string">fromSender:</span><span class="string">forEvent:</span>] + <span class="number">26</span></span><br><span class="line"><span class="number">10</span>  UIKit                           <span class="number">0x37fbb038</span> -[UIControl <span class="string">sendAction:</span><span class="string">to:</span><span class="string">forEvent:</span>] + <span class="number">40</span></span><br><span class="line"><span class="number">11</span>  UIKit                           <span class="number">0x37fba8ee</span> -[UIControl(Internal) <span class="string">_sendActionsForEvents:</span><span class="string">withEvent:</span>] + <span class="number">498</span></span><br><span class="line"><span class="number">12</span>  UIKit                           <span class="number">0x37fbb0a8</span> -[UIApplication <span class="string">sendAction:</span><span class="string">to:</span><span class="string">from:</span><span class="string">forEvent:</span>] + <span class="number">68</span></span><br><span class="line"><span class="number">13</span>  UIKit                           <span class="number">0x37fbb05a</span> -[UIApplication <span class="string">sendAction:</span><span class="string">toTarget:</span><span class="string">fromSender:</span><span class="string">forEvent:</span>] + <span class="number">26</span></span><br><span class="line"><span class="number">14</span>  UIKit                           <span class="number">0x37fbb038</span> -[UIControl <span class="string">sendAction:</span><span class="string">to:</span><span class="string">forEvent:</span>] + <span class="number">40</span></span><br><span class="line"><span class="number">15</span>  UIKit                           <span class="number">0x37fba8ee</span> -[UIControl(Internal) <span class="string">_sendActionsForEvents:</span><span class="string">withEvent:</span>] + <span class="number">498</span></span><br><span class="line"><span class="number">16</span>  UIKit                           <span class="number">0x37fbade4</span> -[UIControl <span class="string">touchesEnded:</span><span class="string">withEvent:</span>] + <span class="number">484</span></span><br><span class="line"><span class="number">17</span>  UIKit                           <span class="number">0x37ee35f4</span> -[UIWindow <span class="string">_sendTouchesForEvent:</span>] + <span class="number">520</span></span><br><span class="line"><span class="number">18</span>  UIKit                           <span class="number">0x37ed0804</span> -[UIApplication <span class="string">sendEvent:</span>] + <span class="number">376</span></span><br><span class="line"><span class="number">19</span>  UIKit                           <span class="number">0x37ed011e</span> _UIApplicationHandleEvent + <span class="number">6150</span></span><br><span class="line"><span class="number">20</span>  GraphicsServices                <span class="number">0x3708359e</span> _PurpleEventCallback + <span class="number">586</span></span><br><span class="line"><span class="number">21</span>  GraphicsServices                <span class="number">0x370831ce</span> PurpleEventCallback + <span class="number">30</span></span><br><span class="line"><span class="number">22</span>  CoreFoundation                  <span class="number">0x36bd416e</span> __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__ + <span class="number">30</span></span><br><span class="line"><span class="number">23</span>  CoreFoundation                  <span class="number">0x36bd4112</span> __CFRunLoopDoSource1 + <span class="number">134</span></span><br><span class="line"><span class="number">24</span>  CoreFoundation                  <span class="number">0x36bd2f94</span> __CFRunLoopRun + <span class="number">1380</span></span><br><span class="line"><span class="number">25</span>  CoreFoundation                  <span class="number">0x36b45eb8</span> CFRunLoopRunSpecific + <span class="number">352</span></span><br><span class="line"><span class="number">26</span>  CoreFoundation                  <span class="number">0x36b45d44</span> CFRunLoopRunInMode + <span class="number">100</span></span><br><span class="line"><span class="number">27</span>  GraphicsServices                <span class="number">0x370822e6</span> GSEventRunModal + <span class="number">70</span></span><br><span class="line"><span class="number">28</span>  UIKit                           <span class="number">0x37f242fc</span> UIApplicationMain + <span class="number">1116</span></span><br><span class="line"><span class="number">29</span>  Rage Masters                    <span class="number">0x000fb004</span> main (main.<span class="string">m:</span><span class="number">16</span>)</span><br><span class="line"><span class="number">30</span>  libdyld.dylib                   <span class="number">0x3b630b1c</span> start + <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这看起来跟前面那个崩溃日志很像。是另一个<code>SIGABRT</code> 异常。 你可能想知道是否是相同的问题：发送信息到一个没有实现相应方法的对象?</p>
+<p>让我们从回溯日志看看哪些方法被调用了。从底部开始，你的源代码最后被调用的是帧 6:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span>    Rage Masters    <span class="number">0x00088c66</span> -[RMBookmarksViewController <span class="string">tableView:</span><span class="string">commitEditingStyle:</span><span class="string">forRowAtIndexPath:</span>] (RMBookmarksViewController.<span class="string">m:</span><span class="number">68</span>)</span><br></pre></td></tr></table></figure>
+<p>这是UITableViewDataSource 的一个方法. 呵呵?! 毫无疑问苹果已经实现了该方法 —— 你可以重载它, 但不像是还没有实现。而且,这是个可选的委派方法。 所以问题不是调用了一个没有实现的方法。 再看看上面的几个帧:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>    Foundation    <span class="number">0x346812aa</span> -[NSAssertionHandler <span class="string">handleFailureInMethod:</span><span class="string">object:</span><span class="string">file:</span><span class="string">lineNumber:</span><span class="string">description:</span>] + <span class="number">86</span></span><br><span class="line"><span class="number">4</span>    UIKit         <span class="number">0x37f04b7e</span> -[UITableView(_UITableViewPrivate) <span class="string">_endCellAnimationsWithContext:</span>] + <span class="number">7690</span></span><br><span class="line"><span class="number">5</span>    UIKit         <span class="number">0x3803a4a2</span> -[UITableView <span class="string">deleteRowsAtIndexPaths:</span><span class="string">withRowAnimation:</span>] + <span class="number">22</span></span><br></pre></td></tr></table></figure>
+<p>帧 5, <code>UITableView</code>调用了它自己的另一个方法 <code>deleteRowsAtIndexPaths:withRowAnimation:</code>然后是看起来像苹果内部方法的<code>_endCellAnimationsWithContext:</code>被调用。然后<code>Foundation framework</code>发生异常<code>handleFailureInMethod:object:file:lineNumber:description:</code>.</p>
+<p>这些分析结合用户的抱怨，看起来是你在处理UITableView删除行过程中有Bug。回到Xcode。你知道看哪里吗 ? 能从崩溃日志中判断出来? 就是RMBookmarksViewController.m文件的第68行:</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">tableView</span>:(UITableView *)<span class="tag">tableView</span> <span class="tag">commitEditingStyle</span>:(UITableViewCellEditingStyle)<span class="tag">editingStyle</span> <span class="tag">forRowAtIndexPath</span>:(NSIndexPath *)<span class="tag">indexPath</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="attr_selector">[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]</span> <span class="tag">withRowAnimation</span><span class="pseudo">:UITableViewRowAnimationAutomatic</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现问题了吗? 给你点时间，仔细看一下。 找到了吧! 数据源呢? 代码在表格视图上删除了一行，但并没有修改背后的数据源。把上面的代码替换成下面的就能修复问题了:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(<span class="tag">void</span>)<span class="rule"><span class="attribute">tableView</span>:<span class="value">(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line"></span><br><span class="line">    RMMaster *masterToDelete = [bookmarks objectAtIndex:indexPath.row]</span></span>;</span><br><span class="line">    <span class="attr_selector">[bookmarks removeObject:masterToDelete]</span>;</span><br><span class="line">    <span class="attr_selector">[[RMBookmarks sharedBookmarks]</span> <span class="rule"><span class="attribute">unbookmarkMaster</span>:<span class="value">masterToDelete]</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="attr_selector">[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]</span> <span class="rule"><span class="attribute">withRowAnimation</span>:<span class="value">UITableViewRowAnimationAutomatic]</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>搞定了!走起，讨厌的 bug!!</p>
+<h3 id="场景_4:_吃棒棒糖时闪退!">场景 4: 吃棒棒糖时闪退!</h3><p>用户邮件说, “当rage master吃棒棒糖时应用就闪退…” 另一用户说, “我让rage master 吃棒棒糖，没几次应用就闪退了!” 崩溃日志如下:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">Incident Identifier: <span class="number">081E58F5</span>-<span class="number">95A8-404</span>D-947B-<span class="number">5E104B6</span>BC1B1</span><br><span class="line">CrashReporter Key:   <span class="number">5a56599d83</span><span class="number">6c4f867</span>f6eec76afee451bf9ae5f31</span><br><span class="line">Hardware Model:      iPhone4,1</span><br><span class="line">OS Version:          iPhone OS 6.0 (10A403)</span><br><span class="line">Kernel Version:      Darwin Kernel Version 13.0.0: Sun Aug <span class="number">19 00:28:05</span> PDT 2012<span class="comment">; root:xnu-2107.2.33~4/RELEASE_ARM_S5L8940X</span></span><br><span class="line">Date:                <span class="number">2012-11-03</span> 13:39:59 -0400</span><br><span class="line">Time since snapshot: 4353 ms</span><br><span class="line"></span><br><span class="line">Free pages:        968</span><br><span class="line">Active pages:      7778</span><br><span class="line">Inactive pages:    4005</span><br><span class="line">Throttled pages:   92319</span><br><span class="line">Purgeable pages:   0</span><br><span class="line">Wired pages:       23347</span><br><span class="line">Largest process:   Rage Masters</span><br><span class="line"></span><br><span class="line">Processes</span><br><span class="line">     Name                    &lt;UUID&gt;                       rpages       recent_max       [reason]          (state)</span><br><span class="line"></span><br><span class="line">             lsd &lt;<span class="number">6a9f5b5</span>f36b23fc<span class="number">78f87b6d8</span>f1f49a9d&gt;          331              331         [vm]         (daemon) (idle)</span><br><span class="line">            afcd &lt;b0aff<span class="number">2e7952e34</span>a9882fec81a8dcdbb2&gt;          141              141         [vm]         (daemon) (idle)</span><br><span class="line">    itunesstored &lt;4e0cd9f873de<span class="number">3435b4119</span>c<span class="number">48b2d6d13</span>d&gt;         1761             1761         [vm]         (daemon) (idle)</span><br><span class="line">softwareupdatese &lt;2bc4b5ae<span class="number">016431c98</span>d<span class="number">3b34f81027</span>d0ae&gt;          311              311         [vm]         (daemon) (idle)</span><br><span class="line">          Amazon &lt;<span class="number">4600481f07</span>ec<span class="number">3e59a92531</span>9b7f67ba14&gt;         2951             2951         [vm]         (suspended)</span><br><span class="line">       accountsd &lt;ac0fce<span class="number">15c1a2350</span>d951efc<span class="number">498d521</span>ac7&gt;          519              519         [vm]         (daemon) (idle)</span><br><span class="line">coresymbolicatio &lt;edba<span class="number">67001f76313</span>b<span class="number">992056c71</span>2153b4b&gt;          126              126         [vm]         (daemon) (idle)</span><br><span class="line">           Skype &lt;504cf2fe60cb3cdea8273e74df09836b&gt;         3187             3187         [vm]         (background)</span><br><span class="line">      MobileMail &lt;bff817c61ce33c85a43ea<span class="number">9a6c98c29</span>f5&gt;        14927            14927         [vm]         (continuous)</span><br><span class="line">       MobileSMS &lt;46778de<span class="number">076363d67</span>aeea207464cfc581&gt;         2134             2134         [vm]         (background)</span><br><span class="line">     MobilePhone &lt;3fca<span class="number">241f2a193d0</span>fb<span class="number">8264218d29</span>6ea41&gt;         2689             2689         [vm]         (continuous)</span><br><span class="line">      librariand &lt;c9a9be81aa<span class="number">9632f0a91</span>3ce<span class="number">79b911f27</span>e&gt;          317              317         [vm]         (daemon)</span><br><span class="line">             kbd &lt;3e7136ddcefc<span class="number">3d77a01499</span>db593466cd&gt;          616              616         [vm]         (daemon)</span><br><span class="line">            tccd &lt;eb5ddcf<span class="number">533663f8</span>d987d67cae6a4c4ea&gt;          224              224         [vm]         (daemon)</span><br><span class="line">    Rage Masters &lt;<span class="number">90b45d6281</span>e<span class="number">934209c5b06</span>cf7dc4d492&gt;        28591            28591         [vm]         (frontmost) (resume)</span><br><span class="line">            ptpd &lt;04a56fce<span class="number">67053c57a79</span>79aeea8e5a7ea&gt;          879              879                      (daemon)</span><br><span class="line">   iaptransportd &lt;f784f30dc<span class="number">09d32078d87</span>b<span class="number">450e8113</span>ef6&gt;          230              230                      (daemon)</span><br><span class="line">       locationd &lt;892cd1c9ffa43c99a82dba197be5f09e&gt;         1641             1641                      (daemon)</span><br><span class="line">         syslogd &lt;cbef142fa<span class="number">0a839f08</span>85afb693fb169c3&gt;          237              237                      (daemon)</span><br><span class="line">    mediaserverd &lt;<span class="number">80657170</span>daca<span class="number">32c9b8f3</span>a6b1faac43a2&gt;         4869             4869                      (daemon)</span><br><span class="line">     dataaccessd &lt;<span class="number">2a3f6a51</span><span class="number">8f3f3646</span>bf35eddd<span class="number">36f25005</span>&gt;         1786             1786                      (daemon)</span><br><span class="line">      aosnotifyd &lt;d<span class="number">4d14f2914</span>c<span class="number">3343796e44</span>7cfef3e6542&gt;          549              549                      (daemon)</span><br><span class="line">           wifid &lt;<span class="number">9472b09074</span><span class="number">6237998</span>cdbb<span class="number">9b34f090</span>d0c&gt;          455              455                      (daemon)</span><br><span class="line">     SpringBoard &lt;27372aae101f3bbc87804edc10314af3&gt;        18749            18749</span><br><span class="line">      backboardd &lt;<span class="number">5037235f29</span>5b33eda98eb<span class="number">5c72c09885</span>8&gt;         5801             5801                      (daemon)</span><br><span class="line">  UserEventAgent &lt;6edfd8d8dba<span class="number">23187b05772</span>dcdfc94f90&gt;          601              601                      (daemon)</span><br><span class="line">    mediaremoted &lt;4ff<span class="number">39c50c68430</span><span class="number">2492e396</span>ace813cb25&gt;          293              293                      (daemon)</span><br><span class="line">     pasteboardd &lt;<span class="number">8a4279b78</span>e<span class="number">4a321f84</span>a<span class="number">076a711</span>dc1c51&gt;          176              176                      (daemon)</span><br><span class="line">springboardservi &lt;ff<span class="number">6f64b3a21</span>a<span class="number">39c9a179332</span>1eefa5304&gt;            0                0                      (daemon)</span><br><span class="line">    syslog_relay &lt;<span class="number">45e9844605</span>d<span class="number">737a08368</span>b5215bb54426&gt;            0                0                      (daemon)</span><br><span class="line">      DTMobileIS &lt;23303ca402aa<span class="number">3705870b01</span>a<span class="number">9047854</span>ea&gt;            0                0                      (daemon)</span><br><span class="line">notification_pro &lt;845b7beebc8538ca9ceef<span class="number">731031983</span>b7&gt;          169              169                      (daemon)</span><br><span class="line">    syslog_relay &lt;<span class="number">45e9844605</span>d<span class="number">737a08368</span>b5215bb54426&gt;            0                0                      (daemon)</span><br><span class="line">             ubd &lt;74dc<span class="number">476d178530</span>0e9fcda555fcb8d774&gt;          976              976                      (daemon)</span><br><span class="line">        twitterd &lt;<span class="number">4b4946378</span>a<span class="number">9c397d82</span><span class="number">50965d17055</span>b8e&gt;          730              730                      (daemon)</span><br><span class="line">         configd &lt;<span class="number">4245d73a9</span>e<span class="number">96360399452</span>cf<span class="number">6b8671844</span>&gt;          809              809                      (daemon)</span><br><span class="line">   absinthed.N94 &lt;<span class="number">7f4164c84</span>4fa340caa<span class="number">940b863</span>c901aa9&gt;           99               99                      (daemon)</span><br><span class="line">filecoordination &lt;fbab<span class="number">576f37a63</span>b<span class="number">56a1039153</span>fc1aa7d8&gt;          226              226                      (daemon)</span><br><span class="line">       distnoted &lt;a89af76ec8633ac2bbe99bc2b7964bb0&gt;          137              137                      (daemon)</span><br><span class="line">            apsd &lt;94d8051dd<span class="number">5f5362f82</span>d775bc279ae608&gt;          373              373                      (daemon)</span><br><span class="line">        networkd &lt;<span class="number">0032f46009</span>f<span class="number">53a6c80973</span>fe<span class="number">153d1a588</span>&gt;          219              219                      (daemon)</span><br><span class="line">      aggregated &lt;<span class="number">8c3c991</span>dc4153bc38aee<span class="number">1e841864</span>d088&gt;          112              112                      (daemon)</span><br><span class="line">        BTServer &lt;c92fbd7488e63be99ec9dbd<span class="number">05824f5e5</span>&gt;          522              522                      (daemon)</span><br><span class="line">   fairplayd.N94 &lt;7bd896bd<span class="number">00783a48906</span>090d05cf1c86a&gt;          210              210                      (daemon)</span><br><span class="line">       fseventsd &lt;996cc4ca<span class="number">03793184</span>aea<span class="number">8d781b55</span>bce08&gt;          384              384                      (daemon)</span><br><span class="line">         imagent &lt;<span class="number">1e68080947</span>be352590ce<span class="number">96b7a1d07</span>b2f&gt;          586              586                      (daemon)</span><br><span class="line">   mDNSResponder &lt;<span class="number">3e557693</span>f<span class="number">3073697a58</span>da<span class="number">6d27a827</span>d97&gt;          295              295                      (daemon)</span><br><span class="line">       lockdownd &lt;ba<span class="number">1358c7a80</span>03f1b91af7d5f58dd5bbe&gt;          389              389                      (daemon)</span><br><span class="line">          powerd &lt;2d2ffed<span class="number">5e69638</span>aeba1b92ef124ed861&gt;          174              174                      (daemon)</span><br><span class="line">      CommCenter &lt;<span class="number">1f425e1</span>e<span class="number">897d32e88</span>64fdd8eeaa803a8&gt;         2212             2212                      (daemon)</span><br><span class="line">         notifyd &lt;51c0e03da8a93ac<span class="number">8a595442</span>fcaac531f&gt;          211              211                      (daemon)</span><br><span class="line">     ReportCrash &lt;<span class="number">8c32f231b2</span>ed360bb<span class="number">151b2563</span>bcaa363&gt;          337              337                      (daemon)</span><br></pre></td></tr></table></figure>
+<p>这日志跟我们前面见到的相差很多。</p>
+<p>这个一个来自iOS 6的低内存崩溃日志。正如我们前面所说的，低内存崩溃日志与其他类型的崩溃日志很不一样，它们不指向特定的文件和代码行。相反，它们画出了闪退时设备上的内存使用情况的图表。</p>
+<p>至少，头部还是跟其他崩溃日志很像的:  提供了 <code>Incident Identifier</code>,<code>CrashReporter Key</code>, <code>Hardware Model</code>, <code>OS Version</code>等信息。 接下来部分是低内存崩溃日志特有的:</p>
+<ul>
+<li>Free pages 指可用内存页数。每页大小约是4KB, 上面的日志中，可用内存约为3,872 KB (或者说 3.9 MB)。</li>
+<li>Purgeable pages 是那部分可被清除或重用的内存。在上面的日志中，是0KB。</li>
+<li>Largest process是闪退时使用大部分内存的应用名称，在上面的日志中，正是你的应用!</li>
+<li>Processes显示了闪退时各进程列表，还包含内存使用量。包含进程名 (第一列), 进程唯一标识符(第二名), 进程使用的内存页数(第三列)。最后一列是每个应用的状态。通常，发生闪退的应用的状态是 frontmost。 这里是 Rage Masters, 使用28591 页 (or 114.364 MB) 内存——这内存太多了!</li>
+</ul>
+<p>通过，最大进程和frontmost状态的应用是相同的， 而且也是引起低内存闪退的应用进程。但是也可能看到最大进程和 frontmost状态应用不同的例子。比如，如果最大进程是SpringBoard, 忽略它 , 因为 SpringBoard 进程是显示主屏幕的应用，出现在你双击home按钮等情况，而且它是一直活动的。</p>
+<p>低内存发生时，iOS向活动的应用发出低内存警告并终止后台应用。如果前台应用仍然继续增长内存，iOS将终止它。 为了查找低内存问题的原因，你必需使用Instruments剖析应用。如果你不知道怎么做，可以看一下我们 一篇关于这个方面的教程.。 :] 另外, 你也可以走捷径，响应低内存警告通知，以解决部分闪退问题。</p>
+<p>回到Xcode查看RMLollipopLicker.m文件。 这是实现吃棒棒糖的视图控制器。看看源代码:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"RMLollipopLicker.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define COUNT 20</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">RMLollipopLicker</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIProgressView</span> *progressView;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *lickedTimeLabel;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">RMLollipopLicker</span> </span>&#123;</span><br><span class="line">    <span class="built_in">NSOperationQueue</span> *queue;</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *lollipops;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - Life cycle</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.progressView</span><span class="variable">.progress</span> = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.label</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Tap on run and I'll lick a lollipop %d times!"</span>, COUNT];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.lickedTimeLabel</span><span class="variable">.text</span> = <span class="string">@""</span>;</span><br><span class="line"></span><br><span class="line">    lollipops = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line">    queue = [[<span class="built_in">NSOperationQueue</span> alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)lickLollipop &#123;</span><br><span class="line">    <span class="built_in">NSURL</span> *fileURL = [[<span class="built_in">NSBundle</span> mainBundle] URLForResource:<span class="string">@"Lollipop"</span> withExtension:<span class="string">@"plist"</span>];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dictionary = [<span class="built_in">NSDictionary</span> dictionaryWithContentsOfURL:fileURL];</span><br><span class="line">    <span class="built_in">NSString</span> *lollipop = [dictionary objectForKey:<span class="string">@"Lollipop"</span>];</span><br><span class="line">    [lollipops addObject:lollipop];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - IBActions</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">IBAction</span>)doneButtonPressed:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> dismissViewControllerAnimated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">IBAction</span>)runButtonPressed:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line"></span><br><span class="line">    [sender setEnabled:<span class="literal">NO</span>];</span><br><span class="line">    [queue addOperationWithBlock:^&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">0</span> ; i &lt;= COUNT ; i++) &#123;</span><br><span class="line">            [<span class="keyword">self</span> lickLollipop];</span><br><span class="line"></span><br><span class="line">            [[<span class="built_in">NSOperationQueue</span> mainQueue] addOperationWithBlock:^&#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">self</span><span class="variable">.label</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Licked a strawberry lollipop %d time(s)!"</span>, i];</span><br><span class="line">                <span class="keyword">self</span><span class="variable">.lickedTimeLabel</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Licked the same lollipop %d time(s)!"</span>, lollipops<span class="variable">.count</span>-<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">self</span><span class="variable">.progressView</span><span class="variable">.progress</span> = (<span class="keyword">float</span>)(i/COUNT);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (i &gt;= COUNT) &#123;</span><br><span class="line">                    <span class="keyword">self</span><span class="variable">.label</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Tap on run and I'll lick a lollipop %d times!"</span>, COUNT];</span><br><span class="line">                    <span class="keyword">self</span><span class="variable">.progressView</span><span class="variable">.progress</span> = <span class="number">0.0</span>;</span><br><span class="line">                    [sender setEnabled:<span class="literal">YES</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>当用户点击运行按钮, 应用开始一个背景线程，调用 <code>lickLollipop</code> 方法若干次，然后更新界面反映吃棒棒糖的数量。<code>lickLollipop</code> 方法从属性列表文件(PLIST）文件读取一个长字符串，然后添加到数组上。这些数据并不重要, 能在不影响用户体验的前提下重新创建。 利用每种能够清除和重建数据而不影响用户体验的情况是好习惯。这样能够方便地释放内存，减少低内存警告。</p>
+<p>那么，如何提高代码质量呢? 实现 <code>didReceiveMemoryWarning</code> 方法，像下面这样处理数据:</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(void)<span class="tag">didReceiveMemoryWarning</span> &#123;</span><br><span class="line"><span class="attr_selector">[lollipops removeAllObjects]</span>;</span><br><span class="line"><span class="attr_selector">[super didReceiveMemoryWarning]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>搞定!</p>
+<h2 id="下一步?">下一步?</h2><p>万岁，你研究了4个闪退案例! 你的应用更完善了，并且学到了一些重要的调试技巧。 你可以到<a href="http://cdn5.raywenderlich.com/downloads/RageMasters-Improved.zip" target="_blank" rel="external">这里</a>下载改进后的项目代码。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/15/iOS-Crash文件的解析/">iOS Crash文件的解析</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/13/iOS-property-attribute/">iOS property attribute</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS应用崩溃日志揭秘1"><span class="nav-number">1.</span> <span class="nav-text">iOS应用崩溃日志揭秘1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是崩溃日志，从哪里能得它?"><span class="nav-number">1.1.</span> <span class="nav-text">什么是崩溃日志，从哪里能得它?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么情况下会产生崩溃日志?"><span class="nav-number">1.2.</span> <span class="nav-text">什么情况下会产生崩溃日志?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watchdog_超时机制"><span class="nav-number">1.3.</span> <span class="nav-text">Watchdog 超时机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户强制退出"><span class="nav-number">1.3.1.</span> <span class="nav-text">用户强制退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#低内存终止"><span class="nav-number">1.3.2.</span> <span class="nav-text">低内存终止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用中有Bug"><span class="nav-number">1.3.3.</span> <span class="nav-text">应用中有Bug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#崩溃日志的实例"><span class="nav-number">1.4.</span> <span class="nav-text">崩溃日志的实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程信息"><span class="nav-number">1.4.1.</span> <span class="nav-text">进程信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本信息"><span class="nav-number">1.4.2.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">1.4.3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程回溯"><span class="nav-number">1.4.4.</span> <span class="nav-text">线程回溯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程状态"><span class="nav-number">1.4.5.</span> <span class="nav-text">线程状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制映像"><span class="nav-number">1.4.6.</span> <span class="nav-text">二进制映像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号化Symbolication"><span class="nav-number">1.5.</span> <span class="nav-text">符号化Symbolication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#低内存闪退"><span class="nav-number">1.6.</span> <span class="nav-text">低内存闪退</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常编码"><span class="nav-number">1.7.</span> <span class="nav-text">异常编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大展身手的时候到了!"><span class="nav-number">1.8.</span> <span class="nav-text">大展身手的时候到了!</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#场景_1:_糟糕的代码"><span class="nav-number">1.8.1.</span> <span class="nav-text">场景 1: 糟糕的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景_2:_无法响应事件的按钮"><span class="nav-number">1.8.2.</span> <span class="nav-text">场景 2: 无法响应事件的按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景_3:_表格上的Bug"><span class="nav-number">1.8.3.</span> <span class="nav-text">场景 3: 表格上的Bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景_4:_吃棒棒糖时闪退!"><span class="nav-number">1.8.4.</span> <span class="nav-text">场景 4: 吃棒棒糖时闪退!</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步?"><span class="nav-number">1.9.</span> <span class="nav-text">下一步?</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/15/iOS-应用崩溃日志揭秘/';
+      var disqus_title = 'iOS 应用崩溃日志揭秘';
+      var disqus_url = 'http://ytlvy.com/2015/07/15/iOS-应用崩溃日志揭秘/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Crash,Debug,IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Crash文件的解析 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Crash文件的解析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-Crash文件的解析/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-Crash文件的解析/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://www.cnblogs.com/smileEvday/p/Crash1.html" target="_blank" rel="external">转自</a></p>
+<h1 id="iOS_Crash文件的解析">iOS Crash文件的解析</h1><p>开发程序的过程中不管我们已经如何小心，总是会在不经意间遇到程序闪退。脑补一下当你在一群人面前自信的拿着你的App做功能预演的时候，流畅的操作被无情地Crash打断。联想起老罗在发布Smartisan OS的时候说了，他准备了10个手机，如果一台有问题，就换一台，如果10台后挂了他就不做手机了。好了不闲扯了，今天就跟大家一起聊聊iOSCrash文件的组成以及常用的分析工具。</p>
+<p>　　有一个WWDC 2010的视频推荐大家抽空看看，视频名称<a href="https://developer.apple.com/videos/wwdc/2010/?id=317" target="_blank" rel="external">“Understanding Crash Reports on iPhone OS”</a>，该视频详细讲解了Crash文件的结构。当然如果你没时间看的话，不妨阅读以下这篇文章。</p>
+<h2 id="Crash文件结构">Crash文件结构</h2><p>当程序运行Crash的时候，系统会把运行的最后时刻的运行信息记录下来，存储到一个文件中，也就是我们所说的Crash文件。iOS的Crash日志通常由以下6各部分组成。 <a id="more"></a></p>
+<h3 id="Process_Information(进程信息)">Process Information(进程信息)</h3><p><img src="http://images.cnitblog.com/blog/302680/201412/230718553901251.png" alt=""></p>
+<ol>
+<li>Incident Idnetifier       ———  崩溃报告的唯一标识符，不同的Crash</li>
+<li>CrashReporter Key   ———  设备标识相对应的唯一键值(并非真正的设备的UDID，苹果为了保护用户隐私iOS6以后已经无法获取)。通常同一个设备上同一版本的App发生Crash时，该值都是一样的。</li>
+<li>Hardware Model        ———  代表发生Crash的设备类型，上图中的”iPad4,4”代表iPad Air</li>
+<li>Process                     ———  代表Crash的进程名称，通常都是我们的App的名字, []里面是当时进程的ID</li>
+<li>Path                           ———   可执行程序在手机上的存储位置，注意路径时到XXX.app/XXX，XXX.app其实是作为一个Bundle的，真正的可执行文件其实是Bundle里面的XXX，感兴趣的可以自己查一下相关资料，有机会我后面也会介绍到</li>
+<li>Identifier                     ———   你的App的Indentifier，通常为”com.xxx.yyy”，xxx代表你们公司的域名，yyy代表某一个App</li>
+<li>Version                      ———   当前App的版本号，由Info.plist中的两个字段组成，CFBundleShortVersionString and CFBundleVersion</li>
+<li>Code Type                ———   当前App的CPU架构</li>
+<li>Parent Process         ———   当前进程的父进程，由于iOS中App通常都是单进程的，一般父进程都是launchd</li>
+</ol>
+<h3 id="Basic_Information">Basic Information</h3><p><img src="http://images.cnitblog.com/blog/302680/201501/052025393435295.png" alt=""></p>
+<ol>
+<li>Date/Time           Crash发生的时间，可读的字符串</li>
+<li>OS Version         系统版本，（）内的数字代表的时Bulid号</li>
+<li>Report Version    Crash日志的格式，目前基本上都是104，不同的version里面包含的字段可能有不同</li>
+</ol>
+<h3 id="Exception（非常重要）">Exception（非常重要）</h3><p><img src="http://images.cnitblog.com/blog/302680/201501/052029230317758.png" alt=""></p>
+<ol>
+<li>Exception Type        异常类型</li>
+<li>Exception Subtype:  异常子类型</li>
+<li>Crashed Thread       发生异常的线程号</li>
+</ol>
+<h3 id="Thread_Backtrace">Thread Backtrace</h3><p><img src="http://images.cnitblog.com/blog/302680/201501/052034366876268.png" alt=""></p>
+<p>发生Crash的线程的Crash调用栈，从上到下分别代表调用顺序，最上面的一个表示抛出异常的位置，依次往下可以看到API的调用顺序。上图的信息表明本次Crash出现xxxViewController的323行，出错的函数调用为orderCountLoadFailed。</p>
+<h3 id="Thread_State">Thread State</h3><p><img src="http://images.cnitblog.com/blog/302680/201501/052036460005028.png" alt=""></p>
+<p>Crash时发生时刻，线程的状态，通常我们根据Crash栈即可获取到相关信息，这部分一般不用关心。</p>
+<h3 id="Binary_Images">Binary Images</h3><p><img src="http://images.cnitblog.com/blog/302680/201501/052038193591674.png" alt=""></p>
+<p>Crash时刻App加载的所有的库，其中第一行是Crash发生时我们App可执行文件的信息，可以看出为armv7，可执行文件的包得uuid位c0f……cd65，解析Crash的时候dsym文件的uuid必须和这个一样才能完成Crash的符号化解析。</p>
+<h2 id="常见的Crash类型">常见的Crash类型</h2><h3 id="Watchdog_timeout">Watchdog timeout</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">Exception</span> <span class="preprocessor">Code</span>：<span class="number">0x8badf00d</span>， 不太直观，可以读成“eat <span class="keyword">bad </span>food”，意思是don‘t <span class="keyword">block </span>main thread</span><br></pre></td></tr></table></figure>
+<p>紧接着下面会有一段描述：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Application Specific Information：</span><br><span class="line">com<span class="class">.xxx</span><span class="class">.yyy</span>　　 failed to resume <span class="keyword">in</span> time</span><br></pre></td></tr></table></figure>
+<p>对于此类Crash，我们应该去审视自己App初始化时做的事情是否正确，是否在主线程请求了网络，或者其他耗时的事情卡住了正常初始化流程。</p>
+<p>通常系统允许一个App从启动到可以相应用户事件的时间最多为5S，如果超过了5S，App就会被系统终止掉。在Launch，resume，suspend，quit时都会有相应的时间要求。在Highlight Thread里面我们可以看到被终止时调用到的位置，xxxAppDelegate加上行号。</p>
+<p>PS. 在连接Xcode调试时为了便于调试，系统会暂时禁用掉Watchdog，所以此类问题的发现需要使用正常的启动模式。</p>
+<h3 id="User_force-quit">User force-quit</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Exception</span> <span class="rule"><span class="attribute">Codes</span>:<span class="value"> <span class="number">0</span>xdeadfa11, deadfall</span></span></span><br></pre></td></tr></table></figure>
+<p>这个强制退出跟我们平时所说的kill掉后台任务操作还不太一样，通常在程序bug造成系统无法响应时可以采用长按电源键，当屏幕出现关机确认画面时按下Home键即可关闭当前程序。</p>
+<h3 id="Low_Memory_termination">Low Memory termination</h3><p>跟一般的Crash结构不太一样，通常有Free pages，Wired Pages，Purgeable pages，largest process 组成，同事会列出当前时刻系统运行所有进程的信息。</p>
+<p>关于Memory warning可以参看我之前写的一篇文章IOS 内存警告 <a href="http://www.cnblogs.com/smileEvday/archive/2012/03/07/MemoryWarning.html" target="_blank" rel="external">Memory warning level</a>。</p>
+<p>App在运行过程中，系统内存紧张时通常会先发警告，同时把后台挂起的程序终止掉，最终如果还是内存不够的话就会终止掉当前前台的进程。</p>
+<p>当接受到内存警告的事后，我们应该释放尽可能多的内存，Crash其实也可以看做是对App的一种保护。</p>
+<h3 id="Crash_due_to_bugs">Crash due to bugs</h3><p>因为程序bug导致的Crash通常千奇百怪，很难一概而论。大部分情况通过Crash日志就可以定位出问题，当然也不排除部分疑难杂症看半天都不值问题出在哪儿。这个就只能看功底了，一点点找，总是能发现蛛丝马迹。是在看不出来时还可以求助于Google大神，总有人遇到和你一样的Bug</p>
+<h2 id="常见的Exception_Type_&amp;_Exception_Code">常见的Exception Type &amp; Exception Code</h2><h3 id="Exception_Type">Exception Type</h3><p>1）EXC_BAD_ACCESS 此类型的Excpetion是我们最长碰到的Crash，通常用于访问了不改访问的内存导致。一般EXC_BAD_ACCESS后面的”()”还会带有补充信息。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">SIGSEGV:</span> 通常由于重复释放对象导致，这种类型在切换了ARC以后应该已经很少见到了。</span><br><span class="line"><span class="label">SIGABRT:</span>  收到Abort信号退出，通常Foundation库中的容器为了保护状态正常会做一些检测，例如插入nil到数组中等会遇到此类错误。</span><br><span class="line"><span class="label">SEGV:</span>（Segmentation  Violation），代表无效内存地址，比如空指针，未初始化指针，栈溢出等；</span><br><span class="line">SIGBUS：总线错误，与 SIGSEGV 不同的是，SIGSEGV 访问的是无效地址，而 SIGBUS 访问的是有效地址，但总线访问异常(如地址对齐问题)</span><br><span class="line">SIGILL：尝试执行非法的指令，可能不被识别或者没有权限</span><br></pre></td></tr></table></figure>
+<p>2）EXC_BAD_INSTRUCTION 此类异常通常由于线程执行非法指令导致</p>
+<p>3）EXC_ARITHMETIC 除零错误会抛出此类异常</p>
+<h3 id="Exception_Code">Exception Code</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0xbaaaaaad</span>  此种类型的log意味着该Crash log并非一个真正的Crash，它仅仅只是包含了整个系统某一时刻的运行状态。通常可以通过同时按Home键和音量键，可能由于用户不小心触发</span><br><span class="line"><span class="number">0xbad22222</span>  当VOIP程序在后台太过频繁的激活时，系统可能会终止此类程序</span><br><span class="line"><span class="number">0x8badf00d</span>   这个前面已经介绍了，程序启动或者恢复时间过长被watch dog终止</span><br><span class="line"><span class="number">0xc00010ff</span>    程序执行大量耗费<span class="built_in">CPU</span>和GPU的运算，导致设备过热，触发系统过热保护被系统终止</span><br><span class="line"><span class="number">0xdead10cc</span>  程序退到后台时还占用系统资源，如通讯录被系统终止</span><br><span class="line"><span class="number">0xdeadfa11</span>   前面也提到过，程序无响应用户强制关闭</span><br></pre></td></tr></table></figure>
+<h2 id="获取Crash的途径">获取Crash的途径</h2><h3 id="本机">本机</h3><p>通过xCode连接测试机器，直接在Device中即可读取到该机器上发生的所有Crash log。</p>
+<h3 id="itunes_connect">itunes connect</h3><p>通过itunes connect后台获取到用户上报的Crash日志。</p>
+<h3 id="第三方的Crash收集系统">第三方的Crash收集系统</h3><p>有很多优秀的第三方Crash收集系统大大的方便了我们收集Crash，甚至还带了符号化Crash日志的功能。比较常用的有Crashlytics，Flurry等。</p>
+<h2 id="附录">附录</h2><p>Apple官方文档:</p>
+<ol>
+<li><a href="https://developer.apple.com/library/ios/technotes/tn2151/_index.html#//apple_ref/doc/uid/DTS40008184-CH1-INTRODUCTION" target="_blank" rel="external">Understanding and Analyzing iOS Application Crash Reports</a></li>
+<li><a href="https://developer.apple.com/library/mac/technotes/tn2004/tn2123.html#LISTCRASHLOGEXCEPTION" target="_blank" rel="external">Technical Note TN2123 CrashReporter</a></li>
+<li><a href="https://developer.apple.com/library/ios/qa/qa1592/_index.html" target="_blank" rel="external">https://developer.apple.com/library/ios/qa/qa1592/_index.html</a></li>
+</ol>
+<p>WWDC视频:</p>
+<ol>
+<li><a href="https://developer.apple.com/videos/wwdc/2010/?id=317" target="_blank" rel="external">Understanding Crash Reports on iPhone OS</a></li>
+</ol>
+<p>Crash日志记录的时候是将Crash发生时刻，函数的调用栈，以及线程等信息写入文件。一般都是直接写的16进制地址，如果不经过符号化的话，基本上很难获取到有用信息，下一篇我们将聊一聊Crash日志的符号化，通俗点讲就是让Crash日志变成我们可读的格式。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crash/"> #Crash </a>
+          
+            <a href="/tags/Debug/"> #Debug </a>
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/15/iOS-内存警告/">iOS 内存警告</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/15/iOS-应用崩溃日志揭秘/">iOS 应用崩溃日志揭秘</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS_Crash文件的解析"><span class="nav-number">1.</span> <span class="nav-text">iOS Crash文件的解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crash文件结构"><span class="nav-number">1.1.</span> <span class="nav-text">Crash文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process_Information(进程信息)"><span class="nav-number">1.1.1.</span> <span class="nav-text">Process Information(进程信息)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic_Information"><span class="nav-number">1.1.2.</span> <span class="nav-text">Basic Information</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception（非常重要）"><span class="nav-number">1.1.3.</span> <span class="nav-text">Exception（非常重要）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread_Backtrace"><span class="nav-number">1.1.4.</span> <span class="nav-text">Thread Backtrace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread_State"><span class="nav-number">1.1.5.</span> <span class="nav-text">Thread State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary_Images"><span class="nav-number">1.1.6.</span> <span class="nav-text">Binary Images</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的Crash类型"><span class="nav-number">1.2.</span> <span class="nav-text">常见的Crash类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Watchdog_timeout"><span class="nav-number">1.2.1.</span> <span class="nav-text">Watchdog timeout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User_force-quit"><span class="nav-number">1.2.2.</span> <span class="nav-text">User force-quit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Low_Memory_termination"><span class="nav-number">1.2.3.</span> <span class="nav-text">Low Memory termination</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crash_due_to_bugs"><span class="nav-number">1.2.4.</span> <span class="nav-text">Crash due to bugs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的Exception_Type_&_Exception_Code"><span class="nav-number">1.3.</span> <span class="nav-text">常见的Exception Type & Exception Code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception_Type"><span class="nav-number">1.3.1.</span> <span class="nav-text">Exception Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception_Code"><span class="nav-number">1.3.2.</span> <span class="nav-text">Exception Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取Crash的途径"><span class="nav-number">1.4.</span> <span class="nav-text">获取Crash的途径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本机"><span class="nav-number">1.4.1.</span> <span class="nav-text">本机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#itunes_connect"><span class="nav-number">1.4.2.</span> <span class="nav-text">itunes connect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三方的Crash收集系统"><span class="nav-number">1.4.3.</span> <span class="nav-text">第三方的Crash收集系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">1.5.</span> <span class="nav-text">附录</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/15/iOS-Crash文件的解析/';
+      var disqus_title = 'iOS Crash文件的解析';
+      var disqus_url = 'http://ytlvy.com/2015/07/15/iOS-Crash文件的解析/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS,Pixel,Point,UI," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS 绘制1像素的线 // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS 绘制1像素的线
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-绘制1像素的线/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-绘制1像素的线/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="iOS_绘制1像素的线">iOS 绘制1像素的线</h1><h2 id="Point_Vs_Pixel">Point Vs Pixel</h2><p>iOS中当我们使用Quartz，UIKit，CoreAnimation等框架时，所有的坐标系统采用Point来衡量。系统在实际渲染到设置时会帮助我们处理Point到Pixel的转换。 这样做的好处隔离变化，即我们在布局的事后不需要关注当前设备是否为Retina，直接按照一套坐标系统来布局即可。</p>
+<p>实际使用中我们需要牢记下面这一点:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">One point <span class="keyword">does</span> <span class="keyword">not</span> necessarily correspond <span class="keyword">to</span> one physical pixel.</span><br></pre></td></tr></table></figure>
+<p>1 Point的线在非Retina屏幕则是一个像素，在Retina屏幕上则可能是2个或者3个，取决于系统设备的DPI。</p>
+<p>iOS系统中，UIScreen，UIView，UIImage，CALayer类都提供相关属性来获取scale factor。 原生的绘制技术天然的帮我们处理了scale factor，例如在drawRect:方法中，UIKit自动的根据当前运行的设备设置了正切的scale factor。所以我们在drawRect: 方法中绘制的任何内容都会被自动缩放到设备的物理屏幕上。</p>
+<p>基于以上信息可以看出，我们大部分情况下都不需要去关注pixel，然而存在部分情况需要考虑像素的转化。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如画1个像素的分割线</span><br></pre></td></tr></table></figure>
+<p>看到这个问题你的第一想法可能是，直接根据当前屏幕的缩放因子计算出1 像素线对应的Point，然后设置线宽即可。 代码如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.0f</span> / [UIScreen mainScreen].scale</span><br></pre></td></tr></table></figure>
+<p>表面上看着一切正常了，但是通过实际的设备测试你会发现渲染出来的线宽并不是1个像素。</p>
+<blockquote>
+<p>Why?</p>
+</blockquote>
+<p>为了获得良好的视觉效果，绘图系统通常都会采用一个叫”antialiasing(反锯齿)”的技术，iOS也不例外。 显示屏幕有很多小的显示单元组成，可以接单的理解为一个单元就代表一个像素。如果要画一条黑线，条线刚好落在了一列或者一行显示显示单元之内，将会渲染出标准的一个像素的黑线。 但如果线落在了两个行或列的中间时，那么会得到一条”失真”的线，其实是两个像素宽的灰线。</p>
+<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250827276118632.png" alt=""></p>
+<blockquote>
+<p>Positions defined by whole-numbered points fall at the midpoint between pixels. For example, if you draw a one-pixel-wide vertical line from (1.0, 1.0) to (1.0, 10.0), you get a fuzzy grey line. If you draw a two-pixel-wide line, you get a solid black line because it fully covers two pixels (one on either side of the specified point). As a rule, lines that are an odd number of physical pixels wide appear softer than lines with widths measured in even numbers of physical pixels unless you adjust their position to make them cover pixels fully.</p>
+</blockquote>
+<p>官方解释如上，简单翻译一下:</p>
+<blockquote>
+<p>规定：奇数像素宽度的线在渲染的时候将会表现为柔和的宽度扩展到向上的整数宽度的线，除非你手动的调整线的位置，使线刚好落在一行或列的显示单元内。</p>
+</blockquote>
+<p>如何对齐呢？</p>
+<blockquote>
+<p>在非高清屏上，一个Point对应一个像素。为了防止”antialiasing”导致的奇数像素的线渲染时出现失真，你需要设置偏移0.5 Point。 在高清屏幕上，要绘制一个像素的线，需要设置线宽为0.5个Point，同事设置偏移为0.25 Point。 如果线宽为偶数Point的话，则不要去设置偏移，否则线条也会失真。</p>
+</blockquote>
+<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250824372995931.png" alt=""></p>
+<p>看了上述一通解释，我们了解了1像素宽的线条失真的原因，及解决办法。 至此问题貌似都解决了？再想想为什么在非Retina和Retina屏幕上调整位置时值不一样，前者为0.5Point，后者为0.25Point，那么scale为3的6 Plus设备又该调整多少呢？ 要回答这个问题，我们需要理解调整多少依旧什么原则。</p>
+<p><img src="http://images0.cnblogs.com/blog2015/302680/201506/251942350498849.png" alt=""></p>
+<p>再回过头来看看这上面的图片，图片中每一格子代表一个像素，而顶部标记的则代码我们布局时的坐标。 可以看到左边的非Retina屏幕，我们要在(3,0)这个位置画一条一个像素宽的竖线时，由于渲染的最小单位是像素，而(3,0)这个坐标恰好位于两个像素中间，此时系统会对坐标3左右两列的像素对填充，为了不至于线显得太宽，为对线的颜色淡化。那么根据上述信息我们可以得出，如果要画出一个像素宽的线，就得把绘制的坐标移动到(2.5, 0)或者(3.5,0)这个位置，这样系统渲染的时候刚好可以填充一列像素，也就是标准的一个像素的线。</p>
+<p>基于上面的分析，我们可以得出”Scale为3的6 Plus”设备如果要绘制1个像素宽的线条时，位置调整也应该是0.5像素，对应该的Point计算如下:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">1.0f</span> / <span class="list">[<span class="keyword">UIScreen</span> mainScreen].scale) / <span class="number">2</span><span class="comment">;</span></span></span></span><br></pre></td></tr></table></figure>
+<p>奉上一个画一像素线的一个宏:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_WIDTH           (<span class="number">1</span> / [UIScreen mainScreen].scale)</span><br><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_ADJUST_OFFSET   ((<span class="number">1</span> / [UIScreen mainScreen].scale) / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>使用代码如下:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> xPos = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">UIView</span> *view = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGrect</span>(x - SINGLE_LINE_ADJUST_OFFSET, <span class="number">0</span>, SINGLE_LINE_WIDTH, <span class="number">100</span>)];</span><br></pre></td></tr></table></figure>
+<h2 id="正确的绘制Grid线条">正确的绘制Grid线条</h2><p>贴上一个写的GridView的代码，代码中对Grid线条的奇数像素做了偏移，防止出现线条模糊的情况。</p>
+<p>SvGridView.h</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.h</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SvGridView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格间距，默认30</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridSpacing;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格线宽度，默认为1 pixel (1.0f / [UIScreen mainScreen].scale)</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridLineWidth;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格颜色，默认蓝色</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span>   *gridColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>SvGridView.m</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.m</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">"SvGridView.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_WIDTH           (1 / [UIScreen mainScreen].scale)</span></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_ADJUST_OFFSET   ((1 / [UIScreen mainScreen].scale) / 2)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SvGridView</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@synthesize</span> gridColor = _gridColor;</span><br><span class="line"><span class="keyword">@synthesize</span> gridSpacing = _gridSpacing;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line"></span><br><span class="line">        _gridColor = [<span class="built_in">UIColor</span> blueColor];</span><br><span class="line">        _gridLineWidth = SINGLE_LINE_WIDTH;</span><br><span class="line">        _gridSpacing = <span class="number">30</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridColor:(<span class="built_in">UIColor</span> *)gridColor</span><br><span class="line">&#123;</span><br><span class="line">    _gridColor = gridColor;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridSpacing:(<span class="built_in">CGFloat</span>)gridSpacing</span><br><span class="line">&#123;</span><br><span class="line">    _gridSpacing = gridSpacing;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridLineWidth:(<span class="built_in">CGFloat</span>)gridLineWidth</span><br><span class="line">&#123;</span><br><span class="line">    _gridLineWidth = gridLineWidth;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Only override drawRect: if you perform custom drawing.</span></span><br><span class="line"><span class="comment">// An empty implementation adversely affects performance during animation.</span></span><br><span class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextBeginPath</span>(context);</span><br><span class="line">    <span class="built_in">CGFloat</span> lineMargin = <span class="keyword">self</span><span class="variable">.gridSpacing</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  https://developer.apple.com/library/ios/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GraphicsDrawingOverview/GraphicsDrawingOverview.html</span><br><span class="line">     * 仅当要绘制的线宽为奇数像素时，绘制位置需要调整</span><br><span class="line">     */</span></span><br><span class="line">    <span class="built_in">CGFloat</span> pixelAdjustOffset = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (((<span class="keyword">int</span>)(<span class="keyword">self</span><span class="variable">.gridLineWidth</span> * [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.scale</span>) + <span class="number">1</span>) % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        pixelAdjustOffset = SINGLE_LINE_ADJUST_OFFSET;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGFloat</span> xPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="built_in">CGFloat</span> yPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="keyword">while</span> (xPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, xPos, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, xPos, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">        xPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (yPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, <span class="number">0</span>, yPos);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>, yPos);</span><br><span class="line">        yPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextSetLineWidth</span>(context, <span class="keyword">self</span><span class="variable">.gridLineWidth</span>);</span><br><span class="line">    <span class="built_in">CGContextSetStrokeColorWithColor</span>(context, <span class="keyword">self</span><span class="variable">.gridColor</span><span class="variable">.CGColor</span>);</span><br><span class="line">    <span class="built_in">CGContextStrokePath</span>(context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>使用方法如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SvGridView *gridView = [[SvGridView alloc] initWithFrame:self.view.bounds]<span class="comment">;</span></span><br><span class="line">gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight<span class="comment">;</span></span><br><span class="line">gridView.alpha = 0.6<span class="comment">;</span></span><br><span class="line">gridView.gridColor = [UIColor greenColor]<span class="comment">;</span></span><br><span class="line">[self.view addSubview:gridView]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+            <a href="/tags/Pixel/"> #Pixel </a>
+          
+            <a href="/tags/Point/"> #Point </a>
+          
+            <a href="/tags/UI/"> #UI </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/16/Atom/">Atom</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/15/iOS-内存警告/">iOS 内存警告</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS_绘制1像素的线"><span class="nav-number">1.</span> <span class="nav-text">iOS 绘制1像素的线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Point_Vs_Pixel"><span class="nav-number">1.1.</span> <span class="nav-text">Point Vs Pixel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正确的绘制Grid线条"><span class="nav-number">1.2.</span> <span class="nav-text">正确的绘制Grid线条</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/15/iOS-绘制1像素的线/';
+      var disqus_title = 'iOS 绘制1像素的线';
+      var disqus_url = 'http://ytlvy.com/2015/07/15/iOS-绘制1像素的线/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

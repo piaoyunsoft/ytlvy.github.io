@@ -1,0 +1,700 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="arc,dealloc," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> ARC dealloc cxx_destruct // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              ARC dealloc cxx_destruct
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/ARC-dealloc-cxx-destruct/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/ARC-dealloc-cxx-destruct/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/" target="_blank" rel="external">转</a></p>
+<h1 id="ARC下dealloc过程及-cxx_destruct的探究">ARC下dealloc过程及.cxx_destruct的探究</h1><h2 id="我是前言">我是前言</h2><p>这次探索源自于自己一直以来对ARC的一个疑问，在MRC时代，经常写下面的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)dealloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.array</span> = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.string</span> = <span class="literal">nil</span>;</span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">    <span class="comment">// 非Objc对象内存的释放，如CFRelease(...)</span></span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">    [<span class="keyword">super</span> dealloc];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对象析构时将内部其他对象release掉，申请的非Objc对象的内存当然也一并处理掉，最后调用super，继续将父类对象做析构。而现如今到了ARC时代，只剩下了下面的代码：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">dealloc</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">    <span class="comment">// 非Objc对象内存的释放，如CFRelease(...)</span></span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题来了：</p>
+<ol>
+<li>这个对象实例变量（Ivars）的释放去哪儿了？</li>
+<li>没有显示的调用[super dealloc]，上层的析构去哪儿了？</li>
+</ol>
+<h2 id="ARC文档中对dealloc过程的解释">ARC文档中对dealloc过程的解释</h2><p><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#dealloc" target="_blank" rel="external">llvm官方的ARC文档</a> 中对ARC下的dealloc过程做了简单说明，从中还是能找出些有用的信息：</p>
+<blockquote>
+<p>A class may provide a method definition for an instance method named dealloc. This method will be called after the final release of the object but before it is deallocated or any of its instance variables are destroyed. The superclass’s implementation of dealloc will be called automatically when the method returns.</p>
+</blockquote>
+<p>大概意思是：dealloc方法在最后一次release后被调用，但此时实例变量（Ivars）并未释放，父类的dealloc的方法将在子类dealloc方法返回后自动调用</p>
+<blockquote>
+<p>The instance variables for an ARC-compiled class will be destroyed at some point after control enters the dealloc method for the root class of the class. The ordering of the destruction of instance variables is unspecified, both within a single class and between subclasses and superclasses.</p>
+</blockquote>
+<p>理解：ARC下对象的实例变量在根类[NSObject dealloc]中释放（通常root class都是NSObject），变量释放顺序各种不确定（一个类内的不确定，子类和父类间也不确定，也就是说不用care释放顺序）</p>
+<p>所以，不用主调[super dealloc]是因为自动调了，后面再说如何实现的；ARC下实例变量在根类NSObject析构时析构，下面就探究下。</p>
+<hr>
+<h2 id="NSObject的析构过程">NSObject的析构过程</h2><p>通过apple的runtime源码，不难发现NSObject执行<code>dealloc</code>时调用<code>_objc_rootDealloc</code>继而调用<code>object_dispose</code>随后调用<code>objc_destructInstance</code>方法，前几步都是条件判断和简单的跳转，最后的这个函数如下：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">*</span>objc_destructInstance<span class="params">(id obj)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(obj)</span> &#123;</span><br><span class="line">        Class isa_gen = _object_getClass<span class="params">(obj)</span>;</span><br><span class="line">        class_t <span class="built_in">*</span>isa = newcls<span class="params">(isa_gen)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Read all of the flags at once for performance.</span></span><br><span class="line">        bool cxx = hasCxxStructors<span class="params">(isa)</span>;</span><br><span class="line">        bool assoc = <span class="built_in">!</span>UseGC &amp;&amp; _class_instancesHaveAssociatedObjects<span class="params">(isa_gen)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// This order is important.</span></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(cxx)</span> object_cxxDestruct<span class="params">(obj)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(assoc)</span> _object_remove_assocations<span class="params">(obj)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(!UseGC)</span> objc_clear_deallocating<span class="params">(obj)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单明确的干了三件事：</p>
+<ol>
+<li>执行一个叫<code>object_cxxDestruct</code>的东西干了点什么事</li>
+<li>执行<code>_object_remove_assocations</code>去除和这个对象<code>assocate</code>的对象</li>
+<li>执行<code>objc_clear_deallocating</code>，清空引用计数表并清除弱引用表，将所有<code>weak</code>引用指nil（这也就是weak变量能安全置空的所在）</li>
+</ol>
+<p>所以，所探寻的ARC自动释放实例变量的地方就在cxxDestruct这个东西里面没跑了。</p>
+<hr>
+<h2 id="探寻隐藏的-cxx_destruct">探寻隐藏的.cxx_destruct</h2><p>上面找到的名为<code>object_cxxDestruct</code>的方法最终成为下面的调用：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">static void object_cxxDestructFromClass<span class="params">(id obj, Class cls)</span></span><br><span class="line">&#123;</span><br><span class="line">    void <span class="params">(*dtor)</span><span class="params">(id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Call cls's dtor first, then superclasses's dtors.</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> <span class="params">( ; cls != NULL; cls = _class_getSuperclass<span class="params">(cls)</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(!_class_hasCxxStructors<span class="params">(cls)</span>)</span> return; </span><br><span class="line">        dtor = <span class="params">(void<span class="params">(*)</span><span class="params">(id)</span>)</span></span><br><span class="line">            lookupMethodInClassAndLoadCache<span class="params">(cls, SEL_cxx_destruct)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(dtor != <span class="params">(void<span class="params">(*)</span><span class="params">(id)</span>)</span>_objc_msgForward_internal)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="params">(PrintCxxCtors)</span> &#123;</span><br><span class="line">                _objc_inform<span class="params">(<span class="string">"CXX: calling C++ destructors for class %s"</span>, </span><br><span class="line">                             _class_getName<span class="params">(cls)</span>)</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="params">(*dtor)</span><span class="params">(obj)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码也不难理解，沿着继承链逐层向上搜寻SEL_cxx_destruct这个selector，找到函数实现(void (*)(id)(函数指针)并执行。<br>搜索这个selector的声明，发现是名为.cxx_destruct的方法，以点开头的名字，我想和unix的文件一样，是有隐藏属性的</p>
+<p>从<a href="http://my.safaribooksonline.com/book/programming/objective-c/9780132908641/3dot-memory-management/ch03" target="_blank" rel="external">这篇文章</a>中：</p>
+<blockquote>
+<p>ARC actually creates a -.cxx_destruct method to handle freeing instance variables. This method was originally created for calling C++ destructors automatically when an object was destroyed.</p>
+</blockquote>
+<p>和《Effective Objective-C 2.0》中提到的：</p>
+<blockquote>
+<p>When the compiler saw that an object contained C++ objects, it would generate a method called .cxx_destruct. ARC piggybacks on this method and emits the required cleanup code within it.</p>
+</blockquote>
+<p>可以了解到，<code>.cxx_destruct</code>方法原本是为了C++对象析构的，ARC借用了这个方法插入代码实现了自动内存释放的工作</p>
+<h2 id="通过实验找出-cxx_destruct">通过实验找出.cxx_destruct</h2><p>最好的办法还是写个测试代码把这个隐藏的方法找出来，其实在runtime中运行已经没什么隐藏可言了，简单的类结构如下：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">Father </span>: NSObject</span><br><span class="line"><span class="variable">@property</span> (nonatomic, copy) NSString *name;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@interface</span> <span class="attribute">Son </span>: Father</span><br><span class="line"><span class="variable">@property</span> (nonatomic, copy) NSArray *toys;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<p>只有两个简单的属性，找个地方写简单的测试代码：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// before new</span></span><br><span class="line">    Son *son = [Son <span class="keyword">new</span>];</span><br><span class="line">    son.name = @<span class="string">"sark"</span>;</span><br><span class="line">    son.toys = @[@<span class="string">"sunny"</span>, @<span class="string">"xx"</span>];</span><br><span class="line">    <span class="comment">// after new</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gone</span></span><br></pre></td></tr></table></figure>
+<p>主要目的是为了让这个对象走<code>dealloc</code>方法，新建的son对象过了大括号作用域就会释放了，所以在<code>after new</code>这行son对象初始化完成，在<code>gone</code>这行son对象被dealloc</p>
+<p>个人一直喜欢使用<a href="https://github.com/garnett/DLIntrospection" target="_blank" rel="external">NSObject+DLIntrospection</a>这个扩展作为调试工具，可以轻松打出一个类的方法，变量等等。</p>
+<p>将这个扩展引入工程内，在<code>after new</code>处设置一个断点，run，trigger后使用lldb命令用这个扩展输出Son类所有的方法名：</p>
+<p><img src="http://ww3.sinaimg.cn/large/51530583gw1ef27srhw7lj208b05ujrq.jpg" alt=""></p>
+<p>发现了这个<code>.cxx_destruct</code>方法，经过几次试验，发现：</p>
+<ol>
+<li>只有在ARC下这个方法才会出现（试验代码的情况下）</li>
+<li>只有当前类拥有实例变量时（不论是不是用property）这个方法才会出现，且父类的实例变量不会导致子类拥有这个方法</li>
+<li>出现这个方法和变量是否被赋值，赋值成什么没有关系</li>
+</ol>
+<h2 id="使用watchpoint定位内存释放时刻">使用watchpoint定位内存释放时刻</h2><p>依然在after new断点处，输入lldb命令：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchpoint <span class="built_in">set</span> <span class="built_in">variable</span> son<span class="subst">-&gt;</span>_name</span><br></pre></td></tr></table></figure></p>
+<p>将name的变量加入<code>watchpoint</code>，当这个变量被修改时会触发trigger：</p>
+<p><img src="http://ww3.sinaimg.cn/large/51530583gw1ef28rn41lcj20fs03aq3b.jpg" alt=""></p>
+<p>从中可以看出，在这个时刻，<code>_name</code>从0x00006b98变成了0x0，也就是nil，赶紧看下调用栈：</p>
+<p><img src="http://ww1.sinaimg.cn/large/51530583gw1ef2911o40zj20a605yweu.jpg" alt=""></p>
+<p>发现果然跟到了<code>.cxx_destruct</code>方法，而且是在objc_storeStrong的过程中释放</p>
+<h1 id="刨根问底-cxx_destruct">刨根问底.cxx_destruct</h1><p>知道了ARC下对象实例变量的释放过程在<code>.cxx_destruct</code>内完成，但这个函数内部发生了什么，是如何调用<code>objc_storeStrong</code>释放变量的呢？<br>从上面的探究中知道，<code>.cxx_destruct</code>是编译器生成的代码，那它很可能在clang前端编译时完成，这让我联想到clang的Code Generation，因为之前曾经使用<code>clang -rewrite-objc xxx.m</code>时查看过官方文档留下了些印象，于是google：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.cxx_destruct</span> site:clang<span class="class">.llvm</span><span class="class">.org</span></span><br></pre></td></tr></table></figure></p>
+<p>结果发现clang的doxygen文档中<code>CodeGenModule</code>模块正是这部分的实现代码，cxx相关的代码生成部分源码在<br><a href="http://clang.llvm.org/doxygen/CodeGenModule_8cpp-source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CodeGenModule_8cpp-source.html</a><br>位于1827行，删减掉离题部分如下：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// EmitObjCIvarInitializations - Emit information for ivar initialization</span></span><br><span class="line"><span class="comment">/// for an implementation.</span></span><br><span class="line">void CodeGenModule::EmitObjCIvarInitializations<span class="params">(ObjCImplementationDecl *D)</span> </span><br><span class="line">&#123;</span><br><span class="line">    DeclContext<span class="built_in">*</span> DC = const_cast&lt;DeclContext<span class="built_in">*</span>&gt;<span class="params">(dyn_cast&lt;DeclContext&gt;<span class="params">(D)</span>)</span>;</span><br><span class="line">    assert<span class="params">(DC &amp;&amp; <span class="string">"EmitObjCIvarInitializations - null DeclContext"</span>)</span>;</span><br><span class="line">    IdentifierInfo <span class="built_in">*</span>II = &amp;getContext<span class="params">()</span>.Idents.get<span class="params">(<span class="string">".cxx_destruct"</span>)</span>;</span><br><span class="line">    Selector cxxSelector = getContext<span class="params">()</span>.Selectors.getSelector<span class="params">(<span class="number">0</span>, &amp;II)</span>;</span><br><span class="line">    ObjCMethodDecl <span class="built_in">*</span>DTORMethod = ObjCMethodDecl::Create<span class="params">(getContext<span class="params">()</span>, </span><br><span class="line">                                                        D-&gt;getLocation<span class="params">()</span>,</span><br><span class="line">                                                        D-&gt;getLocation<span class="params">()</span>, cxxSelector,</span><br><span class="line">                                                        getContext<span class="params">()</span>.VoidTy, <span class="number">0</span>, </span><br><span class="line">                                                        DC, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>,</span><br><span class="line">                                                        ObjCMethodDecl::Required)</span>;</span><br><span class="line">   D-&gt;addInstanceMethod<span class="params">(DTORMethod)</span>;</span><br><span class="line">   CodeGenFunction<span class="params">(*this)</span>.GenerateObjCCtorDtorMethod<span class="params">(D, DTORMethod, <span class="literal">false</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数大概作用是：获取.<code>cxx_destruct</code>的selector，创建Method，并加入到这个Class的方法列表中，最后一行的调用才是真的创建这个方法的实现。这个方法位于<br><a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a></p>
+<p>1354行，包含了构造和析构的cxx方法，继续跟随<code>.cxx_destruct</code>，最终调用<code>emitCXXDestructMethod</code>函数，代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> emitCXXDestructMethod(CodeGenFunction &amp;<span class="built_in">CGF</span>, Obj<span class="built_in">CImplementationDecl</span> *impl) </span><br><span class="line">&#123;</span><br><span class="line">   CodeGenFunction::RunCleanupsScope scope(<span class="built_in">CGF</span>);</span><br><span class="line"> </span><br><span class="line">   llvm::Value *<span class="keyword">self</span> = <span class="built_in">CGF</span><span class="variable">.LoadObjCSelf</span>();</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">const</span> Obj<span class="built_in">CInterfaceDecl</span> *iface = impl-&gt;getClassInterface();</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">const</span> Obj<span class="built_in">CIvarDecl</span> *ivar = iface-&gt;all_declared_ivar_begin(); ivar; ivar = ivar-&gt;getNextIvar()) </span><br><span class="line">   &#123;</span><br><span class="line">     QualType type = ivar-&gt;getType();</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Check whether the ivar is a destructible type.</span></span><br><span class="line">     QualType::DestructionKind dtorKind = type<span class="variable">.isDestructedType</span>();</span><br><span class="line">     <span class="keyword">if</span> (!dtorKind) <span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">     CodeGenFunction::Destroyer *destroyer = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">     <span class="comment">// Use a call to objc_storeStrong to destroy strong ivars, for the</span></span><br><span class="line">     <span class="comment">// general benefit of the tools.</span></span><br><span class="line">     <span class="keyword">if</span> (dtorKind == QualType::DK_objc_strong_lifetime) &#123;</span><br><span class="line">       destroyer = destroyARCStrongWithStore;</span><br><span class="line"> </span><br><span class="line">     <span class="comment">// Otherwise use the default for the destruction kind.</span></span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       destroyer = <span class="built_in">CGF</span><span class="variable">.getDestroyer</span>(dtorKind);</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     CleanupKind cleanupKind = <span class="built_in">CGF</span><span class="variable">.getCleanupKind</span>(dtorKind);</span><br><span class="line">     <span class="built_in">CGF</span><span class="variable">.EHStack</span><span class="variable">.pushCleanup</span>&lt;DestroyIvar&gt;(cleanupKind, <span class="keyword">self</span>, ivar, destroyer,</span><br><span class="line">                                          cleanupKind &amp; EHCleanup);</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   assert(scope<span class="variable">.requiresCleanups</span>() &amp;&amp; <span class="string">"nothing to do in .cxx_destruct?"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析这段代码以及其中调用后发现：它遍历当前对象所有的实例变量（Ivars)，调用<code>objc_storeStrong</code>，从clang的ARC文档上可以找到<code>objc_storeStrong</code>的示意代码实现如下：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">id <span class="title">objc_storeStrong</span>(<span class="params">id *<span class="keyword">object</span>, id <span class="keyword">value</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">value</span> = [<span class="keyword">value</span> retain];</span><br><span class="line">  id oldValue = *<span class="keyword">object</span>;</span><br><span class="line">  *<span class="keyword">object</span> = <span class="keyword">value</span>;</span><br><span class="line">  [oldValue release];</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>.cxx_destruct</code>进行形如<code>objc_storeStrong(&amp;ivar, null)</code>的调用后，这个实例变量就被release和设置成nil了<br>注：真实的实现可以参考 <a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a> 2078行</p>
+<h2 id="自动调用[super_dealloc]的实现">自动调用[super dealloc]的实现</h2><p>按照上面的思路，自动调用<code>[super dealloc]</code>也一定是CodeGen干的工作了<br>位于 <a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a> 492行<br><code>StartObjCMethod</code>方法中：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="params">(ident-&gt;isStr<span class="params">(<span class="string">"dealloc"</span>)</span>)</span></span><br><span class="line">   EHStack.pushCleanup&lt;FinishARCDealloc&gt;<span class="params">(getARCCleanupKind<span class="params">()</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>上面代码可以得知在调用<code>dealloc</code>方法时被插入了代码，由FinishARCDealloc结构定义：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct <span class="type">FinishARCDealloc</span> : <span class="type">EHScopeStack</span>::<span class="type">Cleanup</span> &#123;</span><br><span class="line">   <span class="type">void</span> <span class="type">Emit</span>(<span class="type">CodeGenFunction</span> &amp;<span class="type">CGF</span>, <span class="type">Flags</span> flags) override &#123;</span><br><span class="line">     <span class="keyword">const</span> <span class="type">ObjCMethodDecl</span> *<span class="keyword">method</span> = <span class="keyword">cast</span>&lt;<span class="type">ObjCMethodDecl</span>&gt;(<span class="type">CGF</span>.<span class="type">CurCodeDecl</span>);</span><br><span class="line"> </span><br><span class="line">     <span class="keyword">const</span> <span class="type">ObjCImplDecl</span> *impl = <span class="keyword">cast</span>&lt;<span class="type">ObjCImplDecl</span>&gt;(<span class="keyword">method</span>-&gt;getDeclContext());</span><br><span class="line">     <span class="keyword">const</span> <span class="type">ObjCInterfaceDecl</span> *iface = impl-&gt;getClassInterface();</span><br><span class="line">     <span class="keyword">if</span> (!iface-&gt;getSuperClass()) <span class="keyword">return</span>;</span><br><span class="line"> </span><br><span class="line">     <span class="type">bool</span> isCategory = isa&lt;<span class="type">ObjCCategoryImplDecl</span>&gt;(impl);</span><br><span class="line"> </span><br><span class="line">     // <span class="type">Call</span> [super dealloc] <span class="keyword">if</span> we have a superclass.</span><br><span class="line">     llvm::<span class="type">Value</span> *self = <span class="type">CGF</span>.<span class="type">LoadObjCSelf</span>();</span><br><span class="line"> </span><br><span class="line">     <span class="type">CallArgList</span> args;</span><br><span class="line">     <span class="type">CGF</span>.<span class="type">CGM</span>.getObjCRuntime().<span class="type">GenerateMessageSendSuper</span>(<span class="type">CGF</span>, <span class="type">ReturnValueSlot</span>(),</span><br><span class="line">                                                       <span class="type">CGF</span>.getContext().<span class="type">VoidTy</span>,</span><br><span class="line">                                                       <span class="keyword">method</span>-&gt;getSelector(),</span><br><span class="line">                                                       iface,</span><br><span class="line">                                                       isCategory,</span><br><span class="line">                                                       self,</span><br><span class="line">                                                       /*<span class="keyword">is</span> class msg*/ <span class="literal">false</span>,</span><br><span class="line">                                                       args,</span><br><span class="line">                                                       <span class="keyword">method</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>上面代码基本上就是向父类转发dealloc的调用，实现了自动调用[super dealloc]方法。</p>
+<h2 id="总结">总结</h2><ol>
+<li>ARC下对象的成员变量于编译器插入的.cxx_desctruct方法自动释放</li>
+<li>ARC下[super dealloc]方法也由编译器自动插入</li>
+<li>所谓编译器插入代码过程需要进一步了解，还不清楚其运作方式</li>
+<li>clang的CodeGen也值得深入研究一下</li>
+</ol>
+<h2 id="References：">References：</h2><p><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html" target="_blank" rel="external">http://clang.llvm.org/docs/AutomaticReferenceCounting.html</a><br><a href="http://my.safaribooksonline.com/book/programming/objective-c/9780132908641/3dot-memory-management/ch03" target="_blank" rel="external">http://my.safaribooksonline.com/book/programming/objective-c/9780132908641/3dot-memory-management/ch03</a><br><a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/arc/"> #arc </a>
+          
+            <a href="/tags/dealloc/"> #dealloc </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/17/iOS-Super-init/">iOS Super init</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/17/ios-attribute-cleanup/">ios attribute cleanup</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ARC下dealloc过程及-cxx_destruct的探究"><span class="nav-number">1.</span> <span class="nav-text">ARC下dealloc过程及.cxx_destruct的探究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#我是前言"><span class="nav-number">1.1.</span> <span class="nav-text">我是前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARC文档中对dealloc过程的解释"><span class="nav-number">1.2.</span> <span class="nav-text">ARC文档中对dealloc过程的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSObject的析构过程"><span class="nav-number">1.3.</span> <span class="nav-text">NSObject的析构过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#探寻隐藏的-cxx_destruct"><span class="nav-number">1.4.</span> <span class="nav-text">探寻隐藏的.cxx_destruct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过实验找出-cxx_destruct"><span class="nav-number">1.5.</span> <span class="nav-text">通过实验找出.cxx_destruct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用watchpoint定位内存释放时刻"><span class="nav-number">1.6.</span> <span class="nav-text">使用watchpoint定位内存释放时刻</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#刨根问底-cxx_destruct"><span class="nav-number">2.</span> <span class="nav-text">刨根问底.cxx_destruct</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动调用[super_dealloc]的实现"><span class="nav-number">2.1.</span> <span class="nav-text">自动调用[super dealloc]的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References："><span class="nav-number">2.3.</span> <span class="nav-text">References：</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/17/ARC-dealloc-cxx-destruct/';
+      var disqus_title = 'ARC dealloc cxx_destruct';
+      var disqus_url = 'http://ytlvy.com/2015/07/17/ARC-dealloc-cxx-destruct/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

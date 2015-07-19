@@ -1,0 +1,687 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Debug," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Debug // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Debug
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/Debug/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/Debug/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="调试">调试</h3><h4 id="DTrace">DTrace</h4><p>You can use <code>DTrace</code> to monitor a running application to see the methods and the classes that are called. You can easily monitor an iOS app running in the Simulator using DTrace on the command line, First you will need to find the PID of the application using ps and then you can run a <code>DTrace</code> probe like the following:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:::entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>where 1234 is the process ID of the app.</p>
+<p>If you are only interested in tracing a single class, UIView for example, you could use:<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -q -n <span class="string">'objc1234</span>:UIView::entry &#123; printf(<span class="string">"%s %s\n"</span>, probemod, probefunc); &#125;'</span><br></pre></td></tr></table></figure></p>
+<p>If you wanted to trace all calls to dealloc on all classes, you would use:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234::-dealloc:entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>Obviously, you could combine these to only see UIView deallocs:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:UIView:-dealloc:entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>If you want to be able to distinguish a specific object of a class you could also print the memory address of the object (self) using the following:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:UIView:-dealloc:entry &#123; printf("%s (0x%p) %s\n", probemod, arg0, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="message_logging_好像不可以了">message logging 好像不可以了</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Turn on message logging</span></span><br><span class="line">instrumentObjcMessageSends(<span class="literal">YES</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert code here...</span></span><br><span class="line"><span class="built_in">NSString</span> *string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"This is just %d cool"</span>, <span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now turn it off again</span></span><br><span class="line">instrumentObjcMessageSends(<span class="literal">NO</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="检测是否为主线程">检测是否为主线程</h4><pre><code>[NSThread isMainThread]
+</code></pre><h4 id="打印引用计数">打印引用计数</h4><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSLog<span class="list">(@<span class="string">"retain count = %d"</span>, _objc_rootRetainCount<span class="list">(<span class="keyword">obj</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">NSLog<span class="list">(@<span class="string">"Retain count is %ld"</span>, CFGetRetainCount<span class="list">(<span class="list">(<span class="keyword">__bridge</span> CFTypeRef)</span>myObject)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h4 id="output_observation_information_for_object">output observation information for object</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">po</span><span class="sqbracket"> [self observationInfo]</span></span><br></pre></td></tr></table></figure>
+<h4 id="lldb_增强">lldb 增强</h4><pre><code>brew install chisel
+
+vim ~/.lldbinit
+command script <span class="keyword">import</span> <span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>chisel<span class="regexp">/1.1.0/</span>libexec/fblldb.py
+</code></pre><h4 id="lldb_命令">lldb 命令</h4><pre><code><span class="function"><span class="title">print</span><span class="params">(p)</span></span>
+po
+call function
+bt   Printing the Stacktrace
+<span class="function"><span class="title">expr</span><span class="params">(e)</span></span> todo<span class="class">.title</span> = @<span class="string">"Changed"</span>
+</code></pre><h4 id="lldb_增强命令">lldb 增强命令</h4><pre><code>pviews  
+    <span class="type">Print</span> the recursive view description <span class="keyword">for</span> the key window.    <span class="type">Yes</span> <span class="type">Yes</span>
+pvc
+    <span class="type">Print</span> the recursive view controller description <span class="keyword">for</span> the key window. <span class="type">Yes</span> <span class="type">No</span>
+visualize
+    <span class="type">Open</span> a <span class="type">UIImage</span>, <span class="type">CGImageRef</span>, <span class="type">UIView</span>, <span class="keyword">or</span> <span class="type">CALayer</span> <span class="keyword">in</span> <span class="type">Preview</span>.app on your <span class="type">Mac</span>.  <span class="type">Yes</span> <span class="type">No</span>
+fv  
+    <span class="type">Find</span> a view <span class="keyword">in</span> the hierarchy whose class name matches the provided regex.   <span class="type">Yes</span> <span class="type">No</span>
+fvc
+    <span class="type">Find</span> a view controller <span class="keyword">in</span> the hierarchy whose class name matches the provided regex.    <span class="type">Yes</span> <span class="type">No</span>
+show/hide
+    <span class="type">Show</span> <span class="keyword">or</span> hide the given view <span class="keyword">or</span> layer. <span class="type">You</span> don't even have to <span class="keyword">continue</span> the process to see the changes!   <span class="type">Yes</span> <span class="type">Yes</span>
+mask/unmask
+    <span class="type">Overlay</span> a view <span class="keyword">or</span> layer <span class="keyword">with</span> a transparent rectangle to visualize where it <span class="keyword">is</span>.  <span class="type">Yes</span> <span class="type">No</span>
+border/unborder
+    <span class="type">Add</span> a border to a view <span class="keyword">or</span> layer to visualize where it <span class="keyword">is</span>.   <span class="type">Yes</span> <span class="type">Yes</span>
+caflush
+    <span class="type">Flush</span> the render server (equivalent to a <span class="string">"repaint"</span> <span class="keyword">if</span> no animations are <span class="keyword">in</span>-flight).)    <span class="type">Yes</span> <span class="type">Yes</span>
+bmessage
+    <span class="type">Set</span> a symbolic breakpoint on the <span class="keyword">method</span> <span class="keyword">of</span> a class <span class="keyword">or</span> the <span class="keyword">method</span> <span class="keyword">of</span> an instance <span class="keyword">without</span> worrying which class <span class="keyword">in</span> the hierarchy actually implements the <span class="keyword">method</span>.   <span class="type">Yes</span> <span class="type">Yes</span>
+wivar
+    <span class="type">Set</span> a watchpoint on an instance variable <span class="keyword">of</span> an <span class="keyword">object</span>.  <span class="type">Yes</span> <span class="type">Yes</span>
+presponder  
+    <span class="type">Print</span> the responder chain starting <span class="keyword">from</span> the given <span class="keyword">object</span>.   <span class="type">Yes</span> <span class="type">Ye</span>
+</code></pre><h4 id="show_frame">show frame</h4><pre><code><span class="tag">p</span> (CGRect)[uiTextFieldObj frame]
+<span class="tag">p</span> self<span class="class">.view</span><span class="class">.layer</span><span class="class">.frame</span>
+</code></pre><h4 id="how_view_hierarchy-">how view hierarchy.</h4><pre><code><span class="id">#ifdef</span> <span class="tag">DEBUG</span>
+  <span class="tag">NSLog</span>(@<span class="string">"Cell recursive description:\n\n%@\n\n"</span>, [cell <span class="attribute">performSelector</span>:<span class="variable">@selector</span>(recursiveDescription)]);
+<span class="id">#endif</span>
+</code></pre><h5 id="显示所有视图">显示所有视图</h5><pre><code>po <span class="comment">[<span class="comment">[UIWindow keyWindow]</span> recursiveDescription]</span>
+</code></pre><h5 id="IOS8_显示单个视图">IOS8 显示单个视图</h5><pre><code>po <span class="comment">[<span class="comment">[<span class="comment">[UIWindow keyWindow]</span> rootViewController]</span> _printHierarchy]</span>
+</code></pre><h5 id="searchbar_视图">searchbar 视图</h5><pre><code>po <span class="attr_selector">[searchbar recursiveDescription]</span> <span class="comment">//查看索引树</span>
+</code></pre><h4 id="LOG">LOG</h4><pre><code><span class="preprocessor">#ifdef DEBUG</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> ddLogLevel = LOG_LEVEL_VERBOSE;
+<span class="preprocessor">#else</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> ddLogLevel = LOG_LEVEL_OFF;
+<span class="preprocessor">#endif</span>
+
+<span class="comment">// 实例化 lumberjack</span>
+[DDLog addLogger:[DDTTYLogger sharedInstance]];
+<span class="comment">// 允许颜色</span>
+[[DDTTYLogger sharedInstance] setColorsEnabled:<span class="literal">YES</span>];
+
+<span class="comment">//lumberjack提供了四种Log方法</span>
+DDLogError(<span class="string">@"错误信息"</span>); <span class="comment">// 红色</span>
+DDLogWarn(<span class="string">@"警告"</span>); <span class="comment">// 橙色</span>
+DDLogInfo(<span class="string">@"提示信息"</span>); <span class="comment">// 默认是黑色</span>
+DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment">// 默认是黑色</span>
+
+<span class="comment">//如果要修改Log输出的颜色可以使用如下代码</span>
+[[DDTTYLogger sharedInstance] setForegroundColor:[<span class="built_in">UIColor</span> blueColor]
+                                backgroundColor:<span class="literal">nil</span>
+                                        forFlag:LOG_FLAG_INFO];
+</code></pre><h4 id="调试的技巧">调试的技巧</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>) buttonPressed :(<span class="built_in">UIButton</span> *)button</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Stack trace: %@"</span>, [<span class="built_in">NSThread</span> callStackSymbols]);</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Current selector: %@"</span>, <span class="built_in">NSStringFromSelector</span>(_cmd));  </span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Object class: %@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Filename: %@"</span>, [[<span class="built_in">NSString</span> stringWithUTF8String:__FILE__] lastPathComponent]);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Debug/"> #Debug </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/17/iOS-interface-dig/">objc@interface的设计哲学与设计技巧</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/16/LLDB/">LLDB</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#调试"><span class="nav-number">1.</span> <span class="nav-text">调试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DTrace"><span class="nav-number">1.1.</span> <span class="nav-text">DTrace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#message_logging_好像不可以了"><span class="nav-number">1.2.</span> <span class="nav-text">message logging 好像不可以了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检测是否为主线程"><span class="nav-number">1.3.</span> <span class="nav-text">检测是否为主线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打印引用计数"><span class="nav-number">1.4.</span> <span class="nav-text">打印引用计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#output_observation_information_for_object"><span class="nav-number">1.5.</span> <span class="nav-text">output observation information for object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lldb_增强"><span class="nav-number">1.6.</span> <span class="nav-text">lldb 增强</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lldb_命令"><span class="nav-number">1.7.</span> <span class="nav-text">lldb 命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lldb_增强命令"><span class="nav-number">1.8.</span> <span class="nav-text">lldb 增强命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#show_frame"><span class="nav-number">1.9.</span> <span class="nav-text">show frame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#how_view_hierarchy-"><span class="nav-number">1.10.</span> <span class="nav-text">how view hierarchy.</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#显示所有视图"><span class="nav-number">1.10.1.</span> <span class="nav-text">显示所有视图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOS8_显示单个视图"><span class="nav-number">1.10.2.</span> <span class="nav-text">IOS8 显示单个视图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#searchbar_视图"><span class="nav-number">1.10.3.</span> <span class="nav-text">searchbar 视图</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LOG"><span class="nav-number">1.11.</span> <span class="nav-text">LOG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调试的技巧"><span class="nav-number">1.12.</span> <span class="nav-text">调试的技巧</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/16/Debug/';
+      var disqus_title = 'Debug';
+      var disqus_url = 'http://ytlvy.com/2015/07/16/Debug/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="CoreText," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS CoreText Advance // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS CoreText Advance
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-19
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/19/iOS-CoreText-Advance/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/19/iOS-CoreText-Advance/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="版权说明">版权说明</h2><p>原创文章，转载请保留以下信息：</p>
+<p>本文节选自我的图书：《iOS 开发进阶 》。<br>本文涉及的 Demo 工程在这里：<a href="https://github.com/tangqiaoboy/iOS-Pro。" target="_blank" rel="external">https://github.com/tangqiaoboy/iOS-Pro。</a><br>扫码关注我的「iOS 开发」微信公众帐号：<br><img src="http://blog.devtang.com/images/weixin-qr.jpg" alt=""></p>
+<hr>
+<h2 id="基于_CoreText_的排版引擎：进阶">基于 CoreText 的排版引擎：进阶</h2><h3 id="本章前言">本章前言</h3><p>在上一篇《基于 CoreText 的排版引擎：基础》中，我们学会了排版的基础知识，现在我们来增加复杂性，让我们的排版引擎支持图片和链接的点击。</p>
+<h3 id="支持图文混排的排版引擎">支持图文混排的排版引擎</h3><h4 id="改造模版文件">改造模版文件</h4><p>下面我们来进一步改造，让排版引擎支持对于图片的排版。在上一小节中，我们在设置模版文件的时候，就专门在模板文件里面留了一个名为<code>type</code>的字段，用于表示内容的类型。之前的<code>type</code>的值都是txt，这次，我们增加一个值为<code>img</code>的值，用于表示图片。</p>
+<p>我们将上一节的<code>content.json</code>文件修改为如下内容，增加了 2 个<code>type</code>值为<code>img</code>的配置项。由于是图片的配置项，所以我们不需要设置颜色，字号这些图片不具有的属性，但是，我们另外增加了 3 个图片的配置属性：</p>
+<ol>
+<li>一个名为width的属性，用于设置图片显示的宽度。</li>
+<li>一个名为height的属性，用于设置图片显示的高度。</li>
+<li>一个名为name的属性，用于设置图片的资源名。</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[ &#123;</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"img"</span></span>,</span><br><span class="line">    "<span class="attribute">width</span>" : <span class="value"><span class="number">200</span></span>,</span><br><span class="line">    "<span class="attribute">height</span>" : <span class="value"><span class="number">108</span></span>,</span><br><span class="line">    "<span class="attribute">name</span>" : <span class="value"><span class="string">"coretext-image-1.jpg"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"blue"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 更进一步地，实际工作中，我们更希望通过一个排版文件，来设置需要排版的文字的 "</span></span>,</span><br><span class="line">    "<span class="attribute">size</span>" : <span class="value"><span class="number">16</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"red"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 内容、颜色、字体 "</span></span>,</span><br><span class="line">    "<span class="attribute">size</span>" : <span class="value"><span class="number">22</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"black"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 大小等信息。\n"</span></span>,</span><br><span class="line">    "<span class="attribute">size</span>" : <span class="value"><span class="number">16</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"img"</span></span>,</span><br><span class="line">    "<span class="attribute">width</span>" : <span class="value"><span class="number">200</span></span>,</span><br><span class="line">    "<span class="attribute">height</span>" : <span class="value"><span class="number">130</span></span>,</span><br><span class="line">    "<span class="attribute">name</span>" : <span class="value"><span class="string">"coretext-image-2.jpg"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"default"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 我在开发猿题库应用时，自己定义了一个基于 UBB 的排版模版，但是实现该排版文件的解析器要花费大量的篇幅，考虑到这并不是本章的重点，所以我们以一个较简单的排版文件来讲解其思想。"</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>按理说，图片本身的内容信息中，是包含宽度和高度信息的，为什么我们要在这里指定图片的宽高呢？这主要是因为，在真实的开发中，应用的模版和图片通常是通过服务器获取的，模版是纯文本的内容，获取速度比图片快很多，而图片不但获取速度慢，而且为了省流量，通常的做法是直到需要显示图片的时候，再加载图片内容。</p>
+<p>如果我们不将图片的宽度和高度信息设置在模板里面，那么 CoreText 在排版的时候就无法知道绘制所需要的高度，我们就无法设置<code>CoreTextData</code>类中的<code>height</code>信息，没有高度信息，就会对 <code>UITableView</code> 一类的控件排版造成影响。所以，除非你的应用图片能够保证在绘制前都能全部在本地，否则就应该另外提前提供图片宽度和高度信息。</p>
+<p>在完成模板文件修改后，我们选取两张测试用的图片，分别将其命名为<code>coretext-image-1.jpg</code>和<code>coretext-image-2.jpg</code>（和模板中的值一致），将其拖动增加到工程中。向 Xcode 工程增加图片资源是基础知识，在此就不详细介绍过程了。</p>
+<h4 id="CTLine_与_CTRun">CTLine 与 CTRun</h4><p>接下来我们需要改造的是<code>CTFrameParser</code>类，让解析模板文件的方法支持type为img的配置。</p>
+<p>在改造前，我们先来了解一下<code>CTFrame</code>内部的组成。通过之前的例子，我们可以看到，我们首先通过<code>NSAttributeString</code>和配置信息创建 <code>CTFrameSetter</code>， 然后，再通过<code>CTFrameSetter</code>来创建<code>CTFrame</code>。</p>
+<p>在<code>CTFrame</code>内部，是由多个<code>CTLine</code>来组成的，每个<code>CTLine</code>代表一行，每个<code>CTLine</code>又是由多个<code>CTRun</code>来组成，每个<code>CTRun</code>代表一组显示风格一致的文本。我们不用手工管理<code>CTLine</code>和<code>CTRun</code>的创建过程。</p>
+<p>下图是一个<code>CTLine</code>和<code>CTRun</code>的示意图，可以看到，第三行的<code>CTLine</code>是由 2 个<code>CTRun</code>构成的，第一个<code>CTRun</code>为红色大字号的左边部分，第二个<code>CTRun</code>为右边字体较小的部分。</p>
+<p><img src="http://tangqiao.b0.upaiyun.com/coretext/coretext-ctline.jpg" alt=""></p>
+<p>虽然我们不用管理<code>CTRun</code>的创建过程，但是我们可以设置某一个具体的<code>CTRun</code>的<code>CTRunDelegate</code>来指定该文本在绘制时的高度、宽度、排列对齐方式等信息。</p>
+<p>对于图片的排版，其实 <code>CoreText</code>本质上不是直接支持的，但是，我们可以在要显示文本的地方，用一个特殊的空白字符代替，同时设置该字体的<code>CTRunDelegate</code>信息为要显示的图片的宽度和高度信息，这样最后生成的<code>CTFrame</code>实例，就会在绘制时将图片的位置预留出来。</p>
+<p>因为我们的<code>CTDisplayView</code>的绘制代码是在<code>drawRect</code>里面的，所以我们可以方便地把需要绘制的图片，用<code>CGContextDrawImage</code>方法直接绘制出来就可以了。</p>
+<h4 id="改造模版解析类">改造模版解析类</h4><p>在了解了以上原理后，我们就可以开始进行改造了。</p>
+<p>我们需要做的工作包括：</p>
+<ol>
+<li>改造CTFrameParser的parseTemplateFile:(NSString <em>)path config:(CTFrameParserConfig</em>)config;方法，使其支持对type为img的节点解析。并且对type为img的节点，设置其CTRunDelegate信息，使其在绘制时，为图片预留相应的空白位置。</li>
+<li>改造CoreTextData类，增加图片相关的信息，并且增加计算图片绘制区域的逻辑。</li>
+<li>改造CTDisplayView类，增加绘制图片相关的逻辑。</li>
+</ol>
+<p>首先介绍对于<code>CTFrameParser</code>的改造：</p>
+<p>我们修改了<code>parseTemplateFile</code>方法，增加了一个名为<code>imageArray</code>的参数来保存解析时的图片信息。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (CoreTextData *)<span class="string">parseTemplateFile:</span>(NSString *)path <span class="string">config:</span>(CTFrameParserConfig*)config &#123;</span><br><span class="line">    NSMutableArray *imageArray = [NSMutableArray array];</span><br><span class="line">    NSAttributedString *content = [self <span class="string">loadTemplateFile:</span>path <span class="string">config:</span>config <span class="string">imageArray:</span>imageArray];</span><br><span class="line">    CoreTextData *data = [self <span class="string">parseAttributedContent:</span>content <span class="string">config:</span>config];</span><br><span class="line">    data.imageArray = imageArray;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着我们修改<code>loadTemplateFile</code>方法，增加了对于type是img的节点处理逻辑，该逻辑主要做 2 件事情：</p>
+<ol>
+<li>保存当前图片节点信息到imageArray变量中</li>
+<li>新建一个空白的占位符。</li>
+</ol>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> (<span class="type">NSAttributedString</span> *)loadTemplateFile:(<span class="type">NSString</span> *)path</span><br><span class="line">                                  config:(<span class="type">CTFrameParserConfig</span>*)config</span><br><span class="line">                              imageArray:(<span class="type">NSMutableArray</span> *)imageArray &#123;</span><br><span class="line">    <span class="type">NSData</span> *data = [<span class="type">NSData</span> dataWithContentsOfFile:path];</span><br><span class="line">    <span class="type">NSMutableAttributedString</span> *<span class="literal">result</span> = [[<span class="type">NSMutableAttributedString</span> alloc] init];</span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        <span class="type">NSArray</span> *<span class="type">array</span> = [<span class="type">NSJSONSerialization</span> <span class="type">JSONObjectWithData</span>:data</span><br><span class="line">                             options:<span class="type">NSJSONReadingAllowFragments</span></span><br><span class="line">                               error:<span class="keyword">nil</span>];</span><br><span class="line">        <span class="keyword">if</span> ([<span class="type">array</span> isKindOfClass:[<span class="type">NSArray</span> class]]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">NSDictionary</span> *dict <span class="keyword">in</span> <span class="type">array</span>) &#123;</span><br><span class="line">                <span class="type">NSString</span> *<span class="keyword">type</span> = dict[@<span class="string">"type"</span>];</span><br><span class="line">                <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"txt"</span>]) &#123;</span><br><span class="line">                    <span class="type">NSAttributedString</span> *<span class="keyword">as</span> =</span><br><span class="line">                        [self parseAttributedContentFromNSDictionary:dict</span><br><span class="line">                                                              config:config];</span><br><span class="line">                    [<span class="literal">result</span> appendAttributedString:<span class="keyword">as</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"img"</span>]) &#123;</span><br><span class="line">                    // 创建 <span class="type">CoreTextImageData</span></span><br><span class="line">                    <span class="type">CoreTextImageData</span> *imageData = [[<span class="type">CoreTextImageData</span> alloc] init];</span><br><span class="line">                    imageData.name = dict[@<span class="string">"name"</span>];</span><br><span class="line">                    imageData.position = [<span class="literal">result</span> length];</span><br><span class="line">                    [imageArray addObject:imageData];</span><br><span class="line">                    // 创建空白占位符，并且设置它的 <span class="type">CTRunDelegate</span> 信息</span><br><span class="line">                    <span class="type">NSAttributedString</span> *<span class="keyword">as</span> = [self parseImageDataFromNSDictionary:dict config:config];</span><br><span class="line">                    [<span class="literal">result</span> appendAttributedString:<span class="keyword">as</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后我们新建一个最关键的方法：<code>parseImageDataFromNSDictionary</code>，生成图片空白的占位符，并且设置其<code>CTRunDelegate</code>信息。其代码如下：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="type">CGFloat</span> ascentCallback(<span class="type">void</span> *<span class="keyword">ref</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [(<span class="type">NSNumber</span>*)[(__bridge <span class="type">NSDictionary</span>*)<span class="keyword">ref</span> objectForKey:@<span class="string">"height"</span>] floatValue];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="type">CGFloat</span> descentCallback(<span class="type">void</span> *<span class="keyword">ref</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="type">CGFloat</span> widthCallback(<span class="type">void</span>* <span class="keyword">ref</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [(<span class="type">NSNumber</span>*)[(__bridge <span class="type">NSDictionary</span>*)<span class="keyword">ref</span> objectForKey:@<span class="string">"width"</span>] floatValue];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="type">NSAttributedString</span> *)parseImageDataFromNSDictionary:(<span class="type">NSDictionary</span> *)dict</span><br><span class="line">                                                config:(<span class="type">CTFrameParserConfig</span>*)config &#123;</span><br><span class="line">    <span class="type">CTRunDelegateCallbacks</span> callbacks;</span><br><span class="line">    memset(&amp;callbacks, <span class="number">0</span>, sizeof(<span class="type">CTRunDelegateCallbacks</span>));</span><br><span class="line">    callbacks.version = kCTRunDelegateVersion1;</span><br><span class="line">    callbacks.getAscent = ascentCallback;</span><br><span class="line">    callbacks.getDescent = descentCallback;</span><br><span class="line">    callbacks.getWidth = widthCallback;</span><br><span class="line">    <span class="type">CTRunDelegateRef</span> delegate = <span class="type">CTRunDelegateCreate</span>(&amp;callbacks, (__bridge <span class="type">void</span> *)(dict));</span><br><span class="line"></span><br><span class="line">    // 使用 <span class="number">0xFFFC</span> 作为空白的占位符</span><br><span class="line">    unichar objectReplacementChar = <span class="number">0xFFFC</span>;</span><br><span class="line">    <span class="type">NSString</span> * content = [<span class="type">NSString</span> stringWithCharacters:&amp;objectReplacementChar length:<span class="number">1</span>];</span><br><span class="line">    <span class="type">NSDictionary</span> * attributes = [self attributesWithConfig:config];</span><br><span class="line">    <span class="type">NSMutableAttributedString</span> * space =</span><br><span class="line">       [[<span class="type">NSMutableAttributedString</span> alloc] initWithString:content</span><br><span class="line">                                              attributes:attributes];</span><br><span class="line">    <span class="type">CFAttributedStringSetAttribute</span>((<span class="type">CFMutableAttributedStringRef</span>)space,</span><br><span class="line">              <span class="type">CFRangeMake</span>(<span class="number">0</span>, <span class="number">1</span>), kCTRunDelegateAttributeName, delegate);</span><br><span class="line">    <span class="type">CFRelease</span>(delegate);</span><br><span class="line">    <span class="keyword">return</span> space;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着我们对<code>CoreTextData</code>进行改造，增加了<code>imageArray</code>成员变量，用于保存图片绘制时所需的信息。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"CoreTextImageData.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CoreTextData</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) CTFrameRef ctFrame;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> height;</span><br><span class="line"><span class="comment">// 新增加的成员</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSArray</span> * imageArray;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>在设置<code>imageArray</code>成员时，我们还会调一个新创建的fillImagePosition方法，用于找到每张图片在绘制时的位置。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setImageArray:(<span class="built_in">NSArray</span> *)imageArray &#123;</span><br><span class="line">    _imageArray = imageArray;</span><br><span class="line">    [<span class="keyword">self</span> fillImagePosition];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)fillImagePosition &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.imageArray</span><span class="variable">.count</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSArray</span> *lines = (<span class="built_in">NSArray</span> *)CTFrameGetLines(<span class="keyword">self</span><span class="variable">.ctFrame</span>);</span><br><span class="line">    <span class="keyword">int</span> lineCount = [lines count];</span><br><span class="line">    <span class="built_in">CGPoint</span> lineOrigins[lineCount];</span><br><span class="line">    CTFrameGetLineOrigins(<span class="keyword">self</span><span class="variable">.ctFrame</span>, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), lineOrigins);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> imgIndex = <span class="number">0</span>;</span><br><span class="line">    CoreTextImageData * imageData = <span class="keyword">self</span><span class="variable">.imageArray</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lineCount; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (imageData == <span class="literal">nil</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        CTLineRef line = (__bridge CTLineRef)lines[i];</span><br><span class="line">        <span class="built_in">NSArray</span> * runObjArray = (<span class="built_in">NSArray</span> *)CTLineGetGlyphRuns(line);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">id</span> runObj <span class="keyword">in</span> runObjArray) &#123;</span><br><span class="line">            CTRunRef run = (__bridge CTRunRef)runObj;</span><br><span class="line">            <span class="built_in">NSDictionary</span> *runAttributes = (<span class="built_in">NSDictionary</span> *)CTRunGetAttributes(run);</span><br><span class="line">            CTRunDelegateRef delegate = (__bridge CTRunDelegateRef)[runAttributes valueForKey:(<span class="keyword">id</span>)kCTRunDelegateAttributeName];</span><br><span class="line">            <span class="keyword">if</span> (delegate == <span class="literal">nil</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">NSDictionary</span> * metaDic = CTRunDelegateGetRefCon(delegate);</span><br><span class="line">            <span class="keyword">if</span> (![metaDic isKindOfClass:[<span class="built_in">NSDictionary</span> class]]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGRect</span> runBounds;</span><br><span class="line">            <span class="built_in">CGFloat</span> ascent;</span><br><span class="line">            <span class="built_in">CGFloat</span> descent;</span><br><span class="line">            runBounds<span class="variable">.size</span><span class="variable">.width</span> = CTRunGetTypographicBounds(run, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;ascent, &amp;descent, <span class="literal">NULL</span>);</span><br><span class="line">            runBounds<span class="variable">.size</span><span class="variable">.height</span> = ascent + descent;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGFloat</span> xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run)<span class="variable">.location</span>, <span class="literal">NULL</span>);</span><br><span class="line">            runBounds<span class="variable">.origin</span><span class="variable">.x</span> = lineOrigins[i]<span class="variable">.x</span> + xOffset;</span><br><span class="line">            runBounds<span class="variable">.origin</span><span class="variable">.y</span> = lineOrigins[i]<span class="variable">.y</span>;</span><br><span class="line">            runBounds<span class="variable">.origin</span><span class="variable">.y</span> -= descent;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGPathRef</span> pathRef = CTFrameGetPath(<span class="keyword">self</span><span class="variable">.ctFrame</span>);</span><br><span class="line">            <span class="built_in">CGRect</span> colRect = <span class="built_in">CGPathGetBoundingBox</span>(pathRef);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGRect</span> delegateBounds = <span class="built_in">CGRectOffset</span>(runBounds, colRect<span class="variable">.origin</span><span class="variable">.x</span>, colRect<span class="variable">.origin</span><span class="variable">.y</span>);</span><br><span class="line"></span><br><span class="line">            imageData<span class="variable">.imagePosition</span> = delegateBounds;</span><br><span class="line">            imgIndex++;</span><br><span class="line">            <span class="keyword">if</span> (imgIndex == <span class="keyword">self</span><span class="variable">.imageArray</span><span class="variable">.count</span>) &#123;</span><br><span class="line">                imageData = <span class="literal">nil</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                imageData = <span class="keyword">self</span><span class="variable">.imageArray</span>[imgIndex];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加对图片的点击支持">添加对图片的点击支持</h3><h4 id="实现方式">实现方式</h4><p>为了实现对图片的点击支持，我们需要给<code>CTDisplayView</code>类增加用户点击操作的检测函数，在检测函数中，判断当前用户点击的区域是否在图片上，如果在图片上，则触发点击图片的逻辑。苹果提供的<code>UITapGestureRecognizer</code>可以很好的满足我们的要求，所以我们这里用它来检测用户的点击操作。</p>
+<p>我们这里实现的是点击图片后，先用NSLog打印出一行日志。实际应用中，读者可以根据业务需求自行调整点击后的效果。</p>
+<p>我们先为CTDisplayView类增加<code>UITapGestureRecognizer</code>：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithCoder:aDecoder];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> setupEvents];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setupEvents &#123;</span><br><span class="line">    <span class="built_in">UIGestureRecognizer</span> * tapRecognizer =</span><br><span class="line">          [[<span class="built_in">UITapGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span></span><br><span class="line">                    action:<span class="keyword">@selector</span>(userTapGestureDetected:)];</span><br><span class="line">    tapRecognizer<span class="variable">.delegate</span> = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addGestureRecognizer:tapRecognizer];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.userInteractionEnabled</span> = <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后增加<code>UITapGestureRecognizer</code>的回调函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)userTapGestureDetected:(<span class="built_in">UIGestureRecognizer</span> *)recognizer &#123;</span><br><span class="line">    <span class="built_in">CGPoint</span> point = [recognizer locationInView:<span class="keyword">self</span>];</span><br><span class="line">    <span class="keyword">for</span> (CoreTextImageData * imageData <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.data</span><span class="variable">.imageArray</span>) &#123;</span><br><span class="line">        <span class="comment">// 翻转坐标系，因为 imageData 中的坐标是 CoreText 的坐标系</span></span><br><span class="line">        <span class="built_in">CGRect</span> imageRect = imageData<span class="variable">.imagePosition</span>;</span><br><span class="line">        <span class="built_in">CGPoint</span> imagePosition = imageRect<span class="variable">.origin</span>;</span><br><span class="line">        imagePosition<span class="variable">.y</span> = <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span> - imageRect<span class="variable">.origin</span><span class="variable">.y</span></span><br><span class="line">                          - imageRect<span class="variable">.size</span><span class="variable">.height</span>;</span><br><span class="line">        <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectMake</span>(imagePosition<span class="variable">.x</span>, imagePosition<span class="variable">.y</span>, imageRect<span class="variable">.size</span><span class="variable">.width</span>, imageRect<span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">        <span class="comment">// 检测点击位置 Point 是否在 rect 之内</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(rect, point)) &#123;</span><br><span class="line">            <span class="comment">// 在这里处理点击后的逻辑</span></span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"bingo"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="事件处理">事件处理</h4><p>在界面上，<code>CTDisplayView</code>通常在UIView的树形层级结构中，一个 UIView 可能是最外层 View Controller 的 View 的孩子的孩子的孩子（如下图所示）。在这种多级层次结构中，很难通过delegate模式将图片点击的事件一层一层往外层传递，所以最好使用NSNotification，来处理图片点击事件。</p>
+<p><img src="http://tangqiao.b0.upaiyun.com/coretext/coretext-uiview-tree.png" alt=""></p>
+<p>在 Demo 中，我们在最外层的 <code>View Controller</code>中监听图片点击的通知，当收到通知后，进入到一个新的界面来显示图片点击内容。</p>
+<p>注：读者可以将 demo 工程切换到image_click分支，查看示例代码。</p>
+<h4 id="添加对链接的点击支持">添加对链接的点击支持</h4><h5 id="修改模板文件">修改模板文件</h5><p>我们修改模版文件，增加一个名为 link 的类型，用于表示链接内容。如下所示：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"default"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 这在这里尝试放一个参考链接："</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"blue"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 链接文字 "</span></span>,</span><br><span class="line">    "<span class="attribute">url</span>" : <span class="value"><span class="string">"http://blog.devtang.com"</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"link"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"default"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 大家可以尝试点击一下 "</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<h5 id="解析模版中的链接信息">解析模版中的链接信息</h5><p>我们首先增加一个CoreTextLinkData类，用于记录解析 JSON 文件时的链接信息：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">CoreTextLinkData </span>: NSObject</span><br><span class="line"></span><br><span class="line"><span class="variable">@property</span> (strong, nonatomic) NSString * title;</span><br><span class="line"><span class="variable">@property</span> (strong, nonatomic) NSString * url;</span><br><span class="line"><span class="variable">@property</span> (assign, nonatomic) NSRange range;</span><br><span class="line"></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>然后我们修改 CTFrameParser 类，增加解析链接的逻辑：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="type">NSAttributedString</span> *)loadTemplateFile:(<span class="type">NSString</span> *)path</span><br><span class="line">                                  config:(<span class="type">CTFrameParserConfig</span>*)config</span><br><span class="line">                              imageArray:(<span class="type">NSMutableArray</span> *)imageArray</span><br><span class="line">                               linkArray:(<span class="type">NSMutableArray</span> *)linkArray &#123;</span><br><span class="line">    <span class="type">NSData</span> *data = [<span class="type">NSData</span> dataWithContentsOfFile:path];</span><br><span class="line">    <span class="type">NSMutableAttributedString</span> *<span class="literal">result</span> = [[<span class="type">NSMutableAttributedString</span> alloc] init];</span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        <span class="type">NSArray</span> *<span class="type">array</span> = [<span class="type">NSJSONSerialization</span> <span class="type">JSONObjectWithData</span>:data</span><br><span class="line">                                        options:<span class="type">NSJSONReadingAllowFragments</span></span><br><span class="line">                                          error:<span class="keyword">nil</span>];</span><br><span class="line">        <span class="keyword">if</span> ([<span class="type">array</span> isKindOfClass:[<span class="type">NSArray</span> class]]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">NSDictionary</span> *dict <span class="keyword">in</span> <span class="type">array</span>) &#123;</span><br><span class="line">                <span class="type">NSString</span> *<span class="keyword">type</span> = dict[@<span class="string">"type"</span>];</span><br><span class="line">                <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"txt"</span>]) &#123;</span><br><span class="line">                    // 省略</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"img"</span>]) &#123;</span><br><span class="line">                    // 省略</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"link"</span>]) &#123;</span><br><span class="line">                    <span class="type">NSUInteger</span> startPos = <span class="literal">result</span>.length;</span><br><span class="line">                    <span class="type">NSAttributedString</span> *<span class="keyword">as</span> =</span><br><span class="line">                       [self parseAttributedContentFromNSDictionary:dict</span><br><span class="line">                                                             config:config];</span><br><span class="line">                    [<span class="literal">result</span> appendAttributedString:<span class="keyword">as</span>];</span><br><span class="line">                    // 创建 <span class="type">CoreTextLinkData</span></span><br><span class="line">                    <span class="type">NSUInteger</span> length = <span class="literal">result</span>.length - startPos;</span><br><span class="line">                    <span class="type">NSRange</span> linkRange = <span class="type">NSMakeRange</span>(startPos, length);</span><br><span class="line">                    <span class="type">CoreTextLinkData</span> *linkData = [[<span class="type">CoreTextLinkData</span> alloc] init];</span><br><span class="line">                    linkData.title = dict[@<span class="string">"content"</span>];</span><br><span class="line">                    linkData.url = dict[@<span class="string">"url"</span>];</span><br><span class="line">                    linkData.<span class="type">range</span> = linkRange;</span><br><span class="line">                    [linkArray addObject:linkData];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们增加一个 Utils 类来专门处理检测用户点击是否在链接上。主要的方法是使用 CTLineGetStringIndexForPosition 函数来获得用户点击的位置与 NSAttributedString 字符串上的位置的对应关系。这样就知道是点击的哪个字符了。然后判断该字符串是否在链接上即可。该 Util 在实现逻辑如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检测点击位置是否在链接上</span></span><br><span class="line">+ (CoreTextLinkData *)touchLinkInView:(<span class="built_in">UIView</span> *)view atPoint:(<span class="built_in">CGPoint</span>)point data:(CoreTextData *)data &#123;</span><br><span class="line">    CTFrameRef textFrame = data<span class="variable">.ctFrame</span>;</span><br><span class="line">    <span class="built_in">CFArrayRef</span> lines = CTFrameGetLines(textFrame);</span><br><span class="line">    <span class="keyword">if</span> (!lines) <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    <span class="built_in">CFIndex</span> count = <span class="built_in">CFArrayGetCount</span>(lines);</span><br><span class="line">    CoreTextLinkData *foundLink = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获得每一行的 origin 坐标</span></span><br><span class="line">    <span class="built_in">CGPoint</span> origins[count];</span><br><span class="line">    CTFrameGetLineOrigins(textFrame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>,<span class="number">0</span>), origins);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 翻转坐标系</span></span><br><span class="line">    <span class="built_in">CGAffineTransform</span> transform =  <span class="built_in">CGAffineTransformMakeTranslation</span>(<span class="number">0</span>, view<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">    transform = <span class="built_in">CGAffineTransformScale</span>(transform, <span class="number">1.</span>f, -<span class="number">1.</span>f);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        <span class="built_in">CGPoint</span> linePoint = origins[i];</span><br><span class="line">        CTLineRef line = <span class="built_in">CFArrayGetValueAtIndex</span>(lines, i);</span><br><span class="line">        <span class="comment">// 获得每一行的 CGRect 信息</span></span><br><span class="line">        <span class="built_in">CGRect</span> flippedRect = [<span class="keyword">self</span> getLineBounds:line point:linePoint];</span><br><span class="line">        <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectApplyAffineTransform</span>(flippedRect, transform);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(rect, point)) &#123;</span><br><span class="line">            <span class="comment">// 将点击的坐标转换成相对于当前行的坐标</span></span><br><span class="line">            <span class="built_in">CGPoint</span> relativePoint = <span class="built_in">CGPointMake</span>(point<span class="variable">.x</span>-<span class="built_in">CGRectGetMinX</span>(rect),</span><br><span class="line">                                                point<span class="variable">.y</span>-<span class="built_in">CGRectGetMinY</span>(rect));</span><br><span class="line">            <span class="comment">// 获得当前点击坐标对应的字符串偏移</span></span><br><span class="line">            <span class="built_in">CFIndex</span> idx = CTLineGetStringIndexForPosition(line, relativePoint);</span><br><span class="line">            <span class="comment">// 判断这个偏移是否在我们的链接列表中</span></span><br><span class="line">            foundLink = [<span class="keyword">self</span> linkAtIndex:idx linkArray:data<span class="variable">.linkArray</span>];</span><br><span class="line">            <span class="keyword">return</span> foundLink;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">CGRect</span>)getLineBounds:(CTLineRef)line point:(<span class="built_in">CGPoint</span>)point &#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> ascent = <span class="number">0.0</span>f;</span><br><span class="line">    <span class="built_in">CGFloat</span> descent = <span class="number">0.0</span>f;</span><br><span class="line">    <span class="built_in">CGFloat</span> leading = <span class="number">0.0</span>f;</span><br><span class="line">    <span class="built_in">CGFloat</span> width = (<span class="built_in">CGFloat</span>)CTLineGetTypographicBounds(line, &amp;ascent, &amp;descent, &amp;leading);</span><br><span class="line">    <span class="built_in">CGFloat</span> height = ascent + descent;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(point<span class="variable">.x</span>, point<span class="variable">.y</span> - descent, width, height);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (CoreTextLinkData *)linkAtIndex:(<span class="built_in">CFIndex</span>)i linkArray:(<span class="built_in">NSArray</span> *)linkArray &#123;</span><br><span class="line">    CoreTextLinkData *link = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (CoreTextLinkData *data <span class="keyword">in</span> linkArray) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">NSLocationInRange</span>(i, data<span class="variable">.range</span>)) &#123;</span><br><span class="line">            link = data;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> link;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后改造一下CTDisplayView，使其在检测到用户点击后，调用上面的 Util 方法即可。我们这里实现的是点击链接后，先用NSLog打印出一行日志。实际应用中，读者可以根据业务需求自行调整点击后的效果。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)userTapGestureDetected:(<span class="built_in">UIGestureRecognizer</span> *)recognizer &#123;</span><br><span class="line">    <span class="built_in">CGPoint</span> point = [recognizer locationInView:<span class="keyword">self</span>];</span><br><span class="line">    <span class="comment">// 此处省略上一节中介绍的，对图片点击检测的逻辑</span></span><br><span class="line"></span><br><span class="line">    CoreTextLinkData *linkData = [CoreTextUtils touchLinkInView:<span class="keyword">self</span> atPoint:point data:<span class="keyword">self</span><span class="variable">.data</span>];</span><br><span class="line">    <span class="keyword">if</span> (linkData) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"hint link!"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注：在 Demo 中工程中，我们实现了点击链接跳转到一个新的界面，然后用 UIWebView 来显示链接内容的逻辑。读者可以将 demo 工程切换到link_click分支，查看示例代码。</p>
+<p>Demo 工程的 Gif 效果图如下，读者可以将示例工程用git checkout image_support切换到当前章节状态，查看相关代码逻辑。</p>
+<p><img src="http://tangqiao.b0.upaiyun.com/coretext/coretext-demo.gif" alt=""></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CoreText/"> #CoreText </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/19/iOS-CoreText-Base/">iOS CoreText Base</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版权说明"><span class="nav-number">1.</span> <span class="nav-text">版权说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于_CoreText_的排版引擎：进阶"><span class="nav-number">2.</span> <span class="nav-text">基于 CoreText 的排版引擎：进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本章前言"><span class="nav-number">2.1.</span> <span class="nav-text">本章前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持图文混排的排版引擎"><span class="nav-number">2.2.</span> <span class="nav-text">支持图文混排的排版引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#改造模版文件"><span class="nav-number">2.2.1.</span> <span class="nav-text">改造模版文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CTLine_与_CTRun"><span class="nav-number">2.2.2.</span> <span class="nav-text">CTLine 与 CTRun</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改造模版解析类"><span class="nav-number">2.2.3.</span> <span class="nav-text">改造模版解析类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加对图片的点击支持"><span class="nav-number">2.3.</span> <span class="nav-text">添加对图片的点击支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现方式"><span class="nav-number">2.3.1.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件处理"><span class="nav-number">2.3.2.</span> <span class="nav-text">事件处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加对链接的点击支持"><span class="nav-number">2.3.3.</span> <span class="nav-text">添加对链接的点击支持</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#修改模板文件"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">修改模板文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解析模版中的链接信息"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">解析模版中的链接信息</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/19/iOS-CoreText-Advance/';
+      var disqus_title = 'iOS CoreText Advance';
+      var disqus_url = 'http://ytlvy.com/2015/07/19/iOS-CoreText-Advance/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

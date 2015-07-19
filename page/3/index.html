@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<html class="theme-next use-motion ">
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -37,7 +37,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: '',
     analytics: {
       google: ''
     },
@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/30/Dispatch-Sources/">
-                Dispatch Sources
+              <a class="post-title-link" href="/2015/07/13/iOS-Associated-Objects/">
+                iOS Associated Objects
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-30
+          發表於 2015-07-13
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/30/Dispatch-Sources/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-Sources/"></span>
+            <a href="/2015/07/13/iOS-Associated-Objects/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Associated-Objects/"></span>
             </a>
           </span>
           
@@ -194,21 +194,112 @@
 
       
         
-          <h2 id="Dispatch_Sources">Dispatch Sources</h2><p>简单来说，是一种能够监控某种事件的对象。当事件发生的时候，此对象自动唤醒设置好的block，并在指定的queue中运行。</p>
-<h3 id="events_Type">events Type</h3><ul>
-<li>Mach port send right state changes.</li>
-<li>Mach port receive right state changes.</li>
-<li>External process state change.</li>
-<li>File descriptor ready for read.</li>
-<li>File descriptor ready for write.</li>
-<li>Filesystem node event.</li>
-<li>POSIX signal.</li>
-<li>Custom timer.</li>
-<li>Custom event.</li>
+          <h2 id="iOS_Associated_Objects">iOS Associated Objects</h2><p>关注以下三个问题:</p>
+<ol>
+<li>关联对象被存储在什么地方，是不是存放在被关联对象本身的内存中？</li>
+<li>关联对象的五种关联策略有什么区别，有什么坑？</li>
+<li>关联对象的生命周期是怎样的，什么时候被释放，什么时候被移除？</li>
+</ol>
+<h3 id="使用场景:">使用场景:</h3><p>按照 Mattt Thompson 大神的文章 Associated Objects 中的说法，<a href="http://nshipster.com/associated-objects/">Associated Objects</a> 主要有以下三个使用场景</p>
+<ol>
+<li>为现有的类添加私有变量以帮助实现细节；</li>
+<li>为现有的类添加公有属性；</li>
+<li>为 KVO 创建一个关联的观察者。</li>
+</ol>
+<p>从本质上看，第 1 、2 个场景其实是一个意思，唯一的区别就在于新添加的这个属性是公有的还是私有的而已。就目前来说，我在实际工作中使用得最多的是第 2 个场景，而第 3 个场景我还没有使用过<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Associated-Objects/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/13/iOS-Category/">
+                iOS Category
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Category/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Category/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="category">category</h2><h3 id="category_简介">category 简介</h3><ul>
+<li>为已存在的类, 添加方法</li>
+<li>将类的实现, 分别存放在不同的文件中. 好处: a) 减少单体文件体积 b)按照功能划分 c)协作开发 d)按需加载</li>
+<li>声明私有方法</li>
+<li>模拟多继承</li>
+<li>把framework的私有方法公开</li>
 </ul>
-<h3 id="Custom_Events">Custom Events</h3><p>通过<code>dispatch_source_merge_data</code>来发送消息，此方法取名<code>merge</code>的原因是，在事件回调执行前，GCD会自动合并累计的消息，直到对应的运行Queue有空闲，可以运行回调Block。所以，这是一种提高效率的方式，将多次消息合并成一个。<br>自定义事件分为：<code>DISPATCH_SOURCE_TYPE_DATA_ADD</code> 和 <code>DISPATCH_SOURCE_TYPE_DATA_OR</code>, 每个event Source有一个<code>unsigned long data</code>属性，用来合并<code>dispatch_source_merge_data</code>的参数。<code>dispatch_source_get_data</code>可以获取到当前的<code>data</code>数据。</p>
+<h3 id="extension">extension</h3><blockquote>
+<p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
+<p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/Dispatch-Sources/#more">
+            <a class="btn" href="/2015/07/13/iOS-Category/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -241,8 +332,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/30/OSSpinLock/">
-                OSSpinLock
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/">
+                iOS Runtime 运行时类与对象的编译处理
               </a>
             
           
@@ -251,7 +342,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-30
+          發表於 2015-07-13
         </span>
 
         
@@ -271,8 +362,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/30/OSSpinLock/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/OSSpinLock/"></span>
+            <a href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-运行时类与对象的编译处理/"></span>
             </a>
           </span>
           
@@ -287,451 +378,15 @@
 
       
         
-          <h2 id="OSSpinLock">OSSpinLock</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/message.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;libkern/OSAtomic.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define ITERATIONS (1024*1024*32)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> disp=<span class="number">0</span>, land=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">    <span class="keyword">double</span> then, now;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i, count;</span><br><span class="line">    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">    OSSpinLock spinlock = OS_SPINLOCK_INIT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSAutoreleasePool</span> *pool = [<span class="built_in">NSAutoreleasePool</span> new];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLock</span> *lock = [<span class="built_in">NSLock</span> new];</span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        [lock lock];</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    IMP lockLock = [lock methodForSelector:<span class="keyword">@selector</span>(lock)];</span><br><span class="line">    IMP unlockLock = [lock methodForSelector:<span class="keyword">@selector</span>(unlock)];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        lockLock(lock,<span class="keyword">@selector</span>(lock));</span><br><span class="line">        unlockLock(lock,<span class="keyword">@selector</span>(unlock));</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock+IMP Cache: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ITERATIONS;++i) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"pthread_mutex: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        OSSpinLockLock(&amp;spinlock);</span><br><span class="line">        OSSpinLockUnlock(&amp;spinlock);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"OSSpinlock: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)&#123;</span><br><span class="line">        <span class="keyword">@synchronized</span>(obj) &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"@synchronized: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    [pool release];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/OSSpinLock/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/30/Cancel-a-NSBlockOperation/">
-                Cancel a NSBlockOperation
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/30/Cancel-a-NSBlockOperation/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Cancel-a-NSBlockOperation/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="make_NSBlockOperation_cancelable">make NSBlockOperation cancelable</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSBlockOperation</span> *operation = [[<span class="built_in">NSBlockOperation</span> alloc] init];</span><br><span class="line">__<span class="keyword">weak</span> <span class="built_in">NSBlockOperation</span> *weakOperation = operation;</span><br><span class="line">[operation addExecutionBlock:^&#123;</span><br><span class="line">   <span class="keyword">while</span>( ! [weakOperation isCancelled])&#123;</span><br><span class="line">      <span class="comment">//do something...</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/22/Xcode-Notes/">
-                Xcode Notes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Xcode/">Xcode</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/22/Xcode-Notes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/22/Xcode-Notes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="快捷键">快捷键</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">⌘（command）、⌥（option）、⇧（shift）、⇪（caps <span class="operator"><span class="keyword">lock</span>）、</span><br><span class="line">⌃（control）、↩（<span class="keyword">return</span>）、⌅（enter）</span><br><span class="line"></span><br><span class="line">^ + <span class="number">1</span>                 <span class="keyword">corresponding</span> Nib/Storyboard file</span><br><span class="line">^ + <span class="number">2</span>                 <span class="keyword">show</span> the previous history</span><br><span class="line">^ + <span class="number">6</span>                 methods list</span><br><span class="line"></span><br><span class="line">^ + ⌘ + <span class="keyword">left</span>         <span class="keyword">go</span> back</span><br><span class="line">⌘ + Shift + O        jump <span class="keyword">to</span> a particular filename method</span><br><span class="line">⌘ + L                <span class="keyword">go</span> <span class="keyword">to</span> line</span><br><span class="line">⌘ + Y                toggle <span class="keyword">all</span> breakpoints</span><br><span class="line">⌘ + <span class="number">0</span>                toggle <span class="keyword">left</span> panel</span><br><span class="line">⌘ + <span class="number">1</span>                <span class="keyword">show</span> Project Nacigator</span><br><span class="line"></span><br><span class="line">^ + P                 移动光标到上一行</span><br><span class="line">^ + N                 移动光标到下一行</span><br><span class="line">^ + A                 移动光标到本行行首</span><br><span class="line">^ + E                 移动光标到本行行尾</span><br><span class="line">^ + D                 删除光标右边的字符</span><br><span class="line">^ + K                 删除空行/光标到行尾</span><br><span class="line">^ + L                 将插入点置于窗口正中</span><br><span class="line"></span><br><span class="line">⌘ + ⌥ + d           显示／隐藏 dock</span><br><span class="line"></span><br><span class="line">Fn + <span class="keyword">Delete</span>           删除光标后的一个字符</span><br><span class="line">⌘ + <span class="keyword">Delete</span>           删除光标至行首的内容</span><br><span class="line"></span><br><span class="line">⌘ + ⇧ + ;</span>           调出拼写检查对话框。</span><br><span class="line">⌘ + ⌥ + =           xib <span class="operator"><span class="keyword">update</span> frame</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/22/Xcode-Notes/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/">
-                Valar Morghulis Valar Dohaeris
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/other/">other</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/Valar-Morghulis-Valar-Dohaeris/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><img src="http://ww4.sinaimg.cn/mw1024/8edf7b7agw1et5ppc4i12g20dw0697uc.gif" alt=""></p>
-<p>Valar Morghulis = 凡人皆有一死<br>Valar Dohaeris = 凡人皆须侍奉<br>这两句是需要放在一起理解的</p>
-<p>看字面意思，凡人皆有一死，似乎表明的是死亡的不可避免。满含悲观的情绪。这和史塔克的家族箴言一样，凛冬将至。对于命运我们无能为力。</p>
-<p>但是，这句话还伴随着另外那句：凡人皆须侍奉。这两句是高等瓦雷利亚语，缘起于千面之神和信仰它的神秘组织 无面者。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/16/ios-MRC-ARC/">
-                ios MRC && ARC
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/16/ios-MRC-ARC/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/ios-MRC-ARC/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="ARC">ARC</h2><h3 id="MRC">MRC</h3><h4 id="MRC内存管理原则">MRC内存管理原则</h4><p>􏰀1. You have ownership of any objects you create.<br>2.􏰀 You can take ownership of an object using retain.<br>􏰀3. When no longer needed, you must relinquish ownership of an object you own.<br>􏰀4. You must not relinquish ownership of an object you don’t own.</p>
-<table>
-<thead>
-<tr>
-<th>Action for Objective-C Object</th>
-<th>Objective-C Method</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create and have ownership of it</td>
-<td>alloc/new/copy/mutableCopy group</td>
-</tr>
-<tr>
-<td>Take ownership of it</td>
-<td>retian</td>
-</tr>
-<tr>
-<td>Relinquish it</td>
-<td>release</td>
-</tr>
-<tr>
-<td>Dispose of it</td>
-<td>dealloc</td>
-</tr>
-</tbody>
-</table>
-<h4 id="调用者持有">调用者持有</h4><p>Relinquishing Ownership of a Retained Object. 下面的例子将函数将自己持有的obj, 通过return传递给了调用者,由调用者来来持有此变量<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (id)allocObject</span><br><span class="line">&#123;</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">You</span> create an <span class="keyword">object</span> <span class="keyword">and</span> have ownership. */</span><br><span class="line">  id obj = [[<span class="type">NSObject</span> alloc] init];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">At</span> this moment, this <span class="keyword">method</span> has ownership <span class="keyword">of</span> the <span class="keyword">object</span>. */</span><br><span class="line">  <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/16/ios-MRC-ARC/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/15/ios-gcd/">
-                ios gcd
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/15/ios-gcd/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-gcd/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="GCD">GCD</h2><h3 id="befor_GCD">befor GCD</h3><h4 id="object_method">object method</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorInBackground:</span> <span class="string">withObject:</span></span><br><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorOnMainThread:</span> <span class="string">withObject:</span> <span class="string">waitUntilDone:</span></span><br></pre></td></tr></table></figure>
-<h3 id="多线程面临的问题">多线程面临的问题</h3><ol>
-<li>race condition</li>
-<li>dead lock</li>
-<li>too much threads consumes two much memory</li>
+          <h2 id="iOS_Runtime运行时类与对象的编译处理">iOS Runtime运行时类与对象的编译处理</h2><p>Objective-C语言是一门动态语言，它将很多静态语言在编译和链接时期做的事放到了运行时来处理。这种动态语言的优势在于：我们写代码时更具灵活性，如我们可以把消息转发给我们想要的对象，或者随意交换一个方法的实现等。<br>这种特性意味着<code>Objective-C</code>不仅需要一个编译器，还需要一个运行时系统来执行编译的代码。对于Objective-C来说，这个运行时系统就像一个操作系统一样：它让所有的工作可以正常的运行。这个运行时系统即Objc Runtime。Objc Runtime其实是一个Runtime库，它基本上是用C和汇编写的，这个库使得C语言有了面向对象的能力。</p>
+<p>Runtime库主要做下面几件事：</p>
+<ol>
+<li>封装：在这个库中，对象可以用C语言中的结构体表示，而方法可以用C函数来实现，另外再加上了一些额外的特性。这些结构体和函数被runtime函数封装后，我们就可以在程序运行时创建，检查，修改类、对象和它们的方法了。</li>
+<li>找出方法的最终执行代码：当程序执行[object doSomething]时，会向消息接收者(object)发送一条消息(doSomething)，runtime会根据消息接收者是否能响应该消息而做出不同的反应。这将在后面详细介绍。</li>
 </ol>
-<h4 id="多线程的意义">多线程的意义</h4><p>高交互性， 界面编程中，将耗时的操作放入到其他线程执行，避免影响到主线程界面响应</p>
-<h3 id="GCD_基础">GCD 基础</h3><h4 id="Dispatch_Queue_派发队列">Dispatch Queue 派发队列</h4><ol>
-<li>serial dispath queue  顺序派发队列</li>
-<li>concurrent dispath queue  并发派发队列</li>
-</ol>
-<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的<br>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/15/ios-gcd/#more">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -764,8 +419,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/15/ios-block/">
-                ios block
+              <a class="post-title-link" href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/">
+                iOS Event Delivery/ The Responder Chain
               </a>
             
           
@@ -774,7 +429,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-15
+          發表於 2015-07-13
         </span>
 
         
@@ -794,8 +449,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/15/ios-block/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-block/"></span>
+            <a href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Event-Delivery-The-Responder-Chain/"></span>
             </a>
           </span>
           
@@ -810,10 +465,20 @@
 
       
         
-          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
-<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="Event_Delivery:_The_Responder_Chain">Event Delivery: The Responder Chain</h2><p>当你设计应用的时候, 应用需要动态响应事件. 例如: 点击事件, (可以在显示屏上的不同对象上多次触发), 你需要决定那个对象来响应此事件, 并且需要了解这个对象是如何接收事件的.</p>
+<p>当用户触发一个事件时, UIKit 创建一个<code>event object</code>, 此对象包含了需要处理的信息. 然后将此事件对象放入到当前 app 的事件队列中. 例如<code>touch</code>事件, 这种事件对象就是一个包含了一组<code>touch</code>的<code>UIEvent</code> 对象. <code>motion</code>事件, 此对象由你使用的<code>framework</code>和你感兴趣的<code>motion</code>类型来决定.</p>
+<ul>
+<li>Touch events. 当前 window 对象首先尝试将事件传送给 <code>touch</code> 触发的视图.这个视图被称为<code>hit-test</code> 视图. 寻找<code>hit-test</code>视图的过程被称为<code>hit-testing</code>, 将在下面描述.</li>
+<li>Motion and remote control events. 对于这些事件, 当前 window 对象会将 <code>shaking-motion</code> 或 <code>emote control event</code> 发送给<code>first responder</code>来响应.<code>first responder</code>也将在下面描述.</li>
+</ul>
+<h3 id="Hit-Testing_Returns_the_View_Where_a_Touch_Occurred">Hit-Testing Returns the View Where a Touch Occurred</h3><p>iOS 通过<code>hit-testing</code> 来寻找点击下方的视图. <code>Hit-Testing</code> 会查找任何包含该<code>touch</code>点坐标的视图对象, 规则为此坐标位于视图的<code>bounds</code>中, 如果包含, 会继续递归检测此视图的所有子视图. 在视图树中包含该点击的最下层视图, 即是<code>hit-test</code>视图. 当 iOS 决定了 <code>hit-test</code> 视图后, 会将点击事件发送给此视图来处理.</p>
+<p>说明如下, 假设用户点击了视图 E, iOS 查找<code>hit-test</code> 视图的逻辑如下:</p>
+<ol>
+<li>点击在视图 A 的范围内, 然后检测 子视图 B 和 C</li>
+<li>点击不再视图 B 范围内, 但是在视图 C 范围内, 继续检测 子视图 D 和 E</li>
+<li>点击不再视图 D 里, 但是在视图 E 中.
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/15/ios-block/#more">
+            <a class="btn" href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -846,8 +511,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/11/wget/">
-                wget
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-成员变量与属性/">
+                iOS Runtime 成员变量与属性
               </a>
             
           
@@ -856,91 +521,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/linux/">linux</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/11/wget/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/11/wget/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="wget">wget</h2><h3 id="用wget做站点镜像">用wget做站点镜像</h3><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">wget</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">mirror</span> <span class="literal">-</span><span class="comment">p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">convert</span><span class="literal">-</span><span class="comment">links</span> <span class="literal">-</span><span class="comment">P</span> <span class="title">[</span><span class="comment">本地目录</span><span class="title">]</span> <span class="title">[</span><span class="comment">网站地址</span><span class="title">]</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -np -nd <span class="string">http:</span><span class="comment">//appinn.com</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -<span class="tag">p</span> -np -k http:<span class="comment">//dsec.pku.edu.cn/~usr_name/</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -m <span class="string">http:</span><span class="comment">//www.tldp.org/LDP/abs/html/</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/11/wget/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/">
-                AutoLayout -- Content Compression Resistance & Content Hugging
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-08
+          發表於 2015-07-13
         </span>
 
         
@@ -960,8 +541,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/"></span>
+            <a href="/2015/07/13/iOS-Runtime-成员变量与属性/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-成员变量与属性/"></span>
             </a>
           </span>
           
@@ -976,15 +557,432 @@
 
       
         
-          <h2 id="Content_Compression_Resistance_&amp;&amp;_Content_Hugging">Content Compression Resistance &amp;&amp; Content Hugging</h2><p>Auto Layout中, 存在Content Compression Resistance 和 Content Hugging 这两个概念.这两个概念是在<code>固有内容尺寸</code>（Intrinsic Content Size）之上起作用的.</p>
-<h3 id="Intrinsic_Content_Size">Intrinsic Content Size</h3><p>包含内容的UI控件, 由内容多少而决定的大小规则.</p>
-<h3 id="Content_Compression_Resistance_&amp;_Content_Hugging">Content Compression Resistance &amp; Content Hugging</h3><ol>
-<li>内容大小改变是指, 内容显示内容所占空间的长度来说的.</li>
-<li><code>内容抗压指数</code>，在父视图变小时, 会根据抗压指数来缩小各子控件;</li>
-<li><code>内容拥抱指数</code>, 内容越集中于控件中心, 周围空白越小.</li>
-</ol>
+          <h3 id="习题内容">习题内容</h3><p>下面代码会? Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)speak &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"my name is %@"</span>, <span class="keyword">self</span><span class="variable">.name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Test</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">id</span> cls = [Sark class];</span><br><span class="line">        <span class="keyword">void</span> *obj = &amp;cls;</span><br><span class="line">        [(__bridge <span class="keyword">id</span>)obj speak];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [[Test alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>答案：代码正常输出，输出结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-07</span> 14<span class="pseudo">:08</span><span class="pseudo">:25</span><span class="class">.698</span> <span class="tag">Test</span><span class="attr_selector">[1097:57255]</span> <span class="tag">my</span> <span class="tag">name</span> <span class="tag">is</span> &lt;<span class="rule"><span class="attribute">Test</span>:<span class="value"> <span class="number">0</span>x1001002d0&gt;</span></span></span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#more">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-成员变量与属性/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Message-And-Category/">
+                iOS Runtime Message And Category
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Runtime-Message-And-Category/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Message-And-Category/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="习题内容">习题内容</h3><p>下面的代码会？Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSObject</span> (<span class="title">Sark</span>)</span></span><br><span class="line">+ (<span class="keyword">void</span>)foo;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSObject</span> (<span class="title">Sark</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)foo</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"IMP: -[NSObject(Sark) foo]"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [<span class="built_in">NSObject</span> foo];</span><br><span class="line">        [[<span class="built_in">NSObject</span> new] foo];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>答案：代码正常输出，输出结果如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-06</span> 13<span class="pseudo">:11</span><span class="pseudo">:46</span><span class="class">.694</span> <span class="tag">Test</span><span class="attr_selector">[14872:1110786]</span> <span class="rule"><span class="attribute">IMP</span>:<span class="value"> -[<span class="function">NSObject</span>(Sark) foo]</span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">06</span> <span class="number">13</span>:<span class="number">11</span>:<span class="number">46.695</span> Test[<span class="number">14872</span>:<span class="number">1110786</span>] IMP: -[<span class="function">NSObject</span>(Sark) foo]</span></span></span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-Message-And-Category/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/">
+                iOS Runtime Object & Class & Meta Class
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Object-Class-Meta-Class/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="习题内容">习题内容</h3><p>下面代码的运行结果是?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">BOOL</span> res1 = [(<span class="keyword">id</span>)[<span class="built_in">NSObject</span> class] isKindOfClass:[<span class="built_in">NSObject</span> class]];</span><br><span class="line">        <span class="built_in">BOOL</span> res2 = [(<span class="keyword">id</span>)[<span class="built_in">NSObject</span> class] isMemberOfClass:[<span class="built_in">NSObject</span> class]];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">BOOL</span> res3 = [(<span class="keyword">id</span>)[Sark class] isKindOfClass:[Sark class]];</span><br><span class="line">        <span class="built_in">BOOL</span> res4 = [(<span class="keyword">id</span>)[Sark class] isMemberOfClass:[Sark class]];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d %d %d %d"</span>, res1, res2, res3, res4);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-05</span> 14<span class="pseudo">:45</span><span class="pseudo">:08</span><span class="class">.474</span> <span class="tag">Test</span><span class="attr_selector">[9412:721945]</span> 1 0 0 0</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Self-Super/">
+                iOS Runtime Self & Super
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Runtime-Self-Super/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Self-Super/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Self_&amp;&amp;_Super">Self &amp;&amp; Super</h2><h3 id="What_is_Super?">What is Super?</h3><p><code>Super</code> 是和 <code>Self</code> 一样的关键字, 不同的是, 它不能用作函数的参数, 只能接收消息.当接收消息的时候, 它会向父类搜索方法的定义. 如果在向上的类链中没有任何定义, 则程序会 crash.</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithValue<span class="number">1</span>:(id)<span class="keyword">value</span><span class="number">1</span> <span class="keyword">value</span><span class="number">2</span>:(id)<span class="keyword">value</span><span class="number">2</span></span><br><span class="line">&#123;</span><br><span class="line">    self = [<span class="keyword">super</span> initWithValue<span class="number">1</span>:<span class="keyword">value</span><span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (self) &#123;</span><br><span class="line">        <span class="number">_</span><span class="keyword">value</span><span class="number">2</span> = <span class="keyword">value</span><span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="messaging_super">messaging <code>super</code></h3><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_super</span> </span>&#123;</span><br><span class="line">    __unsafe_unretained id receiver;</span><br><span class="line">    __unsafe_unretained Class super_class;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">methodWithArgument</span>:(id)<span class="tag">arg</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr_selector">[super otherMethodWithArgument:arg]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)methodWithArgument:(id)arg</span><br><span class="line">&#123;</span><br><span class="line">    struct objc<span class="number">_</span><span class="keyword">super</span> <span class="keyword">super</span> = &#123;.receiver = self, .<span class="keyword">super</span><span class="number">_</span><span class="keyword">class</span> = <span class="number">0</span>xC<span class="number">0</span>FFEE&#125;;</span><br><span class="line"></span><br><span class="line">    objc<span class="number">_m</span>sgSendSuper(&amp;<span class="keyword">super</span>, <span class="annotation">@selector</span>(otherMethodWithArgument:), arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>objc_msgSendSuper</code> 将从父类的定义开始查找方法的实现. <code>super_class</code>是在 runtime 时, 动态生成的.<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-Self-Super/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/06/Random/">
+                Random
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/06/Random/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Random/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="arc4random()">arc4random()</h2><h3 id="Random_int_between_0_and_N_-_1">Random int between 0 and N - 1</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Random_int_between_1_and_N">Random int between 1 and N</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span> + <span class="number">1</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Random_double_between_0_and_1">Random double between 0 and 1</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sra<span class="label">nd48</span><span class="comment">(time(0)</span>);</span><br><span class="line">double r = dra<span class="label">nd48</span><span class="comment">()</span>;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/06/Random/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/06/progress-memory-map/">
+                progress memory map
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/06/progress-memory-map/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/progress-memory-map/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/">翻译子</a></p>
+<h2 id="程序在内存中分布">程序在内存中分布</h2><p>内存管理是操作系统的核心. 对系统和编程人员来说这都是非常重要的.下面用 32位 系统举例.首先介绍程序如何在内存中分布.</p>
+<h3 id="虚拟地址空间">虚拟地址空间</h3><p>在多任务操作系统中, 每个进程拥有自己独立的内存沙箱. 这个沙箱就是指的<code>虚拟地址空间</code>(virtual address space), 在32位系统中, 就是一块4GB 大小的内存地址块. 这些虚拟地址和物理内存通过<code>page tables</code>来完成映射, <code>page tables</code>是由系统核心管理,进程可以进行访问. 一旦虚拟地址被启用, 会应用到所有的程序中, 包括系统核心. 因此虚拟地址的一部分, 需要被划分出来为系统核心保留使用.<br><img src="http://static.duartes.org/img/blogPosts/kernelUserMemorySplit.png" alt=""></p>
+<p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
+<p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
+<p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
+<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/06/progress-memory-map/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1010,7 +1008,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </div>
 
 
@@ -1044,21 +1042,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">118</span>
+              <span class="site-state-item-count">136</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">59</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -1142,7 +1140,7 @@
 <div class="theme-info">
   主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT
   </a>
 </div>
 

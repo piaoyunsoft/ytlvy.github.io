@@ -1,0 +1,667 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="init," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Super init // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Super init
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-Super-init/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-Super-init/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://www.cocoawithlove.com/2009/04/what-does-it-mean-when-you-assign-super.html" target="_blank" rel="external">转自</a></p>
+<h1 id="What_does_it_mean_when_you_assign_[super_init]_to_self?">What does it mean when you assign [super init] to self?</h1><p><code>self = [super init];</code> 是 Objctive-C 语法中很奇怪的一句.</p>
+<h2 id="Converting_a_method_invocation">Converting a method invocation</h2><p>首先需要了解<code>self</code>参数, 编译器是如何处理的.当你输入下面代码时</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">MyClass</span> *<span class="atom">myObject</span> = [[<span class="name">MyClass</span> <span class="atom">alloc</span>] <span class="atom">initWithString</span>:@<span class="string">"someString"</span>];</span><br></pre></td></tr></table></figure>
+<p>编译器会转换为大致如下的代码:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">class</span> myClass = objc_getClass(<span class="string">"MyClass"</span>);</span><br><span class="line"><span class="title">SEL</span> allocSelector = <span class="variable">@selector</span>(alloc);</span><br><span class="line"><span class="title">MyClass</span> *myObject1 = objc_msgSend(myClass, allocSelector);</span><br><span class="line"></span><br><span class="line"><span class="title">SEL</span> initSelector = <span class="variable">@selector</span>(initWithString:);</span><br><span class="line"><span class="title">MyClass</span> *myObject2 = objc_msgSend(myObject1, initSelector, @<span class="string">"someString"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="So_what_is_“self”?">So what is “self”?</h2><p>每个方法都有两个隐藏参数: <code>self</code> and <code>_cmd</code>.</p>
+<p>例如:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (<span class="tag">id</span>)<span class="rule"><span class="attribute">initWithString</span>:<span class="value">(NSString *)aString</span></span>;</span><br></pre></td></tr></table></figure>
+<p>会转换为:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> initWithString(<span class="keyword">id</span> <span class="keyword">self</span>, SEL _cmd, <span class="built_in">NSString</span> *aString);</span><br></pre></td></tr></table></figure>
+<p>实际上<code>self</code> 只是在每个方法中都存在的隐藏参数, 像普通参数一样, 它通过函数调用来接收数值.</p>
+<p>你可以尝试将下面的方法变更为<code>objc_msgSend</code>方式来调用</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[myObject someMethodWithParameter:someValue]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>你可以直接调用</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SEL methodSelector = <span class="annotation">@selector</span>(someMethodWithParameter:);</span><br><span class="line">IMP someMethodFunction = <span class="keyword">class</span><span class="number">_</span>getMethodImplementation([myObject <span class="keyword">class</span>], methodSelector);</span><br><span class="line">someMethodFunction(myObject, methodSelector, someValue);</span><br></pre></td></tr></table></figure>
+<p><code>self</code>正是由于接收了函数<code>someMethodFunction</code>传入的第一个参数, 才拥有了实际的数值, 如果<br>你此时传入其他的数值, 很可能会造成系统崩溃.</p>
+<h2 id="Why_have_a_“self”_parameter_at_all?">Why have a “self” parameter at all?</h2><p>方法需要知道它操作的数据是什么, 而<code>self</code> 正是用来告诉类它要操作的数据是什么的. 因为在运行时, <code>self</code>也即是对象本身存贮了数据, 而方法使在类中存储的. 所以方法操作数据的时候, 需要通过 <code>self</code> 指针来获取数据的具体位置.例如:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyClass</span> : <span class="title">NSObject</span></span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSInteger</span> value;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)setValueToZero;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>方法:</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setValueToZero</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">value</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>转换为:</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">void</span> setValueToZero(id <span class="built_in">self</span>, SEL _cmd)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">self</span><span class="subst">-&gt;</span>value <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="So_does_self_already_have_a_value_when_init_is_called?">So does self already have a value when init is called?</h2><p>从上面的分析看, <code>initWithString</code> 是 方法调用<code>[[MyClass alloc] initWithString:@&quot;someString&quot;]</code>的一部分.</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass *myObject2 = objc_msgSend<span class="list">(<span class="keyword">myObject1</span>, initSelector, @<span class="string">"someString"</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>所以当我们进入<code>initWithString</code>方法时, <code>self</code> 已经有值<code>myObject1</code>(通过 <code>[MyClass alloc]</code>  返回的), 因为没有<code>super</code>的调用是需要<code>self</code>的,<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[super init]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>会转换为:</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">struct objc<span class="number">_</span><span class="keyword">super</span> <span class="keyword">super</span> = &#123;.receiver = self, .<span class="keyword">super</span><span class="number">_</span><span class="keyword">class</span> = <span class="number">0</span>xC<span class="number">0</span>FFEE&#125;;</span><br><span class="line">objc<span class="number">_m</span>sgSendSuper(&amp;<span class="keyword">super</span>, <span class="annotation">@selector</span>(otherMethodWithArgument:), arg);</span><br></pre></td></tr></table></figure>
+<h2 id="So_why_assign_the_value_returned_from_[super_init]_to_self?">So why assign the value returned from [super init] to self?</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)initWithString:(<span class="built_in">NSString</span> *)aString</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        instanceString = [aString retain];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为什么需要将 <code>self</code> 重新赋值为 <code>[super init]</code>, 原因为<code>[super init]</code> 会发生下面3种情况之一:</p>
+<ol>
+<li>Return its own receiver (the self pointer doesn’t change) with inherited instance values initialized.</li>
+<li>Return a different object with inherited instance values initialized.</li>
+<li>Return nil, indicating failure.</li>
+</ol>
+<p>第一种情况, 赋值是没有意义的, 因为 self 没有改变,  <code>instanceString</code> 是作用在原来的对象上的.<br>第三种情况, 初始化失败返回<code>nil</code>, <code>self</code> 也被赋值为<code>nil</code>并返回, 不会发生更进一步的操作.<br>第二种情况, 才是重新赋值的意义所在. 因为返回的对象改变了.</p>
+<h2 id="It’s_almost_never_required_to_initialize_self">It’s almost never required to initialize self</h2><p>所以重新赋值的意义在于<code>[super init]</code>可能会返回一个不同的对象.那什么时候 会返回不同对象呢, 情况如下:</p>
+<ol>
+<li>Singleton object (always returns the singleton instead of any subsequent allocation)</li>
+<li>Other unique objects ([NSNumber numberWithInteger:0] always returns the global “zero” object)</li>
+<li>Class clusters substitute private subclasses when you initialize an instance of the superclass.</li>
+<li>Classes which choose to reallocate the same (or compatible) class based on parameters passed into the initializer.</li>
+</ol>
+<p>除了最后一种情况外, 如果继续初始化返回的对象, 其实是错误的, 因为这个对象已经被完全初始化完毕了.<br>所以上面说的<code>[super init]</code> 可能发生的情况, 可以扩充了4种:</p>
+<ol>
+<li>Return its own receiver (the self pointer doesn’t change) with inherited instance values initialized.</li>
+<li>Return an object of the same class, requiring further initialization.</li>
+<li>Return a different object that is already completely initialized.</li>
+<li>Return nil, indicating failure.</li>
+</ol>
+<p>上面列表中, 第二种和第三种情况是冲突的, 我们原来典型的写法<code>self = [super init]</code> 可以解决1, 2, 4等情况.<br>而可以解决1, 3, 4情况的写法为:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (id)initWithString:(<span class="type">NSString</span> *)aString</span><br><span class="line">&#123;</span><br><span class="line">    id <span class="literal">result</span> = [super init];</span><br><span class="line">    <span class="keyword">if</span> (self == <span class="literal">result</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        instanceString = [aString retain];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为类簇, 单例和唯一对象等情况都符合第三种情况, 如此以来, 系统中大量的类放入了这种情况, 我仅知道<code>NSManagedObject</code>符合第二种情况.奇怪的是, 适用范围更广的上面的写法反而不是标准写法.</p>
+<h2 id="总结">总结</h2><p>大部分情况下, 你不需要将<code>[ super init]</code> 重新赋值给<code>self</code>, 在某些情况下, 这样做更是错误的.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/init/"> #init </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/19/iOS-CoreText-Base/">iOS CoreText Base</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/17/ARC-dealloc-cxx-destruct/">ARC dealloc cxx_destruct</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#What_does_it_mean_when_you_assign_[super_init]_to_self?"><span class="nav-number">1.</span> <span class="nav-text">What does it mean when you assign [super init] to self?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Converting_a_method_invocation"><span class="nav-number">1.1.</span> <span class="nav-text">Converting a method invocation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#So_what_is_“self”?"><span class="nav-number">1.2.</span> <span class="nav-text">So what is “self”?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why_have_a_“self”_parameter_at_all?"><span class="nav-number">1.3.</span> <span class="nav-text">Why have a “self” parameter at all?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#So_does_self_already_have_a_value_when_init_is_called?"><span class="nav-number">1.4.</span> <span class="nav-text">So does self already have a value when init is called?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#So_why_assign_the_value_returned_from_[super_init]_to_self?"><span class="nav-number">1.5.</span> <span class="nav-text">So why assign the value returned from [super init] to self?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#It’s_almost_never_required_to_initialize_self"><span class="nav-number">1.6.</span> <span class="nav-text">It’s almost never required to initialize self</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/17/iOS-Super-init/';
+      var disqus_title = 'iOS Super init';
+      var disqus_url = 'http://ytlvy.com/2015/07/17/iOS-Super-init/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
