@@ -148,6 +148,87 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/30/OSSpinLock/">
+                OSSpinLock
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/OSSpinLock/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/OSSpinLock/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="OSSpinLock">OSSpinLock</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/message.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;libkern/OSAtomic.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define ITERATIONS (1024*1024*32)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> disp=<span class="number">0</span>, land=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">    <span class="keyword">double</span> then, now;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i, count;</span><br><span class="line">    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">    OSSpinLock spinlock = OS_SPINLOCK_INIT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSAutoreleasePool</span> *pool = [<span class="built_in">NSAutoreleasePool</span> new];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLock</span> *lock = [<span class="built_in">NSLock</span> new];</span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        [lock lock];</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    IMP lockLock = [lock methodForSelector:<span class="keyword">@selector</span>(lock)];</span><br><span class="line">    IMP unlockLock = [lock methodForSelector:<span class="keyword">@selector</span>(unlock)];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        lockLock(lock,<span class="keyword">@selector</span>(lock));</span><br><span class="line">        unlockLock(lock,<span class="keyword">@selector</span>(unlock));</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock+IMP Cache: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ITERATIONS;++i) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"pthread_mutex: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        OSSpinLockLock(&amp;spinlock);</span><br><span class="line">        OSSpinLockUnlock(&amp;spinlock);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"OSSpinlock: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)&#123;</span><br><span class="line">        <span class="keyword">@synchronized</span>(obj) &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"@synchronized: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    [pool release];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/OSSpinLock/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/30/Cancel-a-NSBlockOperation/">
                 Cancel a NSBlockOperation
               </a>
@@ -909,88 +990,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/07/IOS-Multithreading-Memory-Management/">
-                IOS Multithreading && Memory Management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-07
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/07/IOS-Multithreading-Memory-Management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/IOS-Multithreading-Memory-Management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
-<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1029,7 +1028,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

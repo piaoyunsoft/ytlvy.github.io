@@ -148,6 +148,93 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/06/progress-memory-map/">
+                progress memory map
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/06/progress-memory-map/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/progress-memory-map/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/">翻译子</a></p>
+<h2 id="程序在内存中分布">程序在内存中分布</h2><p>内存管理是操作系统的核心. 对系统和编程人员来说这都是非常重要的.下面用 32位 系统举例.首先介绍程序如何在内存中分布.</p>
+<h3 id="虚拟地址空间">虚拟地址空间</h3><p>在多任务操作系统中, 每个进程拥有自己独立的内存沙箱. 这个沙箱就是指的<code>虚拟地址空间</code>(virtual address space), 在32位系统中, 就是一块4GB 大小的内存地址块. 这些虚拟地址和物理内存通过<code>page tables</code>来完成映射, <code>page tables</code>是由系统核心管理,进程可以进行访问. 一旦虚拟地址被启用, 会应用到所有的程序中, 包括系统核心. 因此虚拟地址的一部分, 需要被划分出来为系统核心保留使用.<br><img src="http://static.duartes.org/img/blogPosts/kernelUserMemorySplit.png" alt=""></p>
+<p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
+<p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
+<p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
+<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/06/progress-memory-map/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/06/what-happen-before-main/">
                 what happen before main
               </a>
@@ -907,87 +994,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/30/OSSpinLock/">
-                OSSpinLock
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/30/OSSpinLock/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/OSSpinLock/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="OSSpinLock">OSSpinLock</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/message.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;libkern/OSAtomic.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define ITERATIONS (1024*1024*32)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> disp=<span class="number">0</span>, land=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">    <span class="keyword">double</span> then, now;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i, count;</span><br><span class="line">    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">    OSSpinLock spinlock = OS_SPINLOCK_INIT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSAutoreleasePool</span> *pool = [<span class="built_in">NSAutoreleasePool</span> new];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLock</span> *lock = [<span class="built_in">NSLock</span> new];</span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        [lock lock];</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    IMP lockLock = [lock methodForSelector:<span class="keyword">@selector</span>(lock)];</span><br><span class="line">    IMP unlockLock = [lock methodForSelector:<span class="keyword">@selector</span>(unlock)];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        lockLock(lock,<span class="keyword">@selector</span>(lock));</span><br><span class="line">        unlockLock(lock,<span class="keyword">@selector</span>(unlock));</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock+IMP Cache: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ITERATIONS;++i) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"pthread_mutex: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        OSSpinLockLock(&amp;spinlock);</span><br><span class="line">        OSSpinLockUnlock(&amp;spinlock);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"OSSpinlock: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)&#123;</span><br><span class="line">        <span class="keyword">@synchronized</span>(obj) &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"@synchronized: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    [pool release];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/OSSpinLock/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1026,7 +1032,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

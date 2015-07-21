@@ -148,6 +148,90 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/reactivecocoa-example-1-nsurlsession/">
+                ReactiveCocoa应用1---NSURLSession封装
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/IOS/FP/">FP</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/reactivecocoa-example-1-nsurlsession/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa-example-1-nsurlsession/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="ReactiveCocoa应用1—-NSURLSession封装">ReactiveCocoa应用1—-NSURLSession封装</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="string">fetchJSONFromSession:</span>(NSURLSession *)session <span class="string">withRequest:</span>(NSURLRequest *)request &#123;</span><br><span class="line">    <span class="keyword">return</span> [[[RACSignal <span class="string">createSignal:</span>^RACDisposable *(id&lt;RACSubscriber&gt; subscriber)</span><br><span class="line">    &#123;</span><br><span class="line">        NSURLSessionDataTask *dataTask = [session <span class="string">dataTaskWithRequest:</span>request <span class="string">completionHandler:</span>^(NSData *data, NSURLResponse *response, NSError *error)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (! error) &#123;</span><br><span class="line">                NSError *jsonError = nil;</span><br><span class="line">                NSString* newStr = [[NSString alloc] <span class="string">initWithData:</span>data <span class="string">encoding:</span>NSUTF8StringEncoding];</span><br><span class="line">                id json = [NSJSONSerialization <span class="string">JSONObjectWithData:</span>data <span class="string">options:</span>kNilOptions <span class="string">error:</span>&amp;jsonError];</span><br><span class="line">                <span class="keyword">if</span> (! jsonError) &#123;</span><br><span class="line">                    NSDictionary *dataOfDictionary = (NSDictionary *)json;</span><br><span class="line">                    <span class="keyword">if</span> (dataOfDictionary[@<span class="string">"stat"</span>] &amp;&amp; [dataOfDictionary[@<span class="string">"stat"</span>] integerValue] == <span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        [subscriber <span class="string">sendNext:</span> json[@<span class="string">"data"</span>]];</span><br><span class="line">                        [subscriber sendCompleted];</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        NSString *errmsg = dataOfDictionary[@<span class="string">"msg"</span>];</span><br><span class="line">                        <span class="keyword">if</span> (![errmsg <span class="string">isKindOfClass:</span>[NSString <span class="class"><span class="keyword">class</span>]]) &#123;</span></span><br><span class="line">                            errmsg = @<span class="string">"服务器未知错误"</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                       [subscriber <span class="string">sendError:</span>[NSError <span class="string">errorWithDomain:</span>[AppConstants httpHost] <span class="string">code:</span>[dataOfDictionary[@<span class="string">"stat"</span>] integerValue] <span class="string">userInfo:</span>@&#123;<span class="string">NSLocalizedDescriptionKey:</span>errmsg&#125;]];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    DDLogError(@<span class="string">"function: json 组装错误:%@"</span>, [jsonError localizedDescription]);</span><br><span class="line">                    <span class="keyword">if</span> (jsonError != nil) &#123;</span><br><span class="line">                        [subscriber <span class="string">sendError:</span>jsonError];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                DDLogError(@<span class="string">"function: dataTask error: %@"</span>, [error localizedDescription]);</span><br><span class="line">                [subscriber <span class="string">sendError:</span>error];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [dataTask resume];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> [RACDisposable <span class="string">disposableWithBlock:</span>^&#123;</span><br><span class="line">            [dataTask cancel];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;] logError] replayLazily];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/mac-proxy-config/">
                 MAC 代理设置
               </a>
@@ -887,100 +971,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-autolayout/">
-                ios 自动布局
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-autolayout/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-autolayout/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="自动布局">自动布局</h3><h4 id="IOS7_UIlabel_高度bug">IOS7 UIlabel 高度bug</h4><pre><code><span class="comment">//需要设置</span>
-lb1<span class="variable">.lineBreakMode</span> = <span class="built_in">NSLineBreakByCharWrapping</span>;
-</code></pre><h4 id="自动布局bug">自动布局bug</h4><pre><code>使用autolayout时 <span class="keyword">button不能点击 </span>可能是因为<span class="keyword">button的parentView </span>没有自动扩展开
-</code></pre><h4 id="系统自带autolayout">系统自带autolayout</h4><pre><code>viewsDictionary = NSDictionaryOfVariableBindings(scrollView, imageView);
-[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[scrollView]|"</span> 
-                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
-[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[scrollView]|"</span> 
-                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
-[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[imageView]|"</span> 
-                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
-[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[imageView]|"</span> 
-                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
-</code></pre><h4 id="AutoLayout_priority">AutoLayout priority</h4><pre><code>[UIView <span class="string">autoSetPriority:</span>UILayoutPriorityRequired <span class="string">forConstraints:</span>^{
-    [self.titleLabel <span class="string">autoSetContentCompressionResistancePriorityForAxis:</span>ALAxisVertical];
-}];
-[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTop <span class="string">withInset:</span>kLabelVerticalInsets];
-[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeLeading <span class="string">withInset:</span>kLabelHorizontalInsets];
-[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTrailing <span class="string">withInset:</span>kLabelHorizontalInsets];
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1019,7 +1009,7 @@ lb1<span class="variable">.lineBreakMode</span> = <span class="built_in">NSLineB
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

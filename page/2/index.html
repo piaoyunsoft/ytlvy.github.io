@@ -148,6 +148,102 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/17/iOS-Class-Clusters/">
+                iOS Class Clusters
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-Class-Clusters/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-Class-Clusters/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/12/18/class-cluster/" target="_blank" rel="external">转自</a></p>
+<h2 id="从NSArray看类簇">从NSArray看类簇</h2><h3 id="Class_Clusters">Class Clusters</h3><p>Class Clusters（类簇）是<code>抽象工厂</code>模式在iOS下的一种实现，众多常用类，如NSString，NSArray，NSDictionary，NSNumber都运作在这一模式下，它是接口简单性和扩展性的权衡体现，在我们完全不知情的情况下，偷偷隐藏了很多具体的实现类，只暴露出简单的接口。</p>
+<h3 id="NSArray的类簇">NSArray的类簇</h3><p>虽然<a href="https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/ClassClusters/ClassClusters.html" target="_blank" rel="external">官方文档</a>中拿<code>NSNumber</code>说事儿，但Foundation并没有像图中描述的那样为每个number都弄一个子类，于是研究下NSArray类簇的实现方式。</p>
+<h4 id="__NSPlacehodlerArray">__NSPlacehodlerArray</h4><p>熟悉这个模式的同学很可能看过下面的测试代码，将原有的alloc+init拆开写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> obj1 = [<span class="built_in">NSArray</span> alloc]; <span class="comment">// __NSPlacehodlerArray *</span></span><br><span class="line"><span class="keyword">id</span> obj2 = [<span class="built_in">NSMutableArray</span> alloc];  <span class="comment">// __NSPlacehodlerArray *</span></span><br><span class="line"><span class="keyword">id</span> obj3 = [obj1 init];  <span class="comment">// __NSArrayI *</span></span><br><span class="line"><span class="keyword">id</span> obj4 = [obj2 init];  <span class="comment">// __NSArrayM *</span></span><br></pre></td></tr></table></figure>
+<p>发现<code>+ alloc</code>后并非生成了我们期望的类实例，而是一个<code>__NSPlacehodlerArray</code>的中间对象，后面的<code>- init</code>或<code>- initWithXXXXX</code>消息都是发送给这个中间对象，再由它做工厂，生成真的对象。这里的<code>__NSArrayI</code>和<code>__NSArrayM</code>分别对应Immutable和Mutable（后面的I和M的意思）</p>
+<p>于是顺着思路猜实现，<code>__NSPlacehodlerArray</code>必定用某种方式存储了它是由谁alloc出来的这个信息，才能在init的时候知道要创建的是可变数组还是不可变数组</p>
+<p>于是乎很开心的去看了下*obj1的内存布局：</p>
+<p><img src="http://ww4.sinaimg.cn/large/51530583jw1em3doxs660j20l80j6go3.jpg" alt=""></p>
+<p>下面是32位模拟器中的内存布局（64位太长不好看就临时改32位了- -），第一个箭头是<code>*obj1</code>，第二个是<code>*obj2</code></p>
+<p><img src="http://ww3.sinaimg.cn/mw690/51530583jw1em3dvmuuanj213006maf2.jpg" alt=""></p>
+<p>我们知道，对象的前4字节（32位下）为isa指针，指向类对象地址，上图所示的<code>0x0051E768</code>就是<code>__NSPlacehodlerArray</code>类对象地址，可以从lldb下po这个地址来验证。</p>
+<p>那么问题来了，这个中间对象并没有储存任何信息诶（除了isa外就都是0了），那它init的时候咋知道该创建什么呢？<br>经过研究发现，Foundation用了一个很贱的比较静态实例地址方式来实现，伪代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *GetPlaceholderFor<span class="built_in">NSArray</span>() &#123;</span><br><span class="line">    <span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *instanceFor<span class="built_in">NSArray</span>;</span><br><span class="line">    <span class="keyword">if</span> (!instanceFor<span class="built_in">NSArray</span>) &#123;</span><br><span class="line">        instanceFor<span class="built_in">NSArray</span> = [[__<span class="built_in">NSPlacehodlerArray</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instanceFor<span class="built_in">NSArray</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *GetPlaceholderFor<span class="built_in">NSMutableArray</span>() &#123;</span><br><span class="line">    <span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *instanceFor<span class="built_in">NSMutableArray</span>;</span><br><span class="line">    <span class="keyword">if</span> (!instanceFor<span class="built_in">NSMutableArray</span>) &#123;</span><br><span class="line">        instanceFor<span class="built_in">NSMutableArray</span> = [[__<span class="built_in">NSPlacehodlerArray</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instanceFor<span class="built_in">NSMutableArray</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NSArray实现</span></span><br><span class="line">+ (<span class="keyword">id</span>)alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == [<span class="built_in">NSArray</span> class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> GetPlaceholderFor<span class="built_in">NSArray</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NSMutableArray实现</span></span><br><span class="line">+ (<span class="keyword">id</span>)alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == [<span class="built_in">NSMutableArray</span> class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> GetPlaceholderFor<span class="built_in">NSMutableArray</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// __NSPlacehodlerArray实现</span></span><br><span class="line">- (<span class="keyword">id</span>)init</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == GetPlaceholderFor<span class="built_in">NSArray</span>()) &#123;</span><br><span class="line">        <span class="keyword">self</span> = [[__<span class="built_in">NSArrayI</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">self</span> == GetPlaceholderFor<span class="built_in">NSMutableArray</span>()) &#123;</span><br><span class="line">        <span class="keyword">self</span> = [[__<span class="built_in">NSArrayM</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Foundation不是开源的，所以上面的代码是猜测的，思路大概就是这样，可以这样验证下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> obj1 = [<span class="built_in">NSArray</span> alloc]; </span><br><span class="line"><span class="keyword">id</span> obj2 = [<span class="built_in">NSArray</span> alloc];</span><br><span class="line"><span class="keyword">id</span> obj3 = [<span class="built_in">NSMutableArray</span> alloc];</span><br><span class="line"><span class="keyword">id</span> obj4 = [<span class="built_in">NSMutableArray</span> alloc];</span><br><span class="line"><span class="comment">// 1和2地址相同，3和4地址相同，无论多少次都相同，且地址相差16位</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="静态不可变空对象">静态不可变空对象</h4><p>除此之外，Foundation对<code>不可变</code>版本的空数组也做了个小优化：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSArray <span class="keyword">*</span>arr1 = [[NSArray alloc] init];</span><br><span class="line">NSArray <span class="keyword">*</span>arr2 = [[NSArray alloc] init];</span><br><span class="line">NSArray <span class="keyword">*</span>arr3 = <span class="comment">@[];</span></span><br><span class="line">NSArray <span class="keyword">*</span>arr4 = <span class="comment">@[];</span></span><br><span class="line">NSArray <span class="keyword">*</span>arr5 = <span class="comment">@[@1];</span></span><br></pre></td></tr></table></figure>
+<p>上边1-4号都指向了同一个对象，而arr5指向了另一个对象。</p>
+<p>若干个不可变的空数组间没有任何特异性，返回一个静态对象也理所应当。<br>不仅是NSArray，Foundation中如<code>NSString</code>, <code>NSDictionary</code>, <code>NSSet</code>等区分可变和不可变版本的类，空实例都是静态对象（NSString的空实例对象是常量区的@””）</p>
+<p>所以也给用这些方法来测试对象内存管理的同学提个醒，很容易意料之外的。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/17/iOS-interface-dig/">
                 objc@interface的设计哲学与设计技巧
               </a>
@@ -1166,92 +1262,6 @@ DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment"
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/NSRunLoop深入理解/">
-                NSRunLoop深入理解
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/NSRunLoop深入理解/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/NSRunLoop深入理解/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://www.cocoachina.com/ios/20150601/11970.html">转自</a></p>
-<h2 id="RunLoop">RunLoop</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;RunLoop 是 iOS 和 OS X 开发中非常基础的一个概念，这篇文章将从 CFRunLoop 的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用 RunLoop 实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
-<h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
-<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/NSRunLoop深入理解/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1290,7 +1300,7 @@ DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment"
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
