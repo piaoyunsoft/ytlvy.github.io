@@ -148,6 +148,99 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/30/Dispatch-Sources/">
+                Dispatch Sources
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/Dispatch-Sources/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-Sources/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Dispatch_Sources">Dispatch Sources</h2><p>简单来说，是一种能够监控某种事件的对象。当事件发生的时候，此对象自动唤醒设置好的block，并在指定的queue中运行。</p>
+<h3 id="events_Type">events Type</h3><ul>
+<li>Mach port send right state changes.</li>
+<li>Mach port receive right state changes.</li>
+<li>External process state change.</li>
+<li>File descriptor ready for read.</li>
+<li>File descriptor ready for write.</li>
+<li>Filesystem node event.</li>
+<li>POSIX signal.</li>
+<li>Custom timer.</li>
+<li>Custom event.</li>
+</ul>
+<h3 id="Custom_Events">Custom Events</h3><p>通过<code>dispatch_source_merge_data</code>来发送消息，此方法取名<code>merge</code>的原因是，在事件回调执行前，GCD会自动合并累计的消息，直到对应的运行Queue有空闲，可以运行回调Block。所以，这是一种提高效率的方式，将多次消息合并成一个。<br>自定义事件分为：<code>DISPATCH_SOURCE_TYPE_DATA_ADD</code> 和 <code>DISPATCH_SOURCE_TYPE_DATA_OR</code>, 每个event Source有一个<code>unsigned long data</code>属性，用来合并<code>dispatch_source_merge_data</code>的参数。<code>dispatch_source_get_data</code>可以获取到当前的<code>data</code>数据。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/Dispatch-Sources/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/30/OSSpinLock/">
                 OSSpinLock
               </a>
@@ -913,83 +1006,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/08/objc-runtime-method-Cache/">
-                objc runtime method Cache
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/08/objc-runtime-method-Cache/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/objc-runtime-method-Cache/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="method_cache_更新机制">method cache 更新机制</h3><p>为了方便函数的查找, objc在运行时,引入了method cache机制,来快速定位函数.method cache的大小是动态更新的,在更新时, 将直接生成新容量的缓存, 并将旧的缓存放入到垃圾队列中,等待时机释放. 而时机的选择, 采用检测每个线程的program counter,来查看是否处于objc_msgSend.如果都不在,则释放.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BOOL ThreadsInMsgSend<span class="params">(void)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(thread in GetAllThreads<span class="params">()</span>)</span> &#123;</span><br><span class="line">        uintptr_t pc = thread.GetPC<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">if</span><span class="params">(pc &gt;= objc_msgSend_startAddress &amp;&amp; pc &lt;= objc_msgSend_endAddress)</span> &#123;</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bucket_t <span class="built_in">*</span>oldCache = class-&gt;cache;</span><br><span class="line">class-&gt;cache = malloc<span class="params">(newSize)</span>;</span><br><span class="line"></span><br><span class="line">append<span class="params">(gOldCachesList, oldCache)</span>;</span><br><span class="line"><span class="keyword">if</span><span class="params">(!ThreadsInMsgSend<span class="params">()</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(cache in gOldCachesList)</span> &#123;</span><br><span class="line">        free<span class="params">(cache)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    gOldCachesList.clear<span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1028,7 +1044,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-count">138</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1042,7 +1058,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-count">61</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

@@ -148,6 +148,92 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/appdelegate-shou-shen/">
+                Appdelegate瘦身
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/appdelegate-shou-shen/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appdelegate-shou-shen/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <ul>
+<li>(BOOL)application:(UIApplication <em>)application<br>didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // …<br>  [FooModule setup];<br>  [[BarModule sharedInstance] setup];<br>  // …<br>  return YES;<br>}</li>
+</ul>
+<p>/// FooModule.m</p>
+<ul>
+<li>(void)load<br>{<br>  __block id observer =<br>  [[NSNotificationCenter defaultCenter]<br>   addObserverForName:UIApplicationDidFinishLaunchingNotification<br>   object:nil<br>   queue:nil<br>   usingBlock:^(NSNotification *note) {<pre><code><span class="attr_selector">[self setup]</span>; <span class="comment">// Do whatever you want</span>
+<span class="attr_selector">[[NSNotificationCenter defaultCenter]</span> <span class="tag">removeObserver</span><span class="pseudo">:observer</span>];
+</code></pre>   }];<br>}</li>
+</ul>
+<p>// 解释：<br>// + load方法在足够早的时间点被调用<br>// block版本的通知注册会产生一个<strong>NSObserver *对象用来给外部remove观察者<br>// block对observer对象的捕获早于函数的返回，所以若不加</strong>block，会捕获到nil<br>// 在block执行结束时移除observer，无需其他清理工作<br>// 这样，在模块内部就完成了在程序启动点代码的挂载</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/appstore-reject/">
                 appstore 被拒
               </a>
@@ -888,87 +974,6 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-file-handler/">
-                ios 文件处理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-file-handler/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-file-handler/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="path">path</h4><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">NSMutableArray</span> *<span class="atom">marray</span>=[<span class="name">NSMutableArray</span> <span class="atom">array</span>];</span><br><span class="line"><span class="name">NSString</span> *<span class="atom">path</span>=[<span class="name">NSString</span> <span class="atom">pathWithComponents</span>:<span class="atom">marray</span>];</span><br><span class="line"></span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathComponents</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">isAbsolutePath</span>]</span><br><span class="line"><span class="name">NSLog</span>(@<span class="string">"%@"</span>,[<span class="atom">path</span> <span class="atom">lastPathComponent</span>]);//取得最后一个目录</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingLastPathComponent</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByAppendingPathComponent</span>:@<span class="string">"Documents"</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathExtension</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingPathExtension</span>]</span><br><span class="line">[@<span class="string">"Users/KenshinCui/Desktop/test"</span> <span class="atom">stringByAppendingPathExtension</span>:@<span class="string">"mp3"</span>]</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-file-handler/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1007,7 +1012,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-count">138</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1021,7 +1026,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">59</span>
+              <span class="site-state-item-count">61</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
