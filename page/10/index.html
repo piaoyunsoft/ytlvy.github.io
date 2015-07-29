@@ -148,6 +148,571 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/objective-c-and-core-foundation-memory-managment/">
+                Objective-C 和 Core Foundation 对象相互转换的内存管理总结
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/objective-c-and-core-foundation-memory-managment/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Objective-C_和_Core_Foundation_对象相互转换的内存管理总结">Objective-C 和 Core Foundation 对象相互转换的内存管理总结</h2><p>iOS允许Objective-C 和 Core Foundation 对象之间可以轻松的转换，拿 NSString 和 CFStringRef 来说，直接转换豪无压力：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (<span class="built_in">CFStringRef</span>)a<span class="built_in">NSString</span>;  </span><br><span class="line"><span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = (<span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;</span><br></pre></td></tr></table></figure>
+<p>针对内存管理问题，ARC 可以帮忙管理 Objective-C 对象, 但是不支持 Core Foundation 对象的管理，所以转换后要注意一个问题：谁来释放使用后的对象。 本文重点总结一下类型转换后的内存管理。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/">
+                非零环绕数规则和奇-偶规则(Non-Zero Winding Number Rule&amp;&amp;Odd-even Rule)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>参考</p>
+<p>[1]<a href="http://www.cs.rit.edu/~icss571/filling/alt_parity.html">http://www.cs.rit.edu/~icss571/filling/alt_parity.html</a><br>[2]<a href="http://cs.hust.edu.cn/webroot/courses/csgraphics/jiaocai.php?bookpage=5_c_c">http://cs.hust.edu.cn/webroot/courses/csgraphics/jiaocai.php?bookpage=5_c_c</a><br>[3]<a href="http://en.wikipedia.org/wiki/Nonzero-rule">http://en.wikipedia.org/wiki/Nonzero-rule</a></p>
+<blockquote>
+<p>在图形学中判断一个点是否在多边形内，若多边形不是自相交的，那么可以简单的判断这个点在多边形内部还是外部；若多边形是自相交的，那么就需要根据非零环绕数规则和奇-偶规则判断。<br>  判断多边形是否是自相交的：多边形在平面内除顶点外还有其他公共点</p>
+</blockquote>
+<h2 id="内-外测试">内-外测试</h2><blockquote>
+<p>不自交的多边形：多边形仅在顶点处连接，而在平面内没有其他公共点，此时可以直接划分内-外部分。<br> 自相交的多边形：多边形在平面内除顶点外还有其他公共点，此时划分内-外部分需要采用以下的方法。</p>
+</blockquote>
+<h3 id="1-_奇-偶规则（Odd-even_Rule）：奇数表示在多边形内，偶数表示在多边形外">1. 奇-偶规则（Odd-even Rule）：奇数表示在多边形内，偶数表示在多边形外</h3><blockquote>
+<p>从任意位置p作一条射线，若与该射线相交的多边形边的数目为奇数，则p是多边形内部点，否则是外部点。</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/coreimage-example/">
+                Core Image使用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/coreimage-example/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/coreimage-example/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>首先创建一个径向渐变的滤镜，该滤镜是从白到黑的渐变方式，白色区域的半径默认是100。接着将其与一张使用CIDarkenBlendMode滤镜的图片合成。CIDarkenBlendMode的作用是背景图片样本将被源图片的黑色部分替换掉。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* moi = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.jpeg"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIImage</span>* moi2 = [[<span class="built_in">CIImage</span> alloc] initWith<span class="built_in">CGImage</span>:moi<span class="variable">.CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIFilter</span>* grad = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIRadialGradient"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIVector</span>* center = [<span class="built_in">CIVector</span> vectorWithX:moi<span class="variable">.size</span><span class="variable">.width</span> / <span class="number">2.0</span> Y:moi<span class="variable">.size</span><span class="variable">.height</span> / <span class="number">2.0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用setValue：forKey：方法设置滤镜属性</span></span><br><span class="line">[grad setValue:center forKey:<span class="string">@"inputCenter"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定滤镜名时提供所有滤镜键值对</span></span><br><span class="line"><span class="built_in">CIFilter</span>* dark = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIDarkenBlendMode"</span> keysAndValues:<span class="string">@"inputImage"</span>, grad<span class="variable">.outputImage</span>, <span class="string">@"inputBackgroundImage"</span>, moi2, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIContext</span>* c = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> moi3 = [c create<span class="built_in">CGImage</span>:dark<span class="variable">.outputImage</span> fromRect:moi2<span class="variable">.extent</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* moi4 = [<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:moi3 scale:moi<span class="variable">.scale</span> orientation:moi<span class="variable">.imageOrientation</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(moi3);</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.cnitblog.com/blog/429321/201212/27103647-2fcd19d1ca1e4a0d9f42e2c79687e881.png" alt="图片合成图"></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-cgimage-bugfix/">
+                CGImage绘制倒置修复
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-cgimage-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cgimage-bugfix/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* mars = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.png"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> sz = [mars size];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsCG = [mars <span class="built_in">CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> szCG = <span class="built_in">CGSizeMake</span>(<span class="built_in">CGImageGetWidth</span>(marsCG), <span class="built_in">CGImageGetHeight</span>(marsCG));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsLeft = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsRight = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(szCG<span class="variable">.width</span>/<span class="number">2.0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="built_in">CGSizeMake</span>(sz<span class="variable">.width</span>*<span class="number">1.5</span>, sz<span class="variable">.height</span>), <span class="literal">NO</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsLeft scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsRight scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(sz<span class="variable">.width</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* im = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(marsLeft); <span class="built_in">CGImageRelease</span>(marsRight);</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/">
+                Using SWRevealViewController Together With RBStoryboardLink
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>://samwize.com/<span class="number">2015</span>/<span class="number">03</span>/<span class="number">26</span>/<span class="keyword">using</span>-swrevealviewcontroller-together-<span class="operator">with</span>-rbstoryboardlink/</span><br></pre></td></tr></table></figure>
+<p>I posted about how to modularize storyboard using RBStoryboardLink and how to use SWRevealViewController.<br>But to use both of them together is not straight forward.<br>This is because both library makes use of custom segues to do what they want to do. And it is not possible for you to customize 1 segue to satisfy both!<br>To make them work together:<br>Create the <code>RBStoryboardLink</code> suggorate view controller and setup <code>storyboardName</code> as per normal, but don’t create any segue to it. It will be alone.<br>Give it a storyboard ID eg. “surrogate”<br>Don’t use <code>SWRevealViewControllerSeguePushController</code> segue too<br>Instead, call the revealViewController’s <code>pushFrontViewController</code> method manually.<br>The code:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">IBAction</span>)buttonTapped:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *vc = [<span class="keyword">self</span><span class="variable">.storyboard</span> instantiateViewControllerWithIdentifier:<span class="string">@"surrogate"</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.revealViewController</span> pushFrontViewController:vc animated:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If the view controller is not getting behind the status bar correctly, set <code>needsTopLayoutGuide</code> key to NO in the suggorate.</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/">
+                Pitfall: NSLayoutConstraint Breaking in UICollectionView
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[cell.contentView setTranslatesAutoresizingMaskIntoConstraints:NO]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/how-to-use-reflect-to-set-a-struct-field/">
+                How to Use Reflect to Set a Struct Field
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Golang/">Golang</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/how-to-use-reflect-to-set-a-struct-field/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/how-to-use-reflect-to-set-a-struct-field/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Golang reflect package is one of the hardest to understand.<br>Yet reflect is one of the most powerful because you can inspect a struct and it’s fields during runtime, and change it.<br>Go isn’t as simple to understand as other languages such as Python in using reflection. Just try reading their <a href="http://blog.golang.org/laws-of-reflection" target="_blank" rel="external">laws of reflection</a>.<br>But setting a field of a struct by name could be a one liner. There is a nice answer in <a href="http://stackoverflow.com/a/6396678/242682" target="_blank" rel="external">Stack Overflow</a>.<br>In short, if you want to set a struct <figure class="highlight"><figcaption><span>object when you know the field name to set, this is the code:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;</span><br></pre></td></tr></table></figure></p>
+<p>func setFoo(foo *Foo, field string, value string) {<br>    v := reflect.ValueOf(foo).Elem().FieldByName(field)<br>    if v.IsValid() {<br>        v.SetString(value)<br>    }<br>}<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If you want to <span class="built_in">print</span> all the fields <span class="keyword">of</span> `<span class="javascript">foo</span>`, <span class="keyword">this</span> <span class="keyword">is</span> the <span class="attribute">code</span>:</span><br></pre></td></tr></table></figure></p>
+<p>s := reflect.ValueOf(foo).Elem()<br>typeOfT := s.Type()<br>for i := 0; i &lt; s.NumField(); i++ {<br>    f := s.Field(i)<br>    fmt.Printf(“%d: %s %s = %v\n”, i,<br>        typeOfT.Field(i).Name, f.Type(), f.Interface())<br>}<br>```</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/flickr-primary-key-generate/">
                 flickr 主键生成策略
               </a>
@@ -386,598 +951,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/xcode-submit-behind-proxy/">
-                代理环境下 xcode submit 失败解决---xcode6.3更新
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Xcode/">Xcode</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/xcode-submit-behind-proxy/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-submit-behind-proxy/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>由于公司网络需要设置代理才能访问外网，此时通过xocde提交应用到itunesconnect的时候会出现443访问失败的错误，可以通过下面的方法来解决。</p>
-<blockquote>
-<ol>
-<li>Go to Application Loader java folder :<br>/Applications/Xcode.app/Contents/Applications/“Application Loader.app”/Contents/MacOS/itms/java/lib</li>
-</ol>
-<blockquote>
-<p>//xcode6.3<br>/Applications/Xcode.app/Contents/Applications/“Application Loader.app”/Contents/itms/java/lib</p>
-</blockquote>
-<ol>
-<li><p>Open net.properties file with “sublime text” or “text mate”</p>
-</li>
-<li><p>Change “#https.proxyPort=443” proxy port to “https.proxyPort=80”</p>
-</li>
-<li><p>Save the file and reopen Application Loader and Try again.</p>
-</li>
-</ol>
-</blockquote>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/block/">
-                Block
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/block/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/block/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-multi-thread-example/">
-                ios 多线程操作
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-multi-thread-example/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-multi-thread-example/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="多线程操作">多线程操作</h3><ol>
-<li>创建一个NSOperation不应该直接调用start方法（如果直接start则会在主线程中调用）而是应该放到NSOperationQueue中启动</li>
-<li>NSOperation进行多线程开发可以控制线程总数及线程依赖关系</li>
-<li>相比NSInvocationOperation推荐使用NSBlockOperation，代码简单，同时由于闭包性使它没有传参问题。</li>
-<li>NSOperation是对GCD面向对象的ObjC封装，但是相比GCD基于C语言开发，效率却更高，建议如果任务之间有依赖关系或者想要监听任务完成状态的情况下优先选择NSOperation否则使用GCD</li>
-<li>在GCD中串行队列中的任务被安排到一个单一线程执行（不是主线程），可以方便地控制执行顺序；并发队列在多个线程中执行（前提是使用异步方法），顺序控制相对复杂，但是更高效</li>
-<li>在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行（如果是并行队列使用同步方法调用则会在主线程中执行）</li>
-<li>相比使用NSLock，@synchronized更加简单，推荐使用后者</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-multi-thread-example/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-debug/">
-                ios 调试
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-debug/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-debug/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="调试">调试</h3><h4 id="检测是否为主线程">检测是否为主线程</h4><pre><code>[NSThread isMainThread]
-</code></pre><h4 id="lldb_增强">lldb 增强</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew install chisel</span><br><span class="line"></span><br><span class="line">vim ~/.lldbinit</span><br><span class="line">command script <span class="keyword">import</span> <span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>chisel<span class="regexp">/1.1.0/</span>libexec/fblldb.py</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-debug/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-audio/">
-                ios 声音
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-audio/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-audio/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="声音">声音</h3><h4 id="震动">震动</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#<span class="preprocessor"><span class="keyword">import</span> &lt;AudioToolbox/AudioToolbox.h&gt;</span><br><span class="line">AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);</span></span><br></pre></td></tr></table></figure>
-<h4 id="系统声音">系统声音</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AudioServicesPlaySystemSound(<span class="number">1007</span>); </span><br><span class="line"><span class="string">http:</span><span class="comment">//iphonedevwiki.net/index.php/AudioServices</span></span><br></pre></td></tr></table></figure>
-<h4 id="用户音效">用户音效</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//音效文件路径  </span></span><br><span class="line"><span class="built_in">NSString</span> *path = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"message"</span> ofType:<span class="string">@"wav"</span>];  </span><br><span class="line"><span class="comment">//组装并播放音效  </span></span><br><span class="line">SystemSoundID soundID;  </span><br><span class="line"><span class="built_in">NSURL</span> *filePath = [<span class="built_in">NSURL</span> fileURLWithPath:path isDirectory:<span class="literal">NO</span>];  </span><br><span class="line">AudioServicesCreateSystemSoundID((__bridge <span class="built_in">CFURLRef</span>)filePath, &amp;soundID);  </span><br><span class="line">AudioServicesPlaySystemSound(soundID);  </span><br><span class="line"><span class="comment">//声音停止</span></span><br><span class="line">AudioServicesDisposeSystemSoundID(soundID);</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-audio/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios8-lbs-permission-bug/">
-                IOS8 定位服务权限的问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios8-lbs-permission-bug/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios8-lbs-permission-bug/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="IOS8_定位服务权限的问题">IOS8 定位服务权限的问题</h2><pre><code><span class="keyword">self</span><span class="variable">.manger</span> = [[CLLocationManager alloc]init];
-<span class="keyword">self</span><span class="variable">.manger</span><span class="variable">.distanceFilter</span> = kCLDistanceFilterNone; <span class="comment">// meters</span>
-<span class="keyword">self</span><span class="variable">.manger</span><span class="variable">.delegate</span> = <span class="keyword">self</span>;
-[<span class="keyword">self</span><span class="variable">.manger</span> requestAlwaysAuthorization];
-[<span class="keyword">self</span><span class="variable">.manager</span> requestWhenInUseAuthorization];
-<span class="keyword">self</span><span class="variable">.manger</span><span class="variable">.desiredAccuracy</span> = kCLLocationAccuracyBestForNavigation;
-[<span class="keyword">self</span><span class="variable">.manger</span> startUpdatingLocation];
-
-<span class="comment">//并且在info.plist文件中增加</span>
-<span class="built_in">NSLocationWhenInUseUsageDescription</span>  <span class="built_in">BOOL</span> <span class="literal">YES</span>
-<span class="built_in">NSLocationAlwaysUsageDescription</span>         string “提示描述”
-两个字段，在iOS8中才能进行正确的获取服务权限
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-date-function/">
-                ios 时间处理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-date-function/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-date-function/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="时间">时间</h3><h4 id="NSTimer">NSTimer</h4><pre><code>NSTimer *<span class="tag">time</span> = [NSTimer scheduledTimerWithInterval:<span class="number">1.0</span>
-                    target:self
-                    selector:@<span class="function"><span class="title">selector</span><span class="params">(update)</span></span>
-                    userInfo:nil
-                    repeats:YES]
-[<span class="tag">time</span> invalidate] <span class="comment">//关闭方法</span>
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-date-function/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
   </div>
 
 
@@ -1011,21 +989,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-count">145</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-count">68</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

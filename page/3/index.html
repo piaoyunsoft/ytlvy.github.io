@@ -148,6 +148,768 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/16/Debug/">
+                Debug
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/Debug/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/Debug/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="调试">调试</h3><h4 id="DTrace">DTrace</h4><p>You can use <code>DTrace</code> to monitor a running application to see the methods and the classes that are called. You can easily monitor an iOS app running in the Simulator using DTrace on the command line, First you will need to find the PID of the application using ps and then you can run a <code>DTrace</code> probe like the following:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:::entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>where 1234 is the process ID of the app.</p>
+<p>If you are only interested in tracing a single class, UIView for example, you could use:<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -q -n <span class="string">'objc1234</span>:UIView::entry &#123; printf(<span class="string">"%s %s\n"</span>, probemod, probefunc); &#125;'</span><br></pre></td></tr></table></figure></p>
+<p>If you wanted to trace all calls to dealloc on all classes, you would use:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234::-dealloc:entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>Obviously, you could combine these to only see UIView deallocs:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:UIView:-dealloc:entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>If you want to be able to distinguish a specific object of a class you could also print the memory address of the object (self) using the following:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:UIView:-dealloc:entry &#123; printf("%s (0x%p) %s\n", probemod, arg0, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="message_logging_好像不可以了">message logging 好像不可以了</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Turn on message logging</span></span><br><span class="line">instrumentObjcMessageSends(<span class="literal">YES</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert code here...</span></span><br><span class="line"><span class="built_in">NSString</span> *string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"This is just %d cool"</span>, <span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now turn it off again</span></span><br><span class="line">instrumentObjcMessageSends(<span class="literal">NO</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="检测是否为主线程">检测是否为主线程</h4><pre><code>[NSThread isMainThread]
+</code></pre><h4 id="打印引用计数">打印引用计数</h4><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSLog<span class="list">(@<span class="string">"retain count = %d"</span>, _objc_rootRetainCount<span class="list">(<span class="keyword">obj</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">NSLog<span class="list">(@<span class="string">"Retain count is %ld"</span>, CFGetRetainCount<span class="list">(<span class="list">(<span class="keyword">__bridge</span> CFTypeRef)</span>myObject)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h4 id="output_observation_information_for_object">output observation information for object</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">po</span><span class="sqbracket"> [self observationInfo]</span></span><br></pre></td></tr></table></figure>
+<h4 id="lldb_增强">lldb 增强</h4><pre><code>brew install chisel
+
+vim ~/.lldbinit
+command script <span class="keyword">import</span> <span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>chisel<span class="regexp">/1.1.0/</span>libexec/fblldb.py
+</code></pre><h4 id="lldb_命令">lldb 命令</h4><pre><code><span class="function"><span class="title">print</span><span class="params">(p)</span></span>
+po
+call function
+bt   Printing the Stacktrace
+<span class="function"><span class="title">expr</span><span class="params">(e)</span></span> todo<span class="class">.title</span> = @<span class="string">"Changed"</span>
+</code></pre><h4 id="lldb_增强命令">lldb 增强命令</h4><pre><code>pviews  
+    <span class="type">Print</span> the recursive view description <span class="keyword">for</span> the key window.    <span class="type">Yes</span> <span class="type">Yes</span>
+pvc
+    <span class="type">Print</span> the recursive view controller description <span class="keyword">for</span> the key window. <span class="type">Yes</span> <span class="type">No</span>
+visualize
+    <span class="type">Open</span> a <span class="type">UIImage</span>, <span class="type">CGImageRef</span>, <span class="type">UIView</span>, <span class="keyword">or</span> <span class="type">CALayer</span> <span class="keyword">in</span> <span class="type">Preview</span>.app on your <span class="type">Mac</span>.  <span class="type">Yes</span> <span class="type">No</span>
+fv  
+    <span class="type">Find</span> a view <span class="keyword">in</span> the hierarchy whose class name matches the provided regex.   <span class="type">Yes</span> <span class="type">No</span>
+fvc
+    <span class="type">Find</span> a view controller <span class="keyword">in</span> the hierarchy whose class name matches the provided regex.    <span class="type">Yes</span> <span class="type">No</span>
+show/hide
+    <span class="type">Show</span> <span class="keyword">or</span> hide the given view <span class="keyword">or</span> layer. <span class="type">You</span> don't even have to <span class="keyword">continue</span> the process to see the changes!   <span class="type">Yes</span> <span class="type">Yes</span>
+mask/unmask
+    <span class="type">Overlay</span> a view <span class="keyword">or</span> layer <span class="keyword">with</span> a transparent rectangle to visualize where it <span class="keyword">is</span>.  <span class="type">Yes</span> <span class="type">No</span>
+border/unborder
+    <span class="type">Add</span> a border to a view <span class="keyword">or</span> layer to visualize where it <span class="keyword">is</span>.   <span class="type">Yes</span> <span class="type">Yes</span>
+caflush
+    <span class="type">Flush</span> the render server (equivalent to a <span class="string">"repaint"</span> <span class="keyword">if</span> no animations are <span class="keyword">in</span>-flight).)    <span class="type">Yes</span> <span class="type">Yes</span>
+bmessage
+    <span class="type">Set</span> a symbolic breakpoint on the <span class="keyword">method</span> <span class="keyword">of</span> a class <span class="keyword">or</span> the <span class="keyword">method</span> <span class="keyword">of</span> an instance <span class="keyword">without</span> worrying which class <span class="keyword">in</span> the hierarchy actually implements the <span class="keyword">method</span>.   <span class="type">Yes</span> <span class="type">Yes</span>
+wivar
+    <span class="type">Set</span> a watchpoint on an instance variable <span class="keyword">of</span> an <span class="keyword">object</span>.  <span class="type">Yes</span> <span class="type">Yes</span>
+presponder  
+    <span class="type">Print</span> the responder chain starting <span class="keyword">from</span> the given <span class="keyword">object</span>.   <span class="type">Yes</span> <span class="type">Ye</span>
+</code></pre><h4 id="show_frame">show frame</h4><pre><code><span class="tag">p</span> (CGRect)[uiTextFieldObj frame]
+<span class="tag">p</span> self<span class="class">.view</span><span class="class">.layer</span><span class="class">.frame</span>
+</code></pre><h4 id="how_view_hierarchy-">how view hierarchy.</h4><pre><code><span class="id">#ifdef</span> <span class="tag">DEBUG</span>
+  <span class="tag">NSLog</span>(@<span class="string">"Cell recursive description:\n\n%@\n\n"</span>, [cell <span class="attribute">performSelector</span>:<span class="variable">@selector</span>(recursiveDescription)]);
+<span class="id">#endif</span>
+</code></pre><h5 id="显示所有视图">显示所有视图</h5><pre><code>po <span class="comment">[<span class="comment">[UIWindow keyWindow]</span> recursiveDescription]</span>
+</code></pre><h5 id="IOS8_显示单个视图">IOS8 显示单个视图</h5><pre><code>po <span class="comment">[<span class="comment">[<span class="comment">[UIWindow keyWindow]</span> rootViewController]</span> _printHierarchy]</span>
+</code></pre><h5 id="searchbar_视图">searchbar 视图</h5><pre><code>po <span class="attr_selector">[searchbar recursiveDescription]</span> <span class="comment">//查看索引树</span>
+</code></pre><h4 id="LOG">LOG</h4><pre><code><span class="preprocessor">#ifdef DEBUG</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> ddLogLevel = LOG_LEVEL_VERBOSE;
+<span class="preprocessor">#else</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> ddLogLevel = LOG_LEVEL_OFF;
+<span class="preprocessor">#endif</span>
+
+<span class="comment">// 实例化 lumberjack</span>
+[DDLog addLogger:[DDTTYLogger sharedInstance]];
+<span class="comment">// 允许颜色</span>
+[[DDTTYLogger sharedInstance] setColorsEnabled:<span class="literal">YES</span>];
+
+<span class="comment">//lumberjack提供了四种Log方法</span>
+DDLogError(<span class="string">@"错误信息"</span>); <span class="comment">// 红色</span>
+DDLogWarn(<span class="string">@"警告"</span>); <span class="comment">// 橙色</span>
+DDLogInfo(<span class="string">@"提示信息"</span>); <span class="comment">// 默认是黑色</span>
+DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment">// 默认是黑色</span>
+
+<span class="comment">//如果要修改Log输出的颜色可以使用如下代码</span>
+[[DDTTYLogger sharedInstance] setForegroundColor:[<span class="built_in">UIColor</span> blueColor]
+                                backgroundColor:<span class="literal">nil</span>
+                                        forFlag:LOG_FLAG_INFO];
+</code></pre><h4 id="调试的技巧">调试的技巧</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>) buttonPressed :(<span class="built_in">UIButton</span> *)button</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Stack trace: %@"</span>, [<span class="built_in">NSThread</span> callStackSymbols]);</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Current selector: %@"</span>, <span class="built_in">NSStringFromSelector</span>(_cmd));  </span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Object class: %@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Filename: %@"</span>, [[<span class="built_in">NSString</span> stringWithUTF8String:__FILE__] lastPathComponent]);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/16/LLDB/">
+                LLDB
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/LLDB/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/LLDB/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="build">build</h3><p>Programs normally have to be compiled with a special option to allow debugging to take place. On UNIX, the option for clang++ is the -g option. For example<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">clang</span><span class="literal">+</span><span class="literal">+</span> <span class="literal">-</span><span class="comment">Wall</span> <span class="literal">-</span><span class="comment">g</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">prog1</span> <span class="comment">prog1</span><span class="string">.</span><span class="comment">cpp</span></span><br></pre></td></tr></table></figure></p>
+<p>We also include the -Wall option, which lists warnings (the ‘all’ is to list all warnings). Note that this option leads to executable files that are larger and slower, so you may not want to use it for final distributions or time-critical programs. But you can always remove the debugging information from an executable without recompiling it with the strip command. For more information on that, see the man page for strip (i.e., run man strip from the command line).</p>
+<p>The -g option causes the compiler to include information about the source file (the .cpp file) that is needed for debugging as part of the executable file. This causes the executable to be larger in size, and slightly slower, but allows for debugging. So when you run the debugger, you specify the executable file (not the source file) as the input to the debugger.</p>
+<h3 id="Start_Using_lldb">Start Using lldb</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lldb pro<span class="keyword">g1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Executing_your_Program">Executing your Program</h3><p>command-line arguments<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">run</span> <span class="bash"><span class="number">100</span> <span class="built_in">test</span>1.dat // prog1 <span class="number">100</span> <span class="built_in">test</span>1.dat</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="help">help</h3><p>(lldb) help</p>
+<h3 id="excution">excution</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>r / run</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>s / step</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>n / next</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>c / continue</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>si / ni</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>finish  <span class="list">(<span class="keyword">finishes</span> executing the current function and then pauses)</span></span><br></pre></td></tr></table></figure>
+<h3 id="break_point">break point</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb)<span class="tag">b</span> <span class="function"><span class="title">main</span><span class="params">(set a break at all function named main)</span></span></span><br><span class="line">(lldb)<span class="tag">b</span> test<span class="class">.c</span>:<span class="number">12</span></span><br><span class="line">(lldb)<span class="tag">b</span> -[NSString stringWithFormat:]</span><br><span class="line">(lldb)br s -S count /br set -SvtDataCenterFetchComplete:userData:</span><br><span class="line">(lldb)br list</span><br><span class="line">(lldb)br <span class="tag">del</span> [n]</span><br></pre></td></tr></table></figure>
+<h3 id="watch_point">watch point</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">write</span> global_var(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> exp -w <span class="keyword">write</span> -- my_ptr(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint <span class="keyword">in</span> pointer)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">read</span> global_var(<span class="keyword">set</span> <span class="keyword">read</span> watchpoint)</span><br><span class="line">(lldb) watch modify -c <span class="string">'(global==5)'</span> (<span class="keyword">set</span> condition <span class="keyword">on</span> watch point)</span><br></pre></td></tr></table></figure>
+<h3 id="examining_variables">examining variables</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame variable <span class="list">(<span class="keyword">all</span> the arguments and local variables )</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v -a <span class="list">(<span class="keyword">show</span> local variables for current frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v isChanged</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> target v</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> print a_var / po a_var</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display &lt;var&gt; <span class="list">(<span class="keyword">display</span> that variable<span class="quoted">'s</span> value each time the program execution hits a breakpoint)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display <span class="list">(<span class="keyword">show</span> all display variable)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> undisplay</span><br></pre></td></tr></table></figure>
+<h3 id="Changing_a_Variable’s_Value">Changing a Variable’s Value</h3><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">expr x </span>=<span class="string"> 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="examining_thread">examining thread</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> f<span class="list">(<span class="keyword">see</span> current and surrounding lines)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> list <span class="list">(<span class="keyword">shows</span> a listing of the source code where the breakpoint occurred)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> thread backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> bt / backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> up<span class="list">(<span class="keyword">select</span> the stack frame that called the current stack frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> down<span class="list">(<span class="keyword">select</span> the stack frame that is called by the current stack frame)</span></span><br></pre></td></tr></table></figure>
+<h3 id="executabe_&amp;&amp;_shared_library">executabe &amp;&amp; shared library</h3><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image list(list the <span class="keyword">main</span> executable andall dependent <span class="literal">shared</span> libraries)</span><br><span class="line">(lldb) image <span class="literal">dump</span> sections (<span class="literal">dump</span> all sectionsf rom the <span class="keyword">main</span> executable <span class="keyword">and</span> any sharedlibraries))</span><br></pre></td></tr></table></figure>
+<h3 id="exaples">exaples</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_subroutine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello world"</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> *p = NULL;</span><br><span class="line">    my_subroutine();</span><br><span class="line">    *p = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">", "</span> &lt;&lt; *p &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type run, and let it run to completion (really until it crashes)</li>
+<li>try the bt and f commands</li>
+<li>set up a break point at line 12, which is the line that is causing the crash</li>
+<li>type run, and confirm that you want to restart the program</li>
+<li>at the breakpoint, try printing out the value in p (p p); note that it is NULL</li>
+<li>set the p pointer, which is currently NULL, to point to a valud value (the int variable - x): expr p = &amp;x</li>
+<li>enter c to let it continue running, and it should finish without crashing this time</li>
+</ul>
+<h3 id="远程调试">远程调试</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect <span class="string">connect:</span><span class="comment">//192.168.1.117:1234</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印进程模块">打印进程模块</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image <span class="keyword">list</span> -o -<span class="literal">f</span></span><br></pre></td></tr></table></figure>
+<h3 id="读取寄存器">读取寄存器</h3><p>register read       读取寄存器<br>x/nfu <addr>        以指定方式读取地址<br>    n 单元格式<br>    f 显示方式, 可取如下值：<br>        x 按十六进制格式显示变量<br>        d 按十进制格式显示变量<br>        u 按十进制格式显示无符号整型<br>        o 按八进制格式显示变量<br>        t 按二进制格式显示变量<br>        a 按十六进制格式显示变量<br>        i 指令地址格式<br>        c 按字符格式显示变量<br>        f 按浮点数格式显示变量<br>    u 地址单元的长度<br>        b 表示单字节<br>        h 表示双字节<br>        w 表示四字节<br>        g 表示八字节</addr></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/16/Atom/">
+                Atom
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IDE/">IDE</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/Atom/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/Atom/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://ninghao.net/blog/2073" target="_blank" rel="external">转自</a></p>
+<h2 id="Atom">Atom</h2><p>一款编辑器入门还是很简单的，学会怎么样创建，打开，编辑，保存文件就行。剩下的就是慢慢熟悉，Atom 会不断带给你惊喜，如果你想简化或者加快平时工作中的某些任务或者动作，你就可以去搜索一下，Atom 要么本身就为你提供你需要的功能，没有的话，也可以通过现成的插件（Packages）或者自定义的方式解决。</p>
+<h3 id="安装">安装</h3><p>如果你顺着我们的路线走过来，你的电脑上应该已经安装好了系统的包管理工具，Windows 上的 Chocolatey，Mac 上的 Homebrew，Atom 编辑器可以通过包管理工具来安装。</p>
+<p>Windows<br>用管理员的身份打开 Powershell，然后用 choco install 去安装 Atom：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco <span class="keyword">install</span> atom</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>提示：Atom 编辑器体积挺大，在国内由于网络环境问题，在下载的时候会比较慢，有时也可能出现不能连接到远程服务器的错误，解决的方法就是，准备 “梯子” </p>
+</blockquote>
+<p>Mac<br>打开系统的 终端，然后用 Homebrew 的 brew install 命令去安装 Atom：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>install Caskroom/cask/atom</span><br></pre></td></tr></table></figure></p>
+<p>在命令行下面安装完 Atom 以后，可以输入 atom ，后面指定一个目录，这样会用 Atom 编辑器打开这个目录。另外 Atom 编辑器还自带了一个包管理工具叫 apm （Atom Package Manager），用这个工具可以在命令行下面为编辑器去安装包 （Package） ，包就是 Atom 的插件。</p>
+<h3 id="Packages">Packages</h3><p>Atom 核心的功能是由 Core Packages（核心包） 提供的，另外还有 Community Packages（社区包），就是由社区成员自己开发并且分享出来的 Package。Atom 可以通过安装这些 Package 来扩展编辑器的功能。安装 Package 可以在 Atom 的配置界面上去搜索，然后安装，也可以使用 apm 在命令行下面管理编辑器的 Package 。</p>
+<p>Packages 列表：<a href="https://atom.io/packages" target="_blank" rel="external">https://atom.io/packages</a><br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-1.png" alt=""></p>
+<h4 id="安装包：通过配置界面">安装包：通过配置界面</h4><ol>
+<li>打开 Atom 编辑器。</li>
+<li>打开 Atom 的配置界面（Windows：ctrl + ,    Mac：command + , ）。</li>
+<li>点击边栏上的 Install（安装）。</li>
+<li>在界面上的 Install Packages 下面，选中 Packages 标签，然后搜索你想要安装的 Package。</li>
+<li>在搜索结果找到想要的 Package ，点击 Install 安装。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-11.png" alt=""></li>
+</ol>
+<h4 id="安装包：通过_apm">安装包：通过 apm</h4><ol>
+<li>打开命令行工具，Windows 用 Powershell，Mac 可以使用终端。</li>
+<li>搜索包用的是 apm search &lt;关键词&gt; 。</li>
+<li>找到想要的包以后，再用 apm install &lt;包的名字&gt;。</li>
+</ol>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-12.png" alt=""></p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-13.png" alt=""></p>
+<p>下面，你可以搜索一个叫 Localization 的包，然后安装一下，这个包会为 Atom 的菜单栏提供一个中文翻译。下面我们再看一下怎么样去配置与管理包。</p>
+<h4 id="手动安装包emmet-atom">手动安装包emmet-atom</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/.atom/packages</span><br><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/emmetio/emmet-atom</span><br><span class="line"><span class="keyword">cd</span> emmet-atom</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h4 id="管理包">管理包</h4><p>打开配置界面，在边栏上选中 Packages ，在这个界面上的 Communtity Packages 区域里，你可以找到自己安装的来自社区成员分享的包。Core Packages 下面是 Atom 编辑器核心自带的包。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-3.png" alt=""></p>
+<p>这里会显示包的名字，还有介绍，不想用的包，可以点击 Disable 按钮禁用它，或者直接点击 Uninstall 卸载掉包，点击 Settings 按钮可以打开包的配置界面，在这个界面上，你可以找到包的主页，说明的文档，可以查看包的源文件，还有相关的配置与快捷键。</p>
+<p>下面打开之前安装的 Localization 这个包的配置界面，然后在 Settings 区域里面，在 Current Language 下面的文本框里输入：Chinese - Simplified ，这样会把菜单栏的语言设置成简体中文，如果设置成 Chinese - Traditional，会把菜单栏设置成繁体中文。输入以后，用鼠标点一下浏览器的其它的地方，这样编辑器会保存你的配置。</p>
+<p>完成以后，想让设置生效，可以关掉并且重新打开编辑器，或者可以刷新一下编辑器</p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-4.png" alt=""></p>
+<p>刷新编辑器的快捷键：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Mac</span>    ：ctrl + alt + command + <span class="keyword">L</span></span><br><span class="line">Windows：ctrl + alt + <span class="literal">R</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="打开命令面板">打开命令面板</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">command</span> + <span class="built_in">shift</span> + P</span><br><span class="line">Windows：ctrl + <span class="built_in">shift</span> + P</span><br></pre></td></tr></table></figure>
+<p>搜索一下 tree view ，列出的就是跟树形视图相关的命令。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-8.png" alt=""></p>
+<h3 id="标签面板">标签面板</h3><p>在 Mac 上，你还可以使用 command + 数字 ，打开对应的标签面板。</p>
+<h3 id="分离面板">分离面板</h3><p>在编辑器上打开的文件可以分离到不同的面板上显示，你可以把编辑器分隔成上，下，左，右，四个部分。方法是，找到要分离显示的标签面板，鼠标右键点击，然后选择 Split Up，Split Down，Split Left 或者 Split Right。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-13.png" alt=""></p>
+<p>这些动作也都有对应的快捷键，可以打开命令面板（Mac：command + shift + P，Windows：ctrl + shift + P），然后搜索 Pane ，这样会显示出面板相关的操作命令。</p>
+<p>分离到上面<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">K</span> ↑</span></span><br><span class="line">Windows：ctrl + K ↑</span><br></pre></td></tr></table></figure></p>
+<h3 id="查找文件">查找文件</h3><p>目里的文件多了，想找到对应的文件，用鼠标点出这个文件很费事，可以用搜索找到文件。</p>
+<p>在已经打开的文件里找到你想要的文件：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">B</span></span></span><br><span class="line">Windows：ctrl + B</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-9.png" alt=""></p>
+<p>在整个项目里找到你需要的文件：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">P</span></span></span><br><span class="line">Windows：ctrl + P</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-10.png" alt=""></p>
+<p>查找文件里的内容<br>你可以搜索包含特定内容的文件，比如在当前打开的文件里搜索，或者也可以在整个项目里搜索，找到以后，可以把搜索的内容替换成新的内容。</p>
+<p>在当前打开的文件中搜索<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Mac</span>    ：command + <span class="literal">F</span></span><br><span class="line">Windows：ctrl + <span class="literal">F</span></span><br></pre></td></tr></table></figure></p>
+<p>比如我当前打开的是 humans.txt ，打开搜索，输入 name ，编辑器会高亮显示匹配搜索的内容。在 Replace in current buffer 里面，可以输入要替换成的东西，点击 Replace 会一个一个的替换，点击 Replace All 按钮，会替换全部的找到的地方。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-11.png" alt=""></p>
+<p>查找下一个地方<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">G</span></span></span><br><span class="line">Windows：F3</span><br></pre></td></tr></table></figure></p>
+<p>查找上一个地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">shift</span> + <span class="built_in">command</span> + G</span><br><span class="line">Windows：<span class="built_in">shift</span> + F3</span><br></pre></td></tr></table></figure></p>
+<p>在整个项目中搜索<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">shift</span> + <span class="built_in">command</span> + F</span><br><span class="line">Windows：<span class="built_in">shift</span> + ctrl + F</span><br></pre></td></tr></table></figure></p>
+<p>下面，是我搜索了项目中的 name ，回车以后，会显示出找到的结果，这个结果显示了包含搜索的内容的文件，还有出现这个内容的位置，点一下，会打开出现这个搜索内容的文件，并且会定位到对应的位置上。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-12.png" alt=""></p>
+<h3 id="常用插件">常用插件</h3><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ apm list -i -b</span><br><span class="line">Sublime-Style-Column-Selection<span class="variable">@1</span>.2.3</span><br><span class="line">atom-beautify<span class="variable">@0</span>.24.0</span><br><span class="line">autocomplete-plus<span class="variable">@2</span>.10.0</span><br><span class="line">autocomplete-snippets<span class="variable">@1</span>.3.0</span><br><span class="line"><span class="keyword">color</span>-picker<span class="variable">@1</span>.7.0</span><br><span class="line"><span class="keyword">file</span>-icons<span class="variable">@1</span>.5.5</span><br><span class="line">highlight-selected<span class="variable">@0</span>.9.2</span><br><span class="line">language-cmake<span class="variable">@0</span>.1.3</span><br><span class="line">language-lua<span class="variable">@0</span>.9.2</span><br><span class="line">lines<span class="variable">@0</span>.13.0</span><br><span class="line">linter</span><br><span class="line">linter-coffeelint<span class="variable">@0</span>.2.2</span><br><span class="line">linter-jshint<span class="variable">@0</span>.1.2</span><br><span class="line">linter-lua<span class="variable">@0</span>.1.5</span><br><span class="line">linter-luacheck<span class="variable">@0</span>.4.0</span><br><span class="line">minimap<span class="variable">@4</span>.8.0</span><br><span class="line">pretty-json</span><br></pre></td></tr></table></figure>
+<h3 id="常用命令">常用命令</h3><p>刷新编辑器<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + alt + <span class="command"><span class="keyword">command</span> + <span class="title">l</span></span></span><br></pre></td></tr></table></figure></p>
+<p>proxy<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apm config <span class="keyword">set</span> http_proxy <span class="string">"127.0.0.1:8087"</span></span><br><span class="line">$ apm config <span class="keyword">set</span> https_proxy <span class="string">"127.0.0.1:8087"</span></span><br><span class="line">$ apm config <span class="keyword">set</span> https_proxy <span class="string">"http://user:pass@host:port"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> <span class="string">"http_proxy=http://..."</span></span><br><span class="line">$ <span class="keyword">export</span> <span class="string">"https_proxy=http://..."</span></span><br><span class="line">$ apm <span class="keyword">install</span> minimap</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ env | grep proxy</span><br><span class="line"> http_proxy=<span class="string">http:</span><span class="comment">//... OK</span></span><br><span class="line"> https_proxy=<span class="string">http:</span><span class="comment">//... OK</span></span><br><span class="line">$ apm install minimap</span><br><span class="line"> Installing minimap to <span class="regexp">/home/</span>user<span class="regexp">/.atom/</span>packages ✗</span><br><span class="line"> Request <span class="keyword">for</span> <span class="keyword">package</span> information <span class="string">failed:</span> getaddrinfo ENOTFOUND (ENOTFOUND)</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ apm config <span class="keyword">ls</span></span><br><span class="line">$ apm <span class="keyword">update</span></span><br><span class="line">$ apm <span class="built_in">search</span> <span class="string">"Markdown"</span> --<span class="keyword">verbose</span></span><br><span class="line">$ apm <span class="keyword">update</span> --<span class="keyword">verbose</span></span><br><span class="line">apm --<span class="keyword">version</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/15/iOS-绘制1像素的线/">
+                iOS 绘制1像素的线
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-绘制1像素的线/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-绘制1像素的线/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="iOS_绘制1像素的线">iOS 绘制1像素的线</h1><h2 id="Point_Vs_Pixel">Point Vs Pixel</h2><p>iOS中当我们使用Quartz，UIKit，CoreAnimation等框架时，所有的坐标系统采用Point来衡量。系统在实际渲染到设置时会帮助我们处理Point到Pixel的转换。 这样做的好处隔离变化，即我们在布局的事后不需要关注当前设备是否为Retina，直接按照一套坐标系统来布局即可。</p>
+<p>实际使用中我们需要牢记下面这一点:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">One point <span class="keyword">does</span> <span class="keyword">not</span> necessarily correspond <span class="keyword">to</span> one physical pixel.</span><br></pre></td></tr></table></figure>
+<p>1 Point的线在非Retina屏幕则是一个像素，在Retina屏幕上则可能是2个或者3个，取决于系统设备的DPI。</p>
+<p>iOS系统中，UIScreen，UIView，UIImage，CALayer类都提供相关属性来获取scale factor。 原生的绘制技术天然的帮我们处理了scale factor，例如在drawRect:方法中，UIKit自动的根据当前运行的设备设置了正切的scale factor。所以我们在drawRect: 方法中绘制的任何内容都会被自动缩放到设备的物理屏幕上。</p>
+<p>基于以上信息可以看出，我们大部分情况下都不需要去关注pixel，然而存在部分情况需要考虑像素的转化。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如画1个像素的分割线</span><br></pre></td></tr></table></figure>
+<p>看到这个问题你的第一想法可能是，直接根据当前屏幕的缩放因子计算出1 像素线对应的Point，然后设置线宽即可。 代码如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.0f</span> / [UIScreen mainScreen].scale</span><br></pre></td></tr></table></figure>
+<p>表面上看着一切正常了，但是通过实际的设备测试你会发现渲染出来的线宽并不是1个像素。</p>
+<blockquote>
+<p>Why?</p>
+</blockquote>
+<p>为了获得良好的视觉效果，绘图系统通常都会采用一个叫”antialiasing(反锯齿)”的技术，iOS也不例外。 显示屏幕有很多小的显示单元组成，可以接单的理解为一个单元就代表一个像素。如果要画一条黑线，条线刚好落在了一列或者一行显示显示单元之内，将会渲染出标准的一个像素的黑线。 但如果线落在了两个行或列的中间时，那么会得到一条”失真”的线，其实是两个像素宽的灰线。</p>
+<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250827276118632.png" alt=""></p>
+<blockquote>
+<p>Positions defined by whole-numbered points fall at the midpoint between pixels. For example, if you draw a one-pixel-wide vertical line from (1.0, 1.0) to (1.0, 10.0), you get a fuzzy grey line. If you draw a two-pixel-wide line, you get a solid black line because it fully covers two pixels (one on either side of the specified point). As a rule, lines that are an odd number of physical pixels wide appear softer than lines with widths measured in even numbers of physical pixels unless you adjust their position to make them cover pixels fully.</p>
+</blockquote>
+<p>官方解释如上，简单翻译一下:</p>
+<blockquote>
+<p>规定：奇数像素宽度的线在渲染的时候将会表现为柔和的宽度扩展到向上的整数宽度的线，除非你手动的调整线的位置，使线刚好落在一行或列的显示单元内。</p>
+</blockquote>
+<p>如何对齐呢？</p>
+<blockquote>
+<p>在非高清屏上，一个Point对应一个像素。为了防止”antialiasing”导致的奇数像素的线渲染时出现失真，你需要设置偏移0.5 Point。 在高清屏幕上，要绘制一个像素的线，需要设置线宽为0.5个Point，同事设置偏移为0.25 Point。 如果线宽为偶数Point的话，则不要去设置偏移，否则线条也会失真。</p>
+</blockquote>
+<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250824372995931.png" alt=""></p>
+<p>看了上述一通解释，我们了解了1像素宽的线条失真的原因，及解决办法。 至此问题貌似都解决了？再想想为什么在非Retina和Retina屏幕上调整位置时值不一样，前者为0.5Point，后者为0.25Point，那么scale为3的6 Plus设备又该调整多少呢？ 要回答这个问题，我们需要理解调整多少依旧什么原则。</p>
+<p><img src="http://images0.cnblogs.com/blog2015/302680/201506/251942350498849.png" alt=""></p>
+<p>再回过头来看看这上面的图片，图片中每一格子代表一个像素，而顶部标记的则代码我们布局时的坐标。 可以看到左边的非Retina屏幕，我们要在(3,0)这个位置画一条一个像素宽的竖线时，由于渲染的最小单位是像素，而(3,0)这个坐标恰好位于两个像素中间，此时系统会对坐标3左右两列的像素对填充，为了不至于线显得太宽，为对线的颜色淡化。那么根据上述信息我们可以得出，如果要画出一个像素宽的线，就得把绘制的坐标移动到(2.5, 0)或者(3.5,0)这个位置，这样系统渲染的时候刚好可以填充一列像素，也就是标准的一个像素的线。</p>
+<p>基于上面的分析，我们可以得出”Scale为3的6 Plus”设备如果要绘制1个像素宽的线条时，位置调整也应该是0.5像素，对应该的Point计算如下:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">1.0f</span> / <span class="list">[<span class="keyword">UIScreen</span> mainScreen].scale) / <span class="number">2</span><span class="comment">;</span></span></span></span><br></pre></td></tr></table></figure>
+<p>奉上一个画一像素线的一个宏:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_WIDTH           (<span class="number">1</span> / [UIScreen mainScreen].scale)</span><br><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_ADJUST_OFFSET   ((<span class="number">1</span> / [UIScreen mainScreen].scale) / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>使用代码如下:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> xPos = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">UIView</span> *view = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGrect</span>(x - SINGLE_LINE_ADJUST_OFFSET, <span class="number">0</span>, SINGLE_LINE_WIDTH, <span class="number">100</span>)];</span><br></pre></td></tr></table></figure>
+<h2 id="正确的绘制Grid线条">正确的绘制Grid线条</h2><p>贴上一个写的GridView的代码，代码中对Grid线条的奇数像素做了偏移，防止出现线条模糊的情况。</p>
+<p>SvGridView.h</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.h</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SvGridView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格间距，默认30</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridSpacing;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格线宽度，默认为1 pixel (1.0f / [UIScreen mainScreen].scale)</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridLineWidth;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格颜色，默认蓝色</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span>   *gridColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>SvGridView.m</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.m</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">"SvGridView.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_WIDTH           (1 / [UIScreen mainScreen].scale)</span></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_ADJUST_OFFSET   ((1 / [UIScreen mainScreen].scale) / 2)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SvGridView</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@synthesize</span> gridColor = _gridColor;</span><br><span class="line"><span class="keyword">@synthesize</span> gridSpacing = _gridSpacing;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line"></span><br><span class="line">        _gridColor = [<span class="built_in">UIColor</span> blueColor];</span><br><span class="line">        _gridLineWidth = SINGLE_LINE_WIDTH;</span><br><span class="line">        _gridSpacing = <span class="number">30</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridColor:(<span class="built_in">UIColor</span> *)gridColor</span><br><span class="line">&#123;</span><br><span class="line">    _gridColor = gridColor;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridSpacing:(<span class="built_in">CGFloat</span>)gridSpacing</span><br><span class="line">&#123;</span><br><span class="line">    _gridSpacing = gridSpacing;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridLineWidth:(<span class="built_in">CGFloat</span>)gridLineWidth</span><br><span class="line">&#123;</span><br><span class="line">    _gridLineWidth = gridLineWidth;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Only override drawRect: if you perform custom drawing.</span></span><br><span class="line"><span class="comment">// An empty implementation adversely affects performance during animation.</span></span><br><span class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextBeginPath</span>(context);</span><br><span class="line">    <span class="built_in">CGFloat</span> lineMargin = <span class="keyword">self</span><span class="variable">.gridSpacing</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  https://developer.apple.com/library/ios/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GraphicsDrawingOverview/GraphicsDrawingOverview.html</span><br><span class="line">     * 仅当要绘制的线宽为奇数像素时，绘制位置需要调整</span><br><span class="line">     */</span></span><br><span class="line">    <span class="built_in">CGFloat</span> pixelAdjustOffset = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (((<span class="keyword">int</span>)(<span class="keyword">self</span><span class="variable">.gridLineWidth</span> * [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.scale</span>) + <span class="number">1</span>) % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        pixelAdjustOffset = SINGLE_LINE_ADJUST_OFFSET;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGFloat</span> xPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="built_in">CGFloat</span> yPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="keyword">while</span> (xPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, xPos, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, xPos, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">        xPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (yPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, <span class="number">0</span>, yPos);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>, yPos);</span><br><span class="line">        yPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextSetLineWidth</span>(context, <span class="keyword">self</span><span class="variable">.gridLineWidth</span>);</span><br><span class="line">    <span class="built_in">CGContextSetStrokeColorWithColor</span>(context, <span class="keyword">self</span><span class="variable">.gridColor</span><span class="variable">.CGColor</span>);</span><br><span class="line">    <span class="built_in">CGContextStrokePath</span>(context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>使用方法如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SvGridView *gridView = [[SvGridView alloc] initWithFrame:self.view.bounds]<span class="comment">;</span></span><br><span class="line">gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight<span class="comment">;</span></span><br><span class="line">gridView.alpha = 0.6<span class="comment">;</span></span><br><span class="line">gridView.gridColor = [UIColor greenColor]<span class="comment">;</span></span><br><span class="line">[self.view addSubview:gridView]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/15/iOS-内存警告/">
+                iOS 内存警告
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-内存警告/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-内存警告/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://www.cnblogs.com/smileEvday/archive/2012/03/07/MemoryWarning.html">转自</a></p>
+<h1 id="内存警告">内存警告</h1><p>系统有四种内存警告</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelAny</span>      = -<span class="number">1</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelNormal</span>   =  <span class="number">0</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelWarning</span>  =  <span class="number">1</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelUrgent</span>   =  <span class="number">2</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelCritical</span> =  <span class="number">3</span></span><br><span class="line">&#125; OSMemoryNotificationLevel;</span><br></pre></td></tr></table></figure>
+<p>　　通常我们在程序中接收到最多的就是Memory warning level 1，这个时候就证明系统内存紧张了，我们的程序必须做出相应，释放不必要的内存。通常如果我们处理得当的话，内存警告就会到此停止，恢复正常状态。如果我们在接收到<code>memory warning level 1</code>以后坐视不理的话，系统可能还会再尝试通知几次<code>level 1</code>，如果还是不去处理的话，系统将会发出更高一级的内存警告<code>level 2</code>，通常的结果就是我们的App被强制退出，系统收回内存。当然系统在发出level 2的警告时，也会取尝试做一些清理内存的事，例如关闭不必要的后台程序等。很显然我们不该寄希望于系统自己清理，这就好比你的胳膊被划破了，身体肯定会有自修复功能，但是如果伤口比较大的话，肯定还是需要人工处理一下的。</p>
+<p>到目前位置我还没有见过level 3的警告，根据stack over flow上面讲的”当发生level 3警告时，系统内核将会接管，很有可能关掉IOS的主界面进程（SpringBorad），甚至会重启”，照这个意思来说我们程序里面接收不到，也实属正常，系统自己的东西都被干掉了，我们肯定早被kill了。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/15/iOS-内存警告/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/15/iOS-Crash文件的解析/">
+                iOS Crash文件的解析
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-Crash文件的解析/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-Crash文件的解析/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://www.cnblogs.com/smileEvday/p/Crash1.html">转自</a></p>
+<h1 id="iOS_Crash文件的解析">iOS Crash文件的解析</h1><p>开发程序的过程中不管我们已经如何小心，总是会在不经意间遇到程序闪退。脑补一下当你在一群人面前自信的拿着你的App做功能预演的时候，流畅的操作被无情地Crash打断。联想起老罗在发布Smartisan OS的时候说了，他准备了10个手机，如果一台有问题，就换一台，如果10台后挂了他就不做手机了。好了不闲扯了，今天就跟大家一起聊聊iOSCrash文件的组成以及常用的分析工具。</p>
+<p>　　有一个WWDC 2010的视频推荐大家抽空看看，视频名称<a href="https://developer.apple.com/videos/wwdc/2010/?id=317">“Understanding Crash Reports on iPhone OS”</a>，该视频详细讲解了Crash文件的结构。当然如果你没时间看的话，不妨阅读以下这篇文章。</p>
+<h2 id="Crash文件结构">Crash文件结构</h2><p>当程序运行Crash的时候，系统会把运行的最后时刻的运行信息记录下来，存储到一个文件中，也就是我们所说的Crash文件。iOS的Crash日志通常由以下6各部分组成。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/15/iOS-Crash文件的解析/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/15/iOS-应用崩溃日志揭秘/">
+                iOS 应用崩溃日志揭秘
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-应用崩溃日志揭秘/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-应用崩溃日志揭秘/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://www.raywenderlich.com/23704/demystifying-ios-application-crash-logs">翻译自</a></p>
+<h1 id="iOS应用崩溃日志揭秘1">iOS应用崩溃日志揭秘1</h1><p>作为一名应用开发者，你是否有过如下经历?</p>
+<p>为确保你的应用正确无误，在将其提交到应用商店之前，你必定进行了大量的测试工作。它在你的设备上也运行得很好，但是，上了应用商店后，还是有用户抱怨会闪退 !</p>
+<p>如果你跟我一样是个完美主义者，你肯定想将应用做到尽善尽美。于是你打开代码准备修复闪退的问题……但是，从何处着手呢？ 这时iOS崩溃日志派上用场了。在大多数情况下，你能从中了解到关于闪退的详尽、有用的信息。</p>
+<p>通过本教程，你将学习到一些常见的崩溃日志案例，以及如何从开发设备和iTunes Connect上获取崩溃日志文件。你还将学习到符号化（ symbolication）,从日志追踪到代码 。你还将学习调试一个在待定情况下会闪退的应用。</p>
+<p>让我们开始动手吧!</p>
+<h2 id="什么是崩溃日志，从哪里能得它?">什么是崩溃日志，从哪里能得它?</h2><p>iOS设备上的应用闪退时，操作系统会生成一个崩溃报告，也叫崩溃日志，保存在设备上。 崩溃日志上有很多有用的信息，包括应用是什么情况下闪退的。通常，上面有每个正在执行线程的完整堆栈跟踪信息，所以你能从中了解到闪退发生时各线程都在做什么，并分辨出闪退发生在哪个线程上。</p>
+<p>有几种方法可以从设备上获取崩溃日志。 设备与电脑上的iTunes Store同步后，会将崩溃日志保存在电脑上。根据电脑操作系统的不同，崩溃日志将保存在以下位置:</p>
+<p>Mac OS X:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/Library/</span>Logs<span class="regexp">/CrashReporter/M</span>obileDevice<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/15/iOS-应用崩溃日志揭秘/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/13/iOS-property-attribute/">
                 iOS property attribute
               </a>
@@ -409,615 +1171,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Category/">
-                iOS Category
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Category/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Category/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="category">category</h2><h3 id="category_简介">category 简介</h3><ul>
-<li>为已存在的类, 添加方法</li>
-<li>将类的实现, 分别存放在不同的文件中. 好处: a) 减少单体文件体积 b)按照功能划分 c)协作开发 d)按需加载</li>
-<li>声明私有方法</li>
-<li>模拟多继承</li>
-<li>把framework的私有方法公开</li>
-</ul>
-<h3 id="extension">extension</h3><blockquote>
-<p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
-<p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Category/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/">
-                iOS Runtime 运行时类与对象的编译处理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-运行时类与对象的编译处理/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_Runtime运行时类与对象的编译处理">iOS Runtime运行时类与对象的编译处理</h2><p>Objective-C语言是一门动态语言，它将很多静态语言在编译和链接时期做的事放到了运行时来处理。这种动态语言的优势在于：我们写代码时更具灵活性，如我们可以把消息转发给我们想要的对象，或者随意交换一个方法的实现等。<br>这种特性意味着<code>Objective-C</code>不仅需要一个编译器，还需要一个运行时系统来执行编译的代码。对于Objective-C来说，这个运行时系统就像一个操作系统一样：它让所有的工作可以正常的运行。这个运行时系统即Objc Runtime。Objc Runtime其实是一个Runtime库，它基本上是用C和汇编写的，这个库使得C语言有了面向对象的能力。</p>
-<p>Runtime库主要做下面几件事：</p>
-<ol>
-<li>封装：在这个库中，对象可以用C语言中的结构体表示，而方法可以用C函数来实现，另外再加上了一些额外的特性。这些结构体和函数被runtime函数封装后，我们就可以在程序运行时创建，检查，修改类、对象和它们的方法了。</li>
-<li>找出方法的最终执行代码：当程序执行[object doSomething]时，会向消息接收者(object)发送一条消息(doSomething)，runtime会根据消息接收者是否能响应该消息而做出不同的反应。这将在后面详细介绍。</li>
-</ol>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/">
-                iOS Event Delivery/ The Responder Chain
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Event-Delivery-The-Responder-Chain/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Event_Delivery:_The_Responder_Chain">Event Delivery: The Responder Chain</h2><p>当你设计应用的时候, 应用需要动态响应事件. 例如: 点击事件, (可以在显示屏上的不同对象上多次触发), 你需要决定那个对象来响应此事件, 并且需要了解这个对象是如何接收事件的.</p>
-<p>当用户触发一个事件时, UIKit 创建一个<code>event object</code>, 此对象包含了需要处理的信息. 然后将此事件对象放入到当前 app 的事件队列中. 例如<code>touch</code>事件, 这种事件对象就是一个包含了一组<code>touch</code>的<code>UIEvent</code> 对象. <code>motion</code>事件, 此对象由你使用的<code>framework</code>和你感兴趣的<code>motion</code>类型来决定.</p>
-<ul>
-<li>Touch events. 当前 window 对象首先尝试将事件传送给 <code>touch</code> 触发的视图.这个视图被称为<code>hit-test</code> 视图. 寻找<code>hit-test</code>视图的过程被称为<code>hit-testing</code>, 将在下面描述.</li>
-<li>Motion and remote control events. 对于这些事件, 当前 window 对象会将 <code>shaking-motion</code> 或 <code>emote control event</code> 发送给<code>first responder</code>来响应.<code>first responder</code>也将在下面描述.</li>
-</ul>
-<h3 id="Hit-Testing_Returns_the_View_Where_a_Touch_Occurred">Hit-Testing Returns the View Where a Touch Occurred</h3><p>iOS 通过<code>hit-testing</code> 来寻找点击下方的视图. <code>Hit-Testing</code> 会查找任何包含该<code>touch</code>点坐标的视图对象, 规则为此坐标位于视图的<code>bounds</code>中, 如果包含, 会继续递归检测此视图的所有子视图. 在视图树中包含该点击的最下层视图, 即是<code>hit-test</code>视图. 当 iOS 决定了 <code>hit-test</code> 视图后, 会将点击事件发送给此视图来处理.</p>
-<p>说明如下, 假设用户点击了视图 E, iOS 查找<code>hit-test</code> 视图的逻辑如下:</p>
-<ol>
-<li>点击在视图 A 的范围内, 然后检测 子视图 B 和 C</li>
-<li>点击不再视图 B 范围内, 但是在视图 C 范围内, 继续检测 子视图 D 和 E</li>
-<li>点击不再视图 D 里, 但是在视图 E 中.
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-成员变量与属性/">
-                iOS Runtime 成员变量与属性
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Runtime-成员变量与属性/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-成员变量与属性/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="习题内容">习题内容</h3><p>下面代码会? Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)speak &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"my name is %@"</span>, <span class="keyword">self</span><span class="variable">.name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Test</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">id</span> cls = [Sark class];</span><br><span class="line">        <span class="keyword">void</span> *obj = &amp;cls;</span><br><span class="line">        [(__bridge <span class="keyword">id</span>)obj speak];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [[Test alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>答案：代码正常输出，输出结果为：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-07</span> 14<span class="pseudo">:08</span><span class="pseudo">:25</span><span class="class">.698</span> <span class="tag">Test</span><span class="attr_selector">[1097:57255]</span> <span class="tag">my</span> <span class="tag">name</span> <span class="tag">is</span> &lt;<span class="rule"><span class="attribute">Test</span>:<span class="value"> <span class="number">0</span>x1001002d0&gt;</span></span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Runtime-成员变量与属性/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Message-And-Category/">
-                iOS Runtime Message And Category
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Runtime-Message-And-Category/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Message-And-Category/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="习题内容">习题内容</h3><p>下面的代码会？Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSObject</span> (<span class="title">Sark</span>)</span></span><br><span class="line">+ (<span class="keyword">void</span>)foo;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSObject</span> (<span class="title">Sark</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)foo</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"IMP: -[NSObject(Sark) foo]"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [<span class="built_in">NSObject</span> foo];</span><br><span class="line">        [[<span class="built_in">NSObject</span> new] foo];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>答案：代码正常输出，输出结果如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-06</span> 13<span class="pseudo">:11</span><span class="pseudo">:46</span><span class="class">.694</span> <span class="tag">Test</span><span class="attr_selector">[14872:1110786]</span> <span class="rule"><span class="attribute">IMP</span>:<span class="value"> -[<span class="function">NSObject</span>(Sark) foo]</span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">06</span> <span class="number">13</span>:<span class="number">11</span>:<span class="number">46.695</span> Test[<span class="number">14872</span>:<span class="number">1110786</span>] IMP: -[<span class="function">NSObject</span>(Sark) foo]</span></span></span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Runtime-Message-And-Category/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/">
-                iOS Runtime Object & Class & Meta Class
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Object-Class-Meta-Class/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="习题内容">习题内容</h3><p>下面代码的运行结果是?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">BOOL</span> res1 = [(<span class="keyword">id</span>)[<span class="built_in">NSObject</span> class] isKindOfClass:[<span class="built_in">NSObject</span> class]];</span><br><span class="line">        <span class="built_in">BOOL</span> res2 = [(<span class="keyword">id</span>)[<span class="built_in">NSObject</span> class] isMemberOfClass:[<span class="built_in">NSObject</span> class]];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">BOOL</span> res3 = [(<span class="keyword">id</span>)[Sark class] isKindOfClass:[Sark class]];</span><br><span class="line">        <span class="built_in">BOOL</span> res4 = [(<span class="keyword">id</span>)[Sark class] isMemberOfClass:[Sark class]];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d %d %d %d"</span>, res1, res2, res3, res4);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>运行结果为：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-05</span> 14<span class="pseudo">:45</span><span class="pseudo">:08</span><span class="class">.474</span> <span class="tag">Test</span><span class="attr_selector">[9412:721945]</span> 1 0 0 0</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Runtime-Object-Class-Meta-Class/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Self-Super/">
-                iOS Runtime Self & Super
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Runtime-Self-Super/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Self-Super/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Self_&amp;&amp;_Super">Self &amp;&amp; Super</h2><h3 id="What_is_Super?">What is Super?</h3><p><code>Super</code> 是和 <code>Self</code> 一样的关键字, 不同的是, 它不能用作函数的参数, 只能接收消息.当接收消息的时候, 它会向父类搜索方法的定义. 如果在向上的类链中没有任何定义, 则程序会 crash.</p>
-<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithValue<span class="number">1</span>:(id)<span class="keyword">value</span><span class="number">1</span> <span class="keyword">value</span><span class="number">2</span>:(id)<span class="keyword">value</span><span class="number">2</span></span><br><span class="line">&#123;</span><br><span class="line">    self = [<span class="keyword">super</span> initWithValue<span class="number">1</span>:<span class="keyword">value</span><span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (self) &#123;</span><br><span class="line">        <span class="number">_</span><span class="keyword">value</span><span class="number">2</span> = <span class="keyword">value</span><span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="messaging_super">messaging <code>super</code></h3><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_super</span> </span>&#123;</span><br><span class="line">    __unsafe_unretained id receiver;</span><br><span class="line">    __unsafe_unretained Class super_class;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">methodWithArgument</span>:(id)<span class="tag">arg</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr_selector">[super otherMethodWithArgument:arg]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)methodWithArgument:(id)arg</span><br><span class="line">&#123;</span><br><span class="line">    struct objc<span class="number">_</span><span class="keyword">super</span> <span class="keyword">super</span> = &#123;.receiver = self, .<span class="keyword">super</span><span class="number">_</span><span class="keyword">class</span> = <span class="number">0</span>xC<span class="number">0</span>FFEE&#125;;</span><br><span class="line"></span><br><span class="line">    objc<span class="number">_m</span>sgSendSuper(&amp;<span class="keyword">super</span>, <span class="annotation">@selector</span>(otherMethodWithArgument:), arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>objc_msgSendSuper</code> 将从父类的定义开始查找方法的实现. <code>super_class</code>是在 runtime 时, 动态生成的.<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Runtime-Self-Super/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </div>
 
 
@@ -1051,21 +1209,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-count">145</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-count">68</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

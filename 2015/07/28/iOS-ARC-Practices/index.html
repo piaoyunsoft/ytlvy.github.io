@@ -1,0 +1,667 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="ARC," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS ARC Practices // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS ARC Practices
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-28
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/28/iOS-ARC-Practices/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-ARC-Practices/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://amattn.com/p/arc_best_practices.html" target="_blank" rel="external">转自</a></p>
+<h2 id="ARC_最佳实践">ARC 最佳实践</h2><h3 id="General">General</h3><p>1) 数值变量应该使用 assign：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> scalarInt;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> scalarFloat;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGPoint</span> scalarStruct;</span><br></pre></td></tr></table></figure></p>
+<p>2) 在层次结构上属于下一级的对象应该使用 strong ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">id</span> childObject;</span><br></pre></td></tr></table></figure></p>
+<p>3) 在层次结构上属于上一级的对象应该使用 weak ，另外，当出现循环引用的时候也应该使用 weak ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> parentObject;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSObject</span> &lt;SomeDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure></p>
+<p>4) 闭包应该使用 copy ：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) SomeBlockType someBlock;</span><br></pre></td></tr></table></figure>
+<p>5) 在 dealloc 里：</p>
+<ul>
+<li>从观察者中移除 (remove observers)</li>
+<li>取消订阅通知 (unregister for notifications)</li>
+<li>设置非 weak 的委托为 nil (set any non-weak delegates to nil)</li>
+<li>关闭所有的计时器 (invalidate any timers)</li>
+</ul>
+<p>6) 所有的 IBOutlet 都应该是 weak 的。除非顶层的 IBOutlet 应该是 strong 的，比如 UIViewController 的 View 是需要直接拥有的，所以应该设置成 strong </p>
+<a id="more"></a>
+<h3 id="Bridging">Bridging</h3><p>从文档来看是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> my_id;</span><br><span class="line"><span class="built_in">CFStringRef</span> my_cfref;</span><br><span class="line"><span class="built_in">NSString</span>   *a = (__bridge <span class="built_in">NSString</span>*)my_cfref;     <span class="comment">// Noop cast.</span></span><br><span class="line"><span class="built_in">CFStringRef</span> b = (__bridge <span class="built_in">CFStringRef</span>)my_id;      <span class="comment">// Noop cast.</span></span><br><span class="line"><span class="built_in">NSString</span>   *c = (__bridge_transfer <span class="built_in">NSString</span>*)my_cfref; <span class="comment">// -1 on the CFRef</span></span><br><span class="line"><span class="built_in">CFStringRef</span> d = (__bridge_retained <span class="built_in">CFStringRef</span>)my_id;  <span class="comment">// returned CFRef +1</span></span><br></pre></td></tr></table></figure></p>
+<p>简单的翻译成大白话：</p>
+<ul>
+<li>__bridge 只做类型转换，但是不修改对象内存的管理权。</li>
+<li>__bridge_transfer 将 Core Foundation 的对象转换为 Objective-C 的对象，同时将对象内存的管理权交给 ARC 。 ARC 会自动将引用计数减1 。</li>
+<li>__bridge_retained 将 Objective-C 的对象转换为 Core Foundation 的对象，同时将对象内存的管理权交给我们，引用计数会自动加1。后续需要使用 CFRelease 或者相关方法来释放对象。</li>
+</ul>
+<h3 id="NSError">NSError</h3><p>无所不在的 <code>NSError</code> 有点特殊，在标准的 Cocoa 使用中， <code>NSError</code> 是通过外部参数 <code>(out-parameter)</code> 实现的，又称为 <code>indirect pointer</code> 。</p>
+<p>在 ARC 里， <code>out-parameter</code> 默认是 <code>__autoreleasing</code> 的，并且实现方法应该是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)performWithError:(__autoreleasing <span class="built_in">NSError</span> **)error &#123;</span><br><span class="line">    <span class="comment">// 如果发生了一些错误</span></span><br><span class="line">    <span class="keyword">if</span> (error) &#123;</span><br><span class="line">        <span class="comment">// 写入到外部参数， ARC 会自动释放</span></span><br><span class="line">        *error = [[<span class="built_in">NSError</span> alloc] initWithDomain:<span class="string">@""</span> </span><br><span class="line">                                            code:-<span class="number">1</span> </span><br><span class="line">                                        userInfo:<span class="literal">nil</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当我们使用这个方法的时候， *error 前面应该加上 __autoreleasing 的标记：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NSError __autoreleasing *<span class="keyword">error</span> = <span class="keyword">error</span>;</span><br><span class="line">BOOL OK = [myObject performOperationWithError:&amp;<span class="keyword">error</span>];</span><br><span class="line"><span class="keyword">if</span> (!OK)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// handle the error.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果你标记了 <code>__autoreleasing</code> ，编译器会简单的插入一个临时的中介对象。这是为了能够向下兼容的妥协方案，因为有些编译器的设置并没有自动把它们设置为 <code>__autoreleasing</code> ，所以为了安全起见，还是加上 <code>__autoreleasing</code> 的比较保险。</p>
+<h3 id="@autoreleasepool">@autoreleasepool</h3><p>可以在如下场景使用自动释放池：</p>
+<ul>
+<li>遍历很多很多遍的时候</li>
+<li>创建大量的临时变量</li>
+</ul>
+<p>比如下面这个例子：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果 someArray 里的元素非常多</span></span><br><span class="line"><span class="tag">for</span> (id obj in someArray) &#123;</span><br><span class="line">    <span class="variable">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="comment">// 或者在每次遍历里都创建了大量的临时变量</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以通过 <code>@autoreleasepool</code> 标记创建和销毁一个自动释放池。</p>
+<h3 id="Blocks">Blocks</h3><p>总的来说，闭包用起来还行，但是还是有那么点小问题。</p>
+<p>当我们把闭包添加到集合中的时候 (比如 NSArray) ，一定要先 copy 一下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">someBlockType someBlock = ^&#123;<span class="built_in">NSLog</span>(<span class="string">@"hi"</span>);&#125;;</span><br><span class="line">[someArray addObject:[someBlock <span class="keyword">copy</span>]];</span><br></pre></td></tr></table></figure>
+<p>循环引用是十分危险的，你可能看到过这些 warning ：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">warning</span>: capturing <span class="string">'self'</span> strongly <span class="keyword">in</span> <span class="keyword">this</span> </span><br><span class="line">block <span class="keyword">is</span> likely <span class="keyword">to</span> lead <span class="keyword">to</span> a retain cycle </span><br><span class="line">[-Warc-retain-cycles,<span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">SomeBlockType someBlock = ^&#123;</span><br><span class="line">    [self someMethod];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>警告的原因是 <code>someBlock</code> 是 <code>self</code> 的强引用，而 <code>someBlock</code> 又捕捉并且 <code>retain</code> 了 <code>self。</code></p>
+<p>再举一个表现不明显的循环引用：任何变量的父对象都是会被捕捉的：<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面这个闭包会持有 "self"</span></span><br><span class="line"><span class="constant">SomeBlockType someBlock</span> = ^&#123;</span><br><span class="line"><span class="constant">    BOOL isDone</span> = _isDone;  <span class="comment">// _isDone 是 self 的一个变量</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>更安全但是也更啰嗦的方法是使用 weakSelf ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> SomeObjectClass *weakSelf = <span class="keyword">self</span>;</span><br><span class="line"></span><br><span class="line">SomeBlockType someBlock = ^&#123;</span><br><span class="line">    SomeObjectClass *strongSelf = weakSelf;</span><br><span class="line">    <span class="keyword">if</span> (strongSelf == <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// The original self doesn't exist anymore.</span></span><br><span class="line">        <span class="comment">// Ignore, notify or otherwise handle this case.</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        [strongSelf someMethod];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>有时候你也需要注意避免对象的循环引用：如果 someObject 将会被 block 强引用，可以用 weakSomeObject 打破循环引用：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">SomeObjectClass *<span class="variable">someObject =</span> ...</span><br><span class="line">__weak SomeObjectClass *<span class="variable">weakSomeObject =</span> someObject;</span><br><span class="line"></span><br><span class="line">someObject.<span class="variable">completionHandler =</span> ^&#123;</span><br><span class="line">    SomeObjectClass *<span class="variable">strongSomeObject =</span> weakSomeObject;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">strongSomeObject =</span>= nil)</span><br><span class="line">    &#123;</span><br><span class="line">        // The original someObject doesn't exist anymore.</span><br><span class="line">        // Ignore, notify <span class="constant">or</span> otherwise handle this case.</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        // okay, NOW we can do something <span class="keyword">with</span> someObject</span><br><span class="line">        [strongSomeObject someMethod];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Accessing_CGThings_from_NSThings_or_UIThings">Accessing CGThings from NSThings or UIThings</h3><p>先看一段代码：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIColor</span> *redColor = [<span class="built_in">UIColor</span> redColor]; </span><br><span class="line"><span class="built_in">CGColorRef</span> redRef = redColor<span class="variable">.CGColor</span>;</span><br><span class="line"><span class="comment">// 用 redRef 做一些事情</span></span><br></pre></td></tr></table></figure></p>
+<p>上面这段代码有一些很隐蔽的问题。当你创建 <code>redRef</code> 的时候，如果 <code>redColor</code> 不再被使用，那么 <code>redColor</code> 会在备注那一行立即被销毁。</p>
+<p>问题是 <code>redColor</code> 持有了 <code>redRef</code> ，当访问 <code>redRef</code> 的时候，它有可能是也有可能不再是一个 <code>colorRef</code> 。更糟糕的是，这种问题很少在虚拟机上出现，这更有可能在那种低内存的设备上出现，比如第一代的 <code>iPad</code> 老爷机。</p>
+<p>解决的方案也有很多。最关键的一点是：在使用 <code>redRef</code> 的时候，我们需要保证 <code>redColor</code> 是有效的。</p>
+<p>一种最简单的方式就是使用 <code>__autoreleasingpool</code> ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIColor</span> * __autoreleasing redColor = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line"><span class="built_in">CGColorRef</span> redRef = redColor<span class="variable">.CGColor</span>;</span><br></pre></td></tr></table></figure></p>
+<p>注意这时候 <code>redColor</code> 在方法返回之前都不会被释放掉，所以我们可以放心的在当前的方法里使用 <code>redRef</code> 。</p>
+<p>另一种方法是 <code>retain</code> 一下 <code>redRef</code> ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIColor</span> *redColor = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line"><span class="built_in">CGColorRef</span> redRef = <span class="built_in">CFRetain</span>(redColor<span class="variable">.CGColor</span>);</span><br><span class="line"><span class="comment">// 尽情的使用 redRef ，注意，在结束的时候要 release</span></span><br><span class="line"><span class="built_in">CFRelease</span>(redRef)</span><br></pre></td></tr></table></figure></p>
+<p>注意：我们需要在 <code>redColor.CGColor</code> 处使用 <code>CFRetain()</code>，因为在最近一次使用之后 <code>redColor</code> 就被释放了。比如下面这段代码就是没啥用的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIColor</span> *redColor = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line"><span class="built_in">CGColorRef</span> redRef = redColor<span class="variable">.CGColor</span>; <span class="comment">// redColor 在这行代码之后就被 release 了</span></span><br><span class="line"><span class="built_in">CFRetain</span>(redRef);  <span class="comment">// 这里可能会崩溃</span></span><br></pre></td></tr></table></figure></p>
+<p>有趣的是标记了 这里可能会崩溃 的那一行。在我的印象里，在虚拟机里很少崩溃，而在真机上就很常见。</p>
+<h3 id="单例模式">单例模式</h3><p>标准的单例模式的实现应该是这个样子的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (MyClass *)singleton</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> MyClass *sharedMyClass = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> once = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;once, ^&#123;sharedMyClass = [[<span class="keyword">self</span> alloc] init];&#125;);</span><br><span class="line">    <span class="keyword">return</span> sharedMyClass;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>有时候我们还需要销毁单例，不过如果不是用在单元测试里，那么很有可能你不该使用单例模式。</p>
+<p>可以销毁并重建的单例模式是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 singleton 外声明一个静态变量</span></span><br><span class="line"><span class="keyword">static</span> MyClass *__sharedMyClass = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">+ (MyClass *)singleton</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> once = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;once, ^&#123;__sharedMyClass = [[<span class="keyword">self</span> alloc] init];&#125;);</span><br><span class="line">    <span class="keyword">return</span> __sharedMyClass;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 仅可用于测试！</span></span><br><span class="line">- (<span class="keyword">void</span>)destroyAndRecreateSingleton</span><br><span class="line">&#123;</span><br><span class="line">    __sharedMyClass = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ARC/"> #ARC </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/28/Swift-Exception-Handle/">Swift Exception Handle</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/">iOS9 NSAppTransportSecurity Bypass</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ARC_最佳实践"><span class="nav-number">1.</span> <span class="nav-text">ARC 最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#General"><span class="nav-number">1.1.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bridging"><span class="nav-number">1.2.</span> <span class="nav-text">Bridging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSError"><span class="nav-number">1.3.</span> <span class="nav-text">NSError</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#@autoreleasepool"><span class="nav-number">1.4.</span> <span class="nav-text">@autoreleasepool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blocks"><span class="nav-number">1.5.</span> <span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accessing_CGThings_from_NSThings_or_UIThings"><span class="nav-number">1.6.</span> <span class="nav-text">Accessing CGThings from NSThings or UIThings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式"><span class="nav-number">1.7.</span> <span class="nav-text">单例模式</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/07/28/iOS-ARC-Practices/';
+      var disqus_title = 'iOS ARC Practices';
+      var disqus_url = 'http://ytlvy.com/2015/07/28/iOS-ARC-Practices/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
