@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/objective-c-and-core-foundation-memory-managment/">
-                Objective-C 和 Core Foundation 对象相互转换的内存管理总结
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-workflows/">
+                git tutorials -- workflows
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-05-29
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Git/">Git</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/objective-c-and-core-foundation-memory-managment/"></span>
+            <a href="/2015/05/29/git-tutorials-workflows/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-workflows/"></span>
             </a>
           </span>
           
@@ -194,11 +194,9 @@
 
       
         
-          <h2 id="Objective-C_和_Core_Foundation_对象相互转换的内存管理总结">Objective-C 和 Core Foundation 对象相互转换的内存管理总结</h2><p>iOS允许Objective-C 和 Core Foundation 对象之间可以轻松的转换，拿 NSString 和 CFStringRef 来说，直接转换豪无压力：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFStringRef</span> a<span class="built_in">CFString</span> = (<span class="built_in">CFStringRef</span>)a<span class="built_in">NSString</span>;  </span><br><span class="line"><span class="built_in">NSString</span> *a<span class="built_in">NSString</span> = (<span class="built_in">NSString</span> *)a<span class="built_in">CFString</span>;</span><br></pre></td></tr></table></figure>
-<p>针对内存管理问题，ARC 可以帮忙管理 Objective-C 对象, 但是不支持 Core Foundation 对象的管理，所以转换后要注意一个问题：谁来释放使用后的对象。 本文重点总结一下类型转换后的内存管理。</p>
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="Centralized_workflow">Centralized workflow</h3><p><img src="https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/centralized-workflow/01.svg" alt=""><br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//Someone initializes <span class="operator">the</span> central repository</span><br><span class="line">ssh user@host git init <span class="comment">--bare /path/to/repo.git</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//Everybody clones the central repository</span></span><br><span class="line">git clone ssh://user@host/path/<span class="built_in">to</span>/repo.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit stage commits</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//origin is the remote connection to the central repository</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line"><span class="comment"></span><br><span class="line">//another push</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line">error: failed <span class="built_in">to</span> push some refs <span class="built_in">to</span> <span class="string">'/path/to/repo.git'</span></span><br><span class="line">hint: Updates were rejected because <span class="operator">the</span> tip <span class="operator">of</span> your current branch is behind</span><br><span class="line">hint: its remote counterpart. Merge <span class="operator">the</span> remote changes (e.g. <span class="string">'git pull'</span>)</span><br><span class="line">hint: <span class="keyword">before</span> pushing again.</span><br><span class="line">hint: See <span class="operator">the</span> <span class="string">'Note about fast-forwards'</span> <span class="operator">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line">git pull <span class="comment">--rebase origin master</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Unmerged paths:</span></span><br><span class="line"><span class="comment"># (use "git reset HEAD &lt;some-file&gt;..." to unstage)</span></span><br><span class="line"><span class="comment"># (use "git add/rm &lt;some-file&gt;..." as appropriate to mark resolution)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># both modified: &lt;some-file&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the file</span></span><br><span class="line">git <span class="built_in">add</span> &lt;some-<span class="built_in">file</span>&gt; </span><br><span class="line">git rebase <span class="comment">--continue</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//you can abort and roll back</span><span class="comment"></span><br><span class="line">//right back to where you started before you ran [git pull --rebase]</span></span><br><span class="line">git rebase <span class="comment">--abort</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//or push</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/objective-c-and-core-foundation-memory-managment/#more">
+            <a class="btn" href="/2015/05/29/git-tutorials-workflows/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -231,8 +229,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/">
-                非零环绕数规则和奇-偶规则(Non-Zero Winding Number Rule&amp;&amp;Odd-even Rule)
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-advanced-tips/">
+                git tutorials -- Advanced Tips
               </a>
             
           
@@ -241,28 +239,17 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-05-29
         </span>
 
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
         
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/"></span>
+            <a href="/2015/05/29/git-tutorials-advanced-tips/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-advanced-tips/"></span>
             </a>
           </span>
           
@@ -277,19 +264,14 @@
 
       
         
-          <p>参考</p>
-<p>[1]<a href="http://www.cs.rit.edu/~icss571/filling/alt_parity.html">http://www.cs.rit.edu/~icss571/filling/alt_parity.html</a><br>[2]<a href="http://cs.hust.edu.cn/webroot/courses/csgraphics/jiaocai.php?bookpage=5_c_c">http://cs.hust.edu.cn/webroot/courses/csgraphics/jiaocai.php?bookpage=5_c_c</a><br>[3]<a href="http://en.wikipedia.org/wiki/Nonzero-rule">http://en.wikipedia.org/wiki/Nonzero-rule</a></p>
-<blockquote>
-<p>在图形学中判断一个点是否在多边形内，若多边形不是自相交的，那么可以简单的判断这个点在多边形内部还是外部；若多边形是自相交的，那么就需要根据非零环绕数规则和奇-偶规则判断。<br>  判断多边形是否是自相交的：多边形在平面内除顶点外还有其他公共点</p>
-</blockquote>
-<h2 id="内-外测试">内-外测试</h2><blockquote>
-<p>不自交的多边形：多边形仅在顶点处连接，而在平面内没有其他公共点，此时可以直接划分内-外部分。<br> 自相交的多边形：多边形在平面内除顶点外还有其他公共点，此时划分内-外部分需要采用以下的方法。</p>
-</blockquote>
-<h3 id="1-_奇-偶规则（Odd-even_Rule）：奇数表示在多边形内，偶数表示在多边形外">1. 奇-偶规则（Odd-even Rule）：奇数表示在多边形内，偶数表示在多边形外</h3><blockquote>
-<p>从任意位置p作一条射线，若与该射线相交的多边形边的数目为奇数，则p是多边形内部点，否则是外部点。</p>
-</blockquote>
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="Splitting_a_Commit">Splitting a Commit</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br><span class="line"></span><br><span class="line">// edit second to edit</span><br><span class="line">pick f7f3f6d changed my name a bit</span><br><span class="line">edit 310154e updated README formatting and added blame</span><br><span class="line">pick a5f4a0d added cat-file</span><br><span class="line"></span><br><span class="line">//<span class="operator"><span class="keyword">do</span> a mixed <span class="keyword">reset</span> <span class="keyword">of</span> that <span class="keyword">commit</span> <span class="keyword">with</span> <span class="string">`git reset HEAD^`</span> effectively undoes that <span class="keyword">commit</span> <span class="keyword">and</span> <span class="keyword">leaves</span> the modified files unstaged</span><br><span class="line">$ git <span class="keyword">reset</span> HEAD^</span><br><span class="line">$ git <span class="keyword">add</span> README</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'updated README formatting'</span></span><br><span class="line">$ git <span class="keyword">add</span> lib/simplegit.rb</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'added blame'</span></span><br><span class="line">$ git rebase <span class="comment">--continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ git <span class="keyword">log</span> -<span class="number">4</span> <span class="comment">--pretty=format:"%h %s"</span></span><br><span class="line"><span class="number">1</span>c002dd added cat-file</span><br><span class="line"><span class="number">9</span>b29157 added blame</span><br><span class="line"><span class="number">35</span>cfb2b updated README formatting</span><br><span class="line">f3cc40e <span class="keyword">changed</span> my name a <span class="built_in">bit</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="The_Nuclear_Option:_filter-branch">The Nuclear Option: filter-branch</h3><h4 id="Removing_a_File_from_Every_Commit">Removing a File from Every Commit</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//<span class="built_in">remove</span> passwords.txt form <span class="keyword">all</span> <span class="keyword">history</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD</span><br><span class="line"></span><br><span class="line">//<span class="built_in">remove</span> <span class="keyword">all</span> accidentally committed editor backup <span class="keyword">files</span></span><br><span class="line">git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f *~'</span> HEAD.</span><br><span class="line"></span><br><span class="line">//To run <span class="built_in">filter</span>-branch <span class="keyword">on</span> <span class="keyword">all</span> your branches, you can pass --<span class="keyword">all</span> <span class="keyword">to</span> the <span class="keyword">command</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD --<span class="keyword">all</span></span><br></pre></td></tr></table></figure>
+<h3 id="important">important</h3><ol>
+<li>you should always create a new branch before adding commits to a detached HEAD</li>
+<li>For this reason, git revert should be used to undo changes on a public branch, and git reset should be reserved for undoing changes on a private branch</li>
+</ol>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/non-zero-winding-number-rule-and-odd-even-rule/#more">
+            <a class="btn" href="/2015/05/29/git-tutorials-advanced-tips/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -322,8 +304,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/coreimage-example/">
-                Core Image使用
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-collaborating/">
+                git tutorials -- Collaborating
               </a>
             
           
@@ -332,14 +314,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-05-29
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Git/">Git</a>
 
               
               
@@ -352,8 +334,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/coreimage-example/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/coreimage-example/"></span>
+            <a href="/2015/05/29/git-tutorials-collaborating/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-collaborating/"></span>
             </a>
           </span>
           
@@ -368,403 +350,10 @@
 
       
         
-          <p>首先创建一个径向渐变的滤镜，该滤镜是从白到黑的渐变方式，白色区域的半径默认是100。接着将其与一张使用CIDarkenBlendMode滤镜的图片合成。CIDarkenBlendMode的作用是背景图片样本将被源图片的黑色部分替换掉。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* moi = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.jpeg"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIImage</span>* moi2 = [[<span class="built_in">CIImage</span> alloc] initWith<span class="built_in">CGImage</span>:moi<span class="variable">.CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIFilter</span>* grad = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIRadialGradient"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIVector</span>* center = [<span class="built_in">CIVector</span> vectorWithX:moi<span class="variable">.size</span><span class="variable">.width</span> / <span class="number">2.0</span> Y:moi<span class="variable">.size</span><span class="variable">.height</span> / <span class="number">2.0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用setValue：forKey：方法设置滤镜属性</span></span><br><span class="line">[grad setValue:center forKey:<span class="string">@"inputCenter"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定滤镜名时提供所有滤镜键值对</span></span><br><span class="line"><span class="built_in">CIFilter</span>* dark = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIDarkenBlendMode"</span> keysAndValues:<span class="string">@"inputImage"</span>, grad<span class="variable">.outputImage</span>, <span class="string">@"inputBackgroundImage"</span>, moi2, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIContext</span>* c = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> moi3 = [c create<span class="built_in">CGImage</span>:dark<span class="variable">.outputImage</span> fromRect:moi2<span class="variable">.extent</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* moi4 = [<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:moi3 scale:moi<span class="variable">.scale</span> orientation:moi<span class="variable">.imageOrientation</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(moi3);</span><br></pre></td></tr></table></figure>
-<p><img src="http://images.cnitblog.com/blog/429321/201212/27103647-2fcd19d1ca1e4a0d9f42e2c79687e881.png" alt="图片合成图"></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-cgimage-bugfix/">
-                CGImage绘制倒置修复
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-cgimage-bugfix/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cgimage-bugfix/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* mars = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.png"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> sz = [mars size];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsCG = [mars <span class="built_in">CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> szCG = <span class="built_in">CGSizeMake</span>(<span class="built_in">CGImageGetWidth</span>(marsCG), <span class="built_in">CGImageGetHeight</span>(marsCG));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsLeft = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsRight = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(szCG<span class="variable">.width</span>/<span class="number">2.0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="built_in">CGSizeMake</span>(sz<span class="variable">.width</span>*<span class="number">1.5</span>, sz<span class="variable">.height</span>), <span class="literal">NO</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsLeft scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsRight scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(sz<span class="variable">.width</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* im = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(marsLeft); <span class="built_in">CGImageRelease</span>(marsRight);</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/">
-                Using SWRevealViewController Together With RBStoryboardLink
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>://samwize.com/<span class="number">2015</span>/<span class="number">03</span>/<span class="number">26</span>/<span class="keyword">using</span>-swrevealviewcontroller-together-<span class="operator">with</span>-rbstoryboardlink/</span><br></pre></td></tr></table></figure>
-<p>I posted about how to modularize storyboard using RBStoryboardLink and how to use SWRevealViewController.<br>But to use both of them together is not straight forward.<br>This is because both library makes use of custom segues to do what they want to do. And it is not possible for you to customize 1 segue to satisfy both!<br>To make them work together:<br>Create the <code>RBStoryboardLink</code> suggorate view controller and setup <code>storyboardName</code> as per normal, but don’t create any segue to it. It will be alone.<br>Give it a storyboard ID eg. “surrogate”<br>Don’t use <code>SWRevealViewControllerSeguePushController</code> segue too<br>Instead, call the revealViewController’s <code>pushFrontViewController</code> method manually.<br>The code:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">IBAction</span>)buttonTapped:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *vc = [<span class="keyword">self</span><span class="variable">.storyboard</span> instantiateViewControllerWithIdentifier:<span class="string">@"surrogate"</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.revealViewController</span> pushFrontViewController:vc animated:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>If the view controller is not getting behind the status bar correctly, set <code>needsTopLayoutGuide</code> key to NO in the suggorate.</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/">
-                Pitfall: NSLayoutConstraint Breaking in UICollectionView
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[cell.contentView setTranslatesAutoresizingMaskIntoConstraints:NO]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/how-to-use-reflect-to-set-a-struct-field/">
-                How to Use Reflect to Set a Struct Field
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Golang/">Golang</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/how-to-use-reflect-to-set-a-struct-field/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/how-to-use-reflect-to-set-a-struct-field/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>Golang reflect package is one of the hardest to understand.<br>Yet reflect is one of the most powerful because you can inspect a struct and it’s fields during runtime, and change it.<br>Go isn’t as simple to understand as other languages such as Python in using reflection. Just try reading their <a href="http://blog.golang.org/laws-of-reflection" target="_blank" rel="external">laws of reflection</a>.<br>But setting a field of a struct by name could be a one liner. There is a nice answer in <a href="http://stackoverflow.com/a/6396678/242682" target="_blank" rel="external">Stack Overflow</a>.<br>In short, if you want to set a struct <figure class="highlight"><figcaption><span>object when you know the field name to set, this is the code:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;</span><br></pre></td></tr></table></figure></p>
-<p>func setFoo(foo *Foo, field string, value string) {<br>    v := reflect.ValueOf(foo).Elem().FieldByName(field)<br>    if v.IsValid() {<br>        v.SetString(value)<br>    }<br>}<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If you want to <span class="built_in">print</span> all the fields <span class="keyword">of</span> `<span class="javascript">foo</span>`, <span class="keyword">this</span> <span class="keyword">is</span> the <span class="attribute">code</span>:</span><br></pre></td></tr></table></figure></p>
-<p>s := reflect.ValueOf(foo).Elem()<br>typeOfT := s.Type()<br>for i := 0; i &lt; s.NumField(); i++ {<br>    f := s.Field(i)<br>    fmt.Printf(“%d: %s %s = %v\n”, i,<br>        typeOfT.Field(i).Name, f.Type(), f.Interface())<br>}<br>```</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/flickr-primary-key-generate/">
-                flickr 主键生成策略
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Bigdata/">Bigdata</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/flickr-primary-key-generate/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/flickr-primary-key-generate/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="flickr_主键生成策略">flickr 主键生成策略</h2><p><img src="http://ww1.sinaimg.cn/large/67a6a651gw1dujgqcx9ncj.jpg" alt="flickr采用的sharding主键生成方案示意图"></p>
-<h3 id="整体思想">整体思想</h3><blockquote>
-<p>flickr这一方案的整体思想是：建立两台以上的数据库ID生成服务器，每个服务器都有一张记录各表当前ID的Sequence表，但是Sequence中ID增长的步长是服务器的数量，起始值依次错开，这样相当于把ID的生成散列到了每个服务器节点上。例如：如果我们设置两台数据库ID生成服务器，那么就让一台的Sequence表的ID起始值为1,每次增长步长为2,另一台的Sequence表的ID起始值为2,每次增长步长也为2，那么结果就是奇数的ID都将从第一台服务器上生成，偶数的ID都从第二台服务器上生成，这样就将生成ID的压力均匀分散到两台服务器上，同时配合应用程序的控制，当一个服务器失效后，系统能自动切换到另一个服务器上获取ID，从而保证了系统的容错。</p>
-</blockquote>
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="git_remote">git remote</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//List <span class="operator">the</span> remote connections you have <span class="built_in">to</span> other repositories</span><br><span class="line">git remote</span><br><span class="line"><span class="comment"></span><br><span class="line">//List the remote connections you have to other repositories, include the URL</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">add</span> &lt;name&gt; &lt;url&gt;</span><br><span class="line">git remote rm &lt;name&gt;</span><br><span class="line">git remote <span class="built_in">rename</span> &lt;old-name&gt; &lt;<span class="built_in">new</span>-name&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="The_origin_Remote">The origin Remote</h4><p>When you clone a repository with git clone, it automatically creates a remote connection called origin pointing back to the cloned repository. This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits. This behavior is also why most Git-based projects call their central repository origin.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/flickr-primary-key-generate/#more">
+            <a class="btn" href="/2015/05/29/git-tutorials-collaborating/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -797,8 +386,181 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/reactivecocoa-example-1-nsurlsession/">
-                ReactiveCocoa应用1---NSURLSession封装
+              <a class="post-title-link" href="/2015/05/29/git-tutorials-getting-started/">
+                git tutorials -- Getting Started
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/git-tutorials-getting-started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-getting-started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="git_tutorials">git tutorials</h2><h3 id="setup_a_repository">setup a repository</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialize an local repository</span></span><br><span class="line">git <span class="keyword">init</span></span><br><span class="line">git <span class="keyword">init</span> &lt;directory&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//initialize a Central repositories or server </span></span><br><span class="line">git <span class="keyword">init</span> --bare &lt;directory&gt;.git</span><br><span class="line"></span><br><span class="line">ssh &lt;user&gt;@&lt;host&gt;</span><br><span class="line">cd path/above/repo </span><br><span class="line">git <span class="keyword">init</span> --bare my-project.git</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/git-tutorials-getting-started/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/recently-readings/">
+                最近阅读资料
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Study/">Study</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/recently-readings/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/recently-readings/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="book">book</h2><ol>
+<li>Functional Programming Patterns in Scala and Clojure- Write Lean Programs for the JVM</li>
+<li>iOS.8.by.Tutorials.2014.12</li>
+<li>Leanpub.Functional Reactive Programming on iOS.2014</li>
+<li>Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X</li>
+<li></li>
+</ol>
+<h2 id="links">links</h2><ol>
+<li><a href="http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients" target="_blank" rel="external">http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients</a></li>
+<li><a href="http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers" target="_blank" rel="external">http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers</a></li>
+<li><a href="http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths" target="_blank" rel="external">http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths</a></li>
+<li><a href="http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob" target="_blank" rel="external">http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob</a></li>
+<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1</a></li>
+<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2</a></li>
+<li><a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3" target="_blank" rel="external">http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3</a></li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/reactivecocoa/">
+                Reactivecocoa
               </a>
             
           
@@ -835,8 +597,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/reactivecocoa-example-1-nsurlsession/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa-example-1-nsurlsession/"></span>
+            <a href="/2015/05/27/reactivecocoa/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa/"></span>
             </a>
           </span>
           
@@ -851,7 +613,19 @@
 
       
         
-          <h3 id="ReactiveCocoa应用1—-NSURLSession封装">ReactiveCocoa应用1—-NSURLSession封装</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="string">fetchJSONFromSession:</span>(NSURLSession *)session <span class="string">withRequest:</span>(NSURLRequest *)request &#123;</span><br><span class="line">    <span class="keyword">return</span> [[[RACSignal <span class="string">createSignal:</span>^RACDisposable *(id&lt;RACSubscriber&gt; subscriber)</span><br><span class="line">    &#123;</span><br><span class="line">        NSURLSessionDataTask *dataTask = [session <span class="string">dataTaskWithRequest:</span>request <span class="string">completionHandler:</span>^(NSData *data, NSURLResponse *response, NSError *error)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (! error) &#123;</span><br><span class="line">                NSError *jsonError = nil;</span><br><span class="line">                NSString* newStr = [[NSString alloc] <span class="string">initWithData:</span>data <span class="string">encoding:</span>NSUTF8StringEncoding];</span><br><span class="line">                id json = [NSJSONSerialization <span class="string">JSONObjectWithData:</span>data <span class="string">options:</span>kNilOptions <span class="string">error:</span>&amp;jsonError];</span><br><span class="line">                <span class="keyword">if</span> (! jsonError) &#123;</span><br><span class="line">                    NSDictionary *dataOfDictionary = (NSDictionary *)json;</span><br><span class="line">                    <span class="keyword">if</span> (dataOfDictionary[@<span class="string">"stat"</span>] &amp;&amp; [dataOfDictionary[@<span class="string">"stat"</span>] integerValue] == <span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        [subscriber <span class="string">sendNext:</span> json[@<span class="string">"data"</span>]];</span><br><span class="line">                        [subscriber sendCompleted];</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        NSString *errmsg = dataOfDictionary[@<span class="string">"msg"</span>];</span><br><span class="line">                        <span class="keyword">if</span> (![errmsg <span class="string">isKindOfClass:</span>[NSString <span class="class"><span class="keyword">class</span>]]) &#123;</span></span><br><span class="line">                            errmsg = @<span class="string">"服务器未知错误"</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                       [subscriber <span class="string">sendError:</span>[NSError <span class="string">errorWithDomain:</span>[AppConstants httpHost] <span class="string">code:</span>[dataOfDictionary[@<span class="string">"stat"</span>] integerValue] <span class="string">userInfo:</span>@&#123;<span class="string">NSLocalizedDescriptionKey:</span>errmsg&#125;]];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    DDLogError(@<span class="string">"function: json 组装错误:%@"</span>, [jsonError localizedDescription]);</span><br><span class="line">                    <span class="keyword">if</span> (jsonError != nil) &#123;</span><br><span class="line">                        [subscriber <span class="string">sendError:</span>jsonError];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                DDLogError(@<span class="string">"function: dataTask error: %@"</span>, [error localizedDescription]);</span><br><span class="line">                [subscriber <span class="string">sendError:</span>error];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [dataTask resume];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> [RACDisposable <span class="string">disposableWithBlock:</span>^&#123;</span><br><span class="line">            [dataTask cancel];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;] logError] replayLazily];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="Reactivecocoa">Reactivecocoa</h3><h4 id="zip">zip</h4><pre><code><span class="collection">[<span class="collection">[<span class="collection">[<span class="collection">[RACSignal zip:@<span class="collection">[RACObserve<span class="list">(<span class="keyword">self</span>, minimum)</span>, RACObserve<span class="list">(<span class="keyword">self</span>, maximum)</span>,
+    RACObserve<span class="list">(<span class="keyword">self</span>, average)</span>]</span>]</span> skip:1]</span> reduceEach:<span class="comment">^id</span><span class="collection">{
+        return <span class="literal">nil</span><span class="comment">;</span>
+    }</span>]</span> subscribeNext:^<span class="list">(<span class="keyword">id</span> x)</span> <span class="collection">{
+        <span class="collection">[self buildView]</span><span class="comment">; //called once, while all three values were changed.</span>
+}</span>]</span><span class="comment">;</span>
+</code></pre><h4 id="RACTuple">RACTuple</h4><pre><code><span class="collection">[<span class="collection">[RACSignal  combineLatest:signals]</span> map:^<span class="list">(<span class="keyword">RACTuple</span> *strings)</span> <span class="collection">{
+    for <span class="list">(<span class="keyword">NSString</span> *string in strings)</span> <span class="collection">{
+        // Do whatever here.
+    }</span>
+    return <span class="literal">nil</span><span class="comment">;</span>
+}</span>]</span><span class="comment">;</span>
+</code></pre>
         
       
     </div>
@@ -881,8 +655,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/mac-proxy-config/">
-                MAC 代理设置
+              <a class="post-title-link" href="/2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/">
+                <Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X>笔记
               </a>
             
           
@@ -898,7 +672,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/MAC/">MAC</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -911,8 +685,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-proxy-config/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-proxy-config/"></span>
+            <a href="/2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/pro-multithreading-and-memory-management-for-ios-and-osx-note/"></span>
             </a>
           </span>
           
@@ -927,12 +701,263 @@
 
       
         
-          <h4 id="Command_line_proxy">Command line proxy</h4><pre><code><span class="built_in">export</span> http_proxy=<span class="string">"http://127.0.0.1:8087"</span>
-<span class="built_in">export</span> https_proxy=<span class="string">"http://127.0.0.1:8087"</span>
-<span class="built_in">unset</span> http_proxy
-<span class="built_in">unset</span> https_proxy
-</code></pre><h3 id="svn_proxy">svn proxy</h3><pre><code><span class="keyword">sublime </span>~/.<span class="keyword">subversion/servers</span>
+          <h1 id="读书笔记">读书笔记</h1><h2 id="weake___unsafe_unretained">weake __unsafe_unretained</h2><pre><code><span class="keyword">id</span> __weake obj = [[<span class="built_in">NSObject</span> alloc] init];
+<span class="comment">//obj为nil，因为weak不能持有对象，所以生成后马上释放</span>
+<span class="keyword">id</span> __unsafe_unretained obj = [[<span class="built_in">NSObject</span> alloc] init];
+<span class="comment">//obj is nil</span>
+
+<span class="built_in">NSAutoReleasePool</span> 对象不能调用 autorelease 方法 因为<span class="built_in">NSAutoReleasePool</span>类重载了该方法
+</code></pre><h2 id="AutoReleasePool">AutoReleasePool</h2><pre><code><span class="comment">//arc</span>
+<span class="keyword">@autoreleasepool</span>{
+    <span class="keyword">id</span> __autoreleasing obj2;
+}
 </code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/xcode-plugins-update-tool/">
+                更新XcodePlugins脚本
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Xcode/">Xcode</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/xcode-plugins-update-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-plugins-update-tool/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>ios8.2  ——— A16FF353-8441-459E-A50C-B071F53F51B7<br>ios8.3 ———- 9F75337B-21B4-4ADC-B558-F9CADF7073A7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line">PLIST_BUDDY=/usr/libexec/PlistBuddy</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">add_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="string">"<span class="variable">$PLIST_BUDDY</span>"</span> -c <span class="string">"Add DVTPlugInCompatibilityUUIDs:10 string <span class="variable">$2</span>"</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">has_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="variable">$PLIST_BUDDY</span> -c <span class="string">'Print DVTPlugInCompatibilityUUIDs'</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span>|grep -q <span class="string">"<span class="variable">$2</span>"</span></span><br><span class="line">  <span class="built_in">return</span> $?</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$HOME</span>/Library/Application Support/Developer/Shared/Xcode/Plug-ins"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> `ls <span class="operator">-d</span> *`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> `has_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7`</span><br><span class="line">  <span class="keyword">then</span></span><br><span class="line">    <span class="literal">true</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Plugin <span class="variable">$file</span> is now compatible with Xcode 6.0 GM"</span></span><br><span class="line">    add_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/">
+                IOS8.3 NSMutableURLRequest需手动设置Content-Type
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios8-nsmutableurlrequest-bugfix/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>引用：<a href="http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update" target="_blank" rel="external">http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update</a></p>
+<p>IOS8.3开始 NSMutableURLRequest需要手动设置Content-Type，否则导致服务器接受参数失败的错误，请添加如下代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[request <span class="built_in">set</span>Value:@<span class="string">"application/json"</span> <span class="keyword">for</span>HTTPHeaderField:@<span class="string">"Content-Type"</span>];</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-third-party-frames-conflict-bugfix/">
+                第三方类库重复冲突解决
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-third-party-frames-conflict-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-third-party-frames-conflict-bugfix/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="第三方类库重复冲突解决">第三方类库重复冲突解决</h2><h3 id="复制-a文件">复制.a文件</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/ &amp;&amp; <span class="built_in">mkdir</span> librepack &amp;&amp; <span class="keyword">cd</span> librepack</span><br><span class="line"><span class="keyword">cp</span> /Users/tony/Desktop/XXXProject/Lib/libMiPushSDK.<span class="keyword">a</span> ./libx.<span class="keyword">a</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看包信息">查看包信息</h3><p><code>lipo -info libx.a</code></p>
+<h3 id="解包">解包</h3><p>如果提示fat file，那么代表这个包是支持多平台的，例如armv7，armv7s，i386等，这需要我们逐一做解包重打包操作。否则我们只需要做一次[1-6]操作即可</p>
+<ol>
+<li>创建临时文件夹，用于存放armv7平台解压后的.o文件：<code>mkdir armv7</code></li>
+<li>取出armv7平台的包：<code>lipo libx.a -thin armv7 -output armv7/libx-armv7.a</code></li>
+<li>查看库中所包含的文件列表：<code>ar -t armv7/libx-armv7.a</code></li>
+<li>解压出object file（即.o后缀文件）：<code>cd armv7 &amp;&amp; ar xv libx-armv7.a</code></li>
+<li>找到冲突的包（JSONKit），删除掉<code>rm JSONKit.o</code></li>
+<li>重新打包object file：<code>cd .. &amp;&amp; ar rcs libx-armv7.a armv7/*.o</code>，可以再次使用[2]中命令确认是否已成功将文件去除</li>
+<li>将其他几个平台(armv7s, i386)包逐一做上述[1-6]操作</li>
+<li>重新合并为fat file的.a文件：<br><code>lipo -create libx-armv7.a libx-armv7s.a libx-i386.a -output libMiPushSDK-new.a</code></li>
+<li>拷贝到项目中覆盖源文件：<br><code>cp libMiPushSDK-new.a /Users/tony/Desktop/XXXProject/Lib/libMiPushSDK.a</code></li>
+</ol>
+<p>参考:<a href="http://itony.me/674.html" target="_blank" rel="external">http://itony.me/674.html</a></p>
+
         
       
     </div>
@@ -955,7 +980,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
   </div>
 
 
@@ -989,21 +1014,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">160</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">73</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

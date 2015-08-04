@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/31/websocket-tunnel-over-cloud-ide/">
-                Websocket Tunnel Over Cloud IDE
+              <a class="post-title-link" href="/2015/06/11/wget/">
+                wget
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-31
+          發表於 2015-06-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/FQ/">FQ</a>
+              <a href="/categories/linux/">linux</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/31/websocket-tunnel-over-cloud-ide/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/31/websocket-tunnel-over-cloud-ide/"></span>
+            <a href="/2015/06/11/wget/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/11/wget/"></span>
             </a>
           </span>
           
@@ -194,546 +194,631 @@
 
       
         
-          <h3 id="bbs">bbs</h3><blockquote>
-<p><a href="https://groups.google.com/forum/#!forum/go-gost">https://groups.google.com/forum/#!forum/go-gost</a></p>
+          <h2 id="wget">wget</h2><h3 id="用wget做站点镜像">用wget做站点镜像</h3><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">wget</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">mirror</span> <span class="literal">-</span><span class="comment">p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">convert</span><span class="literal">-</span><span class="comment">links</span> <span class="literal">-</span><span class="comment">P</span> <span class="title">[</span><span class="comment">本地目录</span><span class="title">]</span> <span class="title">[</span><span class="comment">网站地址</span><span class="title">]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -np -nd <span class="string">http:</span><span class="comment">//appinn.com</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -<span class="tag">p</span> -np -k http:<span class="comment">//dsec.pku.edu.cn/~usr_name/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -m <span class="string">http:</span><span class="comment">//www.tldp.org/LDP/abs/html/</span></span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/11/wget/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/">
+                AutoLayout -- Content Compression Resistance & Content Hugging
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Content_Compression_Resistance_&amp;&amp;_Content_Hugging">Content Compression Resistance &amp;&amp; Content Hugging</h2><p>Auto Layout中, 存在Content Compression Resistance 和 Content Hugging 这两个概念.这两个概念是在<code>固有内容尺寸</code>（Intrinsic Content Size）之上起作用的.</p>
+<h3 id="Intrinsic_Content_Size">Intrinsic Content Size</h3><p>包含内容的UI控件, 由内容多少而决定的大小规则.</p>
+<h3 id="Content_Compression_Resistance_&amp;_Content_Hugging">Content Compression Resistance &amp; Content Hugging</h3><ol>
+<li>内容大小改变是指, 内容显示内容所占空间的长度来说的.</li>
+<li><code>内容抗压指数</code>，在父视图变小时, 会根据抗压指数来缩小各子控件;</li>
+<li><code>内容拥抱指数</code>, 内容越集中于控件中心, 周围空白越小.</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/08/objc-runtime-method-Cache/">
+                objc runtime method Cache
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/08/objc-runtime-method-Cache/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/objc-runtime-method-Cache/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="method_cache_更新机制">method cache 更新机制</h3><p>为了方便函数的查找, objc在运行时,引入了method cache机制,来快速定位函数.method cache的大小是动态更新的,在更新时, 将直接生成新容量的缓存, 并将旧的缓存放入到垃圾队列中,等待时机释放. 而时机的选择, 采用检测每个线程的program counter,来查看是否处于objc_msgSend.如果都不在,则释放.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BOOL ThreadsInMsgSend<span class="params">(void)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(thread in GetAllThreads<span class="params">()</span>)</span> &#123;</span><br><span class="line">        uintptr_t pc = thread.GetPC<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">if</span><span class="params">(pc &gt;= objc_msgSend_startAddress &amp;&amp; pc &lt;= objc_msgSend_endAddress)</span> &#123;</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bucket_t <span class="built_in">*</span>oldCache = class-&gt;cache;</span><br><span class="line">class-&gt;cache = malloc<span class="params">(newSize)</span>;</span><br><span class="line"></span><br><span class="line">append<span class="params">(gOldCachesList, oldCache)</span>;</span><br><span class="line"><span class="keyword">if</span><span class="params">(!ThreadsInMsgSend<span class="params">()</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(cache in gOldCachesList)</span> &#123;</span><br><span class="line">        free<span class="params">(cache)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    gOldCachesList.clear<span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/07/IOS-Multithreading-Memory-Management/">
+                IOS Multithreading && Memory Management
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-07
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/07/IOS-Multithreading-Memory-Management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/IOS-Multithreading-Memory-Management/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
+<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/07/ice-girl/">
+                冰之魔女
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-07
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/default/">default</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/07/ice-girl/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/ice-girl/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+        <div class="post-gallery">
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" rel="gallery_cicxe2ran009wwfk3wcuo1bo9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" />
+            </a>
+          
+        </div>
+      
+
+      
+        
+          <h2 id="冰之魔女">冰之魔女</h2>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/06/ios-nspredicate/">
+                IOS NSPredicate
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/ios-nspredicate/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-nspredicate/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="NSPredicate">NSPredicate</h3><p>NSPredicate is a Foundation class that specifies how data should be fetched or filtered.<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSPredicate</span> *bobPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"firstName = 'Bob'"</span>];</span><br><span class="line"><span class="built_in">NSPredicate</span> *thirtiesPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"age &gt;= 30"</span>];</span><br><span class="line"></span><br><span class="line">[people filterdArrayUsingPredicate:bobPredicate];</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/ios-nspredicate/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/06/ios-nssortdescriptor/">
+                IOS NSSortDescriptor
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/ios-nssortdescriptor/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-nssortdescriptor/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="NSSortDescriptor">NSSortDescriptor</h2><p>NSSortDescriptor objects are constructed with the following parameters:</p>
+<ol>
+<li>key: for a given collection, the key for the corresponding value to be sorted on for each object in the collection</li>
+<li>ascending: a boolean specifying whether the collection should be sorted in ascending (YES) or descending (NO) order</li>
+<li>a selector (SEL) or comparator (NSComparator)</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/ios-nssortdescriptor/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/06/ios-key-value-coding-and-and-collection-operators/">
+                IOS Key-Value Coding &amp;&amp; Collection Operators
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/ios-key-value-coding-and-and-collection-operators/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-key-value-coding-and-and-collection-operators/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Key-Value_Coding_&amp;&amp;_Collection_Operators">Key-Value Coding &amp;&amp; Collection Operators</h2><blockquote>
+<p>KVC Collection Operators allows actions to be performed on a collection using key path notation in valueForKeyPath:. @’s in a key path denote an aggregate function whose result can be returned or chained, just like any other key path.</p>
 </blockquote>
-<h3 id="原理">原理</h3><blockquote>
-<p>在平台中建立websocket服务器，将数据通过websocket传输给客户端实现一个tunnel</p>
-</blockquote>
-<h3 id="cloud_Ide">cloud Ide</h3><ul>
-<li>Cloud 9：<a href="https://c9.io">https://c9.io</a></li>
-<li>Koding：<a href="https://koding.com/">https://koding.com/</a></li>
-<li>Nitrous：<a href="https://lite.nitrous.io/">https://lite.nitrous.io/</a></li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/31/websocket-tunnel-over-cloud-ide/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/30/ios-send-sms/">
-                ios send SMS
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/30/ios-send-sms/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-send-sms/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;termios.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSString</span>(<span class="title">UCS2Encoding</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span>*)ucs2EncodingString&#123;</span><br><span class="line">    <span class="built_in">NSMutableString</span> *result = [<span class="built_in">NSMutableString</span> string];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; [<span class="keyword">self</span> length]; i++) &#123;</span><br><span class="line">        <span class="keyword">unichar</span> unic = [<span class="keyword">self</span> characterAtIndex:i];</span><br><span class="line">        [result appendFormat:<span class="string">@"%04hX"</span>,unic];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithString:result];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">- (<span class="built_in">NSString</span>*)ucs2DecodingString&#123;</span><br><span class="line">    <span class="built_in">NSUInteger</span> length = [<span class="keyword">self</span> length]/<span class="number">4</span>;</span><br><span class="line">    <span class="keyword">unichar</span> *buf = malloc(<span class="keyword">sizeof</span>(<span class="keyword">unichar</span>)*length);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *scanString = [<span class="keyword">self</span> UTF8String];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">        sscanf(scanString+i*<span class="number">4</span>, <span class="string">"%04hX"</span>, buf+i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [[<span class="built_in">NSString</span> alloc] initWithCharacters:buf length:length];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span>*)hexSwipString&#123;</span><br><span class="line">    <span class="keyword">unichar</span> *oldBuf = malloc([<span class="keyword">self</span> length]*<span class="keyword">sizeof</span>(<span class="keyword">unichar</span>));</span><br><span class="line">    <span class="keyword">unichar</span> *newBuf = malloc([<span class="keyword">self</span> length]*<span class="keyword">sizeof</span>(<span class="keyword">unichar</span>));</span><br><span class="line">    [<span class="keyword">self</span> getCharacters:oldBuf range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, [<span class="keyword">self</span> length])];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; [<span class="keyword">self</span> length]; i+=<span class="number">2</span>) &#123;</span><br><span class="line">        newBuf[i] = oldBuf[i+<span class="number">1</span>];</span><br><span class="line">        newBuf[i+<span class="number">1</span>] = oldBuf[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSString</span> *result = [<span class="built_in">NSString</span> stringWithCharacters:newBuf length:[<span class="keyword">self</span> length]];</span><br><span class="line">    free(oldBuf);</span><br><span class="line">    free(newBuf);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/30/ios-send-sms/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/30/ios-reverse-myapp/">
-                ios reverse myapp
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/reverse/">reverse</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/30/ios-reverse-myapp/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse-myapp/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="reverseMyApp">reverseMyApp</h2><h3 id="download_tools_and_install">download tools and install</h3><p><a href="https://code.google.com/p/networkpx/wiki/class_dump_z">class-dump-z</a><br><a href="http://www.charlesproxy.com/download/">Charles</a></p>
-<h3 id="Edit_Scheme">Edit Scheme</h3><p>Select <code>Run</code> panel, then in <code>info</code> tab, select <code>Release</code> under <code>Build Configuration</code>;</p>
-<h3 id="enter_Simulator_App_directory">enter Simulator App directory</h3><p>you can use <code>SimPholders2</code></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/30/ios-reverse-myapp/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/30/ios-reverse-tutorial/">
-                ios reverse tutorial
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/reverse/">reverse</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/30/ios-reverse-tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse-tutorial/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="setting_platform">setting platform</h2><h3 id="jailbreak">jailbreak</h3><h3 id="add_sources">add sources</h3><pre><code><span class="number">1</span>. apt.<span class="number">178</span><span class="class">.com</span>
-<span class="number">2</span>. apt<span class="class">.weiphone</span><span class="class">.com</span>
-</code></pre><h3 id="install_tools">install tools</h3><pre><code><span class="label">openssh</span>
-<span class="keyword">BigBoss </span>Recommended tools
-<span class="label">MobileTerminal</span>
-</code></pre><h3 id="ssh_login">ssh login</h3><pre><code><span class="keyword">user</span>: <span class="literal">root</span> pwd:alpine
-change <span class="literal">password</span> <span class="constant">G</span>JJ123456
-</code></pre><h3 id="update">update</h3><pre><code>apt-<span class="built_in">get</span> <span class="keyword">update</span>
-apt-<span class="built_in">get</span> upgrade
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/30/ios-reverse-tutorial/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/30/ios-reverse/">
-                ios reverse
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/reverse/">reverse</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/30/ios-reverse/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-reverse/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="class-dump-z">class-dump-z</h3><h4 id="下载配置class_dump_z">下载配置class_dump_z</h4><p>前往 <a href="https://code.google.com/p/networkpx/wiki/class_dump_z">https://code.google.com/p/networkpx/wiki/class_dump_z</a> ，下载tar包，然后解压配置到本地环境<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>tar -zxvf <span class="class"><span class="keyword">class</span>-<span class="title">dump</span>-<span class="title">z_0</span>.2<span class="title">a</span>.<span class="title">tar</span>.<span class="title">gz</span>  </span></span><br><span class="line"><span class="variable">$ </span>sudo cp mac_x86/<span class="class"><span class="keyword">class</span>-<span class="title">dump</span>-<span class="title">z</span> /<span class="title">usr</span>/<span class="title">bin</span>/</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="class_dump_分文件">class_dump 分文件</h4><pre><code><span class="keyword">class</span>-dump-z <span class="keyword">App</span> -<span class="keyword">H</span> -o outputdir
-</code></pre><h4 id="class_dump支付宝app">class_dump支付宝app</h4><pre><code>$ class-dump-z Portal &gt; Portal-dump.txt  
-
-@protocol XXEncryptedProtocol_10764b0  
--<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109df</span>;  
-</span>-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109d3</span>;  
-</span>-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109c7</span>;  
-</span>-<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109bf</span>;  
-</span>@optional  
--<span class="ruby">(?)<span class="constant">XXEncryptedMethod_d109eb</span>;  
-</span>@end  
-</code></pre><p>查看得到的信息是加过密的，这个加密操作是苹果在部署到app store时做的，所以我们还需要做一步解密操作</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/30/ios-reverse/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/29/git-tutorials-workflows/">
-                git tutorials -- workflows
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-29
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Git/">Git</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/29/git-tutorials-workflows/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-workflows/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="git_tutorials">git tutorials</h2><h3 id="Centralized_workflow">Centralized workflow</h3><p><img src="https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/centralized-workflow/01.svg" alt=""><br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//Someone initializes <span class="operator">the</span> central repository</span><br><span class="line">ssh user@host git init <span class="comment">--bare /path/to/repo.git</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//Everybody clones the central repository</span></span><br><span class="line">git clone ssh://user@host/path/<span class="built_in">to</span>/repo.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit stage commits</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//origin is the remote connection to the central repository</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line"><span class="comment"></span><br><span class="line">//another push</span></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line">error: failed <span class="built_in">to</span> push some refs <span class="built_in">to</span> <span class="string">'/path/to/repo.git'</span></span><br><span class="line">hint: Updates were rejected because <span class="operator">the</span> tip <span class="operator">of</span> your current branch is behind</span><br><span class="line">hint: its remote counterpart. Merge <span class="operator">the</span> remote changes (e.g. <span class="string">'git pull'</span>)</span><br><span class="line">hint: <span class="keyword">before</span> pushing again.</span><br><span class="line">hint: See <span class="operator">the</span> <span class="string">'Note about fast-forwards'</span> <span class="operator">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line">git pull <span class="comment">--rebase origin master</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Unmerged paths:</span></span><br><span class="line"><span class="comment"># (use "git reset HEAD &lt;some-file&gt;..." to unstage)</span></span><br><span class="line"><span class="comment"># (use "git add/rm &lt;some-file&gt;..." as appropriate to mark resolution)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># both modified: &lt;some-file&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the file</span></span><br><span class="line">git <span class="built_in">add</span> &lt;some-<span class="built_in">file</span>&gt; </span><br><span class="line">git rebase <span class="comment">--continue</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//you can abort and roll back</span><span class="comment"></span><br><span class="line">//right back to where you started before you ran [git pull --rebase]</span></span><br><span class="line">git rebase <span class="comment">--abort</span></span><br><span class="line"><span class="comment"></span><br><span class="line">//or push</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/29/git-tutorials-workflows/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/29/git-tutorials-advanced-tips/">
-                git tutorials -- Advanced Tips
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-29
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/29/git-tutorials-advanced-tips/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-advanced-tips/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="git_tutorials">git tutorials</h2><h3 id="Splitting_a_Commit">Splitting a Commit</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br><span class="line"></span><br><span class="line">// edit second to edit</span><br><span class="line">pick f7f3f6d changed my name a bit</span><br><span class="line">edit 310154e updated README formatting and added blame</span><br><span class="line">pick a5f4a0d added cat-file</span><br><span class="line"></span><br><span class="line">//<span class="operator"><span class="keyword">do</span> a mixed <span class="keyword">reset</span> <span class="keyword">of</span> that <span class="keyword">commit</span> <span class="keyword">with</span> <span class="string">`git reset HEAD^`</span> effectively undoes that <span class="keyword">commit</span> <span class="keyword">and</span> <span class="keyword">leaves</span> the modified files unstaged</span><br><span class="line">$ git <span class="keyword">reset</span> HEAD^</span><br><span class="line">$ git <span class="keyword">add</span> README</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'updated README formatting'</span></span><br><span class="line">$ git <span class="keyword">add</span> lib/simplegit.rb</span><br><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'added blame'</span></span><br><span class="line">$ git rebase <span class="comment">--continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ git <span class="keyword">log</span> -<span class="number">4</span> <span class="comment">--pretty=format:"%h %s"</span></span><br><span class="line"><span class="number">1</span>c002dd added cat-file</span><br><span class="line"><span class="number">9</span>b29157 added blame</span><br><span class="line"><span class="number">35</span>cfb2b updated README formatting</span><br><span class="line">f3cc40e <span class="keyword">changed</span> my name a <span class="built_in">bit</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="The_Nuclear_Option:_filter-branch">The Nuclear Option: filter-branch</h3><h4 id="Removing_a_File_from_Every_Commit">Removing a File from Every Commit</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//<span class="built_in">remove</span> passwords.txt form <span class="keyword">all</span> <span class="keyword">history</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD</span><br><span class="line"></span><br><span class="line">//<span class="built_in">remove</span> <span class="keyword">all</span> accidentally committed editor backup <span class="keyword">files</span></span><br><span class="line">git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f *~'</span> HEAD.</span><br><span class="line"></span><br><span class="line">//To run <span class="built_in">filter</span>-branch <span class="keyword">on</span> <span class="keyword">all</span> your branches, you can pass --<span class="keyword">all</span> <span class="keyword">to</span> the <span class="keyword">command</span></span><br><span class="line">$ git <span class="built_in">filter</span>-branch --tree-<span class="built_in">filter</span> <span class="string">'rm -f passwords.txt'</span> HEAD --<span class="keyword">all</span></span><br></pre></td></tr></table></figure>
-<h3 id="important">important</h3><ol>
-<li>you should always create a new branch before adding commits to a detached HEAD</li>
-<li>For this reason, git revert should be used to undo changes on a public branch, and git reset should be reserved for undoing changes on a private branch</li>
+<h3 id="Simple_Collection_Operators">Simple Collection Operators</h3><ol>
+<li>@count: Returns the number of objects in the collection.</li>
+<li>@sum: Converts each object in the collection to a double, computes the sum, and returns the sum.</li>
+<li>@avg: Takes the double value of each object in the collection, and returns the average value.</li>
+<li>@max: Determines the maximum value using compare:. Objects must support mutual comparison for this to work.</li>
+<li>@min: Same as @max, but returns the minimum value.</li>
 </ol>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/29/git-tutorials-advanced-tips/#more">
+            <a class="btn" href="/2015/06/06/ios-key-value-coding-and-and-collection-operators/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -766,8 +851,8 @@ apt-<span class="built_in">get</span> upgrade
           
           
             
-              <a class="post-title-link" href="/2015/05/29/git-tutorials-collaborating/">
-                git tutorials -- Collaborating
+              <a class="post-title-link" href="/2015/06/06/c-storage-classes/">
+                C Storage Classes
               </a>
             
           
@@ -776,14 +861,14 @@ apt-<span class="built_in">get</span> upgrade
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-29
+          發表於 2015-06-06
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Git/">Git</a>
+              <a href="/categories/C/">C</a>
 
               
               
@@ -796,8 +881,8 @@ apt-<span class="built_in">get</span> upgrade
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/29/git-tutorials-collaborating/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-collaborating/"></span>
+            <a href="/2015/06/06/c-storage-classes/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/c-storage-classes/"></span>
             </a>
           </span>
           
@@ -812,186 +897,204 @@ apt-<span class="built_in">get</span> upgrade
 
       
         
-          <h2 id="git_tutorials">git tutorials</h2><h3 id="git_remote">git remote</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//List <span class="operator">the</span> remote connections you have <span class="built_in">to</span> other repositories</span><br><span class="line">git remote</span><br><span class="line"><span class="comment"></span><br><span class="line">//List the remote connections you have to other repositories, include the URL</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">add</span> &lt;name&gt; &lt;url&gt;</span><br><span class="line">git remote rm &lt;name&gt;</span><br><span class="line">git remote <span class="built_in">rename</span> &lt;old-name&gt; &lt;<span class="built_in">new</span>-name&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="The_origin_Remote">The origin Remote</h4><p>When you clone a repository with git clone, it automatically creates a remote connection called origin pointing back to the cloned repository. This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits. This behavior is also why most Git-based projects call their central repository origin.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/29/git-tutorials-collaborating/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/29/git-tutorials-getting-started/">
-                git tutorials -- Getting Started
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-29
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Git/">Git</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/29/git-tutorials-getting-started/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/git-tutorials-getting-started/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="git_tutorials">git tutorials</h2><h3 id="setup_a_repository">setup a repository</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialize an local repository</span></span><br><span class="line">git <span class="keyword">init</span></span><br><span class="line">git <span class="keyword">init</span> &lt;directory&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//initialize a Central repositories or server </span></span><br><span class="line">git <span class="keyword">init</span> --bare &lt;directory&gt;.git</span><br><span class="line"></span><br><span class="line">ssh &lt;user&gt;@&lt;host&gt;</span><br><span class="line">cd path/above/repo </span><br><span class="line">git <span class="keyword">init</span> --bare my-project.git</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/29/git-tutorials-getting-started/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/recently-readings/">
-                最近阅读资料
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Study/">Study</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/recently-readings/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/recently-readings/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="book">book</h2><ol>
-<li>Functional Programming Patterns in Scala and Clojure- Write Lean Programs for the JVM</li>
-<li>iOS.8.by.Tutorials.2014.12</li>
-<li>Leanpub.Functional Reactive Programming on iOS.2014</li>
-<li>Pro.Multithreading.and.Memory.Management.for.iOS.and.OS.X</li>
-<li></li>
+          <h2 id="C_Storage_Classes">C Storage Classes</h2><p>There are 4 storage classes in C: auto, register, static &amp; extern.</p>
+<h3 id="static">static</h3><p>When it comes to storage classes, static means one of two things.</p>
+<ol>
+<li>A static variable inside a method or function retains its value between invocations.</li>
+<li>A static variable declared globally can called by any function or method, so long as those functions appear in the same file as the static variable. The same goes for static functions.</li>
 </ol>
-<h2 id="links">links</h2><ol>
-<li><a href="http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients" target="_blank" rel="external">http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients</a></li>
-<li><a href="http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers" target="_blank" rel="external">http://www.raywenderlich.com/34003/core-graphics-tutorial-curves-and-layers</a></li>
-<li><a href="http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths" target="_blank" rel="external">http://www.raywenderlich.com/33193/core-graphics-tutorial-arcs-and-paths</a></li>
-<li><a href="http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob" target="_blank" rel="external">http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob</a></li>
-<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-1</a></li>
-<li><a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2</a></li>
-<li><a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3" target="_blank" rel="external">http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3</a></li>
-</ol>
+<h3 id="Static_Singletons">Static Singletons</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">id</span> _sharedInstance = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    dispath_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">        <span class="comment">//any config</span></span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="keyword">return</span> _sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/c-storage-classes/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
 
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/06/ios-encodings/">
+                ios encodings
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/ios-encodings/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-encodings/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Type_Encodings">Type Encodings</h2><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> c</td>
+<td>A char                                           </td>
+</tr>
+<tr>
+<td> i</td>
+<td>An int                                           </td>
+</tr>
+<tr>
+<td> s</td>
+<td>A short                                          </td>
+</tr>
+<tr>
+<td> l</td>
+<td>A longl is treated as a 32-bit quantity on 64-bit programs.</td>
+</tr>
+<tr>
+<td> q</td>
+<td>A long long                                      </td>
+</tr>
+<tr>
+<td> C</td>
+<td>An unsigned char                                 </td>
+</tr>
+<tr>
+<td> I</td>
+<td>An unsigned int                                  </td>
+</tr>
+<tr>
+<td> S</td>
+<td>An unsigned short                                </td>
+</tr>
+<tr>
+<td> L</td>
+<td>An unsigned long                                 </td>
+</tr>
+<tr>
+<td> Q</td>
+<td>An unsigned long long                            </td>
+</tr>
+<tr>
+<td> f</td>
+<td>A float                                          </td>
+</tr>
+<tr>
+<td> d</td>
+<td>A double                                         </td>
+</tr>
+<tr>
+<td> B</td>
+<td>A C++ bool or a C99 _Bool                        </td>
+</tr>
+<tr>
+<td> v</td>
+<td>A void                                           </td>
+</tr>
+<tr>
+<td> *</td>
+<td>A character string (char *)                      </td>
+</tr>
+<tr>
+<td> @</td>
+<td>An object (whether statically typed or typed id) </td>
+</tr>
+<tr>
+<td> #</td>
+<td>A class object (Class)                           </td>
+</tr>
+<tr>
+<td> :</td>
+<td>A method selector (SEL)                          </td>
+</tr>
+<tr>
+<td> [array type]</td>
+<td>An array                                         </td>
+</tr>
+<tr>
+<td> {name=type…}</td>
+<td>A structure                                      </td>
+</tr>
+<tr>
+<td> (name=type…)</td>
+<td>A union                                          </td>
+</tr>
+<tr>
+<td> bnum</td>
+<td>A bit field of num bits                          </td>
+</tr>
+<tr>
+<td> ^type</td>
+<td>A pointer to type                                </td>
+</tr>
+<tr>
+<td> ?</td>
+<td>An unknown type (used for function pointers)     </td>
+</tr>
+</tbody>
+</table>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/ios-encodings/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1014,7 +1117,7 @@ apt-<span class="built_in">get</span> upgrade
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/9/">&raquo;</a>
   </div>
 
 
@@ -1048,21 +1151,21 @@ apt-<span class="built_in">get</span> upgrade
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">160</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">73</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

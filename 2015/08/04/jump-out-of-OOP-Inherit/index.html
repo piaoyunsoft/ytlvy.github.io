@@ -1,0 +1,687 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Framework," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> jump out of OOP -- Inherit // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              jump out of OOP -- Inherit
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Framework/">Framework</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/jump-out-of-OOP-Inherit/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Inherit/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-yi-ji-cheng.html" target="_blank" rel="external">reference</a></p>
+<h2 id="跳出面向对象思想(一)_继承">跳出面向对象思想(一) 继承</h2><h3 id="简述">简述</h3><p>这一系列文章中谈谈面向对象思想的几个部分，并且给出对应的解决方案，这些解决方案有些是用面向过程的思路解决的，有些也还是停留在面向对象中。到最后我会给大家一个比较，然后给出结论。</p>
+<h4 id="上下文规范">上下文规范</h4><p>在进一步地讨论这些概念之前，我需要跟大家达成一个表达上的共识，我会采用下面的语法来表达对象相关的信息<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">所有的大写字母都是类或对象，小写字母表示属性或方法。</span><br><span class="line"></span><br><span class="line"><span class="type">FOO</span>:&#123; isLoading, _data, render<span class="literal">()</span>, _switch<span class="literal">()</span> &#125;   这表示一个<span class="type">FOO</span>对象，isLoading、_data是它的属性，render<span class="literal">()</span>、_switch<span class="literal">()</span>是它的方法，加下划线表示私有。</span><br><span class="line"></span><br><span class="line"><span class="type">A</span> -&gt; <span class="type">B</span>                                          这表示从<span class="type">A</span>派生出了<span class="type">B</span>，<span class="type">A</span>是父类。</span><br><span class="line"></span><br><span class="line"><span class="type">A</span> -&gt; <span class="type">B</span>:&#123; [a, b, c<span class="literal">()</span>, d<span class="literal">()</span>], e, f<span class="literal">()</span> &#125;             <span class="literal">[]</span>里面是父类的东西，e、f<span class="literal">()</span>是派生类的东西</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span> ], e, f<span class="literal">()</span> &#125;                             省略了对父类的描述，用类名<span class="type">A</span>代替，其他同上</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span> ], e, f<span class="literal">()</span>, @c<span class="literal">()</span> &#125;                       省略了对父类的描述，函数前加@表示重载了父类的方法。</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span>,<span class="type">D</span> ], e, f<span class="literal">()</span> &#125;                           多继承，<span class="type">B</span>继承了<span class="type">A</span>和<span class="type">D</span></span><br><span class="line"></span><br><span class="line"><span class="type">B</span>&lt;protocol&gt;                                     符合某个protocol接口的对象。</span><br><span class="line"></span><br><span class="line">&lt;protocol&gt;:&#123;foo<span class="literal">()</span>, bar&#125;                         protocol这个接口中包含foo<span class="literal">()</span>这个方法，bar这个属性。</span><br><span class="line"></span><br><span class="line">foo(<span class="type">A</span>, <span class="built_in">int</span>)                                     foo这个函数，接收<span class="type">A</span>类和<span class="built_in">int</span>类型作为参数。</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="来，我们谈谈对象">来，我们谈谈对象</h3><p>面向对象思想三大支柱：继承、封装、多态。这篇文章说的是继承。当然面向对象和面向过程都会有好有坏，但是做决定的时候，更多地还是去权衡值得不值得放弃。关于这样的立场问题，我都会给出非常明确的倾向，不会跟你们打太极。<br>如果说这个也好那个也好，那还发表毛个观点，那叫没有观点。</p>
+<h3 id="继承">继承</h3><p>继承从代码复用的角度来说，特别好用，也特别容易被滥用和被错用。不恰当地使用继承导致的最大的一个缺陷特征就是高耦合。<br>在这里我要补充一点，耦合是一个特征，虽然大部分情况是缺陷的特征，但是当耦合成为需求的时候，耦合就不是缺陷了。耦合成为需求的例子在后面会提到。<br>我们来看下面这个场景：</p>
+<p>有一天，产品经理Yuki说:</p>
+<blockquote>
+<p>我们不光首页要有一个搜索框，在进去的这个页面，也要有一个搜索框，只不过这个搜索框要多一些功能，它是可以即时给用户搜索提示的。</p>
+</blockquote>
+<p>Casa接到这个任务，他研究了一下代码，说:OK，没问题~<br>Casa知道代码里已经有了一个现成的搜索框，Casa立刻从HOME_SEARCH_BAR派生出PAGE_SEARCH_BAR<br>嗯，目前事情进展到这里还不错：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">HOME_SEARCH_BAR</span>:&#123;<span class="tag">textField</span>, <span class="tag">search</span>(), <span class="tag">init</span>()&#125;</span><br><span class="line"><span class="tag">PAGE_SEARCH_BAR</span>:&#123; <span class="attr_selector">[ HOME_SEARCH_BAR ]</span>, <span class="tag">overlay</span>, <span class="tag">prompt</span>() &#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>过了几天，产品经理Yuki要求:</p>
+<blockquote>
+<p>用户收藏的东西太多了，我们的app需要有一个本地搜索的功能。</p>
+</blockquote>
+<p>Casa轻松通过方法覆盖摆平了这事儿:<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">HOME_SEARCH_BAR</span>:&#123;<span class="tag">textField</span>, <span class="tag">search</span>()&#125;</span><br><span class="line"><span class="tag">PAGE_SEARCH_BAR</span>:&#123; <span class="attr_selector">[ HOME_SEARCH_BAR ]</span>, <span class="tag">overlay</span>, <span class="tag">prompt</span>() &#125;</span><br><span class="line"><span class="tag">LOCAL_SEARCH_BAR</span>:&#123; <span class="attr_selector">[ HOME_SEARCH_BAR ]</span>, @<span class="tag">search</span>() &#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>app上线一段时间之后，UED不知哪根筋搭错了，决定要修改搜索框的UI，UED跟Casa说:</p>
+<blockquote>
+<p>把HOME_SEARCH_BAR的样式改成这样吧，里面PAGE_SEARCH_BAR还是老样子就OK。</p>
+</blockquote>
+<p>Casa表示这个看似简单的修改其实很蛋碎，<code>HOME_SEARCH_BAR</code>的样式一改，<code>PAGE_SEARCH_BAR</code>和<code>LOCAL_SEARCH_BAR</code>都会改变，怎么办呢？ 与其每个手工修一遍，Casa不得已只能给<code>HOME_SEARCH_BAR</code>添加了一个函数：<code>initWithStyle()</code></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">HOME_SEARCH_BAR</span>:&#123; <span class="tag">textField</span>, <span class="tag">search</span>(), <span class="tag">init</span>(), <span class="tag">initWithStyle</span>() &#125;</span><br><span class="line"><span class="tag">PAGE_SEARCH_BAR</span>:&#123; <span class="attr_selector">[ HOME_SEARCH_BAR ]</span>, <span class="tag">overlay</span>, <span class="tag">prompt</span>() &#125;</span><br><span class="line"><span class="tag">LOCAL_SEARCH_BAR</span>:&#123; <span class="attr_selector">[ HOME_SEARCH_BAR ]</span>, @<span class="tag">search</span>() &#125;</span><br></pre></td></tr></table></figure>
+<p>于是代码里面就出现了各种init()和initWithStyle()混用的情况。</p>
+<blockquote>
+<p>无所谓了，先把需求应付过去再说。</p>
+</blockquote>
+<p>Casa这么想。</p>
+<hr>
+<p>有一天，另外一个team的leader来对Casa抱怨:</p>
+<blockquote>
+<p>搞什么玩意儿？为毛我要把LOCAL_SEARCH_BAR独立出来还特么连带着把那么多文件都弄出来？我就只是想要个本地搜索的功能而已！！</p>
+</blockquote>
+<p>这是因为<code>LOCAL_SEARCH_BA</code>R依赖于它的父类<code>HOME_SEARCH_BAR</code>,然而<code>HOME_SEARCH_BAR</code>本身也带着API相关的对象，同时还有数据解析的对象。 也就是说，要想把<code>LOCAL_SEARCH_BAR</code>移植给另外一个TEAM，拔出萝卜带出泥，差不多整个Networking框架都要移植过去。 嗯，Casa又要为了解耦开始一个不眠之夜了～</p>
+<hr>
+<p>以上是典型的错误使用继承的案例，虽然继承是代码复用的一种方案，但是使用继承仍然是需要好好甄别代码复用的方式的，不是所有场景的代码复用都适用于继承。</p>
+<blockquote>
+<p>继承是紧耦合的一种模式，主要的体现就在于牵一发动全身。</p>
+</blockquote>
+<ul>
+<li>第一种类型的问题是改了一处，到处都要改，但解决方案还算方便，多添加一个特定的函数(initWithStyle())就好了。只是代码里面难看一点。</li>
+<li>第二种类型的问题是代码复用的时候，要跟着把父类以及父类所有的相关依赖也复制过去，高耦合在复用的时候造成了冗余。</li>
+</ul>
+<hr>
+<p>对于这样的问题，业界其实早就给出了解决方案：用组合替代继承。将Textfield和search模块拆开，然后通过定义好的接口进行交互，一般来说可以选择Delegate模式来交互。</p>
+<p>解决方案：<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;search_protocol&gt;:<span class="list">&#123;search()&#125;</span></span><br><span class="line"></span><br><span class="line">SEARCH_LOGIC&lt;search_protocol&gt;</span><br><span class="line"></span><br><span class="line">SEARCH_BAR:<span class="list">&#123;textField, SEARCH_LOGIC&lt;search_protocol&gt;&#125;</span></span><br><span class="line"></span><br><span class="line">HOME_SEARCH_BAR:<span class="list">&#123;SearchBar1, SearchLogic1&#125;</span></span><br><span class="line">PAGE_SEARCH_BAR:<span class="list">&#123;SearchBar2, SearchLogic1&#125;</span></span><br><span class="line">LOCAL_SEARCH_BAR:<span class="list">&#123;SearchBar2, SearchLogic2&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样一来，搜索框和搜索逻辑分别形成了两个不同的组件，分别在<code>HOME_SEARCH_BAR</code>, <code>PAGE_SEARCH_BAR</code>, <code>LOCAL_SEARCH_BAR</code>中以不同的形态组合而成。 <code>textField</code>和<code>SEARCH_LOGIC&lt;search_protocol&gt;</code>之间通过delegate的模式进行数据交互。 这样就解决了上面提到的两种类型的问题。 大部分我们通过代码复用来选择继承的情况，其实都是变成组合比较好。 因此我在团队中一直在推动使用组合来代替继承的方案。 那么什么时候继承才有用呢？</p>
+<p>纠结了一下，貌似实在是没什么地方非要用继承不可的。但事实上使用继承，我们得要分清楚层次，使用继承其实是如何给一类对象划分层次的问题。在正确的继承方式中，父类应当扮演的是底层的角色，子类是上层的业务。举两个例子：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">Object </span>-&gt; <span class="constant">Model</span></span><br><span class="line"><span class="constant">Object </span>-&gt; <span class="constant">View</span></span><br><span class="line"><span class="constant">Object </span>-&gt; <span class="constant">Controller</span></span><br><span class="line"></span><br><span class="line"><span class="constant">ApiManager </span>-&gt; <span class="constant">DetailManager</span></span><br><span class="line"><span class="constant">ApiManager </span>-&gt; <span class="constant">ListManager</span></span><br><span class="line"><span class="constant">ApiManager </span>-&gt; <span class="constant">CityManager</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>这里是有非常明确的层次关系的，我在这里也顺便提一下使用继承的3大要点：</p>
+<blockquote>
+<p>父类只是给子类提供服务，并不涉及子类的业务逻辑</p>
+</blockquote>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>并不影响Model, View, Controller的执行逻辑和业务  </span><br><span class="line">    <span class="built_in">Object</span>为子类提供基础服务，例如内存计数等</span><br><span class="line"></span><br><span class="line">    ApiManager并不影响其他的Manager  </span><br><span class="line">    ApiManager只是给派生的Manager提供服务而已,ApiManager做的只会是份内的是，对于子类做的事情不参与。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>层级关系明显，功能划分清晰，父类和子类各做各的。</p>
+</blockquote>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>并不参与MVC的管理中，那些都只是各自派生类自己要处理的事情</span><br><span class="line"></span><br><span class="line">DetailManager, ListManager, CityManager都只是处理各自业务的对象  </span><br><span class="line">ApiManager并不应该涉足对应的业务。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>父类的所有变化，都需要在子类中体现，也就是说此时耦合已经成为需求</p>
+</blockquote>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>对类的描述，对内存引用的计数方式等，都是普遍影响派生类的。  </span><br><span class="line">ApiManager中对于网络请求的发起，网络状态的判断，是所有派生类都需要的。  </span><br><span class="line">此时，牵一发动全身就已经成为了需求，是适用继承的</span><br></pre></td></tr></table></figure>
+<hr>
+<p>此时我们回过头来看为什么<code>HOME_SEARCH_BAR</code>, <code>PAGE_SEARCH_BAR</code>, <code>LOCAL_SEARCH_BAR</code>采用继承的方案是不恰当的：</p>
+<p>1) 他们的父类是HOME_SEARCH_BAR，父类不只提供了服务，也在一定程度上影响了子类的业务逻辑。派生出的子类也是为了要做搜索，虽然搜索的逻辑不同，但是互相涉及到搜索这一块业务了。</p>
+<p>2) 子类做搜索，父类也做搜索，虽然处理逻辑不同，但是这是同一个业务，与父类在业务上的联系密切。在层级关系上，HOME_SEARCH_BAR和其派生出的LOCAL_SEARCH_BAR, PAGE_SEARCH_BAR其实是并列关系，并不是上下层级关系。</p>
+<p>3) 由于这里所谓的父类和子类其实是并列关系而不是父子关系，且并没有需要耦合的需求，相反，每个派生子类其实都不希望跟父类有耦合，此时耦合不是需求，是缺陷。</p>
+<hr>
+<h3 id="总结">总结</h3><p>可见，代码复用也是分类别的，如果当初只是出于代码复用的目的而不区分类别和场景，就采用继承是不恰当的。我们应当考虑以上3点要素看是否符合，才能决定是否使用继承。就目前大多数的开发任务来看，继承出现的场景不多，主要还是代码复用的场景比较多，然而通过组合去进行代码复用显得要比继承麻烦一些，因为组合要求你有更强的抽象能力，继承则比较符合直觉。然而从未来可能产生的需求变化和维护成本来看，使用组合其实是很值得的。另外，<code>当你发现你的继承超过2层的时候，你就要好好考虑是否这个继承的方案</code>了，第三层继承正是滥用的开端。确定有必要之后，再进行更多层次的继承。</p>
+<p>所以我的态度是：<code>万不得已不要用继承，优先考虑组合</code></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Framework/"> #Framework </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/04/jump-out-of-OOP-Polymorphic/">jump out of OOP -- Polymorphic</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/28/Chun-notes/">Chun notes</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#跳出面向对象思想(一)_继承"><span class="nav-number">1.</span> <span class="nav-text">跳出面向对象思想(一) 继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述"><span class="nav-number">1.1.</span> <span class="nav-text">简述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上下文规范"><span class="nav-number">1.1.1.</span> <span class="nav-text">上下文规范</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#来，我们谈谈对象"><span class="nav-number">1.2.</span> <span class="nav-text">来，我们谈谈对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承"><span class="nav-number">1.3.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/04/jump-out-of-OOP-Inherit/';
+      var disqus_title = 'jump out of OOP -- Inherit';
+      var disqus_url = 'http://ytlvy.com/2015/08/04/jump-out-of-OOP-Inherit/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

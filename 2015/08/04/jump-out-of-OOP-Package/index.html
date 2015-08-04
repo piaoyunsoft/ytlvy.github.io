@@ -1,0 +1,655 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Framework," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> jump out of OOP -- Package // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              jump out of OOP -- Package
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Framework/">Framework</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/jump-out-of-OOP-Package/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Package/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-san-feng-zhuang.html" target="_blank" rel="external">reference</a></p>
+<h2 id="跳出面向对象思想(三)_封装">跳出面向对象思想(三) 封装</h2><h3 id="简述">简述</h3><p>我认为”封装”的概念在面向对象思想中是最基础的概念，它实质上是通过将相关的一堆函数和一堆对象放在一起，对外有函数作为操作通道，对内则以变量作为操作原料。只留给外部程序员操作方式，而不暴露具体执行细节。大部分书举的典型例子就是汽车和灯泡的例子：你不需要知道不同车子的发动机原理，只要踩油门就可以跑；你不需要知道你的灯泡是那种灯泡，打开开关就会亮。我们都会很直觉地认为这种做法非常棒，是吧？</p>
+<p>但是有的时候还是会觉得有哪些地方不对劲，使用面向对象语言的时候，我隐约觉得封装也许并没有我们直觉中认为的那么好，也就是说，面向对象其实并没有我们直觉中的那么好，虽然它已经流行了很多很多年。</p>
+<h3 id="1-_将数据结构和函数放在一起是否真的合理？">1. 将数据结构和函数放在一起是否真的合理？</h3><p>函数就是做事情的，它们有输入，有执行逻辑，有输出。 数据结构就是用来表达数据的，要么作为输入，要么作为输出。</p>
+<p>两者本质上是属于完全不同的东西，面向对象思想将他们放到一起，使得函数的作用被限制在某一个区域里，这样做虽然能够很好地将操作归类，但是这种归类方法是根据”作用领域”来归类的，在现实世界中可以，但在程序的世界中，有些不妥。</p>
+<p>不妥的理由有如下几个：</p>
+<blockquote>
+<p>在并行计算时，由于执行部分和数据部分被绑定在一起，这就使得这种方案制约了并行程度。在为了更好地实现并行的时候，业界的工程师们发现了一个新的思路：函数式编程。将函数作为数据来使用，这样就能保证执行的功能在时序上的正确性了。但你不觉得，只要把数据表达和执行部分分开，形成流水线，这不就能够非常方便地将并行数提高了么？</p>
+</blockquote>
+<p>我来举个例子： 在数据和函数没有分开时，程序的执行流程是这样：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="function"><span class="title">function1</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">function2</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">function3</span><span class="params">()</span></span>     最后得到经过处理的A</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>当处于并发环境时，假设有这么多任务同时到达<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="function"><span class="title">f1</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">f2</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">f3</span><span class="params">()</span></span>     最后得到经过处理的A</span><br><span class="line">B.<span class="function"><span class="title">f1</span><span class="params">()</span></span> -&gt; B.<span class="function"><span class="title">f2</span><span class="params">()</span></span> -&gt; B.<span class="function"><span class="title">f3</span><span class="params">()</span></span>     最后得到经过处理的B</span><br><span class="line">C.<span class="function"><span class="title">f1</span><span class="params">()</span></span> -&gt; C.<span class="function"><span class="title">f2</span><span class="params">()</span></span> -&gt; C.<span class="function"><span class="title">f3</span><span class="params">()</span></span>     最后得到经过处理的C</span><br><span class="line">D.<span class="function"><span class="title">f1</span><span class="params">()</span></span> -&gt; D.<span class="function"><span class="title">f2</span><span class="params">()</span></span> -&gt; D.<span class="function"><span class="title">f3</span><span class="params">()</span></span>     最后得到经过处理的D</span><br><span class="line">E.<span class="function"><span class="title">f1</span><span class="params">()</span></span> -&gt; E.<span class="function"><span class="title">f2</span><span class="params">()</span></span> -&gt; E.<span class="function"><span class="title">f3</span><span class="params">()</span></span>     最后得到经过处理的E</span><br><span class="line">F.<span class="function"><span class="title">f1</span><span class="params">()</span></span> -&gt; F.<span class="function"><span class="title">f2</span><span class="params">()</span></span> -&gt; F.<span class="function"><span class="title">f3</span><span class="params">()</span></span>     最后得到经过处理的F</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>假设并发数是3，那么完成上面类似的很多个任务，时序就是这样<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string"> time </span>|<span class="string"> 1   </span>|<span class="string"> 2   </span>|<span class="string"> 3   </span>|<span class="string"> 4   </span>|<span class="string"> 5   </span>|<span class="string"> 6   </span>|<span class="string"> 7   </span>|<span class="string"> 8   </span>|<span class="string"> 9   </span>|<span class="string"> 10  </span>|<span class="string"> 11  </span>|<span class="string"> 12  </span>|</span><br><span class="line">|<span class="string">------</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|<span class="string">-----</span>|</span><br><span class="line">|<span class="string"> A    </span>|<span class="string"> A.1 </span>|<span class="string"> A.2 </span>|<span class="string"> A.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> B    </span>|<span class="string"> B.1 </span>|<span class="string"> B.2 </span>|<span class="string"> B.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> C    </span>|<span class="string"> C.1 </span>|<span class="string"> C.2 </span>|<span class="string"> C.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> D    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> D.1 </span>|<span class="string"> D.2 </span>|<span class="string"> D.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> E    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> E.1 </span>|<span class="string"> E.2 </span>|<span class="string"> E.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> F    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> F.1 </span>|<span class="string"> F.2 </span>|<span class="string"> F.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> G    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> G.1 </span>|<span class="string"> G.2 </span>|<span class="string"> G.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> H    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> H.1 </span>|<span class="string"> H.2 </span>|<span class="string"> H.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> I    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> I.2 </span>|<span class="string"> I.2 </span>|<span class="string"> I.3 </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|</span><br><span class="line">|<span class="string"> J    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> J.1 </span>|<span class="string"> J.2 </span>|<span class="string"> J.3 </span>|</span><br><span class="line">|<span class="string"> K    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> K.1 </span>|<span class="string"> K.2 </span>|<span class="string"> K.3 </span>|</span><br><span class="line">|<span class="string"> L    </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string">     </span>|<span class="string"> L.1 </span>|<span class="string"> L.2 </span>|<span class="string"> L.3 </span>|</span><br></pre></td></tr></table></figure></p>
+<p>当数据和函数分开时，并发数同样是3，就能形成流水线了，有没有发现吞吐量一下子上来了？<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string"> time </span>|<span class="string"> 1 </span>|<span class="string"> 2 </span>|<span class="string"> 3 </span>|<span class="string"> 4 </span>|<span class="string"> 5 </span>|<span class="string"> 6 </span>|<span class="string"> 7 </span>|<span class="string"> 8 </span>|<span class="string"> 9 </span>|<span class="string"> 10</span>|<span class="string"> 11</span>|<span class="string"> 12</span>|</span><br><span class="line">|<span class="string">------</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|<span class="string">---</span>|</span><br><span class="line">|<span class="string"> f1() </span>|<span class="string"> A </span>|<span class="string"> B </span>|<span class="string"> C </span>|<span class="string"> D </span>|<span class="string"> E </span>|<span class="string"> F </span>|<span class="string"> G </span>|<span class="string"> H </span>|<span class="string"> I </span>|<span class="string"> J </span>|<span class="string"> K </span>|<span class="string"> L </span>|</span><br><span class="line">|<span class="string"> f2() </span>|<span class="string"> Z </span>|<span class="string"> A </span>|<span class="string"> B </span>|<span class="string"> C </span>|<span class="string"> D </span>|<span class="string"> E </span>|<span class="string"> F </span>|<span class="string"> G </span>|<span class="string"> H </span>|<span class="string"> I </span>|<span class="string"> J </span>|<span class="string"> K </span>|</span><br><span class="line">|<span class="string"> f3() </span>|<span class="string"> Y </span>|<span class="string"> Z </span>|<span class="string"> A </span>|<span class="string"> B </span>|<span class="string"> C </span>|<span class="string"> D </span>|<span class="string"> E </span>|<span class="string"> F </span>|<span class="string"> G </span>|<span class="string"> H </span>|<span class="string"> I </span>|<span class="string"> J </span>|</span><br></pre></td></tr></table></figure></p>
+<p>你要是粗看一下，诶？怎么到了第13个周期K才刚刚结束？上面一种方案在第12个周期的时候就结束了？不能这么看的哦，其实在12个周期里面，Y、Z也已经交付了。因为流水线吞吐量的提升是有过程的，我截取的片段应该是机器在持续运算过程中的一个片段。</p>
+<p>我们不能单纯地去看ABCD，要看交付的任务数量。在12个周期里面，大家都能够完成12个任务，在11个周期里面，流水线完成了11个任务，前面一种只完成了9个任务，流水线的优势在这里就体现出来了：每个时间段都能稳定地交付任务，吞吐量很大。而且并发数越多，跟第一种方案比起来的优势就越大，具体的大家也可以通过画图来验证。</p>
+<blockquote>
+<p>数据部分就是数据部分，执行部分就是执行部分，不同类的东西放在一起是不合适的</p>
+</blockquote>
+<p>函数就是一个执行黑盒，只要满足函数调用的充要条件（给够参数），就是能够确定输出结果的。面向对象思想将函数和数据绑在一起，这样的封装扩大了代码重用时的粒度。如果将函数和数据拆开，代码重用的基本元素就由对象变为了函数，这样才能更灵活更方便地进行代码重用。</p>
+<p>嗯，谁都经历过重用对象时，要把这个对象所依赖的所有东西都要移过来，哪怕你想用的只是这个对象里的一个方法，然而很有可能你的这些依赖是跟你所需要的方法无关的。</p>
+<p>但如果是函数的话，由于函数自身已经是天然完美封装的了，所以如果你要用到这个函数，那么这个函数所有的依赖你都需要，这才是合理的。</p>
+<h3 id="2-_是否所有的东西都需要对象化？">2. 是否所有的东西都需要对象化？</h3><p>面向对象语言一直以自己做到”一切皆对象”为荣，但事实是：是否所有的东西都需要对象化？</p>
+<p>在iOS开发中，有一个类叫做NSNumber，它封装了所有数值：double，float，unsigned int, int…等等类型，在使用的时候它弱化了数值的类型，使得非常方便。但问题也来了，计算的时候是不能直接对这个对象做运算的，你得把它们拆成数值，然后进行运算，然后再把结果变成NSNumber对象，然后返回。这是第一点不合理。第二点不合理的地方在于，运算的时候你不知道原始数据的类型是什么，拆箱装箱过程中难免会导致内存的浪费（比如原来uint8_t的数据变成unsigned int），这也十分没有必要。</p>
+<p>还有就是我们的file descriptor，它本身是一个资源的标识号，如果将资源抽象成对象，那么不可避免的就会使得这个对象变得非常庞大，资源有非常多的用法，你需要将这些函数都放到对象里去。在真正传递资源的时候，其实我们也只是关心资源标识而已，其它的真的无需关心。</p>
+<p>我们已经有函数作为黑盒了，拿着数据塞到黑盒里就够了。</p>
+<h3 id="3-_类型爆炸">3. 类型爆炸</h3><p>由于数据和函数绑定到了一起，在逻辑上有派生关系的两种对象往往可以当作一种，以派生链最上端的那个对象为准。单纯地看这个现象直觉上会觉得非常棒，父亲有的儿子都有。但在实际工程中，派生是非常不好控制的，它导致同一类类型在工程中泛滥：ViewController、AViewController、BViewController、ThisViewController、ThatViewController…</p>
+<p>你有没有发现，一旦把执行和数据拆解开，就不需要这么多ViewController了，派生只是给对象添加属性和方法。但事实上是这样：<br><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> </span>&#123;              Class A <span class="keyword">extends</span> B</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">B</span> b;         </span>&#123;</span><br><span class="line">    int number;             int number;</span><br><span class="line">&#125;</span><br><span class="line">                        &#123;</span><br></pre></td></tr></table></figure></p>
+<p>前者和后者的相同点是：在内存中，它们的数值部分的布局是一模一样的。不同点是：前者更强烈地表达了组合，后者更强烈地表达的是继承。然而我们都知道一个常识：组合要比继承更加合适，这在我这一系列的第一篇文章中有提到。</p>
+<p>上两者的表达在内存中没有任何不同，但在实际开发阶段中，后者会更容易把项目引入一个坏方向。</p>
+<h3 id="总结">总结</h3><p>为什么面向对象会如此流行？我想了一下业界关于这个谈论的最多的是以下几点：</p>
+<ul>
+<li>它能够非常好地进行代码复用</li>
+<li>它能够非常方便地应对复杂代码</li>
+<li>在进行程序设计时，面向对象更加符合程序员的直觉</li>
+</ul>
+<p>第一点在理论上确实成立，但实际上大家都懂，在面向对象的大背景下，写一段便于复用的代码比面向过程背景下难多了。关于第二点，你不觉得正是面向对象，才把工程变复杂的么？如果层次清晰，调用规范，无论面向对象还是面向过程，处理复杂业务都是一样好，等真的到了非常复杂的时候，对象间错综复杂的关系只会让你处理起来更加头疼，不如面向过程来得简洁。关于第三点，这其实是一个障眼法，因为无论面向什么的设计，最终落实下来，还是要面向过程的，面向对象只是在处理调用关系时符合直觉，在架构设计时，理清需求是第一步，理清调用关系是第二步，理清实现过程是第三步。面向对象让你在第二步时就产生了设计完成的错觉，只有再往下落地到实现过程的时候，你才会发现第二步中都有哪些错误。</p>
+<p>所以综上所述，我的观点是：面向对象是在架构设计时非常好的思想，但如果只是简单映射到程序实现上来，引入的缺点会让我们得不偿失。</p>
+<hr>
+<h3 id="后记">后记</h3><p>距离上一次博文更新已经快要一个月了，不是我偷懒，实在是太忙，现在终于有时间可以把”跳出面向对象”系列完成了。针对面向对象的3个支柱概念我写了三篇文章来挑它的刺，看上去有一种全盘否定的感觉，而我倒不至于希望大家回去下一个项目就开始面向过程的开发，我希望大家能够针对这一系列文章提出的面向对象的弊端，严格规范代码的行为，知道哪些可行哪些不可行。过去的工作中我深受其苦，往往没有时间去详细解释为什么这么直觉的东西实际上不可行，要想解释这些东西就得需要各种长篇大论。最痛苦的是，即便长篇大论说完了，最后对方还无法理解，照样写出垃圾代码出来害人。</p>
+<p>现在好了，长篇大论落在纸上了，说的时候听不懂，回去总可以翻文章慢慢理解了吧。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Framework/"> #Framework </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/04/iOS-application-framework-first/">iOS application framework -- first</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/04/jump-out-of-OOP-Polymorphic/">jump out of OOP -- Polymorphic</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#跳出面向对象思想(三)_封装"><span class="nav-number">1.</span> <span class="nav-text">跳出面向对象思想(三) 封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述"><span class="nav-number">1.1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-_将数据结构和函数放在一起是否真的合理？"><span class="nav-number">1.2.</span> <span class="nav-text">1. 将数据结构和函数放在一起是否真的合理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-_是否所有的东西都需要对象化？"><span class="nav-number">1.3.</span> <span class="nav-text">2. 是否所有的东西都需要对象化？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-_类型爆炸"><span class="nav-number">1.4.</span> <span class="nav-text">3. 类型爆炸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">1.6.</span> <span class="nav-text">后记</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/04/jump-out-of-OOP-Package/';
+      var disqus_title = 'jump out of OOP -- Package';
+      var disqus_url = 'http://ytlvy.com/2015/08/04/jump-out-of-OOP-Package/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/Chun-notes/">
-                Chun notes
+              <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
+                parse crashLog manually
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/Chun-notes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Chun-notes/"></span>
+            <a href="/2015/08/04/parse-crashLog-manually/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/parse-crashLog-manually/"></span>
             </a>
           </span>
           
@@ -194,11 +194,12 @@
 
       
         
-          <p><a href="http://blog.callmewhy.com/2015/05/25/note-about-chun/">转自</a></p>
-<h2 id="Chun_阅读笔记_-_如何做一个图片缓存库">Chun 阅读笔记 - 如何做一个图片缓存库</h2><p><a href="https://github.com/yechunjun/Chun">Chun</a> 是 <a href="http://chun.tips/">叶纯俊</a> 在 Github 上开源的一个图片缓存库，基于 Swift 编写。学习 Swift 有一段时间了，记录一些阅读源码的一些收获。</p>
-<h3 id="代码组织">代码组织</h3><p>Swift 中通过 <code>extension</code> 组织代码会让整个类更加清晰可读，尤其是对于 <code>UITableViewDataSource</code> 和 <code>UITableViewDelegate</code> 这种情况。在 Chun 这个项目中的 Demo 文件就是这样的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span>: <span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span> </span>&#123;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">CGFloat</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <p><a href="http://foggry.com/blog/2015/07/27/ru-he-shou-dong-jie-xi-crashlog/">转自</a></p>
+<h2 id="如何手动解析CrashLog">如何手动解析CrashLog</h2><p>解决崩溃问题是移动应用开发者最日常的工作之一。如果是开发过程中遇到的崩溃，可以根据重现步骤调试，但线上版本就无能为力了。好在目前已经有很多不错的第三方CrashLog搜集平台（如友盟、Crashlytics等）为我们做好了解析工作，甚至在Xcode7里苹果也跟进了解析线上版本崩溃日志的功能，为开发者减轻了不少负担。尽管通常已经不需要我们手工处理CrashLog，了解CrashLog的还原原理和方法还是有必要的。</p>
+<h3 id="-dSYM">.dSYM</h3><p><code>.dSYM(debugging SYMbols)</code>又称为调试符号表，是苹果为了方便调试和定位问题而使用的一种调试方案，本质上使用的是起源于贝尔实验室的DWARF（Debugging With Attributed Record Formats），其在<code>.xcarchive</code>目录中的层次结构为：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.xcarchive</span><br><span class="line"><span class="comment">--dSYMs</span></span><br><span class="line">  |<span class="comment">--Your.app.dSYM</span></span><br><span class="line">    |<span class="comment">--Contents</span></span><br><span class="line">      |<span class="comment">--Resources</span></span><br><span class="line">        |<span class="comment">--DWARF</span></span><br></pre></td></tr></table></figure></p>
+<p>关于DWARF的具体内容以后有机会再说。我们能解析CrashLog全靠.dSYM文件，解析方式见后文。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Chun-notes/#more">
+            <a class="btn" href="/2015/08/04/parse-crashLog-manually/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -231,8 +232,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS-NSTimer-Overflow/">
-                iOS NSTimer Overflow
+              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
+                iOS NSURLProtocal
               </a>
             
           
@@ -241,7 +242,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -261,8 +262,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-NSTimer-Overflow/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-NSTimer-Overflow/"></span>
+            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
             </a>
           </span>
           
@@ -277,109 +278,24 @@
 
       
         
-          <h2 id="NSTimer">NSTimer</h2><h3 id="fire">fire</h3><p>我们先用 NSTimer 来做个简单的计时器，每隔5秒钟在控制台输出 Fire 。比较想当然的做法是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DetailViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSTimer</span> *timer;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DetailViewController</span></span></span><br><span class="line">- (<span class="keyword">IBAction</span>)fireButtonPressed:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    _timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">3.0</span>f</span><br><span class="line">                                              target:<span class="keyword">self</span></span><br><span class="line">                                            selector:<span class="keyword">@selector</span>(timerFire:)</span><br><span class="line">                                            userInfo:<span class="literal">nil</span></span><br><span class="line">                                             repeats:<span class="literal">YES</span>];</span><br><span class="line">    [_timer fire];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)timerFire:(<span class="keyword">id</span>)userinfo &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Fire"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>运行之后确实在控制台每隔3秒钟输出一次 <code>Fire</code> ，然而当我们从这个界面跳转到其他界面的时候却发现：控制台还在源源不断的输出着 Fire 。看来 Timer 并没有停止。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-NSTimer-Overflow/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/Swift-Exception-Handle/">
-                Swift Exception Handle
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/Swift-Exception-Handle/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Swift-Exception-Handle/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.callmewhy.com/2015/04/20/error-handling-in-swift/">转自</a></p>
-<h2 id="Swift_中的异常处理">Swift 中的异常处理</h2><h3 id="问题">问题</h3><p>在开发过程中，异常处理算是比较常见的问题了。</p>
-<p>举一个比较常见的例子：用户修改注册的邮箱，大概分为以下几个步骤：</p>
+          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
 <ul>
-<li>接收到一个用户的请求：我要修改邮箱地址</li>
-<li>验证一下请求是否合法，将请求进行格式转化</li>
-<li>更新以前的邮箱地址记录</li>
-<li>给新的邮箱地址发送验证邮件</li>
-<li>将结果返回给用户</li>
+<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
+<li>如何优雅地进行流量统计</li>
+<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
+<li>怎么实现HTTP的同步请求</li>
 </ul>
-<p>上面的步骤如果一切顺利，那代码肯定干净利落，但是人生不如意十有八九，上面的步骤很容易出现问题：</p>
+<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
+<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
 <ul>
-<li>用户把邮箱地址填成了家庭地址</li>
-<li>用户是个黑客，没登录就发送了更新请求</li>
-<li>发送验证邮件的时候服务器爆炸了，发送邮件失败</li>
+<li>自定义请求和响应</li>
+<li>提供自定义的全局缓存支持</li>
+<li>重定向网络请求</li>
+<li>提供HTTP Mocking (方便前期测试)</li>
+<li>其他一些全局的网络请求修改需求</li>
 </ul>
-<p>各种异常都会导致这次操作的失败。</p>
-<h3 id="方案一">方案一</h3><p>在传统的处理方案里，一般是遇到异常就往上抛：<br><img src="http://segmentfault.com/img/bVlsK9" alt=""></p>
-<p>这种方案想必大家都不陌生，比如下面这段代码：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSError</span> *err = <span class="keyword">nil</span>;</span><br><span class="line"><span class="type">CGFloat</span> <span class="literal">result</span> = [<span class="type">MathTool</span> divide:<span class="number">2</span>.<span class="number">5</span> by:<span class="number">3</span>.<span class="number">0</span> error:&amp;err];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">"%@"</span>, err)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    [<span class="type">MathTool</span> doSomethingWithResult:<span class="literal">result</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Swift-Exception-Handle/#more">
+            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -412,8 +328,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS-ARC-Practices/">
-                iOS ARC Practices
+              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
+                dSYM parse tool
               </a>
             
           
@@ -422,7 +338,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -442,8 +358,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-ARC-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-ARC-Practices/"></span>
+            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
             </a>
           </span>
           
@@ -458,22 +374,10 @@
 
       
         
-          <p><a href="http://amattn.com/p/arc_best_practices.html">转自</a></p>
-<h2 id="ARC_最佳实践">ARC 最佳实践</h2><h3 id="General">General</h3><p>1) 数值变量应该使用 assign：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> scalarInt;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> scalarFloat;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGPoint</span> scalarStruct;</span><br></pre></td></tr></table></figure></p>
-<p>2) 在层次结构上属于下一级的对象应该使用 strong ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">id</span> childObject;</span><br></pre></td></tr></table></figure></p>
-<p>3) 在层次结构上属于上一级的对象应该使用 weak ，另外，当出现循环引用的时候也应该使用 weak ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> parentObject;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSObject</span> &lt;SomeDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure></p>
-<p>4) 闭包应该使用 copy ：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) SomeBlockType someBlock;</span><br></pre></td></tr></table></figure>
-<p>5) 在 dealloc 里：</p>
-<ul>
-<li>从观察者中移除 (remove observers)</li>
-<li>取消订阅通知 (unregister for notifications)</li>
-<li>设置非 weak 的委托为 nil (set any non-weak delegates to nil)</li>
-<li>关闭所有的计时器 (invalidate any timers)</li>
-</ul>
-<p>6) 所有的 IBOutlet 都应该是 weak 的。除非顶层的 IBOutlet 应该是 strong 的，比如 UIViewController 的 View 是需要直接拥有的，所以应该设置成 strong </p>
+          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
+<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-ARC-Practices/#more">
+            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -506,8 +410,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/">
-                iOS9 NSAppTransportSecurity Bypass
+              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
+                Variable Argument Lists
               </a>
             
           
@@ -516,7 +420,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -536,8 +440,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS9-NSAppTransportSecurity-Bypass/"></span>
+            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
             </a>
           </span>
           
@@ -552,608 +456,585 @@
 
       
         
-          <h2 id="Configuring_App_Transport_Security_Exceptions_in_iOS_9_and_OSX_10-11">Configuring App Transport Security Exceptions in iOS 9 and OSX 10.11</h2><h3 id="What_is_App_Transport_Security_(ATS)?">What is App Transport Security (ATS)?</h3><p>At WWDC 2015, Apple announced “App Transport Security” for iOS 9 and OSX 10.11 El Capitan. The <a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-SW1">“What’s New in iOS”</a> guide for iOS 9 explains:</p>
-<blockquote>
-<p>App Transport Security (ATS) lets an app add a declaration to its Info.plist file that specifies the domains with which it needs secure communication. ATS prevents accidental disclosure, provides secure default behavior, and is easy to adopt. You should adopt ATS as soon as possible, regardless of whether you’re creating a new app or updating an existing one.<br>If you’re developing a new app, you should use HTTPS exclusively. If you have an existing app, you should use HTTPS as much as you can right now, and create a plan for migrating the rest of your app as soon as possible.</p>
-</blockquote>
-<p>In simple terms, this means that if your application attempts to connect to any HTTP server (in this example, yourserver.com) that doesn’t support the latest SSL technology (TLSv1.2), your connections will fail with an error like this:<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CFNetwork SSLHandshake failed (-<span class="number">9801</span>)</span><br><span class="line">Error <span class="variable">Domain=</span>NSURLErrorDomain <span class="variable">Code=</span>-<span class="number">1200</span> <span class="string">"An SSL error has occurred and a secure connection to the server cannot be made."</span> <span class="variable">UserInfo=</span><span class="number">0</span>x7fb080442170 &#123;<span class="variable">NSURLErrorFailingURLPeerTrustErrorKey=</span>&lt;SecTrustRef: <span class="number">0</span>x7fb08043b380&gt;, <span class="variable">NSLocalizedRecoverySuggestion=</span>Would you like to connect to the server anyway?, <span class="variable">_kCFStreamErrorCodeKey=</span>-<span class="number">9802</span>, <span class="variable">NSUnderlyingError=</span><span class="number">0</span>x7fb08055bc00 <span class="string">"The operation couldn’t be completed. (kCFErrorDomainCFNetwork error -1200.)"</span>, <span class="variable">NSLocalizedDescription=</span>An SSL error has occurred <span class="constant">and</span> a secure connection to the server cannot be made., <span class="variable">NSErrorFailingURLKey=</span>https://yourserver.com, <span class="variable">NSErrorFailingURLStringKey=</span>https://yourserver.com, <span class="variable">_kCFStreamErrorDomainKey=</span><span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Curiously, you’ll notice that the connection attempts to change the http protocol to https to protect against mistakes in your code where you may have accidentally misconfigured the URL. In some cases, this might actually work, but it’s also confusing.</p>
-<h3 id="WARNING:_ATS_is_good_for_you_and_your_users_and_you_shouldn’t_disable_it!"><strong>WARNING: ATS is good for you and your users and you shouldn’t disable it!</strong></h3><p>The reason why Apple is pushing so aggressively to force secure connections is because it’s the right thing to do. Protecting personal data from being compromised over insecure wireless connections, among other things, is great for users. Just because these exceptions exist doesn’t mean you should actually use them.</p>
-<p>If your application is connecting to third party APIs that you can’t control (such as in my case, where my application Routesy connects to public transit APIs that don’t yet support SSL) or serving as a means to load syndicated content (a browser or a news reader, for instance), these techniques might be useful to you.</p>
-<p>The bottom line is, if you run your own API server, FIX YOUR SSL. Thanks to Dave DeLong for reminding me that I should clarify that disabling ATS is a bad idea.</p>
-<p>That being said…<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/sqlite-insert-replace/">
-                sqlite insert replace
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Sqlite/">Sqlite</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/sqlite-insert-replace/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/sqlite-insert-replace/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Sqlite_insert_&amp;&amp;_replace">Sqlite insert &amp;&amp; replace</h2><p>Assuming 3 columns in the table.. ID, NAME, ROLE</p>
-<h3 id="BAD:_This_will_insert_or_replace_all_columns_with_new_values_for_ID=1:">BAD: This will insert or replace all columns with new values for ID=1:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, name, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'John Foo'</span>, <span class="string">'CEO'</span>);</span></span><br></pre></td></tr></table></figure>
-<h3 id="BAD:_This_will_insert_or_replace_2_of_the_columns…_the_NAME_column_will_be_set_to_NULL_or_the_default_value:">BAD: This will insert or replace 2 of the columns… the NAME column will be set to NULL or the default value:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'code monkey'</span>);</span></span><br></pre></td></tr></table></figure>
-<h3 id="GOOD:_This_will_update_2_of_the_columns-_When_ID=1_exists,_the_NAME_will_be_unaffected-_When_ID=1_does_not_exist,_the_name_will_be_default_(NULL)-">GOOD: This will update 2 of the columns. When ID=1 exists, the NAME will be unaffected. When ID=1 does not exist, the name will be default (NULL).</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, role, name) </span><br><span class="line">  <span class="keyword">VALUES</span> (  <span class="number">1</span>, </span><br><span class="line">            <span class="string">'code monkey'</span>,</span><br><span class="line">            (<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> Employee <span class="keyword">WHERE</span> id = <span class="number">1</span>)</span><br><span class="line">          );</span></span><br></pre></td></tr></table></figure>
-<h3 id="GOOD:_This_will_update_2_of_the_columns-_When_ID=1_exists,_the_ROLE_will_be_unaffected-_When_ID=1_does_not_exist,_the_role_will_be_set_to_‘Benchwarmer’_instead_of_the_default_value-">GOOD: This will update 2 of the columns. When ID=1 exists, the ROLE will be unaffected. When ID=1 does not exist, the role will be set to ‘Benchwarmer’ instead of the default value.</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, name, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (  <span class="number">1</span>, </span><br><span class="line">            <span class="string">'Susan Bar'</span>,</span><br><span class="line">            <span class="keyword">COALESCE</span>((<span class="keyword">SELECT</span> role <span class="keyword">FROM</span> Employee <span class="keyword">WHERE</span> id = <span class="number">1</span>), <span class="string">'Benchwarmer'</span>)</span><br><span class="line">          );</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/xcode-condition-breakpoint-non-ascii/">
-                xcode condition breakpoint non-ascii
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/xcode-condition-breakpoint-non-ascii/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/xcode-condition-breakpoint-non-ascii/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="设置变量">设置变量</h4><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">expr</span> username = @<span class="string">"username"</span></span><br><span class="line"><span class="type">expr</span> password = @<span class="string">"badpassword"</span></span><br></pre></td></tr></table></figure>
-<h4 id="条件断点">条件断点</h4><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">BOOL</span>)</span><span class="list">[<span class="keyword">item</span> isEqualToString:@<span class="string">"three"</span>]</span><br><span class="line"></span><br><span class="line">//非 ASCII 码写法</span><br><span class="line"><span class="list">(<span class="keyword">BOOL</span>)</span><span class="list">[<span class="list">(<span class="keyword">NSString*</span>)</span>titleName isEqualToString:<span class="list">[<span class="keyword">NSString</span> stringWithUTF8String:<span class="string">"消息"</span>]]</span></span></span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/26/iOS-static-library-architectures/">
-                iOS static library architectures
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/26/iOS-static-library-architectures/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/26/iOS-static-library-architectures/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_static_library_architectures">iOS static library architectures</h2><p>最近入职, 刚接手需要参与的工程, 调试了半天, 发现由于32\64位的问题, 不能在模拟器调试, 很郁闷. 后来google 到答案记录如下:</p>
-<p>静态库编译支持<code>arm64,armv7 armv7s, i386, x86_64</code>.</p>
-<p>1) 分别在设备和模拟器编译<br>2) 找到<code>Build/Products</code>目录, 下有两个目录 <code>Release-iphoneos</code>  <code>Release-iphonesimulator</code></p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/Users/</span>kappe<span class="regexp">/Library/</span>Developer<span class="regexp">/Xcode/</span>DerivedData<span class="regexp">/zbar-gyozyrpbqzvslmfoadhqkwskcesd/</span>Build<span class="regexp">/Products</span></span><br></pre></td></tr></table></figure>
-<p>3) 合并<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -<span class="built_in">create</span> Release-iphoneos/libzbar.<span class="operator">a</span> Release-iphonesimulator/libzbar.<span class="operator">a</span> -o libzbar.<span class="operator">a</span></span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/21/iOS-wild-pointer-crash/">
-                iOS wild pointer crash
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-21
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/21/iOS-wild-pointer-crash/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/21/iOS-wild-pointer-crash/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://bugly.qq.com/blog/?p=200" target="_blank" rel="external">转自</a></p>
-<h2 id="先提高野指针Crash率">先提高野指针Crash率</h2><p>写c、c++代码的同学应该都清楚，crash最多的原因通常有两种，一种是多线程，一种是野指针。这两种crash都带随机性，而且这两种crash有相当一部分都很难区分，甚至大量的crash只有系统栈，如果不能根据日志重现，几乎是无解，让人非常蛋疼。</p>
-<p>本文主要讨论的方向是objc的野指针。objc的野指针最常见的一种栈是<code>objc_msgSend</code>，从Bugly上报的Crash数据来看，objc_msgSend的量占了五分之一，这其中大多数是objc野指针。当然也有相当多的objc野指针不是这种表现，所以野指针的crash体量很惊人</p>
-<h3 id="为什么Obj-C野指针的Crash那么多？">为什么Obj-C野指针的Crash那么多？</h3><p>我们有这么多自动化和人工测试流程，而且还有几轮的灰度过程，其实很多crash场景都应该已经覆盖到了，但随机性意味着，测试的时候它没有问题，等用户用了才有问题，这种情况该怎么办？！</p>
-<p>我觉得关键在于它的随机性，随机性问题我初略地分为两类：</p>
-<p>第一类是跑不进出错的逻辑，执行不到出错的代码，这种可以提高测试场景覆盖度来解决。</p>
-<p>第二类是跑进了有问题的逻辑，但是野指针指向的地址并不一定会导致crash，这好像要看人品了？<br>一说到人品就头疼啊有木有，由于上辈子做了太多善事，人品太好每次自测的时候根本不crash有木有！</p>
-<h3 id="先来分析分析">先来分析分析</h3><p><strong>野指针是指指向一个已删除的对象或未申请访问受限内存区域的指针</strong>。本文说的objc野指针，说的是objc对象释放之后指针未置空，导致的野指针（objc里面一般不会出现为初始化对象的常识性错误）。</p>
-<p>既然是访问已经释放的对象为什么不是必现crash呢？<br><strong>因为dealloc执行后只是告诉系统，这片内存我不用了，而系统并没有就让这片内存不能访问</strong>。</p>
-<p>现实大概是下面几种可能的情况：</p>
+          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/" target="_blank" rel="external">转自</a></p>
+<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
+<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
 <ol>
-<li>对象释放后内存没被改动过，原来的内存保存完好，可能不crash或者出现逻辑错误（随机crash）。</li>
-<li>对象释放后内存没被改动过，但是它自己析构的时候已经删掉某些必要的东西，可能不crash、crash在访问依赖的对象比如类成员上、出现逻辑错误（随机crash）。</li>
-<li>对象释放后内存被改动过，写上了不可访问的数据，直接就出错了很可能crash在objc_msgSend上面（必现crash，常见）。</li>
-<li>对象释放后内存被改动过，写上了可以访问的数据，可能不crash、出现逻辑错误、间接访问到不可访问的数据（随机crash）。</li>
-<li>对象释放后内存被改动过，写上了可以访问的数据，但是再次访问的时候执行的代码把别的数据写坏了，遇到这种crash只能哭了（随机crash，难度大，概率低）！！</li>
-<li>对象释放后再次release（几乎是必现crash，但也有例外，很常见）。</li>
+<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
+<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
+<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
+<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
+<li>最后调用<code>va_end()</code>来进行清理。</li>
 </ol>
-<p>参考下面的这张图：<br><img src="http://7jpswx.com1.z0.glb.clouddn.com/ios%20wild%20pointer%20crash.png" alt=""></p>
-<p>看看下面的代码，明显有问题，但是大部分时候是不会crash的。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIView* <span class="built_in">test</span>Obj=[[UIView alloc] init];</span><br><span class="line">[<span class="built_in">test</span>Obj release];</span><br><span class="line">[<span class="built_in">test</span>Obj <span class="built_in">set</span>NeedsLayout];</span><br></pre></td></tr></table></figure>
-<h3 id="让随机变成不随机">让随机变成不随机</h3><p>从上面列的情况来看，出现随机Crash的情况有很多种！这是得多蛋疼呢！或许最好的办法让他们全都立马crash，然后把野指针都找出来！<br>仔细看看上面的关键路径只有出现被随机填入的数据是不可访问的时候才会必现crash。</p>
-<p>这个地方我们可以做一下手脚，把这一随机的过程变成不随机的过程。对象释放后在内存上填上不可访问的数据，其实这种技术其实一直都有，xcode的Enable Scribble就是这个作用。<br><img src="http://7jpswx.com1.z0.glb.clouddn.com/ios%20wild%20pointer%20crash1.png" alt=""></p>
-<p>下面我们就拿刚刚的代码试一下。</p>
-<p>scheme=&gt;run=&gt;diagnostics=&gt;Enable Scribble</p>
-<p>果然，必现了，0x5555561！！</p>
-<p><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/05/3.png" alt=""></p>
-<p>但是有个问题：这货不能放在测试同学那边用！因为总不能让测试同学装了xcode来测试吧？</p>
-<p>于是我们自己动手实现一个，这个过程中我们要解决几个问题：</p>
+<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
+<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
+<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
+<h2 id="解决方案">解决方案</h2><p>一般而言，为了确保参数的获取正确进行，有如下两种解决方案：</p>
+<h3 id="Format_string">Format string</h3><p>如C语言中的<code>printf</code>，Cocoa中的<code>NSLog</code>，<code>[NSString stringWithFormat:]</code>就是使用了<code>Format String</code>的解决方案。通常，该函数的第一个参数既为一个<code>format string</code>，函数内部实现会扫描这个<code>format string</code>，来确定之后接着的可变参数的数量和类型。例如：</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString <span class="variable">*str</span> = [NSString stringWithFormat:<span class="variable">@"</span><span class="keyword">int</span> <span class="variable">%d</span>, str <span class="variable">%@</span>, <span class="keyword">float</span> <span class="variable">%g</span><span class="string">", 123, @"</span>ok<span class="string">", 123.4];</span></span><br></pre></td></tr></table></figure>
+<p>这里使用了<code>%</code>作为转义符，其后跟着的<code>d</code>代表<code>int</code>，<code>@</code>代表<code>id</code>，<code>g</code>代表<code>float/double</code>，这表示后面必须有三个参数，其类型必须与<code>format string</code>所指定的一致。</p>
+<p>如之前所说，提供的参数的数量或者类型若与提供的<code>format string</code>不一致，则会发生不可预知的问题。而在运行的时候，我们没有任何的办法去保证其正确性，幸运的是编译器提供了一些方法，能让我们在编译的时候做一些检查：</p>
+<p>gcc中定义了<code>__attribute__((format))</code>来标示一个可变参函数使用了<code>format string</code>，从而在编译时对其进行检查。其定义为<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">format</span> (archetype, <span class="keyword">string</span>-index, <span class="keyword">first</span>-<span class="built_in">to</span>-check)</span><br></pre></td></tr></table></figure></p>
 <ol>
-<li>怎么在内存释放后填上不可访问的数据？内存释放很可能不在我们的代码中。为此我们需要hook对象释放的接口，内存释放之后马上执行我们的破坏工作。</li>
-<li>我们要重写对象释放的接口，重写哪个呢？NSObject的dealloc、runtime的 object_dispose，c的free应该都是可以，但是各有优点，我选择的是覆盖面最广的free，free是c的函数，重写了它之后还可以顺带解决一部分c的野指针问题。</li>
-<li>怎么重写？重写c的接口场景的有两种： a. 替换系统动态库 b.hook . 替换动态库太麻烦，还不知道行不行得通；hook我们就找现成的<code>fishhook</code>，github里面找的，但现成的代码需要防止代码冲突。</li>
-<li>填充的不可访问的数据的长度怎么确定？获取内存长度的接口不在标准库中，好在在Mac和iOS中可以用<code>malloc_size</code>就可以。</li>
-<li>填什么？和xcode一样，填0x55</li>
+<li><code>archetype</code>代表<code>format string</code>的类型，它可以是<code>printf</code>，<code>scanf</code>，<code>strftime</code>或者<code>strfmon</code>，Cocoa开发者还可以使用<code>__NSString__</code>来指定其使用和<code>[NSString stringWithFormat:]</code>与<code>NSLog(</code>)一致的<code>format string</code>规则。</li>
+<li><code>string-index</code>代表<code>format string</code>是第几个参数，</li>
+<li><code>first-to-check</code>则代表了可变参数列表从第几个参数开始。</li>
 </ol>
-<p>上hook后的free代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">safe_free</span><span class="params">(<span class="keyword">void</span>* p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> memSiziee=malloc_size(p);</span><br><span class="line">    <span class="built_in">memset</span>(p, <span class="number">0x55</span>, memSiziee);</span><br><span class="line">    orig_free(p);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>测试一下，出现了和Enable Scribble一样的crash！<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/05/4.png" alt=""></p>
-<p>重复造了这个xcode的轮子之后，以后编包给测试，终于在某些情况下不需要那么拼人品了。但是这仅仅覆盖了众多野指针中的一部分，还有大量的疑问等着继续解答。比如：</p>
-<ol>
-<li>由于内存已经被释放了，很可能我们的0x55又被别的数据覆盖，这种情况还是无能为力。</li>
-<li>为什么我们的0x55555555变成了0x55555561。</li>
-<li>如果释放后访问野指针的是系统代码，虽然提前发现了crash，但是离解决问题还是很远。</li>
-<li>如果野指针指向的数据没有被当成指针使用，还是可能不立即crash。</li>
-</ol>
-<h2 id="让非必现Crash变成必现">让非必现Crash变成必现</h2><blockquote>
-<p>注：本文主要介绍一种延迟内在释放的技术，继续上一篇提到的如何提高野指针Crash的概率（可以文章底部点击“阅读原文”，查看上一篇文章）。另外，本文探讨的环境是在非arc情况下</p>
-</blockquote>
-<h3 id="只有小概率Crash肿么办？">只有小概率Crash肿么办？</h3><p>之前介绍了一种在内存释放后填充0x55使野指针后数据不能访问，从而使某些野指针从不必现Crash变成了必现。然而，我们早就看穿了一切，这个事情不会那么顺利的。</p>
-<p>加上上次的代码之后，再试试下面的代码：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIView</span>* testObj=[[<span class="built_in">UIView</span> alloc] init]; </span><br><span class="line">[testObj release]; </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123; </span><br><span class="line">    <span class="built_in">UIView</span>* testView=[[[<span class="built_in">UIView</span> alloc] </span><br><span class="line">        initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">200</span>,<span class="built_in">CGRectGetWidth</span>(<span class="keyword">self</span><span class="variable">.view</span><span class="variable">.bounds</span>), <span class="number">60</span>)] autorelease]; </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:testView]; </span><br><span class="line">    [[<span class="built_in">NSRunLoop</span> mainRunLoop] runMode:<span class="built_in">NSDefaultRunLoopMode</span> beforeDate:<span class="literal">nil</span>]; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">[testObj setNeedsLayout];</span><br></pre></td></tr></table></figure>
-<p>依然有大概率不会Crash！难道是我们的实现有问题？我试了一下xcode的Enable Scribble，但一样是大概率不Crash！</p>
-<p>其实这就是上一篇文中留下了几个问题之一，如果我们填充0x55后内存又被别的内存覆盖了，最终还是会出现随机Crash。而在真实环境中，这种情况是非常常见的。</p>
-<p>我们再梳理一下这个过程：</p>
-<ol>
-<li>我们在即将要释放的填了0x55，之后调用了free真正释放，内存被系统回收。</li>
-<li>这个时候系统随时可能把这片内存给别的代码使用，也就是说我们的0x55被再次写上随机的数据（在这里再强调一下，访问野指针是不会Crash的，只有野指针指向的地址被写上了有问题的数据才会引发Crash）。</li>
-<li>假如释放的内存上又填上了另一个对象的指针，而那个对象也有同样的一个方法，那很可能只是逻辑上有问题，并不会直接Crash，甚至悄无声息地像什么事情都没发生一样。（这个地方可能会发生多种情况，可以参考之上一篇文章中的图）</li>
-</ol>
-<p>没有发生Crash可不是好事，因为这种情况如果后续再Crash，问题就非常难查，因为你看到的Crash栈很可能和出错的代码完全没有关联。既然这个问题这么棘手，最好还是和之前一样，让这个Crash提前暴露。</p>
-<h3 id="继续提高Crash率">继续提高Crash率</h3><p>沿着上次的思路，首先，我们要解决的问题就是怎么让系统不再往这片释放的内存上乱放东西。</p>
-<p>要控制底层内存管理机制让它不使用这些内存可能很困难。但是，我们变通一下，简单粗暴地，我们干脆就不释放这片内存了。也就是当free被调用的时候我们不真的调用free，而是自己保留着内存，这样系统不知道这片内存已经不需要用了，自然就不会被再次写上别的数据（偷笑)。</p>
-<p>为了防止系统内存过快耗尽，还需要额外多做几件事：</p>
-<ol>
-<li>自己保留的内存大于一定值的时候就释放一部分，防止被系统杀死。</li>
-<li>系统内存警告的时候，也要释放一部分内存。</li>
-</ol>
-<p>主要代码还是很简单的：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">DSQueue* _unfreeQueue = NULL;<span class="comment">//用来保存自己偷偷保留的内存:1这个队列要线程安全或者自己加锁;2这个队列内部应该尽量少申请和释放堆内存。 </span></span><br><span class="line"><span class="keyword">int</span> unfreeSize=<span class="number">0</span>;<span class="comment">//用来记录我们偷偷保存的内存的大小 </span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAX_STEAL_MEM_SIZE 1024*1024*100<span class="comment">//最多存这么多内存，大于这个值就释放一部分 </span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAX_STEAL_MEM_NUM 1024*1024*10<span class="comment">//最多保留这么多个指针，再多就释放一部分 </span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> BATCH_FREE_NUM 100<span class="comment">//每次释放的时候释放指针数量 </span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//系统内存警告的时候调用这个函数释放一些内存 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_some_mem</span><span class="params">(size_t freeNum)</span></span>&#123; </span><br><span class="line">    <span class="keyword">size_t</span> count = ds_queue_length(_unfreeQueue); </span><br><span class="line">    freeNum = freeNum &gt; count ? count : freeNum; </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;freeNum;  i++) &#123; </span><br><span class="line">        <span class="keyword">void</span>* unfreePoint=ds_queue_get(_unfreeQueue); </span><br><span class="line">        <span class="keyword">size_t</span> memSiziee=malloc_size(unfreePoint); </span><br><span class="line">        __sync_fetch_and_sub(&amp;unfreeSize,memSiziee);</span><br><span class="line">        orig_free(unfreePoint); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">safe_free</span><span class="params">(<span class="keyword">void</span>* p)</span></span>&#123; </span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> 0<span class="comment">//之前的代码我们先注释掉 </span></span></span><br><span class="line">    <span class="keyword">size_t</span> memSiziee=malloc_size(p); </span><br><span class="line">    <span class="built_in">memset</span>(p, <span class="number">0x55</span>, memSiziee); </span><br><span class="line">    orig_free(p); </span><br><span class="line"><span class="preprocessor">#<span class="keyword">else</span> </span></span><br><span class="line">    <span class="keyword">int</span> unFreeCount=ds_queue_length(_unfreeQueue); </span><br><span class="line">    <span class="keyword">if</span> (unFreeCount&gt;MAX_STEAL_MEM_NUM*<span class="number">0.9</span> || unfreeSize&gt;MAX_STEAL_MEM_SIZE) &#123; </span><br><span class="line">        free_some_mem(BATCH_FREE_NUM); </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123; </span><br><span class="line">        <span class="keyword">size_t</span> memSiziee=malloc_size(p); </span><br><span class="line">        <span class="built_in">memset</span>(p, <span class="number">0x55</span>, memSiziee);   </span><br><span class="line">        __sync_fetch_and_add(&amp;unfreeSize,memSiziee); </span><br><span class="line">        ds_queue_put(_unfreeQueue, p); </span><br><span class="line">    &#125; </span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span> </span></span><br><span class="line">    <span class="keyword">return</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">init_safe_free</span><span class="params">()</span> </span><br><span class="line"></span>&#123; </span><br><span class="line">    _unfreeQueue=ds_queue_create(MAX_STEAL_MEM_NUM); </span><br><span class="line">    orig_free=(<span class="keyword">void</span>(*)(<span class="keyword">void</span>*))dlsym(RTLD_DEFAULT, <span class="string">"free"</span>); </span><br><span class="line">    rebind_symbols1((<span class="keyword">struct</span> rebinding[])&#123;&#123;<span class="string">"free"</span>, (<span class="keyword">void</span>*)safe_free&#125;&#125;, <span class="number">1</span>); </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)applicationDidReceiveMemoryWarning:(UIApplication *)application </span><br><span class="line">&#123; </span><br><span class="line">    free_some_mem(<span class="number">1024</span>*<span class="number">1024</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里需要注意一下：</p>
-<ol>
-<li>在safe_free以及它调用的函数里面尽量不要再用带锁的函数，不然很容易导致死锁。</li>
-<li>加上这个代码之后APP的内存占用会增大不少，拿过来测试可以，但万万不能放在正式的发布版本中。</li>
-<li>关于性能问题，我的机器是iPhone5，跑在App里面运行，还算流畅（不同App性能可能会有些不同）。</li>
-<li>可能由于锁的存在，会使cpu线程切换变得频繁，这样多线程的问题Crash率也可能会提升（最近遇到一个多线程引起的Crash很难重现，但我加了这个代码后就变成了必现Crash）</li>
-</ol>
-<p>做完这些之后拿到项目中实际验证一下，验证的版本可以是经过测试，且遗留Crash问题已经很少，但还没有对外灰度或发布的版本。</p>
-<p>现在来看一下效果：<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/1.png" alt=""></p>
-<p>终于出现了我们熟悉的Crash了！并且，我们做了更多的尝试之后，Crash还是以高概率重现！<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/2.png" alt=""></p>
-<p>但以上代码只是雏形，其实还有很多地方可以优化，大家在试用时可以参考着优化：</p>
-<ol>
-<li>最好是根据机器的情况来决定偷偷保留内存的数量。</li>
-<li>由于内存申请太过频繁，其实我们保留的内存很快就会耗尽，对于大片的内存，可以适当放过，这样可以提高保存指针的数量，防止消耗的内存过多。</li>
-<li>有的APP自己写的都是Obj-C代码，想忽略c、c++对象的话可以过滤掉（会有办法判断的）。</li>
-<li>如果觉得某些Obj-C类有问题，可以只保留指定的类对象，如果数量不是特别大，甚至可以干脆不释放。</li>
-<li>……</li>
-</ol>
-<h2 id="加点黑科技让Crash自报家门">加点黑科技让Crash自报家门</h2><p>虽然说的是iOS下的野指针问题，但其实在各种平台都是通用的，本文终于可以利用OC Runtime的特性，让OC野指针对象主动抛出自己的信息，某些情况下秒杀某些全系统栈Crash。</p>
-<h3 id="为什么错误地址是0x55555561？">为什么错误地址是0x55555561？</h3><p>前文（前文链接）介绍了在内存释放后填充0x55使野指针出现后数据不能访问，从而使野指针变成了必现的方法，那这里会有一个比较奇怪的问题：我们在释放的内存上填上了0x55，但为什么大部分时候野指针Crash了，出错的地址却是0x55555561？</p>
-<p>为了解答这个问题，我们可以先看看Crash栈，就会发现这些Crash都是在objc_msgSend上。我们知道Obj-C的对象方法调用是通过objc_msgSend进行的，我们通过野指针访问一个对象的方法也一样，其实是通过objc_msgSend给已经释放的对象发了一条消息。</p>
-<p>而objc_msgSend的函数签名是这样：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> objc_msgSend(<span class="keyword">id</span> <span class="keyword">self</span>, SEL op, ...)</span><br></pre></td></tr></table></figure></p>
-<p>我们再来看看objc_msgSend的代码:<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">libobjc.A.dylib</span>`objc_msgSend:</span><br><span class="line"> <span class="number">0x2f879f40</span> &lt;+<span class="number">0</span>&gt;: <span class="keyword">cbz </span><span class="literal">r0</span>, <span class="number">0x2f879f7e</span> <span class="comment">; &lt;+62&gt;</span></span><br><span class="line"> <span class="number">0x2f879f42</span> &lt;+<span class="number">2</span>&gt;: <span class="keyword">ldr.w </span><span class="literal">r9</span>, [<span class="literal">r0</span>]</span><br><span class="line"> <span class="number">0x2f879f46</span> &lt;+<span class="number">6</span>&gt;: <span class="keyword">ldrh.w </span><span class="literal">r12</span>, [<span class="literal">r9</span>, <span class="number">#0xc</span>]</span><br><span class="line"> <span class="number">0x2f879f4a</span> &lt;+<span class="number">10</span>&gt;: <span class="keyword">ldr.w </span><span class="literal">r9</span>, [<span class="literal">r9</span>, <span class="number">#0x8</span>]</span><br><span class="line"> <span class="number">0x2f879f4e</span> &lt;+<span class="number">14</span>&gt;: <span class="keyword">and.w </span><span class="literal">r12</span>, <span class="literal">r12</span>, <span class="literal">r1</span></span><br><span class="line"> <span class="number">0x2f879f52</span> &lt;+<span class="number">18</span>&gt;: <span class="keyword">add.w </span><span class="literal">r9</span>, <span class="literal">r9</span>, <span class="literal">r12</span>, <span class="keyword">lsl </span><span class="number">#3</span></span><br><span class="line"> <span class="number">0x2f879f56</span> &lt;+<span class="number">22</span>&gt;: <span class="keyword">ldr.w </span><span class="literal">r12</span>, [<span class="literal">r9</span>]</span><br><span class="line"> <span class="number">0x2f879f5a</span> &lt;+<span class="number">26</span>&gt;: <span class="keyword">teq.w </span><span class="literal">r12</span>, <span class="literal">r1</span></span><br><span class="line"> <span class="number">0x2f879f5e</span> &lt;+<span class="number">30</span>&gt;: <span class="keyword">bne </span><span class="number">0x2f879f66</span> <span class="comment">; &lt;+38&gt;</span></span><br><span class="line"> <span class="number">0x2f879f60</span> &lt;+<span class="number">32</span>&gt;: <span class="keyword">ldr.w </span><span class="literal">r12</span>, [<span class="literal">r9</span>, <span class="number">#0x4</span>]</span><br><span class="line"> <span class="number">0x2f879f64</span> &lt;+<span class="number">36</span>&gt;: <span class="keyword">bx </span><span class="literal">r12</span></span><br><span class="line"> <span class="number">0x2f879f66</span> &lt;+<span class="number">38</span>&gt;: <span class="keyword">cmp.w </span><span class="literal">r12</span>, <span class="number">#0x1</span></span><br><span class="line"> <span class="number">0x2f879f6a</span> &lt;+<span class="number">42</span>&gt;: <span class="keyword">blo </span><span class="number">0x2f879f78</span> <span class="comment">; &lt;+56&gt;</span></span><br><span class="line"> <span class="number">0x2f879f6c</span> &lt;+<span class="number">44</span>&gt;: <span class="keyword">it </span>eq</span><br><span class="line"> <span class="number">0x2f879f6e</span> &lt;+<span class="number">46</span>&gt;: <span class="keyword">ldreq.w </span><span class="literal">r9</span>, [<span class="literal">r9</span>, <span class="number">#0x4</span>]</span><br><span class="line"> <span class="number">0x2f879f72</span> &lt;+<span class="number">50</span>&gt;: <span class="keyword">ldr </span><span class="literal">r12</span>, [<span class="literal">r9</span>, <span class="number">#8</span>]!</span><br><span class="line"> <span class="number">0x2f879f76</span> &lt;+<span class="number">54</span>&gt;: <span class="keyword">b </span><span class="number">0x2f879f5a</span> <span class="comment">; &lt;+26&gt;</span></span><br><span class="line"> <span class="number">0x2f879f78</span> &lt;+<span class="number">56</span>&gt;: <span class="keyword">ldr.w </span><span class="literal">r9</span>, [<span class="literal">r0</span>]</span><br><span class="line"> <span class="number">0x2f879f7c</span> &lt;+<span class="number">60</span>&gt;: <span class="keyword">b </span><span class="number">0x2f87a1c0</span> <span class="comment">; _objc_msgSend_uncached</span></span><br><span class="line"> <span class="number">0x2f879f7e</span> &lt;+<span class="number">62</span>&gt;: <span class="keyword">mov.w </span><span class="literal">r1</span>, <span class="number">#0x0</span></span><br><span class="line"> <span class="number">0x2f879f82</span> &lt;+<span class="number">66</span>&gt;: <span class="keyword">bx </span><span class="literal">lr</span></span><br></pre></td></tr></table></figure></p>
-<p>我们可以结合Obj-C类的内存布局再来解读一下上面的汇编代码（节选于Obj-C类的源代码）：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_class : objc_object &#123;</span><br><span class="line"> <span class="comment">// Class ISA;</span></span><br><span class="line"> Class superclass;</span><br><span class="line"> <span class="keyword">cache_t</span> cache;</span><br><span class="line"> <span class="keyword">uintptr_t</span> data_NEVER_USE; <span class="comment">// class_rw_t * plus custom rr/alloc flags</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">class_rw_t</span> *data() &#123;</span><br><span class="line"> <span class="keyword">return</span> (<span class="keyword">class_rw_t</span> *)(data_NEVER_USE &amp; ~CLASS_FAST_FLAG_MASK);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">setData</span><span class="params">(class_rw_t *newData)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">uintptr_t</span> flags = (<span class="keyword">uintptr_t</span>)data_NEVER_USE &amp; CLASS_FAST_FLAG_MASK;</span><br><span class="line"> data_NEVER_USE = (<span class="keyword">uintptr_t</span>)newData | flags;</span><br><span class="line"> &#125;</span><br><span class="line">……..</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="keyword">cache_t</span> &#123;</span><br><span class="line"> <span class="keyword">struct</span> <span class="keyword">bucket_t</span> *buckets;</span><br><span class="line"> <span class="keyword">mask_t</span> shiftmask;</span><br><span class="line"> <span class="keyword">mask_t</span> occupied;</span><br><span class="line">……..</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="keyword">bucket_t</span> &#123;</span><br><span class="line"> <span class="keyword">cache_key_t</span> key;</span><br><span class="line"> IMP imp;</span><br><span class="line">…...</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">uintptr_t</span> <span class="keyword">cache_key_t</span>;</span><br></pre></td></tr></table></figure>
-<p>根据苹果的函数调用约定，objc_msgSend被调用的时候，寄存器对应关系：r0是对象本身self，r1是sel，r2和r3是参数。根据objc_class的声明，我们可以知道：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x2f879f40</span> &lt;+<span class="number">0</span>&gt;: cbz <span class="literal">r0</span>, <span class="number">0x2f879f7e</span> //如果self为<span class="number">0</span>就跳转到<span class="number">0x2f879f7e</span>。给nil发消息的话就什么都不做</span><br><span class="line"><span class="number">0x2f879f42</span> &lt;+<span class="number">2</span>&gt;: ldr.w <span class="literal">r9</span>, [<span class="literal">r0</span>] //取对象的类到<span class="literal">r9</span></span><br><span class="line"><span class="number">0x2f879f46</span> &lt;+<span class="number">6</span>&gt;: ldrh.w <span class="literal">r12</span>, [<span class="literal">r9</span>, #<span class="number">0xc</span>] //取类的偏移#<span class="number">0xc</span>的数据到<span class="literal">r12</span>，也就是shiftmask的值</span><br><span class="line"><span class="number">0x2f879f4a</span> &lt;+<span class="number">10</span>&gt;: ldr.w <span class="literal">r9</span>, [<span class="literal">r9</span>, #<span class="number">0x8</span>] //取类的偏移#<span class="number">0x8</span>的成员到<span class="literal">r9</span>，也即是cache</span><br><span class="line"><span class="number">0x2f879f4e</span> &lt;+<span class="number">14</span>&gt;: <span class="keyword">and</span>.w <span class="literal">r12</span>, <span class="literal">r12</span>, <span class="literal">r1</span> //<span class="literal">r1</span>和shiftmask与，放到<span class="literal">r12</span>,<span class="literal">r1</span>是参数一，也就是sel，用来计算sel的index</span><br><span class="line"><span class="number">0x2f879f52</span> &lt;+<span class="number">18</span>&gt;: <span class="keyword">add</span>.w <span class="literal">r9</span>, <span class="literal">r9</span>, <span class="literal">r12</span>, <span class="keyword">lsl</span> #<span class="number">3</span> //左移<span class="number">3</span>位就是乘<span class="number">8</span>，<span class="number">8</span>是索引项 bucket_t的宽度，<span class="literal">r12</span>是cache索引，<span class="literal">r9</span>就cache的位置，<span class="literal">r9</span>+<span class="literal">r12</span>*<span class="number">8</span>，就是当前sel对应的bucket_t缓存</span><br><span class="line"><span class="number">0x2f879f56</span> &lt;+<span class="number">22</span>&gt;: ldr.w <span class="literal">r12</span>, [<span class="literal">r9</span>] //取缓存bucket_t</span><br><span class="line"><span class="number">0x2f879f5a</span> &lt;+<span class="number">26</span>&gt;: teq.w <span class="literal">r12</span>, <span class="literal">r1</span> //判断缓存项是不是要找的sel key==sel？</span><br><span class="line"><span class="number">0x2f879f5e</span> &lt;+<span class="number">30</span>&gt;: bne <span class="number">0x2f879f66</span> //不是的话就要查找sel</span><br><span class="line"><span class="number">0x2f879f60</span> &lt;+<span class="number">32</span>&gt;: ldr.w <span class="literal">r12</span>, [<span class="literal">r9</span>, #<span class="number">0x4</span>] //是的话就取出imp</span><br><span class="line"><span class="number">0x2f879f64</span> &lt;+<span class="number">36</span>&gt;: <span class="number">bx</span> <span class="literal">r12</span> //调sel的实现，跳到imp里面去执行</span><br></pre></td></tr></table></figure></p>
-<p>其实上面的代码就是从缓存中找sel的实现的过程，而错误地址之所以是0x55555561是因为ldrh.w r12, [r9, #0xc]这行指令。我们用0x55555555覆盖了对象的isa指针，当发生OC调用查找缓存0x55555555+0xc取shiftmask的时候，发现这个地址不可读，于是CPU抛出了异常。</p>
-<h3 id="怎么获取野指针的更多异常数据？">怎么获取野指针的更多异常数据？</h3><p>弄清楚上述问题后，又有一个问题：既然0x55555555是被当成了类的指针使用，那假如我们用指定的类覆盖这个指针，是不是就可以执行我们指定类的方法呢？</p>
-<p>进一步说就是在发生野指针调用的时候，我们是不是可以控制CPU的行为？说起来有点像溢出攻击，利用shellcode覆盖函数返回值，一旦我们在出错的时候控制了CPU就可以获取更多异常信息，比如是哪个类，调了什么方法，对象的地址之类。</p>
-<p>先解决几个关键问题：</p>
-<ol>
-<li>覆盖成什么？<br>我们需要自己写一个类，用它的isa来替换已经释放的对象的isa。如果不出我们所料，我们用自己的类覆盖之后，之前调用的sel就换成了调用我们自己的类的某个sel。这样，只要我们指定的类也实现这个方法，就可以执行我们需要执行的代码，然后在里面获取我们需要的信息。当然，我们无法预料野指针对象会在调用哪个函数时发生Crash，好在我们可以利用runtime的重定向特性了转到我们自己的代码里面去。</li>
-<li>怎么覆盖isa？<br>object_setClass可以替换一个类的isa，但是试了一下，发生死锁！根据Obj-C对象的内存布局，对象的第一个数据就是isa，这里我们可以直接用自己的类指针替换它，反正是已经释放的内存，随便我们怎么玩。</li>
-</ol>
-<p>总之，还是很简单，这个类就是下面这样:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DPCatcher</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>,<span class="keyword">assign</span>,<span class="keyword">nonatomic</span>) Class origClass;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DPCatcher</span></span></span><br><span class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector&#123;</span><br><span class="line"> <span class="built_in">NSLog</span>(<span class="string">@"发现objc野指针:%s::%p=&gt;%@"</span>,class_getName(<span class="keyword">self</span><span class="variable">.origClass</span>),<span class="keyword">self</span>,<span class="built_in">NSStringFromSelector</span>(aSelector));</span><br><span class="line"> abort();</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)dealloc&#123;</span><br><span class="line"> <span class="built_in">NSLog</span>(<span class="string">@"发现objc野指针:%s::%p=&gt;%@"</span>,class_getName(<span class="keyword">self</span><span class="variable">.origClass</span>),<span class="keyword">self</span>,<span class="string">@"dealloc"</span>);</span><br><span class="line"> abort();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">oneway</span> <span class="keyword">void</span>)release&#123;</span><br><span class="line"> <span class="built_in">NSLog</span>(<span class="string">@"发现objc野指针:%s::%p=&gt;%@"</span>,class_getName(<span class="keyword">self</span><span class="variable">.origClass</span>),<span class="keyword">self</span>,<span class="string">@"release"</span>);</span><br><span class="line"> abort();</span><br><span class="line">&#125;</span><br><span class="line">- (instancetype)autorelease&#123;</span><br><span class="line"> <span class="built_in">NSLog</span>(<span class="string">@"发现objc野指针:%s::%p=&gt;%@"</span>,class_getName(<span class="keyword">self</span><span class="variable">.origClass</span>),<span class="keyword">self</span>,<span class="string">@"autorelease"</span>);</span><br><span class="line"> abort();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注意：对象的release、dealloc等函数要特殊处理一下，因为任何对象都有这些方法，不会执行重定向。</p>
-</blockquote>
-<p>然后，我们的free函数改成下面这样（去掉了一些多余代码）：<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">static void DPFree<span class="params">(void* p)</span>&#123;</span><br><span class="line"> </span><br><span class="line"> size_t memSiziee=malloc_size<span class="params">(p)</span>;</span><br><span class="line"> <span class="keyword">if</span> <span class="params">(memSiziee&gt;sDPCatchSize)</span> &#123;<span class="comment">//有足够的空间才覆盖</span></span><br><span class="line"> id obj=<span class="params">(id)</span>p;</span><br><span class="line"> Class origClass=object_getClass<span class="params">(obj)</span>; <span class="comment">//判断是不是objc对象 ，registeredClasses里面有所有的类，如果可以查到，说明是objc类</span></span><br><span class="line"> <span class="keyword">if</span> <span class="params">(origClass &amp;&amp; CFSetContainsValue<span class="params">(registeredClasses, origClass)</span>)</span> &#123;</span><br><span class="line"> memset<span class="params">(obj, <span class="number">0</span>x55, memSiziee)</span>;</span><br><span class="line"> memcpy<span class="params">(obj, &amp;sDPCatchIsa, sizeof<span class="params">(void*)</span>)</span>;<span class="comment">//把我们自己的类的isa复制过去</span></span><br><span class="line"> </span><br><span class="line"> DPCatcher<span class="built_in">*</span> bug=<span class="params">(DPCatcher*)</span>p;</span><br><span class="line"> bug.origClass=origClass;</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"> memset<span class="params">(p, <span class="number">0</span>x55, memSiziee)</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"> memset<span class="params">(p, <span class="number">0</span>x55, memSiziee)</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>初始化的时候获取所有类信息，获取填充类的的大小:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">registeredClasses = <span class="built_in">CFSetCreateMutable</span>(<span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"> Class *classes = objc_copyClassList(&amp;count);</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line"> <span class="built_in">CFSetAddValue</span>(registeredClasses, (__bridge <span class="keyword">const</span> <span class="keyword">void</span> *)(classes[i]));</span><br><span class="line"> &#125;</span><br><span class="line"> free(classes);</span><br><span class="line"> classes=<span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line"> sDPCatchIsa=objc_getClass(<span class="string">"DPCatcher"</span>);</span><br><span class="line"> </span><br><span class="line"> sDPCatchSize=class_getInstanceSize(sDPCatchIsa);</span><br></pre></td></tr></table></figure>
-<p>用下面简单的代码试一下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIView* <span class="built_in">test</span>Obj=[[UIView alloc] init];</span><br><span class="line"> [<span class="built_in">test</span>Obj release];</span><br><span class="line"> [<span class="built_in">test</span>Obj <span class="built_in">set</span>NeedsLayout];</span><br></pre></td></tr></table></figure></p>
-<p>发生野指针的类、对象地址和访问的方法就这样可以被打印出来！<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/12.jpg" alt=""></p>
-<p>再看看下面这几个让人头疼的传说中的全系统栈Crash，你是否熟悉？<br>栈1：<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/22.jpg" alt=""></p>
-<p>栈2：<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/32.jpg" alt=""></p>
-<p>上面这两个Crash如果不能重现几乎是无解！但是，加上我们的野指针定位神器之后再看看，类名和地址都可以打出来了，解决起来就不是什么问题了。<br>栈1被捕获后的信息：<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/42.jpg" alt=""></p>
-<p>栈2被捕获后的信息：<br><img src="http://bugly.qq.com/blog/wp-content/uploads/2015/06/52.jpg" alt=""></p>
-<p>说明：</p>
-<ol>
-<li>我们打印出了野指针对象的名字和地址，当这个类的对象比较少时，对查找问题有很大的用处（如果是自定义的类出现野指针，一般还是比较容易找到问题），但是如果是一些经常出现的类，比如nsarray，定位起来还是比较麻烦。这个时候建议试一下xcode的malloc history工具，或者可以自己实现一个类似记录内存使用记录的工具，因为有内存申请和释放的记录，只要重现一次就可以精确定位野指针。</li>
-<li>如果出现dealloc的使用错误，例如先[super dealloc]，然后release成员变量，那么就会出现崩溃的现象，且此时对象的地址为0x55555555。这是因为[super dealloc]只会释放对应的内存，但其成员的内存不会被release而变成了0x555555。 这种问题场景比较简单，一旦发生绝对是必现的，修复也比较容易。</li>
-</ol>
-<h2 id="后记">后记</h2><p>写到这里，关于iOS野指针随机问题定位的三篇文章就写完了，特别说一下，文中提到的方法虽然可以提高野指针的曝光率和定位精度，但并不是万能，比如下面这几种情况，可能并不一定适用：</p>
-<ol>
-<li>未触发出现野指针的逻辑：比如说一个有问题的代码，只有在特殊的逻辑下才会有野指针问题，如果我们没有触发这个逻辑，肯定也是无法暴露出这个问题的。这种情况建议还是提高测试的场景覆盖。</li>
-<li>产生野指针和使用野指针的时间间隔太长：时间太长的话，很可能我们保留的指针已经被释放了。</li>
-<li>APP内存消耗大，会降低曝光率。因为内存消耗大的时候，我们保留的指针数量必然减少，而且保留的时间也会更短。</li>
-<li>之前也收到了很多同学的反馈，感谢大家对这个系列文的关注！在这里先回答一下大家提出的一些疑问。</li>
-<li>free之前先填上 0x55 ，这个0x55有什么具体含义吗？<br>答：实际上填写数据的关键在于填写数据后其地址指向不可读的内存。而填写0x55，和前面提到的出现异常情况的对象地址0x555555连接起来被当成指针使用的话，就会被识别为0x55555555，而CPU访问这个地址就会抛出异常。<br>另外一点，就是方便区分野指针，例如在Xcode启用Enable Scribble时，指定alloc之后填写的地址为0xaa，防止内存初始化就使用，也是为了方便和free之后的内存做区分。</li>
-<li>这个方法对于arc和非arc是否都可以用？<br>答：都可以，不过都是arc的话应该比较少出现野指针吧。</li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/19/iOS-CoreText-Advance/">
-                iOS CoreText Advance
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-19
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/19/iOS-CoreText-Advance/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/19/iOS-CoreText-Advance/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="版权说明">版权说明</h2><p>原创文章，转载请保留以下信息：</p>
-<p>本文节选自我的图书：《iOS 开发进阶 》。<br>本文涉及的 Demo 工程在这里：<a href="https://github.com/tangqiaoboy/iOS-Pro。" target="_blank" rel="external">https://github.com/tangqiaoboy/iOS-Pro。</a><br>扫码关注我的「iOS 开发」微信公众帐号：<br><img src="http://blog.devtang.com/images/weixin-qr.jpg" alt=""></p>
+<p>示例：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 第一个参数是<span class="keyword">format</span>，第二个参数起是可变参数列表，<span class="keyword">format</span>的格式规则与<span class="keyword">printf</span>一致</span><br><span class="line">void customPrintf(const char *<span class="keyword">format</span>, ...) __attribute_<span class="number">_</span>((<span class="keyword">format</span>(<span class="keyword">printf</span>, <span class="number">1</span>, <span class="number">2</span>)));</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> 使用的时候，若<span class="keyword">format</span>和参数不符，则会报warning</span><br><span class="line">customPrintf(<span class="string">"what? <span class="variable">%d</span>"</span>, <span class="number">1.2</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Cocoa开发者可以使用<code>NS_FORMAT_FUNCTION(F,A)</code>宏来替代<code>__atribute__format</code>，F和A即对应<code>string-index</code>和<code>first-to-check</code>，事实上，他的实现类似于：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine <span class="function"><span class="title">NS_FORMAT_FUNCTION</span><span class="params">(F,A)</span></span> __attribute__((<span class="function"><span class="title">format</span><span class="params">(__NSString__, F, A)</span></span>))</span><br></pre></td></tr></table></figure>
+<p>示例如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOUNDATION_EXPORT <span class="keyword">void</span> <span class="built_in">NSLog</span>(<span class="built_in">NSString</span> *format, ...) <span class="built_in">NS_FORMAT_FUNCTION</span>(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h2 id="基于_CoreText_的排版引擎：进阶">基于 CoreText 的排版引擎：进阶</h2><h3 id="本章前言">本章前言</h3><p>在上一篇《基于 CoreText 的排版引擎：基础》中，我们学会了排版的基础知识，现在我们来增加复杂性，让我们的排版引擎支持图片和链接的点击。</p>
-<h3 id="支持图文混排的排版引擎">支持图文混排的排版引擎</h3><h4 id="改造模版文件">改造模版文件</h4><p>下面我们来进一步改造，让排版引擎支持对于图片的排版。在上一小节中，我们在设置模版文件的时候，就专门在模板文件里面留了一个名为<code>type</code>的字段，用于表示内容的类型。之前的<code>type</code>的值都是txt，这次，我们增加一个值为<code>img</code>的值，用于表示图片。</p>
-<p>我们将上一节的<code>content.json</code>文件修改为如下内容，增加了 2 个<code>type</code>值为<code>img</code>的配置项。由于是图片的配置项，所以我们不需要设置颜色，字号这些图片不具有的属性，但是，我们另外增加了 3 个图片的配置属性：</p>
-<ol>
-<li>一个名为width的属性，用于设置图片显示的宽度。</li>
-<li>一个名为height的属性，用于设置图片显示的高度。</li>
-<li>一个名为name的属性，用于设置图片的资源名。</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[ &#123;</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"img"</span></span>,</span><br><span class="line">    "<span class="attribute">width</span>" : <span class="value"><span class="number">200</span></span>,</span><br><span class="line">    "<span class="attribute">height</span>" : <span class="value"><span class="number">108</span></span>,</span><br><span class="line">    "<span class="attribute">name</span>" : <span class="value"><span class="string">"coretext-image-1.jpg"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"blue"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 更进一步地，实际工作中，我们更希望通过一个排版文件，来设置需要排版的文字的 "</span></span>,</span><br><span class="line">    "<span class="attribute">size</span>" : <span class="value"><span class="number">16</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"red"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 内容、颜色、字体 "</span></span>,</span><br><span class="line">    "<span class="attribute">size</span>" : <span class="value"><span class="number">22</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"black"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 大小等信息。\n"</span></span>,</span><br><span class="line">    "<span class="attribute">size</span>" : <span class="value"><span class="number">16</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"img"</span></span>,</span><br><span class="line">    "<span class="attribute">width</span>" : <span class="value"><span class="number">200</span></span>,</span><br><span class="line">    "<span class="attribute">height</span>" : <span class="value"><span class="number">130</span></span>,</span><br><span class="line">    "<span class="attribute">name</span>" : <span class="value"><span class="string">"coretext-image-2.jpg"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"default"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 我在开发猿题库应用时，自己定义了一个基于 UBB 的排版模版，但是实现该排版文件的解析器要花费大量的篇幅，考虑到这并不是本章的重点，所以我们以一个较简单的排版文件来讲解其思想。"</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>按理说，图片本身的内容信息中，是包含宽度和高度信息的，为什么我们要在这里指定图片的宽高呢？这主要是因为，在真实的开发中，应用的模版和图片通常是通过服务器获取的，模版是纯文本的内容，获取速度比图片快很多，而图片不但获取速度慢，而且为了省流量，通常的做法是直到需要显示图片的时候，再加载图片内容。</p>
-<p>如果我们不将图片的宽度和高度信息设置在模板里面，那么 CoreText 在排版的时候就无法知道绘制所需要的高度，我们就无法设置<code>CoreTextData</code>类中的<code>height</code>信息，没有高度信息，就会对 <code>UITableView</code> 一类的控件排版造成影响。所以，除非你的应用图片能够保证在绘制前都能全部在本地，否则就应该另外提前提供图片宽度和高度信息。</p>
-<p>在完成模板文件修改后，我们选取两张测试用的图片，分别将其命名为<code>coretext-image-1.jpg</code>和<code>coretext-image-2.jpg</code>（和模板中的值一致），将其拖动增加到工程中。向 Xcode 工程增加图片资源是基础知识，在此就不详细介绍过程了。</p>
-<h4 id="CTLine_与_CTRun">CTLine 与 CTRun</h4><p>接下来我们需要改造的是<code>CTFrameParser</code>类，让解析模板文件的方法支持type为img的配置。</p>
-<p>在改造前，我们先来了解一下<code>CTFrame</code>内部的组成。通过之前的例子，我们可以看到，我们首先通过<code>NSAttributeString</code>和配置信息创建 <code>CTFrameSetter</code>， 然后，再通过<code>CTFrameSetter</code>来创建<code>CTFrame</code>。</p>
-<p>在<code>CTFrame</code>内部，是由多个<code>CTLine</code>来组成的，每个<code>CTLine</code>代表一行，每个<code>CTLine</code>又是由多个<code>CTRun</code>来组成，每个<code>CTRun</code>代表一组显示风格一致的文本。我们不用手工管理<code>CTLine</code>和<code>CTRun</code>的创建过程。</p>
-<p>下图是一个<code>CTLine</code>和<code>CTRun</code>的示意图，可以看到，第三行的<code>CTLine</code>是由 2 个<code>CTRun</code>构成的，第一个<code>CTRun</code>为红色大字号的左边部分，第二个<code>CTRun</code>为右边字体较小的部分。</p>
-<p><img src="http://tangqiao.b0.upaiyun.com/coretext/coretext-ctline.jpg" alt=""></p>
-<p>虽然我们不用管理<code>CTRun</code>的创建过程，但是我们可以设置某一个具体的<code>CTRun</code>的<code>CTRunDelegate</code>来指定该文本在绘制时的高度、宽度、排列对齐方式等信息。</p>
-<p>对于图片的排版，其实 <code>CoreText</code>本质上不是直接支持的，但是，我们可以在要显示文本的地方，用一个特殊的空白字符代替，同时设置该字体的<code>CTRunDelegate</code>信息为要显示的图片的宽度和高度信息，这样最后生成的<code>CTFrame</code>实例，就会在绘制时将图片的位置预留出来。</p>
-<p>因为我们的<code>CTDisplayView</code>的绘制代码是在<code>drawRect</code>里面的，所以我们可以方便地把需要绘制的图片，用<code>CGContextDrawImage</code>方法直接绘制出来就可以了。</p>
-<h4 id="改造模版解析类">改造模版解析类</h4><p>在了解了以上原理后，我们就可以开始进行改造了。</p>
-<p>我们需要做的工作包括：</p>
-<ol>
-<li>改造CTFrameParser的parseTemplateFile:(NSString <em>)path config:(CTFrameParserConfig</em>)config;方法，使其支持对type为img的节点解析。并且对type为img的节点，设置其CTRunDelegate信息，使其在绘制时，为图片预留相应的空白位置。</li>
-<li>改造CoreTextData类，增加图片相关的信息，并且增加计算图片绘制区域的逻辑。</li>
-<li>改造CTDisplayView类，增加绘制图片相关的逻辑。</li>
-</ol>
-<p>首先介绍对于<code>CTFrameParser</code>的改造：</p>
-<p>我们修改了<code>parseTemplateFile</code>方法，增加了一个名为<code>imageArray</code>的参数来保存解析时的图片信息。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (CoreTextData *)<span class="string">parseTemplateFile:</span>(NSString *)path <span class="string">config:</span>(CTFrameParserConfig*)config &#123;</span><br><span class="line">    NSMutableArray *imageArray = [NSMutableArray array];</span><br><span class="line">    NSAttributedString *content = [self <span class="string">loadTemplateFile:</span>path <span class="string">config:</span>config <span class="string">imageArray:</span>imageArray];</span><br><span class="line">    CoreTextData *data = [self <span class="string">parseAttributedContent:</span>content <span class="string">config:</span>config];</span><br><span class="line">    data.imageArray = imageArray;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接着我们修改<code>loadTemplateFile</code>方法，增加了对于type是img的节点处理逻辑，该逻辑主要做 2 件事情：</p>
-<ol>
-<li>保存当前图片节点信息到imageArray变量中</li>
-<li>新建一个空白的占位符。</li>
-</ol>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> (<span class="type">NSAttributedString</span> *)loadTemplateFile:(<span class="type">NSString</span> *)path</span><br><span class="line">                                  config:(<span class="type">CTFrameParserConfig</span>*)config</span><br><span class="line">                              imageArray:(<span class="type">NSMutableArray</span> *)imageArray &#123;</span><br><span class="line">    <span class="type">NSData</span> *data = [<span class="type">NSData</span> dataWithContentsOfFile:path];</span><br><span class="line">    <span class="type">NSMutableAttributedString</span> *<span class="literal">result</span> = [[<span class="type">NSMutableAttributedString</span> alloc] init];</span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        <span class="type">NSArray</span> *<span class="type">array</span> = [<span class="type">NSJSONSerialization</span> <span class="type">JSONObjectWithData</span>:data</span><br><span class="line">                             options:<span class="type">NSJSONReadingAllowFragments</span></span><br><span class="line">                               error:<span class="keyword">nil</span>];</span><br><span class="line">        <span class="keyword">if</span> ([<span class="type">array</span> isKindOfClass:[<span class="type">NSArray</span> class]]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">NSDictionary</span> *dict <span class="keyword">in</span> <span class="type">array</span>) &#123;</span><br><span class="line">                <span class="type">NSString</span> *<span class="keyword">type</span> = dict[@<span class="string">"type"</span>];</span><br><span class="line">                <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"txt"</span>]) &#123;</span><br><span class="line">                    <span class="type">NSAttributedString</span> *<span class="keyword">as</span> =</span><br><span class="line">                        [self parseAttributedContentFromNSDictionary:dict</span><br><span class="line">                                                              config:config];</span><br><span class="line">                    [<span class="literal">result</span> appendAttributedString:<span class="keyword">as</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"img"</span>]) &#123;</span><br><span class="line">                    // 创建 <span class="type">CoreTextImageData</span></span><br><span class="line">                    <span class="type">CoreTextImageData</span> *imageData = [[<span class="type">CoreTextImageData</span> alloc] init];</span><br><span class="line">                    imageData.name = dict[@<span class="string">"name"</span>];</span><br><span class="line">                    imageData.position = [<span class="literal">result</span> length];</span><br><span class="line">                    [imageArray addObject:imageData];</span><br><span class="line">                    // 创建空白占位符，并且设置它的 <span class="type">CTRunDelegate</span> 信息</span><br><span class="line">                    <span class="type">NSAttributedString</span> *<span class="keyword">as</span> = [self parseImageDataFromNSDictionary:dict config:config];</span><br><span class="line">                    [<span class="literal">result</span> appendAttributedString:<span class="keyword">as</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后我们新建一个最关键的方法：<code>parseImageDataFromNSDictionary</code>，生成图片空白的占位符，并且设置其<code>CTRunDelegate</code>信息。其代码如下：</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="type">CGFloat</span> ascentCallback(<span class="type">void</span> *<span class="keyword">ref</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [(<span class="type">NSNumber</span>*)[(__bridge <span class="type">NSDictionary</span>*)<span class="keyword">ref</span> objectForKey:@<span class="string">"height"</span>] floatValue];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="type">CGFloat</span> descentCallback(<span class="type">void</span> *<span class="keyword">ref</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="type">CGFloat</span> widthCallback(<span class="type">void</span>* <span class="keyword">ref</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [(<span class="type">NSNumber</span>*)[(__bridge <span class="type">NSDictionary</span>*)<span class="keyword">ref</span> objectForKey:@<span class="string">"width"</span>] floatValue];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="type">NSAttributedString</span> *)parseImageDataFromNSDictionary:(<span class="type">NSDictionary</span> *)dict</span><br><span class="line">                                                config:(<span class="type">CTFrameParserConfig</span>*)config &#123;</span><br><span class="line">    <span class="type">CTRunDelegateCallbacks</span> callbacks;</span><br><span class="line">    memset(&amp;callbacks, <span class="number">0</span>, sizeof(<span class="type">CTRunDelegateCallbacks</span>));</span><br><span class="line">    callbacks.version = kCTRunDelegateVersion1;</span><br><span class="line">    callbacks.getAscent = ascentCallback;</span><br><span class="line">    callbacks.getDescent = descentCallback;</span><br><span class="line">    callbacks.getWidth = widthCallback;</span><br><span class="line">    <span class="type">CTRunDelegateRef</span> delegate = <span class="type">CTRunDelegateCreate</span>(&amp;callbacks, (__bridge <span class="type">void</span> *)(dict));</span><br><span class="line"></span><br><span class="line">    // 使用 <span class="number">0xFFFC</span> 作为空白的占位符</span><br><span class="line">    unichar objectReplacementChar = <span class="number">0xFFFC</span>;</span><br><span class="line">    <span class="type">NSString</span> * content = [<span class="type">NSString</span> stringWithCharacters:&amp;objectReplacementChar length:<span class="number">1</span>];</span><br><span class="line">    <span class="type">NSDictionary</span> * attributes = [self attributesWithConfig:config];</span><br><span class="line">    <span class="type">NSMutableAttributedString</span> * space =</span><br><span class="line">       [[<span class="type">NSMutableAttributedString</span> alloc] initWithString:content</span><br><span class="line">                                              attributes:attributes];</span><br><span class="line">    <span class="type">CFAttributedStringSetAttribute</span>((<span class="type">CFMutableAttributedStringRef</span>)space,</span><br><span class="line">              <span class="type">CFRangeMake</span>(<span class="number">0</span>, <span class="number">1</span>), kCTRunDelegateAttributeName, delegate);</span><br><span class="line">    <span class="type">CFRelease</span>(delegate);</span><br><span class="line">    <span class="keyword">return</span> space;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接着我们对<code>CoreTextData</code>进行改造，增加了<code>imageArray</code>成员变量，用于保存图片绘制时所需的信息。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"CoreTextImageData.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CoreTextData</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) CTFrameRef ctFrame;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> height;</span><br><span class="line"><span class="comment">// 新增加的成员</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSArray</span> * imageArray;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>在设置<code>imageArray</code>成员时，我们还会调一个新创建的fillImagePosition方法，用于找到每张图片在绘制时的位置。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setImageArray:(<span class="built_in">NSArray</span> *)imageArray &#123;</span><br><span class="line">    _imageArray = imageArray;</span><br><span class="line">    [<span class="keyword">self</span> fillImagePosition];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)fillImagePosition &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.imageArray</span><span class="variable">.count</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSArray</span> *lines = (<span class="built_in">NSArray</span> *)CTFrameGetLines(<span class="keyword">self</span><span class="variable">.ctFrame</span>);</span><br><span class="line">    <span class="keyword">int</span> lineCount = [lines count];</span><br><span class="line">    <span class="built_in">CGPoint</span> lineOrigins[lineCount];</span><br><span class="line">    CTFrameGetLineOrigins(<span class="keyword">self</span><span class="variable">.ctFrame</span>, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), lineOrigins);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> imgIndex = <span class="number">0</span>;</span><br><span class="line">    CoreTextImageData * imageData = <span class="keyword">self</span><span class="variable">.imageArray</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lineCount; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (imageData == <span class="literal">nil</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        CTLineRef line = (__bridge CTLineRef)lines[i];</span><br><span class="line">        <span class="built_in">NSArray</span> * runObjArray = (<span class="built_in">NSArray</span> *)CTLineGetGlyphRuns(line);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">id</span> runObj <span class="keyword">in</span> runObjArray) &#123;</span><br><span class="line">            CTRunRef run = (__bridge CTRunRef)runObj;</span><br><span class="line">            <span class="built_in">NSDictionary</span> *runAttributes = (<span class="built_in">NSDictionary</span> *)CTRunGetAttributes(run);</span><br><span class="line">            CTRunDelegateRef delegate = (__bridge CTRunDelegateRef)[runAttributes valueForKey:(<span class="keyword">id</span>)kCTRunDelegateAttributeName];</span><br><span class="line">            <span class="keyword">if</span> (delegate == <span class="literal">nil</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">NSDictionary</span> * metaDic = CTRunDelegateGetRefCon(delegate);</span><br><span class="line">            <span class="keyword">if</span> (![metaDic isKindOfClass:[<span class="built_in">NSDictionary</span> class]]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGRect</span> runBounds;</span><br><span class="line">            <span class="built_in">CGFloat</span> ascent;</span><br><span class="line">            <span class="built_in">CGFloat</span> descent;</span><br><span class="line">            runBounds<span class="variable">.size</span><span class="variable">.width</span> = CTRunGetTypographicBounds(run, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="number">0</span>), &amp;ascent, &amp;descent, <span class="literal">NULL</span>);</span><br><span class="line">            runBounds<span class="variable">.size</span><span class="variable">.height</span> = ascent + descent;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGFloat</span> xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run)<span class="variable">.location</span>, <span class="literal">NULL</span>);</span><br><span class="line">            runBounds<span class="variable">.origin</span><span class="variable">.x</span> = lineOrigins[i]<span class="variable">.x</span> + xOffset;</span><br><span class="line">            runBounds<span class="variable">.origin</span><span class="variable">.y</span> = lineOrigins[i]<span class="variable">.y</span>;</span><br><span class="line">            runBounds<span class="variable">.origin</span><span class="variable">.y</span> -= descent;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGPathRef</span> pathRef = CTFrameGetPath(<span class="keyword">self</span><span class="variable">.ctFrame</span>);</span><br><span class="line">            <span class="built_in">CGRect</span> colRect = <span class="built_in">CGPathGetBoundingBox</span>(pathRef);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">CGRect</span> delegateBounds = <span class="built_in">CGRectOffset</span>(runBounds, colRect<span class="variable">.origin</span><span class="variable">.x</span>, colRect<span class="variable">.origin</span><span class="variable">.y</span>);</span><br><span class="line"></span><br><span class="line">            imageData<span class="variable">.imagePosition</span> = delegateBounds;</span><br><span class="line">            imgIndex++;</span><br><span class="line">            <span class="keyword">if</span> (imgIndex == <span class="keyword">self</span><span class="variable">.imageArray</span><span class="variable">.count</span>) &#123;</span><br><span class="line">                imageData = <span class="literal">nil</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                imageData = <span class="keyword">self</span><span class="variable">.imageArray</span>[imgIndex];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="添加对图片的点击支持">添加对图片的点击支持</h3><h4 id="实现方式">实现方式</h4><p>为了实现对图片的点击支持，我们需要给<code>CTDisplayView</code>类增加用户点击操作的检测函数，在检测函数中，判断当前用户点击的区域是否在图片上，如果在图片上，则触发点击图片的逻辑。苹果提供的<code>UITapGestureRecognizer</code>可以很好的满足我们的要求，所以我们这里用它来检测用户的点击操作。</p>
-<p>我们这里实现的是点击图片后，先用NSLog打印出一行日志。实际应用中，读者可以根据业务需求自行调整点击后的效果。</p>
-<p>我们先为CTDisplayView类增加<code>UITapGestureRecognizer</code>：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithCoder:aDecoder];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> setupEvents];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setupEvents &#123;</span><br><span class="line">    <span class="built_in">UIGestureRecognizer</span> * tapRecognizer =</span><br><span class="line">          [[<span class="built_in">UITapGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span></span><br><span class="line">                    action:<span class="keyword">@selector</span>(userTapGestureDetected:)];</span><br><span class="line">    tapRecognizer<span class="variable">.delegate</span> = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addGestureRecognizer:tapRecognizer];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.userInteractionEnabled</span> = <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后增加<code>UITapGestureRecognizer</code>的回调函数：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)userTapGestureDetected:(<span class="built_in">UIGestureRecognizer</span> *)recognizer &#123;</span><br><span class="line">    <span class="built_in">CGPoint</span> point = [recognizer locationInView:<span class="keyword">self</span>];</span><br><span class="line">    <span class="keyword">for</span> (CoreTextImageData * imageData <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.data</span><span class="variable">.imageArray</span>) &#123;</span><br><span class="line">        <span class="comment">// 翻转坐标系，因为 imageData 中的坐标是 CoreText 的坐标系</span></span><br><span class="line">        <span class="built_in">CGRect</span> imageRect = imageData<span class="variable">.imagePosition</span>;</span><br><span class="line">        <span class="built_in">CGPoint</span> imagePosition = imageRect<span class="variable">.origin</span>;</span><br><span class="line">        imagePosition<span class="variable">.y</span> = <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span> - imageRect<span class="variable">.origin</span><span class="variable">.y</span></span><br><span class="line">                          - imageRect<span class="variable">.size</span><span class="variable">.height</span>;</span><br><span class="line">        <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectMake</span>(imagePosition<span class="variable">.x</span>, imagePosition<span class="variable">.y</span>, imageRect<span class="variable">.size</span><span class="variable">.width</span>, imageRect<span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">        <span class="comment">// 检测点击位置 Point 是否在 rect 之内</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(rect, point)) &#123;</span><br><span class="line">            <span class="comment">// 在这里处理点击后的逻辑</span></span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"bingo"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="事件处理">事件处理</h4><p>在界面上，<code>CTDisplayView</code>通常在UIView的树形层级结构中，一个 UIView 可能是最外层 View Controller 的 View 的孩子的孩子的孩子（如下图所示）。在这种多级层次结构中，很难通过delegate模式将图片点击的事件一层一层往外层传递，所以最好使用NSNotification，来处理图片点击事件。</p>
-<p><img src="http://tangqiao.b0.upaiyun.com/coretext/coretext-uiview-tree.png" alt=""></p>
-<p>在 Demo 中，我们在最外层的 <code>View Controller</code>中监听图片点击的通知，当收到通知后，进入到一个新的界面来显示图片点击内容。</p>
-<p>注：读者可以将 demo 工程切换到image_click分支，查看示例代码。</p>
-<h4 id="添加对链接的点击支持">添加对链接的点击支持</h4><h5 id="修改模板文件">修改模板文件</h5><p>我们修改模版文件，增加一个名为 link 的类型，用于表示链接内容。如下所示：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"default"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 这在这里尝试放一个参考链接："</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"blue"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 链接文字 "</span></span>,</span><br><span class="line">    "<span class="attribute">url</span>" : <span class="value"><span class="string">"http://blog.devtang.com"</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"link"</span></span><br><span class="line">  </span>&#125;,</span><br><span class="line">  &#123; "<span class="attribute">color</span>" : <span class="value"><span class="string">"default"</span></span>,</span><br><span class="line">    "<span class="attribute">content</span>" : <span class="value"><span class="string">" 大家可以尝试点击一下 "</span></span>,</span><br><span class="line">    "<span class="attribute">type</span>" : <span class="value"><span class="string">"txt"</span></span><br><span class="line">  </span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
-<h5 id="解析模版中的链接信息">解析模版中的链接信息</h5><p>我们首先增加一个CoreTextLinkData类，用于记录解析 JSON 文件时的链接信息：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">CoreTextLinkData </span>: NSObject</span><br><span class="line"></span><br><span class="line"><span class="variable">@property</span> (strong, nonatomic) NSString * title;</span><br><span class="line"><span class="variable">@property</span> (strong, nonatomic) NSString * url;</span><br><span class="line"><span class="variable">@property</span> (assign, nonatomic) NSRange range;</span><br><span class="line"></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>然后我们修改 CTFrameParser 类，增加解析链接的逻辑：</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="type">NSAttributedString</span> *)loadTemplateFile:(<span class="type">NSString</span> *)path</span><br><span class="line">                                  config:(<span class="type">CTFrameParserConfig</span>*)config</span><br><span class="line">                              imageArray:(<span class="type">NSMutableArray</span> *)imageArray</span><br><span class="line">                               linkArray:(<span class="type">NSMutableArray</span> *)linkArray &#123;</span><br><span class="line">    <span class="type">NSData</span> *data = [<span class="type">NSData</span> dataWithContentsOfFile:path];</span><br><span class="line">    <span class="type">NSMutableAttributedString</span> *<span class="literal">result</span> = [[<span class="type">NSMutableAttributedString</span> alloc] init];</span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        <span class="type">NSArray</span> *<span class="type">array</span> = [<span class="type">NSJSONSerialization</span> <span class="type">JSONObjectWithData</span>:data</span><br><span class="line">                                        options:<span class="type">NSJSONReadingAllowFragments</span></span><br><span class="line">                                          error:<span class="keyword">nil</span>];</span><br><span class="line">        <span class="keyword">if</span> ([<span class="type">array</span> isKindOfClass:[<span class="type">NSArray</span> class]]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">NSDictionary</span> *dict <span class="keyword">in</span> <span class="type">array</span>) &#123;</span><br><span class="line">                <span class="type">NSString</span> *<span class="keyword">type</span> = dict[@<span class="string">"type"</span>];</span><br><span class="line">                <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"txt"</span>]) &#123;</span><br><span class="line">                    // 省略</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"img"</span>]) &#123;</span><br><span class="line">                    // 省略</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">type</span> isEqualToString:@<span class="string">"link"</span>]) &#123;</span><br><span class="line">                    <span class="type">NSUInteger</span> startPos = <span class="literal">result</span>.length;</span><br><span class="line">                    <span class="type">NSAttributedString</span> *<span class="keyword">as</span> =</span><br><span class="line">                       [self parseAttributedContentFromNSDictionary:dict</span><br><span class="line">                                                             config:config];</span><br><span class="line">                    [<span class="literal">result</span> appendAttributedString:<span class="keyword">as</span>];</span><br><span class="line">                    // 创建 <span class="type">CoreTextLinkData</span></span><br><span class="line">                    <span class="type">NSUInteger</span> length = <span class="literal">result</span>.length - startPos;</span><br><span class="line">                    <span class="type">NSRange</span> linkRange = <span class="type">NSMakeRange</span>(startPos, length);</span><br><span class="line">                    <span class="type">CoreTextLinkData</span> *linkData = [[<span class="type">CoreTextLinkData</span> alloc] init];</span><br><span class="line">                    linkData.title = dict[@<span class="string">"content"</span>];</span><br><span class="line">                    linkData.url = dict[@<span class="string">"url"</span>];</span><br><span class="line">                    linkData.<span class="type">range</span> = linkRange;</span><br><span class="line">                    [linkArray addObject:linkData];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后，我们增加一个 Utils 类来专门处理检测用户点击是否在链接上。主要的方法是使用 CTLineGetStringIndexForPosition 函数来获得用户点击的位置与 NSAttributedString 字符串上的位置的对应关系。这样就知道是点击的哪个字符了。然后判断该字符串是否在链接上即可。该 Util 在实现逻辑如下：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检测点击位置是否在链接上</span></span><br><span class="line">+ (CoreTextLinkData *)touchLinkInView:(<span class="built_in">UIView</span> *)view atPoint:(<span class="built_in">CGPoint</span>)point data:(CoreTextData *)data &#123;</span><br><span class="line">    CTFrameRef textFrame = data<span class="variable">.ctFrame</span>;</span><br><span class="line">    <span class="built_in">CFArrayRef</span> lines = CTFrameGetLines(textFrame);</span><br><span class="line">    <span class="keyword">if</span> (!lines) <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    <span class="built_in">CFIndex</span> count = <span class="built_in">CFArrayGetCount</span>(lines);</span><br><span class="line">    CoreTextLinkData *foundLink = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获得每一行的 origin 坐标</span></span><br><span class="line">    <span class="built_in">CGPoint</span> origins[count];</span><br><span class="line">    CTFrameGetLineOrigins(textFrame, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>,<span class="number">0</span>), origins);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 翻转坐标系</span></span><br><span class="line">    <span class="built_in">CGAffineTransform</span> transform =  <span class="built_in">CGAffineTransformMakeTranslation</span>(<span class="number">0</span>, view<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">    transform = <span class="built_in">CGAffineTransformScale</span>(transform, <span class="number">1.</span>f, -<span class="number">1.</span>f);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        <span class="built_in">CGPoint</span> linePoint = origins[i];</span><br><span class="line">        CTLineRef line = <span class="built_in">CFArrayGetValueAtIndex</span>(lines, i);</span><br><span class="line">        <span class="comment">// 获得每一行的 CGRect 信息</span></span><br><span class="line">        <span class="built_in">CGRect</span> flippedRect = [<span class="keyword">self</span> getLineBounds:line point:linePoint];</span><br><span class="line">        <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectApplyAffineTransform</span>(flippedRect, transform);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(rect, point)) &#123;</span><br><span class="line">            <span class="comment">// 将点击的坐标转换成相对于当前行的坐标</span></span><br><span class="line">            <span class="built_in">CGPoint</span> relativePoint = <span class="built_in">CGPointMake</span>(point<span class="variable">.x</span>-<span class="built_in">CGRectGetMinX</span>(rect),</span><br><span class="line">                                                point<span class="variable">.y</span>-<span class="built_in">CGRectGetMinY</span>(rect));</span><br><span class="line">            <span class="comment">// 获得当前点击坐标对应的字符串偏移</span></span><br><span class="line">            <span class="built_in">CFIndex</span> idx = CTLineGetStringIndexForPosition(line, relativePoint);</span><br><span class="line">            <span class="comment">// 判断这个偏移是否在我们的链接列表中</span></span><br><span class="line">            foundLink = [<span class="keyword">self</span> linkAtIndex:idx linkArray:data<span class="variable">.linkArray</span>];</span><br><span class="line">            <span class="keyword">return</span> foundLink;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">CGRect</span>)getLineBounds:(CTLineRef)line point:(<span class="built_in">CGPoint</span>)point &#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> ascent = <span class="number">0.0</span>f;</span><br><span class="line">    <span class="built_in">CGFloat</span> descent = <span class="number">0.0</span>f;</span><br><span class="line">    <span class="built_in">CGFloat</span> leading = <span class="number">0.0</span>f;</span><br><span class="line">    <span class="built_in">CGFloat</span> width = (<span class="built_in">CGFloat</span>)CTLineGetTypographicBounds(line, &amp;ascent, &amp;descent, &amp;leading);</span><br><span class="line">    <span class="built_in">CGFloat</span> height = ascent + descent;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(point<span class="variable">.x</span>, point<span class="variable">.y</span> - descent, width, height);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (CoreTextLinkData *)linkAtIndex:(<span class="built_in">CFIndex</span>)i linkArray:(<span class="built_in">NSArray</span> *)linkArray &#123;</span><br><span class="line">    CoreTextLinkData *link = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (CoreTextLinkData *data <span class="keyword">in</span> linkArray) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">NSLocationInRange</span>(i, data<span class="variable">.range</span>)) &#123;</span><br><span class="line">            link = data;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> link;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后改造一下CTDisplayView，使其在检测到用户点击后，调用上面的 Util 方法即可。我们这里实现的是点击链接后，先用NSLog打印出一行日志。实际应用中，读者可以根据业务需求自行调整点击后的效果。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)userTapGestureDetected:(<span class="built_in">UIGestureRecognizer</span> *)recognizer &#123;</span><br><span class="line">    <span class="built_in">CGPoint</span> point = [recognizer locationInView:<span class="keyword">self</span>];</span><br><span class="line">    <span class="comment">// 此处省略上一节中介绍的，对图片点击检测的逻辑</span></span><br><span class="line"></span><br><span class="line">    CoreTextLinkData *linkData = [CoreTextUtils touchLinkInView:<span class="keyword">self</span> atPoint:point data:<span class="keyword">self</span><span class="variable">.data</span>];</span><br><span class="line">    <span class="keyword">if</span> (linkData) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"hint link!"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注：在 Demo 中工程中，我们实现了点击链接跳转到一个新的界面，然后用 UIWebView 来显示链接内容的逻辑。读者可以将 demo 工程切换到link_click分支，查看示例代码。</p>
-<p>Demo 工程的 Gif 效果图如下，读者可以将示例工程用git checkout image_support切换到当前章节状态，查看相关代码逻辑。</p>
-<p><img src="http://tangqiao.b0.upaiyun.com/coretext/coretext-demo.gif" alt=""></p>
+<h3 id="Sentinel_value">Sentinel value</h3><p>哨兵值是另一种可变参数列表所常用的方案，如前一节我们的示例代码，即是使用了数字0作为哨兵值。当程序发现当前读取到的参数值为0时，则停止继续读取程序。在Cocoa中，我们经常使用<code>nil</code>作为哨兵值，比如<code>[NSArray arrayWithObjects:]</code>方法，其接受数量不等的对象作为参数，而在最后则必须使用<code>nil</code>结尾。如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="constant">NSArray </span><span class="symbol">arrayWithObjects:</span><span class="variable">@1</span>, <span class="variable">@2</span>, <span class="variable">@3</span>, <span class="keyword">nil</span>];</span><br><span class="line"><span class="regexp">//</span>备注：我们现在通常使用@[<span class="variable">@1</span>, <span class="variable">@2</span>, <span class="variable">@3</span>]来代替这一行代码，且不需要在最后添加<span class="keyword">nil</span>，这称为字面量（<span class="constant">Literals)</span></span><br></pre></td></tr></table></figure>
+<p>同<code>format string</code>一样危险的是，若开发者调用方法（函数）的时候，忘记在最后添加上哨兵值，则会发生不可预知的问题。同样幸运的是，编译器也为我们提供了一些方法来在编译时进行检查。<br>gcc中定义了<code>___attribute__((sentinel))</code>来标示一个函数需要在编译的时候对哨兵值进行检查。用法如下：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int addemUp <span class="list">(<span class="keyword">int</span> firstNum, ...)</span> __attribute__<span class="list">(<span class="list">(<span class="keyword">sentinel</span>)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>Cocoa开发者可以使用<code>NS_REQUIRES_NIL_TERMINATION</code>宏来替代，其实现基本等同于上述代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="tag">instancetype</span>)<span class="rule"><span class="attribute">arrayWithObjects</span>:<span class="value">(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="工程实例">工程实例</h3><p>我在开发猿题库iOS客户端时，由于产品的需要会有许多<code>alert</code>弹框。但传统的<code>UIAlertView</code>经常需要实现相应的<code>UIAlertViewDelegate</code>，使用起来非常不便。我写了一个能够接收block作为回调的自定义的AlertView组件，同时为了保证其接口与UIAlertView基本一致，使用了可变参数列表。其接口定义如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYAlertView</span> : <span class="title">UIAlertView</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)initWithTitle:(<span class="built_in">NSString</span> *)title</span><br><span class="line">            message:(<span class="built_in">NSString</span> *)message</span><br><span class="line">         clickedBlock:(<span class="keyword">void</span> (^)(CYAlertView *alertView, <span class="built_in">BOOL</span> cancelled, <span class="built_in">NSInteger</span> buttonIndex))clickedBlock</span><br><span class="line">  cancelButtonTitle:(<span class="built_in">NSString</span> *)cancelButtonTitle</span><br><span class="line">  otherButtonTitles:(<span class="built_in">NSString</span> *)otherButtonTitles, ... <span class="built_in">NS_REQUIRES_NIL_TERMINATION</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>完整的代码开源托管在GitHub（传送门），有兴趣的同学可以参考。</p>
+<h2 id="参考">参考</h2><p><a href="http://clang.llvm.org/docs/AttributeReference.html#format-gnu-format" target="_blank" rel="external">Clang 3.5 documentation: Attributes in Clang</a><br><a href="http://gcc.gnu.org/onlinedocs/gcc/Function-Attributes.html" target="_blank" rel="external">GCC documentation: Function Attributes</a><br><a href="http://nshipster.com/__attribute__/" target="_blank" rel="external">NSHisper: attribute</a><br>Advanced Mac OS X Programming</p>
 
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-bit-computing/">
+                iOS bit computing
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-bit-computing/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-bit-computing/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS_位与位运算">iOS 位与位运算</h2><h3 id="介绍">介绍</h3><p>位操作是程序设计中对位模式或二进制数的一元和二元操作. 在许多古老的微处理器上, 位运算比加减运算略快, 通常位运算比乘除法运算要快很多. 在现代架构中, 情况并非如此:位运算的运算速度通常与加法运算相同(仍然快于乘法运算).（摘自wikipedia）<br>OC作为c的扩展和超集，位运算自然使用的是c的操作符。c提供了6个位操作符，$，|，^，~，&lt;&lt;，&gt;&gt;。本文不打算做位运算的基础教学，只介绍一些开发中能用到的场景。</p>
+<h3 id="提高运算速度">提高运算速度</h3><p>如前一段所说，位运算的运算速度是通常与加法速度相当，但是快于乘法运算的。故而如果我们的程序对性能有要求，我们可以使用位运算来提高运算速度。比如：</p>
+<ul>
+<li>乘以2：n &lt;&lt; 1;</li>
+<li>除以2：n &gt;&gt; 1;</li>
+<li>乘以2的m次方：n &lt;&lt; m;</li>
+<li>除以2的m次方：n &gt;&gt; m;</li>
+<li>判断奇偶：(n &amp; 1) == 1;</li>
+<li>求平均数：(a + b) &gt;&gt; 1;</li>
+<li>……</li>
+</ul>
+<p>基于乘除法的位运算提速还有很多，这里不一一列举。需要注意的是，你应当只在遇到性能瓶颈的时候，并且瓶颈的确是计算的时候才这么做。因为使用位运算并不利于程序的可读性和可维护性。（科学计算除外）</p>
+<h3 id="压缩空间">压缩空间</h3><p>以前接触过ACM的筒子们应该对状态压缩不陌生，状态压缩的目的在于把一个大数据用有限的内存空间来进行表示。比如 Programming Pearls 里面的一个经典示例：如何对最多有一千万条不重复的7位整数（电话号码）进行排序？且可使用的内存空间有大约1MB多。</p>
+<p>显而易见的常规做法既是做一个基于磁盘操作的外排序。然而如果转换一下思路，充分的使用内存中的每一个位，加上不存在重复的电话号码，以及不存在0和1开头的电话号码。我们只需要使用1000万个位（大约1.2mb），就能以集合的方式在内存里标记下所有的数据，从而轻松的实现位排序。此种方法大幅度的减少了IO时间，从而获得巨大的性能提升。</p>
+<p>ACM里面有大量的如果使用位来压缩空间的示例，状态压缩的动态规划等，此处不做展开，只告诉读者，充分的使用内存的每一个位，经常能带来意想不到的收获。但需要注意的是，状态的压缩和提取，都需要一定的计算量，有时一味的追求状态压缩，反而会降低效率。</p>
+<h3 id="表示数据">表示数据</h3><p>比较经典的一个应用场景，使用一串24位的十六机制数字来表现一个RGB颜色（或者32位来表示ARGB）。由于PS，Web以及各类取色器，都能快速的取出RGB的Hex值，但是UIColor没有对应的方法。故而我们可以写出下面这样一个UIColor的Category，来快速的用一个RGBHex生成一个UIColor。（源码在<a href="http://github.com/lancy/cyhelper" target="_blank" rel="external">UIColor + CYHelper.h</a>）<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+ (UIColor *)colorWithRGBHex:(UInt32)<span class="built_in">hex</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [UIColor colorWithRGBHex:<span class="built_in">hex</span> <span class="built_in">alpha</span>:<span class="number">1.0</span>f];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (UIColor *)colorWithRGBHex:(UInt32)<span class="built_in">hex</span> <span class="built_in">alpha</span>:(CGFloat)<span class="built_in">alpha</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> r = (<span class="built_in">hex</span> &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line">    <span class="built_in">int</span> g = (<span class="built_in">hex</span> &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line">    <span class="built_in">int</span> b = (<span class="built_in">hex</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [UIColor colorWithRed:r / <span class="number">255.0</span>f <span class="built_in">green</span>:g / <span class="number">255.0</span>f <span class="built_in">blue</span>:b / <span class="number">255.0</span>f <span class="built_in">alpha</span>:<span class="built_in">alpha</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>状态与选项<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">UIViewAnimationOptions</span>) &#123;</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionLayoutSubviews</span>            = <span class="number">1</span> &lt;&lt;  <span class="number">0</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionAllowUserInteraction</span>      = <span class="number">1</span> &lt;&lt;  <span class="number">1</span>, <span class="comment">// turn on user interaction while animating</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionBeginFromCurrentState</span>     = <span class="number">1</span> &lt;&lt;  <span class="number">2</span>, <span class="comment">// start all views from current value, not initial value</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionRepeat</span>                    = <span class="number">1</span> &lt;&lt;  <span class="number">3</span>, <span class="comment">// repeat animation indefinitely</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionAutoreverse</span>               = <span class="number">1</span> &lt;&lt;  <span class="number">4</span>, <span class="comment">// if repeat, run animation back and forth</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionOverrideInheritedDuration</span> = <span class="number">1</span> &lt;&lt;  <span class="number">5</span>, <span class="comment">// ignore nested duration</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionOverrideInheritedCurve</span>    = <span class="number">1</span> &lt;&lt;  <span class="number">6</span>, <span class="comment">// ignore nested curve</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionAllowAnimatedContent</span>      = <span class="number">1</span> &lt;&lt;  <span class="number">7</span>, <span class="comment">// animate contents (applies to transitions only)</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionShowHideTransitionViews</span>   = <span class="number">1</span> &lt;&lt;  <span class="number">8</span>, <span class="comment">// flip to/from hidden state instead of adding/removing</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionOverrideInheritedOptions</span>  = <span class="number">1</span> &lt;&lt;  <span class="number">9</span>, <span class="comment">// do not inherit any options or animation type</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveEaseInOut</span>            = <span class="number">0</span> &lt;&lt; <span class="number">16</span>, <span class="comment">// default</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveEaseIn</span>               = <span class="number">1</span> &lt;&lt; <span class="number">16</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveEaseOut</span>              = <span class="number">2</span> &lt;&lt; <span class="number">16</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveLinear</span>               = <span class="number">3</span> &lt;&lt; <span class="number">16</span>,</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionNone</span>            = <span class="number">0</span> &lt;&lt; <span class="number">20</span>, <span class="comment">// default</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromLeft</span>    = <span class="number">1</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromRight</span>   = <span class="number">2</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionCurlUp</span>          = <span class="number">3</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionCurlDown</span>        = <span class="number">4</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionCrossDissolve</span>   = <span class="number">5</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromTop</span>     = <span class="number">6</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromBottom</span>  = <span class="number">7</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">&#125; <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">4</span>_0);</span><br></pre></td></tr></table></figure></p>
+<p>我们观察Apple在<code>UIViewAnimationOptions</code>的枚举变量，使用了一个NSUInteger就表示了<code>UIViewAnimation</code>所需的所有Option。其中0~9十个是互不影响的可同时存在option。16~19，20~24使用了4位来表示互斥的option。</p>
+<p>如此定义了之后，对<code>UIViewAnimationOptions</code>的赋值变得尤为简单，使用 | 操作符既可以获得一个给对应的option位赋值后的结果。例如：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">UIView</span> animateWithDuration:<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">                      delay:<span class="number">0</span></span><br><span class="line">                    options:<span class="type">UIViewAnimationOptionAllowUserInteraction</span></span><br><span class="line">                         | <span class="type">UIViewAnimationOptionBeginFromCurrentState</span></span><br><span class="line">                         | <span class="type">UIViewAnimationOptionCurveEaseIn</span></span><br><span class="line">                 animations:<span class="decorator">&#123;...&#125;</span></span><br><span class="line">                 completion:<span class="decorator">&#123;...&#125;</span>];</span><br></pre></td></tr></table></figure></p>
+<p>提取也比较简单，使用 <code>&amp;</code> 操作符 和 <code>&gt;&gt;</code> 操作符，就可以轻松判定某个位有没有被设置，以及提取某些状态位，例如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIViewAnimationOptions</span> option = <span class="built_in">UIViewAnimationOptionAllowUserInteraction</span></span><br><span class="line">                                | <span class="built_in">UIViewAnimationOptionBeginFromCurrentState</span></span><br><span class="line">                                | <span class="built_in">UIViewAnimationOptionCurveEaseIn</span></span><br><span class="line">                                | <span class="built_in">UIViewAnimationOptionTransitionCrossDissolve</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (option &amp; <span class="built_in">UIViewAnimationOptionAllowUserInteraction</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionAllowUserInteraction has been set"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (option &amp; <span class="built_in">UIViewAnimationOptionBeginFromCurrentState</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionBeginFromCurrentState has been set"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">UInt8</span> optionCurve = option &gt;&gt; <span class="number">16</span> &amp; <span class="number">0xf</span>;</span><br><span class="line"><span class="keyword">if</span> (optionCurve == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionCurveEaseIn has been set"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">UInt8</span> optionTransition = option &gt;&gt; <span class="number">20</span> &amp; <span class="number">0xf</span>;</span><br><span class="line"><span class="keyword">if</span> (optionTransition == <span class="number">5</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionTransitionCrossDissolve has been set"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里最需要注意的地方就是，对互斥的状态的设置必须尤为小心，如果你这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIViewAnimationOptions</span> badOption = <span class="built_in">UIViewAnimationOptionCurveEaseIn</span> | <span class="built_in">UIViewAnimationOptionCurveEaseOut</span>;</span><br><span class="line"><span class="built_in">UInt8</span> oops = badOption &gt;&gt; <span class="number">16</span> &amp; <span class="number">0xf</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Sorry, it's not UIViewAnimationOptionCurveEaseInOut"</span>);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"oops = %d, you got UIViewAnimationOptionCurveLinear"</span>, oops);</span><br></pre></td></tr></table></figure></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-Toll-Free-Bridging/">
+                iOS Toll-Free Bridging
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-Toll-Free-Bridging/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-Toll-Free-Bridging/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/" target="_blank" rel="external">reference</a></p>
+<h2 id="Toll-Free_Bridging">Toll-Free Bridging</h2><h3 id="什么是_Toll-Free_Bridging">什么是 Toll-Free Bridging</h3><p>有一些数据类型是能够在 <code>Core Foundation Framework</code> 和 <code>Foundation Framework</code> 之间交换使用的。这意味着，对于同一个数据类型，你既可以将其作为参数传入 <code>Core Foundation</code>函数，也可以将其作为接收者对其发送 <code>Objective-C</code> 消息（即调用ObjC类方法）。这种在 <code>Core Foundation 和 Foundation</code> 之间交换使用数据类型的技术就叫 <code>Toll-Free Bridging</code>.</p>
+<p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
+<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
+<h3 id="Toll-Free_Bridging_是如何实现的？">Toll-Free Bridging 是如何实现的？</h3><p>1) 每一个能够 bridge 的 ObjC 类，都是一个类簇（<code>class cluster</code>）。类簇是一个公开的抽象类，但其核心功能的是在不同的私有子类中实现的，公开类只暴露一致的接口和实现一些辅助的创建方法。而与该 ObjC 类相对应的 <code>Core Foundation</code> 类的内存结构，正好与类簇的其中一个私有子类相同。</p>
+<p>举个例子，NSString是一个类簇，一个公开的抽象类，但每次创建一个NSString的实例时，实际上我们会获得其中一个私有子类的实例。而NSString的其中一个私有子类实现既为NSCFString，其内存的结构与CFString是相同的，CFString的isa指针就指向NSCFString类，即，CFString对象就是一个NSCFString类的实例。</p>
+<p>所以，当<code>NSString</code>的实现刚好是<code>NSCFString</code>的时候，他们两者之间的转换是相当容易而直接的，他们就是同一个类的实例。</p>
+<p>2) 当<code>NSString</code>的实现不是<code>NSCFString</code>的时候（比如我们自己 subclass 了<code>NSString</code>），我们调用 CF 函数，就需要先检查对象的具体实现。如果发现其不是<code>NSCFString</code>，我们不会调用 CF 函数的实现来获得结果，而是通过给对象发送与函数功能相对应的 ObjC 消息（调用相对应的<code>NSString</code>的接口）来获得其结果。<br>例如<code>CFStringGetLength</code>函数，当收到一个作为参数传递进来的对象时，会先确认该对象到底是不是<code>NSCFString</code>实现。如果是的话，就会直接调用<code>CFStringGetLength</code>函数的实现来获得字符串的长度；如果不是的话，会给对象发送length消息（调用<code>NSString</code>的<code>- (NSUInteger)length</code>接口），来得到字符串的长度。<br>通过这样的技术，即使是我们自己子类了一个<code>NSString</code>，也可以和<code>CFStringRef</code>相互 Bridge。</p>
+<p>3) 其他支持 Toll-Free Bridging 的数据类型原理也同NSString一样，比如NSNumber的NSCFNumber和CFNumber。</p>
+<h3 id="ARC_下的_Toll-Free_Bridging">ARC 下的 Toll-Free Bridging</h3><p>如之前提到的，MRC 下的 <code>Toll－Free Bridging</code> 因为不涉及内存管理的转移，相互之间可以直接交换使用：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bridge</span></span><br><span class="line"><span class="built_in">NSString</span> *nsStr = (<span class="built_in">NSString</span> *)cfStr;</span><br><span class="line"><span class="built_in">CFStringRef</span> cfStr = (<span class="built_in">CFStringRef</span>)nsStr;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用函数或者方法</span></span><br><span class="line"><span class="built_in">NSUInteger</span> length = [(<span class="built_in">NSString</span> *)cfStr length];</span><br><span class="line"><span class="built_in">NSUInteger</span> length = <span class="built_in">CFStringGetLength</span>((<span class="built_in">CFStringRef</span>)nsStr);</span><br><span class="line"></span><br><span class="line"><span class="comment">// release</span></span><br><span class="line"><span class="built_in">CFRelease</span>((<span class="built_in">CFStringRef</span>)nsStr);</span><br><span class="line">[(<span class="built_in">NSString</span> *)cfStr release];</span><br></pre></td></tr></table></figure></p>
+<p>而在 ARC 下，事情就会变得复杂一些，因为 ARC 能够管理 Objective-C 对象的内存，却不能管理 CF 对象，CF 对象依然需要我们手动管理内存。在 CF 和 ObjC 之间 bridge 对象的时候，问题就出现了，编译器不知道该如何处理这个同时有 ObjC 指针和 CFTypeRef 指向的对象。</p>
+<p>这时候，我们需要使用<code>__bridge</code>, <code>__bridge_retained</code>, <code>__bridge_transfer</code> 修饰符来告诉编译器该如何去做。</p>
+<h3 id="__bridge">__bridge</h3><p>最常用的修饰符，这意味着告诉编译器不做任何内存管理的事情，编译器仍然负责管理好在 Objc 一端的引用计数的事情，开发者也继续负责管理好在 CF 一端的事情。举例说明：</p>
+<p>例子1:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// objc to cf</span></span><br><span class="line"><span class="built_in">NSString</span> *nsStr = [<span class="keyword">self</span> createSome<span class="built_in">NSString</span>];</span><br><span class="line"><span class="built_in">CFStringRef</span> cfStr = (__bridge <span class="built_in">CFStringRef</span>)nsStr;</span><br><span class="line"><span class="built_in">CFUseCFString</span>(cfStr);</span><br><span class="line"><span class="comment">// CFRelease(cfStr); 不需要</span></span><br></pre></td></tr></table></figure></p>
+<p>在这里，编译器会继续负责nsStr的内存管理的事情，不会在 bridge 的时候 retain 对象，所以也不需要开发者在 CF 一端释放。需要注意的是，当nsStr被释放的时候（比如出了作用域），意味着cfStr指向的对象被释放了，这时如果继续使用cfStr将会引起程序崩溃。</p>
+<p>例子2:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cf to objc</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello); <span class="comment">// 需要</span></span><br><span class="line">[<span class="keyword">self</span> use<span class="built_in">NSString</span>:world];</span><br></pre></td></tr></table></figure></p>
+<p>在这里，bridge 的时候编译器不会做任何内存管理的事情，bridge 之后，会负责 ObjC 一端的内存管理的事情 。同时，开发者需要负责管理 CF 一端的内存管理的事情，需要再 bridge 之后，负责 release 对象。</p>
+<h3 id="__bridge_retained">__bridge_retained</h3><p>接<code>__bridge</code>一节的第一个例子，objc to cf。为了防止nsStr被释放，引起我们使用cfStr的时候程序崩溃，可以使用<code>__bridge_retained</code>修饰符。这意味着，在 bridge 的时候，编译器会 retain 对象，而由开发者在 CF 一端负责 release。这样，就算nsStr在 objc 一端被释放，只要开发者不手动去释放cfStr，其指向的对象就不会被真的销毁。但同时，开发者也必须保证和负责对象的释放。例如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// objc to cf</span></span><br><span class="line"><span class="built_in">NSString</span> *nsStr = [<span class="keyword">self</span> createSome<span class="built_in">NSString</span>];</span><br><span class="line"><span class="built_in">CFStringRef</span> cfStr = (__bridge_retained <span class="built_in">CFStringRef</span>)nsStr;</span><br><span class="line"><span class="built_in">CFUseCFString</span>(cfStr);</span><br><span class="line"><span class="built_in">CFRelease</span>(cfStr); <span class="comment">// 需要</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="__bridge_transfer">__bridge_transfer</h3><p>接<code>__bridge</code>一节的第二个例子，cf to objc。我们发现如果使用<strong>bridge修饰符在cf转objc的时候非常的麻烦，我们既需要一个CFTypeRef的变量，还需要在 bridge 之后负责释放。这时我们可以使用`</strong>bridge_transfer`，意味着在 bridge 的时候，编译器转移了对象的所有权，开发者不再需要负责对象的释放。例如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cf to objc</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge_transfer <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="comment">// CFRelease(hello); 不需要</span></span><br><span class="line">[<span class="keyword">self</span> use<span class="built_in">NSString</span>:world];</span><br></pre></td></tr></table></figure></p>
+<p>甚至可以这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cf to objc</span></span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge_transfer <span class="built_in">NSString</span> *)<span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line">[<span class="keyword">self</span> use<span class="built_in">NSString</span>:world];</span><br></pre></td></tr></table></figure></p>
+<h2 id="小结">小结</h2><ul>
+<li><code>(__bridge T) op</code>：告诉编译器在 bridge 的时候不要做任何事情</li>
+<li><code>(__bridge_retained T) op</code>：（ ObjC 转 CF 的时候使用）告诉编译器在 bridge 的时候 retain 对象，开发者需要在CF一端负责释放对象</li>
+<li><code>(__bridge_transfer T) op：</code>（ CF 转 ObjC 的时候使用）告诉编译器转移 CF 对象的所有权，开发者不再需要在CF一端负责释放对象</li>
+</ul>
+<h2 id="参考">参考</h2><p><a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">Concepts in Objective-C Programming</a><br><a href="https://developer.apple.com/library/ios/documentation/corefoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/TP40010677" target="_blank" rel="external">Core Foundation Design Concepts</a><br><a href="https://mikeash.com/pyblog/friday-qa-2010-01-22-toll-free-bridging-internals.html" target="_blank" rel="external">Toll Free Bridging Internals</a><br><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#bridged-casts" target="_blank" rel="external">Clang documentation: Objective-C Automatic Reference Counting (ARC)</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-attribute-objc-designated-initializer/">
+                iOS attribute objc_designated_initializer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-attribute-objc-designated-initializer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-attribute-objc-designated-initializer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="https://leafduo.com/articles/2014/03/20/objc-designated-initializer/" target="_blank" rel="external">reference</a></p>
+<h2 id="attribute((objc_designated_initializer))"><strong>attribute</strong>((objc_designated_initializer))</h2><p>指定初始化器（<code>designated initializer</code>）是 Objective-C 中的一个重要的概念，但是很可惜的是，很多开发者（不知道为什么）并没能正确遵守关于指定初始化器的一些惯例。 </p>
+<p>之前，我们只能通过 code review 之类的方法来找出、修正这些问题；现在，clang 为我们提供了编译器级别的支持，能够找出不遵守管理的地方并给出警告，我们需要做的是标记出哪个初始化器是指定初始化器，例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">interface</span> FTBObject</span><br><span class="line"></span><br><span class="line">- (instancetype)init __<span class="function">attribute__</span>((objc_designated_initializer))</span>;</span><br><span class="line"></span><br><span class="line"><span class="at_rule">@<span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<p>通过在接口定义中指定指定初始化器，不仅编译器能够给出相关的警告，而且需要继承该类的开发者也可以不参考文档就知道哪个初始化器是指定初始化器。</p>
+<p>目前，clang 可以提供一系列警告，例如非指定初始化器没有调用其他初始化器、指定初始化器没有调用父类的指定初始化器、指定初始化器调用了非指定初始化器、子类没有复写父类的指定初始化器等。 具体的例子可以看这个<a href="https://llvm.org/svn/llvm-project/cfe/trunk/test/SemaObjC/attr-designated-init.m" target="_blank" rel="external">测试用例</a>。</p>
+<p>不幸的是，目前系统库的接口还没有这个属性，也就是说只有继承自己的代码和标记了这个指令的第三方库中的类才有用。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/ios-GPUImage-simple-use/">
+                ios GPUImage simple use
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/ios-GPUImage-simple-use/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/ios-GPUImage-simple-use/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="GPUImage">GPUImage</h2><p>GPUImage 作者是 Brad Larson，以 BSD 协议放出，能够在图像、实时摄像头影像和视频上使用 GPU 加速的滤镜和其他效果.</p>
+<h3 id="GPU_vs-_CPU">GPU vs. CPU</h3><p>每只 iPhone 都有两个处理器：一个 CPU，也就是中央处理器，和一个 GPU，也就是图形处理器。每个处理器都有它自己的优势，现代芯片架构（例如 Apple A4）把 CPU 和 GPU 集成在一个物理封装里。</p>
+<p>在 Xcode 里面写 C 和 Objective-C 的时候，产生的指令绝大部分会被 CPU 执行。相对地，GPU 是一枚专用芯片，专门用来做独立的小操作，例如图形渲染。GPU 执行的指令和 CPU 是有很大区别的，因此用特殊的语言来编写：OpenGL（特别地，在 iPhone 和 iPad 上使用 OpenGL ES）</p>
+<h3 id="渲染管线">渲染管线</h3><p><img src="http://nshipster.s3.amazonaws.com/gpuimage-pipeline.png" alt=""></p>
+<p>GPUImage 从本质上来说是一个渲染管线的 <code>Objective-C</code>抽象。从相机、网络或者磁盘上加载的源图像，在经过一系列滤镜处理后，最终输出到了 <code>view</code>、<code>graphics context</code> 或是数据流中。</p>
+<p>例如说，摄像头中的图像可以应用一个 Color Levels 滤镜，来模拟各种色盲效果，然后实时显示在一个 view 中。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GPUImageVideoCamera *videoCamera = [[GPUImageVideoCamera alloc]</span><br><span class="line"><span class="label">    initWithSessionPreset:</span>AVCaptureSessionPreset640x480</span><br><span class="line"><span class="label">           cameraPosition:</span>AVCaptureDevicePositionBack];</span><br><span class="line">videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;</span><br><span class="line"></span><br><span class="line">GPUImageFilter *filter = [[GPUImageLevelsFilter alloc] </span><br><span class="line"><span class="label">                            initWithFragmentShaderFromFile:</span>@<span class="string">"CustomShader"</span>];</span><br><span class="line">[filter <span class="string">setRedMin:</span><span class="number">0.299</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setGreenMin:</span><span class="number">0.587</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setBlueMin:</span><span class="number">0.114</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[videoCamera <span class="string">addTarget:</span>filter];</span><br><span class="line"></span><br><span class="line">GPUImageView *filteredVideoView = [[GPUImageView alloc] <span class="string">initWithFrame:</span>self.view.bounds)];</span><br><span class="line">[filter <span class="string">addTarget:</span>filteredVideoView];</span><br><span class="line">[self.view <span class="string">addSubView:</span>filteredVideoView];</span><br><span class="line"></span><br><span class="line">[videoCamera startCameraCapture];</span><br></pre></td></tr></table></figure></p>
+<p>或者，结合不同的颜色混合模式，图像效果和一些调整，你可以把静止图像转变成可以分享给你时髦的朋友们看看的精美图像（例子来自基于 GPUImage 的 FilterKit）。<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GPUImageFilterGroup *filter = <span class="comment">[<span class="comment">[FKGPUFilterGroup alloc]</span> init]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageSaturationFilter *saturationFilter = <span class="comment">[<span class="comment">[GPUImageSaturationFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[saturationFilter setSaturation:0.5]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageMonochromeFilter *monochromeFilter = <span class="comment">[<span class="comment">[GPUImageMonochromeFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setColor:(GPUVector4)&#123;0.0f, 0.0f, 1.0f, 1.0f&#125;]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setIntensity:0.2]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageVignetteFilter *vignetteFilter = <span class="comment">[<span class="comment">[GPUImageVignetteFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[vignetteFilter setVignetteEnd:0.7]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageExposureFilter *exposureFilter = <span class="comment">[<span class="comment">[GPUImageExposureFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[exposureFilter setExposure:0.3]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">[filter addGPUFilter:exposureFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:monochromeFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:saturationFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:vignetteFilter]</span>;</span><br></pre></td></tr></table></figure></p>
+<p>看完了 GPUImage 的功能，一定很兴奋吧。GPUImage 非常简单，可以马上开始使用（不需要了解 OpenGL），性能上也足够完成你想要的一切。不止是这样，它还自带了非常多的积木一样的部件 — 色彩调整，混合模式，你能想到的想不到的一切视觉效果。</p>
+<p>GPUImage 是开源社区少有的好东西，我们 Mac 和 iOS 开发者非常幸运的能拥有它。用 GPUImage 做些牛逼的东西，向其他人展示一个崭新的世界</p>
+<h3 id="吐槽">吐槽</h3><p>我自己也用过一点 GPUImage，方便是很方便，不光是省掉了 AVFoundation 的许多烦人的 setup 代码，还内置了许多滤镜效果。不过它也有不少坑，我遇到的一个就是占用太多内存，一段时间后就 crash 掉了，毕竟是处理视频，需要不少内存，iPhone 的内存又不太多，就要更加注意。我当时是加了一个 @autoreleasepool 就好多了。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
+                C programe memory management
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Memory/">Memory</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/C-programe-memory-management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
+<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
+<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
+                iOS application framework -- network layer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Framework/">Framework</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
+<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
+<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
+<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
+<p>这篇文章就主要会讲这些方面：</p>
+<ul>
+<li>网络层跟业务对接部分的设计</li>
+<li>网络层的安全机制实现</li>
+<li>网络层的优化方案</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1176,7 +1057,7 @@
 
   
   <div class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </div>
 
 
@@ -1210,21 +1091,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">160</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">73</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
