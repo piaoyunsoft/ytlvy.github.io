@@ -194,6 +194,7 @@
 <p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
 <p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
+<a id="more"></a>
 <h3 id="Toll-Free_Bridging_是如何实现的？">Toll-Free Bridging 是如何实现的？</h3><p>1) 每一个能够 bridge 的 ObjC 类，都是一个类簇（<code>class cluster</code>）。类簇是一个公开的抽象类，但其核心功能的是在不同的私有子类中实现的，公开类只暴露一致的接口和实现一些辅助的创建方法。而与该 ObjC 类相对应的 <code>Core Foundation</code> 类的内存结构，正好与类簇的其中一个私有子类相同。</p>
 <p>举个例子，NSString是一个类簇，一个公开的抽象类，但每次创建一个NSString的实例时，实际上我们会获得其中一个私有子类的实例。而NSString的其中一个私有子类实现既为NSCFString，其内存的结构与CFString是相同的，CFString的isa指针就指向NSCFString类，即，CFString对象就是一个NSCFString类的实例。</p>
 <p>所以，当<code>NSString</code>的实现刚好是<code>NSCFString</code>的时候，他们两者之间的转换是相当容易而直接的，他们就是同一个类的实例。</p>
@@ -303,7 +304,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-count">162</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -317,7 +318,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

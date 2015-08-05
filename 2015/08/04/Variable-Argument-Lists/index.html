@@ -202,6 +202,7 @@
 <h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
 <p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
 <p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
+<a id="more"></a>
 <h2 id="解决方案">解决方案</h2><p>一般而言，为了确保参数的获取正确进行，有如下两种解决方案：</p>
 <h3 id="Format_string">Format string</h3><p>如C语言中的<code>printf</code>，Cocoa中的<code>NSLog</code>，<code>[NSString stringWithFormat:]</code>就是使用了<code>Format String</code>的解决方案。通常，该函数的第一个参数既为一个<code>format string</code>，函数内部实现会扫描这个<code>format string</code>，来确定之后接着的可变参数的数量和类型。例如：</p>
 <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString <span class="variable">*str</span> = [NSString stringWithFormat:<span class="variable">@"</span><span class="keyword">int</span> <span class="variable">%d</span>, str <span class="variable">%@</span>, <span class="keyword">float</span> <span class="variable">%g</span><span class="string">", 123, @"</span>ok<span class="string">", 123.4];</span></span><br></pre></td></tr></table></figure>
@@ -313,7 +314,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-count">162</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -327,7 +328,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

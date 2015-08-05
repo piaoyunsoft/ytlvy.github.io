@@ -148,6 +148,193 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
+                iOS Application Framework Think - Network
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
+<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
+<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
+<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
+<ol>
+<li>无法cancel这个请求</li>
+<li>占用了完整的一个线程</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
+                iOS Best Practices
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/05/iOS-Best-Practices/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Best-Practices/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="iOS_Best_Practices">iOS Best Practices</h1><p>这里总结一下iOS最佳实践，主要参考Futurice developers的文章<a href="https://github.com/futurice/ios-good-practices">iOS Good Practices</a>，同时加上了一些自己的理解</p>
+<h2 id="目录">目录</h2><ul>
+<li><a href="#setup_project">初始化项目</a></li>
+<li><a href="#iOS_architecture">iOS架构</a></li>
+<li><a href="#api_design">API设计</a></li>
+<li><a href="#high_quality_code">高质量代码</a></li>
+<li><a href="#code_style">编码规范</a></li>
+<li><a href="#iOS_open_source_lib">iOS开源库</a></li>
+<li><a href="#iOS_basic_skills">iOS基本技能</a></li>
+<li><a href="#build_automation">自动化构建</a></li>
+<li><a href="#optimiaze_app">优化App</a></li>
+</ul>
+<p><b id="setup_project"></b></p>
+<h2 id="初始化项目">初始化项目</h2><h3 id="UI采用Interface_Builder还是手写代码">UI采用Interface Builder还是手写代码</h3><p>当开始一个iOS项目时，一个常见的问题就是编写所有的views是采用手写代码的方式还是使用Interface Builder的Storyboard或XIB文件。两种方式都可以实现相同UI效果，但几点需要考虑：</p>
+<h4 id="为什么使用代码？">为什么使用代码？</h4><ul>
+<li>当多人协作开发时，由于Storyboard复杂的XML结构，它更容易发生版本冲突，这比手写代码的方式更难合并代码。</li>
+<li>手写代码更容易地结构化和重用views，因此使你的代码库保持<a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>。</li>
+<li>所有的信息都在同一个地方。在Interface Builder中，你必须通过点击所有inspectors才能找到你想要的东西。</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/05/iOS-Best-Practices/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
                 parse crashLog manually
               </a>
@@ -456,7 +643,7 @@
 
       
         
-          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/" target="_blank" rel="external">转自</a></p>
+          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
 <h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
 <p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
 <ol>
@@ -469,31 +656,11 @@
 <h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
 <p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
 <p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
-<h2 id="解决方案">解决方案</h2><p>一般而言，为了确保参数的获取正确进行，有如下两种解决方案：</p>
-<h3 id="Format_string">Format string</h3><p>如C语言中的<code>printf</code>，Cocoa中的<code>NSLog</code>，<code>[NSString stringWithFormat:]</code>就是使用了<code>Format String</code>的解决方案。通常，该函数的第一个参数既为一个<code>format string</code>，函数内部实现会扫描这个<code>format string</code>，来确定之后接着的可变参数的数量和类型。例如：</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString <span class="variable">*str</span> = [NSString stringWithFormat:<span class="variable">@"</span><span class="keyword">int</span> <span class="variable">%d</span>, str <span class="variable">%@</span>, <span class="keyword">float</span> <span class="variable">%g</span><span class="string">", 123, @"</span>ok<span class="string">", 123.4];</span></span><br></pre></td></tr></table></figure>
-<p>这里使用了<code>%</code>作为转义符，其后跟着的<code>d</code>代表<code>int</code>，<code>@</code>代表<code>id</code>，<code>g</code>代表<code>float/double</code>，这表示后面必须有三个参数，其类型必须与<code>format string</code>所指定的一致。</p>
-<p>如之前所说，提供的参数的数量或者类型若与提供的<code>format string</code>不一致，则会发生不可预知的问题。而在运行的时候，我们没有任何的办法去保证其正确性，幸运的是编译器提供了一些方法，能让我们在编译的时候做一些检查：</p>
-<p>gcc中定义了<code>__attribute__((format))</code>来标示一个可变参函数使用了<code>format string</code>，从而在编译时对其进行检查。其定义为<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">format</span> (archetype, <span class="keyword">string</span>-index, <span class="keyword">first</span>-<span class="built_in">to</span>-check)</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><code>archetype</code>代表<code>format string</code>的类型，它可以是<code>printf</code>，<code>scanf</code>，<code>strftime</code>或者<code>strfmon</code>，Cocoa开发者还可以使用<code>__NSString__</code>来指定其使用和<code>[NSString stringWithFormat:]</code>与<code>NSLog(</code>)一致的<code>format string</code>规则。</li>
-<li><code>string-index</code>代表<code>format string</code>是第几个参数，</li>
-<li><code>first-to-check</code>则代表了可变参数列表从第几个参数开始。</li>
-</ol>
-<p>示例：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 第一个参数是<span class="keyword">format</span>，第二个参数起是可变参数列表，<span class="keyword">format</span>的格式规则与<span class="keyword">printf</span>一致</span><br><span class="line">void customPrintf(const char *<span class="keyword">format</span>, ...) __attribute_<span class="number">_</span>((<span class="keyword">format</span>(<span class="keyword">printf</span>, <span class="number">1</span>, <span class="number">2</span>)));</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> 使用的时候，若<span class="keyword">format</span>和参数不符，则会报warning</span><br><span class="line">customPrintf(<span class="string">"what? <span class="variable">%d</span>"</span>, <span class="number">1.2</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
-<p>Cocoa开发者可以使用<code>NS_FORMAT_FUNCTION(F,A)</code>宏来替代<code>__atribute__format</code>，F和A即对应<code>string-index</code>和<code>first-to-check</code>，事实上，他的实现类似于：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine <span class="function"><span class="title">NS_FORMAT_FUNCTION</span><span class="params">(F,A)</span></span> __attribute__((<span class="function"><span class="title">format</span><span class="params">(__NSString__, F, A)</span></span>))</span><br></pre></td></tr></table></figure>
-<p>示例如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOUNDATION_EXPORT <span class="keyword">void</span> <span class="built_in">NSLog</span>(<span class="built_in">NSString</span> *format, ...) <span class="built_in">NS_FORMAT_FUNCTION</span>(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="Sentinel_value">Sentinel value</h3><p>哨兵值是另一种可变参数列表所常用的方案，如前一节我们的示例代码，即是使用了数字0作为哨兵值。当程序发现当前读取到的参数值为0时，则停止继续读取程序。在Cocoa中，我们经常使用<code>nil</code>作为哨兵值，比如<code>[NSArray arrayWithObjects:]</code>方法，其接受数量不等的对象作为参数，而在最后则必须使用<code>nil</code>结尾。如：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="constant">NSArray </span><span class="symbol">arrayWithObjects:</span><span class="variable">@1</span>, <span class="variable">@2</span>, <span class="variable">@3</span>, <span class="keyword">nil</span>];</span><br><span class="line"><span class="regexp">//</span>备注：我们现在通常使用@[<span class="variable">@1</span>, <span class="variable">@2</span>, <span class="variable">@3</span>]来代替这一行代码，且不需要在最后添加<span class="keyword">nil</span>，这称为字面量（<span class="constant">Literals)</span></span><br></pre></td></tr></table></figure>
-<p>同<code>format string</code>一样危险的是，若开发者调用方法（函数）的时候，忘记在最后添加上哨兵值，则会发生不可预知的问题。同样幸运的是，编译器也为我们提供了一些方法来在编译时进行检查。<br>gcc中定义了<code>___attribute__((sentinel))</code>来标示一个函数需要在编译的时候对哨兵值进行检查。用法如下：</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int addemUp <span class="list">(<span class="keyword">int</span> firstNum, ...)</span> __attribute__<span class="list">(<span class="list">(<span class="keyword">sentinel</span>)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>Cocoa开发者可以使用<code>NS_REQUIRES_NIL_TERMINATION</code>宏来替代，其实现基本等同于上述代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="tag">instancetype</span>)<span class="rule"><span class="attribute">arrayWithObjects</span>:<span class="value">(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION</span></span>;</span><br></pre></td></tr></table></figure></p>
-<h3 id="工程实例">工程实例</h3><p>我在开发猿题库iOS客户端时，由于产品的需要会有许多<code>alert</code>弹框。但传统的<code>UIAlertView</code>经常需要实现相应的<code>UIAlertViewDelegate</code>，使用起来非常不便。我写了一个能够接收block作为回调的自定义的AlertView组件，同时为了保证其接口与UIAlertView基本一致，使用了可变参数列表。其接口定义如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYAlertView</span> : <span class="title">UIAlertView</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)initWithTitle:(<span class="built_in">NSString</span> *)title</span><br><span class="line">            message:(<span class="built_in">NSString</span> *)message</span><br><span class="line">         clickedBlock:(<span class="keyword">void</span> (^)(CYAlertView *alertView, <span class="built_in">BOOL</span> cancelled, <span class="built_in">NSInteger</span> buttonIndex))clickedBlock</span><br><span class="line">  cancelButtonTitle:(<span class="built_in">NSString</span> *)cancelButtonTitle</span><br><span class="line">  otherButtonTitles:(<span class="built_in">NSString</span> *)otherButtonTitles, ... <span class="built_in">NS_REQUIRES_NIL_TERMINATION</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>完整的代码开源托管在GitHub（传送门），有兴趣的同学可以参考。</p>
-<h2 id="参考">参考</h2><p><a href="http://clang.llvm.org/docs/AttributeReference.html#format-gnu-format" target="_blank" rel="external">Clang 3.5 documentation: Attributes in Clang</a><br><a href="http://gcc.gnu.org/onlinedocs/gcc/Function-Attributes.html" target="_blank" rel="external">GCC documentation: Function Attributes</a><br><a href="http://nshipster.com/__attribute__/" target="_blank" rel="external">NSHisper: attribute</a><br>Advanced Mac OS X Programming</p>
-
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -584,13 +751,11 @@
 <h3 id="压缩空间">压缩空间</h3><p>以前接触过ACM的筒子们应该对状态压缩不陌生，状态压缩的目的在于把一个大数据用有限的内存空间来进行表示。比如 Programming Pearls 里面的一个经典示例：如何对最多有一千万条不重复的7位整数（电话号码）进行排序？且可使用的内存空间有大约1MB多。</p>
 <p>显而易见的常规做法既是做一个基于磁盘操作的外排序。然而如果转换一下思路，充分的使用内存中的每一个位，加上不存在重复的电话号码，以及不存在0和1开头的电话号码。我们只需要使用1000万个位（大约1.2mb），就能以集合的方式在内存里标记下所有的数据，从而轻松的实现位排序。此种方法大幅度的减少了IO时间，从而获得巨大的性能提升。</p>
 <p>ACM里面有大量的如果使用位来压缩空间的示例，状态压缩的动态规划等，此处不做展开，只告诉读者，充分的使用内存的每一个位，经常能带来意想不到的收获。但需要注意的是，状态的压缩和提取，都需要一定的计算量，有时一味的追求状态压缩，反而会降低效率。</p>
-<h3 id="表示数据">表示数据</h3><p>比较经典的一个应用场景，使用一串24位的十六机制数字来表现一个RGB颜色（或者32位来表示ARGB）。由于PS，Web以及各类取色器，都能快速的取出RGB的Hex值，但是UIColor没有对应的方法。故而我们可以写出下面这样一个UIColor的Category，来快速的用一个RGBHex生成一个UIColor。（源码在<a href="http://github.com/lancy/cyhelper" target="_blank" rel="external">UIColor + CYHelper.h</a>）<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+ (UIColor *)colorWithRGBHex:(UInt32)<span class="built_in">hex</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [UIColor colorWithRGBHex:<span class="built_in">hex</span> <span class="built_in">alpha</span>:<span class="number">1.0</span>f];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (UIColor *)colorWithRGBHex:(UInt32)<span class="built_in">hex</span> <span class="built_in">alpha</span>:(CGFloat)<span class="built_in">alpha</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> r = (<span class="built_in">hex</span> &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line">    <span class="built_in">int</span> g = (<span class="built_in">hex</span> &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line">    <span class="built_in">int</span> b = (<span class="built_in">hex</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [UIColor colorWithRed:r / <span class="number">255.0</span>f <span class="built_in">green</span>:g / <span class="number">255.0</span>f <span class="built_in">blue</span>:b / <span class="number">255.0</span>f <span class="built_in">alpha</span>:<span class="built_in">alpha</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>状态与选项<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">UIViewAnimationOptions</span>) &#123;</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionLayoutSubviews</span>            = <span class="number">1</span> &lt;&lt;  <span class="number">0</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionAllowUserInteraction</span>      = <span class="number">1</span> &lt;&lt;  <span class="number">1</span>, <span class="comment">// turn on user interaction while animating</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionBeginFromCurrentState</span>     = <span class="number">1</span> &lt;&lt;  <span class="number">2</span>, <span class="comment">// start all views from current value, not initial value</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionRepeat</span>                    = <span class="number">1</span> &lt;&lt;  <span class="number">3</span>, <span class="comment">// repeat animation indefinitely</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionAutoreverse</span>               = <span class="number">1</span> &lt;&lt;  <span class="number">4</span>, <span class="comment">// if repeat, run animation back and forth</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionOverrideInheritedDuration</span> = <span class="number">1</span> &lt;&lt;  <span class="number">5</span>, <span class="comment">// ignore nested duration</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionOverrideInheritedCurve</span>    = <span class="number">1</span> &lt;&lt;  <span class="number">6</span>, <span class="comment">// ignore nested curve</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionAllowAnimatedContent</span>      = <span class="number">1</span> &lt;&lt;  <span class="number">7</span>, <span class="comment">// animate contents (applies to transitions only)</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionShowHideTransitionViews</span>   = <span class="number">1</span> &lt;&lt;  <span class="number">8</span>, <span class="comment">// flip to/from hidden state instead of adding/removing</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionOverrideInheritedOptions</span>  = <span class="number">1</span> &lt;&lt;  <span class="number">9</span>, <span class="comment">// do not inherit any options or animation type</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveEaseInOut</span>            = <span class="number">0</span> &lt;&lt; <span class="number">16</span>, <span class="comment">// default</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveEaseIn</span>               = <span class="number">1</span> &lt;&lt; <span class="number">16</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveEaseOut</span>              = <span class="number">2</span> &lt;&lt; <span class="number">16</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionCurveLinear</span>               = <span class="number">3</span> &lt;&lt; <span class="number">16</span>,</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionNone</span>            = <span class="number">0</span> &lt;&lt; <span class="number">20</span>, <span class="comment">// default</span></span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromLeft</span>    = <span class="number">1</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromRight</span>   = <span class="number">2</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionCurlUp</span>          = <span class="number">3</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionCurlDown</span>        = <span class="number">4</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionCrossDissolve</span>   = <span class="number">5</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromTop</span>     = <span class="number">6</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">UIViewAnimationOptionTransitionFlipFromBottom</span>  = <span class="number">7</span> &lt;&lt; <span class="number">20</span>,</span><br><span class="line">&#125; <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">4</span>_0);</span><br></pre></td></tr></table></figure></p>
-<p>我们观察Apple在<code>UIViewAnimationOptions</code>的枚举变量，使用了一个NSUInteger就表示了<code>UIViewAnimation</code>所需的所有Option。其中0~9十个是互不影响的可同时存在option。16~19，20~24使用了4位来表示互斥的option。</p>
-<p>如此定义了之后，对<code>UIViewAnimationOptions</code>的赋值变得尤为简单，使用 | 操作符既可以获得一个给对应的option位赋值后的结果。例如：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">UIView</span> animateWithDuration:<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">                      delay:<span class="number">0</span></span><br><span class="line">                    options:<span class="type">UIViewAnimationOptionAllowUserInteraction</span></span><br><span class="line">                         | <span class="type">UIViewAnimationOptionBeginFromCurrentState</span></span><br><span class="line">                         | <span class="type">UIViewAnimationOptionCurveEaseIn</span></span><br><span class="line">                 animations:<span class="decorator">&#123;...&#125;</span></span><br><span class="line">                 completion:<span class="decorator">&#123;...&#125;</span>];</span><br></pre></td></tr></table></figure></p>
-<p>提取也比较简单，使用 <code>&amp;</code> 操作符 和 <code>&gt;&gt;</code> 操作符，就可以轻松判定某个位有没有被设置，以及提取某些状态位，例如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIViewAnimationOptions</span> option = <span class="built_in">UIViewAnimationOptionAllowUserInteraction</span></span><br><span class="line">                                | <span class="built_in">UIViewAnimationOptionBeginFromCurrentState</span></span><br><span class="line">                                | <span class="built_in">UIViewAnimationOptionCurveEaseIn</span></span><br><span class="line">                                | <span class="built_in">UIViewAnimationOptionTransitionCrossDissolve</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (option &amp; <span class="built_in">UIViewAnimationOptionAllowUserInteraction</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionAllowUserInteraction has been set"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (option &amp; <span class="built_in">UIViewAnimationOptionBeginFromCurrentState</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionBeginFromCurrentState has been set"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">UInt8</span> optionCurve = option &gt;&gt; <span class="number">16</span> &amp; <span class="number">0xf</span>;</span><br><span class="line"><span class="keyword">if</span> (optionCurve == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionCurveEaseIn has been set"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">UInt8</span> optionTransition = option &gt;&gt; <span class="number">20</span> &amp; <span class="number">0xf</span>;</span><br><span class="line"><span class="keyword">if</span> (optionTransition == <span class="number">5</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"UIViewAnimationOptionTransitionCrossDissolve has been set"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里最需要注意的地方就是，对互斥的状态的设置必须尤为小心，如果你这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIViewAnimationOptions</span> badOption = <span class="built_in">UIViewAnimationOptionCurveEaseIn</span> | <span class="built_in">UIViewAnimationOptionCurveEaseOut</span>;</span><br><span class="line"><span class="built_in">UInt8</span> oops = badOption &gt;&gt; <span class="number">16</span> &amp; <span class="number">0xf</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Sorry, it's not UIViewAnimationOptionCurveEaseInOut"</span>);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"oops = %d, you got UIViewAnimationOptionCurveLinear"</span>, oops);</span><br></pre></td></tr></table></figure></p>
-
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-bit-computing/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -666,34 +831,16 @@
 
       
         
-          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/" target="_blank" rel="external">reference</a></p>
+          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">reference</a></p>
 <h2 id="Toll-Free_Bridging">Toll-Free Bridging</h2><h3 id="什么是_Toll-Free_Bridging">什么是 Toll-Free Bridging</h3><p>有一些数据类型是能够在 <code>Core Foundation Framework</code> 和 <code>Foundation Framework</code> 之间交换使用的。这意味着，对于同一个数据类型，你既可以将其作为参数传入 <code>Core Foundation</code>函数，也可以将其作为接收者对其发送 <code>Objective-C</code> 消息（即调用ObjC类方法）。这种在 <code>Core Foundation 和 Foundation</code> 之间交换使用数据类型的技术就叫 <code>Toll-Free Bridging</code>.</p>
 <p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
-<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
-<h3 id="Toll-Free_Bridging_是如何实现的？">Toll-Free Bridging 是如何实现的？</h3><p>1) 每一个能够 bridge 的 ObjC 类，都是一个类簇（<code>class cluster</code>）。类簇是一个公开的抽象类，但其核心功能的是在不同的私有子类中实现的，公开类只暴露一致的接口和实现一些辅助的创建方法。而与该 ObjC 类相对应的 <code>Core Foundation</code> 类的内存结构，正好与类簇的其中一个私有子类相同。</p>
-<p>举个例子，NSString是一个类簇，一个公开的抽象类，但每次创建一个NSString的实例时，实际上我们会获得其中一个私有子类的实例。而NSString的其中一个私有子类实现既为NSCFString，其内存的结构与CFString是相同的，CFString的isa指针就指向NSCFString类，即，CFString对象就是一个NSCFString类的实例。</p>
-<p>所以，当<code>NSString</code>的实现刚好是<code>NSCFString</code>的时候，他们两者之间的转换是相当容易而直接的，他们就是同一个类的实例。</p>
-<p>2) 当<code>NSString</code>的实现不是<code>NSCFString</code>的时候（比如我们自己 subclass 了<code>NSString</code>），我们调用 CF 函数，就需要先检查对象的具体实现。如果发现其不是<code>NSCFString</code>，我们不会调用 CF 函数的实现来获得结果，而是通过给对象发送与函数功能相对应的 ObjC 消息（调用相对应的<code>NSString</code>的接口）来获得其结果。<br>例如<code>CFStringGetLength</code>函数，当收到一个作为参数传递进来的对象时，会先确认该对象到底是不是<code>NSCFString</code>实现。如果是的话，就会直接调用<code>CFStringGetLength</code>函数的实现来获得字符串的长度；如果不是的话，会给对象发送length消息（调用<code>NSString</code>的<code>- (NSUInteger)length</code>接口），来得到字符串的长度。<br>通过这样的技术，即使是我们自己子类了一个<code>NSString</code>，也可以和<code>CFStringRef</code>相互 Bridge。</p>
-<p>3) 其他支持 Toll-Free Bridging 的数据类型原理也同NSString一样，比如NSNumber的NSCFNumber和CFNumber。</p>
-<h3 id="ARC_下的_Toll-Free_Bridging">ARC 下的 Toll-Free Bridging</h3><p>如之前提到的，MRC 下的 <code>Toll－Free Bridging</code> 因为不涉及内存管理的转移，相互之间可以直接交换使用：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bridge</span></span><br><span class="line"><span class="built_in">NSString</span> *nsStr = (<span class="built_in">NSString</span> *)cfStr;</span><br><span class="line"><span class="built_in">CFStringRef</span> cfStr = (<span class="built_in">CFStringRef</span>)nsStr;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用函数或者方法</span></span><br><span class="line"><span class="built_in">NSUInteger</span> length = [(<span class="built_in">NSString</span> *)cfStr length];</span><br><span class="line"><span class="built_in">NSUInteger</span> length = <span class="built_in">CFStringGetLength</span>((<span class="built_in">CFStringRef</span>)nsStr);</span><br><span class="line"></span><br><span class="line"><span class="comment">// release</span></span><br><span class="line"><span class="built_in">CFRelease</span>((<span class="built_in">CFStringRef</span>)nsStr);</span><br><span class="line">[(<span class="built_in">NSString</span> *)cfStr release];</span><br></pre></td></tr></table></figure></p>
-<p>而在 ARC 下，事情就会变得复杂一些，因为 ARC 能够管理 Objective-C 对象的内存，却不能管理 CF 对象，CF 对象依然需要我们手动管理内存。在 CF 和 ObjC 之间 bridge 对象的时候，问题就出现了，编译器不知道该如何处理这个同时有 ObjC 指针和 CFTypeRef 指向的对象。</p>
-<p>这时候，我们需要使用<code>__bridge</code>, <code>__bridge_retained</code>, <code>__bridge_transfer</code> 修饰符来告诉编译器该如何去做。</p>
-<h3 id="__bridge">__bridge</h3><p>最常用的修饰符，这意味着告诉编译器不做任何内存管理的事情，编译器仍然负责管理好在 Objc 一端的引用计数的事情，开发者也继续负责管理好在 CF 一端的事情。举例说明：</p>
-<p>例子1:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// objc to cf</span></span><br><span class="line"><span class="built_in">NSString</span> *nsStr = [<span class="keyword">self</span> createSome<span class="built_in">NSString</span>];</span><br><span class="line"><span class="built_in">CFStringRef</span> cfStr = (__bridge <span class="built_in">CFStringRef</span>)nsStr;</span><br><span class="line"><span class="built_in">CFUseCFString</span>(cfStr);</span><br><span class="line"><span class="comment">// CFRelease(cfStr); 不需要</span></span><br></pre></td></tr></table></figure></p>
-<p>在这里，编译器会继续负责nsStr的内存管理的事情，不会在 bridge 的时候 retain 对象，所以也不需要开发者在 CF 一端释放。需要注意的是，当nsStr被释放的时候（比如出了作用域），意味着cfStr指向的对象被释放了，这时如果继续使用cfStr将会引起程序崩溃。</p>
-<p>例子2:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cf to objc</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello); <span class="comment">// 需要</span></span><br><span class="line">[<span class="keyword">self</span> use<span class="built_in">NSString</span>:world];</span><br></pre></td></tr></table></figure></p>
-<p>在这里，bridge 的时候编译器不会做任何内存管理的事情，bridge 之后，会负责 ObjC 一端的内存管理的事情 。同时，开发者需要负责管理 CF 一端的内存管理的事情，需要再 bridge 之后，负责 release 对象。</p>
-<h3 id="__bridge_retained">__bridge_retained</h3><p>接<code>__bridge</code>一节的第一个例子，objc to cf。为了防止nsStr被释放，引起我们使用cfStr的时候程序崩溃，可以使用<code>__bridge_retained</code>修饰符。这意味着，在 bridge 的时候，编译器会 retain 对象，而由开发者在 CF 一端负责 release。这样，就算nsStr在 objc 一端被释放，只要开发者不手动去释放cfStr，其指向的对象就不会被真的销毁。但同时，开发者也必须保证和负责对象的释放。例如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// objc to cf</span></span><br><span class="line"><span class="built_in">NSString</span> *nsStr = [<span class="keyword">self</span> createSome<span class="built_in">NSString</span>];</span><br><span class="line"><span class="built_in">CFStringRef</span> cfStr = (__bridge_retained <span class="built_in">CFStringRef</span>)nsStr;</span><br><span class="line"><span class="built_in">CFUseCFString</span>(cfStr);</span><br><span class="line"><span class="built_in">CFRelease</span>(cfStr); <span class="comment">// 需要</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="__bridge_transfer">__bridge_transfer</h3><p>接<code>__bridge</code>一节的第二个例子，cf to objc。我们发现如果使用<strong>bridge修饰符在cf转objc的时候非常的麻烦，我们既需要一个CFTypeRef的变量，还需要在 bridge 之后负责释放。这时我们可以使用`</strong>bridge_transfer`，意味着在 bridge 的时候，编译器转移了对象的所有权，开发者不再需要负责对象的释放。例如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cf to objc</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge_transfer <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="comment">// CFRelease(hello); 不需要</span></span><br><span class="line">[<span class="keyword">self</span> use<span class="built_in">NSString</span>:world];</span><br></pre></td></tr></table></figure></p>
-<p>甚至可以这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cf to objc</span></span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge_transfer <span class="built_in">NSString</span> *)<span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line">[<span class="keyword">self</span> use<span class="built_in">NSString</span>:world];</span><br></pre></td></tr></table></figure></p>
-<h2 id="小结">小结</h2><ul>
-<li><code>(__bridge T) op</code>：告诉编译器在 bridge 的时候不要做任何事情</li>
-<li><code>(__bridge_retained T) op</code>：（ ObjC 转 CF 的时候使用）告诉编译器在 bridge 的时候 retain 对象，开发者需要在CF一端负责释放对象</li>
-<li><code>(__bridge_transfer T) op：</code>（ CF 转 ObjC 的时候使用）告诉编译器转移 CF 对象的所有权，开发者不再需要在CF一端负责释放对象</li>
-</ul>
-<h2 id="参考">参考</h2><p><a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">Concepts in Objective-C Programming</a><br><a href="https://developer.apple.com/library/ios/documentation/corefoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/TP40010677" target="_blank" rel="external">Core Foundation Design Concepts</a><br><a href="https://mikeash.com/pyblog/friday-qa-2010-01-22-toll-free-bridging-internals.html" target="_blank" rel="external">Toll Free Bridging Internals</a><br><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#bridged-casts" target="_blank" rel="external">Clang documentation: Objective-C Automatic Reference Counting (ARC)</a></p>
-
+<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-Toll-Free-Bridging/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -880,184 +1027,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
-                C programe memory management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Memory/">Memory</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/C-programe-memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
-<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
-<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
-                iOS application framework -- network layer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
-<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
-<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
-<p>这篇文章就主要会讲这些方面：</p>
-<ul>
-<li>网络层跟业务对接部分的设计</li>
-<li>网络层的安全机制实现</li>
-<li>网络层的优化方案</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </div>
 
 
@@ -1091,7 +1065,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-count">162</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1105,7 +1079,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

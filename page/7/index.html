@@ -148,6 +148,187 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/30/Dispatch-semaphore/">
+                Dispatch_semaphore
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/Dispatch-semaphore/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-semaphore/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><img src="/images/DispatchSemaphore.jpg" alt=""></p>
+<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
+<h3 id="functions">functions</h3><ul>
+<li>dispatch_semaphore_create</li>
+<li>dispatch_semaphore_wait (减少一个信号量)</li>
+<li>dispatch_semaphore_signal (增加一个信号量)</li>
+</ul>
+<h3 id="实例">实例</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)test4&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">3</span>;</span><br><span class="line">    __block <span class="keyword">int</span> mainData = <span class="number">0</span>;</span><br><span class="line">    __block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</span><br><span class="line">    __block dispatch_semaphore_t sem = dispatch_semaphore_create(<span class="number">2</span>);</span><br><span class="line">    dispatch_queue_t ioQueue = dispatch_queue_create(<span class="string">"com.dreamingwish.imagegcd.io"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue = dispatch_queue_create(<span class="string">"StudyBlocks"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_group_t <span class="keyword">group</span> = dispatch_group_create();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt;<span class="number">100</span>; i++) &#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);  <span class="comment">// -1 非零即通过</span></span><br><span class="line">            dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line"><span class="comment">//                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">                dispatch_group_async(<span class="keyword">group</span>, queue, ^&#123;</span><br><span class="line">                    <span class="keyword">sum</span> += data;</span><br><span class="line">                    </span><br><span class="line">                    __block <span class="keyword">int</span> nsum = <span class="keyword">sum</span>;</span><br><span class="line">                    dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line">                        NSLog(@<span class="string">" &gt;&gt; Sum: %d"</span>, nsum);</span><br><span class="line">                        </span><br><span class="line">                        dispatch_semaphore_signal(sem);  <span class="comment">// +1</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                    </span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dispatch_group_wait(<span class="keyword">group</span>, DISPATCH_TIME_FOREVER);</span><br><span class="line"><span class="comment">//    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>; j&lt;<span class="number">5</span>; j++) &#123;</span><br><span class="line">        mainData++;</span><br><span class="line">        NSLog(@<span class="string">" &gt;&gt; MainData: %d"</span>, mainData);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    dispatch_semaphore_signal(sem);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/Dispatch-semaphore/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/30/DispatchOnce/">
+                DispatchOnce
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/DispatchOnce/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/DispatchOnce/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><img src="/images/DispatchOnce.jpg" alt=""></p>
+<h2 id="Dispatch_Once">Dispatch_Once</h2><p>四种场景如上图</p>
+<ol>
+<li>第一次执行，<code>block调用</code>，调用结束后需要置标记变量</li>
+<li>非第一次执行，而此时#1<code>block调用</code>尚未完成(预执行拿到的 obj 为 nil, 此时需要废弃此次预执行)，线程需进入等待#1状态</li>
+<li>非第一次执行，而此时#1<code>block调用</code>已经完成(预执行拿到的 obj 已经初始化完毕)此时线程的预执行是正确的, 之后可能继续执行,也可能由于时间问题,废弃此次预执行进入等待</li>
+<li>非第一次执行，而此时#1已经完成，线程预执行后, 直接跳过block而进行后续任务</li>
+</ol>
+<p>Dispatch_Once 保证了当第一个线程在进行alloc 对象时，有其他线程发起, 会废弃此线程的预执行，进入等待。在第一个线程结束时，将正在等待的线程唤醒。而实现这一机制的方法是在生成对象和变更identifier之间加入一个大于预执行时间的等待来实现的。</p>
+<h3 id="Dispatch_Once实现用到的技术">Dispatch_Once实现用到的技术</h3><ul>
+<li>原子操作 “原子比较交换函数” __sync_bool_compare_and_swap</li>
+<li>cpuid指令 实现大于预执行时间的延迟等待</li>
+<li>dispatch_thread_semaphore 来实现线程之间的等待和唤醒
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/DispatchOnce/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/30/UITableView-Cancel-Request/">
                 UITableView Cancel Request
               </a>
@@ -823,185 +1004,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/15/ios-gcd/">
-                ios gcd
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/15/ios-gcd/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-gcd/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="GCD">GCD</h2><h3 id="befor_GCD">befor GCD</h3><h4 id="object_method">object method</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorInBackground:</span> <span class="string">withObject:</span></span><br><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorOnMainThread:</span> <span class="string">withObject:</span> <span class="string">waitUntilDone:</span></span><br></pre></td></tr></table></figure>
-<h3 id="多线程面临的问题">多线程面临的问题</h3><ol>
-<li>race condition</li>
-<li>dead lock</li>
-<li>too much threads consumes two much memory</li>
-</ol>
-<h4 id="多线程的意义">多线程的意义</h4><p>高交互性， 界面编程中，将耗时的操作放入到其他线程执行，避免影响到主线程界面响应</p>
-<h3 id="GCD_基础">GCD 基础</h3><h4 id="Dispatch_Queue_派发队列">Dispatch Queue 派发队列</h4><ol>
-<li>serial dispath queue  顺序派发队列</li>
-<li>concurrent dispath queue  并发派发队列</li>
-</ol>
-<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/15/ios-gcd/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/15/ios-block/">
-                ios block
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/15/ios-block/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-block/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
-<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/15/ios-block/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/8/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/8/">&raquo;</a>
   </div>
 
 
@@ -1035,7 +1042,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-count">162</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1049,7 +1056,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

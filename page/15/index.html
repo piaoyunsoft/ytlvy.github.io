@@ -148,6 +148,172 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/duan-dian-xu-chuan/">
+                断点续传
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/duan-dian-xu-chuan/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/duan-dian-xu-chuan/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <pre><code>[request <span class="string">addValue:</span>@<span class="string">"bytes=500-"</span> <span class="string">forHTTPHeaderField:</span>@<span class="string">"Range"</span>];
+_fileHandle = [NSFileHandle <span class="string">fileHandleForWritingAtPath:</span>_tempFilePath];
+_fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number">0</span>;
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-muti-thread/">
+                ios 多线程
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-muti-thread/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-muti-thread/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="dispatch_queue_create">dispatch_queue_create</h4><pre><code>dispatch_queue_create生成的queue需要手动内存管理
+dispatch_release
+dispatch_retain
+dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create( <span class="string">"com.example.gcd.MyConcurrentDispatchQueue"</span>, DISPATCH_QUEUE_CONCURRENT);
+dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="string">"com.example.gcd.MySerialDispatchQueue"</span>, NULL);
+<span class="keyword">global</span> dispatch queues. They are concurrent dispatch queues <span class="keyword">that</span> are usable anywhere <span class="keyword">in</span> <span class="keyword">the</span> <span class="type">application</span>
+</code></pre>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-muti-thread/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios-shake/">
                 ios手势 摇一摇
               </a>
@@ -748,154 +914,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-directory/">
-                MAC 目录结构
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-directory/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-directory/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/  : <span class="keyword">this</span> is root directory</span><br><span class="line">/<span class="string">bin :</span> commands <span class="keyword">in</span> <span class="keyword">this</span> dir are all system installed user commands</span><br><span class="line">/<span class="string">sbin:</span>  commands <span class="keyword">in</span> <span class="keyword">this</span> dir are all system installed <span class="keyword">super</span> user commands</span><br><span class="line"><span class="regexp">/usr/</span><span class="string">bin:</span> user commands <span class="keyword">for</span> applications</span><br><span class="line"><span class="regexp">/usr/</span><span class="string">sbin:</span> <span class="keyword">super</span> user commands <span class="keyword">for</span> applications</span><br><span class="line"><span class="regexp">/usr/</span>local/<span class="string">bin :</span> application user commands</span><br><span class="line"><span class="regexp">/usr/</span>local/<span class="string">sbin:</span> application <span class="keyword">super</span> user commands</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-programe-install-directory/">
-                MAC程序安装位置
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/MAC/">MAC</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-programe-install-directory/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-programe-install-directory/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local/bin</span><br><span class="line"></span><br><span class="line"><span class="comment">//homebrew</span></span><br><span class="line"><span class="regexp">/usr/</span>local/Cellar</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
   </div>
 
 
@@ -929,7 +952,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-count">162</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -943,7 +966,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

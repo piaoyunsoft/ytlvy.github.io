@@ -148,6 +148,179 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
+                C programe memory management
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Memory/">Memory</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/C-programe-memory-management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
+<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
+<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
+                iOS application framework -- network layer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Framework/">Framework</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
+<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
+<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
+<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
+<p>这篇文章就主要会讲这些方面：</p>
+<ul>
+<li>网络层跟业务对接部分的设计</li>
+<li>网络层的安全机制实现</li>
+<li>网络层的优化方案</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/04/iOS-application-framework-view-layer/">
                 iOS application framework -- view layer
               </a>
@@ -833,195 +1006,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/iOS-ARC-Practices/">
-                iOS ARC Practices
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-ARC-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-ARC-Practices/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://amattn.com/p/arc_best_practices.html">转自</a></p>
-<h2 id="ARC_最佳实践">ARC 最佳实践</h2><h3 id="General">General</h3><p>1) 数值变量应该使用 assign：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> scalarInt;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> scalarFloat;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGPoint</span> scalarStruct;</span><br></pre></td></tr></table></figure></p>
-<p>2) 在层次结构上属于下一级的对象应该使用 strong ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">id</span> childObject;</span><br></pre></td></tr></table></figure></p>
-<p>3) 在层次结构上属于上一级的对象应该使用 weak ，另外，当出现循环引用的时候也应该使用 weak ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> parentObject;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSObject</span> &lt;SomeDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure></p>
-<p>4) 闭包应该使用 copy ：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) SomeBlockType someBlock;</span><br></pre></td></tr></table></figure>
-<p>5) 在 dealloc 里：</p>
-<ul>
-<li>从观察者中移除 (remove observers)</li>
-<li>取消订阅通知 (unregister for notifications)</li>
-<li>设置非 weak 的委托为 nil (set any non-weak delegates to nil)</li>
-<li>关闭所有的计时器 (invalidate any timers)</li>
-</ul>
-<p>6) 所有的 IBOutlet 都应该是 weak 的。除非顶层的 IBOutlet 应该是 strong 的，比如 UIViewController 的 View 是需要直接拥有的，所以应该设置成 strong </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-ARC-Practices/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/">
-                iOS9 NSAppTransportSecurity Bypass
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS9-NSAppTransportSecurity-Bypass/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Configuring_App_Transport_Security_Exceptions_in_iOS_9_and_OSX_10-11">Configuring App Transport Security Exceptions in iOS 9 and OSX 10.11</h2><h3 id="What_is_App_Transport_Security_(ATS)?">What is App Transport Security (ATS)?</h3><p>At WWDC 2015, Apple announced “App Transport Security” for iOS 9 and OSX 10.11 El Capitan. The <a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-SW1">“What’s New in iOS”</a> guide for iOS 9 explains:</p>
-<blockquote>
-<p>App Transport Security (ATS) lets an app add a declaration to its Info.plist file that specifies the domains with which it needs secure communication. ATS prevents accidental disclosure, provides secure default behavior, and is easy to adopt. You should adopt ATS as soon as possible, regardless of whether you’re creating a new app or updating an existing one.<br>If you’re developing a new app, you should use HTTPS exclusively. If you have an existing app, you should use HTTPS as much as you can right now, and create a plan for migrating the rest of your app as soon as possible.</p>
-</blockquote>
-<p>In simple terms, this means that if your application attempts to connect to any HTTP server (in this example, yourserver.com) that doesn’t support the latest SSL technology (TLSv1.2), your connections will fail with an error like this:<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CFNetwork SSLHandshake failed (-<span class="number">9801</span>)</span><br><span class="line">Error <span class="variable">Domain=</span>NSURLErrorDomain <span class="variable">Code=</span>-<span class="number">1200</span> <span class="string">"An SSL error has occurred and a secure connection to the server cannot be made."</span> <span class="variable">UserInfo=</span><span class="number">0</span>x7fb080442170 &#123;<span class="variable">NSURLErrorFailingURLPeerTrustErrorKey=</span>&lt;SecTrustRef: <span class="number">0</span>x7fb08043b380&gt;, <span class="variable">NSLocalizedRecoverySuggestion=</span>Would you like to connect to the server anyway?, <span class="variable">_kCFStreamErrorCodeKey=</span>-<span class="number">9802</span>, <span class="variable">NSUnderlyingError=</span><span class="number">0</span>x7fb08055bc00 <span class="string">"The operation couldn’t be completed. (kCFErrorDomainCFNetwork error -1200.)"</span>, <span class="variable">NSLocalizedDescription=</span>An SSL error has occurred <span class="constant">and</span> a secure connection to the server cannot be made., <span class="variable">NSErrorFailingURLKey=</span>https://yourserver.com, <span class="variable">NSErrorFailingURLStringKey=</span>https://yourserver.com, <span class="variable">_kCFStreamErrorDomainKey=</span><span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Curiously, you’ll notice that the connection attempts to change the http protocol to https to protect against mistakes in your code where you may have accidentally misconfigured the URL. In some cases, this might actually work, but it’s also confusing.</p>
-<h3 id="WARNING:_ATS_is_good_for_you_and_your_users_and_you_shouldn’t_disable_it!"><strong>WARNING: ATS is good for you and your users and you shouldn’t disable it!</strong></h3><p>The reason why Apple is pushing so aggressively to force secure connections is because it’s the right thing to do. Protecting personal data from being compromised over insecure wireless connections, among other things, is great for users. Just because these exceptions exist doesn’t mean you should actually use them.</p>
-<p>If your application is connecting to third party APIs that you can’t control (such as in my case, where my application Routesy connects to public transit APIs that don’t yet support SSL) or serving as a means to load syndicated content (a browser or a news reader, for instance), these techniques might be useful to you.</p>
-<p>The bottom line is, if you run your own API server, FIX YOUR SSL. Thanks to Dave DeLong for reminding me that I should clarify that disabling ATS is a bad idea.</p>
-<p>That being said…<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
   </div>
 
 
@@ -1055,7 +1044,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-count">162</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1069,7 +1058,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

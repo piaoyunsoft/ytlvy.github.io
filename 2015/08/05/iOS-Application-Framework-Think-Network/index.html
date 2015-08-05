@@ -1,0 +1,678 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Framework," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Application Framework Think - Network // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Application Framework Think - Network
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/" target="_blank" rel="external">reference</a></p>
+<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
+<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
+<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
+<ol>
+<li>无法cancel这个请求</li>
+<li>占用了完整的一个线程</li>
+</ol>
+<a id="more"></a>
+<h4 id="可以cancel">可以cancel</h4><p>请求可以cancel的需求的重要性不用说了吧，别说你没用过。使用NSOperation可以让你方便的设计cancel一个请求的方法。</p>
+<h4 id="线程">线程</h4><p>说道线程可能很多人对发送请求的时候线程有个很大的误解： 每个请求占用一个线程。其实不是的，无论同时并发多少个请求，AFNetworking和ASI都是只有一个线程在等待的。不信请看AFNetworking的实现：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">void</span>)networkRequestThreadEntryPoint:(<span class="keyword">id</span> __unused)object &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [[<span class="built_in">NSThread</span> currentThread] setName:<span class="string">@"AFNetworking"</span>];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSRunLoop</span> *runLoop = [<span class="built_in">NSRunLoop</span> currentRunLoop];</span><br><span class="line">        [runLoop addPort:[<span class="built_in">NSMachPort</span> port] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</span><br><span class="line">        [runLoop run];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">NSThread</span> *)networkRequestThread &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSThread</span> *_networkRequestThread = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> oncePredicate;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;oncePredicate, ^&#123;</span><br><span class="line">        _networkRequestThread = [[<span class="built_in">NSThread</span> alloc] initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(networkRequestThreadEntryPoint:) object:<span class="literal">nil</span>];</span><br><span class="line">        [_networkRequestThread start];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _networkRequestThread;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)start &#123;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.lock</span> lock];</span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> isReady]) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.state</span> = AFOperationExecutingState;</span><br><span class="line"></span><br><span class="line">        [<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(operationDidStart) onThread:[[<span class="keyword">self</span> class] networkRequestThread] withObject:<span class="literal">nil</span> waitUntilDone:<span class="literal">NO</span> modes:[<span class="keyword">self</span><span class="variable">.runLoopModes</span> allObjects]];</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.lock</span> unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码中我们可以看到，<code>AFNetworking</code>在等待请求时其实只有个一个Thread, 然后在这个Thread上启动一个runLoop监听 <code>NSURLConnection</code> 的 <code>NSMachPort</code> 类型源。 <code>start</code>里面直接就跳到这个线程去执行了， 在加入<code>NSOperationQueue</code>时，顶多<code>start</code>方法执行的时候占用一个线程，然后真正的发送请求和等待都是在这个<code>networkRequestThread</code>里面进行的。</p>
+<blockquote>
+<p>补充一下，上面的描述可能引起误会，已经有人问我这个疑问了。注意， 上面讲的networkRequestThread 并不是最终访问网络并拉取数据的线程。真正的下载数据是NSURLConnection统一调度的，networkRequestThread 只是启用了一个runLoop来监听NSURLConnection的回调事件。</p>
+</blockquote>
+<p>了解上面两点后我们再看前面的例子，就会发现问题有多致命了。</p>
+<blockquote>
+<p>如果同时并发了很多个请求，那就是实实在在的占用了n个线程了，而且请求不能cancel，对于这些被占用掉得大量资源就束手无策了。</p>
+</blockquote>
+<h4 id="并发数量限制">并发数量限制</h4><p>如果用<code>NSOperationQueue</code>来说明，就是<code>maxConcurrentOperationCount</code>, 最大并发数量。<br>可能有人指出了, 刚才不是讲请求都是在一个线程等待的吗，那并发数量岂不是没有太大意义？ NO, 并发数量还是有重要的意义的，它的主要意义就是<strong><em>控制连接数</em></strong>。&gt; 这里多谢 CasaTaloyum 同学的勘误，我原本不知道2G, 3G, 等网络协议的限制。</p>
+<p>2G网络下一次只能维持一个链接，3G是2个，4G和wifi是不限。这个是对应协议的限制。如果超过这个限制发出的请求，就会报超时。<br>除掉这个连接数的影响外，还有次要的影响就是带宽，下载数据是要流量的，如果同时并发了太多请求，每个连接都占用带宽，可能导致每个请求的时间均会延长，就好像你在迅雷同时下载10个文件，那么下载速度都慢了。不过考虑到现在的网速，这个场景一般都比较极限，在做一些特殊场景优化的时候或许可以考虑到。</p>
+<p>当然<code>maxConcurrentOperationCount</code>也不能设置太小，太小了的话，如果个别的请求太慢，导致后面的任务就启动不起来了。<br>并发数量的考虑应该从上面两个点出发，因此如果有人再扯到线程上去，只能说走远了。</p>
+<h4 id="pause_&amp;_dependency">pause &amp; dependency</h4><p>可暂停的，可添加依赖的，这些可能不常会用到，但是如果要设计网络层框架还是要考虑的，这也是要用<code>NSOperation</code>的原因之一。</p>
+<blockquote>
+<p>本节内容说出了开源框架在operation的设计上的一些优点，因此也推荐这部分直接使用AFNetworking之类的框架，因为优秀的开源组件总有其优点，他们考虑了很多你甚至都没有意识到的问题，以前有是遇到过一些同学质疑AFNetworking,质疑arc, 质疑SDWebImage, 质疑Masonry等，当然不是说没有缺点，但是这些东西当你真正深入了解学习后我觉得才能做出正确的选择。</p>
+</blockquote>
+<h3 id="安全性">安全性</h3><p>很多IOS客户端开发者不注重安全性，当然也因为IOS系统已经做得很不错的原因，还有安全的主要工作是在后端，比如使用https啊，比如加签啊，那么前段的网络框架设计要注意哪些安全性的问题呢。</p>
+<h4 id="数据加密和防篡改">数据加密和防篡改</h4><p>如无特殊情况，数据加密就推荐用https就够了，好处就不一一列举了，现在各大互联网公司（如BAT）都在做“全站https”. 而且现在免费的SSL证书也非常好申请，几乎不要什么成本了。</p>
+<p>要保证接口参数不被篡改，不会被第三方恶意攻击，就要对参数进行签名。记得以前在某国内知名电商，由于接口没有类似防护，一两个小时被人利用移动端的注册接口注册了80w+账号，惨不忍睹。 而且签名密钥（其实不是密钥，就是个干扰串）不要写死，要动态下发。</p>
+<h4 id="https中间人">https中间人</h4><p>https是非常安全的协议，可以参考我以前的博客RSA加密数字证书里面。但是可能还是会存在中间人攻击的问题，那么就需要打ssl钢钉，AFNetworking中的<code>AFURLConnectionOperationSSLPinningMode</code>就是可以设置ssl钢钉的，原理就是把证书或者公钥 打包到bundle中，发送请求的时候会与请求过来的证书比较，因此避免中间人发放的伪造证书可能。</p>
+<h4 id="DNS防劫持">DNS防劫持</h4><p>进一步的安全策略就可以考虑到DNS防劫持，原理比较简单，可以本地维护一个路由表，然后本地实现 NSURLProtocol 对host进行ip映射。如果你还不太了解NSURLProtocol，可以参考<a href="http://nshipster.cn/nsurlprotocol/" target="_blank" rel="external">NSURLProtocol</a>进行学习</p>
+<h3 id="组件设计">组件设计</h3><p>无论你是用AFNetworking之类的开源组件还是自己封装的方式，一般我们都会封装下中间组件，一来可以降低业务代码和底层组件的耦合，二来方便拓展。那么设计这些组件的时候需要注意哪些呢？</p>
+<h4 id="回调方式">回调方式</h4><p>这部分选择不少，主要是能统一和方便，可能会考虑下面2个问题 1、是选择block回调方式，还是delegate, 还是target-action, 可以根据自己的喜好来设置，也可以兼容多种。 2、success和fail分开回调还是同一个方法回调。</p>
+<h4 id="拦截器">拦截器</h4><p>request的部分可能会有些场景需要请求前和请求后的拦截器的设计， 即AOP入口，在这样的拦截器接口中，我们就可以做一些事情如：</p>
+<ol>
+<li>session过期后自动登录 </li>
+<li>需要登录的接口进入登录</li>
+</ol>
+<h4 id="统一cancel还是单独cancel">统一cancel还是单独cancel</h4><p>在一个页面中发送请求的时候，无疑会碰到一个问题，那就是“页面退出时请求要取消”。<br>我们最开始是如何做的呢，就像内存管理，谁启动，谁cancel, 即是单独cancel. 使用方式类似下面：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> <span class="string">AViewController:</span> UIViewController &#123;</span><br><span class="line">  HTTPRequest *_request;</span><br><span class="line">&#125;</span><br><span class="line"><span class="annotation">@end</span></span><br><span class="line"><span class="annotation">@implementation</span> AViewController</span><br><span class="line">- (<span class="typename">void</span>)dealloc &#123;</span><br><span class="line">  [_request cancel];</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="typename">void</span>)sendRequest &#123;</span><br><span class="line">  [_request cancel];</span><br><span class="line">  _request = [[HTTPRequest alloc] init];</span><br><span class="line">  [HttpClient <span class="string">sendRequest:</span>_request];</span><br><span class="line">&#125;</span><br><span class="line"><span class="annotation">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>然后就觉得每个地方都要在dealloc里面写cancel，很麻烦，于是可能想要做个统一的cancel，类似封装个方法在父类里面调用：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> BaseViewController</span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">  <span class="attr_selector">[HttpClient cancelRequestForDelegate:self]</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>这样的话好像就更方便了，代码量也少了一些，调用的类也不用去管cancel了， 但是这样真的好么，虽然可能让你暂时方便了，但是这样的设计还是不紧凑，其实这个请求是否应该被取消应该是调用者的逻辑，这样就相当于一部分的逻辑放在父类里面，是有点坑的，第一种写法虽然可能麻烦写，但是就像内存管理，谁创建，谁负责销毁，这样的代码可读性和维护性更高些。不然如果遇到特殊的逻辑，可能要去动父类或底层。</p>
+<blockquote>
+<p>说到这里就是建议上面代码中的request对象的封装就是Operation本身，这样其实就不需要再在viewController里面写很多isLoading, isLoaded的状态位了啊，NSOperation自带的。</p>
+</blockquote>
+<h3 id="缓存">缓存</h3><p>说道网络请求，就不能不提网络缓存，数据缓存是提升用户体验不可缺少的重要一环。而对于缓存可以讲的太多了，比如图片缓存可以单独开篇文章来讲了，这里就讲一下关于普通接口数据的缓存。一般我们对于缓存的方式有两种做法，一种是客户端写缓存实现和缓存逻辑，一种是遵循HTTP协议的缓存。</p>
+<h4 id="自己实现缓存逻辑">自己实现缓存逻辑</h4><p>一般需要这种缓存的逻辑无非是考虑下面的需求：</p>
+<blockquote>
+<p>1、接口返回的数据很少变动，不希望做重复请求 2、网络慢或者服务器等异常状况容灾。</p>
+</blockquote>
+<p>自己实现也比较灵活，你可以写个数据库来缓存、也可以直接序列化存文件。但是缺点也比较明显，那就是缓存时间不好定义。</p>
+<p>既然做了缓存，那么就会遇到这个问题，就是数据刷新了之后，缓存不更新怎么办。那么其实在你选择这种缓存实现之前就需要做权衡，是数据实时性重要，还是数据加载速度重要。想好这个问题才能确定是否要这样的缓存。</p>
+<h4 id="HTTP缓存">HTTP缓存</h4><p>这种缓存方案是比较推荐的方案，HTTP协议已经定义了好了一套缓存方案，为什么不用呢。 而且苹果已经帮我们实现好了缓存的代码，NSURLCache，数据缓存在本地sqlite里。不过就是要和服务端同学一块推进。</p>
+<p>可以缓存的接口，可以在返回的 responseHeaders 中添加 cache-control 和 Expires 来告诉前端是否可以缓存和缓存时间等。</p>
+<p>而客户端可以通过设置 cachePolicy 来决定是否使用缓存<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">NSURLRequestCachePolicy</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSURLRequestUseProtocolCachePolicy</span> = <span class="number">0</span>,</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span> = <span class="number">1</span>,</span><br><span class="line">    <span class="built_in">NSURLRequestReloadIgnoringLocalAndRemoteCacheData</span> = <span class="number">4</span>, <span class="comment">// Unimplemented</span></span><br><span class="line">    <span class="built_in">NSURLRequestReloadIgnoringCacheData</span> = <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span>,</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSURLRequestReturnCacheDataElseLoad</span> = <span class="number">2</span>,</span><br><span class="line">    <span class="built_in">NSURLRequestReturnCacheDataDontLoad</span> = <span class="number">3</span>,</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSURLRequestReloadRevalidatingCacheData</span> = <span class="number">5</span>, <span class="comment">// Unimplemented</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>考虑一种场景，你不能确定数据什么时候更新，可能随时刷新，也可能几天才更新，那么我们如何使用缓存呢。<br>可以使用 <code>ETag/If-None-Match</code> 或者 <code>Last-Modified/If-Modified-Since</code>。</p>
+</blockquote>
+<p>两种方式原理差不多，就是在发送请求的 requestHeaders 中加入 <code>If-None-Match</code> 或者 <code>If-Modified-Since</code> 字段，和服务端数据进行比较是否有更新，有更新则返回body，没有的话就在responseHeaders中告知使用缓存。 两者中， ETag是比较hash， Last-Modified是比较最后更改时间。</p>
+<p>ASIHTTPRequest实现了这种模式，如下<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([<span class="keyword">self</span> cachePolicy] &amp; (ASIAskServerIfModifiedWhenStaleCachePolicy|ASIAskServerIfModifiedCachePolicy)) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">NSDictionary</span> *cachedHeaders = [[<span class="keyword">self</span> downloadCache] cachedResponseHeadersForURL:[<span class="keyword">self</span> url]];</span><br><span class="line">  <span class="keyword">if</span> (cachedHeaders) &#123;</span><br><span class="line">      <span class="built_in">NSString</span> *etag = [cachedHeaders objectForKey:<span class="string">@"Etag"</span>];</span><br><span class="line">      <span class="keyword">if</span> (etag) &#123;</span><br><span class="line">          [[<span class="keyword">self</span> requestHeaders] setObject:etag forKey:<span class="string">@"If-None-Match"</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">NSString</span> *lastModified = [cachedHeaders objectForKey:<span class="string">@"Last-Modified"</span>];</span><br><span class="line">      <span class="keyword">if</span> (lastModified) &#123;</span><br><span class="line">          [[<span class="keyword">self</span> requestHeaders] setObject:lastModified forKey:<span class="string">@"If-Modified-Since"</span>];</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="服务器推">服务器推</h3><p>对于很多需要精细化体验的app来说，HTTP协议的模式已经不能够满足需求了， 比如支付宝可以随时随地的推活动。那么就需要服务器推的技术了。</p>
+<h4 id="SPDY_或_HTTP/2">SPDY 或 HTTP/2</h4><p>spdy 和 HTTP2 协议都定义了关于服务端推送的协议，还有一些其他的相对于http的优良特性. 一些大公司应该都做了对于spdy的支持，ios中可以使用twitter开源的CocoaSPDY。 不过Google刚刚宣布了不再支持SPDY，以后都走HTTP/2了。</p>
+<p>关于这些我还没有详细的学习，这里就不多讲了，以后多多学习。</p>
+<h4 id="长连接">长连接</h4><p>一种比较灵活和强大的方法服务器推送的方案就是TCP长连接了，长连接可以让你做很多事情，唯一的难题就是要处理好心跳包。</p>
+<h3 id="其他">其他</h3><h4 id="国际化">国际化</h4><p>在做国际化的时候，需要向服务器提供用户的语言偏好，也就是需要设置 Accept-Language 字段，如下：<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="collection">[request setValue:<span class="collection">[NSString stringWithFormat:@<span class="string">"%@"</span>, <span class="collection">[<span class="collection">[NSLocale preferredLanguages]</span> componentsJoinedByString:@<span class="string">", "</span>]</span>]</span>, forHTTPHeaderField:@<span class="string">"Accept-Language"</span>]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>即使你的服务器还不支持国际化，把这个属性放进去会让你在需要的时候用到，而不必更新客户端。<code>AFNetworking</code>已经实现了改逻辑。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Framework/"> #Framework </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/05/iOS-Best-Practices/">iOS Best Practices</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">162</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS应用架构思考一（网络层）"><span class="nav-number">1.</span> <span class="nav-text">IOS应用架构思考一（网络层）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#requestOperation的设计"><span class="nav-number">1.1.</span> <span class="nav-text">requestOperation的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可以cancel"><span class="nav-number">1.1.1.</span> <span class="nav-text">可以cancel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程"><span class="nav-number">1.1.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发数量限制"><span class="nav-number">1.1.3.</span> <span class="nav-text">并发数量限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pause_&_dependency"><span class="nav-number">1.1.4.</span> <span class="nav-text">pause & dependency</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">1.2.</span> <span class="nav-text">安全性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据加密和防篡改"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据加密和防篡改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#https中间人"><span class="nav-number">1.2.2.</span> <span class="nav-text">https中间人</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS防劫持"><span class="nav-number">1.2.3.</span> <span class="nav-text">DNS防劫持</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件设计"><span class="nav-number">1.3.</span> <span class="nav-text">组件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回调方式"><span class="nav-number">1.3.1.</span> <span class="nav-text">回调方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截器"><span class="nav-number">1.3.2.</span> <span class="nav-text">拦截器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#统一cancel还是单独cancel"><span class="nav-number">1.3.3.</span> <span class="nav-text">统一cancel还是单独cancel</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">1.4.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自己实现缓存逻辑"><span class="nav-number">1.4.1.</span> <span class="nav-text">自己实现缓存逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP缓存"><span class="nav-number">1.4.2.</span> <span class="nav-text">HTTP缓存</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器推"><span class="nav-number">1.5.</span> <span class="nav-text">服务器推</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SPDY_或_HTTP/2"><span class="nav-number">1.5.1.</span> <span class="nav-text">SPDY 或 HTTP/2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#长连接"><span class="nav-number">1.5.2.</span> <span class="nav-text">长连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#国际化"><span class="nav-number">1.6.1.</span> <span class="nav-text">国际化</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/05/iOS-Application-Framework-Think-Network/';
+      var disqus_title = 'iOS Application Framework Think - Network';
+      var disqus_url = 'http://ytlvy.com/2015/08/05/iOS-Application-Framework-Think-Network/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
