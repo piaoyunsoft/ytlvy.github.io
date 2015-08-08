@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
-                C programe memory management
+              <a class="post-title-link" href="/2015/08/08/Swift-Reactive/">
+                Swift Reactive
               </a>
             
           
@@ -158,777 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Memory/">Memory</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/C-programe-memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
-<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
-<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
-                iOS application framework -- network layer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
-<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
-<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
-<p>这篇文章就主要会讲这些方面：</p>
-<ul>
-<li>网络层跟业务对接部分的设计</li>
-<li>网络层的安全机制实现</li>
-<li>网络层的优化方案</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-view-layer/">
-                iOS application framework -- view layer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-view-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-view-layer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_view层的组织和调用方案">iOS应用架构谈 view层的组织和调用方案</h2><h3 id="前言">前言</h3><p>《iOS应用架构谈 开篇》出来之后，很多人来催我赶紧出第二篇。这一篇文章出得相当艰难，因为公司里的破事儿特别多，我自己又有点私事儿，以至于能用来写博客的时间不够充分。</p>
-<p>现在好啦，第二篇出来了。</p>
-<hr>
-<p>当我们开始设计View层的架构时，往往是这个App还没有开始开发，或者这个App已经发过几个版本了，然后此时需要做非常彻底的重构。</p>
-<p>一般也就是这两种时机会去做View层架构，基于这个时机的特殊性，我们在这时候必须清楚认识到：View层的架构一旦实现或定型，在App发版后可修改的余地就已经非常之小了。因为它跟业务关联最为紧密，所以哪怕稍微动一点点，它所引发的蝴蝶效应都不见得是业务方能够hold住的。这样的情况，就要求我们在实现这个架构时，代码必须得改得勤快，不能偷懒。也必须抱着充分的自我怀疑态度，做决策时要拿捏好尺度。</p>
-<hr>
-<p>View层的架构非常之重要，在我看来，这部分架构是这系列文章涉及4个方面最重要的一部分，没有之一。为什么这么说？</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-view-layer/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-first/">
-                iOS application framework -- first
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-first/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-first/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html">reference</a></p>
-<h2 id="iOS应用架构谈_开篇">iOS应用架构谈 开篇</h2><h3 id="缘由">缘由</h3><p>之前安居客iOS app的第二版架构大部分内容是我做的，期间有总结了一些经验。在将近一年之后，前同事zzz在微信朋友圈上发了一个问题：假如问你一个<code>iOS or Android app</code>的架构，你会从哪些方面来说呢？</p>
-<p>当时看到这个问题正好在乘公车回家的路上，闲来无聊就答了一把。在zzz在微信朋友圈上追问了几个问题之后，我觉得有必要开个博客专门来讲讲一些个人见解。</p>
-<p>其实对于iOS客户端应用的架构来说，复杂度不亚于服务端，但侧重点和入手点却跟服务端不太一样。比如客户端应用就不需要考虑类似C10K的问题，正常的app就根本不需要考虑。</p>
-<p>这系列文章我会主要专注在iOS应用架构方面，很多方案也是基于iOS技术栈的特点而建立的。因为我个人不是很喜欢写Java，所以Android这边的我就不太了解了。如果你是Android开发者，你可以侧重看我提出的一些架构思想，毕竟不管做什么，思路是相通的，实现手段不同罢了。</p>
-<h3 id="当我们讨论客户端应用架构的时候，我们在讨论什么？">当我们讨论客户端应用架构的时候，我们在讨论什么？</h3><p>其实市面上大部分应用不外乎就是颠过来倒过去地做以下这些事情：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">|<span class="string"> 调用网络API  </span>|<span class="string"> --&gt; </span>|<span class="string">   展现列表    </span>|<span class="string"> --&gt; </span>|<span class="string">  选择列表    </span>|<span class="string"> --&gt; </span>|<span class="string">   展现单页   </span>|</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">                           ^                                        |<span class="string"></span><br><span class="line">                           </span>|<span class="string">                                        </span>|</span><br><span class="line">                           |<span class="string">                                        </span>|</span><br><span class="line">                           ------------------------------------------</span><br></pre></td></tr></table></figure></p>
-<p>简单来说就是调API，展示页面，然后跳转到别的地方再调API，再展示页面。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-first/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/jump-out-of-OOP-Package/">
-                jump out of OOP -- Package
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/jump-out-of-OOP-Package/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Package/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-san-feng-zhuang.html">reference</a></p>
-<h2 id="跳出面向对象思想(三)_封装">跳出面向对象思想(三) 封装</h2><h3 id="简述">简述</h3><p>我认为”封装”的概念在面向对象思想中是最基础的概念，它实质上是通过将相关的一堆函数和一堆对象放在一起，对外有函数作为操作通道，对内则以变量作为操作原料。只留给外部程序员操作方式，而不暴露具体执行细节。大部分书举的典型例子就是汽车和灯泡的例子：你不需要知道不同车子的发动机原理，只要踩油门就可以跑；你不需要知道你的灯泡是那种灯泡，打开开关就会亮。我们都会很直觉地认为这种做法非常棒，是吧？</p>
-<p>但是有的时候还是会觉得有哪些地方不对劲，使用面向对象语言的时候，我隐约觉得封装也许并没有我们直觉中认为的那么好，也就是说，面向对象其实并没有我们直觉中的那么好，虽然它已经流行了很多很多年。</p>
-<h3 id="1-_将数据结构和函数放在一起是否真的合理？">1. 将数据结构和函数放在一起是否真的合理？</h3><p>函数就是做事情的，它们有输入，有执行逻辑，有输出。 数据结构就是用来表达数据的，要么作为输入，要么作为输出。</p>
-<p>两者本质上是属于完全不同的东西，面向对象思想将他们放到一起，使得函数的作用被限制在某一个区域里，这样做虽然能够很好地将操作归类，但是这种归类方法是根据”作用领域”来归类的，在现实世界中可以，但在程序的世界中，有些不妥。</p>
-<p>不妥的理由有如下几个：</p>
-<blockquote>
-<p>在并行计算时，由于执行部分和数据部分被绑定在一起，这就使得这种方案制约了并行程度。在为了更好地实现并行的时候，业界的工程师们发现了一个新的思路：函数式编程。将函数作为数据来使用，这样就能保证执行的功能在时序上的正确性了。但你不觉得，只要把数据表达和执行部分分开，形成流水线，这不就能够非常方便地将并行数提高了么？</p>
-</blockquote>
-<p>我来举个例子： 在数据和函数没有分开时，程序的执行流程是这样：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="function"><span class="title">function1</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">function2</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">function3</span><span class="params">()</span></span>     最后得到经过处理的A</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/jump-out-of-OOP-Package/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/jump-out-of-OOP-Polymorphic/">
-                jump out of OOP -- Polymorphic
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/jump-out-of-OOP-Polymorphic/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Polymorphic/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-er-duo-tai.html">reference</a></p>
-<h2 id="跳出面向对象思想(二)_多态">跳出面向对象思想(二) 多态</h2><h3 id="简述">简述</h3><p>多态一般都要跟继承结合起来说，其本质是子类通过覆盖或重载（在下文里我会多次用到覆盖或重载，我打算把它简化成覆重，意思到就好，不要太纠结这种名词。）父类的方法，来使得对同一类对象同一方法的调用产生不同的结果。这里需要辨析的地方在：同一类对象指的是继承层级再上一层的对象，更加泛化。</p>
-<p>举个例子：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Animal</span> -&gt; Cat</span><br><span class="line"><span class="keyword">Animal</span> -&gt; Dog</span><br><span class="line"></span><br><span class="line"><span class="keyword">Animal</span>.speak()  // I'm an <span class="keyword">Animal</span></span><br><span class="line">Cat.speak()     // I'm a Cat</span><br><span class="line">Dog.speak()     // I'm a Dog</span><br></pre></td></tr></table></figure></p>
-<p>此处Cat和Dog虽然不是同一种对象，但它们算是同一类对象，因为他们的父类都是Animal。种和类的表达可能不是很对，其实我也不知道谁更大一点，在文章中我打算用这样的符号来表示两者区别：^和^^</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/jump-out-of-OOP-Polymorphic/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/jump-out-of-OOP-Inherit/">
-                jump out of OOP -- Inherit
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/jump-out-of-OOP-Inherit/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Inherit/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-yi-ji-cheng.html">reference</a></p>
-<h2 id="跳出面向对象思想(一)_继承">跳出面向对象思想(一) 继承</h2><h3 id="简述">简述</h3><p>这一系列文章中谈谈面向对象思想的几个部分，并且给出对应的解决方案，这些解决方案有些是用面向过程的思路解决的，有些也还是停留在面向对象中。到最后我会给大家一个比较，然后给出结论。</p>
-<h4 id="上下文规范">上下文规范</h4><p>在进一步地讨论这些概念之前，我需要跟大家达成一个表达上的共识，我会采用下面的语法来表达对象相关的信息<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">所有的大写字母都是类或对象，小写字母表示属性或方法。</span><br><span class="line"></span><br><span class="line"><span class="type">FOO</span>:&#123; isLoading, _data, render<span class="literal">()</span>, _switch<span class="literal">()</span> &#125;   这表示一个<span class="type">FOO</span>对象，isLoading、_data是它的属性，render<span class="literal">()</span>、_switch<span class="literal">()</span>是它的方法，加下划线表示私有。</span><br><span class="line"></span><br><span class="line"><span class="type">A</span> -&gt; <span class="type">B</span>                                          这表示从<span class="type">A</span>派生出了<span class="type">B</span>，<span class="type">A</span>是父类。</span><br><span class="line"></span><br><span class="line"><span class="type">A</span> -&gt; <span class="type">B</span>:&#123; [a, b, c<span class="literal">()</span>, d<span class="literal">()</span>], e, f<span class="literal">()</span> &#125;             <span class="literal">[]</span>里面是父类的东西，e、f<span class="literal">()</span>是派生类的东西</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span> ], e, f<span class="literal">()</span> &#125;                             省略了对父类的描述，用类名<span class="type">A</span>代替，其他同上</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span> ], e, f<span class="literal">()</span>, @c<span class="literal">()</span> &#125;                       省略了对父类的描述，函数前加@表示重载了父类的方法。</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span>,<span class="type">D</span> ], e, f<span class="literal">()</span> &#125;                           多继承，<span class="type">B</span>继承了<span class="type">A</span>和<span class="type">D</span></span><br><span class="line"></span><br><span class="line"><span class="type">B</span>&lt;protocol&gt;                                     符合某个protocol接口的对象。</span><br><span class="line"></span><br><span class="line">&lt;protocol&gt;:&#123;foo<span class="literal">()</span>, bar&#125;                         protocol这个接口中包含foo<span class="literal">()</span>这个方法，bar这个属性。</span><br><span class="line"></span><br><span class="line">foo(<span class="type">A</span>, <span class="built_in">int</span>)                                     foo这个函数，接收<span class="type">A</span>类和<span class="built_in">int</span>类型作为参数。</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/jump-out-of-OOP-Inherit/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/Chun-notes/">
-                Chun notes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/Chun-notes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Chun-notes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.callmewhy.com/2015/05/25/note-about-chun/">转自</a></p>
-<h2 id="Chun_阅读笔记_-_如何做一个图片缓存库">Chun 阅读笔记 - 如何做一个图片缓存库</h2><p><a href="https://github.com/yechunjun/Chun">Chun</a> 是 <a href="http://chun.tips/">叶纯俊</a> 在 Github 上开源的一个图片缓存库，基于 Swift 编写。学习 Swift 有一段时间了，记录一些阅读源码的一些收获。</p>
-<h3 id="代码组织">代码组织</h3><p>Swift 中通过 <code>extension</code> 组织代码会让整个类更加清晰可读，尤其是对于 <code>UITableViewDataSource</code> 和 <code>UITableViewDelegate</code> 这种情况。在 Chun 这个项目中的 Demo 文件就是这样的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span>: <span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span> </span>&#123;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">CGFloat</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Chun-notes/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/iOS-NSTimer-Overflow/">
-                iOS NSTimer Overflow
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-NSTimer-Overflow/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-NSTimer-Overflow/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="NSTimer">NSTimer</h2><h3 id="fire">fire</h3><p>我们先用 NSTimer 来做个简单的计时器，每隔5秒钟在控制台输出 Fire 。比较想当然的做法是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DetailViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSTimer</span> *timer;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DetailViewController</span></span></span><br><span class="line">- (<span class="keyword">IBAction</span>)fireButtonPressed:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    _timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">3.0</span>f</span><br><span class="line">                                              target:<span class="keyword">self</span></span><br><span class="line">                                            selector:<span class="keyword">@selector</span>(timerFire:)</span><br><span class="line">                                            userInfo:<span class="literal">nil</span></span><br><span class="line">                                             repeats:<span class="literal">YES</span>];</span><br><span class="line">    [_timer fire];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)timerFire:(<span class="keyword">id</span>)userinfo &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Fire"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>运行之后确实在控制台每隔3秒钟输出一次 <code>Fire</code> ，然而当我们从这个界面跳转到其他界面的时候却发现：控制台还在源源不断的输出着 Fire 。看来 Timer 并没有停止。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-NSTimer-Overflow/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/Swift-Exception-Handle/">
-                Swift Exception Handle
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-08
         </span>
 
         
@@ -948,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/Swift-Exception-Handle/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Swift-Exception-Handle/"></span>
+            <a href="/2015/08/08/Swift-Reactive/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Reactive/"></span>
             </a>
           </span>
           
@@ -964,27 +194,929 @@
 
       
         
-          <p><a href="http://blog.callmewhy.com/2015/04/20/error-handling-in-swift/">转自</a></p>
-<h2 id="Swift_中的异常处理">Swift 中的异常处理</h2><h3 id="问题">问题</h3><p>在开发过程中，异常处理算是比较常见的问题了。</p>
-<p>举一个比较常见的例子：用户修改注册的邮箱，大概分为以下几个步骤：</p>
+          <h1 id="Swift的响应式编程">Swift的响应式编程</h1><hr>
+<blockquote>
 <ul>
-<li>接收到一个用户的请求：我要修改邮箱地址</li>
-<li>验证一下请求是否合法，将请求进行格式转化</li>
-<li>更新以前的邮箱地址记录</li>
-<li>给新的邮箱地址发送验证邮件</li>
-<li>将结果返回给用户</li>
+<li>原文链接 : <a href="https://medium.com/swift-programming/reactive-swift-3b6050375534">Reactive Swift</a></li>
+<li>原文作者 : <a href="https://medium.com/@vasarhelyia">Agnes Vasarhelyi</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/bboyefiyu">Mr.Simple</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
+<li>状态 :  完成</li>
 </ul>
-<p>上面的步骤如果一切顺利，那代码肯定干净利落，但是人生不如意十有八九，上面的步骤很容易出现问题：</p>
-<ul>
-<li>用户把邮箱地址填成了家庭地址</li>
-<li>用户是个黑客，没登录就发送了更新请求</li>
-<li>发送验证邮件的时候服务器爆炸了，发送邮件失败</li>
-</ul>
-<p>各种异常都会导致这次操作的失败。</p>
-<h3 id="方案一">方案一</h3><p>在传统的处理方案里，一般是遇到异常就往上抛：<br><img src="http://segmentfault.com/img/bVlsK9" alt=""></p>
-<p>这种方案想必大家都不陌生，比如下面这段代码：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSError</span> *err = <span class="keyword">nil</span>;</span><br><span class="line"><span class="type">CGFloat</span> <span class="literal">result</span> = [<span class="type">MathTool</span> divide:<span class="number">2</span>.<span class="number">5</span> by:<span class="number">3</span>.<span class="number">0</span> error:&amp;err];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">"%@"</span>, err)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    [<span class="type">MathTool</span> doSomethingWithResult:<span class="literal">result</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>让我们首先回到Apple刚推出Objective-C的继任者-Swift的时候，那真是一个非比寻常的时刻。<br>Siri还没有开启地狱之门，Prezi还没有支持订阅，那时的朝鲜也还没有hack任何人的email。一种新语言的出现让我个人非常兴奋，尤其是这是一种类型安全的脚本语言。虽然Swift还在快速的发展中，但是我们不必担心它是否已经稳定。当那一刻到来之时，我应该已经知道如何交付整洁的、可测试的代码。还要有非常灵活、流畅的UI？如果你对Objective-C 和 MVC之外的东西感兴趣，那么就请继续读下去吧。</p>
+<h2 id="MVC_与_MVVM">MVC 与 MVVM</h2><p>让我们从零开始，当我们设计一个应用时，你可能会先考虑应用的架构。Cocoa框架以<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html">Model-View-Controller</a> (也称为 MVC)为基础架构，它的结构如下图所示。</p>
+<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*pEvMKHBK9HeAgrYC." alt=""></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Swift-Exception-Handle/#more">
+            <a class="btn" href="/2015/08/08/Swift-Reactive/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/">
+                Swift Access Sub-Controllers from a UINavigationController
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="在Swift开发中通过UINavigationController来访问Sub-Controllers">在Swift开发中通过UINavigationController来访问Sub-Controllers</h1><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">Access Sub-Controllers from a UINavigationController in Swift</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">samw00</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">mrchenhao</a> </li>
+<li>状态 : 完成</li>
+</ul>
+</blockquote>
+<p>通过<code>AppDelegate</code>或者通过<code>prepareForSegue(_:sender:)</code>来访问<code>UINavigationController</code>的第一个子元素的访问顺序总是让我有点纳闷。这篇博文中有几段代码可以帮助你和我迅速的弄清楚如何在我们的Swift应用程序开发中和navigation controllers打交道。</p>
+<h2 id="AppDelegate">AppDelegate</h2><p>每一个iOS应用在其启动加载完成后都会显示一个根视图控制器。假设我们要搭建一个以导航控制器(navigation controller)为主的一个app…,也就是说我们这个app的第一（根）视图控制器是一个UINavigationController。在我们的Storyboard中，我们创建了一个简单的场景，给一个视图控制器添加了些UI控件和一些属性，然后我们将这个视图控制器嵌入在一个导航控制器中。</p>
+<p>但是如果我想在app启动之后再去设置视图控制器中的某些个属性呢？我们要如何才能做到这点呢？</p>
+<p>我一直把我在Storyboard中添加UI要素的第一个场景(first scene)视为“第一视图控制器”。但是，对iOS来说，导航控制器才是实际意义上的第一（根）视图控制器。</p>
+<p>当一个app把导航控制器视为其第一（根）视图器时，我们就需要在视图层级结构中“挖”的更深一点才能访问到我们之前所以为的“第一视图控制器“。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/">
+                Swift Increasing Performance by Reducing Dynamic Dispatch
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="通过减少动态分发来提高Swift的执行效率">通过减少动态分发来提高Swift的执行效率</h2><p>&gt;</p>
+<ul>
+<li>原文链接 : <a href="https://developer.apple.com/swift/blog/?id=27">Increasing Performance by Reducing Dynamic Dispatch</a></li>
+<li>原文作者 : <a href="https://developer.apple.com/swift">Apple官方博文</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+</ul>
+<p>和其他很多编程语言一样，Swift允许一个类重写其父类中声明的方法和属性。这意味着程序在运行时需要先确定要调用的方法和访问的属性是属于哪个类的，确定之后，则会执行间接调用（indirect call）或间接访问（indirect access）。这个运行机制称为<strong>动态分发</strong>（dynamic dispatch）。这个机制能够提高语言的表现力，但其付出的代价是在每次间接调用或间接访问时，会产生一定量的运行时开销（runtime overhead）。在执行敏感代码时，最好能避免产生这样的开销。这篇博客将罗列三种通过消除这动态分发机制来提高程序执行效率的方式：<code>final</code>，<code>private</code>和全模块优化（Whole Module Optimization）。</p>
+<p>Consider the following example:</p>
+<p>先来看看下面这段代码</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParticleModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> point = ( <span class="number">0.0</span>, <span class="number">0.0</span> )</span><br><span class="line">    <span class="keyword">var</span> velocity = <span class="number">100.0</span></span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">updatePoint</span><span class="params">(newPoint: <span class="params">(Double, Double)</span></span></span>, newVelocity: <span class="type">Double</span>) &#123;</span><br><span class="line">        point = newPoint</span><br><span class="line">        velocity = newVelocity</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">update</span><span class="params">(newP: <span class="params">(Double, Double)</span></span></span>, newV: <span class="type">Double</span>) &#123;</span><br><span class="line">        updatePoint(newP, newVelocity: newV)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="type">ParticalModel</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stride(from: <span class="number">0.0</span>, through: <span class="number">360</span>, by: <span class="number">1.0</span>) &#123;</span><br><span class="line">    p.update((i * sin(i), i), newV: i * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/">
+                How To Implement A Circular Image Loader Animation with CAShapeLayer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="使用CAShapeLayer来实现圆形图片加载动画">使用CAShapeLayer来实现圆形图片加载动画</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer">How To Implement A Circular Image Loader Animation with CAShapeLayer</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/rounak">Rounak Jain</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>几个星期之前，Michael Villar在Motion试验中创建一个非常有趣的加载动画。</p>
+<p>下面的GIF图片展示这个加载动画，它将一个圆形进度指示器和圆形渐现动画结合。这个组合的效果有趣，独一无二和有点迷人。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Circle.gif" alt=""></p>
+<p>这个教程将会教你如何使用Swift和Core Animatoin来重新创建这个效果。让我们开始吧！</p>
+<h1 id="基础">基础</h1><p>首先下载这个教程的<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Starter.zip">启动项目</a>，然后编译和运行。过一会之后，你应该看到一个简单的image显示：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/StarterProject.png" alt=""></p>
+<p>这个启动项目已经预先在恰当的位置将views和加载逻辑编写好了。花一分钟来浏览来快速了解这个项目；那里有一个<strong>ViewController</strong>，<strong>ViewController</strong>里有一个命名为<strong>CustomImageView</strong>的<strong>UIImageView</strong>子类, 还有一个<strong>SDWebImage</strong>的方法被调用来加载image。</p>
+<p>你可能注意到当你第一次运行这个app的时候，当image下载时这个app似乎会暂停几秒，然后image会显示在屏幕。当然，此刻没有圆形进度指示器 - 你将会在这个教程中创建它！</p>
+<p>你会在两个步骤中创建这个动画：</p>
+<ol>
+<li><strong>圆形进度</strong>。首先，你会画一个圆形进度指示器，然后根据下载进度来更新它。</li>
+<li><strong>扩展圆形图片</strong>。第二，你会通过扩展的圆形窗口来揭示下载图片。</li>
+</ol>
+<p>紧跟着下面步骤来逐步实现！</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Extensions-Nuances/">
+                Swift Extensions Nuances
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Extensions-Nuances/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Extensions-Nuances/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Swift扩展的三个微妙细节">Swift扩展的三个微妙细节</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/04/22/3-nuances-of-swift-extensions/">3 Nuances of Swift Extensions</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+<li>校对者:  </li>
+<li>状态 :  校对中 </li>
+</ul>
+</blockquote>
+<p>每当我初次翻看某文档时，我都走马观花似的快速阅过，还一边点着头一边喃喃自语说：“好！懂了，就这么回事！”，可是过后当我真正要运用到这些我以为已经理解了的知识点时，却发现实际情况和我想的往往不一样，每当这时我就懵了，心想：“哇哦…怎么回事？这和我想的完全不一样啊！文档里有说这事吗？”。</p>
+<p>最近的几次讨论促使我扪心自问是否真正的理解了Swift中的扩展。我阅读过关于扩展的文档，并且我“认为”我自己对这块内容已经是理解的相当透彻了。可是这几次讨论，加上自己私下通过敲代码的验证，让我发现了我原先不曾注意到几个微妙的细节。</p>
+<p><strong>更新</strong>：这篇文章刚一发表，Swift社区就出手襄助并帮助我弄明白了我最根本的纠结点在哪。为此，我写了另一篇文章“<a href="http://www.andrewcbancroft.com/2015/04/24/clarifying-swift-access-control-hint-swift-isnt-c-sharp/">阐明Swift访问控制</a>”进一步说明我之前的误解。为了避免犯我曾今犯过的错误，我建议大家去读一读。</p>
+<h2 id="三个关于扩展的微妙细节">三个关于扩展的微妙细节</h2><p>对下面列出的三个细节的思考严重挑战了我之前对Swift扩展的理解：</p>
+<ol>
+<li>Swift扩展对它所扩展类型的<strong>visibility</strong>。比如，扩展能访问被<code>private</code>所修饰的内容吗?</li>
+<li>定义扩展的位置是否对扩展的<strong>visibility</strong>有影响。比如我这有一个类型我想写个扩展，把扩展写在同一个源文件里和把扩展写在另一个文件里有什么区别吗？</li>
+<li>扩展里“成员”的默认访问修饰符以及是否给他们添加修饰对这个扩展作为一个类型的公共接口的影响。</li>
+</ol>
+<p>在我开始之前，假设我有一个公共结构体<code>Person</code>。这个结构体有一些私有属性，<code>name</code>，<code>gender</code>，和<code>age</code>。用一个枚举把<code>Gender</code>封装了一下。这个结构体看起来如下：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Extensions-Nuances/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-What’s-New-in-Swift-2/">
+                iOS What’s New in Swift 2
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-What’s-New-in-Swift-2/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Swift_2_有哪些新特性">Swift 2 有哪些新特性</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/108522/whats-new-in-swift-2">What’s New in Swift 2</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/gregheo">Greg Heo</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>在WWDC我们发现Swift团队没有浪费时间在无谓的地方，而是致力于改善Swift 2。</p>
+<p>我们将会为你编写和录制很多关于Swift 2的教程，但在此期间我想强调Swift最令人兴奋的改变，为你可以在秋天迁移到Swift 2做准备。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/06/swift-new.jpg" alt=""></p>
+<h1 id="错误处理">错误处理</h1><p>正如Ray在<a href="http://www.raywenderlich.com/108379/wwdc-2015-initial-impressions">WWDC 2015 Initial Impressions</a>文章中提及，错误处理已经在Swift 2改进了。我们已经迁移到新的系统就像异常处理，而不是<strong>NSError</strong>对象和双指针。</p>
+<p>你可能对以下代码比较熟悉：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> drinkWithError(<span class="constant">nil</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般在Cocoa，你传入一个<strong>NSError</strong>对象的引用(一个<strong>inout</strong>参数在Swift)，然后方法会赋值给错误变量。但问题是你可以传入一个nil到这里来完全忽略这个错误；或者，你可以传入<strong>NSError</strong>但从不检查它。</p>
+<p>Swift 2 为错误检查添加额外保护层。你可以使用<strong>throws</strong>关键字来指定那个函数和方法能够抛出一个错误。然后当你调用某样东西时，可以用<strong>do</strong>, <strong>try</strong>和<strong>catch</strong>多个关键字来捕捉和处理错误。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DrinkError</span>: <span class="title">ErrorType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">NoBeerRemainingError</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">drinkWithError</span><span class="params">()</span></span> throws &#123;</span><br><span class="line">  <span class="keyword">if</span> beer.isAvailable() &#123;</span><br><span class="line">    <span class="comment">// party!</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    throw <span class="type">DrinkError</span>.<span class="type">NoBeerRemainingError</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">tryToDrink</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    try drinkWithError()</span><br><span class="line">  &#125; catch &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有几样东西需要强调的：</p>
+<ol>
+<li>为了创建一个错误可以抛出，只是创建一个继承<strong>ErrorType</strong>的<strong>enum</strong>。</li>
+<li>你需要使用<strong>throws</strong>关键字来标志任何函数可以抛出一个错误。</li>
+<li>这里抛出一个错误，它将会在section 4中被捕捉。</li>
+<li>你在一个<strong>do</strong>块中包含任何可以抛出一个错误的代码，而不是其他语言类似的<strong>try</strong>块中。然后，你添加一个<strong>try</strong>关键字到函数被调用的前面，而且这个函数能够抛出一个错误。</li>
+</ol>
+<p>新语法是非常简洁和易读。任何API当前使用<strong>NSError</strong>以后都会使用这种错误处理方式。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/06/throw-all-the-things-415x320.jpg" alt=""></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-What’s-New-in-Swift-2/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/swift-Core-Image-Tutorial/">
+                swift Core Image Tutorial
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/swift-Core-Image-Tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/swift-Core-Image-Tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Core_Image入门教程(swift)">Core Image入门教程(swift)</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">Core Image Tutorial: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/nicklockwood">Nick Lockwood</a></li>
+<li>译文出自 :<a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>Core Image是一个强大的框架，它能够让你轻松地对图像进行过滤。你能够通过修改图像的饱和度、色调或曝光率来获取各种特效。你也可以使用CPU或GPU更快地来处理图像数据，快到能够实时处理视频帧数据(video frame)。</p>
+<p>Core Image过滤器能够以链式的方式结合将多个特效应用到一个图像或视频帧数据。多个过滤器能够组合成单个过滤器应用在一个图像。通过每次与每个过滤器比较，这使它非常有效地处理图像。</p>
+<p>在这个教程中，你将会亲手实践如何使用Core Image.通过使用几个不同的过滤器，你会看到实时使用各种炫酷的特效是多么容易。</p>
+<h1 id="基础">基础</h1><p>在你开始之前，让我们先讨论在Core Image框架中几个很重要的类：</p>
+<ul>
+<li><strong>CIContext</strong>. 所有处理core image的工作都在CIContext完成。这个与Core Graphics或OpenGL context有几分相似。</li>
+<li><strong>CIImage</strong>. 这个类保存图像数据，它能够从UIImage，图像文件或像素数据等方式来创建。</li>
+<li><strong>CIFilter</strong>. CIFilter类有一个字典(dictionary)来定义特定属性的过滤器，比如常用过滤器有饱和度，颜色翻转，裁剪等属性，还有很多没列出来。</li>
+</ul>
+<h3 id="CoreImageFun">CoreImageFun</h3><p>打开Xcode并使用<strong>iOS \ Application \ Single View Application</strong>模板来创建一个新工程。输入<strong>CoreImageFun</strong>作为Product Name，选择iPhone为Devices option和确定使用<strong>swift</strong>作为编程语言。</p>
+<p>下载<a href="http://cdn5.raywenderlich.com/downloads/CIResources.zip">教程的资源</a>，并添加图片<strong>image.png</strong>到工程</p>
+<p>下一步，打开<strong>Main.storyboard</strong>你文件，拖拽一个image view到已存在的view，image view作为view的子视图。在Attributes Inspector中，设置image view的content mode属性为Aspect Fit，这样它就不会拉伸图片。</p>
+<p>下一步，确定Document Outline(在Interface Builder里canvas左边)是可见的 - 你可以从menu中<strong>Editor \ Show Document Outline</strong>来启用。</p>
+<p>按着control键从image view拖动到它的superview三次来添加三个约束(constraint)：</p>
+<ol>
+<li>添加一个Top Space to Layout Guide的约束，如果有必要的话，使用Size Inspector来设置约束的constant为0 </li>
+<li>添加一个Center Horizontally in Container的约束(同样也需要设置constant为0)</li>
+<li>添加一个Equal Width约束</li>
+</ol>
+<p>最后，为了约束image view的高度，按着control键从image view拖动到本身，然后添加一个Aspect Ratio约束，使用Size Inspector来设置它的multiplier的值为8:5对应宽高比和constant factor为0。最后，选择<strong>Editor \ Resolve Auto Layout Issues \ All Views in View Controller \ Update Frames</strong>，那么Interface Builder会根据这些约束来更新布局</p>
+<p>下一步，打开Assistant Editor，然后确保它显示<strong>ViewController.swift</strong>。按着control键从UIImageView拖动到刚刚打开的<strong>ViewController</strong>类的大括号。命名outlet为<strong>imageView</strong>，然后点击connect。</p>
+<p>编译和运行这个项目来确保目前进展顺利 - 你应该看到一个空屏。初始化设置完成，现在进入Core Image的世界。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/swift-Core-Image-Tutorial/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-Continuous-Integration-Deployment/">
+                iOS Continuous Integration & Deployment
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Continuous-Integration-Deployment/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS项目的持续集成与管理">iOS项目的持续集成与管理</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ribot-labs/continuous-integration-deployment-for-ios-projects-7358b72ca2e9">Continuous Integration &amp; Deployment for iOS Projects</a></li>
+<li>原文作者 : <a href="https://medium.com/@matto1990">Matt Oakes</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完 </li>
+</ul>
+</blockquote>
+<p>当实现新功能时，如果忽略可维护性而引入<a href="http://en.wikipedia.org/wiki/Technical_debt">技术债务</a>，那将会需要延迟解决它或导致增加维护成本。</p>
+<p>最近我们已经思考通过哪些方式来提高代码的质量：</p>
+<ul>
+<li>当代码的质量下降时，通过设置一些工具来马上提醒开发者</li>
+<li>文档化一些编码规范和思考在过去的几个项目中如何避免维护性差的问题</li>
+</ul>
+<p><strong>我将会简单地概括我们需要设置什么才能自动监控代码质量.</strong></p>
+<h1 id="基础">基础</h1><p>我们选择一个持续集成工具<a href="https://jenkins-ci.org/">Jenkins</a>，让它运行在一台放在我们工作室的Mac Mini。其实我不怎么喜欢Jenkins，但到目前为止，它是最稳定和最适合的工具来完成这些工作。</p>
+<p>我们已经通过<a href="https://brew.sh/">Homebrew</a>和<a href="https://github.com/sstephenson/rbenv">rbenv</a>来分别安装Jenkins和Ruby，而rbenv能够为我们提供一个最新和稳定的<a href="https://rubygems.org/">Ruby Gems</a>环境。有个Homebrew和Ruby Gems两个包管理工具之后，我们就几乎能够安装所有我们需要的工具，但很少会破坏与原有OS X系统更新提供的Ruby。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-Continuous-Integration-Deployment/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
+                iOS UITableviewCell Swipeable
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
+</ul>
+</blockquote>
+<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
+<p>首先，让我们来看一下现有的解决方法。</p>
+<ul>
+<li>UITableViewRowAction (new in iOS 8)</li>
+</ul>
+<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
+<ul>
+<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
+</ul>
+<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
+<ul>
+<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
+</ul>
+<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-Background-Modes-Tutorial/">
+                iOS Background Modes Tutorial
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-Background-Modes-Tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Background-Modes-Tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="iOS后台模式开发指南">iOS后台模式开发指南</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/92428/background-modes-ios-swift-tutorial">Background Modes Tutorial: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/rayfix"> Ray Fix </a></li>
+<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
+<li>校对者:David Hu</li>
+<li>状态 :  已完成</li>
+</ul>
+</blockquote>
+<p>更新说明:这个教程被Ray Fix更新为关于iOS和Swift的.原著作者为<a href="http://www.raywenderlich.com/29948/backgrounding-for-ios">Gustavo Ambrozio</a>.</p>
+<p>自从古老的iOS4以来,当用户点击home建的时候,你可以使你的APP们在内存中处于suspended(挂起)状态.即使APP仍停留在内存中,它的所有操作是被暂停的直到用户再次运行它.</p>
+<p>当然这个规则中有例外情况.在特定的情况下,这个APP仍然可以在后台中执行某些操作.这个教程会教你在什么时候怎么去用最常用的一些后台操作.</p>
+<p>每一次iOS的发布都会在后台操作和细节上的放宽限制，以此提升用户体验和延长电池寿命.对于在iOS中实现”真正”的多任务来说,后台模式不是一个神奇的解决办法.当用户切换到其他的APP应用时,大多数的APP应用仍然会完全的暂停运行.你的应用只被允许在很特殊的情况下才能在后台中继续运行.例如,这些包括播放音频,获取位置更新,或者从服务器获取最新内容的情况.</p>
+<p>iOS7之前,APP应用在真正暂停之前会有连续10分钟的时间去完成它们当前的操作.随着NSURLSession的出现,有了一种更为优雅的方式去应对大量的网络切换.因此,对于可用的后台运行时间已经减少到只有几分钟,而且不再必须为连续的.</p>
+<p>这样的后台模式可能不适合你.但如果合适,请继续阅读!</p>
+<p>接下来的学习中,将会有几个几个后台模式提供给你.在本教程中你将建立一个关于简单标签应用的工程,来探索从连续播放视频到周期性的获取更新内容的四种常见模式.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-Background-Modes-Tutorial/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1010,7 +1142,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
   </div>
 
 
@@ -1044,7 +1176,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">162</span>
+              <span class="site-state-item-count">187</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1058,7 +1190,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-count">92</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

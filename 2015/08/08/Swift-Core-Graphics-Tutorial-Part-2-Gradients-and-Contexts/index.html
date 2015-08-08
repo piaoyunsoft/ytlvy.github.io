@@ -1,0 +1,778 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Core Graphics," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Swift Core Graphics Tutorial Part 2: Gradients and Contexts // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Swift Core Graphics Tutorial Part 2: Gradients and Contexts
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Core_Graphics教程第二部分(Swift)_-_Gradients_与_Context">Core Graphics教程第二部分(Swift) - Gradients 与 Context</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">Core Graphics Tutorial Part 2: Gradients and Contexts</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/caroline" target="_blank" rel="external">caroline</a></li>
+<li>译文出自 :  <a href="http://www.devtf.cn" target="_blank" rel="external">开发技术前线</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao" target="_blank" rel="external">HarriesChen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao" target="_blank" rel="external">HarriesChen</a></li>
+</ul>
+</blockquote>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt="FinalApp"></p>
+<p><em>更新时间  04/15/2015</em> 为Xcode 6.3 和 Swift1.2更新</p>
+<p>欢迎回到我们的Swift核心绘图教程系列！</p>
+<p>在<a href="http://www.raywenderlich.com/?p=90690" target="_blank" rel="external">第一部分</a>中,你学习到了使用storyboard绘制线条和矩形.</p>
+<p>在第二部部分中，你将深入核心绘图，使用CGContext实现渐变效果</p>
+<h2 id="核心绘图">核心绘图</h2><p>你现在已经从简单的UIKit深入到核心绘图。</p>
+<p>下图是各个框架的关系图：</p>
+<p><a href="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-Architecture.png" target="_blank" rel="external"><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-Architecture-433x320.png" alt="2-Architecture"></a></p>
+<p>UIKit是在最顶层，使用最友好的框架。你使用过UIBezierPath的就是在UIKit层中对Core Graphics层中CGPath的封装。</p>
+<p>你可以看到 Core Graphics 的对象和方法都是CG开头的，非常容易辨认。</p>
+<p>另外CG方法都是C方法，在调用的时候不需要明确的指定参数名，和一般Swift调用方法不一样。</p>
+<h2 id="从Graph_View开始">从Graph View开始</h2><a id="more"></a>
+<p>本次的目标就是使用历史数据创建一个图表。</p>
+<p><a href="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-ResultGraphView.png" target="_blank" rel="external"><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-ResultGraphView-383x320.png" alt="2-ResultGraphView"></a></p>
+<p>在绘图之前，你需要创建一个storyboard，写一些显示图表的代码。</p>
+<p>完成后的视图结构如下图：</p>
+<p><a href="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-ViewHierarchy.png" target="_blank" rel="external"><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-ViewHierarchy-547x500.png" alt="2-ViewHierarchy"></a></p>
+<p>如果你还没有完成，从<a href="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part1-6.31.zip" target="_blank" rel="external">这里</a>下载开始的项目。</p>
+<p>打开 <em>File\New\File…</em>, 选择 <em>iOS\Source\Cocoa Touch Class</em><br>模板然后点击 <em>Next</em>. 输入名称 <em>GraphView</em>,选择成为 <em>UIView</em> 的子类，选择语言 <em>Swift</em>。 点击 <em>Next</em> 和 <em>Create</em>.</p>
+<p>打开 <em>Main.storyboard</em> 拖一个 <em>UIView</em> 到控制器的视图。</p>
+<p>视图将包含一个<code>Graph</code>和<code>Counter Views</code>，确定他们是视图控制器的主视图的子视图，并且<code>Graph</code>在<code>Counter Views</code>之上。</p>
+<p>此时目录结构应该是这样的：</p>
+<p><a href="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-DocumentOutline.png" target="_blank" rel="external"><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-DocumentOutline.png" alt="2-DocumentOutline"></a></p>
+<p>在 <em>Size Inspector</em>, 设置 <em>X</em>=<em>150</em>, <em>Y</em>=<em>50</em>, <em>Width</em>=<em>300</em>,<br><em>Height</em>=<em>300</em>:</p>
+<p><a href="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-ContainerCoordinates.png" target="_blank" rel="external"><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-ContainerCoordinates.png" alt="2-ContainerCoordinates"></a></p>
+<p>创建自动布局约束非常简单，在第一部分中有讲到。</p>
+<ul>
+<li>选中视图, 按住Control轻轻的向左拖动，在弹出的菜单中选择<em>Width</em>.</li>
+<li>选中视图, 按住Control轻轻的向上拖动，在弹出的菜单中选择<em>Height</em>.</li>
+<li>选中视图, 按住Control从里向外拖动，在弹出的菜单中选择 <em>Center Vertically in Container</em>.</li>
+<li>选中视图, 按住Control从里向外拖动，在弹出的菜单中选择 <em>Center Horizontally in Container</em>.</li>
+</ul>
+<p>当创建了视图，通常我们我们会设置一个临时的背景颜色，这样做非常有用，可以让我们清楚的看到我们做了什么。</p>
+<p>在 <em>Attributes Inspector</em>, 将背景颜色设置为黄色.</p>
+<p><a href="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-ContainerViewBackground.png" target="_blank" rel="external"><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-ContainerViewBackground.png" alt="2-ContainerViewBackground"></a></p>
+<p>再拖一个 <em>UIView</em> 到黄色的视图作为它的子视图.</p>
+<p>在 <em>Identity Inspector</em>, 将新创建的视图的class设置为<em>GraphView</em>.</p>
+<p><a href="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-GraphViewClass.png" target="_blank" rel="external"><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-GraphViewClass.png" alt="2-GraphViewClass"></a></p>
+<p>在 <em>Size Inspector</em>, 设置 <em>X</em>=<em>0</em>, <em>Y</em>=<em>25</em>, <em>Width</em>=<em>300</em>,<br><em>Height</em>=<em>250</em>:</p>
+<p><a href="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-GraphViewCoordinates.png" target="_blank" rel="external"><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-GraphViewCoordinates.png" alt="2-GraphViewCoordinates"></a></p>
+<p>在<em>Document Outline</em>，将 <em>Counter View</em>拖到黄色的视图中作为它的子视图，这里需要注意需要放置在<em>Graph View</em>的后方。</p>
+<p>在移动 <em>Counter View</em>之后, 自动布局约束会变红. 选择 <em>Counter View</em>, 在storyboard 右下方找到并点击 <em>Resolve Auto Layout Issues</em>, 选择<br><em>Selected Views: Clear Constraints</em>.</p>
+<p><a href="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-ClearAutoLayout.png" target="_blank" rel="external"><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-ClearAutoLayout.png" alt="2-ClearAutoLayout"></a></p>
+<p>你可以重置为默认的约束，因为现在<code>Counter View</code>充满了整个<code>Container View</code></p>
+<p>在 <em>Document Outline</em> 双击黄色视图来重命名为 <em>Container View</em>. 现在 <em>Document Outline</em> 是这样子的:</p>
+<p><a href="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/Flo2-Outline.png" target="_blank" rel="external"><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/Flo2-Outline-303x320.png" alt="Flo2-Outline"></a></p>
+<p>你需要一个<code>Container View</code>是因为在 <code>Counter View</code> 和 <code>Graph View</code>的渐变动画中需要用到。</p>
+<p>打开 <em>ViewController.swift</em> ,为<code>Container</code> 和 <code>Graph Views</code> 添加<code>outloets</code>:</p>
+ <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line"> @IBOutlet weak var containerView: UIView!                                </span><br><span class="line"> @IBOutlet weak var graphView: GraphView!                                 </span><br><span class="line"> <span class="code">```</span>                                                                      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这一步为<span class="code">`container view`</span> 和 <span class="code">`graph view`</span>创建outlet，现在我们将他们和<span class="code">`storyboard`</span>的视图关联起来。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">打开 <span class="emphasis">*Main.storyboard*</span>， 将 <span class="emphasis">*Graph View*</span> <span class="emphasis">*Container View*</span> 和 outlets关联起来:</span><br><span class="line"></span><br><span class="line">![<span class="link_label">Flo2-ConnectGraphViewOutlet</span>](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/Flo2-ConnectGraphViewOutlet.gif</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="header">设置渐变动画</span><br><span class="line">----------</span></span><br><span class="line"></span><br><span class="line">仍然在 <span class="emphasis">*Main.storyboard*</span>中, 从<span class="emphasis">*Object Library*</span> 拖一个<span class="emphasis">*UITapGestureRecognizer*</span> 到 <span class="emphasis">*Container View*</span>:</span><br><span class="line"></span><br><span class="line">![<span class="link_label">Flo2-AddTapGesture</span>](<span class="link_url">http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/Flo2-AddTapGesture.gif</span>)</span><br><span class="line"></span><br><span class="line">打开 <span class="emphasis">*ViewController.swift*</span> 在开头添加属性：</span><br><span class="line"></span><br><span class="line"> <span class="code">```</span>                               </span><br><span class="line"> var isGraphViewShowing = false                                           </span><br><span class="line"> <span class="code">```</span>                                                                      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这个将简单的标记用于判断当前<span class="code">`graph view`</span>是否正在显示；</span><br><span class="line"></span><br><span class="line">为点击事件添加过渡效果的方法：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="code">```</span>                               </span><br><span class="line"> @IBAction func counterViewTap(gesture:UITapGestureRecognizer?) &#123;         </span><br><span class="line">   if (isGraphViewShowing) &#123;                                              </span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">     //hide Graph                                                         </span></span><br><span class="line"><span class="code">     UIView.transitionFromView(graphView,                                 </span></span><br><span class="line"><span class="code">         toView: counterView,                                             </span></span><br><span class="line"><span class="code">         duration: 1.0,                                                   </span></span><br><span class="line"><span class="code">         options: UIViewAnimationOptions.TransitionFlipFromLeft           </span></span><br><span class="line"><span class="code">            UIViewAnimationOptions.ShowHideTransitionViews,              </span></span><br><span class="line"><span class="code">         completion:nil)                                                  </span></span><br><span class="line">   &#125; else &#123;                                                               </span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">     //show Graph                                                         </span></span><br><span class="line"><span class="code">     UIView.transitionFromView(counterView,                               </span></span><br><span class="line"><span class="code">       toView: graphView,                                                 </span></span><br><span class="line"><span class="code">       duration: 1.0,                                                     </span></span><br><span class="line"><span class="code">       options: UIViewAnimationOptions.TransitionFlipFromRight            </span></span><br><span class="line"><span class="code">          UIViewAnimationOptions.ShowHideTransitionViews,                </span></span><br><span class="line"><span class="code">       completion: nil)                                                   </span></span><br><span class="line">   &#125;                                                                      </span><br><span class="line">   isGraphViewShowing = !isGraphViewShowing                               </span><br><span class="line"> &#125;                                                                        </span><br><span class="line"> <span class="code">```</span>                                                                      </span><br><span class="line"></span><br><span class="line"><span class="code">`UIView.transitionFromView(_:toView:duration:options:completion:)`</span></span><br><span class="line">设置了一个水平翻动的效果. 另外还有扩散，溶解，竖直翻动，弯曲和下降等效果。 过渡效果使用<span class="emphasis">*ShowHideTransitionViews*</span> 系数, 你不必通过移除视图来使它消失。</span><br><span class="line"></span><br><span class="line">在<span class="emphasis">*btnPushButton(\_:)*</span>的最后添加以下代码：</span><br><span class="line"></span><br><span class="line"> <span class="code">```</span>                               </span><br><span class="line"> if isGraphViewShowing &#123;                                                  </span><br><span class="line">   counterViewTap(nil)                                                    </span><br><span class="line"> &#125;                                                                        </span><br><span class="line"> <span class="code">```</span>                                                                      </span><br><span class="line"></span><br><span class="line">这是为了防止在图标正在显示的过程中点击，将闪回计数器视图。</span><br><span class="line"></span><br><span class="line">最后，为了让这个效果生效，打开 <span class="emphasis">*Main.storyboard*</span>，将点击手势与<span class="code">`counterViewTap(gesture:)`</span>关联起来。</span><br><span class="line"></span><br><span class="line">![<span class="link_label">Flo2-TapGestureConnection</span>](<span class="link_url">http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/Flo2-TapGestureConnection.gif</span>)</span><br><span class="line"></span><br><span class="line">构建并运行程序，你可以看到<span class="code">` graph view `</span>在你打开程序的时候。点击它，<span class="code">`graph view`</span>会消失，<span class="code">`counter view`</span>现实，中间有过渡动画。</span><br><span class="line"></span><br><span class="line">[<span class="link_label">![2-ViewTransition</span>](<span class="link_url">http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-ViewTransition-270x500.png</span>)](<span class="link_url">http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-ViewTransition.png</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="header">分析Graph View</span><br><span class="line">-------------</span></span><br><span class="line"></span><br><span class="line">[<span class="link_label">![2-AnalysisGraphView</span>](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-AnalysisGraphView-383x320.png</span>)](<span class="link_url">http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-AnalysisGraphView.png</span>)</span><br><span class="line"></span><br><span class="line">还记得第一部分的绘图模型嘛？它描述了用Core Graphics绘图从里到外的过程，你需要明白这里的顺序在你写代码之前：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.  </span>渐变的背景</span><br><span class="line"><span class="bullet">2.  </span>在图表中进行裁剪</span><br><span class="line"><span class="bullet">3.  </span>折线</span><br><span class="line"><span class="bullet">4.  </span>折线点</span><br><span class="line"><span class="bullet">5.  </span>横线</span><br><span class="line"><span class="bullet">6.  </span>标签</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="header">绘制渐变</span><br><span class="line">------</span></span><br><span class="line"></span><br><span class="line">现在我们在<span class="code">`Graph View`</span> 的 <span class="code">`context`</span>中绘制渐变效果。</span><br><span class="line"></span><br><span class="line">打开 <span class="emphasis">*GraphView.swift*</span> 将里面带代码替换为以下:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="code">```</span>                               </span><br><span class="line"> import UIKit                                                             </span><br><span class="line">                                                                          </span><br><span class="line"> @IBDesignable class GraphView: UIView &#123;                                  </span><br><span class="line">                                                                          </span><br><span class="line">   //1 - the properties for the gradient                                  </span><br><span class="line">   @IBInspectable var startColor: UIColor = UIColor.redColor()            </span><br><span class="line">   @IBInspectable var endColor: UIColor = UIColor.greenColor()            </span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">     override func drawRect(rect: CGRect) &#123;                               </span></span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">       //2 - get the current context                                      </span></span><br><span class="line"><span class="code">       let context = UIGraphicsGetCurrentContext()                        </span></span><br><span class="line"><span class="code">       let colors = [startColor.CGColor, endColor.CGColor]                </span></span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">       //3 - set up the color space                                       </span></span><br><span class="line"><span class="code">       let colorSpace = CGColorSpaceCreateDeviceRGB()                     </span></span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">       //4 - set up the color stops                                       </span></span><br><span class="line"><span class="code">       let colorLocations:[CGFloat] = [0.0, 1.0]                          </span></span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">       //5 - create the gradient                                          </span></span><br><span class="line"><span class="code">       let gradient = CGGradientCreateWithColors(colorSpace,              </span></span><br><span class="line"><span class="code">                                                 colors,                  </span></span><br><span class="line"><span class="code">                                                 colorLocations)          </span></span><br><span class="line">                                                                          </span><br><span class="line"><span class="code">       //6 - draw the gradient                                            </span></span><br><span class="line"><span class="code">       var startPoint = CGPoint.zeroPoint                                 </span></span><br><span class="line"><span class="code">       var endPoint = CGPoint(x:0, y:self.bounds.height)                  </span></span><br><span class="line"><span class="code">       CGContextDrawLinearGradient(context,                               </span></span><br><span class="line"><span class="code">                                   gradient,                              </span></span><br><span class="line"><span class="code">                                   startPoint,                            </span></span><br><span class="line"><span class="code">                                   endPoint,                              </span></span><br><span class="line"><span class="code">                                   0)                                     </span></span><br><span class="line"><span class="code">     &#125;                                                                    </span></span><br><span class="line"> &#125;                                                                        </span><br><span class="line"> <span class="code">```</span>                                                                      </span><br><span class="line"></span><br><span class="line">这里有以下步骤</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.  </span>将渐变的开始和结束颜色设置为<span class="code">`@IBInspectable`</span> 属性,这样就可以在storyboard中实时看到效果.</span><br><span class="line"><span class="bullet">2.  </span>CG 绘图方法需要知道他们在哪个上下文（context）中绘图，,调用 <span class="code">`UIGraphicsGetCurrentContext()`</span> 来获取当前上下文. 那就是 <span class="code">`drawRect(_:)`</span> 绘制的地方.</span><br><span class="line"><span class="bullet">3.  </span>所有的上下文都有一个色域. 可以是 CMYK 也可以是 grayscale,</span><br><span class="line"><span class="code">    这里使用的是RGB色域.</span></span><br><span class="line"><span class="bullet">4.  </span>颜色的起止描述了颜色的变化效果. 在这个例子中, 你只有两种颜色，从红到绿,</span><br><span class="line"><span class="code">    你也可以又一个数组的颜色变化, 颜色从红到蓝在到绿. 每种颜色的起止都是0.33.</span></span><br><span class="line"><span class="bullet">5.  </span>创建渐变效果，定义色域，颜色起止。</span><br><span class="line"><span class="bullet">6.  </span>最后，绘制渐变效果通过方法<span class="code">`CGContextDrawLinearGradient()`</span></span><br><span class="line"><span class="code">    有以下几个参数:</span></span><br><span class="line"><span class="code">    -   `CGContext`表示在哪个上下文</span></span><br><span class="line"><span class="code">    -   `CGGradient` 色域，颜色起止。</span></span><br><span class="line"><span class="code">    -   开始点</span></span><br><span class="line"><span class="code">    -   结束点</span></span><br><span class="line"><span class="code">    -   其他延伸选项</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过<span class="code">`drawRect(_:)`</span>渐变效果将充满整个<span class="code">`rect`</span>。</span><br><span class="line"></span><br><span class="line">在Xcode你通过设置代码或者在storyboard的<span class="emphasis">*Assistant Editor*</span>调节，可以直接在<span class="code">`Graph View`</span>看到效果。</span><br><span class="line"></span><br><span class="line">![<span class="link_label">2-InitialGradient</span>](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-InitialGradient1.png</span>)</span><br><span class="line"></span><br><span class="line">在storyboard中, 选择 <span class="code">`Graph View`</span>. 在 *Attributes</span><br><span class="line">Inspector<span class="emphasis">*设置 *</span>Start Color<span class="bullet">* 为 RGB(250, 233, 222), 设置 *</span>End Color* 为RGB(252, 79, 8):</span><br><span class="line"></span><br><span class="line">[<span class="link_label">![2-FirstGradient</span>](<span class="link_url">http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-FirstGradient.png</span>)](<span class="link_url">http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-FirstGradient.png</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在 <span class="emphasis">*Main.storyboard*</span>, 一次选择所有的视图,除了控制器自带的,将他们的<span class="emphasis">*BackgroundColor*</span> 设置为clear color. 现在已经不需要黄色背景了,同样将按钮的背景颜色设置为透明.</span><br><span class="line"></span><br><span class="line">运行程序，你会发现现在变得好看很多。</span><br><span class="line"></span><br><span class="line"><span class="header">裁剪区域</span><br><span class="line">------</span></span><br><span class="line"></span><br><span class="line">你刚才用渐变填充了整个上下文的区域。现在你可以创建路径来裁剪当前的绘图区域。</span><br><span class="line"></span><br><span class="line">打开<span class="emphasis">*GraphView.swift*</span>, 在<span class="code">`drawRect(_:)`</span>的顶部加入以下代码:</span><br><span class="line"></span><br><span class="line"> <span class="code">```</span>                               </span><br><span class="line"> let width = rect.width                                                   </span><br><span class="line"> let height = rect.height                                                 </span><br><span class="line">                                                                          </span><br><span class="line"> //set up background clipping area                                        </span><br><span class="line"> var path = UIBezierPath(roundedRect: rect,                               </span><br><span class="line"><span class="code">     byRoundingCorners: UIRectCorner.AllCorners,                          </span></span><br><span class="line"><span class="code">     cornerRadii: CGSize(width: 8.0, height: 8.0))                        </span></span><br><span class="line"> path.addClip()</span><br></pre></td></tr></table></figure>
+<p>这个将创建一个裁剪区域来限制渐变效果，你可以用相同的方式绘制渐变效果在在折线上。</p>
+<p>构建运行程序，你会发现有漂亮的圆角效果：</p>
+<p><a href="http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-RoundedCorners2.png" target="_blank" rel="external"><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-RoundedCorners2.png" alt="2-RoundedCorners2"></a></p>
+<p><em>注意:</em> 绘制静态的图像使用<code>Core Graphics</code>是绰绰有余的，但是当你的图像需要频繁的重绘时，你应当使用<code>Core Animation layers</code>，它充分利用了GPU而不是CPU。CPU是通过调用 <code>drawRect(_:)</code>绘制的。</p>
+<p>除了使用裁剪路径，你还可以通过使用CALayer的<code>cornerRadius</code>属性来创建圆角，但是你需要优化。为了更好的理解，可以参考Mikael Konutgan and Sam Davies写的<a href="http://www.raywenderlich.com/82058/custom-control-tutorial-ios-swift-reusable-knob" target="_blank" rel="external">Custom Control Tutorial for iOS and Swift: A Reusable<br>Knob</a>，使用<code>Core Animation</code>来创建自定义控件。</p>
+<h2 id="计算坐标点">计算坐标点</h2><p>现在可以短暂了停一下画图，我们需要绘制7个点，横坐标为一周的七天，纵坐标为</p>
+<p>首先, 设置几个简单的值。</p>
+<p>在 <em>GraphView.swift</em>, 在顶部添加属性:</p>
+ <figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//Weekly sample data                                                     </span></span><br><span class="line"> var graphPoints:[Int] = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">3</span>]                            </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">这里简单的数据代表了七天的数据。</span><br><span class="line"></span><br><span class="line">接着，在`drawRect<span class="params">(_:)</span>`的最后添加代码：</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">//calculate the x point                                                  </span></span><br><span class="line">                                                                          </span><br><span class="line"> <span class="built_in">let</span> margin:CGFloat = <span class="number">20.0</span>                                                </span><br><span class="line"> var columnXPoint = &#123; <span class="params">(column:Int)</span> -&gt; CGFloat in                          </span><br><span class="line">   <span class="comment">//Calculate gap between points                                         </span></span><br><span class="line">   <span class="built_in">let</span> spacer = <span class="params">(width - margin*<span class="number">2</span> - <span class="number">4</span>)</span> /                                  </span><br><span class="line">         CGFloat<span class="params">(<span class="params">(self.graphPoints.count - <span class="number">1</span>)</span>)</span>                            </span><br><span class="line">   var x:CGFloat = CGFloat<span class="params">(column)</span> <span class="built_in">*</span> spacer                               </span><br><span class="line">   x += margin + <span class="number">2</span>                                                        </span><br><span class="line">   return x                                                               </span><br><span class="line"> &#125;                                                                        </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">横坐标点包括了<span class="number">7</span>个等距离的点。上述代码在一个闭包表达式中，应该是要独立的封装成一个方法，但是对于这个小的运算量，是可以内嵌在代码之中。</span><br><span class="line"></span><br><span class="line">`columnXPoint` 接受 column作为参数, 返回点所在的横坐标的值.</span><br><span class="line"></span><br><span class="line">接着，在`drawRect<span class="params">(_:)</span>`的最后添加代码来计算纵坐标的点：</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">// calculate the y point                                                 </span></span><br><span class="line">                                                                          </span><br><span class="line"> <span class="built_in">let</span> topBorder:CGFloat = <span class="number">60</span>                                               </span><br><span class="line"> <span class="built_in">let</span> bottomBorder:CGFloat = <span class="number">50</span>                                            </span><br><span class="line"> <span class="built_in">let</span> graphHeight = height - topBorder - bottomBorder                      </span><br><span class="line"> <span class="built_in">let</span> maxValue = maxElement<span class="params">(graphPoints)</span>                                   </span><br><span class="line"> var columnYPoint = &#123; <span class="params">(graphPoint:Int)</span> -&gt; CGFloat in                      </span><br><span class="line">   var y:CGFloat = CGFloat<span class="params">(graphPoint)</span> /                                  </span><br><span class="line">           CGFloat<span class="params">(maxValue)</span> <span class="built_in">*</span> graphHeight                                </span><br><span class="line">   y = graphHeight + topBorder - y <span class="comment">// Flip the graph                      </span></span><br><span class="line">   return y                                                               </span><br><span class="line"> &#125;                                                                        </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">`columnYPoint` 同样的也在一个闭包表达式中，将数组中得每一天作为参数.返回纵坐标的位置, 在<span class="number">0</span>和最大饮水量之间.</span><br><span class="line"></span><br><span class="line">因为起始点为左上角，但是你是从左下角开始绘制， `columnYPoint`会调整它的返回值来朝向你期望的地方。</span><br><span class="line"></span><br><span class="line">继续在`drawRect<span class="params">(_:)</span>`的底部添加以下代码：</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">// draw the line graph                                                   </span></span><br><span class="line">                                                                          </span><br><span class="line"> UIColor.whiteColor<span class="params">()</span>.setFill<span class="params">()</span>                                           </span><br><span class="line"> UIColor.whiteColor<span class="params">()</span>.setStroke<span class="params">()</span>                                         </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//set up the points line                                                 </span></span><br><span class="line"> var graphPath = UIBezierPath<span class="params">()</span>                                           </span><br><span class="line"> <span class="comment">//go to start of line                                                    </span></span><br><span class="line"> graphPath.moveToPoint<span class="params">(CGPoint<span class="params">(x:columnXPoint<span class="params">(<span class="number">0</span>)</span>,                         </span><br><span class="line">                               y:columnYPoint<span class="params">(graphPoints[<span class="number">0</span>])</span>)</span>)</span>           </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//add points for each item in the graphPoints array                      </span></span><br><span class="line"> <span class="comment">//at the correct (x, y) for the point                                    </span></span><br><span class="line"> <span class="keyword">for</span> i in <span class="number">1</span>..&lt;graphPoints.count &#123;                                         </span><br><span class="line">   <span class="built_in">let</span> nextPoint = CGPoint<span class="params">(x:columnXPoint<span class="params">(i)</span>,                             </span><br><span class="line">                           y:columnYPoint<span class="params">(graphPoints[i])</span>)</span>                </span><br><span class="line">   graphPath.addLineToPoint<span class="params">(nextPoint)</span>                                    </span><br><span class="line"> &#125;                                                                        </span><br><span class="line">                                                                          </span><br><span class="line"> graphPath.stroke<span class="params">()</span>                                                       </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">在这个代码快中，你创建了图标的路径， `UIBezierPath`用来连接`graphPoints`种的每一个点。</span><br><span class="line"></span><br><span class="line">现在，storyboard中的图标看起来是这样的：</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-FirstGraphLine]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-FirstGraphLine.png)</span>]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-FirstGraphLine.png)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">现在你验证了线已经正确绘制，从`drawRect<span class="params">(_:)</span>`移除最后一行代码</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> graphPath.stroke<span class="params">()</span>                                                       </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">这行代码让你检查线在`storyboard `是否被正确的绘制，点是否计算正确.</span><br><span class="line"></span><br><span class="line"><span class="built_in">#</span><span class="built_in">#</span><span class="built_in">#</span> 图表渐变</span><br><span class="line"></span><br><span class="line">现在在这个折线的路径之下来绘制渐变效果.</span><br><span class="line"></span><br><span class="line">首先设置裁剪路径在`drawRect<span class="params">(_:)</span>`的最下方:</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">//Create the clipping path for the graph gradient                        </span></span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//1 - save the state of the context (commented out for now)              </span></span><br><span class="line"> <span class="comment">//CGContextSaveGState(context)                                           </span></span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//2 - make a copy of the path                                            </span></span><br><span class="line"> var clippingPath = graphPath.copy<span class="params">()</span> as<span class="built_in">!</span> UIBezierPath                     </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//3 - add lines to the copied path to complete the clip area             </span></span><br><span class="line"> clippingPath.addLineToPoint<span class="params">(CGPoint<span class="params">(                                     </span><br><span class="line">        x: columnXPoint<span class="params">(graphPoints.count - <span class="number">1</span>)</span>,                           </span><br><span class="line">        y:height)</span>)</span>                                                        </span><br><span class="line"> clippingPath.addLineToPoint<span class="params">(CGPoint<span class="params">(                                     </span><br><span class="line">        x:columnXPoint<span class="params">(<span class="number">0</span>)</span>,                                                </span><br><span class="line">        y:height)</span>)</span>                                                        </span><br><span class="line"> clippingPath.closePath<span class="params">()</span>                                                 </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//4 - add the clipping path to the context                               </span></span><br><span class="line"> clippingPath.addClip<span class="params">()</span>                                                   </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//5 - check clipping path - temporary code                               </span></span><br><span class="line"> UIColor.greenColor<span class="params">()</span>.setFill<span class="params">()</span>                                           </span><br><span class="line"> <span class="built_in">let</span> rectPath = UIBezierPath<span class="params">(rect: self.bounds)</span>                           </span><br><span class="line"> rectPath.fill<span class="params">()</span>                                                          </span><br><span class="line"> <span class="comment">//end temporary code                                                     </span></span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">通过上述代码让块于块之间分割：</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.  `CGContextSaveGState` 现在先不讨论`CGContextSaveGState`，一会来说它是干嘛的。</span><br><span class="line"><span class="number">2</span>.  复制一个新的路径来定义需要被填充的区域.</span><br><span class="line"><span class="number">3</span>.  完成区域的角点并关闭路径。这增加了右下和左下的点.</span><br><span class="line"><span class="number">4</span>.  添加裁剪区域，当上下文被填充时，只有被裁减的区域会被填充。</span><br><span class="line"><span class="number">5</span>.  填充上下文. 记住 `rect`就是上下文传递给`drawRect<span class="params">(_:)</span>`被填充的区域。</span><br><span class="line"></span><br><span class="line">现在storyboard中的图标看起来应该是这样的：</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-GraphClipping]<span class="params">(http://cdn5.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphClipping.png)</span>]<span class="params">(http://cdn5.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphClipping.png)</span></span><br><span class="line"></span><br><span class="line">下一步，你会将可爱的绿色换成你为背景创建的渐变的效果</span><br><span class="line"></span><br><span class="line">移除`drawRect<span class="params">(_:)</span>`底部填充绿色的临时代码，换成以下代码：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="built_in">let</span> highestYPoint = columnYPoint<span class="params">(maxValue)</span>                               </span><br><span class="line"> startPoint = CGPoint<span class="params">(x:margin, y: highestYPoint)</span>                         </span><br><span class="line"> endPoint = CGPoint<span class="params">(x:margin, y:self.bounds.height)</span>                       </span><br><span class="line">                                                                          </span><br><span class="line"> CGContextDrawLinearGradient<span class="params">(context, gradient, startPoint, endPoint, <span class="number">0</span>)</span>  </span><br><span class="line"> <span class="comment">//CGContextRestoreGState(context)                                        </span></span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">在这里，你将找到最大的数字作为渐变的起点。</span><br><span class="line"></span><br><span class="line">You can’t fill the whole `rect` the same way you did with the green</span><br><span class="line"><span class="built_in">color</span>. The gradient would fill from the top of the context instead of</span><br><span class="line">from the top of the graph, and the desired gradient wouldn’t show up.</span><br><span class="line"></span><br><span class="line">你不能填充这个`rect`就像填充绿色一样，渐变会从上下问得顶部而不是图标的顶部开始进行渐变。</span><br><span class="line"></span><br><span class="line">注意<span class="built_in">*</span>CGContextRestoreState<span class="built_in">*</span>的注释，你在绘制之后需要取消注释。</span><br><span class="line"></span><br><span class="line">在 `drawRect<span class="params">(_:)</span>`之后添加代码：</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">//draw the line on top of the clipped gradient                           </span></span><br><span class="line"> graphPath.lineWidth = <span class="number">2.0</span>                                                </span><br><span class="line"> graphPath.stroke<span class="params">()</span>                                                       </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这里绘制了原始的路径</span><br><span class="line"></span><br><span class="line">现在图标看起来是这样的：</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-SecondGraphLine]<span class="params">(http://cdn5.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-SecondGraphLine.png)</span>]<span class="params">(http://cdn5.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-SecondGraphLine.png)</span></span><br><span class="line"></span><br><span class="line">在`drawRect<span class="params">(_:)</span>`的底部添加:</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">//Draw the circles on top of graph stroke                                </span></span><br><span class="line"> <span class="keyword">for</span> i in <span class="number">0</span>..&lt;graphPoints.count &#123;                                         </span><br><span class="line">   var point = CGPoint<span class="params">(x:columnXPoint<span class="params">(i)</span>, y:columnYPoint<span class="params">(graphPoints[i])</span>)</span> </span><br><span class="line">   point.x -= <span class="number">5.0</span>/<span class="number">2</span>                                                       </span><br><span class="line">   point.y -= <span class="number">5.0</span>/<span class="number">2</span>                                                       </span><br><span class="line">                                                                          </span><br><span class="line">   <span class="built_in">let</span> <span class="built_in">circle</span> = UIBezierPath<span class="params">(ovalInRect:                                  </span><br><span class="line">                CGRect<span class="params">(origin: point,                                     </span><br><span class="line">                         size: CGSize<span class="params">(width: <span class="number">5.0</span>, height: <span class="number">5.0</span>)</span>)</span>)</span>          </span><br><span class="line">   <span class="built_in">circle</span>.fill<span class="params">()</span>                                                          </span><br><span class="line"> &#125;                                                                        </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">绘制小圆点的代码并不是新的。这里将为每一个数组中的元素的位置绘制一个圆点。</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-GraphWithFlatCircles]<span class="params">(http://cdn2.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphWithFlatCircles.png)</span>]<span class="params">(http://cdn2.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphWithFlatCircles.png)</span></span><br><span class="line"></span><br><span class="line">现在为什么不好看呢，对了，小圆点。没事，我们一会加上去。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上下文状态</span><br><span class="line">--------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">图形上下文可以保存状态。当你设置了许多上下文属性，如填充颜色，色域,变换矩阵，或裁剪区域，你实际上设置为当前图形状态。</span><br><span class="line"></span><br><span class="line">你可以使用`CGContextSaveGState<span class="params">()</span>`保存状态，这会就将当前状态的拷贝压进状态栈。你可以改变上下文的属性，但是当你调用`CGContextRestoreGState<span class="params">()</span>`原来的状态将会出栈，还原当前的状态。</span><br><span class="line"></span><br><span class="line">在 <span class="built_in">*</span>GraphView.swift<span class="built_in">*</span>的`drawRect<span class="params">(_:)</span>`方法中，注意`CGContextSaveGState<span class="params">()</span>` 发生在创建裁剪路径之前， `CGContextRestoreGState<span class="params">()</span>`发生在裁剪路径之后。</span><br><span class="line">这里我们做了一下几点：</span><br><span class="line"><span class="number">1</span>.  通过`CGContextSaveGState<span class="params">()</span>`将原始状态压入栈.</span><br><span class="line"><span class="number">2</span>.  添加裁剪路径到新的状态.</span><br><span class="line"><span class="number">3</span>.  在裁剪路径中绘图.</span><br><span class="line"><span class="number">4</span>.  通过`CGContextRestoreGState<span class="params">()</span>`还原状态，这是在添加裁剪路径前的状态。</span><br><span class="line"></span><br><span class="line">现在的图标和圆点看起来更加的清晰：</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-GraphWithCircles]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphWithCircles.png)</span>]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphWithCircles.png)</span></span><br><span class="line"></span><br><span class="line">在 `drawRect<span class="params">(_:)</span>`后添加代码来添加三条横线：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">//Draw horizontal graph lines on the top of everything                   </span></span><br><span class="line"> var linePath = UIBezierPath<span class="params">()</span>                                            </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//top line                                                               </span></span><br><span class="line"> linePath.moveToPoint<span class="params">(CGPoint<span class="params">(x:margin, y: topBorder)</span>)</span>                    </span><br><span class="line"> linePath.addLineToPoint<span class="params">(CGPoint<span class="params">(x: width - margin,                       </span><br><span class="line">                                 y:topBorder)</span>)</span>                            </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//center line                                                            </span></span><br><span class="line"> linePath.moveToPoint<span class="params">(CGPoint<span class="params">(x:margin,                                   </span><br><span class="line">                              y: graphHeight/<span class="number">2</span> + topBorder)</span>)</span>              </span><br><span class="line"> linePath.addLineToPoint<span class="params">(CGPoint<span class="params">(x:width - margin,                        </span><br><span class="line">                                 y:graphHeight/<span class="number">2</span> + topBorder)</span>)</span>            </span><br><span class="line">                                                                          </span><br><span class="line"> <span class="comment">//bottom line                                                            </span></span><br><span class="line"> linePath.moveToPoint<span class="params">(CGPoint<span class="params">(x:margin,                                   </span><br><span class="line">                              y:height - bottomBorder)</span>)</span>                   </span><br><span class="line"> linePath.addLineToPoint<span class="params">(CGPoint<span class="params">(x:width - margin,                        </span><br><span class="line">                                 y:height - bottomBorder)</span>)</span>                </span><br><span class="line"> <span class="built_in">let</span> <span class="built_in">color</span> = UIColor<span class="params">(white: <span class="number">1.0</span>, alpha: <span class="number">0.3</span>)</span>                              </span><br><span class="line"> <span class="built_in">color</span>.setStroke<span class="params">()</span>                                                        </span><br><span class="line">                                                                          </span><br><span class="line"> linePath.lineWidth = <span class="number">1.0</span>                                                 </span><br><span class="line"> linePath.stroke<span class="params">()</span>                                                        </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">没有新的代码，你需要做的只是移动到一个点然后水平画线。</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-GraphWithAxisLines]<span class="params">(http://cdn5.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphWithAxisLines.png)</span>]<span class="params">(http://cdn5.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphWithAxisLines.png)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">添加图标的标签</span><br><span class="line">-----------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">现在你可以添加标签来让图标的用户体验更好。</span><br><span class="line">在<span class="built_in">*</span>ViewController.swift<span class="built_in">*</span>添加 outlets 属性：</span><br><span class="line"></span><br><span class="line"> ```                               </span><br><span class="line"> <span class="comment">//Label outlets                                                          </span></span><br><span class="line"> @IBOutlet weak var averageWaterDrunk: UILabel<span class="built_in">!</span>                           </span><br><span class="line"> @IBOutlet weak var maxLabel: UILabel<span class="built_in">!</span>                                    </span><br><span class="line"> ```                                                                      </span><br><span class="line"></span><br><span class="line">这两个标签将会动态的改变内容（饮水量的平均值和最大值）。</span><br><span class="line"></span><br><span class="line">在 <span class="built_in">*</span>Main.storyboard<span class="built_in">*</span> 添加以下的 <span class="built_in">*</span>UILabels<span class="built_in">*</span> 作为 <span class="built_in">*</span>Graph View<span class="built_in">*</span>的子视图:</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.  <span class="built_in">*</span><span class="built_in">*</span>“Water Drunk”<span class="built_in">*</span><span class="built_in">*</span></span><br><span class="line"><span class="number">2</span>.  <span class="built_in">*</span><span class="built_in">*</span>“Average:”<span class="built_in">*</span><span class="built_in">*</span></span><br><span class="line"><span class="number">3</span>.  <span class="built_in">*</span><span class="built_in">*</span>“<span class="number">2</span>”<span class="built_in">*</span><span class="built_in">*</span> <span class="params">(平均饮水量)</span></span><br><span class="line"><span class="number">4</span>.  <span class="built_in">*</span><span class="built_in">*</span>“<span class="number">99</span>”<span class="built_in">*</span><span class="built_in">*</span> <span class="params">(最大饮水量)</span>. 右对齐</span><br><span class="line"><span class="number">5</span>.  <span class="built_in">*</span><span class="built_in">*</span>“<span class="number">0</span>”<span class="built_in">*</span><span class="built_in">*</span>. 右对齐</span><br><span class="line"><span class="number">6</span>.  每一天的标签，居中对齐.</span><br><span class="line"></span><br><span class="line">通过Shift全选所有标签，改变字体为<span class="built_in">*</span>Avenir Next Condensed, Medium style<span class="built_in">*</span>.</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-LabelledGraph]<span class="params">(http://cdn4.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-LabelledGraph.png)</span>]<span class="params">(http://cdn4.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-LabelledGraph.png)</span></span><br><span class="line"></span><br><span class="line">在<span class="built_in">*</span>Main.storyboard<span class="built_in">*</span>关联`averageWaterDrunk` 和 `maxLabel` .按住Control从View Controller拖分别拖到相应的标签。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-ConnectLabels]<span class="params">(http://cdn4.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-ConnectLabels.gif)</span>]<span class="params">(http://cdn4.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-ConnectLabels.gif)</span></span><br><span class="line"></span><br><span class="line">对于每天得标签来说，在<span class="built_in">*</span>Attributes Inspector<span class="built_in">*</span> 改变 <span class="built_in">*</span>View’s Tag<span class="built_in">*</span> 属性，分别食从<span class="number">1</span>到<span class="number">7</span></span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-LabelViewTag]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-LabelViewTag.png)</span>]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-LabelViewTag.png)</span></span><br><span class="line"></span><br><span class="line">现在已经完成了图标的设置，在<span class="built_in">*</span>Main.storyboard<span class="built_in">*</span> 选择 <span class="built_in">*</span>Graph View<span class="built_in">*</span>并选择<span class="built_in">*</span>Hidden<span class="built_in">*</span>，让程序第一次出现的时候不显示图标。</span><br><span class="line"></span><br><span class="line">[<span class="built_in">!</span>[<span class="number">2</span>-GraphHidden]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphHidden.png)</span>]<span class="params">(http://cdn1.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">2</span>-GraphHidden.png)</span></span><br><span class="line"></span><br><span class="line">在 <span class="built_in">*</span>ViewController.swift<span class="built_in">*</span> 添加以下方法来设置标签:</span><br></pre></td></tr></table></figure>
+<p> func setupGraphDisplay() {                                               </p>
+<p>   //Use 7 days for graph - can use any number,<br>   //but labels and sample data are set up for 7 days<br>   let noOfDays:Int = 7                                                   </p>
+<p>   //1 - replace last day with today’s actual data<br>   graphView.graphPoints[graphView.graphPoints.count-1] = counterView.cou<br> nter                                                                     </p>
+<p>   //2 - indicate that the graph needs to be redrawn<br>   graphView.setNeedsDisplay()                                            </p>
+<p>   maxLabel.text = “(maxElement(graphView.graphPoints))”                 </p>
+<p>   //3 - calculate average from graphPoints<br>   let average = graphView.graphPoints.reduce(0, combine: +)<br>             / graphView.graphPoints.count<br>   averageWaterDrunk.text = “(average)”                                  </p>
+<p>   //set up labels<br>   //day of week labels are set up in storyboard with tags<br>   //today is last day of the array need to go backwards                  </p>
+<p>   //4 - get today’s day number<br>   let dateFormatter = NSDateFormatter()<br>   let calendar = NSCalendar.currentCalendar()<br>   let componentOptions:NSCalendarUnit = .CalendarUnitWeekday<br>   let components = calendar.components(componentOptions,<br>                                        fromDate: NSDate())<br>   var weekday = components.weekday                                       </p>
+<p>   let days = [“S”, “S”, “M”, “T”, “W”, “T”, “F”]                         </p>
+<p>   //5 - set up the day name labels with correct day<br>   for i in reverse(1…days.count) {<br>     if let labelView = graphView.viewWithTag(i) as? UILabel {<br>       if weekday == 7 {<br>         weekday = 0<br>       }<br>       labelView.text = days[weekday—]<br>       if weekday &lt; 0 {<br>         weekday = days.count - 1<br>       }<br>     }<br>   }<br> }</p>
+<pre><code>
+
+<span class="livecodeserver">This looks <span class="operator">a</span> little burly, but <span class="keyword">it</span>’s required <span class="built_in">to</span> <span class="built_in">set</span> up <span class="operator">the</span> calendar <span class="operator">and</span> retrieve <span class="operator">the</span> current day <span class="operator">of</span> <span class="operator">the</span> week. Take <span class="keyword">it</span> <span class="operator">in</span> sections:
+
+这看起来有点粗鲁的，但它需要设置日历和知道今天是星期几：
+
+<span class="number">1.</span>  你设置今天的数据将会作为数组的最后一个元素插入. 在最后的项目中,[Part
+    <span class="number">3</span>](<span class="keyword">http</span>://www.raywenderlich.com/?p=<span class="number">90695</span>),你可以扩展到<span class="number">60</span>天的数据, 将会有一个方法来选取起止时间,但是这超出了本章的讲解内容 :]
+<span class="number">2.</span>  如果今天有变化，重绘数据.
+<span class="number">3.</span>  这里你使用 Swift的 `reduce` 来计算一周的平局饮水量; 这个在计算数组的总和的时候非常有用。
+<span class="number">4.</span>  这一部分将当前的日期作为iOS的日历一周的结束.
+<span class="number">5.</span>  这个循环从<span class="number">7</span>到<span class="number">1</span>，通过tag来获取相应的视图，这是正确的标题从*days*数组中。
+
+还是在*ViewController.swift*，在`counterViewTap(_:)`方法的`<span class="keyword">else</span>`分支中调用新方法来显示图表:</span>
+</code></pre><p> setupGraphDisplay()</p>
+<pre><code>
+运行程序，点击计数器，万岁，图表将显示所有的数据。
+
+
+[<span class="link_label">![2-GraphFinished</span>](<span class="link_url">http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-GraphFinished.gif</span>)](<span class="link_url">http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-GraphFinished.gif</span>)
+
+<span class="header">掌握矩阵
+------</span>
+
+现在程序看起来有点突兀，我们子啊第一部分创建的计数器还需要提升一下，在饮水量上添加指示。
+
+[<span class="link_label">![2-Result</span>](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-Result.png</span>)](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-Result.png</span>)
+
+现在已经有CG方法绘图的一些经验了，你将会使用旋转和平移。
+可以看出这个标志都是从中心辐射的:
+
+[<span class="link_label">![2-LinesExpanded</span>](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-LinesExpanded.png</span>)](<span class="link_url">http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-LinesExpanded.png</span>)
+
+和在上下文绘图一样，你可以通过旋转，缩放，和平移来进行矩阵变幻。
+
+一开始这可能是令你费解的，但是在经过一些练习之后，将会变得更有意义，变换的顺序非常重要，我先说画出你需要做的示意图。
+下面的示意图就是通过旋转然后在中间绘制矩形的结果。
+
+[<span class="link_label">![2-RotatedContext</span>](<span class="link_url">http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-RotatedContext.png</span>)](<span class="link_url">http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-RotatedContext.png</span>)
+
+黑色的矩形食旋转前的上下文。然后是绿的，再是红得。有两件事需要注意。
+
+<span class="bullet">1.  </span>上下文根据左上角进行旋转。
+<span class="bullet">2.  </span>矩形依然绘制在中心在旋转之后.
+
+当你绘制计数器的标志的时候，你需要先旋转上下文，然后再绘制它。
+
+[<span class="link_label">![2-RotatedTranslatedContext</span>](<span class="link_url">http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-RotatedTranslatedContext.png</span>)](<span class="link_url">http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/2-RotatedTranslatedContext.png</span>)
+
+
+在这个示意图中，矩形的标记在左上方，蓝色轮廓就是变换的上下文，然后上下文旋转（红色虚线），然后再次旋转。
+
+最后当红色的标识被绘制完之后，它的角度如图所示:
+
+在上下文旋转和平移得到红色标记之后，它需要回到中心来进行下一次的变换得到绿的标志。
+
+就像你在裁剪的时候保存上下文一样，你需要保存和恢复上下文状态在每次矩阵变换的时候。
+
+打开<span class="emphasis">*CounterView.swift*</span> 在<span class="code">`drawRect(_:)`</span>的最后添加代码来增加标记:
+</code></pre><p> //Counter View markers                                                   </p>
+<p> let context = UIGraphicsGetCurrentContext()                              </p>
+<p> //1 - save original state<br> CGContextSaveGState(context)<br> outlineColor.setFill()                                                   </p>
+<p> let markerWidth:CGFloat = 5.0<br> let markerSize:CGFloat = 10.0                                            </p>
+<p> //2 - the marker rectangle positioned at the top left<br> var markerPath = UIBezierPath(rect:<br>        CGRect(x: -markerWidth/2,<br>        y: 0,<br>        width: markerWidth,<br>        height: markerSize))                                              </p>
+<p> //3 - move top left of context to the previous center position<br> CGContextTranslateCTM(context,<br>                       rect.width/2,<br>                       rect.height/2)                                     </p>
+<p> for i in 1…NoOfGlasses {<br>   //4 - save the centred context<br>   CGContextSaveGState(context)                                           </p>
+<p>   //5 - calculate the rotation angle<br>   var angle = arcLengthPerGlass * CGFloat(i) + startAngle - π/2          </p>
+<p>   //rotate and translate<br>   CGContextRotateCTM(context, angle)<br>   CGContextTranslateCTM(context,<br>                         0,<br>                         rect.height/2 - markerSize)                      </p>
+<p>   //6 - fill the marker rectangle<br>   markerPath.fill()                                                      </p>
+<p>   //7 - restore the centred context for the next rotate<br>   CGContextRestoreGState(context)<br> }                                                                        </p>
+<p> //8 - restore the original state in case of more painting<br> CGContextRestoreGState(context) </p>
+<p>```                                                                      </p>
+<p>这里你做了下面几点：</p>
+<ol>
+<li>矩阵变换之前，保存上下文状态.</li>
+<li>得到位路劲的位置和形状，但是现在还不绘制.</li>
+<li>旋转能够围绕原始的中心点(上面的蓝色线)</li>
+<li>对于每个标志, 首先保存居中上下文状态.</li>
+<li>根据先前计算的值来进行旋转和平移上下文.</li>
+<li>在旋转后的左上角绘制矩形并平移.</li>
+<li>读取居中上下文状态</li>
+<li>读取最原始的上下文状态.</li>
+</ol>
+<p>喔，干的不错，现在来运行程序，欣赏这个漂亮的界面。<br><a href="http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/2-FinalPart2.gif" target="_blank" rel="external"><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/2-FinalPart2-270x500.gif" alt="2-FinalPart2"></a></p>
+<h2 id="接下来该做什么？">接下来该做什么？</h2><p><a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part2-6.3.zip" target="_blank" rel="external">这里</a>,<br>是到现在为止为止所有的代码.</p>
+<p>现在你已经学会了绘制路径，渐变效果和通过上下文的矩阵变化</p>
+<p><a href="http://www.raywenderlich.com/?p=90695" target="_blank" rel="external">在第三部分</a>的核心绘图教程中,<br>你将创建图案的背景和绘制矢量图。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Core-Graphics/"> #Core Graphics </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/">Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Memory-management/">Swift Memory management</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Core_Graphics教程第二部分(Swift)_-_Gradients_与_Context"><span class="nav-number">1.</span> <span class="nav-text">Core Graphics教程第二部分(Swift) - Gradients 与 Context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心绘图"><span class="nav-number">2.</span> <span class="nav-text">核心绘图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从Graph_View开始"><span class="nav-number">3.</span> <span class="nav-text">从Graph View开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算坐标点"><span class="nav-number">4.</span> <span class="nav-text">计算坐标点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接下来该做什么？"><span class="nav-number">5.</span> <span class="nav-text">接下来该做什么？</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/';
+      var disqus_title = 'Swift Core Graphics Tutorial Part 2: Gradients and Contexts';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

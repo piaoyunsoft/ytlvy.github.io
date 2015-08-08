@@ -1,0 +1,735 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> How To Implement A Circular Image Loader Animation with CAShapeLayer // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              How To Implement A Circular Image Loader Animation with CAShapeLayer
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="使用CAShapeLayer来实现圆形图片加载动画">使用CAShapeLayer来实现圆形图片加载动画</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer" target="_blank" rel="external">How To Implement A Circular Image Loader Animation with CAShapeLayer</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/rounak" target="_blank" rel="external">Rounak Jain</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn" target="_blank" rel="external">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev" target="_blank" rel="external">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo" target="_blank" rel="external">Lollypo</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>几个星期之前，Michael Villar在Motion试验中创建一个非常有趣的加载动画。</p>
+<p>下面的GIF图片展示这个加载动画，它将一个圆形进度指示器和圆形渐现动画结合。这个组合的效果有趣，独一无二和有点迷人。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Circle.gif" alt=""></p>
+<p>这个教程将会教你如何使用Swift和Core Animatoin来重新创建这个效果。让我们开始吧！</p>
+<h1 id="基础">基础</h1><p>首先下载这个教程的<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Starter.zip" target="_blank" rel="external">启动项目</a>，然后编译和运行。过一会之后，你应该看到一个简单的image显示：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/StarterProject.png" alt=""></p>
+<p>这个启动项目已经预先在恰当的位置将views和加载逻辑编写好了。花一分钟来浏览来快速了解这个项目；那里有一个<strong>ViewController</strong>，<strong>ViewController</strong>里有一个命名为<strong>CustomImageView</strong>的<strong>UIImageView</strong>子类, 还有一个<strong>SDWebImage</strong>的方法被调用来加载image。</p>
+<p>你可能注意到当你第一次运行这个app的时候，当image下载时这个app似乎会暂停几秒，然后image会显示在屏幕。当然，此刻没有圆形进度指示器 - 你将会在这个教程中创建它！</p>
+<p>你会在两个步骤中创建这个动画：</p>
+<ol>
+<li><strong>圆形进度</strong>。首先，你会画一个圆形进度指示器，然后根据下载进度来更新它。</li>
+<li><strong>扩展圆形图片</strong>。第二，你会通过扩展的圆形窗口来揭示下载图片。</li>
+</ol>
+<p>紧跟着下面步骤来逐步实现！</p>
+<a id="more"></a>
+<h1 id="创建圆形指示器">创建圆形指示器</h1><p>想一下关于进度指示器的基本设计。这个指示器一开始是空来展示0%进度，然后逐渐填满直到image完成下载。通过设置<strong>CAShapeLayer</strong>的<strong>path</strong>为circle来实现是相当简单。</p>
+<blockquote>
+<p>注意：如果你不熟悉<strong>CAShapeLayer</strong>(或<strong>CALayers</strong>)的基本概念，可以查看Scott Gardner的<a href="http://www.raywenderlich.com/90488/calayer-in-ios-with-swift-10-examples" target="_blank" rel="external">CALayer in iOS with Swift</a>文章。</p>
+</blockquote>
+<p>你可以通过<strong>CAShapeLayer</strong>的<strong>strokeStart</strong>和<strong>strokeEnd</strong>属性来控制开始和结束位置的外观。通过改变<strong>strokeEnd</strong>的值在0到1之间，你可以恰当地填充下载进度。</p>
+<p>让我们试一下。通过<strong>iOS\Source\Cocoa Touch Class template</strong>来创建一个新的文件，文件名为<strong>CircularLoaderView</strong>。设置它为<strong>UIView</strong>的子类。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/Screenshot-2015-01-25-19.25.43.png" alt=""></p>
+<p>点击<strong>Next</strong>和<strong>Create</strong>。新的子类<strong>UIView</strong>将用来保存动画的代码。</p>
+<p>打开<strong>CircularLoaderView.swift</strong>和添加以下属性和常量到这个类：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">circlePathLayer =</span> CAShapeLayer()</span><br><span class="line"><span class="keyword">let</span> circleRadius: <span class="variable">CGFloat =</span> <span class="number">20.0</span></span><br></pre></td></tr></table></figure>
+<p><strong>circlePathLayer</strong>表示这个圆形路径，而<strong>circleRadius</strong>表示这个圆形路径的半径。</p>
+<p>添加以下初始化代码到<strong>CircularLoaderView.swift</strong>来配置这个shape layer:</p>
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="component">override init(frame: CGRect) &#123;</span><br><span class="line">  super<span class="string">.init(frame:</span> frame)</span><br><span class="line">  configure()</span><br><span class="line">&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="component">required init(coder aDecoder: NSCoder) &#123;</span><br><span class="line">  super<span class="string">.init(coder:</span> aDecoder)</span><br><span class="line">  configure()</span><br><span class="line">&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="component">func configure() &#123;</span><br><span class="line">  circlePathLayer<span class="string">.frame</span> = bounds</span><br><span class="line">  circlePathLayer<span class="string">.lineWidth</span> = 2</span><br><span class="line">  circlePathLayer<span class="string">.fillColor</span> = UIColor<span class="string">.clearColor().CGColor</span></span><br><span class="line">  circlePathLayer<span class="string">.strokeColor</span> = UIColor<span class="string">.redColor().CGColor</span></span><br><span class="line">  layer<span class="string">.addSublayer(circlePathLayer)</span></span><br><span class="line">  backgroundColor = UIColor<span class="string">.whiteColor()</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>两个初始化方法都调用<strong>configure</strong>方法，<strong>configure</strong>方法设置一个shape layer的line width为2，fill color为clear,stroke color为red。将添加circlePathLayer添加到view’s main layer。然后设置view的 <strong>backgroundColor</strong> 为white，那么当image加载时，屏幕的其余部分就忽略掉。</p>
+<h2 id="添加路径">添加路径</h2><p>你会注意到你还没赋值一个path给layer。为了做到这点，添加以下方法(还是在<strong>CircularLoaderView.swift</strong>文件)：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func circleFrame() -&gt; <span class="built_in">CGRect</span> &#123;</span><br><span class="line">  var circleFrame = <span class="built_in">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="number">2</span>*circleRadius, height: <span class="number">2</span>*circleRadius)</span><br><span class="line">  circleFrame<span class="variable">.origin</span><span class="variable">.x</span> = <span class="built_in">CGRectGetMidX</span>(circlePathLayer<span class="variable">.bounds</span>) - <span class="built_in">CGRectGetMidX</span>(circleFrame)</span><br><span class="line">  circleFrame<span class="variable">.origin</span><span class="variable">.y</span> = <span class="built_in">CGRectGetMidY</span>(circlePathLayer<span class="variable">.bounds</span>) - <span class="built_in">CGRectGetMidY</span>(circleFrame)</span><br><span class="line">  <span class="keyword">return</span> circleFrame</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面那个方法返回一个<strong>CGRect</strong>的实例来界定指示器的路径。这个边框是<strong>2*circleRadius</strong>宽和<strong>2*circleRadius</strong>高，放在这个view的正中心。</p>
+<p>每次这个view的size改变时，你会需要都重新计算<strong>circleFrame</strong>，所以你可能将它放在一个独立的方法。</p>
+<p>现在添加以下方法来创建你的路径：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func circlePath<span class="function"><span class="params">()</span> -&gt;</span> UIBezierPath &#123;</span><br><span class="line">  <span class="keyword">return</span> UIBezierPath(<span class="attribute">ovalInRect</span>: circleFrame())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这只是根据<strong>circleFrame</strong>限定来返回圆形的<strong>UIBezierPath</strong>。由于<strong>circleFrame()</strong>返回一个正方形，在这种情况下”椭圆“会最终成为一个圆形。</p>
+<p>由于layers没有<strong>autoresizingMask</strong>这个属性，你需要在<strong>layoutSubviews</strong>方法更新<strong>circlePathLayer</strong>的frame来恰当地响应view的size变化。</p>
+<p>下一步，覆盖<strong>layoutSubviews()</strong>方法：</p>
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="component">override func layoutSubviews() &#123;</span><br><span class="line">  super<span class="string">.layoutSubviews()</span></span><br><span class="line">  circlePathLayer<span class="string">.frame</span> = bounds</span><br><span class="line">  circlePathLayer<span class="string">.path</span> = circlePath()<span class="string">.CGPath</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>由于改变了frame，你要在这里调用<strong>circlePath()</strong>方法来触发重新计算路径。</p>
+<p>现在打开<strong>CustomImageView.swift</strong>文件和添加以下<strong>CircularLoaderView</strong>实例作为一个属性：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let progressIndicatorView = <span class="function"><span class="title">CircularLoaderView</span><span class="params">(frame: CGRectZero)</span></span></span><br></pre></td></tr></table></figure>
+<p>下一步，在之前下载图片的代码添加这几行代码到<strong>init(coder:)</strong>方法：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">addSubview(self.progressIndicatorView)</span><br><span class="line"></span><span class="label">progressIndicatorView.frame</span> = <span class="keyword">bounds</span><br><span class="line"></span><span class="label">progressIndicatorView.autoresizingMask</span> = .FlexibleWidth <span class="title">| .FlexibleHeight</span></span><br></pre></td></tr></table></figure>
+<p>上面代码添加进度指示器作为一个subview添加到自定义的image view。<strong>autoresizingMask</strong>确保进度指示器view保持与image view的size一样。</p>
+<p>编译和运行你的项目；你会看到一个红的、空心的圆形出现，就像这样：</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Screenshot-2015-01-25-21.44.17.png" alt=""></p>
+<p>好的 - 你已经有进度指示器画在屏幕上。你的下一个任务就是根据下载进度变化来stroke。</p>
+<h2 id="修改Stroke长度">修改Stroke长度</h2><p>回到<strong>CircularLoaderView.swift</strong>文件和在这个文件的其他属性直接添加以下代码：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">var</span> progress: CGFloat &#123;</span><br><span class="line">  <span class="preprocessor">get</span> &#123;</span><br><span class="line">    return circlePathLayer.<span class="keyword">strokeEnd</span><br><span class="line"></span>  &#125;</span><br><span class="line">  set &#123;</span><br><span class="line">    <span class="preprocessor">if</span> (newValue &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      circlePathLayer.<span class="keyword">strokeEnd </span>= <span class="number">1</span></span><br><span class="line">    &#125; <span class="preprocessor">else</span> <span class="preprocessor">if</span> (newValue &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      circlePathLayer.<span class="keyword">strokeEnd </span>= <span class="number">0</span></span><br><span class="line">    &#125; <span class="preprocessor">else</span> &#123;</span><br><span class="line">      circlePathLayer.<span class="keyword">strokeEnd </span>= newValue</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码创建一个<strong>computed property</strong> - 也就是一个属性没有任何后背的变量 - 它有一个自定义的setter和getter。这个getter只是返回<strong>circlePathLayer.strokeEnd</strong>，setter验证输入值要在0到1之间，然后恰当地设置layer的<strong>strokeEnd</strong>属性。</p>
+<p>在第一次运行的时候，添加下面这行代码到<strong>configure()</strong>来初始化进度：</p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">progress </span>=<span class="string"> 0</span></span><br></pre></td></tr></table></figure>
+<p>编译和运行工程；除了一个空白的屏幕，你应该什么也没看到。相信我，这是一个好消息。设置<strong>progress</strong>为0，反过来会设置<strong>strokeEnd</strong>也为0，这就意味着shape layer什么也没画。</p>
+<p>唯一剩下要做的就是你的指示器在image下载回调方法中更新<strong>progress</strong>。</p>
+<p>回到<strong>CustomImageView.swift</strong>文件和用以下代码来代替注释<strong>Update progress here</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self!<span class="class">.progressIndicatorView</span><span class="class">.progress</span> = <span class="function"><span class="title">CGFloat</span><span class="params">(receivedSize)</span></span>/<span class="function"><span class="title">CGFloat</span><span class="params">(expectedSize)</span></span></span><br></pre></td></tr></table></figure>
+<p>这主要通过<strong>receivedSize</strong>除以<strong>expectedSize</strong>来计算进度。</p>
+<blockquote>
+<p>注意：你会注意到block使用weak self引用 - 这样能够避免retain cycle。</p>
+</blockquote>
+<p>编译和运行你的工程；你会看到进度指示器像这样开始移动：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/indicator.gif" alt=""></p>
+<p>即使你自己没有添加任何动画代码，<strong>CALayer</strong>在layer轻松地发现任何animatable属性和当属性改变时平滑地animate。</p>
+<p>上面已经完成第一个阶段。现在进入第二和最后阶段。</p>
+<h1 id="创建Reveal动画">创建Reveal动画</h1><p>reveal阶段在window显示image然后逐渐扩展圆形环的形状。如果你已经读过<a href="http://www.raywenderlich.com/86521/how-to-make-a-view-controller-transition-animation-like-in-the-ping-app" target="_blank" rel="external">前面教程</a>，那个教程主要讲创建一个Ping风格的view controller动画，你就会知道这是一个很好的关于<strong>CALayer</strong>的<strong>mask</strong>属性的使用案例。</p>
+<p>添加以下方法到<strong>CircularLoaderView.swift</strong>文件：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func reveal<span class="params">()</span> &#123;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  backgroundColor = UIColor.clearColor<span class="params">()</span></span><br><span class="line">  progress = <span class="number">1</span></span><br><span class="line">  <span class="comment">// 2</span></span><br><span class="line">  circlePathLayer.removeAnimationForKey<span class="params">(<span class="string">"strokeEnd"</span>)</span></span><br><span class="line">  <span class="comment">// 3</span></span><br><span class="line">  circlePathLayer.removeFromSuperlayer<span class="params">()</span></span><br><span class="line">  superview?.layer.mask = circlePathLayer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个很重要的方法需要理解，让我们逐段看一遍：</p>
+<ol>
+<li><p>设置view的背景色为clear，那么在view后面的image不再隐藏，然后设置<strong>progress</strong>为1或100%。</p>
+</li>
+<li><p>使用<strong>strokeEnd</strong>属性来移除任何待定的implicit animations，否则干扰reveal animation。关于implicit animations的更多信息，请查看<a href="http://www.raywenderlich.com/store/ios-animations-by-tutorials" target="_blank" rel="external">iOS Animations by Tutorials</a>.</p>
+</li>
+<li><p>从它的<strong>superLayer</strong>移除<strong>circlePathLayer</strong>，然后赋值给<strong>superView</strong>的layer maks，借助circular mask “hole”，image是可见的。这样让你复用已存在的layer和避免重复代码。</p>
+</li>
+</ol>
+<p>现在你需要在某个地方调用<strong>reveal()</strong>。在<strong>CustomImageView.swift</strong>文件用以下代码替换<strong>Reveal image here</strong>注释：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self!<span class="class">.progressIndicatorView</span><span class="class">.reveal</span>()</span><br></pre></td></tr></table></figure>
+<p>编译和运行你的app；一旦image开始下载，你会看见一部分小的ring在显示。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Screenshot-2015-01-26-02.49.54.png" alt=""></p>
+<p>你能在背景看到你的image - 但几乎什么也没有！</p>
+<h2 id="扩展环">扩展环</h2><p>你的下一步就是在内外扩展这个环。你可以两个分离的、同轴心的<strong>UIBezierPath</strong>来做到，但你也可以一个更加有效的方法，只是使用一个Bezier path来完成。</p>
+<p>怎样做呢？你只是增加圆的半径(<strong>path</strong>属性)来向外扩展，同时增加line的宽度(<strong>lineWidth</strong>属性)来使环更加厚和向内扩展。最终，两个值都增长到足够时就在下面显示整个image。</p>
+<p>回到<strong>CircularLoaderView.swift</strong>文件和添加以下代码到reveal()方法的最后：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line">let center = <span class="function"><span class="title">CGPoint</span><span class="params">(x: CGRectGetMidX(bounds)</span></span>, y: <span class="function"><span class="title">CGRectGetMidY</span><span class="params">(bounds)</span></span>)</span><br><span class="line">let finalRadius = <span class="function"><span class="title">sqrt</span><span class="params">((center.x*center.x)</span></span> + (center.y*center.y))</span><br><span class="line">let radiusInset = finalRadius - circleRadius</span><br><span class="line">let outerRect = <span class="function"><span class="title">CGRectInset</span><span class="params">(circleFrame()</span></span>, -radiusInset, -radiusInset)</span><br><span class="line">let toPath = <span class="function"><span class="title">UIBezierPath</span><span class="params">(ovalInRect: outerRect)</span></span><span class="class">.CGPath</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line">let fromPath = circlePathLayer<span class="class">.path</span></span><br><span class="line">let fromLineWidth = circlePathLayer<span class="class">.lineWidth</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">CATransaction.<span class="function"><span class="title">begin</span><span class="params">()</span></span></span><br><span class="line">CATransaction.<span class="function"><span class="title">setValue</span><span class="params">(kCFBooleanTrue, forKey: kCATransactionDisableActions)</span></span></span><br><span class="line">circlePathLayer<span class="class">.lineWidth</span> = <span class="number">2</span>*finalRadius</span><br><span class="line">circlePathLayer<span class="class">.path</span> = toPath</span><br><span class="line">CATransaction.<span class="function"><span class="title">commit</span><span class="params">()</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line">let lineWidthAnimation = <span class="function"><span class="title">CABasicAnimation</span><span class="params">(keyPath: <span class="string">"lineWidth"</span>)</span></span></span><br><span class="line">lineWidthAnimation<span class="class">.fromValue</span> = fromLineWidth</span><br><span class="line">lineWidthAnimation<span class="class">.toValue</span> = <span class="number">2</span>*finalRadius</span><br><span class="line">let pathAnimation = <span class="function"><span class="title">CABasicAnimation</span><span class="params">(keyPath: <span class="string">"path"</span>)</span></span></span><br><span class="line">pathAnimation<span class="class">.fromValue</span> = fromPath</span><br><span class="line">pathAnimation<span class="class">.toValue</span> = toPath</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 5</span></span><br><span class="line">let groupAnimation = <span class="function"><span class="title">CAAnimationGroup</span><span class="params">()</span></span></span><br><span class="line">groupAnimation<span class="class">.duration</span> = <span class="number">1</span></span><br><span class="line">groupAnimation<span class="class">.timingFunction</span> = <span class="function"><span class="title">CAMediaTimingFunction</span><span class="params">(name: kCAMediaTimingFunctionEaseInEaseOut)</span></span></span><br><span class="line">groupAnimation<span class="class">.animations</span> = [pathAnimation, lineWidthAnimation]</span><br><span class="line">groupAnimation<span class="class">.delegate</span> = self</span><br><span class="line">circlePathLayer.<span class="function"><span class="title">addAnimation</span><span class="params">(groupAnimation, forKey: <span class="string">"strokeWidth"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>现在逐段解释以上代码是究竟做了什么：</p>
+<ol>
+<li><p>确定圆形的半径之后就能完全限制image view。然后计算<strong>CGRect</strong>来完全限制这个圆形。<strong>toPath</strong>表示<strong>CAShapeLayer</strong> mask的最终形状。</p>
+</li>
+<li><p>设置<strong>lineWidth</strong>和<strong>path</strong>初始值来匹配当前layer的值。</p>
+</li>
+<li><p>设置<strong>lineWidth</strong>和<strong>path</strong>的最终值；这样能防止它们当动画完成时跳回它们的原始值。<strong>CATransaction</strong>设置<strong>kCATransactionDisableActions</strong>键对应的值为<strong>true</strong>来禁用layer的implicit animations。</p>
+</li>
+<li><p>创建一个两个<strong>CABasicAnimation</strong>的实例，一个是路径动画，一个是<strong>lineWidth</strong>动画，<strong>lineWidth</strong>必须增加到两倍跟半径增长速度一样快，这样圆形向内扩展与向外扩展一样。</p>
+</li>
+<li><p>将两个animations添加到一个<strong>CAAnimationGroup</strong>，然后添加animation group到layer。将<strong>self</strong>赋值给delegate，等下你会使用到它。</p>
+</li>
+</ol>
+<p>编译和运行你的工程；你会看到一旦image完成下载，reveal animation就会弹出来。但即使reveal animation完成，部分圆形还是会保持在屏幕上。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/02/StillVisible.png" alt=""></p>
+<p>为了修复这种情况，添加以下实现<strong>animationDidStop(_:finished:)</strong> 到 <strong>CircularLoaderView.swift</strong>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">animationDidStop</span><span class="params">(anim: CAAnimation!, finished flag: Bool)</span></span> &#123;</span><br><span class="line">  superview?.layer.mask = <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些代码从super layer上移除mask，这会完全地移除圆形。</p>
+<p>再次编译和运行你的工程，和你会看到整个动画的效果：</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/02/indicator-final-final.gif" alt=""></p>
+<p>恭喜你，你已经完成创建圆形图像加载动画！</p>
+<h1 id="下一步">下一步</h1><p>你可以<a href="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Final.zip" target="_blank" rel="external">在这里下载整个工程</a>。</p>
+<p>基于本教程，你可以进一步来微调动画的时间、曲线和颜色来满足你的需求和个人设计美学。一个可能需要改进就是设置shape layer的<strong>lineCap</strong>属性值为<strong>kCALineCapRound</strong>来四舍五入圆形进度指示器的尾部。你自己思考还有什么可以改进的地方。</p>
+<p>如果你喜欢这个教程和愿意学习怎样创建更多像这样的动画，请查看Marin Todorov的书<a href="http://www.raywenderlich.com/store/ios-animations-by-tutorials" target="_blank" rel="external">iOS Animations by Tutorials</a>。它是从基本的动画开始，然后逐步讲解layer animations, animating constraints, view controller transitions和更多</p>
+<p>如果你有什么关于这个教程的问题或评论，请在下面参与讨论。我很乐意看到你在你的App中添加这么酷的动画。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/"> #Swift </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/">Swift Increasing Performance by Reducing Dynamic Dispatch</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Extensions-Nuances/">Swift Extensions Nuances</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用CAShapeLayer来实现圆形图片加载动画"><span class="nav-number">1.</span> <span class="nav-text">使用CAShapeLayer来实现圆形图片加载动画</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number"></span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建圆形指示器"><span class="nav-number"></span> <span class="nav-text">创建圆形指示器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加路径"><span class="nav-number">1.</span> <span class="nav-text">添加路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改Stroke长度"><span class="nav-number">2.</span> <span class="nav-text">修改Stroke长度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建Reveal动画"><span class="nav-number"></span> <span class="nav-text">创建Reveal动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展环"><span class="nav-number">1.</span> <span class="nav-text">扩展环</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下一步"><span class="nav-number"></span> <span class="nav-text">下一步</span></a></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/';
+      var disqus_title = 'How To Implement A Circular Image Loader Animation with CAShapeLayer';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

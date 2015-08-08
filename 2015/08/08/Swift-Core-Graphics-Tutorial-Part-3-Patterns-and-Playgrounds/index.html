@@ -1,0 +1,755 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Core Graphics," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Core_Graphics_教程第三部分(Swift)_-_Patterns_和_Playgrounds">Core Graphics 教程第三部分(Swift) - Patterns 和 Playgrounds</h2><blockquote>
+<ul>
+<li>原文链接：<a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3" target="_blank" rel="external">Core Graphics Tutorial Part 3: Patterns and Playgrounds</a></li>
+<li>原文作者：<a href="http://www.raywenderlich.com/u/caroline" target="_blank" rel="external"> Caroline Begbie </a></li>
+<li>译文出自：<a href="www.devtf.cn">开发者前线</a></li>
+<li>译者：<a href="https://github.com/MrLoong" target="_blank" rel="external">MrLoong</a></li>
+<li>校对者：<a href="https://github.com/samw00" target="_blank" rel="external">samw00</a></li>
+</ul>
+</blockquote>
+<p>欢迎回到Core Graphics 教学系列的第三也是最后一部分！Flo，你的water drinking tracking app将使用Core Graphics 进行最终的改进。</p>
+<p>在<a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1" target="_blank" rel="external">第一部分</a>，你通过UIKit画了三个自定义形状的控件,<a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2" target="_blank" rel="external">在第二部分</a>你创建了一个视图用来显示用户在过去一周的喝水量，并且研究了transforming the context transformation matrix (CTM)</p>
+<p>在这第三也是最后一部分，你将使<strong>Flo</strong>升级到它的最终形态，特别的是你将：</p>
+<ul>
+<li>创建一个重复的背景图案</li>
+<li>为成功每天喝掉8杯水的用户从头到尾画一枚奖章</li>
+</ul>
+<p>如果你还没有这个项目的源代码，从本系列的第二部分下载<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part2-6.3.zip" target="_blank" rel="external"><strong>Flo工程</strong></a></p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt=""></p>
+<a id="more"></a>
+<h2 id="Background_Repeating_Pattern_背景重复模式">Background Repeating Pattern 背景重复模式</h2><p>你在这部分的任务是使用UIKit的方式创建这个背景图案：</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-FinalBackground-300x500.png" alt=""></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Note: If you need to <span class="operator"><span class="keyword">optimize</span> <span class="keyword">for</span> speed, <span class="keyword">then</span> <span class="keyword">work</span> through</span><br><span class="line">Core Graphics Tutorial: Patterns which demonstrates a basic </span><br><span class="line">way <span class="keyword">to</span> <span class="keyword">create</span> patterns <span class="keyword">with</span> Objective-C <span class="keyword">and</span> Core Graphics. </span><br><span class="line"><span class="keyword">For</span> most purposes, <span class="keyword">like</span> <span class="keyword">when</span> the background <span class="keyword">is</span> <span class="keyword">only</span> drawn </span><br><span class="line">once, UIKit’s easier wrapper methods should be acceptable.</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意：如果你需要对速度进行优化，可以去看[<span class="link_label">Core Graphics Tutorial:Patters</span>](<span class="link_url">http://www.raywenderlich.com/33496/core-graphics-tutorial-patterns</span>)里面演示一个使用Object－c和Core Graphics的基本方法去创建一个格局.在大多数情况下当背景仅被描绘一次，使用UIKit封装好的简易方法应该是可以接受的。</span><br></pre></td></tr></table></figure>
+<p>点击<strong>File\New\File…</strong>并且选择IOS <strong>iOS\Source\Cocoa Touch Class</strong> 模版创建一个类名为<strong>BackgroundView</strong>的UIView。点击下一步然后创建</p>
+<p>进入<strong>Main.storyboard</strong>，在 <strong>Identity Inspector</strong>选择ViewController主界面，改变为<strong>BackgroundView</strong></p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-BackgroundViewStoryboard3-480x187.png" alt=""></p>
+<p>点击<strong>Assistant Editor</strong>，让<strong>BackgroundView.swift</strong>和<strong>Main.storyboard</strong>并排显示。</p>
+<p>替换<strong>BackgroundView.swift</strong>的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="type">UIKit</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor">@IBDesignable</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BackgroundView</span>: <span class="title">UIView</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">//1 </span></span><br><span class="line">  <span class="preprocessor">@IBInspectable</span> <span class="keyword">var</span> lightColor: <span class="type">UIColor</span> = <span class="type">UIColor</span>.orangeColor()</span><br><span class="line">  <span class="preprocessor">@IBInspectable</span> <span class="keyword">var</span> darkColor: <span class="type">UIColor</span> = <span class="type">UIColor</span>.yellowColor()</span><br><span class="line">  <span class="preprocessor">@IBInspectable</span> <span class="keyword">var</span> patternSize:<span class="type">CGFloat</span> = <span class="number">200</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">drawRect</span><span class="params">(rect: CGRect)</span></span> &#123;</span><br><span class="line">    <span class="comment">//2</span></span><br><span class="line">    <span class="keyword">let</span> context = <span class="type">UIGraphicsGetCurrentContext</span>()</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//3</span></span><br><span class="line">    <span class="type">CGContextSetFillColorWithColor</span>(context, darkColor.<span class="type">CGColor</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//4</span></span><br><span class="line">    <span class="type">CGContextFillRect</span>(context, rect)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在你的storyboard背景应该是黄色的，更多的细节参考上面的代码：</p>
+<ol>
+<li><strong>lightColor</strong>和<strong>darkColor</strong>拥有<strong>@IBInspectable</strong>属性，所以更容易去配置背景颜色。你使用橙色和黄色作为临时色，这样你就能直到到底在发生什么事。<strong>patternSize</strong>控件控制着重复形式的大小。它的初始值设置为large，所以更容易看清发生了什么。</li>
+<li><strong>UIGraphicsGetCurrentContext()</strong>让你了解视图上下文同样也是<strong>drawRect(_:)</strong>将会绘画的区域。</li>
+<li>使用Core Graphics的方法<strong>CGContextSetFillColorWithColor()</strong> 去设置当前上下文的填充色。注意当你使用Core Graphics时，需要用到<strong>darkColor</strong>的一个属性<strong>CGColor</strong>。</li>
+<li><strong>CGContextFillRect()</strong>使用当前填充色填充当前上下文的整个背景，而不是建立一个矩形路径。</li>
+</ol>
+<p>你现在需要使用<strong>UIBezierPath()</strong>画这三个橙色的三角形。图中的点对应代码中的数字。</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-GridPattern.png" alt=""></p>
+<p>仍然在<strong>BackgroundView.swift</strong>中操作，在 <strong>drawRect(_:)</strong>末尾添加如下代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">let drawSize = <span class="function"><span class="title">CGSize</span><span class="params">(width: patternSize, height: patternSize)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//insert code here</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">let trianglePath = <span class="function"><span class="title">UIBezierPath</span><span class="params">()</span></span></span><br><span class="line"><span class="comment">//1</span></span><br><span class="line">trianglePath.moveToPoint(CGPoint(x:drawSize.<span class="attribute">width</span>/<span class="number">2</span>, </span><br><span class="line">                                 y:<span class="number">0</span>)) </span><br><span class="line"><span class="comment">//2</span></span><br><span class="line">trianglePath.addLineToPoint(CGPoint(x:<span class="number">0</span>, </span><br><span class="line">                                    y:drawSize.<span class="attribute">height</span>/<span class="number">2</span>)) </span><br><span class="line"><span class="comment">//3</span></span><br><span class="line">trianglePath.addLineToPoint(CGPoint(x:drawSize<span class="class">.width</span>, </span><br><span class="line">                                    y:drawSize.<span class="attribute">height</span>/<span class="number">2</span>)) </span><br><span class="line"> </span><br><span class="line"><span class="comment">//4</span></span><br><span class="line">trianglePath.moveToPoint(CGPoint(x: <span class="number">0</span>, </span><br><span class="line">                                 y: drawSize.<span class="attribute">height</span>/<span class="number">2</span>)) </span><br><span class="line"><span class="comment">//5</span></span><br><span class="line">trianglePath.addLineToPoint(CGPoint(x: drawSize.<span class="attribute">width</span>/<span class="number">2</span>, </span><br><span class="line">                                    y: drawSize.<span class="attribute">height</span>)) </span><br><span class="line"><span class="comment">//6</span></span><br><span class="line">trianglePath.addLineToPoint(CGPoint(x: <span class="number">0</span>, </span><br><span class="line">                                    y: drawSize.<span class="attribute">height</span>)) </span><br><span class="line"> </span><br><span class="line"><span class="comment">//7</span></span><br><span class="line">trianglePath.moveToPoint(CGPoint(x: drawSize<span class="class">.width</span>, </span><br><span class="line">                                 y: drawSize.<span class="attribute">height</span>/<span class="number">2</span>)) </span><br><span class="line"><span class="comment">//8</span></span><br><span class="line">trianglePath.addLineToPoint(CGPoint(x:drawSize.<span class="attribute">width</span>/<span class="number">2</span>, </span><br><span class="line">                                    y:drawSize.<span class="attribute">height</span>)) </span><br><span class="line"><span class="comment">//9</span></span><br><span class="line">trianglePath.addLineToPoint(CGPoint(x: drawSize<span class="class">.width</span>, </span><br><span class="line">                                    y: drawSize.<span class="attribute">height</span>)) </span><br><span class="line"> </span><br><span class="line">lightColor.<span class="function"><span class="title">setFill</span><span class="params">()</span></span></span><br><span class="line">trianglePath.<span class="function"><span class="title">fill</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>注意你是如何使用一个路径画三个三角形的，<strong>moveToPoint(_:)</strong>就像在纸上抬起你的笔从一个地方绘制和移动到另一个地方。</p>
+<p>你的storyboard现在应该有一个橙色和黄的的图像在你背景的左上方。</p>
+<p>到目前为止，你都是直接在一个视图的上下文中直接绘画。为了能重复这个图案，你需要在上下文外创建一个图像，然后用这个图像作为上下文中的背景图案。</p>
+<p>找到下面这段代码，在drawRect(_:)的顶部，但是在下面这段代码之后：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">et drawSize = <span class="function"><span class="title">CGSize</span><span class="params">(width: patternSize, height: patternSize)</span></span></span><br></pre></td></tr></table></figure>
+<p>然后插入下面的代码</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">UIGraphicsBeginImageContextWithOptions</span><span class="params">(drawSize, true, <span class="number">0.0</span>)</span></span></span><br><span class="line">let drawingContext = <span class="function"><span class="title">UIGraphicsGetCurrentContext</span><span class="params">()</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//set the fill color for the new context</span></span><br><span class="line">darkColor.<span class="function"><span class="title">setFill</span><span class="params">()</span></span></span><br><span class="line">CGContextFillRect(drawingContext,</span><br><span class="line">      <span class="function"><span class="title">CGRectMake</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>, drawSize.width, drawSize.height)</span></span>)</span><br></pre></td></tr></table></figure>
+<p>嘿！那些橘黄色三角形从面板中消失了，它们去哪了？</p>
+<p><strong>UIGraphicsBeginImageContextWithOptions()</strong>创建了一个新的上下文，并且将其设置为当前的绘图上下文，所以你在这个新的上下文中作画。刚才方法的参数为：</p>
+<ul>
+<li>context的大小</li>
+<li>背景是否透明— 如果你需要透明的, 这里设置为false.</li>
+<li>context scale的大小. 如果要适应视网膜屏幕, 这里应该设置为2, 如果要适应iPhone 6 Plus, 应该为3.0. 然而这里使用0.0将自动适配屏幕</li>
+</ul>
+<p>然后你用 <strong>UIGraphicsGetCurrentContext()</strong>得到这个新的上下文的引用。</p>
+<p>然后你将这个新的context设置为黄色。你可以通过设这context的属性opacity为false让原来的背景色显示，但是画一个不透明的context比画一个透明的要快得多，凭这一点就应该选opaque。</p>
+<p>在<strong>drawRect(_:)</strong>的末尾添加下面的代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let image = <span class="function"><span class="title">UIGraphicsGetImageFromCurrentImageContext</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">UIGraphicsEndImageContext</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>在当前的context提取一个UIImage。当你使用<strong>UIGraphicsEndImageContext()</strong>结束当前context时，描绘context还原为视图context，所以任何未来在<strong>drawRect(_:)</strong> 中的的绘图都会反应在viwe中。</p>
+<p>为了使图像作为一个可重复的图案，在drawRect(_:)末尾添加代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">UIColor</span><span class="params">(patternImage: image)</span></span>.<span class="function"><span class="title">setFill</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">CGContextFillRect</span><span class="params">(context, rect)</span></span></span><br></pre></td></tr></table></figure>
+<p>这会让图片当作UIColor中的一个新的颜色来用，而不是一个纯色。</p>
+<p>编译并且运行app，你现在的app应该有一个相当亮眼的背景：</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/3-BoldBackground2.png" alt=""></p>
+<p>去Main.storyboard，选择background view，并且在Attributes Inspector改变IBInspectable属性的值为：</p>
+<ul>
+<li>Light Color: RGB(255, 255, 242)</li>
+<li>Dark Color: RGB(223, 255, 247)</li>
+<li>Pattern Size: 30</li>
+</ul>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-BackgroundColors2-473x320.png" alt=""></p>
+<p>尝试去画一些不同的背景图案，看看除了三角形，你能不能把背景图案变成polka dot。</p>
+<p>当然，你可以使用自己的非矢量图作为背景图案</p>
+<h2 id="Drawing_Images_绘制图像">Drawing Images 绘制图像</h2><p>在本教程的最后阶段，你将为喝够水的人送上一个奖牌，当计数器纪录的数量达到8杯的时候这个奖牌将出现。</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/3-MedalFinal.png" alt=""></p>
+<p>我知道这肯定比不上博物馆里的一件艺术品，但是请你知道，如果你改进它，我并不会生气，甚至你可以通过画一个奖杯而不是奖牌来升华一下。</p>
+<p>你将在<strong>Swift Playground</strong>中绘制这个奖牌，而不是用<strong>@IBDesignable</strong>，然后把代码复制到<strong>UIImageView</strong>的子类中。虽然与storyboards互动通长是很有用的，但他们有局限性。他们仅能描绘简单的代码，当你创建一个复杂的设计时，storyboards通长很耗时间。</p>
+<p>在这种情况下，只有当用户喝满八杯水的时候才需要画一个图像。如果用户从来没有到达到过目标，那就根本不需要绘制奖牌。</p>
+<p>一旦绘制，他也不需要使用drawRect(_:)和setNeedsDisplay().进行重绘。</p>
+<p>是时候作画了。首先点击Standard Editor按钮，让Xcode返回单一界面编辑模式。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-StandardEditor.png" alt=""></p>
+<p>点击<strong>File\New\File…</strong>并且选择IOS Playground模版。点击 Next 命名playground为MedalDrawing然后点击Create。</p>
+<p>把playground中的代码替换为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"> </span><br><span class="line">let size = <span class="function"><span class="title">CGSize</span><span class="params">(width: <span class="number">120</span>, height: <span class="number">200</span>)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="title">UIGraphicsBeginImageContextWithOptions</span><span class="params">(size, false, <span class="number">0.0</span>)</span></span></span><br><span class="line">let context = <span class="function"><span class="title">UIGraphicsGetCurrentContext</span><span class="params">()</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//This code must always be at the end of the playground</span></span><br><span class="line">let image = <span class="function"><span class="title">UIGraphicsGetImageFromCurrentImageContext</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">UIGraphicsEndImageContext</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>这将创建一个绘制上下文，就像你之前刚给重复背景图片做的是一回事。</p>
+<p>注意最后两行。你总是需要它们在playground底部，这样你就可以在playground中预览图片。</p>
+<p>下一步，在灰色的结果栏中单击代码右边的＋按钮：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/ShowFinishedImage.gif" alt=""></p>
+<p>这将在代码的底部预览你的图像。图像将根据你代码的每次更新而更新。</p>
+<p>在你作画之前，最好能在你的脑海里先有一张绘制草图，看看我在构造这篇tutorial时所构想的“杰作”：</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-Sketch.png" alt=""></p>
+<p>下面是绘制奖牌的顺序:</p>
+<ol>
+<li>后丝带（红色）</li>
+<li>奖章（金色渐变）</li>
+<li>扣环（暗金色）</li>
+<li>前丝带（蓝色）</li>
+<li>数字1（暗金色）</li>
+</ol>
+<p>记住不要变动playground的最后两行（在你最后提取背景图像的地方），并且在那两行代码前添加描绘代码：</p>
+<p>首先设置你要的非标准颜色。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Gold colors</span></span><br><span class="line">let darkGoldColor = UIColor(<span class="string">red:</span> <span class="number">0.6</span>, <span class="string">green:</span> <span class="number">0.5</span>, <span class="string">blue:</span> <span class="number">0.15</span>, <span class="string">alpha:</span> <span class="number">1.0</span>)</span><br><span class="line">let midGoldColor = UIColor(<span class="string">red:</span> <span class="number">0.86</span>, <span class="string">green:</span> <span class="number">0.73</span>, <span class="string">blue:</span> <span class="number">0.3</span>, <span class="string">alpha:</span> <span class="number">1.0</span>)</span><br><span class="line">let lightGoldColor = UIColor(<span class="string">red:</span> <span class="number">1.0</span>, <span class="string">green:</span> <span class="number">0.98</span>, <span class="string">blue:</span> <span class="number">0.9</span>, <span class="string">alpha:</span> <span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+<p>这些现在应该看起来非常熟悉了。注意当你声明颜色的时候，颜色会出现在palyground的右边。</p>
+<p>下面的代码将绘制奖章的红色丝带：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Lower Ribbon</span></span><br><span class="line"><span class="tag">var</span> lowerRibbonPath = <span class="function"><span class="title">UIBezierPath</span><span class="params">()</span></span></span><br><span class="line">lowerRibbonPath.<span class="function"><span class="title">moveToPoint</span><span class="params">(CGPointMake(<span class="number">0</span>, <span class="number">0</span>)</span></span>)</span><br><span class="line">lowerRibbonPath.<span class="function"><span class="title">addLineToPoint</span><span class="params">(CGPointMake(<span class="number">40</span>,<span class="number">0</span>)</span></span>)</span><br><span class="line">lowerRibbonPath.<span class="function"><span class="title">addLineToPoint</span><span class="params">(CGPointMake(<span class="number">78</span>, <span class="number">70</span>)</span></span>)</span><br><span class="line">lowerRibbonPath.<span class="function"><span class="title">addLineToPoint</span><span class="params">(CGPointMake(<span class="number">38</span>, <span class="number">70</span>)</span></span>)</span><br><span class="line">lowerRibbonPath.<span class="function"><span class="title">closePath</span><span class="params">()</span></span></span><br><span class="line">UIColor.<span class="function"><span class="title">redColor</span><span class="params">()</span></span>.<span class="function"><span class="title">setFill</span><span class="params">()</span></span></span><br><span class="line">lowerRibbonPath.<span class="function"><span class="title">fill</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>没有什么新东西，就是创建一个路径并且填充它。你应该看见红色的路径出现在右侧。</p>
+<p>添加描绘扣环的代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Clasp</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">var</span> claspPath = UIBezierPath(roundedRect: </span><br><span class="line">                           <span class="function"><span class="title">CGRectMake</span><span class="params">(<span class="number">36</span>, <span class="number">62</span>, <span class="number">43</span>, <span class="number">20</span>)</span></span>, </span><br><span class="line">                           cornerRadius: <span class="number">5</span>)</span><br><span class="line">claspPath<span class="class">.lineWidth</span> = <span class="number">5</span></span><br><span class="line">darkGoldColor.<span class="function"><span class="title">setStroke</span><span class="params">()</span></span></span><br><span class="line">claspPath.<span class="function"><span class="title">stroke</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>这里你将通过<strong>UIBezierPath(roundedRect:)</strong>中的<strong>cornerRadius</strong>这个参数来设置圆角。<br>扣环应该在右侧显示了。</p>
+<p>添加绘制奖章的代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Medallion</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">var</span> medallionPath = UIBezierPath(ovalInRect: </span><br><span class="line">                    <span class="function"><span class="title">CGRect</span><span class="params">(origin: CGPointMake(<span class="number">8</span>, <span class="number">72</span>)</span></span>, </span><br><span class="line">                             size: <span class="function"><span class="title">CGSizeMake</span><span class="params">(<span class="number">100</span>, <span class="number">100</span>)</span></span>))</span><br><span class="line"><span class="comment">//CGContextSaveGState(context)</span></span><br><span class="line"><span class="comment">//medallionPath.addClip()</span></span><br><span class="line">let gradient = CGGradientCreateWithColors(</span><br><span class="line">                      <span class="function"><span class="title">CGColorSpaceCreateDeviceRGB</span><span class="params">()</span></span>, </span><br><span class="line">                      [darkGoldColor<span class="class">.CGColor</span>, </span><br><span class="line">                       midGoldColor<span class="class">.CGColor</span>, </span><br><span class="line">                       lightGoldColor.CGColor],</span><br><span class="line">                      [<span class="number">0</span>, <span class="number">0.51</span>, <span class="number">1</span>])</span><br><span class="line">CGContextDrawLinearGradient(context,</span><br><span class="line">                            gradient, </span><br><span class="line">                            <span class="function"><span class="title">CGPointMake</span><span class="params">(<span class="number">40</span>, <span class="number">40</span>)</span></span>, </span><br><span class="line">                            <span class="function"><span class="title">CGPointMake</span><span class="params">(<span class="number">40</span>,<span class="number">162</span>)</span></span>, </span><br><span class="line">                             <span class="number">0</span>)</span><br><span class="line"><span class="comment">//CGContextRestoreGState(context)</span></span><br></pre></td></tr></table></figure>
+<p>注意注释部分，这些都是暂时显示颜色渐变是如何写的：</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-SquareGradient.png" alt=""></p>
+<p>为了使颜色从左上角至右下角渐变，改变渐变最终点的x坐标，修改<strong>CGContextDrawLinearGradient()</strong>中的代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CGContextDrawLinearGradient(context,</span><br><span class="line">                            gradient, </span><br><span class="line">                            <span class="function"><span class="title">CGPointMake</span><span class="params">(<span class="number">40</span>, <span class="number">40</span>)</span></span>, </span><br><span class="line">                            <span class="function"><span class="title">CGPointMake</span><span class="params">(<span class="number">100</span>,<span class="number">160</span>)</span></span>, </span><br><span class="line">                             <span class="number">0</span>)</span><br><span class="line">``` </span><br><span class="line">![](http:<span class="comment">//cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-SkewedGradient.png)</span></span><br><span class="line"></span><br><span class="line">现在取消奖章那部分代码中的三行注释从而创建了一个剪切路径把渐变图案约束在奖章的圈圈内。</span><br><span class="line"></span><br><span class="line">就像你在第二部分绘制图形是一样，你在添加剪切路径前保存了绘画上下文，在渐变画好自后你有将上下文恢复了回去，所以上下文不再是被剪切的状态了。</span><br><span class="line"></span><br><span class="line">![](http:<span class="comment">//cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-ClippedGradient.png)</span></span><br><span class="line"></span><br><span class="line">用奖牌的圆圈路径来绘制奖牌上的实线，但绘制前要改变比例。你只将改变应用到一个路径上而不是转变整个context。</span><br><span class="line"></span><br><span class="line">在绘制奖章的代码下添加：</span><br></pre></td></tr></table></figure>
+<p>//Create a transform<br>//Scale it, and translate it right and down<br>var transform = CGAffineTransformMakeScale(0.8, 0.8)<br>transform = CGAffineTransformTranslate(transform, 15, 30)</p>
+<p>medallionPath.lineWidth = 2.0</p>
+<p>//apply the transform to the path<br>medallionPath.applyTransform(transform)<br>medallionPath.stroke()<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">!<span class="attr_selector">[]</span>(<span class="attribute">http</span>:<span class="comment">//cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-MedalOutline.png)</span></span><br><span class="line"></span><br><span class="line">这将路径的尺寸缩小至原始尺寸的<span class="number">80%</span>，并转换路径使其人在渐变视图中居中。</span><br><span class="line"></span><br><span class="line">之后添加前丝带的绘制代码：</span><br></pre></td></tr></table></figure></p>
+<p>//Upper Ribbon</p>
+<p>var upperRibbonPath = UIBezierPath()<br>upperRibbonPath.moveToPoint(CGPointMake(68, 0))<br>upperRibbonPath.addLineToPoint(CGPointMake(108, 0))<br>upperRibbonPath.addLineToPoint(CGPointMake(78, 70))<br>upperRibbonPath.addLineToPoint(CGPointMake(38, 70))<br>upperRibbonPath.closePath()</p>
+<p>UIColor.blueColor().setFill()<br>upperRibbonPath.fill()<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这和你之前给后丝带添加的代码非常相似，创建一个<span class="tag">bezier</span>路径并且填充。</span><br><span class="line"></span><br><span class="line">!<span class="attr_selector">[]</span>(<span class="rule"><span class="attribute">http</span>:<span class="value">//cdn4.raywenderlich.com/wp-content/uploads/<span class="number">2014</span>/<span class="number">12</span>/<span class="number">3</span>-UpperRibbon.png)</span><br><span class="line"></span><br><span class="line">最后一步是在奖章上画数字<span class="number">1</span>，代码如下：</span></span></span><br></pre></td></tr></table></figure></p>
+<p>//Number One</p>
+<p>//Must be NSString to be able to use drawInRect()<br>let numberOne = “1”<br>let numberOneRect = CGRectMake(47, 100, 50, 50)<br>let font = UIFont(name: “Academy Engraved LET”, size: 60)<br>let textStyle = NSMutableParagraphStyle.defaultParagraphStyle()<br>let numberOneAttributes = [<br>  NSFontAttributeName: font!,<br>  NSForegroundColorAttributeName: darkGoldColor]<br>numberOne.drawInRect(numberOneRect,<br>                     withAttributes:numberOneAttributes)<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在这里你定义了一个字符串并设置了字体属性，然后使用**<span class="function"><span class="title">drawInRect</span><span class="params">(_:)</span></span>.**在context进行了重绘</span><br><span class="line"></span><br><span class="line">![](http:<span class="comment">//cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-NumberOne.png)</span></span><br><span class="line"></span><br><span class="line">看上去不错</span><br><span class="line"></span><br><span class="line">你已经很接近成功了，但它看起来有一些二维 － 如果加上一些阴影会更好。</span><br><span class="line"></span><br><span class="line">#<span class="id">#Shadows</span> 阴影</span><br><span class="line"></span><br><span class="line">创建一个阴影需要三个要素：颜色，偏移（阴影的距离和方向）和模糊</span><br><span class="line"></span><br><span class="line">在 playground 顶部，位于自定义颜色之后但在<span class="comment">//Lower Ribbon之前，插入实现阴影的代码：</span></span><br></pre></td></tr></table></figure></p>
+<p>//Add Shadow<br>let shadow:UIColor = UIColor.blackColor().colorWithAlphaComponent(0.80)<br>let shadowOffset = CGSizeMake(2.0, 2.0)<br>let shadowBlurRadius: CGFloat = 5</p>
+<p>CGContextSetShadowWithColor(context,<br>                            shadowOffset,<br>                            shadowBlurRadius,<br>                            shadow.CGColor)<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Okay，这能给我们一个阴影，但结果并不是我们所想象的那样。为什么呢？</span><br><span class="line"></span><br><span class="line">![](<span class="string">http:</span><span class="comment">//cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-MessyShadows.png)</span></span><br><span class="line"></span><br><span class="line">当你在上下文中绘制一个对象时，该代码会给所有的对象都创建阴影。</span><br><span class="line"></span><br><span class="line">![](<span class="string">http:</span><span class="comment">//cdn4.raywenderlich.com/wp-content/uploads/2014/12/3-IndividualShadows.png)</span></span><br><span class="line"></span><br><span class="line">啊！你的奖章由五个对象所组成。难怪看起来有点模糊。幸运的是这改起来比较容易。就是简单的把所有的对象通过一个透明的layer组起来，然后你只需要对整个对象组绘制一个阴影就可以。</span><br><span class="line"></span><br><span class="line">![](<span class="string">http:</span><span class="comment">//cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-GroupedShadow.png)</span></span><br><span class="line"></span><br><span class="line">在阴影代码后添加组合对象的代码。以这段开头：</span><br></pre></td></tr></table></figure></p>
+<p>CGContextBeginTransparencyLayer(context, nil)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">当你开启一组，你也需要结束它。所以在playground末端添加这一段代码，但仍然在截取最后的图像之前：</span><br></pre></td></tr></table></figure></p>
+<p>CGContextEndTransparencyLayer(context)<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">现在你将有一个完整的奖牌图像，整洁的阴影。</span><br><span class="line"></span><br><span class="line">![](http://cdn1.raywenderlich.com/wp-content/uploads/2014/12/3-MedalFinal.png)</span><br><span class="line"></span><br><span class="line"><span class="comment">##Image View Using Core Graphics Image创建一个新的图像视图</span></span><br><span class="line"></span><br><span class="line">给这个图像视图创建一个新的文件。</span><br><span class="line"></span><br><span class="line">单击<span class="keyword">*</span><span class="keyword">*</span>File\New\File…<span class="keyword">*</span><span class="keyword">*</span> ,并且选择 <span class="keyword">*</span><span class="keyword">*</span>Cocoa Touch Class<span class="keyword">*</span><span class="keyword">*</span> 模版，单击Next，并且将类命名为<span class="keyword">*</span><span class="keyword">*</span>MedalView<span class="keyword">*</span><span class="keyword">*</span>，父类为<span class="keyword">*</span><span class="keyword">*</span>UIImageView<span class="keyword">*</span><span class="keyword">*</span>，然后点击Next，点击Creat</span><br><span class="line"></span><br><span class="line">进入<span class="keyword">*</span><span class="keyword">*</span>Main.storyboard<span class="keyword">*</span><span class="keyword">*</span>，把<span class="keyword">*</span><span class="keyword">*</span>UIImageView<span class="keyword">*</span><span class="keyword">*</span> 添加为<span class="keyword">*</span><span class="keyword">*</span>Counter View<span class="keyword">*</span><span class="keyword">*</span>的一个子视图。然后选择UIImageView，在<span class="keyword">*</span><span class="keyword">*</span>Identity Inspector<span class="keyword">*</span><span class="keyword">*</span>把类改为 <span class="keyword">*</span><span class="keyword">*</span>MedalView<span class="keyword">*</span><span class="keyword">*</span>。</span><br><span class="line"></span><br><span class="line">![](http://cdn5.raywenderlich.com/wp-content/uploads/2014/12/3-MedalViewClass.png)</span><br><span class="line"></span><br><span class="line">在<span class="keyword">*</span><span class="keyword">*</span>Size Inspector<span class="keyword">*</span><span class="keyword">*</span>给视图设置坐标为x=76,y=147,宽度为80,高度为80：</span><br><span class="line"></span><br><span class="line">![](http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/3-MedalViewCoordinates.png)</span><br><span class="line"></span><br><span class="line">在<span class="keyword">*</span><span class="keyword">*</span>Attributes Inspector<span class="keyword">*</span><span class="keyword">*</span>中改变<span class="keyword">*</span><span class="keyword">*</span>Image Mode<span class="keyword">*</span><span class="keyword">*</span>为<span class="keyword">*</span><span class="keyword">*</span>Aspect Fit<span class="keyword">*</span><span class="keyword">*</span>，这样图像可以自动调整大小适应视图。</span><br><span class="line"></span><br><span class="line">![](http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/3-MedalAspectFit.png)</span><br><span class="line"></span><br><span class="line">去medalview.swift并添加一个方法用来创建奖章：</span><br></pre></td></tr></table></figure></p>
+<p>func createMedalImage() -&gt; UIImage {<br>  println(“creating Medal Image”)</p>
+<p>}<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这会打印一句话，这样你就能直到图像什么时候被创建。</span><br><span class="line"></span><br><span class="line">进入<span class="keyword">*</span><span class="keyword">*</span>MedalDrawing<span class="keyword">*</span><span class="keyword">*</span> playground，复制整个代码除了开始的 import UIKit。</span><br><span class="line"></span><br><span class="line">返回<span class="keyword">*</span><span class="keyword">*</span>MedalView.swift<span class="keyword">*</span><span class="keyword">*</span>把playground中的代码黏贴到<span class="keyword">*</span><span class="keyword">*</span>createMedalImage()<span class="keyword">*</span><span class="keyword">*</span>中去。</span><br><span class="line"></span><br><span class="line">在<span class="keyword">*</span><span class="keyword">*</span>createMedalImage()<span class="keyword">*</span><span class="keyword">*</span>尾部添加：</span><br></pre></td></tr></table></figure></p>
+<p>return image<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">应该会编译错误。</span><br><span class="line">在类的顶部添加一个属性来持有奖牌图像：</span><br></pre></td></tr></table></figure></p>
+<p>lazy var medalImage:UIImage = self.createMedalImage()<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">添加一个方法去显示奖牌：</span><br></pre></td></tr></table></figure></p>
+<p>func showMedal(show:Bool) {<br>  if show {<br>    image = medalImage<br>  } else {<br>    image = nil<br>  }<br>}<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在<span class="keyword">*</span><span class="keyword">*</span>ViewController.swift<span class="keyword">*</span><span class="keyword">*</span>类顶部添加一个外部应用：</span><br></pre></td></tr></table></figure></p>
+<p>@IBOutlet weak var medalView: MedalView!<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">去Main.storyboard将new MedalView和这个外部引用相连。</span><br><span class="line"></span><br><span class="line">返回<span class="keyword">*</span><span class="keyword">*</span>ViewController.swift<span class="keyword">*</span><span class="keyword">*</span>并且添加这个方法：</span><br></pre></td></tr></table></figure></p>
+<p>func checkTotal() {<br>  if counterView.counter &gt;= 8 {<br>    medalView.showMedal(true)<br>  } else {<br>    medalView.showMedal(false)<br>  }<br>}<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如果你今天喝了足够的水，这个奖牌将显示。</span><br><span class="line"></span><br><span class="line">在<span class="keyword">*</span><span class="keyword">*</span>viewDidLoad()<span class="keyword">*</span><span class="keyword">*</span> 和 <span class="keyword">*</span><span class="keyword">*</span>btnPushButton(_:)<span class="keyword">*</span><span class="keyword">*</span>这两个方法的底部调用:</span><br></pre></td></tr></table></figure></p>
+<p>checkTotal()<br>```</p>
+<p>编译并运行应用，它应该像这样：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/3-CompletedApp.png" alt=""></p>
+<p>在调试控制台中，只有当计数器达到8时，你才会看到创建奖章的那句log，这是因为medalImage使用了一个延迟声明lazy declaration。</p>
+<h2 id="Where_to_Go_From_Here?_何去何从">Where to Go From Here? 何去何从</h2><p>你已经在这部系列教程中走了很长的路。你应该已经掌握了Core Graphics的基本知识，创建图案和渐变还有转换context，最为重要的是，你学会了如何在app中融汇地使用它们。</p>
+<p>在这<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part3-6.31.zip" target="_blank" rel="external">Flo right here</a>下载完整的版本。这个版本还包括一些额外地数据和辐射渐变让按钮在被按下的时候能给用户一个更好的UI体验。</p>
+<p>我希望在制作Flo时你乐在其中，并且你能只用Core Graphics和UIKit做一些惊叹漂亮的UI！如果你有任何问题，意见，或者你想讨论如何绘制一个奖杯，而不是一个奖章，请加入论坛讨论下。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Core-Graphics/"> #Core Graphics </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/">Swift Core Graphics Tutorial Part 1: Getting Started</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/">Swift Core Graphics Tutorial Part 2: Gradients and Contexts</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Core_Graphics_教程第三部分(Swift)_-_Patterns_和_Playgrounds"><span class="nav-number">1.</span> <span class="nav-text">Core Graphics 教程第三部分(Swift) - Patterns 和 Playgrounds</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Background_Repeating_Pattern_背景重复模式"><span class="nav-number">2.</span> <span class="nav-text">Background Repeating Pattern 背景重复模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drawing_Images_绘制图像"><span class="nav-number">3.</span> <span class="nav-text">Drawing Images 绘制图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Where_to_Go_From_Here?_何去何从"><span class="nav-number">4.</span> <span class="nav-text">Where to Go From Here? 何去何从</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/';
+      var disqus_title = 'Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

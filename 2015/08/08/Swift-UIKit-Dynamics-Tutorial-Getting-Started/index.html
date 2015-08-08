@@ -1,0 +1,776 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="UIKit Dynamics," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Swift UIKit Dynamics Tutorial: Getting Started // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Swift UIKit Dynamics Tutorial: Getting Started
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="UIKit_Dynamics_教程:_起步">UIKit Dynamics 教程: 起步</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76147/uikit-dynamics-tutorial-swift" target="_blank" rel="external">UIKit Dynamics Tutorial: Getting Started</a></li>
+<li>原文作者: <a href="http://www.raywenderlich.com/u/frosty" target="_blank" rel="external">James Frost</a></li>
+<li>译文出自: <a href="http://www.devtf.cn/" target="_blank" rel="external">开发技术前线http://www.devtf.cn/</a></li>
+<li>译者 : <a href="https://github.com/Lollypo" target="_blank" rel="external">Lollypo</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao" target="_blank" rel="external">Harries Chen</a></li>
+<li>状态 :  完成</li>
+</ul>
+</blockquote>
+<p><strong>更新备注</strong>:本教程是由<a href="http://www.raywenderlich.com/u/ColinEberhardt" target="_blank" rel="external">Colin Eberhardt</a>编写的<a href="http://www.raywenderlich.com/?page_id=48020" target="_blank" rel="external"> iOS 7 by Tutorials</a>其中某章节的精简版本.由James Frost更新到iOS8并用Swift重写,在Xcode 6 beta 7版本上测试通过。</p>
+<p>iOS的设计目标鼓励你去创建数字界面模拟触摸，手势，改变方向等，就好像它们真实的物理对象而远非像素的集合。最终给予用户更深层级的交互而不是肤浅的拟真设计。</p>
+<p>这听起来感觉挺难的，因为让数字界面看起来是真实的远比让它感觉是真实的简单。不过好在你有一些漂亮的新工具:</p>
+<ul>
+<li><strong>UIKit Dynamics</strong> 是集成到UIKit中的物理引擎。这允许你创建一个感觉像是真实的界面，通过添加一些行为，例如重力，锚连接 (弹簧)以及力. 你可以定义你希望你的界面需要的物理特征, Dynamics会帮你关心其他的细枝末节。</li>
+<li><strong>Motion Effects</strong> 允许你创建类似于iOS 7 主屏幕中酷酷的视差效果. 基本上你可以利用手机加速器提供的数据来创建界面来模拟手机方向发生改变的反应。</li>
+</ul>
+<p>当一起使用的时候，由 Dynamics 与 Motion形成用户体验的工具，让你的界面给用户生活带来非同一般的体验。当观察到他们的操作是通过一种自然、动态的方式，你的用户将会与你的app进行更深层次的连接。</p>
+<blockquote>
+<p><strong>注意</strong>: 由于本教程编写的时候iOS 8 还处于测试中，因此<a href="http://www.raywenderlich.com/?p=74138" target="_blank" rel="external">没有提供iOS8的截图</a>. 所有的截图都是iOS7环境下的,不过看起来与iOS 8相差不大.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Getting_started_起步">Getting started  起步</h3><p>UIKit Dynamics是非常有趣的；最好的学习方法就是脚踏实地先学一些小例子。</p>
+<p>打开Xcode，依次选择<strong>File / New / Project …</strong> 然后选择 <strong>iOS Application / Single View Application</strong> 最后命名你的项目为<strong>DynamicsDemo</strong>。项目创建完成之后，打开 <strong>ViewController.swift</strong> ，然后在<code>viewDidLoad</code>方法中添加如下代码:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> square = <span class="type">UIView</span>(frame: <span class="type">CGRect</span>(x: <span class="number">100</span>, y: <span class="number">100</span>, width: <span class="number">100</span>, height: <span class="number">100</span>))</span><br><span class="line">square.backgroundColor = <span class="type">UIColor</span>.grayColor()</span><br><span class="line">view.addSubview(square)</span><br></pre></td></tr></table></figure>
+<p>以上代码仅仅是在界面上添加一个方形的<code>UIView</code>。</p>
+<p>运行你的App,你就可以在模拟器中看到如下的正方形:</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2013/09/LonelySquare.png" alt=""></p>
+<p>如果你在真机中运行此app,可以尝试倾斜、颠倒甚至是摇晃它.你会发现这样做没什么效果.这是因为一切是按照设计来工作的.当你添加一个View到界面上时,你希望它一直固定在设定好的坐标上,除非是你给界面添加一些动态的效果.</p>
+<h3 id="Adding_gravity_添加重力">Adding gravity   添加重力</h3><p>还是在 <strong>ViewController.swift</strong>中，在<code>viewDidLoad</code>之上加上下面这些属性:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> animator: <span class="type">UIDynamicAnimator</span>!</span><br><span class="line"><span class="keyword">var</span> gravity: <span class="type">UIGravityBehavior</span>!</span><br></pre></td></tr></table></figure>
+<p>这些属性是表示自动拆包可选类型(在类型后由!表示).这些属性必须是可选类型的,因为我们在<code>init</code>方法中不会初始化它们.同时也是因为在你初始化之后它们不可能为空.这样通过!就可以避免每一次都手动拆包.</p>
+<p>在<code>viewDidLoad</code>方法的最后加上这段代码:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">animator = <span class="type">UIDynamicAnimator</span>(referenceView: view)</span><br><span class="line">gravity = <span class="type">UIGravityBehavior</span>(items: [square])</span><br><span class="line">animator.addBehavior(gravity)</span><br></pre></td></tr></table></figure>
+<p>我会在一会儿之后解释这个.现在,运行你的程序.你会看到你的方块慢慢的开始加速向下运行,直到掉落在屏幕的底部.</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2013/09/FallingSquare.png" alt=""></p>
+<p>刚刚添加的代码中,有两个Dynamics的类在起作用:</p>
+<ul>
+<li><strong>UIDynamicAnimator</strong> 是UIKit物理引擎.这个类跟踪你添加到Dynamics中的各种行为,例如重力,并且提供了整体的上下文.当你创建一个动画实例时, 你需要传递一个该动画用来定义坐标系统的View.</li>
+<li><strong>UIGravityBehavior</strong> 模拟重力行为以及对一个或者多个物体施力,允许你模拟物理行为.当你创建一个行为的实例时, 你需要将此行为关联到一系列的物体上  — 通常来说是View. 这样你就可以选择哪些物体受到该行为的影响,在这个案例中物体受重力影响.</li>
+</ul>
+<p>大多数的行为有一些配置属性;例如,重力行为允许你改变它的角度和大小.尝试修改这些属性让你的对象降落,侧移,或者是不同加速度的对角线.</p>
+<p>注意:稍微说一下,在物理世界中,重力(g)表示米每秒平方,约等于9.8m/s2.使用牛顿第二定律,运用下列公式可以计算出在重力的影响下物体将会下滑多远.</p>
+<p><strong>distance = 0.5 × g × time2</strong></p>
+<p>在UIKit Dynamics中,该公式是一样的不过单位却是有所不同.你使用的是每千像素平方秒而不是米.使用牛顿第二定律,基于你所提供的重力组件,仍然可以计算出在任意时间点你的View的地点.</p>
+<p>但是你真的需要全部了解么?并不是这样;你真正需要知道的是<strong>g</strong>越大就表示物体下降的越快,这在数学的角度来看并不难理解.</p>
+<h3 id="Setting_boundaries_设定边界">Setting boundaries  设定边界</h3><p>虽然你看不到它，这个方块甚至会继续下落后即便它已经消失在屏幕的底部.为了让它在屏幕的范围内，你需要定义一个边界.</p>
+<p>在<strong>ViewController.swift</strong>中添加另外一个属性:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> collision: <span class="type">UICollisionBehavior</span>!</span><br></pre></td></tr></table></figure>
+<p>在<code>viewDidLoad</code>方法的最后加上这几行:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">collision = <span class="type">UICollisionBehavior</span>(items: [square])</span><br><span class="line">collision.translatesReferenceBoundsIntoBoundary = <span class="literal">true</span></span><br><span class="line">animator.addBehavior(collision)</span><br></pre></td></tr></table></figure>
+<p>以上代码创建了一个碰撞行为,其中定义了若干边界与该物体交互.</p>
+<p>以上代码将<code>translatesReferenceBoundsIntoBoundary</code> 属性设为<code>true</code>,而不是显示的定义边界坐标. 这表示被关联的View的坐标被用于<code>UIDynamicAnimator</code>.</p>
+<p>运行程序,你会看到方块碰撞屏幕的底部,然后反弹一下,停了下来,就像这样:</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2013/09/SquareAtRest.png" alt=""></p>
+<p>这是一些令人印象深刻的行为,特别是考虑到你此时只添加了这一点代码.</p>
+<h3 id="Handling_collisions_处理碰撞">Handling collisions  处理碰撞</h3><p>接下来,你将添加一个不可移动的障碍物来与下落的方块进行碰撞交互.</p>
+<p>将下面的代码添加到<code>viewDidLoad</code>方法中添加方块View的后面:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> barrier = <span class="type">UIView</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">300</span>, width: <span class="number">130</span>, height: <span class="number">20</span>))</span><br><span class="line">barrier.backgroundColor = <span class="type">UIColor</span>.redColor()</span><br><span class="line">view.addSubview(barrier)</span><br></pre></td></tr></table></figure>
+<p>运行你的程序;你会看到一个红色的”障碍物”在屏幕的中间穿过.然而事实是障碍物并未对下落的方块产生影响:</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2013/09/BadBarrier.png" alt=""></p>
+<p>这并不是你想要的效果,但这却是一个重要的提醒:Dynamics为只对已关联的行为的View产生影响.</p>
+<p>可以看一下这张图:</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2013/09/DynamicClasses.png" alt=""></p>
+<p><strong>UIDynamicAnimator</strong>与一个提供了坐标系统的View相关联.然后你在与此关联的物体上添加了若干个行为对它们施力.大多数行为可以与多个物体关联,同样的一个物体也可以与若干个行为关联.上面的图显示当前程序中有关联的行为.</p>
+<p>无论是你现在代码中的行为还是障碍物都是不被知道的,所以从引擎系统角度看,障碍物是不存在的.</p>
+<h3 id="Making_objects_respond_to_collisions_让物体对碰撞做出反应">Making objects respond to collisions  让物体对碰撞做出反应</h3><p>为了使方块与障碍物相碰撞,找到初始化碰撞行为的那行,然后替换成下面的:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collision = <span class="type">UICollisionBehavior</span>(items: [square, barrier])</span><br></pre></td></tr></table></figure>
+<p>碰撞对象需要知道应该与之几乎的每一个View;因此添加障碍物到物体列表中,这样就允许碰撞对象与之发生作用.</p>
+<p>运行你的程序;这两个对象产生碰撞行为,如下面的截图所示:</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2013/09/GoodBarrier.png" alt=""></p>
+<p>这个碰撞的行为围绕与之关联的每个物体,形成了一个”边界”.将他们从对象改变成更坚固的物体.</p>
+<p>更新之前的图示,现在可以看到现在碰撞行为与View相关联了:</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2013/09/DynamicClasses2.png" alt=""></p>
+<p>然后,两个物体的相互作用还是有些不太对劲.障碍物应该是不可移动的,但是当两个物体碰撞时,你当前的配置的障碍物向着屏幕的底部移动了.</p>
+<p>更奇怪的是,障碍物居然在屏幕底部弹跳,而且不像方块那样停止下来 -这样是因为重力行为没有与障碍物交互.这同样也解释了为什么障碍物直到与方块碰撞才移动.</p>
+<p>看起来你需要一个不一样的解决问题的办法.由于障碍物是不可移动的,没有任何必须要让运动引擎直到它的存在,但这样如何检测碰撞呢?</p>
+<h3 id="Invisible_boundaries_and_collisions_可见的边界与碰撞">Invisible boundaries and collisions  可见的边界与碰撞</h3><p>恢复碰撞行为的初始化到原来的状态，让它只知道方块：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collision = <span class="type">UICollisionBehavior</span>(items: [square])</span><br></pre></td></tr></table></figure>
+<p>此行之后,添加以下内容:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// add a boundary that has the same frame as the barrier</span></span><br><span class="line">collision.addBoundaryWithIdentifier(<span class="string">"barrier"</span>, forPath: <span class="type">UIBezierPath</span>(rect: barrier.frame))</span><br></pre></td></tr></table></figure>
+<p>上面的代码添加了一个具有同样结构的障碍物View作为可见的边界.这个红色的障碍物保持着对用户可见,但对Dynamics引擎不可见,同时,边界对于Dynamics引擎可见,对于用户却不可见.当方块落下时,看起来似乎是与障碍物交互的,然而实际上却是撞到了不可移动的边界.</p>
+<p>运行你的程序看看这个动作,如下图:</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2013/09/BestBarrier.png" alt=""></p>
+<p>现在方块在边界处反弹,旋转了一下,然后继续继续朝屏幕底部落下.</p>
+<p>现在的UIKit Dynamics的能力变得相当清楚：你可以用少量代码完成效果.在这之中有很多细节;接下来的部分我将向你展示一些Dynamics在你的应用程序中与对象的交互细节。</p>
+<h3 id="Behind_the_scenes_of_collisions_碰撞背后的知识">Behind the scenes of collisions  碰撞背后的知识</h3><p>任何Dynamic行为都有一个action属性,用来提供一个block,在动画的每一步都执行:添加以下代码到<code>viewDidLoad</code>:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">collision.action = &#123;</span><br><span class="line">  <span class="built_in">println</span>(<span class="string">"<span class="subst">\(NSStringFromCGAffineTransform(square.transform)</span>) <span class="subst">\(NSStringFromCGPoint(square.center)</span>)"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码的日志记录了下落方块的center与transform属性.运行程序,然后你就会在Xcode的输出窗口看到这些输出.</p>
+<p>从开始到400毫秒这段时间,你应该是看到类似下面的日志信息:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], &#123;<span class="number">150</span>, <span class="number">236</span>&#125;</span><br><span class="line">[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], &#123;<span class="number">150</span>, <span class="number">243</span>&#125;</span><br><span class="line">[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], &#123;<span class="number">150</span>, <span class="number">250</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>这里你可以看到运动引擎一直在改变方块的center — 也就是动画执行中的每一步的frame值.</p>
+<p>只要方块撞到障碍物,就开始旋转,这就会生成类似以下的日志信息:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0.99797821</span>, <span class="number">0.063557133</span>, -<span class="number">0.063557133</span>, <span class="number">0.99797821</span>, <span class="number">0</span>, <span class="number">0</span>] &#123;<span class="number">152</span>, <span class="number">247</span>&#125;</span><br><span class="line">[<span class="number">0.99192101</span>, <span class="number">0.12685727</span>, -<span class="number">0.12685727</span>, <span class="number">0.99192101</span>, <span class="number">0</span>, <span class="number">0</span>] &#123;<span class="number">154</span>, <span class="number">244</span>&#125;</span><br><span class="line">[<span class="number">0.97873402</span>, <span class="number">0.20513339</span>, -<span class="number">0.20513339</span>, <span class="number">0.97873402</span>, <span class="number">0</span>, <span class="number">0</span>] &#123;<span class="number">157</span>, <span class="number">241</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>这里你可以看到Dynamics使用的是transform与基于底层物理模型定位视图偏移的组合.</p>
+<p>虽然对于Dynamics的这些属性的兴趣可能不大,不过重要的是要知道,他们正在发挥作用.因此,如果你以编程方式更改frame或transform的属性,你可以假设这些值将被覆盖.这意味着当对象被Dynamics控制时,你就不能使用transform缩放对象了.</p>
+<p>该方法为Dynamics行为签名,选择物体而不是View.应用动力学行为的唯一需要就是让对象实现 <code>UIDynamicItem</code> 协议,这样:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">UIDynamicItem</span> : <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> center: <span class="type">CGPoint</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br><span class="line">  <span class="keyword">var</span> bounds: <span class="type">CGRect</span> &#123; <span class="keyword">get</span> &#125;</span><br><span class="line">  <span class="keyword">var</span> transform: <span class="type">CGAffineTransform</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>UIDynamicItem</code>协议允许Dynamics读写center和transform属性,允许其基于其内部计算来移动物体.它对bounds也有读取的权限,用来确定物体的大小。这允许它来创建碰撞边界的四周的物体以及计算当前物体的质量.</p>
+<p>这个协议意味着引擎不与UIView耦合,此外还有一个UIKit类不是视图但仍然遵循这个协议:<code>UICollectionViewLayoutAttributes</code>.这允许引擎在集合视图内执行动画.</p>
+<h3 id="Collision_notifications_碰撞提醒">Collision notifications 碰撞提醒</h3><p>到目前为止,你已经添加了一些视图和行为然后让Dynamics控制.在这一节你会看看如何在物体碰撞时接收通知.</p>
+<p>还是在<strong>ViewController.swift</strong>文件中,修改类的声明来遵循 <code>UICollisionBehaviorDelegate</code>协议:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="typename">UIViewController</span>, <span class="typename">UICollisionBehaviorDelegate &#123;</span></span></span><br></pre></td></tr></table></figure>
+<p>在 <code>viewDidLoad</code>方法中,将视图控制器设置为刚刚初始化的碰撞代理对象,如下:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collision<span class="class">.collisionDelegate</span> = self</span><br></pre></td></tr></table></figure>
+<p>接下来,在类中实现碰撞行为代理中的一个方法:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">collisionBehavior</span><span class="params">(behavior: UICollisionBehavior!, beganContactForItem item: UIDynamicItem!, withBoundaryIdentifier identifier: NSCopying!, atPoint p: CGPoint)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">println</span>(<span class="string">"Boundary contact occurred - <span class="subst">\(identifier)</span>"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该代理方法会在发生碰撞时调用.这会在控制台输出日志信息.为了避免太多的日志信息搞乱了控制台的消息,请随意删除上一节添加的<code>collision.action</code>日志.</p>
+<p>运行程序,物体发生交互,然后控制台会输出这些:</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Boundary </span>contact occurred - <span class="keyword">barrier</span><br><span class="line"></span><span class="keyword">Boundary </span>contact occurred - <span class="keyword">barrier</span><br><span class="line"></span><span class="keyword">Boundary </span>contact occurred - nil</span><br><span class="line"><span class="keyword">Boundary </span>contact occurred - nil</span><br><span class="line"><span class="keyword">Boundary </span>contact occurred - nil</span><br><span class="line"><span class="keyword">Boundary </span>contact occurred - nil</span><br></pre></td></tr></table></figure>
+<p>从上面的日志消息中可以看到,方块与标识的边界发生两次碰撞;这是您前面添加的不可见的边界。(null)标识符是指外部引用视图边界.</p>
+<p>这些日志消息可以引人入胜(很严肃的说!),不过需要提供一个视觉指示项来表示反弹.</p>
+<p>在第二次输出日志的行后,添加以下代码:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> collidingView = item <span class="keyword">as</span> <span class="type">UIView</span></span><br><span class="line">collidingView.backgroundColor = <span class="type">UIColor</span>.yellowColor()</span><br><span class="line"><span class="type">UIView</span>.animateWithDuration(<span class="number">0.3</span>) &#123;</span><br><span class="line">collidingView.backgroundColor = <span class="type">UIColor</span>.grayColor()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码将碰撞物体的的背景颜色更改为黄色,然后再消褪到灰色.</p>
+<p>运行程序然后查看这个效果:</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2013/09/YellowCollision.png" alt=""></p>
+<p>方块每次碰撞到边界都会变化成黄色.</p>
+<p>到目前为止UIKit Dynamics 通过计算它们的bounds自动为你的物体设置物理属性(如质量和弹性).接下来你将看到如何自己使用<code>UIDynamicItemBehavior</code>类来控制这些物理属性.</p>
+<h3 id="Configuring_item_properties_设置属性">Configuring item properties  设置属性</h3><p>在<code>viewDidLoad</code>方法中,在方法的末尾加上以下代码:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let itemBehaviour = <span class="function"><span class="title">UIDynamicItemBehavior</span><span class="params">(items: [square])</span></span></span><br><span class="line">itemBehaviour<span class="class">.elasticity</span> = <span class="number">0.6</span></span><br><span class="line">animator.<span class="function"><span class="title">addBehavior</span><span class="params">(itemBehaviour)</span></span></span><br></pre></td></tr></table></figure>
+<p>以上代码创建了一个物体行为,并与方块关联上,接着将其添加到animator中. elasticity属性控制物体的弹力;其值为1.0时表示碰撞完全反弹;也就是说,碰撞不消耗能量或者减缓速度.你为方块设置的elasticity为0.6,这意味着你的方块每次碰撞时都会减缓速度.</p>
+<p>运行你的程序,然后你会发现方块现在的行为很有弹性,如下所示:</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2013/09/PrettyBounce.png" alt=""></p>
+<blockquote>
+<p>注意:如果你想知道我是如何产生上图的方块轨迹图的,这实际上很简单!我只是添加了一个block到每个行为中的action属性中,该block每三秒执行一次,然后使用当前方块的center和transform属性在视图中添加一个新的方块.下面就是我的解决方案.<br>解决方案:<br><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var updateCount = 0</span><br><span class="line"><span class="component">collision.action = &#123;</span><br><span class="line">  if (updateCount % 3 == 0) &#123;</span><br><span class="line">    let outline = UIView(frame: square<span class="string">.bounds)</span></span><br><span class="line">    outline<span class="string">.transform</span> = square<span class="string">.transform</span></span><br><span class="line">    outline<span class="string">.center</span> = square<span class="string">.center</span></span><br><span class="line">    outline<span class="string">.alpha</span> = 0.5</span><br><span class="line">    outline<span class="string">.backgroundColor</span> = UIColor<span class="string">.clearColor()</span></span><br><span class="line">    outline<span class="string">.layer.borderColor</span> = square<span class="string">.layer.presentationLayer().backgroundColor</span></span><br><span class="line">    outline<span class="string">.layer.borderWidth</span> = 1.0</span><br><span class="line">    self<span class="string">.view.addSubview(outline)</span></span><br><span class="line">  &#125;</span></span><br><span class="line">    ++updateCount</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>在上面的代码你只改变了物体的弹力;然而,物体的行为类有许多可以控制的属性,如下:</p>
+<ul>
+<li><code>elasticity</code> – 弹力,决定碰撞时的弹力,例如,当物体发生碰撞行为时的弹力或者韧性.</li>
+<li><code>friction</code>   –  摩擦力,决定物体滑动时的抵抗力.</li>
+<li><code>density</code>   –  密度,如果加上大小,就能表示物体的质量.质量越大,物体越难加速或减速.</li>
+<li><code>resistance</code> – 阻力,任何线性运动的抵抗力.与摩擦力不同的是,摩擦力只对滑动有效.</li>
+<li><code>angularResistance</code> – 旋转的阻力.</li>
+<li><code>allowsRotation</code> – 这个有点意思,因为这不表示真实物理世界中的属性. 将这个属性设置为NO可以让物体不管任何发生力量的旋转都无效.</li>
+</ul>
+<h3 id="Adding_behaviors_dynamically_动态添加行为">Adding behaviors dynamically  动态添加行为</h3><p>在当前情况下,你的程序为系统设置全部的行为,然后让Dynamics处理系统中的物理事件直到是全部的物体都静止下来.接下来,你将看到如何动态的添加与删除行为.</p>
+<p>打开<strong>ViewController.swift</strong>,然后在<code>viewDidLoad</code>方法中添加以下属性:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> firstContact</span> = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>添加以下代码到碰撞的代理方法<code>collisionBehavior(behavior:beganContactForItem:withBoundaryIdentifier:atPoint:)</code>的最后</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="params">(!firstContact)</span> &#123;</span><br><span class="line">  firstContact = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">let</span> <span class="built_in">square</span> = UIView<span class="params">(frame: CGRect<span class="params">(x: <span class="number">30</span>, y: <span class="number">0</span>, width: <span class="number">100</span>, height: <span class="number">100</span>)</span>)</span></span><br><span class="line">  <span class="built_in">square</span>.backgroundColor = UIColor.grayColor<span class="params">()</span></span><br><span class="line">  view.addSubview<span class="params">(square)</span></span><br><span class="line"></span><br><span class="line">  collision.addItem<span class="params">(square)</span></span><br><span class="line">  gravity.addItem<span class="params">(square)</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">let</span> attach = UIAttachmentBehavior<span class="params">(item: collidingView, attachedToItem:square)</span></span><br><span class="line">  animator.addBehavior<span class="params">(attach)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码检测初次接触时的障碍物和方块,然后创建第二个方块,并为其添加碰撞与重力行为.此外,你创建一个锚链接行为来为一对对象创建虚拟的弹簧效果.</p>
+<p>运行你的程序;当最初的方块碰撞到障碍物时,你将会看到一个新的方块出现,就像下面这样:</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2013/09/Attachment.png" alt=""></p>
+<p>尽管这样看起来两个方块之间似乎是连接着的,不过你在屏幕上是无法看到线条或者弹簧之类的.</p>
+<h3 id="User_Interaction_用户交互">User Interaction  用户交互</h3><p>正如刚刚所看到的那样,你可以动态的添加或是删除你定义的物理系统中正在运动的行为.在最后一节,你将添加另一种类型的Dynamics行为-<code>UISnapBehavior</code>,当用户点击屏幕时,<code>UISnapBehavior</code>会生成一个弹簧动画跳转到指定位置.</p>
+<p>删除你在上一节添加的代码:<code>firstContact</code>属性与<code>collisionBehavior()</code>中的if语句.这样当界面中只有一个方块时,就很容易看出来<code>UISnapBehavior</code>的作用.</p>
+<p>在<code>viewDidLoad</code>中加上这两个属性:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> square</span>: UIView!</span><br><span class="line"><span class="variable"><span class="keyword">var</span> snap</span>: UISnapBehavior!</span><br></pre></td></tr></table></figure>
+<p>这记录了方块视图,这样你就可以在控制器的任何地方访问到它.接下来你就会用到<code>snap</code>对象.</p>
+<p>在<code>viewDidLoad</code>方法中,从声明方块的地方移除<code>let</code>关键字,这样就可以使用新的属性来替代局部变量:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">square = UIView(<span class="string">frame:</span> CGRect(<span class="string">x:</span> <span class="number">100</span>, <span class="string">y:</span> <span class="number">100</span>, <span class="string">width:</span> <span class="number">100</span>, <span class="string">height:</span> <span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+<p>最后,实现<code>touchesEnded</code>方法,每当用户点击屏幕的时候就创建新的触摸行为:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">touchesEnded</span><span class="params">(touches: NSSet, withEvent event: UIEvent)</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (snap != <span class="literal">nil</span>) &#123;</span><br><span class="line">    animator.removeBehavior(snap)</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">let</span> touch = touches.anyObject() <span class="keyword">as</span> <span class="type">UITouch</span> </span><br><span class="line">  snap = <span class="type">UISnapBehavior</span>(item: square, snapToPoint: touch.locationInView(view))</span><br><span class="line">  animator.addBehavior(snap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码相当简单.首先,它会检查当前是否已经存在触摸行为并且移除.然后创建一个新的触摸行为来检测用户是否触摸方块,最后添加到animator中.</p>
+<p>运行你的程序.尝试点击一下;无论你点击哪个地方,方块都应该会放大.</p>
+<h3 id="Where_To_Go_From_Here?_何去何从">Where To Go From Here? 何去何从</h3><p>此时,你应该对于Dynamics的核心概念有了一定的理解.你可以下载本教程最后<a href="http://cdn5.raywenderlich.com/wp-content/uploads/2014/07/DynamicsDemo-Final-7.zip" target="_blank" rel="external">DynamicsDemo项目</a> 进行进一步的研究。</p>
+<p>UIKit Dynamics 给你的应用带来物理引擎的能力.通过精妙的的反弹和弹簧和重力效果,给你的应用程序注入新的血液,让用户如同身临其境.</p>
+<p>如果你想要更深入的学习UIKit Dynamics,请查阅我们编写的<a href="http://www.raywenderlich.com/?page_id=48020" target="_blank" rel="external">iOS 7 By Tutorials</a>. 这本书让你的知识更进一步,向你展示如何在真实场景中使用UIKit Dynamics:</p>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2013/09/SandwichFlowDynamics.png" alt=""></p>
+<p>用户可以把菜谱上一瞥,当他们将菜谱放回时,它会掉回菜谱堆中,或者靠近屏幕顶部.最终给予应用程序一个真实的物理效果。</p>
+<p>我希望你能喜欢这个UIKit Dynamics的教程,我们觉得这是非常炫酷的,期待你在程序中创造性的使用他们.如果你有任何的问题或意见,请在一下进行讨论!</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UIKit-Dynamics/"> #UIKit Dynamics </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/">Notes: The interesting things from WWDC, iOS 9, Swift 2</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/">Swift UIKit Dynamics - Tossing Views</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UIKit_Dynamics_教程:_起步"><span class="nav-number">1.</span> <span class="nav-text">UIKit Dynamics 教程: 起步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Getting_started_起步"><span class="nav-number">1.1.</span> <span class="nav-text">Getting started  起步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adding_gravity_添加重力"><span class="nav-number">1.2.</span> <span class="nav-text">Adding gravity   添加重力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting_boundaries_设定边界"><span class="nav-number">1.3.</span> <span class="nav-text">Setting boundaries  设定边界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling_collisions_处理碰撞"><span class="nav-number">1.4.</span> <span class="nav-text">Handling collisions  处理碰撞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Making_objects_respond_to_collisions_让物体对碰撞做出反应"><span class="nav-number">1.5.</span> <span class="nav-text">Making objects respond to collisions  让物体对碰撞做出反应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Invisible_boundaries_and_collisions_可见的边界与碰撞"><span class="nav-number">1.6.</span> <span class="nav-text">Invisible boundaries and collisions  可见的边界与碰撞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Behind_the_scenes_of_collisions_碰撞背后的知识"><span class="nav-number">1.7.</span> <span class="nav-text">Behind the scenes of collisions  碰撞背后的知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collision_notifications_碰撞提醒"><span class="nav-number">1.8.</span> <span class="nav-text">Collision notifications 碰撞提醒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuring_item_properties_设置属性"><span class="nav-number">1.9.</span> <span class="nav-text">Configuring item properties  设置属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adding_behaviors_dynamically_动态添加行为"><span class="nav-number">1.10.</span> <span class="nav-text">Adding behaviors dynamically  动态添加行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User_Interaction_用户交互"><span class="nav-number">1.11.</span> <span class="nav-text">User Interaction  用户交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where_To_Go_From_Here?_何去何从"><span class="nav-number">1.12.</span> <span class="nav-text">Where To Go From Here? 何去何从</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/';
+      var disqus_title = 'Swift UIKit Dynamics Tutorial: Getting Started';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

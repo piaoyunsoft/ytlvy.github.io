@@ -148,74 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/mac-directory/">
-                MAC 目录结构
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-directory/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-directory/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/  : <span class="keyword">this</span> is root directory</span><br><span class="line">/<span class="string">bin :</span> commands <span class="keyword">in</span> <span class="keyword">this</span> dir are all system installed user commands</span><br><span class="line">/<span class="string">sbin:</span>  commands <span class="keyword">in</span> <span class="keyword">this</span> dir are all system installed <span class="keyword">super</span> user commands</span><br><span class="line"><span class="regexp">/usr/</span><span class="string">bin:</span> user commands <span class="keyword">for</span> applications</span><br><span class="line"><span class="regexp">/usr/</span><span class="string">sbin:</span> <span class="keyword">super</span> user commands <span class="keyword">for</span> applications</span><br><span class="line"><span class="regexp">/usr/</span>local/<span class="string">bin :</span> application user commands</span><br><span class="line"><span class="regexp">/usr/</span>local/<span class="string">sbin:</span> application <span class="keyword">super</span> user commands</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-programe-install-directory/">
-                MAC程序安装位置
+              <a class="post-title-link" href="/2015/05/27/ios-autolayout/">
+                ios 自动布局
               </a>
             
           
@@ -231,7 +165,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/MAC/">MAC</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -244,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-programe-install-directory/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-programe-install-directory/"></span>
+            <a href="/2015/05/27/ios-autolayout/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-autolayout/"></span>
             </a>
           </span>
           
@@ -260,8 +194,25 @@
 
       
         
-          <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local/bin</span><br><span class="line"></span><br><span class="line"><span class="comment">//homebrew</span></span><br><span class="line"><span class="regexp">/usr/</span>local/Cellar</span><br></pre></td></tr></table></figure>
-
+          <h3 id="自动布局">自动布局</h3><h4 id="IOS7_UIlabel_高度bug">IOS7 UIlabel 高度bug</h4><pre><code><span class="comment">//需要设置</span>
+lb1<span class="variable">.lineBreakMode</span> = <span class="built_in">NSLineBreakByCharWrapping</span>;
+</code></pre><h4 id="自动布局bug">自动布局bug</h4><pre><code>使用autolayout时 <span class="keyword">button不能点击 </span>可能是因为<span class="keyword">button的parentView </span>没有自动扩展开
+</code></pre><h4 id="系统自带autolayout">系统自带autolayout</h4><pre><code>viewsDictionary = NSDictionaryOfVariableBindings(scrollView, imageView);
+[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[scrollView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[scrollView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[imageView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[imageView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+</code></pre><h4 id="AutoLayout_priority">AutoLayout priority</h4><pre><code>[UIView <span class="string">autoSetPriority:</span>UILayoutPriorityRequired <span class="string">forConstraints:</span>^{
+    [self.titleLabel <span class="string">autoSetContentCompressionResistancePriorityForAxis:</span>ALAxisVertical];
+}];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTop <span class="string">withInset:</span>kLabelVerticalInsets];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeLeading <span class="string">withInset:</span>kLabelHorizontalInsets];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTrailing <span class="string">withInset:</span>kLabelHorizontalInsets];
+</code></pre>
         
       
     </div>
@@ -291,268 +242,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/mac-delevoper-tools/">
-                mac delevoper tools
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-delevoper-tools/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-delevoper-tools/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/xcode-plugins/">
-                Xcode plugins
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/xcode-plugins/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-plugins/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-autostart-plist/">
-                mac 自启动plist文件
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-autostart-plist/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-autostart-plist/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~/<span class="keyword">Library</span>/LaunchAgents</span><br><span class="line">~/<span class="keyword">Library</span>/LaunchDaemons</span><br><span class="line"></span><br><span class="line">/<span class="keyword">Library</span>/LaunchAgents</span><br><span class="line">/<span class="keyword">Library</span>/LaunchDaemons</span><br><span class="line"></span><br><span class="line">/System/<span class="keyword">Library</span>/LaunchAgents</span><br><span class="line">/System/<span class="keyword">Library</span>/LaunchDaemons</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-cocoapods/">
-                Pod 管理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-cocoapods/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cocoapods/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-command-line-proxy/">
-                Command line proxy
+              <a class="post-title-link" href="/2015/05/27/ios-is-modal/">
+                ios 是否模态弹出
               </a>
             
           
@@ -568,7 +259,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/OSX/">OSX</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -581,8 +272,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-command-line-proxy/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-command-line-proxy/"></span>
+            <a href="/2015/05/27/ios-is-modal/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-is-modal/"></span>
             </a>
           </span>
           
@@ -597,8 +288,19 @@
 
       
         
-          <h2 id="Command_line_proxy">Command line proxy</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">"http://127.0.0.1:8087"</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">"http://127.0.0.1:8087"</span></span><br><span class="line"><span class="built_in">unset</span> http_proxy</span><br><span class="line"><span class="built_in">unset</span> https_proxy</span><br></pre></td></tr></table></figure>
+          <h2 id="是否模态弹出">是否模态弹出</h2><pre><code>- (<span class="built_in">BOOL</span>)isModal {
+     <span class="keyword">if</span>([<span class="keyword">self</span> presentingViewController])
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+     <span class="keyword">if</span>([[<span class="keyword">self</span> presentingViewController] presentedViewController] == <span class="keyword">self</span>)
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+     <span class="keyword">if</span>([[[<span class="keyword">self</span> navigationController] presentingViewController] presentedViewController] == [<span class="keyword">self</span> navigationController])
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+     <span class="keyword">if</span>([[[<span class="keyword">self</span> tabBarController] presentingViewController] isKindOfClass:[<span class="built_in">UITabBarController</span> class]])
+         <span class="keyword">return</span> <span class="literal">YES</span>;
 
+    <span class="keyword">return</span> <span class="literal">NO</span>;
+ }
+</code></pre>
         
       
     </div>
@@ -628,8 +330,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/register/">
-                寄存器
+              <a class="post-title-link" href="/2015/05/27/ios-notification-push/">
+                ios Notification push
               </a>
             
           
@@ -645,7 +347,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Base/">Base</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -658,8 +360,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/register/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/register/"></span>
+            <a href="/2015/05/27/ios-notification-push/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-notification-push/"></span>
             </a>
           </span>
           
@@ -674,9 +376,17 @@
 
       
         
-          <h3 id="寄存器">寄存器</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">EAX Extended Accumulator X          累加寄存器。A代表Accumulator</span><br><span class="line">ECX Extended Counting X             计数寄存器。<span class="keyword">C</span>代表counting</span><br><span class="line">EDI Extended Destination Indexing   目的索引寄存器。<span class="keyword">D</span>代表destnation，<span class="keyword">I</span>代表Indexing</span><br><span class="line">ESI Extended Source Indexing        源索引寄存器。S代表Source，<span class="keyword">I</span>代表Indexing</span><br><span class="line">ESP Extended <span class="keyword">Stack</span> Pointer          栈指针寄存器。S代表<span class="keyword">Stack</span></span><br><span class="line">EBP Extended (<span class="keyword">Stack</span>) Base Pointer   栈基指针寄存器。B代表Base</span><br><span class="line">EIP Extended Instructions Pointer   指令寄存器。<span class="keyword">I</span>代表Instruction</span><br></pre></td></tr></table></figure>
+          <h3 id="Event">Event</h3><h4 id="注册一个消息中心">注册一个消息中心</h4><pre><code><span class="built_in">NSString</span> *<span class="keyword">const</span> GameToIPhoneNotification = <span class="string">@"GameToIPhoneNotification"</span>; 
+<span class="built_in">NSNotificationCenter</span> *center = [<span class="built_in">NSNotificationCenter</span> defaultCenter];
+[center addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(onToIphone:) name:GameToIPhoneNotification object:<span class="literal">nil</span>];
+-(<span class="keyword">void</span>)onToIphone:(<span class="built_in">NSNotification</span>*)notify
+</code></pre><h4 id="调用信息">调用信息</h4><pre><code><span class="built_in">NSNotificationCenter</span> * center = [<span class="built_in">NSNotificationCenter</span> defaultCenter];   
+[center postNotificationName:GameToIPhoneNotification object:<span class="literal">nil</span> userInfo:[<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys: [<span class="built_in">NSNumber</span> numberWithInt:SMSRecommendNotification] , <span class="string">@"actcode"</span>,<span class="literal">nil</span>]];
+
+[<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys: [<span class="built_in">NSNumber</span> numberWithInt:SMSRecommendNotification] 这个是传递给-(<span class="keyword">void</span>)onToIphone:(<span class="built_in">NSNotification</span>*)notify 的参数    
+</code></pre>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/register/#more">
+            <a class="btn" href="/2015/05/27/ios-notification-push/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -709,8 +419,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/server-constructure/">
-                服务器架构
+              <a class="post-title-link" href="/2015/05/27/ios-network/">
+                ios 网络
               </a>
             
           
@@ -723,24 +433,13 @@
         </span>
 
         
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Bigdata/">Bigdata</a>
-
-              
-              
-
-            
-          </span>
-        
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/server-constructure/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/server-constructure/"></span>
+            <a href="/2015/05/27/ios-network/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-network/"></span>
             </a>
           </span>
           
@@ -755,16 +454,7 @@
 
       
         
-          <h3 id="服务器架构">服务器架构</h3><ol>
-<li>CISC (复杂指令集) 架构主要指的是采用英特尔架构技术的服务器，即我们常说的“PC 服务器”.特点是主频非常高，但是效率非常低，散热量非常大</li>
-<li>RISC (精简指令集) 架构的服务器指采用非英特尔架构技术的服务器，如采用 Power PC、Alpha、PA-RISC、SPARC 等 RISC CPU 的服务器. 精简了指令系统, 采用了一种叫做“超标量和超流水线结构”，架构在同等频率下，采用 RISC 架构的 CPU 比 CISC 架构的 CPU 性能高很多，这是由 CPU 的技术特征决定的</li>
-</ol>
-<h5 id="区别">区别</h5><ol>
-<li>PC 服务器上发布的操作系统最多支持16颗 CPU（最新的一些操作系统也可以支持更多的 CPU，甚至于 UNIX 达到相同的支持度）</li>
-<li>在小型机上，一台机器集成的 CPU 总数已经达到了几十到几百颗</li>
-<li>一般小型机体系设计最多都可以支持一百个以上的 I/O 通道卡，可以提供足够的带宽将处理结果从网络发送出去或者保存到磁盘，同时还能够接受新任务。几乎没有哪个 PC 服务器插了10块以上的 I/O 卡，当业务量大的时候，及时 CPU 忙得开，I/O 也处理不来。<br>并不是随随便便就可以增加处理卡数量的，I/O 控制器，总线带宽制约了可以插接的 I/O 卡、内存和 CPU 的数量。因此小型机往往采用特殊的技术，来实现近乎疯狂的扩展能力</li>
-</ol>
-
+          
         
       
     </div>
@@ -794,8 +484,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/hight-load-balance/">
-                高负载处理
+              <a class="post-title-link" href="/2015/05/27/3d-matrix/">
+                3D Matrix
               </a>
             
           
@@ -811,7 +501,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Bigdata/">Bigdata</a>
+              <a href="/categories/Math/">Math</a>
 
               
               
@@ -824,8 +514,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/hight-load-balance/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/hight-load-balance/"></span>
+            <a href="/2015/05/27/3d-matrix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/3d-matrix/"></span>
             </a>
           </span>
           
@@ -840,20 +530,466 @@
 
       
         
-          <h3 id="高负载处理">高负载处理</h3><h4 id="一_应用无状态">一 应用无状态</h4><blockquote>
-<p>集群节点间session的通信会随着节点的增多而开销增大，因此要想做到应用本身的伸缩性，我们需要保证应用的无状态性</p>
-</blockquote>
-<h4 id="二_有效使用缓存">二 有效使用缓存</h4><h5 id="缓存分类">缓存分类</h5><blockquote>
-<p>浏览器缓存，反向代理缓存，页面缓存，局部页面缓存，对象缓存</p>
-</blockquote>
-<h5 id="应用场景">应用场景</h5><blockquote>
-<p>安全性较低 更新不频繁</p>
-</blockquote>
+          <h2 id="3D_Matrix">3D Matrix</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string">1   0   0   0</span>|<span class="string">         </span>|<span class="string">x</span>|<span class="string">       </span>|<span class="string">x</span>|</span><br><span class="line">|<span class="string">0   1   0   0</span>|<span class="string">    *    </span>|<span class="string">y</span>|<span class="string">    =  </span>|<span class="string">y</span>|</span><br><span class="line">|<span class="string">0   0   1   0</span>|<span class="string">         </span>|<span class="string">z</span>|<span class="string">       </span>|<span class="string">z</span>|</span><br><span class="line">|<span class="string">0   0   0   1</span>|<span class="string">         </span>|<span class="string">1</span>|<span class="string">       </span>|<span class="string">1</span>|</span><br></pre></td></tr></table></figure>
+<h3 id="Identity_Matrix">Identity Matrix</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string">1   0   0   0</span>|</span><br><span class="line">|<span class="string">0   1   0   0</span>|</span><br><span class="line">|<span class="string">0   0   1   0</span>|</span><br><span class="line">|<span class="string">0   0   0   1</span>|</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/hight-load-balance/#more">
+            <a class="btn" href="/2015/05/27/3d-matrix/#more">
               閱讀全文 &raquo;
             </a>
           </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-global-style/">
+                全局样式
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-global-style/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-global-style/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="全局样式">全局样式</h3><pre><code>- (<span class="keyword">void</span>)setStyle{
+    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle: <span class="built_in">UIStatusBarStyleLightContent</span>];
+
+    [[<span class="built_in">UIBarButtonItem</span> appearanceWhenContainedIn:[<span class="built_in">UINavigationBar</span> class], <span class="literal">nil</span>] setTitleTextAttributes:
+     @{<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> blackColor],
+       <span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>]
+       } forState:<span class="built_in">UIControlStateNormal</span>];
+
+    [[<span class="built_in">UIBarButtonItem</span> appearanceWhenContainedIn:[<span class="built_in">UINavigationBar</span> class], <span class="literal">nil</span>] setTitleTextAttributes:
+     @{<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> whiteColor],
+       <span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>]
+       } forState:<span class="built_in">UIControlStateHighlighted</span>];
+
+    <span class="comment">// [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xFC6259)];</span>
+
+    <span class="comment">// Uncomment to change the color of back button</span>
+    [[<span class="built_in">UINavigationBar</span> appearance] setTintColor:[<span class="built_in">UIColor</span> whiteColor]];
+
+    <span class="comment">// Uncomment to assign a custom backgroung image</span>
+    <span class="comment">// [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavBar-Background"] forBarMetrics:UIBarMetricsDefault];</span>
+
+    <span class="comment">// Uncomment to change the back indicator image</span>
+    <span class="comment">// [[UINavigationBar appearance] setBackgroundColor:[UIColor blackColor]];</span>
+    <span class="comment">// [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@""]];</span>
+
+    <span class="comment">// Uncomment to change the font style of the title</span>
+    <span class="built_in">NSShadow</span> *shadow = [[<span class="built_in">NSShadow</span> alloc] init];
+    shadow<span class="variable">.shadowColor</span> = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.0</span> green:<span class="number">0.0</span> blue:<span class="number">0.0</span> alpha:<span class="number">0.8</span>];
+    shadow<span class="variable">.shadowOffset</span> = <span class="built_in">CGSizeMake</span>(<span class="number">0</span>, <span class="number">1</span>);
+
+    [[<span class="built_in">UINavigationBar</span> appearance] setTitleTextAttributes: [<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys:[<span class="built_in">UIColor</span> colorWithRed:<span class="number">245.0</span>/<span class="number">255.0</span> green:<span class="number">245.0</span>/<span class="number">255.0</span> blue:<span class="number">245.0</span>/<span class="number">255.0</span> alpha:<span class="number">1.0</span>], <span class="built_in">NSForegroundColorAttributeName</span>,shadow, <span class="built_in">NSShadowAttributeName</span>,[<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>], <span class="built_in">NSFontAttributeName</span>, <span class="literal">nil</span>]];
+    [[<span class="built_in">UINavigationBar</span> appearance] setTitleVerticalPositionAdjustment:<span class="number">0.0</span> forBarMetrics:<span class="built_in">UIBarMetricsDefault</span>];
+}
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-animation/">
+                ios 动画
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-animation/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-animation/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="动画保持结果">动画保持结果</h4><pre><code><span class="attribute">fillMode </span>=<span class="string"> kCAFillModeForwards</span>
+</code></pre><h4 id="CAKeyframeAnimation_动画使用_开始、暂停动画">CAKeyframeAnimation 动画使用 开始、暂停动画</h4><h5 id="开始一个帧动画">开始一个帧动画</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)showAlertAnimation &#123;  </span><br><span class="line">    <span class="built_in">CAKeyframeAnimation</span> *animation = [<span class="built_in">CAKeyframeAnimation</span></span><br><span class="line">                       animationWithKeyPath:<span class="string">@"transform"</span>]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//方式1：放大再缩小（类似系统alert）  </span></span><br><span class="line">    <span class="comment">//如果需要更好的效果  </span></span><br><span class="line">    <span class="comment">//可以添加 .keyTimes 属性。  </span></span><br><span class="line">    <span class="built_in">NSMutableArray</span> *values = [<span class="built_in">NSMutableArray</span> array]; </span><br><span class="line">    [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.1</span>, <span class="number">0.1</span>, <span class="number">1.0</span>)]];</span><br><span class="line">    [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">1.2</span>, <span class="number">1.2</span>, <span class="number">1.0</span>)]]; </span><br><span class="line">     [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.9</span>, <span class="number">0.9</span>, <span class="number">0.9</span>)]];</span><br><span class="line">      [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>)]]; </span><br><span class="line">      animation<span class="variable">.values</span> = values; </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="comment">//方式2:直接缩小  </span></span><br><span class="line">    animation<span class="variable">.fillMode</span> = k<span class="built_in">CAFillModeForwards</span>;  </span><br><span class="line">    animation<span class="variable">.removedOnCompletion</span> = <span class="literal">NO</span>;  </span><br><span class="line">    animation<span class="variable">.duration</span> = .<span class="number">3</span>;  </span><br><span class="line">      </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.alertView</span><span class="variable">.layer</span> addAnimation:animation forKey:<span class="string">@"showAlert"</span>];  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-animation/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-uitableview/">
+                UITableview
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-uitableview/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-uitableview/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="UITableview">UITableview</h3><h4 id="UITableView每次滑动一行，类似scroll_page_enable">UITableView每次滑动一行，类似scroll page enable</h4><pre><code>- (<span class="typename">void</span>)<span class="string">scrollViewDidEndDragging:</span>(UIScrollView *)scrollView <span class="string">willDecelerate:</span>(BOOL)decelerate{  
+    <span class="keyword">if</span>(decelerate) <span class="keyword">return</span>;  
+    [self <span class="string">scrollViewDidEndDecelerating:</span>scrollView];  
+}  
+
+- (<span class="typename">void</span>)<span class="string">scrollViewDidEndDecelerating:</span>(UITableView *)tableView {  
+    [tableView <span class="string">scrollToRowAtIndexPath:</span>[tableView <span class="string">indexPathForRowAtPoint:</span> CGPointMake(tableView.contentOffset.x, tableView.contentOffset.y+tableView.rowHeight/<span class="number">2</span>)] <span class="string">atScrollPosition:</span>UITableViewScrollPositionTop <span class="string">animated:</span>YES];  
+}  
+</code></pre>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-uitableview/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-uitextview-and-and-uitextfield/">
+                UITextView &amp;&amp; UITextField
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-uitextview-and-and-uitextfield/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-uitextview-and-and-uitextfield/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="UITextView">UITextView</h3><h4 id="ios7_textView_contentInsets">ios7 textView contentInsets</h4><pre><code>A text view <span class="keyword">is</span> a scroll view. iOS <span class="number">7</span> will <span class="keyword">add</span> a content offset automatically <span class="keyword">to</span> scroll views, <span class="keyword">as</span> it assumes they will want <span class="keyword">to</span> scroll up behind the nav bar <span class="keyword">and</span> title bar.
+<span class="keyword">To</span> prevent this, <span class="keyword">override</span> the <span class="keyword">new</span> <span class="function"><span class="keyword">method</span> <span class="title">on</span> <span class="title">UIViewController</span>, <span class="title">automaticallyAdjustsScrollViewInsets</span>, <span class="title">and</span> <span class="title">return</span> <span class="title">NO</span>.</span>
+</code></pre><h3 id="UITextField">UITextField</h3><h4 id="textfield_clear_button_bug">textfield clear button bug</h4><pre><code><span class="preprocessor">#pragma mark- gesture delegate</span>
+- (<span class="built_in">BOOL</span>)gestureRecognizer:(<span class="built_in">UIGestureRecognizer</span> *)gestureRecognizer shouldReceiveTouch:(<span class="built_in">UITouch</span> *)touch {
+    <span class="keyword">if</span> ([touch<span class="variable">.view</span> isKindOfClass:[<span class="built_in">UITextField</span> class]] ||
+        [touch<span class="variable">.view</span> isKindOfClass:[<span class="built_in">UIButton</span> class]])
+    {
+        <span class="keyword">return</span> <span class="literal">NO</span>;
+    }
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/appdelegate-shou-shen/">
+                Appdelegate瘦身
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/appdelegate-shou-shen/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appdelegate-shou-shen/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <ul>
+<li>(BOOL)application:(UIApplication <em>)application<br>didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // …<br>  [FooModule setup];<br>  [[BarModule sharedInstance] setup];<br>  // …<br>  return YES;<br>}</li>
+</ul>
+<p>/// FooModule.m</p>
+<ul>
+<li>(void)load<br>{<br>  __block id observer =<br>  [[NSNotificationCenter defaultCenter]<br>   addObserverForName:UIApplicationDidFinishLaunchingNotification<br>   object:nil<br>   queue:nil<br>   usingBlock:^(NSNotification *note) {<pre><code><span class="attr_selector">[self setup]</span>; <span class="comment">// Do whatever you want</span>
+<span class="attr_selector">[[NSNotificationCenter defaultCenter]</span> <span class="tag">removeObserver</span><span class="pseudo">:observer</span>];
+</code></pre>   }];<br>}</li>
+</ul>
+<p>// 解释：<br>// + load方法在足够早的时间点被调用<br>// block版本的通知注册会产生一个<strong>NSObserver *对象用来给外部remove观察者<br>// block对observer对象的捕获早于函数的返回，所以若不加</strong>block，会捕获到nil<br>// 在block执行结束时移除observer，无需其他清理工作<br>// 这样，在模块内部就完成了在程序启动点代码的挂载</p>
+
         
       
     </div>
@@ -876,7 +1012,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/17/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/15/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/17/">&raquo;</a>
   </div>
 
 
@@ -910,7 +1046,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">162</span>
+              <span class="site-state-item-count">187</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -924,7 +1060,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-count">92</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

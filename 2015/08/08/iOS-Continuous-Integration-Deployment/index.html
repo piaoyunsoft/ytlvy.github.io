@@ -1,0 +1,675 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Deployment," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Continuous Integration & Deployment // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Continuous Integration & Deployment
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Continuous-Integration-Deployment/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="iOS项目的持续集成与管理">iOS项目的持续集成与管理</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ribot-labs/continuous-integration-deployment-for-ios-projects-7358b72ca2e9" target="_blank" rel="external">Continuous Integration &amp; Deployment for iOS Projects</a></li>
+<li>原文作者 : <a href="https://medium.com/@matto1990" target="_blank" rel="external">Matt Oakes</a></li>
+<li><a href="http://www.devtf.cn" target="_blank" rel="external">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev" target="_blank" rel="external">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu" target="_blank" rel="external">Mr.Simple</a>  </li>
+<li>状态 :  校正完 </li>
+</ul>
+</blockquote>
+<p>当实现新功能时，如果忽略可维护性而引入<a href="http://en.wikipedia.org/wiki/Technical_debt" target="_blank" rel="external">技术债务</a>，那将会需要延迟解决它或导致增加维护成本。</p>
+<p>最近我们已经思考通过哪些方式来提高代码的质量：</p>
+<ul>
+<li>当代码的质量下降时，通过设置一些工具来马上提醒开发者</li>
+<li>文档化一些编码规范和思考在过去的几个项目中如何避免维护性差的问题</li>
+</ul>
+<p><strong>我将会简单地概括我们需要设置什么才能自动监控代码质量.</strong></p>
+<h1 id="基础">基础</h1><p>我们选择一个持续集成工具<a href="https://jenkins-ci.org/" target="_blank" rel="external">Jenkins</a>，让它运行在一台放在我们工作室的Mac Mini。其实我不怎么喜欢Jenkins，但到目前为止，它是最稳定和最适合的工具来完成这些工作。</p>
+<p>我们已经通过<a href="https://brew.sh/" target="_blank" rel="external">Homebrew</a>和<a href="https://github.com/sstephenson/rbenv" target="_blank" rel="external">rbenv</a>来分别安装Jenkins和Ruby，而rbenv能够为我们提供一个最新和稳定的<a href="https://rubygems.org/" target="_blank" rel="external">Ruby Gems</a>环境。有个Homebrew和Ruby Gems两个包管理工具之后，我们就几乎能够安装所有我们需要的工具，但很少会破坏与原有OS X系统更新提供的Ruby。</p>
+<a id="more"></a>
+<h1 id="单元测试">单元测试</h1><p>我们使用<a href="https://github.com/specta/specta" target="_blank" rel="external">Specta</a>和<a href="https://github.com/specta/expecta" target="_blank" rel="external">Expecta</a>来测试我们的iOS项目。</p>
+<p>Specta让我们采用行为驱动开发(BDD)风格的语法来编写测试，相比于<em>XCTest</em>的语法，它更加易读。它还有一个强大的分组测试功能，在测试之前或之后运行一些代码块，这样的话，能够极大地减少重复代码。</p>
+<p>Expecta是一个匹配器框架，我们可以在测试中使用它来创建断言。它的语法非常强大，与此同时，它比内建的<em>XCAssert</em>套件更加易读。例如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">expect</span>(<span class="at_rule">@<span class="keyword">"foo").to.equal(@"foo");</span></span><br><span class="line"><span class="function">expect</span>(foo).notTo.<span class="function">equal</span>(<span class="number">1</span>)</span>;</span><br><span class="line"><span class="tag">expect</span>(<span class="attr_selector">[bar isBar]</span>)<span class="class">.to</span><span class="class">.equal</span>(<span class="tag">YES</span>);</span><br><span class="line"><span class="tag">expect</span>(<span class="tag">baz</span>)<span class="class">.to</span><span class="class">.equal</span>(3<span class="class">.14159</span>);</span><br></pre></td></tr></table></figure>
+<p>我们在开发时，通过XCode来运行测试；而使用通过Homebrew来安装的Jenkins时，会借助<a href="https://github.com/facebook/xctool" target="_blank" rel="external">XCTool</a>。XCTool是一个可代替的选择来<em>xcodebuild</em>，它能让你通过命令行的方式来非常轻松地运行测试套件和生成JUnit风格的测试报告。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xctool -workspace Project<span class="class">.xcworkspace</span> -scheme Project -reporter junit:junit-report<span class="class">.xml</span> test</span><br></pre></td></tr></table></figure>
+<p>这些测试报告会发布在Jenkins上，而Jenkins会使用<a href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin" target="_blank" rel="external">JUnit Plugin</a>来根据时间的推移提供单元测试结果的图表，同时会向我们显示我们的测试是否稳定。</p>
+<div align="center"><br><br><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/1*YXbjsC43-eVvMPPw2CXn6A.png"><br></div>
+
+<h1 id="Pull_Request测试">Pull Request测试</h1><p>我们想我们的测试尽可能运行以至于如果我们破坏什么东西，我们就会马上知道。我们在<a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow/" target="_blank" rel="external">feature branches</a>做些修改，然后提交一个pull request到Github，那么代码就会被另一个开发者审查。只要被打开，我们就能运行所有的测试来确保没有任何东西被破坏。</p>
+<p>当新的pull requst是开放状态时，为了管理这些，我们安装<a href="https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin" target="_blank" rel="external">Github Pull Request plugin</a>来将信息从Github发送到Jenkins。如果有任何测试失败，它将会显示在Github，然后我们就不将代码合并，直到代码被修复为止。</p>
+<h1 id="代码覆盖率">代码覆盖率</h1><p>我们也会用<a href="http://gcovr.com/" target="_blank" rel="external">Gcovr</a>工具来生成代码覆盖率报告，Gcovr的安装方式也是Homebrew。你需要针对main target的debug congfiguration改变两个构建设置来配置项目。将<em>Generate Test Coverage Files</em>和<em>Instrument Program Flow</em>都设置为<em>YES</em>。</p>
+<div align="center"><br><br><img src="https://d262ilb51hltx0.cloudfront.net/max/1200/1*Aq8ClxmME0tcpf747uPguQ.png"><br></div>
+
+<p>当我们运行单元测试来生成代码覆盖率报告时，我们需要将<em>OBJROOT=./build</em>添加到XCTool命令行的尾部。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcovr -r . — object-directory build/<span class="keyword">Project</span>.build/Debug-iphonesimulator/<span class="keyword">Project</span>.build/Objects-normal/x86_64 — exclude ‘.*Tests.*’ — xml &gt; coverage.xml</span><br></pre></td></tr></table></figure>
+<p>Gcovr输出的代码覆盖率报告也会被插件<a href="https://wiki.jenkins-ci.org/display/JENKINS/Cobertura+Plugin" target="_blank" rel="external">Cobertura Jenkins plugin</a>发布，这个插件会提供一种可视化的方式来根据时间的推移来显示代码覆盖率。</p>
+<p>现在我们不仅可以看到测试是否通过，还可以看到代码的测试覆盖范围。</p>
+<h1 id="静态分析">静态分析</h1><p>在工具集中，其中一个强大并能够保持高质量的代码的工具就是静态分析工具。这些工具会扫描你的代码，然后生成一个报告，这个报告会告诉你破坏代码风格规则的代码位置。举几个规则的例子：</p>
+<ul>
+<li>未使用的变量或参数</li>
+<li>长变量名，方法名或代码行</li>
+<li>覆盖一个方法，但没有在这个方法调用<em>super</em></li>
+<li>方法太长或方法过于复杂</li>
+<li>还更多的规格…</li>
+</ul>
+<p>我们使用<a href="http://oclint.org/" target="_blank" rel="external">OCLint</a>静态分析工具，这个工具能够支持C，C++和Objective-C语言。OCLint通过结合XCTool使用来生成<strong>json-compilation-database</strong> reporter<br>，从而提供<a href="http://docs.oclint.org/en/dev/guide/xctool.html" target="_blank" rel="external">great integration</a>特性。我们首先添加另一个reporter到我们的XCTool命令行，然后将那个report传递到OCLint来执行静态分析。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ xctool -workspace Project<span class="class">.xcworkspace</span> -scheme Project -reporter junit:junit-report<span class="class">.xml</span> -reporter json-compilation-database:compile_commands<span class="class">.json</span> test</span><br><span class="line">$ oclint-json-compilation-database -e Pods -report-type pmd -o oclint-pmd.xml</span><br></pre></td></tr></table></figure>
+<p>这个report以<a href="http://pmd.sourceforge.net/" target="_blank" rel="external">PMD</a>的方式来生成，然后使用<a href="https://wiki.jenkins-ci.org/display/JENKINS/PMD+Plugin" target="_blank" rel="external">PMD Plugin</a>被发布到Jenkins。有了这些插件之后，你也可以在测试失败之前，设置每个警告的优先级(底，中，高)中一些限制。最初，我们设置这些限制为低，那么只要我们引入代码，就会被提醒，从而提高代码质量。</p>
+<div align="center"><br><br><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/1*fkHdHqA_WGoWATdAs6or0A.png"><br></div>
+
+
+<h1 id="自动部署">自动部署</h1><p>最后一个问题不是如何提高代码质量，而是如何节省时间。开发者通常都会将编译好的代码通过<a href="https://www.crashlytics.com/" target="_blank" rel="external">Crashlytics</a>发送到设计师来设计审查，或在sprint结束演示时发给用户。发送一个已经编译好的app通常花一个开发者的10分钟左右时间，但它需要他们来切换任务和干扰他们的心流。</p>
+<p>最近我们已经配置一个在夜晚构建系统，它会在早上自动发送一个新版本的app给每个人。</p>
+<p>为了做到这样，我们使用<a href="http://fastlane.tools/" target="_blank" rel="external">fastlane</a>。fastlane是一个定义<strong>lanes</strong>的一些操作来执行的强大工具集。现在我们有三个已经定义好的lanes，一个是用来发布给ribot开发者，一个是用来发布给在ribot的每个人，最后一个是发布给用户。</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">before_all <span class="keyword">do</span> |lane|</span><br><span class="line"> cert</span><br><span class="line"> sigh</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">desc</span> “Deploy a <span class="keyword">new</span> build <span class="keyword">to</span> ribot iOS developers over crashlytics”</span><br><span class="line">lane :dev <span class="keyword">do</span></span><br><span class="line"> ipa</span><br><span class="line"> crashlytics(<span class="comment">&#123; groups: ‘ribot-developers’ &#125;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">desc</span> “Deploy a <span class="keyword">new</span> build <span class="keyword">to</span> people at ribot over crashlytics”</span><br><span class="line">lane :internal <span class="keyword">do</span></span><br><span class="line"> ensure_git_status_clean</span><br><span class="line"> append_build_time</span><br><span class="line"> ipa</span><br><span class="line"> crashlytics(<span class="comment">&#123; groups: ‘ribot’ &#125;</span>)</span><br><span class="line"> reset_git_repo</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">desc</span> “Deploy a <span class="keyword">new</span> build <span class="keyword">to</span> everyone over crashlytics”</span><br><span class="line">lane :<span class="keyword">external</span> <span class="keyword">do</span></span><br><span class="line"> ensure_git_status_clean</span><br><span class="line"> increment_build_number</span><br><span class="line"> ipa</span><br><span class="line"> crashlytics(<span class="comment">&#123; groups: [‘ribot’, ‘client’] &#125;</span>)</span><br><span class="line"> commit_version_bump</span><br><span class="line"> add_git_tag</span><br><span class="line"> push_to_git_remote</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">after_all <span class="keyword">do</span> |lane|</span><br><span class="line"> clean_build_artifacts</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>通过使用<strong>fastlane</strong>工具(通过Ruby Gems来安装)来运行一个lane。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane <span class="keyword">internal</span></span><br></pre></td></tr></table></figure>
+<p>在开始使用所有的<em>lanes</em>之前，我们应该自动确保我们有一个有效的signing certificate和最新的provisioning profile。所有我们的配置都放在一个<em>.env</em>文件，它让我们有些默认配置，但当我们运行<em>fastlane</em>根据需要来覆盖它们。</p>
+<p>在将来，我们会通过使用<em>deliver</em>操作来自动化app store提交过程。</p>
+<h1 id="最后总结">最后总结</h1><p>到目前为止，我们已经尝试这些过程，并在工程中呈现出好的结果。我们期望看到只要适当地使用这些工具，就能提高代码的质量，这些报告将会让我们随着时间推移来量化代码质量。我们期待在下一个工程中适当地使用这些工具会发生什么。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deployment/"> #Deployment </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/swift-Core-Image-Tutorial/">swift Core Image Tutorial</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/">iOS UITableviewCell Swipeable</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS项目的持续集成与管理"><span class="nav-number">1.</span> <span class="nav-text">iOS项目的持续集成与管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number"></span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单元测试"><span class="nav-number"></span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pull_Request测试"><span class="nav-number"></span> <span class="nav-text">Pull Request测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码覆盖率"><span class="nav-number"></span> <span class="nav-text">代码覆盖率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态分析"><span class="nav-number"></span> <span class="nav-text">静态分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自动部署"><span class="nav-number"></span> <span class="nav-text">自动部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后总结"><span class="nav-number"></span> <span class="nav-text">最后总结</span></a></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/iOS-Continuous-Integration-Deployment/';
+      var disqus_title = 'iOS Continuous Integration & Deployment';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/iOS-Continuous-Integration-Deployment/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

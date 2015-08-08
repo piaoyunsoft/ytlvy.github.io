@@ -1,0 +1,802 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Core Image," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> swift Core Image Tutorial // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              swift Core Image Tutorial
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/swift-Core-Image-Tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/swift-Core-Image-Tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Core_Image入门教程(swift)">Core Image入门教程(swift)</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76285/beginning-core-image-swift" target="_blank" rel="external">Core Image Tutorial: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/nicklockwood" target="_blank" rel="external">Nick Lockwood</a></li>
+<li>译文出自 :<a href="http://www.devtf.cn" target="_blank" rel="external">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev" target="_blank" rel="external">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao" target="_blank" rel="external">Harries Chen</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>Core Image是一个强大的框架，它能够让你轻松地对图像进行过滤。你能够通过修改图像的饱和度、色调或曝光率来获取各种特效。你也可以使用CPU或GPU更快地来处理图像数据，快到能够实时处理视频帧数据(video frame)。</p>
+<p>Core Image过滤器能够以链式的方式结合将多个特效应用到一个图像或视频帧数据。多个过滤器能够组合成单个过滤器应用在一个图像。通过每次与每个过滤器比较，这使它非常有效地处理图像。</p>
+<p>在这个教程中，你将会亲手实践如何使用Core Image.通过使用几个不同的过滤器，你会看到实时使用各种炫酷的特效是多么容易。</p>
+<h1 id="基础">基础</h1><p>在你开始之前，让我们先讨论在Core Image框架中几个很重要的类：</p>
+<ul>
+<li><strong>CIContext</strong>. 所有处理core image的工作都在CIContext完成。这个与Core Graphics或OpenGL context有几分相似。</li>
+<li><strong>CIImage</strong>. 这个类保存图像数据，它能够从UIImage，图像文件或像素数据等方式来创建。</li>
+<li><strong>CIFilter</strong>. CIFilter类有一个字典(dictionary)来定义特定属性的过滤器，比如常用过滤器有饱和度，颜色翻转，裁剪等属性，还有很多没列出来。</li>
+</ul>
+<h3 id="CoreImageFun">CoreImageFun</h3><p>打开Xcode并使用<strong>iOS \ Application \ Single View Application</strong>模板来创建一个新工程。输入<strong>CoreImageFun</strong>作为Product Name，选择iPhone为Devices option和确定使用<strong>swift</strong>作为编程语言。</p>
+<p>下载<a href="http://cdn5.raywenderlich.com/downloads/CIResources.zip" target="_blank" rel="external">教程的资源</a>，并添加图片<strong>image.png</strong>到工程</p>
+<p>下一步，打开<strong>Main.storyboard</strong>你文件，拖拽一个image view到已存在的view，image view作为view的子视图。在Attributes Inspector中，设置image view的content mode属性为Aspect Fit，这样它就不会拉伸图片。</p>
+<p>下一步，确定Document Outline(在Interface Builder里canvas左边)是可见的 - 你可以从menu中<strong>Editor \ Show Document Outline</strong>来启用。</p>
+<p>按着control键从image view拖动到它的superview三次来添加三个约束(constraint)：</p>
+<ol>
+<li>添加一个Top Space to Layout Guide的约束，如果有必要的话，使用Size Inspector来设置约束的constant为0 </li>
+<li>添加一个Center Horizontally in Container的约束(同样也需要设置constant为0)</li>
+<li>添加一个Equal Width约束</li>
+</ol>
+<p>最后，为了约束image view的高度，按着control键从image view拖动到本身，然后添加一个Aspect Ratio约束，使用Size Inspector来设置它的multiplier的值为8:5对应宽高比和constant factor为0。最后，选择<strong>Editor \ Resolve Auto Layout Issues \ All Views in View Controller \ Update Frames</strong>，那么Interface Builder会根据这些约束来更新布局</p>
+<p>下一步，打开Assistant Editor，然后确保它显示<strong>ViewController.swift</strong>。按着control键从UIImageView拖动到刚刚打开的<strong>ViewController</strong>类的大括号。命名outlet为<strong>imageView</strong>，然后点击connect。</p>
+<p>编译和运行这个项目来确保目前进展顺利 - 你应该看到一个空屏。初始化设置完成，现在进入Core Image的世界。</p>
+<a id="more"></a>
+<h1 id="基本图片过滤器">基本图片过滤器</h1><p>你将会通过使用<strong>CIFilter</strong>应用到图像和显示到屏幕来入门。每次你想将CIFilter应用到一个图像，都需要做四件事：</p>
+<ol>
+<li><strong>创建一个CIImage对象</strong>。CIImage有几个初始化方法，其中包括：CIImage(contentsOfURL:), CIImage(data:), CIImage(CGImage:), CIImage(bitmapData:bytesPerRow:size:format:colorSpace:)等，大多数你都会使用CIImage(contentsOfURL:)方法。</li>
+<li><strong>创建一个CIContext对象</strong>。一个CIContext是基于CPU或CPU，在初始化它时比较耗资源，所以需要复用它而不是多次创建。当你输出CIImage对象时，你会经常需要CIContext对象。</li>
+<li><strong>创建CIFilter对象</strong>。当你创建一个filter时，你需要配置多个属性来决定你使用的filter。</li>
+<li><strong>获取filter的输出</strong>。filter会输出一个CIImage类型的image给你 - 你可以使用CIContext将它转换为UIImage类型image。</li>
+</ol>
+<p>让我们看看它是如何工作。添加以下代码到<strong>ViewController.swift</strong>的viewDidLoad():方法</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line">let fileURL = NSBundle.<span class="function"><span class="title">mainBundle</span><span class="params">()</span></span>.<span class="function"><span class="title">URLForResource</span><span class="params">(<span class="string">"image"</span>, withExtension: <span class="string">"png"</span>)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line">let beginImage = <span class="function"><span class="title">CIImage</span><span class="params">(contentsOfURL: fileURL)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">let <span class="attribute">filter</span> = <span class="function"><span class="title">CIFilter</span><span class="params">(name: <span class="string">"CISepiaTone"</span>)</span></span></span><br><span class="line"><span class="attribute">filter</span>.<span class="function"><span class="title">setValue</span><span class="params">(beginImage, forKey: kCIInputImageKey)</span></span></span><br><span class="line"><span class="attribute">filter</span>.<span class="function"><span class="title">setValue</span><span class="params">(<span class="number">0.5</span>, forKey: kCIInputIntensityKey)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line">let newImage = <span class="function"><span class="title">UIImage</span><span class="params">(CIImage: filter.outputImage)</span></span></span><br><span class="line">self<span class="class">.imageView</span><span class="class">.image</span> = newImage</span><br></pre></td></tr></table></figure>
+<p>让我们逐段分析以上代码：</p>
+<ol>
+<li>这行代码创建一个NSURL对象，它保存image文件的路径</li>
+<li>通过CIImage(contentsOfURL:)构造器来创建CIImage对象</li>
+<li>创建CIFilter对象。CIFilter构造器将name作为参数，然后用dictionary来指定filter的键值对。每个filter都拥有唯一的键和多个有效值。<strong>CISepiaTone</strong> filter只接收两个值<strong>kCIInputImageKey</strong>(CIImage)和<strong>kCIInputIntensityKey</strong>(在0到1之间的一个浮点数)。这里你设置它的值为0.5。如果没有值提供的话，大多数filters都有默认值。但CIImage没有默认值，它必须要提供。</li>
+<li>通过使用filter的<strong>outputImage</strong>属性能够轻松地获取CIImage。一旦你有个输出的CIImage，你需要将它转换为UIImage。使用<strong>UIImage(CIImage:)</strong>构造器来创建UIImage。如果你已经将CIImage转换为UIImage，你就能将image显示到image view</li>
+</ol>
+<p><img src="http://cdn5.raywenderlich.com/wp-content/uploads/2014/07/CI-Sepia-Crop.jpg" alt=""></p>
+<h1 id="把它放进Context">把它放进Context</h1><p>在你向前看之前，有个优化建议你应该需要知道。</p>
+<p>之前我曾提及过，你需要有个<strong>CIContext</strong>来使用CIFilter，但以上例子都没有提及过这个对象。结果变成了由<strong>UIImage(CIImage:)</strong> 构造器来为你处理所有的工作。UIImage它创建一个<strong>CIContext</strong>，然后用它来执行所有过滤图像的操作，这让你更加容易地使用Core Image的API。</p>
+<p>但这种方式有一个主要缺点就是每次使用时都创建一个新的<strong>CIContext</strong>对象。<strong>CIContext</strong>对象是为了复用来提高性能。如果你想用一个slider来更新filter的值，是以每次创建一个新的CIContext来实现更新filter的方式，那么运行速度将会很慢。</p>
+<p>让我们以恰当的方式来实现。在<strong>viewDidLoad()</strong>里删除步骤4的代码，然后用一下代码来代替：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line">let context = <span class="function"><span class="title">CIContext</span><span class="params">(options:nil)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line">let cgimg = context.<span class="function"><span class="title">createCGImage</span><span class="params">(filter.outputImage, fromRect: filter.outputImage.extent()</span></span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">let newImage = <span class="function"><span class="title">UIImage</span><span class="params">(CGImage: cgimg)</span></span></span><br><span class="line">self<span class="class">.imageView</span><span class="class">.image</span> = newImage</span><br></pre></td></tr></table></figure>
+<p>我们再一次逐段分析代码：</p>
+<ol>
+<li>你设置CIContext对象，然后用它来画一个CGImage。<strong>CIContext(options:)</strong>构造器以NSDictionary为参数，它指定一些选项，比如：颜色格式，或者context是否运行在CPU或GPU。对于这个app来说，默认值是可以的，所以你可以传递nil这个值进去。</li>
+<li>context调用<strong>createCGImage(outputImage:fromRect:)</strong>方法在给定CIImage参数并返回一个新的CGImage示例。</li>
+<li>你根据刚刚获取的CIImage，使用<strong>UIImage(CGImage:)</strong>构造器来创建一个UIImage对象。注意，当我们使用CIImage对象之后，没有必要显式地释放它，虽然在Objective-C需要这样做。但在Swift中，ARC会自动释放Core Foundation的对象。</li>
+</ol>
+<p>编译和运行，确保项目进展顺利</p>
+<p>在这个例子中，自己创建CIContext与不创建没什么不同。但下个部分中，你会看到当你动态地修改filter时，为什么CIContext对性能影响很大。</p>
+<h1 id="修改Filter值">修改Filter值</h1><p>目前还不错，但这只是使用Core Image filters的入门方式。让我们添加一个slider，然后设置它以便你能够实时调整filter的设置</p>
+<p>打开<strong>Main.storyboard</strong>，选取一个slider，将它拖放到image view的上面，并水平对齐。选中view，然后点击<strong>Editor \ Resolve Auto Layout Issues \ Selected Views \ Reset to Suggested Constraints</strong>，添加需要的宽约束。</p>
+<p>确保Assistant Editor可见和显示<strong>ViewController.swift</strong>，然后按着control键从slider拖动到之前添加的@IBOutlet下面，设置name为<strong>amountSlider</strong>，然后点击<strong>Connect</strong>。</p>
+<p>当你还选中slider时，也让我们连接slider到一个action method。再一次按着control键从slider拖动到ViewController类的}上面。设置Connection为<strong>Action</strong>，name为<strong>amountSliderValueChanged</strong>，确保Event设置为<strong>Value Changed</strong>，然后点击<strong>Connect</strong>。</p>
+<p>每次slider改变时，你需要根据不同的值来重新创建image filter。然而，你不想重复整个耗时且没效率的过程。你需要在你的类改变几样东西，那么你就要在viewDidLoad方法中创建一些对象并保存。</p>
+<p>最重要的一件事就是当你需要使用CIContext时，你只需复用它。如果你每次都重新创建它，你的程序将会变得很慢。另一件事就是保存CIFilter和CIImage，CIImage主要保存原始的图像。每次输出都会产生新的CIImage，但你刚开始使用的图像都会保持不变。</p>
+<p>你需要添加几个实例变量来完成这个任务。添加以下三个属性到你的ViewController类：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> context: CIContext!</span><br><span class="line"><span class="tag">var</span> <span class="attribute">filter</span>: CIFilter!</span><br><span class="line"><span class="tag">var</span> beginImage: CIImage!</span><br></pre></td></tr></table></figure>
+<p>请注意，你已经用!语法来声明那些值为implicitly-unwrapped optionals，因为直到<strong>viewDidLoad</strong>才初始化它们。你也可以用？，但采用那种方式是为了当你使用那几个实例变量时，防止optionals为nil。implicitly-unwrapped语法由于不用到处使用!标识来访问变量，它让代码更加易读。</p>
+<p>在<strong>viewDidLoad</strong>改变代码，那么它使用这些属性而不是使用新的局部变量，代码如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">beginImage = <span class="function"><span class="title">CIImage</span><span class="params">(contentsOfURL: fileURL)</span></span></span><br><span class="line"> </span><br><span class="line"><span class="attribute">filter</span> = <span class="function"><span class="title">CIFilter</span><span class="params">(name: <span class="string">"CISepiaTone"</span>)</span></span></span><br><span class="line"><span class="attribute">filter</span>.<span class="function"><span class="title">setValue</span><span class="params">(beginImage, forKey: kCIInputImageKey)</span></span></span><br><span class="line"><span class="attribute">filter</span>.<span class="function"><span class="title">setValue</span><span class="params">(<span class="number">0.5</span>, forKey: kCIInputIntensityKey)</span></span></span><br><span class="line"> </span><br><span class="line">let outputImage = <span class="attribute">filter</span><span class="class">.outputImage</span></span><br><span class="line"> </span><br><span class="line">context = <span class="function"><span class="title">CIContext</span><span class="params">(options:nil)</span></span></span><br><span class="line">let cgimg = context.<span class="function"><span class="title">createCGImage</span><span class="params">(outputImage, fromRect: outputImage.extent()</span></span>)</span><br></pre></td></tr></table></figure>
+<p>现在你将会实现changeValue方法。你在这个方法需要做的是修改CIFilter dictionary的inputIntentsity键对应的值。</p>
+<p>一旦你修改这个值，你需要重复这几个步骤：</p>
+<ul>
+<li>从CIFilter获取输出的CIImage</li>
+<li>将CIImage转换为CGImage</li>
+<li>将CGImage转换为UIImage，然后将它显示在image view</li>
+</ul>
+<p>用以下代码代替amountSliderValueChanged(sender:)方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">@IBAction</span> <span class="func"><span class="keyword">func</span> <span class="title">amountSliderValueChanged</span><span class="params">(sender: UISlider)</span></span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">let</span> sliderValue = sender.value</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">filter</span>.setValue(sliderValue, forKey: kCIInputIntensityKey)</span><br><span class="line">    <span class="keyword">let</span> outputImage = <span class="built_in">filter</span>.outputImage</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">let</span> cgimg = context.createCGImage(outputImage, fromRect: outputImage.extent())</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">let</span> newImage = <span class="type">UIImage</span>(<span class="type">CGImage</span>: cgimg)</span><br><span class="line">    <span class="keyword">self</span>.imageView.image = newImage</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你会注意到，你已经将方法定义中参数类型从<strong>AnyObject</strong>转换为<strong>UISlider</strong>。你只用这个方法来从<strong>UISlider</strong>获取值，以便你改变值。如果你不管它，默认是<strong>AnyObject</strong>，你需要将它转换为<strong>UISlider</strong>，否则下一行代码就会抛出错误。</p>
+<p>你可以从slider获取<strong>浮点数</strong>的值。你的slider默认设置为0.5，最小值为0，最大值为1。通过slider设置CIFilter是多么方便。</p>
+<p>CIFilter有多个方法允许你在dictionary根据不同键来设置多个值。而这里，你刚设置<strong>inputIntensity</strong>键对应的值，而这个值是从slider获取。Swift自动将CGFloat值转换为NSNumber对象，来符合<strong>setValue(value:forKey:)</strong>方法的使用。</p>
+<p>剩下的代码看起来很熟悉，因为它与<strong>viewDidLoad</strong>方法的逻辑一样。你将会多次使用这段代码。从现在起，你会用<strong>amountSliderValueChanged(sender:)</strong>方法来将CIFilter输出的图像渲染到ImageView。</p>
+<p>编译和运行，你可以修改slider值来实时地改变图像。</p>
+<h1 id="从相册获取图片">从相册获取图片</h1><p>现在你可以改变filter的值，事情也开始变得有趣。但是，如果你不喜欢这张花朵的图片。你可以设置<strong>UIImagePickerController</strong>来从相册选取图片放进你的app来使用。</p>
+<p>你需要创建一个button来跳转到相册视图，所以打开<strong>Main.storyboard</strong>，拖动一个button到scene的右底部，并改变按钮文字为”Photo Album”。像之前一样，使用Auto Layout来Reset to Suggested Constraints。button应该在slider的右下边。</p>
+<p>确保Assistant Editor是可见和显示<strong>ViewController.swift</strong>，然后按着control键从button拖动到}的上面。设置Connection为<strong>Action</strong>，name为<strong>loadPhoto</strong>，确保Event设置为<strong>Touch Up Inside</strong>，最后点击<strong>Connect</strong>。</p>
+<p>loadPhoto方法实现如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">@IBAction</span> <span class="func"><span class="keyword">func</span> <span class="title">loadPhoto</span><span class="params">(sender : AnyObject)</span></span> &#123;</span><br><span class="line">  <span class="keyword">let</span> pickerC = <span class="type">UIImagePickerController</span>()</span><br><span class="line">  pickerC.delegate = <span class="keyword">self</span></span><br><span class="line">  <span class="keyword">self</span>.presentViewController(pickerC, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一行代码主要是创建一个<strong>UIImagePickerController</strong>对象。然后设置image picker的delegate为self(ViewController)</p>
+<p>你会这里得到一个警告。你需要声明<strong>ViewController</strong>遵循<strong>UIImagePickerControllerDelegate</strong>和<strong>UINavigationControllerDelegate</strong>协议。</p>
+<p>仍在ViewController.swift文件，在文件顶部改变类的定义，代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="typename">UIViewController</span>, <span class="typename">UINavigationControllerDelegate</span>, <span class="typename">UIImagePickerControllerDelegate &#123;</span></span></span><br></pre></td></tr></table></figure>
+<p>而方法实现如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">imagePickerController</span><span class="params">(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: NSDictionary!)</span></span> &#123;</span><br><span class="line">  <span class="keyword">self</span>.dismissViewControllerAnimated(<span class="literal">true</span>, completion: <span class="literal">nil</span>);</span><br><span class="line">  <span class="built_in">println</span>(info);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>UIImagePickerControllerDelegate</strong>方法还没完成 - 它只是一个占位符来打印被选择图片的信息。注意，不管你怎样实现UIImagePickerControllerDelegate这个方法，你必须在实现中显式地dimiss UIImagePickerController。如果你不这样做的话，你就会永远地盯着image picker。</p>
+<p>编译和运行这个app，点击button。它会跳转到相册任你选择图片。</p>
+<blockquote>
+<p>如果你在模拟器运行app，你可以不会有图片。在模拟器(或在没有摄像头的设备)，你可以使用Safari来保存图片到相册。打开Safari，查找一张图片，点着并长按，你就会有一个选项来保存图片。下一次你运行你app，它将会出现在你图片库。</p>
+</blockquote>
+<p>在控制台中，你选择完一张图片之后，就看到类似以下的打印信息：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">UIImagePickerControllerMediaType = "public.image"<span class="comment">;</span></span><br><span class="line">UIImagePickerControllerOriginalImage = " size &#123;1165, 770&#125; orientation 0 scale <span class="number">1.000000</span>"<span class="comment">;</span></span><br><span class="line">UIImagePickerControllerReferenceURL = "assets-library://asset/asset.PNG?id=DCFE<span class="number">1435-2C01</span>-<span class="number">4820-9182</span>-40A69B48EA67&amp;ext=PNG"<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，它有一个dictionary入口，对应就是用户选择的“原始图片”。这个就是你想拽取和过滤的东西。</p>
+<p>现在你已经有方法选取图片了，你怎样使用它作为你的<strong>beginImage</strong>呢？</p>
+<p>很简答，只需将delegate方法修改成以下代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">imagePickerController</span><span class="params">(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: NSDictionary!)</span></span> &#123;</span><br><span class="line">  <span class="keyword">self</span>.dismissViewControllerAnimated(<span class="literal">true</span>, completion: <span class="literal">nil</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">let</span> gotImage = info[<span class="type">UIImagePickerControllerOriginalImage</span>] <span class="keyword">as</span> <span class="type">UIImage</span></span><br><span class="line"> </span><br><span class="line">  beginImage = <span class="type">CIImage</span>(image:gotImage)</span><br><span class="line">  <span class="built_in">filter</span>.setValue(beginImage, forKey: kCIInputImageKey)</span><br><span class="line">  <span class="keyword">self</span>.amountSliderValueChanged(amountSlider)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你需要从你选择的图片来创建一个新的<strong>CIImage</strong>。你可以通过在dictionary的<strong>UIImagePickerControllerOriginalImage</strong>键获取值，从而获取<strong>UIImage</strong>的表示。注意，最好就是用UIImagePickerControllerOriginalImage这个常量，而不是硬编码的字符串，因为Apple可能在将来会改变这个键的名字。</p>
+<p>你需要通过<strong>CIImage(image:)</strong>构造器将image转换为<strong>CIImage</strong>对象。然后在filter dictionary设置键，那么就可以创建新的CIImage。</p>
+<p>最后一行代码看起来有点奇怪。还记得我说过，怎样运行<strong>changeValue</strong>方法，最新的值被设置在filter，然后更新image view。</p>
+<p>好，你需要再做一次，所以你只是调用<strong>changeValue</strong>方法。即使slider的值还没改变，你仍然可以使用那个方法的代码来完成工作。你可以分解那段代码到自己的方法(如果你想做得更加复杂来避免混淆)，但这种情况下，你的目的是为了复用amountSliderValueChanged方法。传递<strong>amountSlider</strong>作为sender以致它有正确的值使用。</p>
+<p>编译和运行，你能从相册中更新任何图片。</p>
+<p>如果你创建完美的深褐色图片，你怎样才能保存它。你可以截图，但最恰当的方式就是保存已过滤的图片到相册。</p>
+<h1 id="保存到相册">保存到相册</h1><p>为了保存到相册，你需要使用<strong>AssetsLibrary</strong> framework。在<strong>ViewController.swift</strong>文件顶部添加以下导入语句：</p>
+<figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"><span class="keyword">import</span> AssetsLibrary</span></span><br></pre></td></tr></table></figure>
+<p>有一件你需要知道的事就是当你保存图片到相册,它需要花费几秒时间，即使在你关闭app之后仍在继续处理图片。</p>
+<p>由于当你切换到另一个app的时候，GPU就停止处理，这将变成一个问题。如果图片还没完成保存，当你迟点找到它的时候，它将不在那里。</p>
+<p>有一个解决方案就是使用基于CPU的<strong>CIContext</strong>来渲染。默认选择就是使用GPU，因为它处理速度更快，但你不想为了添加保存功能而降低过滤性能。而现在，你会创建另一个<strong>CIContext</strong>来保存image。注意，软件渲染将不会在模拟器正常工作。</p>
+<p>添加一个新button到你的app，这个button会让你保存修改后的图片。打开<strong>Main.storyboard</strong>，添加一个新的button，修改button标题为“Save to Album”。将button放在slider的左边，然后添加相应的约束。</p>
+<p>然后像上一次一样，连接button到一个新方法<strong>savePhoto(sender:)</strong>，方法实现如下：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func savePhoto<span class="params">(sender: AnyObject)</span> &#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    <span class="built_in">let</span> imageToSave = filter.outputImage</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="built_in">let</span> softwareContext = CIContext<span class="params">(options:[kCIContextUseSoftwareRenderer: <span class="literal">true</span>])</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    <span class="built_in">let</span> cgimg = softwareContext.createCGImage<span class="params">(imageToSave, fromRect:imageToSave.extent<span class="params">()</span>)</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 4</span></span><br><span class="line">    <span class="built_in">let</span> library = ALAssetsLibrary<span class="params">()</span></span><br><span class="line">    library.writeImageToSavedPhotosAlbum<span class="params">(cgimg,</span><br><span class="line">      metadata:imageToSave.properties<span class="params">()</span>,</span><br><span class="line">      completionBlock:nil)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码块中：</p>
+<ol>
+<li>从filter获取CIImage的输出。</li>
+<li>创建一个新的，基于软件的，使用CPU渲染器的CIContext对象。</li>
+<li>生成CGImage。</li>
+<li>保存CIImage到photo library。</li>
+</ol>
+<p>编译和运行app(记住要运行在实际设备，因为你已经使用软件渲染)，现在你可以永久地保存完美的图像到你的photo library。</p>
+<h1 id="Image元数据是什么？">Image元数据是什么？</h1><p>让我们讨论一下关于image元数据。用手机拍照出来的图片有很多关联它的数据，例如GPS坐标，图片格式，和方向。</p>
+<p>方向是一样特殊的东西你需要保存。加载UIImage变成CIImage，渲染成CGImage，然后转换回一个UIImage这个过程是为了从image抓取元数据。为了保存方向，你需要保存它然后传递它作为UIImage构造器参数。</p>
+<p>添加一个新属性到<strong>ViewController</strong>类定义：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> orientation</span>: UIImageOrientation = .Up</span><br></pre></td></tr></table></figure>
+<p>下一步，添加下面代码到<strong>imagePickerController(picker:didFinishPickingMediaWithInfo:)</strong>方法里，设置<strong>beginImage</strong>代码行的上面：</p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">orientation </span>=<span class="string"> gotImage.imageOrientation</span></span><br></pre></td></tr></table></figure>
+<p>这样就会保存原始image方向的属性。</p>
+<p>最后，修改在<strong>amountSliderValueChanged</strong>方法里，那段创建UIImage来设置imageView对象的代码：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let newImage = UIImage(<span class="string">CGImage:</span> cgimg, <span class="string">scale:</span><span class="number">1</span>, <span class="string">orientation:</span>orientation)</span><br></pre></td></tr></table></figure>
+<p>现在，如果你拍一张照片而不是默认方向，它将会默认保存。</p>
+<h1 id="还有哪些Filters是可用的？">还有哪些Filters是可用的？</h1><p>CIFilter API在Mac OS有超过160个，在iOS 8有126个关于filters的API。</p>
+<p>为了查找有哪些filters在给定的设备是可用的，你可以使用CIFilter的<strong>filterNamesInCategory(kCICategoryBuiltIn)</strong>方法。这个方法会返回一个关于filter名字的数组。</p>
+<p>除此之外，每个filter有一个<strong>attributes()</strong>方法返回一个dictionary，dictionary包含关于filter的信息。这些信息包括filter的名字，分类，filter接受哪些输入，默认输入，和这些输入接受哪些值。</p>
+<p>让我们将所有东西放在一个类的方法，这个方法记录当前所有可用的filters信息。添加这个方法到ViewController类的定义：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">logAllFilters</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">let</span> properties = <span class="type">CIFilter</span>.filterNamesInCategory(kCICategoryBuiltIn)</span><br><span class="line">  <span class="built_in">println</span>(properties)</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">for</span> filterName: <span class="type">AnyObject</span> <span class="keyword">in</span> properties &#123;</span><br><span class="line">    <span class="keyword">let</span> fltr = <span class="type">CIFilter</span>(name:filterName <span class="keyword">as</span> <span class="type">String</span>)</span><br><span class="line">    <span class="built_in">println</span>(fltr.attributes())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法仅仅通过<strong>filterNamesInCategory()</strong>方法来获取filters的数组。首先，它打印名字的列表。然后，遍历列表获取每个名字，根据名字实例化filter和打印它的属性dictionary。</p>
+<p>在<strong>viewDidLoad()</strong>方法最后调用这个方法：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.<span class="function"><span class="title">logAllFilters</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>你会看到很多filters在控制台被列出：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">CIAttributeFilterDisplayName</span>: Color Monochrome, inputColor: &#123;</span><br><span class="line">    <span class="built_in">CIAttributeClass</span> = <span class="built_in">CIColor</span>;</span><br><span class="line">    <span class="built_in">CIAttributeDefault</span> = <span class="string">"(0.6 0.45 0.3 1)"</span>;</span><br><span class="line">    <span class="built_in">CIAttributeType</span> = <span class="built_in">CIAttributeTypeColor</span>;</span><br><span class="line">&#125;, inputImage: &#123;</span><br><span class="line">    <span class="built_in">CIAttributeClass</span> = <span class="built_in">CIImage</span>;</span><br><span class="line">    <span class="built_in">CIAttributeType</span> = <span class="built_in">CIAttributeTypeImage</span>;</span><br><span class="line">&#125;, <span class="built_in">CIAttributeFilterCategories</span>: (</span><br><span class="line">    <span class="built_in">CICategoryColorEffect</span>,</span><br><span class="line">    <span class="built_in">CICategoryVideo</span>,</span><br><span class="line">    <span class="built_in">CICategoryInterlaced</span>,</span><br><span class="line">    <span class="built_in">CICategoryNonSquarePixels</span>,</span><br><span class="line">    <span class="built_in">CICategoryStillImage</span>,</span><br><span class="line">    <span class="built_in">CICategoryBuiltIn</span></span><br><span class="line">), inputIntensity: &#123;</span><br><span class="line">    <span class="built_in">CIAttributeClass</span> = <span class="built_in">NSNumber</span>;</span><br><span class="line">    <span class="built_in">CIAttributeDefault</span> = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">CIAttributeIdentity</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">CIAttributeSliderMax</span> = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">CIAttributeSliderMin</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">CIAttributeType</span> = <span class="built_in">CIAttributeTypeScalar</span>;</span><br><span class="line">&#125;, <span class="built_in">CIAttributeFilterName</span>: <span class="built_in">CIColorMonochrome</span>]</span><br></pre></td></tr></table></figure>
+<p>哇，有很多的filters！它会给你一些灵感在你自己的app中尝试其他filters。</p>
+<h1 id="更加复杂的Filter链">更加复杂的Filter链</h1><p>现在我们已经知道在iOS平台有哪些可用的filter，是时候创建更加复杂的filter链了。为了做到这样，你会创建一个专门的方法来处理CIImage。它会接受一个CIImage作为参数，过滤它，让它看起来像一张老旧的图片，然后返回一个已经修改的CIImage。</p>
+<p>添加以下方法到ViewController：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">func oldPhoto<span class="params">(img: CIImage, withAmount intensity: Float)</span> -&gt; CIImage &#123;</span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">let</span> sepia = CIFilter<span class="params">(name:<span class="string">"CISepiaTone"</span>)</span></span><br><span class="line">  sepia.setValue<span class="params">(img, forKey:kCIInputImageKey)</span></span><br><span class="line">  sepia.setValue<span class="params">(intensity, forKey:<span class="string">"inputIntensity"</span>)</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 2</span></span><br><span class="line">  <span class="built_in">let</span> random = CIFilter<span class="params">(name:<span class="string">"CIRandomGenerator"</span>)</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 3</span></span><br><span class="line">  <span class="built_in">let</span> lighten = CIFilter<span class="params">(name:<span class="string">"CIColorControls"</span>)</span></span><br><span class="line">  lighten.setValue<span class="params">(random.outputImage, forKey:kCIInputImageKey)</span></span><br><span class="line">  lighten.setValue<span class="params">(<span class="number">1</span> - intensity, forKey:<span class="string">"inputBrightness"</span>)</span></span><br><span class="line">  lighten.setValue<span class="params">(<span class="number">0</span>, forKey:<span class="string">"inputSaturation"</span>)</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="built_in">let</span> croppedImage = lighten.outputImage.imageByCroppingToRect<span class="params">(beginImage.extent<span class="params">()</span>)</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 5</span></span><br><span class="line">  <span class="built_in">let</span> composite = CIFilter<span class="params">(name:<span class="string">"CIHardLightBlendMode"</span>)</span></span><br><span class="line">  composite.setValue<span class="params">(sepia.outputImage, forKey:kCIInputImageKey)</span></span><br><span class="line">  composite.setValue<span class="params">(croppedImage, forKey:kCIInputBackgroundImageKey)</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 6</span></span><br><span class="line">  <span class="built_in">let</span> vignette = CIFilter<span class="params">(name:<span class="string">"CIVignette"</span>)</span></span><br><span class="line">  vignette.setValue<span class="params">(composite.outputImage, forKey:kCIInputImageKey)</span></span><br><span class="line">  vignette.setValue<span class="params">(intensity * <span class="number">2</span>, forKey:<span class="string">"inputIntensity"</span>)</span></span><br><span class="line">  vignette.setValue<span class="params">(intensity * <span class="number">30</span>, forKey:<span class="string">"inputRadius"</span>)</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 7</span></span><br><span class="line">  return vignette.outputImage</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里会逐段讲解：</p>
+<ol>
+<li><p>以相同的方式设置深褐色的filter。你在这个方法传递一个浮点数来设置深褐色效果的强度。这个值是由slider提供。</p>
+</li>
+<li><p>设置一个创建随机噪音模式的filter，filter效果如下：</p>
+</li>
+</ol>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2012/09/CIRandomGenerator.gif" alt=""></p>
+<p>   它好像没有接受任何参数。你会使用这个噪音模式来添加纹理到你的最终“老旧相片”的外观。</p>
+<ol>
+<li><p>修改随机噪音生成器的输出。你想改变的它的灰度和减轻它一点以至于效果没有那么炫酷。你会注意到，输入image的键被设置到随机filter的outputImage属性。这是一种传递一个filter的输出作为下个输入的方便方式。</p>
+</li>
+<li><p><strong>imageByCroppingToRect()</strong>接受被裁剪的rect作为参数，然后返回CIImage。在这种情况下，你需要裁剪CIRandomGenerator filter的输出，因为它无限地碎片化。在某种情况下，如果你不裁剪它，你会得到一个错误信息，说filters有‘an infinite extent’。CIImages实际上是不包含image数据，它们创建它时将它描述成一个’recipe’。直到你在CIContext调用一个方法时数据才实际被处理。</p>
+</li>
+<li><p>将深褐色filter的输出和CIRandomGenerator filter的输出结合起来。这个filter执行像在photoshop层‘Hard Light’设置完全一样的操作。大多数在photoshop(但不是全部)的filter选项都可以通过使用Core Image来实现。</p>
+</li>
+<li><p>在这个合成的输出中，运行一个vignette filter，它会使你的图片边缘变暗。你使用从slider获取的值来设置半径和效果的强度。</p>
+</li>
+<li><p>最后，返回最后filter的输出。</p>
+</li>
+</ol>
+<p>关于filter chain讲到这里。你现在应该有一个如何形成复杂filter chain的想法。通过组合多个Core Image filters成各种各样的chains，你就能实现无穷多种的特效。</p>
+<p>下一件事就是在<strong>amountSliderValueChanged()</strong>方法实现。改变这两行代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">filter</span>.<span class="function"><span class="title">setValue</span><span class="params">(sliderValue, forKey: <span class="string">"inputIntensity"</span>)</span></span></span><br><span class="line">let outputImage = <span class="attribute">filter</span>.outputImage</span><br></pre></td></tr></table></figure>
+<p>成这行代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let outputImage = self.<span class="function"><span class="title">oldPhoto</span><span class="params">(beginImage, withAmount: sliderValue)</span></span></span><br></pre></td></tr></table></figure>
+<p>这只是用新的，更复杂的filter方法来代替之前深褐色效果。你可以传递slder的值给强度，和你使用在viewDidLoad方法中被设置的beginImage作为输入的CIImage。编译和运行，你应该得到一个更加完善的旧图片效果，这种效果会是深褐色，有一点噪音和一点渐晕。</p>
+<p>这种噪音效果会是更加微妙，但我会留给你自行试验。现在你完全有能力随意操纵Core Image，尽管去尝试吧！</p>
+<h1 id="下一步">下一步</h1><p>这个是<a href="http://cdn4.raywenderlich.com/wp-content/uploads/2014/07/CoreImageFun.zip" target="_blank" rel="external">示例工程</a>包含这个教程所有的代码。</p>
+<p>它包含了如何使用Core Image filters的基本方法。这是一个很容易上手的技术，所以你应该很快就能使用它来应用到一些优雅的filters。</p>
+<p>记住，这个示例app在一开始的时候打印出所有可用的filters列表到控制台。为什么不尝试使用这些filters呢？你可以在<a href="https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CoreImageFilterReference/Reference/reference.html" target="_blank" rel="external">Core Image filter reference documentation</a>查看更多关于filters的详细信息。</p>
+<p>如果你在这个教程中有任何问题或评论，请加入这个论坛来讨论。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Core-Image/"> #Core Image </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/">iOS What’s New in Swift 2</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/">iOS Continuous Integration & Deployment</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Core_Image入门教程(swift)"><span class="nav-number">1.</span> <span class="nav-text">Core Image入门教程(swift)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number"></span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CoreImageFun"><span class="nav-number">0.1.</span> <span class="nav-text">CoreImageFun</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本图片过滤器"><span class="nav-number"></span> <span class="nav-text">基本图片过滤器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#把它放进Context"><span class="nav-number"></span> <span class="nav-text">把它放进Context</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改Filter值"><span class="nav-number"></span> <span class="nav-text">修改Filter值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从相册获取图片"><span class="nav-number"></span> <span class="nav-text">从相册获取图片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存到相册"><span class="nav-number"></span> <span class="nav-text">保存到相册</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image元数据是什么？"><span class="nav-number"></span> <span class="nav-text">Image元数据是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#还有哪些Filters是可用的？"><span class="nav-number"></span> <span class="nav-text">还有哪些Filters是可用的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更加复杂的Filter链"><span class="nav-number"></span> <span class="nav-text">更加复杂的Filter链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下一步"><span class="nav-number"></span> <span class="nav-text">下一步</span></a></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/swift-Core-Image-Tutorial/';
+      var disqus_title = 'swift Core Image Tutorial';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/swift-Core-Image-Tutorial/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

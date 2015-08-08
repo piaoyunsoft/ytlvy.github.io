@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/duan-dian-xu-chuan/">
-                断点续传
+              <a class="post-title-link" href="/2015/05/27/reactivecocoa-example-1-nsurlsession/">
+                ReactiveCocoa应用1---NSURLSession封装
               </a>
             
           
@@ -169,6 +169,14 @@
 
               
               
+                ， 
+              
+
+            
+              <a href="/categories/IOS/FP/">FP</a>
+
+              
+              
 
             
           </span>
@@ -178,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/duan-dian-xu-chuan/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/duan-dian-xu-chuan/"></span>
+            <a href="/2015/05/27/reactivecocoa-example-1-nsurlsession/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa-example-1-nsurlsession/"></span>
             </a>
           </span>
           
@@ -194,9 +202,87 @@
 
       
         
-          <pre><code>[request <span class="string">addValue:</span>@<span class="string">"bytes=500-"</span> <span class="string">forHTTPHeaderField:</span>@<span class="string">"Range"</span>];
-_fileHandle = [NSFileHandle <span class="string">fileHandleForWritingAtPath:</span>_tempFilePath];
-_fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number">0</span>;
+          <h3 id="ReactiveCocoa应用1—-NSURLSession封装">ReactiveCocoa应用1—-NSURLSession封装</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="string">fetchJSONFromSession:</span>(NSURLSession *)session <span class="string">withRequest:</span>(NSURLRequest *)request &#123;</span><br><span class="line">    <span class="keyword">return</span> [[[RACSignal <span class="string">createSignal:</span>^RACDisposable *(id&lt;RACSubscriber&gt; subscriber)</span><br><span class="line">    &#123;</span><br><span class="line">        NSURLSessionDataTask *dataTask = [session <span class="string">dataTaskWithRequest:</span>request <span class="string">completionHandler:</span>^(NSData *data, NSURLResponse *response, NSError *error)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (! error) &#123;</span><br><span class="line">                NSError *jsonError = nil;</span><br><span class="line">                NSString* newStr = [[NSString alloc] <span class="string">initWithData:</span>data <span class="string">encoding:</span>NSUTF8StringEncoding];</span><br><span class="line">                id json = [NSJSONSerialization <span class="string">JSONObjectWithData:</span>data <span class="string">options:</span>kNilOptions <span class="string">error:</span>&amp;jsonError];</span><br><span class="line">                <span class="keyword">if</span> (! jsonError) &#123;</span><br><span class="line">                    NSDictionary *dataOfDictionary = (NSDictionary *)json;</span><br><span class="line">                    <span class="keyword">if</span> (dataOfDictionary[@<span class="string">"stat"</span>] &amp;&amp; [dataOfDictionary[@<span class="string">"stat"</span>] integerValue] == <span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        [subscriber <span class="string">sendNext:</span> json[@<span class="string">"data"</span>]];</span><br><span class="line">                        [subscriber sendCompleted];</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        NSString *errmsg = dataOfDictionary[@<span class="string">"msg"</span>];</span><br><span class="line">                        <span class="keyword">if</span> (![errmsg <span class="string">isKindOfClass:</span>[NSString <span class="class"><span class="keyword">class</span>]]) &#123;</span></span><br><span class="line">                            errmsg = @<span class="string">"服务器未知错误"</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                       [subscriber <span class="string">sendError:</span>[NSError <span class="string">errorWithDomain:</span>[AppConstants httpHost] <span class="string">code:</span>[dataOfDictionary[@<span class="string">"stat"</span>] integerValue] <span class="string">userInfo:</span>@&#123;<span class="string">NSLocalizedDescriptionKey:</span>errmsg&#125;]];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    DDLogError(@<span class="string">"function: json 组装错误:%@"</span>, [jsonError localizedDescription]);</span><br><span class="line">                    <span class="keyword">if</span> (jsonError != nil) &#123;</span><br><span class="line">                        [subscriber <span class="string">sendError:</span>jsonError];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                DDLogError(@<span class="string">"function: dataTask error: %@"</span>, [error localizedDescription]);</span><br><span class="line">                [subscriber <span class="string">sendError:</span>error];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [dataTask resume];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> [RACDisposable <span class="string">disposableWithBlock:</span>^&#123;</span><br><span class="line">            [dataTask cancel];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;] logError] replayLazily];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/mac-proxy-config/">
+                MAC 代理设置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/MAC/">MAC</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/mac-proxy-config/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-proxy-config/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="Command_line_proxy">Command line proxy</h4><pre><code><span class="built_in">export</span> http_proxy=<span class="string">"http://127.0.0.1:8087"</span>
+<span class="built_in">export</span> https_proxy=<span class="string">"http://127.0.0.1:8087"</span>
+<span class="built_in">unset</span> http_proxy
+<span class="built_in">unset</span> https_proxy
+</code></pre><h3 id="svn_proxy">svn proxy</h3><pre><code><span class="keyword">sublime </span>~/.<span class="keyword">subversion/servers</span>
 </code></pre>
         
       
@@ -227,8 +313,8 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-muti-thread/">
-                ios 多线程
+              <a class="post-title-link" href="/2015/05/27/xcode-submit-behind-proxy/">
+                代理环境下 xcode submit 失败解决---xcode6.3更新
               </a>
             
           
@@ -244,7 +330,7 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Xcode/">Xcode</a>
 
               
               
@@ -257,8 +343,8 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-muti-thread/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-muti-thread/"></span>
+            <a href="/2015/05/27/xcode-submit-behind-proxy/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-submit-behind-proxy/"></span>
             </a>
           </span>
           
@@ -273,350 +359,175 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
 
       
         
-          <h4 id="dispatch_queue_create">dispatch_queue_create</h4><pre><code>dispatch_queue_create生成的queue需要手动内存管理
-dispatch_release
-dispatch_retain
-dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create( <span class="string">"com.example.gcd.MyConcurrentDispatchQueue"</span>, DISPATCH_QUEUE_CONCURRENT);
-dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="string">"com.example.gcd.MySerialDispatchQueue"</span>, NULL);
-<span class="keyword">global</span> dispatch queues. They are concurrent dispatch queues <span class="keyword">that</span> are usable anywhere <span class="keyword">in</span> <span class="keyword">the</span> <span class="type">application</span>
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-muti-thread/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-shake/">
-                ios手势 摇一摇
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-shake/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-shake/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="手势冲突">手势冲突</h4><p>在iOS中，如果一个手势A的识别部分是另一个手势B的子部分时，默认情况下A就会先识别，B就无法识别了。要解决这个冲突可以利用- (void)requireGestureRecognizerToFail:(UIGestureRecognizer *)otherGestureRecognizer;方法来完成 也就是说如果我们指定拖动手势的执行前提为轻扫手势失败就可以了，这样一来当我们手指轻轻滑动时系统会优先考虑轻扫手势，如果最后发现该操作不是轻扫，那么就会执行拖动。只要将下面的代码添加到添加手势之后就能解决这个问题了<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//解决在图片上滑动时拖动手势和轻扫手势的冲突</span></span><br><span class="line"><span class="attr_selector">[panGesture requireGestureRecognizerToFail:swipeGestureToRight]</span>;</span><br><span class="line"><span class="attr_selector">[panGesture requireGestureRecognizerToFail:swipeGestureToLeft]</span>;</span><br><span class="line"><span class="comment">//解决拖动和长按手势之间的冲突</span></span><br><span class="line"><span class="attr_selector">[longPressGesture requireGestureRecognizerToFail:panGesture]</span>;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-shake/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/c-static/">
-                c static关键字
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/C/">C</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/c-static/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/c-static/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="static">static</h2><ol>
-<li>static作用于变量时，该变量只会定义一次，以后在使用时不会重新定义，当static作用于全局变量时说明该变量只能在当前文件可以访问，其他文件中不能访问；</li>
-<li>static作用于函数时与作用于全局变量类似，表示声明或定义该函数是内部函数（又叫静态函数），在该函数所在文件外的其他文件中无法访问此函数</li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-file-handler/">
-                ios 文件处理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-file-handler/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-file-handler/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="path">path</h4><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">NSMutableArray</span> *<span class="atom">marray</span>=[<span class="name">NSMutableArray</span> <span class="atom">array</span>];</span><br><span class="line"><span class="name">NSString</span> *<span class="atom">path</span>=[<span class="name">NSString</span> <span class="atom">pathWithComponents</span>:<span class="atom">marray</span>];</span><br><span class="line"></span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathComponents</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">isAbsolutePath</span>]</span><br><span class="line"><span class="name">NSLog</span>(@<span class="string">"%@"</span>,[<span class="atom">path</span> <span class="atom">lastPathComponent</span>]);//取得最后一个目录</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingLastPathComponent</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByAppendingPathComponent</span>:@<span class="string">"Documents"</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathExtension</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingPathExtension</span>]</span><br><span class="line">[@<span class="string">"Users/KenshinCui/Desktop/test"</span> <span class="atom">stringByAppendingPathExtension</span>:@<span class="string">"mp3"</span>]</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-file-handler/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-system-service/">
-                ios系统服务
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-system-service/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-system-service/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="AddressBook">AddressBook</h4><p>AddressBook不能使用arc</p>
+          <p>由于公司网络需要设置代理才能访问外网，此时通过xocde提交应用到itunesconnect的时候会出现443访问失败的错误，可以通过下面的方法来解决。</p>
+<blockquote>
 <ol>
-<li>ABAddressBookRef 通讯录对象</li>
-<li>ABRecordRef  联系人或群组 ABRecordGetRecordType() ABRecordGetRecordID()</li>
-<li>ABPersonRef</li>
-<li>ABGroupRef</li>
-<li>ABPersonCreate():创建一个类型为“kABPersonType”的ABRecordRef</li>
-<li>ABRecordCopyValue():取得指定属性的值</li>
-<li>ABRecordCopyCompositeName():取得联系人（或群组）的复合信息（对于联系人则包括：姓、名、公司等信息，对于群组则返回组名称）</li>
-<li>ABRecordSetValue():设置ABRecordRef的属性值</li>
-<li>ABMutableMultiValueRef ABMultiValueAddValueAndLabel()方法依次添加属性值</li>
-<li>ABRecordRemoveValue():删除指定的属性值</li>
+<li>Go to Application Loader java folder :<br>/Applications/Xcode.app/Contents/Applications/“Application Loader.app”/Contents/MacOS/itms/java/lib</li>
+</ol>
+<blockquote>
+<p>//xcode6.3<br>/Applications/Xcode.app/Contents/Applications/“Application Loader.app”/Contents/itms/java/lib</p>
+</blockquote>
+<ol>
+<li><p>Open net.properties file with “sublime text” or “text mate”</p>
+</li>
+<li><p>Change “#https.proxyPort=443” proxy port to “https.proxyPort=80”</p>
+</li>
+<li><p>Save the file and reopen Application Loader and Try again.</p>
+</li>
+</ol>
+</blockquote>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/block/">
+                Block
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/block/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/block/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-multi-thread-example/">
+                ios 多线程操作
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-multi-thread-example/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-multi-thread-example/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="多线程操作">多线程操作</h3><ol>
+<li>创建一个NSOperation不应该直接调用start方法（如果直接start则会在主线程中调用）而是应该放到NSOperationQueue中启动</li>
+<li>NSOperation进行多线程开发可以控制线程总数及线程依赖关系</li>
+<li>相比NSInvocationOperation推荐使用NSBlockOperation，代码简单，同时由于闭包性使它没有传参问题。</li>
+<li>NSOperation是对GCD面向对象的ObjC封装，但是相比GCD基于C语言开发，效率却更高，建议如果任务之间有依赖关系或者想要监听任务完成状态的情况下优先选择NSOperation否则使用GCD</li>
+<li>在GCD中串行队列中的任务被安排到一个单一线程执行（不是主线程），可以方便地控制执行顺序；并发队列在多个线程中执行（前提是使用异步方法），顺序控制相对复杂，但是更高效</li>
+<li>在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行（如果是并行队列使用同步方法调用则会在主线程中执行）</li>
+<li>相比使用NSLock，@synchronized更加简单，推荐使用后者</li>
 </ol>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-system-service/#more">
+            <a class="btn" href="/2015/05/27/ios-multi-thread-example/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -649,8 +560,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-warning/">
-                手动让编译器报警
+              <a class="post-title-link" href="/2015/05/27/ios-debug/">
+                ios 调试
               </a>
             
           
@@ -679,8 +590,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-warning/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-warning/"></span>
+            <a href="/2015/05/27/ios-debug/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-debug/"></span>
             </a>
           </span>
           
@@ -695,11 +606,183 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       
         
-          <h2 id="手动让编译器报警">手动让编译器报警</h2><pre><code><span class="id">#warning</span> sunnyxx
-<span class="id">#error</span> sunnyxx
-<span class="id">#pragma</span> message <span class="string">"sunnyxx"</span>
-<span class="id">#pragma</span> GCC warning <span class="string">"sunnyxx"</span>
-<span class="id">#pragma</span> GCC error <span class="string">"sunnyxx"</span>
+          <h3 id="调试">调试</h3><h4 id="检测是否为主线程">检测是否为主线程</h4><pre><code>[NSThread isMainThread]
+</code></pre><h4 id="lldb_增强">lldb 增强</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew install chisel</span><br><span class="line"></span><br><span class="line">vim ~/.lldbinit</span><br><span class="line">command script <span class="keyword">import</span> <span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>chisel<span class="regexp">/1.1.0/</span>libexec/fblldb.py</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-debug/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-audio/">
+                ios 声音
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-audio/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-audio/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="声音">声音</h3><h4 id="震动">震动</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#<span class="preprocessor"><span class="keyword">import</span> &lt;AudioToolbox/AudioToolbox.h&gt;</span><br><span class="line">AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);</span></span><br></pre></td></tr></table></figure>
+<h4 id="系统声音">系统声音</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AudioServicesPlaySystemSound(<span class="number">1007</span>); </span><br><span class="line"><span class="string">http:</span><span class="comment">//iphonedevwiki.net/index.php/AudioServices</span></span><br></pre></td></tr></table></figure>
+<h4 id="用户音效">用户音效</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//音效文件路径  </span></span><br><span class="line"><span class="built_in">NSString</span> *path = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"message"</span> ofType:<span class="string">@"wav"</span>];  </span><br><span class="line"><span class="comment">//组装并播放音效  </span></span><br><span class="line">SystemSoundID soundID;  </span><br><span class="line"><span class="built_in">NSURL</span> *filePath = [<span class="built_in">NSURL</span> fileURLWithPath:path isDirectory:<span class="literal">NO</span>];  </span><br><span class="line">AudioServicesCreateSystemSoundID((__bridge <span class="built_in">CFURLRef</span>)filePath, &amp;soundID);  </span><br><span class="line">AudioServicesPlaySystemSound(soundID);  </span><br><span class="line"><span class="comment">//声音停止</span></span><br><span class="line">AudioServicesDisposeSystemSoundID(soundID);</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-audio/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios8-lbs-permission-bug/">
+                IOS8 定位服务权限的问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios8-lbs-permission-bug/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios8-lbs-permission-bug/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="IOS8_定位服务权限的问题">IOS8 定位服务权限的问题</h2><pre><code><span class="keyword">self</span><span class="variable">.manger</span> = [[CLLocationManager alloc]init];
+<span class="keyword">self</span><span class="variable">.manger</span><span class="variable">.distanceFilter</span> = kCLDistanceFilterNone; <span class="comment">// meters</span>
+<span class="keyword">self</span><span class="variable">.manger</span><span class="variable">.delegate</span> = <span class="keyword">self</span>;
+[<span class="keyword">self</span><span class="variable">.manger</span> requestAlwaysAuthorization];
+[<span class="keyword">self</span><span class="variable">.manager</span> requestWhenInUseAuthorization];
+<span class="keyword">self</span><span class="variable">.manger</span><span class="variable">.desiredAccuracy</span> = kCLLocationAccuracyBestForNavigation;
+[<span class="keyword">self</span><span class="variable">.manger</span> startUpdatingLocation];
+
+<span class="comment">//并且在info.plist文件中增加</span>
+<span class="built_in">NSLocationWhenInUseUsageDescription</span>  <span class="built_in">BOOL</span> <span class="literal">YES</span>
+<span class="built_in">NSLocationAlwaysUsageDescription</span>         string “提示描述”
+两个字段，在iOS8中才能进行正确的获取服务权限
 </code></pre>
         
       
@@ -730,8 +813,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
           
             
-              <a class="post-title-link" href="/2015/05/27/sublime-text-shortcut/">
-                Sublime text shortcut
+              <a class="post-title-link" href="/2015/05/27/ios-date-function/">
+                ios 时间处理
               </a>
             
           
@@ -744,13 +827,24 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         </span>
 
         
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/sublime-text-shortcut/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/sublime-text-shortcut/"></span>
+            <a href="/2015/05/27/ios-date-function/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-date-function/"></span>
             </a>
           </span>
           
@@ -765,7 +859,18 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       
         
-          
+          <h3 id="时间">时间</h3><h4 id="NSTimer">NSTimer</h4><pre><code>NSTimer *<span class="tag">time</span> = [NSTimer scheduledTimerWithInterval:<span class="number">1.0</span>
+                    target:self
+                    selector:@<span class="function"><span class="title">selector</span><span class="params">(update)</span></span>
+                    userInfo:nil
+                    repeats:YES]
+[<span class="tag">time</span> invalidate] <span class="comment">//关闭方法</span>
+</code></pre>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-date-function/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -795,8 +900,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
           
             
-              <a class="post-title-link" href="/2015/05/27/mrc-and-and-arc/">
-                MRC &amp;&amp; ARC
+              <a class="post-title-link" href="/2015/05/27/ios-string/">
+                ios 字符串处理
               </a>
             
           
@@ -809,13 +914,24 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         </span>
 
         
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/mrc-and-and-arc/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mrc-and-and-arc/"></span>
+            <a href="/2015/05/27/ios-string/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-string/"></span>
             </a>
           </span>
           
@@ -830,72 +946,13 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       
         
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-bash-profile/">
-                MAC bin顺序
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-bash-profile/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-bash-profile/"></span>
+          <h3 id="字符串">字符串</h3><h4 id="字符创建区别">字符创建区别</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="string">"sss"</span> 创建在常量区</span><br><span class="line">[NSString <span class="string">stringWithFormat:</span>@<span class="string">"Hello world"</span>] 创建在堆上</span><br></pre></td></tr></table></figure>
+<h4 id="字符串比较">字符串比较</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> &#123;</span><br><span class="line">   <span class="built_in">NSOrderedAscending</span> = -<span class="number">1</span>,</span><br><span class="line">   <span class="built_in">NSOrderedSame</span>,</span><br><span class="line">   <span class="built_in">NSOrderedDescending</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NSInteger</span> <span class="built_in">NSComparisonResult</span>;</span><br><span class="line"><span class="built_in">NSString</span> caseInsensitiveCompare:<span class="string">@"Response"</span> == <span class="built_in">NSOrderedSame</span></span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/ios-string/#more">
+              閱讀全文 &raquo;
             </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/profile -&gt; (~<span class="regexp">/.bash_profile | ~/</span>.bash_login | ~<span class="regexp">/.profile) -&gt; ~/</span>.bashrc -&gt; /etc/bashrc -&gt; ~<span class="regexp">/.bash_logout</span></span><br></pre></td></tr></table></figure>
+          </div>
         
       
     </div>
@@ -918,7 +975,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
   </div>
 
 
@@ -952,7 +1009,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">162</span>
+              <span class="site-state-item-count">187</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -966,7 +1023,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-count">92</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

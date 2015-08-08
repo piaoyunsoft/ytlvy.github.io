@@ -1,0 +1,692 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="UITableview," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS UITableviewCell Swipeable // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS UITableviewCell Swipeable
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935" target="_blank" rel="external">Swipeable table view cells in iOS apps</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao" target="_blank" rel="external">Harries Chen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao" target="_blank" rel="external">Mr.Simple</a>  </li>
+</ul>
+</blockquote>
+<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
+<p>首先，让我们来看一下现有的解决方法。</p>
+<ul>
+<li>UITableViewRowAction (new in iOS 8)</li>
+</ul>
+<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
+<ul>
+<li><a href="https://github.com/CEWendel/SWTableViewCell" target="_blank" rel="external">SWTableViewCell</a></li>
+</ul>
+<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
+<ul>
+<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell" target="_blank" rel="external">MGSwipeTableCell</a></li>
+</ul>
+<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+<a id="more"></a>
+<h2 id="原理剖析">原理剖析</h2><p>制作一个可滑动的UITableViewCell其实是一件非常简单的事情，它的要点就是在contentView里面包含了UIScrollView，在UIScrollView里面有两个UIView，一个用于放置按钮，一个用于放置单元格的内容，难点在于如何配置滑动页面，下面是一张图片来展示UIScrollView里的主要内容。</p>
+<p><img src="http://img.blog.csdn.net/20150420235653232" alt="这里写图片描述"></p>
+<ul>
+<li>frame</li>
+</ul>
+<p>视图的大小，（也就是实际在屏幕上显示的面积），在上图中，外面的高度看起来会比UIScrollView的高度高很多，实际上在代码中他们的高度是一样的，只是为了更好的展示。</p>
+<ul>
+<li>contentSize</li>
+</ul>
+<p>在可滚动的视图中，显示的大小和常常与实际内容的大小不同，当实际内容比显示的内容要大的时候，就可以进行滚动，以便让用户看到所有的内容。这个属性代表了在scrollview实际内容的宽和高。在这个例子中，我们实际上会保持它和视图大小相同，这要归功于一个叫做contentInset属性</p>
+<ul>
+<li>contentInset</li>
+</ul>
+<p>这个属性将使我们的扩大内容区域之外的可滚动范围。通常，当contentSize属性被设置为与frame相同的（或更小）的尺寸作为视图本身，视图并不会产生滚动的效果。然而，contentInset将延长使内容产生滚动，让你可以滚动至内容边界的区域。这有什么用吗？例如，它可以用在显示上拉刷新的加载画面之中。在这个例子中，我们将使用它来腾出空间已显示额外的按钮。</p>
+<ul>
+<li>contentOffset</li>
+</ul>
+<p>这个值代表当前滚动视图的滚动量，当用户滚动的时候，这个值将会被改变，你也可以通过程序来改变它的值，我们随后将会通过改变这个值来控制按钮的出现。</p>
+<p>Implementing the cell, step by step<br>This section will demonstrate how to actually make the cell display buttons when swiping on it. The code examples will be simplified to focus on the concept. At the end I will provide a full implementation.</p>
+<p>First, let’s subclass UITableViewCell to begin implementing our swipeable table cell.</p>
+<p>The easiest way to subclass classes is to go to File &gt; New &gt; File… (⌘N). Pick UITableViewCell as the class to subclass.</p>
+<h2 id="一步步实现">一步步实现</h2><p>本节将展示如何通过滑动来使单元格显示按钮。代码将被简化以便更好的理解这一概念。最后我将提供<a href="https://github.com/blixt/SwipeableTableViewCell" target="_blank" rel="external">完整的代码</a>。</p>
+<p>第一步，子类化UITableViewCell</p>
+<p><img src="http://img.blog.csdn.net/20150420235749907" alt="这里写图片描述"></p>
+<p>子类化最简单的方法就是文件&gt;新建&gt;文件…（⌘N）。选择的UITableViewCell作为类的子类。</p>
+<p>因为我们希望实现对滚动控制，所以我们需要指定我们的类实现UIScrollViewDelegate协议。方法是后面加上尖括号，在里面写上需要实现的协议</p>
+<figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="class"><span class="keyword">interface</span>  <span class="title">SwipeableTableViewCell</span>：<span class="title">UITableViewCell</span> &lt;<span class="title">UIScrollViewDelegate</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>接下来，我们将在单元格初始化的时候配置滚动视图。选择你想要的初始化方式，可以是<code>initWithCoder：</code>也可以是 <code>initWithStyle：reuseIdentifier：</code> 。我建议创建一个common方法来配置单元格，以便从不同的初始化放来调用。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个可以横向滚动的滚动视图</span></span><br><span class="line"><span class="built_in">UIScrollView</span> *scrollView = [[<span class="built_in">UIScrollView</span> alloc] initWithFrame:<span class="keyword">self</span><span class="variable">.bounds</span>];</span><br><span class="line">scrollView<span class="variable">.autoresizingMask</span> = <span class="built_in">UIViewAutoresizingFlexibleWidth</span> | <span class="built_in">UIViewAutoresizingFlexibleHeight</span>;</span><br><span class="line">scrollView<span class="variable">.contentSize</span> = <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span>;</span><br><span class="line">scrollView<span class="variable">.contentInset</span> = <span class="built_in">UIEdgeInsetsMake</span>(<span class="number">0</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">scrollView<span class="variable">.delegate</span> = <span class="keyword">self</span>;</span><br><span class="line">scrollView<span class="variable">.scrollsToTop</span> = <span class="literal">NO</span>;</span><br><span class="line">scrollView<span class="variable">.showsHorizontalScrollIndicator</span> = <span class="literal">NO</span>;</span><br><span class="line">scrollView<span class="variable">.showsVerticalScrollIndicator</span> = <span class="literal">NO</span>;</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.contentView</span> addSubview:scrollView];</span><br><span class="line"><span class="keyword">self</span><span class="variable">.scrollView</span> = scrollView;</span><br></pre></td></tr></table></figure>
+<p>当我们我们创建滚动视图后，我们需要做一些事情。首先，我们设置它的大小的。这意味着在父视图大小发生改变的时候应该怎样改变。我们希望滚动视图填充整个单元格当它运行时改变大小的时候（这很可能发生，因为在iPhone 5，6和6 plus都具有不同的屏幕宽度）。然后我们设置与滚动视图相同大小的内容，在左边插入与我们所需要添加的按钮宽度相同的视图。关闭scrollsToTop事件，因为我们不关心这个状态栏是否被点击（这个功能通常用于滚动视图顶部）。这将让我们的表视图利用这特性，而不是打破这一行为。同时我们也关掉水平和垂直滚动栏，这样，当我们滚动的时候半透明的黑条不会出现。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置内容大小</span></span><br><span class="line"><span class="built_in">UIView</span> *contentView = [[<span class="built_in">UIView</span> alloc] initWithFrame:scrollView<span class="variable">.bounds</span>];</span><br><span class="line">contentView<span class="variable">.autoresizingMask</span> = <span class="built_in">UIViewAutoresizingFlexibleWidth</span> | <span class="built_in">UIViewAutoresizingFlexibleHeight</span>;</span><br><span class="line">contentView<span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">[scrollView addSubview:contentView];</span><br><span class="line"><span class="keyword">self</span><span class="variable">.scrollViewContentView</span> = contentView;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">UILabel</span> *label = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectInset</span>(contentView<span class="variable">.bounds</span>, <span class="number">10</span>, <span class="number">0</span>)];</span><br><span class="line">label<span class="variable">.autoresizingMask</span> = <span class="built_in">UIViewAutoresizingFlexibleWidth</span> | <span class="built_in">UIViewAutoresizingFlexibleHeight</span>;</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.scrollViewContentView</span> addSubview:label];</span><br><span class="line"><span class="keyword">self</span><span class="variable">.scrollViewLabel</span> = label;</span><br></pre></td></tr></table></figure>
+<p>不必惊讶于上述代码，我们只是增加了必要的部分呈现的表格单元格的主要区域</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建按钮的容器.</span></span><br><span class="line"><span class="built_in">UIView</span> *buttonsView = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">160</span>, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>)];</span><br><span class="line">buttonsView<span class="variable">.autoresizingMask</span> = <span class="built_in">UIViewAutoresizingFlexibleHeight</span>;</span><br><span class="line"><span class="keyword">self</span><span class="variable">.buttonsView</span> = buttonsView;</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.scrollView</span> insertSubview:buttonsView atIndex:<span class="number">0</span>];</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 创建两个按钮并放入容器.</span></span><br><span class="line"><span class="built_in">UIButton</span> *yesButton = [<span class="built_in">UIButton</span> buttonWithType:<span class="built_in">UIButtonTypeCustom</span>];</span><br><span class="line">yesButton<span class="variable">.autoresizingMask</span> = <span class="built_in">UIViewAutoresizingFlexibleHeight</span>;</span><br><span class="line">yesButton<span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> greenColor];</span><br><span class="line">yesButton<span class="variable">.frame</span> = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">80</span>, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">[yesButton setTitle:<span class="string">@"Yes"</span> forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">[yesButton setTitleColor:[<span class="built_in">UIColor</span> whiteColor] forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.buttonsView</span> addSubview:yesButton];</span><br><span class="line"> </span><br><span class="line"><span class="built_in">UIButton</span> *noButton = [<span class="built_in">UIButton</span> buttonWithType:<span class="built_in">UIButtonTypeCustom</span>];</span><br><span class="line">noButton<span class="variable">.autoresizingMask</span> = <span class="built_in">UIViewAutoresizingFlexibleHeight</span>;</span><br><span class="line">noButton<span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line">noButton<span class="variable">.frame</span> = <span class="built_in">CGRectMake</span>(<span class="number">80</span>, <span class="number">0</span>, <span class="number">80</span>, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">[noButton setTitle:<span class="string">@"No"</span> forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">[noButton setTitleColor:[<span class="built_in">UIColor</span> whiteColor] forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.buttonsView</span> addSubview:noButton];</span><br></pre></td></tr></table></figure>
+<p>这将创建一个包含按钮的视图。这里需要注意的是，视图宽度应该是所有的按钮宽度的总和，它的需要插入在滚动视图之前（为了让显示在下面）。然后，我们只需要添加我们想要的按钮。为了使代码尽可能的简洁，我没有添加任何按钮的点击事件处理代码。</p>
+<p>如果你此时运行程序，它可以滑动从而让按钮出现，但是如果你再iPhone6 或者更大的屏幕上运行的时候，将会遇到一个问题，我们稍后会解决它。另外一个需要解决的问题就是当我们在滑到一半就停止的时候会出现按钮显示一半的情况。我们先来修复它。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewWillEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView withVelocity:(<span class="built_in">CGPoint</span>)velocity targetContentOffset:(<span class="keyword">inout</span> <span class="built_in">CGPoint</span> *)targetContentOffset &#123;</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.x</span> &lt; -scrollView<span class="variable">.contentInset</span><span class="variable">.left</span>) &#123;</span><br><span class="line">        targetContentOffset-&gt;x = -scrollView<span class="variable">.contentInset</span><span class="variable">.left</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        *targetContentOffset = <span class="built_in">CGPointZero</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当你的类得到用户停止滑动的通知（通过UIScrollViewDelegate协议）你需要将滚动视图滚动到按钮的最左端（如果滑动量超过按钮）或者重新隐藏按钮（如果滑动量不够）</p>
+<p>到了这里我们完成了一些基本的工作。接下来我们来处理一些细节上的问题。继续往下看</p>
+<p>接下来最大的问题就是就是来适应更大的屏幕，（例如iPhone6）我们可以通过一个简单的方法来修复这个问题（如果你有更好的方法，务必告诉我）。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</span><br><span class="line">    [<span class="keyword">super</span> layoutSubviews];</span><br><span class="line">    <span class="comment">// This is necessary to ensure that the content size scales with the view.</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.scrollView</span><span class="variable">.contentSize</span> = <span class="keyword">self</span><span class="variable">.contentView</span><span class="variable">.bounds</span><span class="variable">.size</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.scrollView</span><span class="variable">.contentOffset</span> = <span class="built_in">CGPointZero</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码的作用就是在单元格的面积发生变化的时候，修复内容大小和偏移量</p>
+<p>这会避免图形出现问题。接下来，我们需要阻止滚动视图向另外一个方向滚动，（因为没有任何按钮来显示）。这非常简单：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView &#123;</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.x</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        scrollView<span class="variable">.contentOffset</span> = <span class="built_in">CGPointZero</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果用户向另外一个方向滑动，将偏移量设置为0来阻止它。</p>
+<p>最后，你可能想让按钮安静的呆在原地，而不是与单元格一起移来移去。要做到这一点，我们将简单地移动按钮容器视图来抵消滚动偏移量。我们可以做到这一点，通过改变scrollViewDidScroll：上述方法如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView &#123;</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.x</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        scrollView<span class="variable">.contentOffset</span> = <span class="built_in">CGPointZero</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">self</span><span class="variable">.buttonsView</span><span class="variable">.frame</span> = <span class="built_in">CGRectMake</span>(scrollView<span class="variable">.contentOffset</span><span class="variable">.x</span>, <span class="number">0</span>, <span class="number">160</span>, <span class="keyword">self</span><span class="variable">.buttonsView</span><span class="variable">.frame</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="还可以做些什么">还可以做些什么</h2><p>现在，我们已经制作了最基本功能，还有很多地方仍然可以提高。比如说：</p>
+<ul>
+<li>滚动表视图时自动隐藏按钮</li>
+<li>在滑动一个单元格的时候自动隐藏其它的单元格按钮</li>
+<li>允许在单元的两侧的按钮</li>
+<li>启用在外部创建按钮（例如，在视图控制器）</li>
+<li>动态计算按钮的大小</li>
+<li>改进开启和关闭的动画效果</li>
+</ul>
+<p>最后，我实现上面的功能和所提供的代码在GitHub上：<a href="https://github.com/blixt/SwipeableTableViewCell" target="_blank" rel="external">GitHub</a><br>感谢您的阅读！如果有任何问题。最简单的方式就是在我Twitter下留言，我得名字叫做@blixt。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UITableview/"> #UITableview </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/">iOS Continuous Integration & Deployment</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/iOS-Background-Modes-Tutorial/">iOS Background Modes Tutorial</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS开发-可滑动的单元格"><span class="nav-number">1.</span> <span class="nav-text">iOS开发-可滑动的单元格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理剖析"><span class="nav-number">2.</span> <span class="nav-text">原理剖析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一步步实现"><span class="nav-number">3.</span> <span class="nav-text">一步步实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还可以做些什么"><span class="nav-number">4.</span> <span class="nav-text">还可以做些什么</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/iOS-UITableviewCell-Swipeable/';
+      var disqus_title = 'iOS UITableviewCell Swipeable';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/iOS-UITableviewCell-Swipeable/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

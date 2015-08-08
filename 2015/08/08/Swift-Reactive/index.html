@@ -1,0 +1,694 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Reactive," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Swift Reactive // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Swift Reactive
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Reactive/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Reactive/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="Swift的响应式编程">Swift的响应式编程</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/swift-programming/reactive-swift-3b6050375534" target="_blank" rel="external">Reactive Swift</a></li>
+<li>原文作者 : <a href="https://medium.com/@vasarhelyia" target="_blank" rel="external">Agnes Vasarhelyi</a></li>
+<li><a href="http://www.devtf.cn" target="_blank" rel="external">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/bboyefiyu" target="_blank" rel="external">Mr.Simple</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo" target="_blank" rel="external">Lollypo</a>  </li>
+<li>状态 :  完成</li>
+</ul>
+</blockquote>
+<p>让我们首先回到Apple刚推出Objective-C的继任者-Swift的时候，那真是一个非比寻常的时刻。<br>Siri还没有开启地狱之门，Prezi还没有支持订阅，那时的朝鲜也还没有hack任何人的email。一种新语言的出现让我个人非常兴奋，尤其是这是一种类型安全的脚本语言。虽然Swift还在快速的发展中，但是我们不必担心它是否已经稳定。当那一刻到来之时，我应该已经知道如何交付整洁的、可测试的代码。还要有非常灵活、流畅的UI？如果你对Objective-C 和 MVC之外的东西感兴趣，那么就请继续读下去吧。</p>
+<h2 id="MVC_与_MVVM">MVC 与 MVVM</h2><p>让我们从零开始，当我们设计一个应用时，你可能会先考虑应用的架构。Cocoa框架以<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html" target="_blank" rel="external">Model-View-Controller</a> (也称为 MVC)为基础架构，它的结构如下图所示。</p>
+<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*pEvMKHBK9HeAgrYC." alt=""></p>
+<a id="more"></a>
+<p>虽然，你可能发现这个架构并没有让你的设计更有效，从上图中我们可以看到Controller角色的职责太过复杂。如果你有在iOS或者Mac上使用MVC的经验，我打赌你已经领略到了View Controller承担了过多的职责。你使用MVC的经验越多，你就越会想找到另一个方法来解决掉MVC存在的这些问题。当使用MVC处理网络请求时，你会发现这会使得Controller变得极为臃肿，它不仅要处理获取数据的请求，同时也要负责将这些数据渲染到UI上。更蛋疼的是你有尝试过对一个ViewController进行单元测试吗？不堪回首啊！这涉及到View、业务逻辑的测试。随着View的复杂度的增长，它变得越来越难以维护。这就是为什么人们不对MVC进行测试的原因。</p>
+<p><a href="http://www.objc.io/issue-13/mvvm.html" target="_blank" rel="external">Model-View-ViewModel</a> (也叫MVVM)对于你的应用来说是一个更好的选择。这是微软发布的一个针对事件驱动实现的、非常强大的架构模式。正如你看到的，与MVC不同的是这里的View持有ViewModel角色。</p>
+<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*SUaY1aSgIcvDys9j." alt=""></p>
+<p>当然，这些都依赖于你想如何实现这个模式，不管如何，最终MVVM模式都会给你带来更低的复杂性、更好的可测试性。同时能达到这些效果吗？怎么可能？反正我相信了！它把所有的逻辑移到ViewModel角色中，以此来减少View Controller的职责。( 译者注: 关于MVC、MVP、MVVM的区别请参考<a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="external">这篇文章</a>。)</p>
+<p><img src="http://img.blog.csdn.net/20150507120115027" alt="">       </p>
+<p>闪开，让哥用一个项目来演示MVVM模式的使用，这是一个用来控制酒窖气温的半自动iOS客户端项目。如何你想了解更多关于这个项目的细节，可以参考<a href="http://blog.risingstack.com/brewfactory-full-stack-homebrew-with-iot/" target="_blank" rel="external">这篇文章</a>。这个项目的关键在于我们能够通过这个App看到酒窖中各个时间段的温度。</p>
+<p>让我们回到MVVM与酒窖的温度上。为了能够读取到温度值，我们需要在我们的服务器上使用WebSocket，使得我们基于MVC架构的应用能够读取它，并且将它显示到iPhone上。首先我们需要建立一个Brew 模型类，这个类中有一个温度字段（ temp ）.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Brew</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> temp = <span class="number">0.0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们还需要建立一个将酒窖温度显示到UI上的ViewController。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BrewViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    <span class="preprocessor">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> tempLabel: <span class="type">UILabel</span>!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过MVC的方式，我们需要在ViewController中实现网络请求逻辑、更新UI的操作。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">"temperature_changed"</span>, callback: &#123;(<span class="type">AnyObject</span> data) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">self</span>.brew.temp = data[<span class="number">0</span>] <span class="keyword">as</span> <span class="type">Float</span></span><br><span class="line">     dispatch_async(dispatch_get_main_queue(), &#123;</span><br><span class="line">       <span class="keyword">self</span>.updateTempLabel()</span><br><span class="line">     &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>更新UI的函数 : </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">updateTempLabel</span><span class="params">()</span></span> &#123;</span><br><span class="line">       <span class="keyword">self</span>.brewLabel.text =  <span class="type">NSString</span>(format:<span class="string">"%.2f ˚C"</span>, <span class="keyword">self</span>.brew.temp)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>此时，我们成功的把这些代码都放到一个ViewController中了，非常好不是吗？必须不是呐！</p>
+<p>想象一下这种场景，当你需要先验证用户的身份、绘制一个实时的图表或者处理出入的字段时你如何实现？MVC架构的完整例子在<a href="https://gist.github.com/vasarhelyia/70b2c3fae2bbe38c4a7a" target="_blank" rel="external">这里</a>。但是现在，先让我们来看看基于MVVM架构的实现:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> brew = <span class="type">Brew</span>()</span><br><span class="line">dynamic <span class="keyword">var</span> temp: <span class="type">Float</span> = <span class="number">0.0</span> &#123;</span><br><span class="line">    <span class="keyword">didSet</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.brew.temp = temp</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面就是存储在ViewModel中的变量，虽然它们看起来有点陌生，但是我也不知道怎么才能使它们看起来不那么奇怪。不管它啦，我们先来看Socket: </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">"temperature_changed"</span>, callback: &#123;(<span class="type">AnyObject</span> data) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">   <span class="keyword">self</span>.temp = data[<span class="number">0</span>] <span class="keyword">as</span> <span class="type">Float</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样，网络请求的逻辑就被移到了ViewModel中。但是我们如何修改UI呢？<a href="http://nshipster.com/key-value-observing/" target="_blank" rel="external">KVO</a>是我们的好朋友，我们就用它来实现，这里是viewDidLoad中的一个代码片段 : </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.brewViewModel.addObserver(<span class="keyword">self</span>, forKeyPath: <span class="string">"temp"</span>, options: .<span class="type">New</span>, context: &amp;brewContext)</span><br></pre></td></tr></table></figure>
+<p>我们需要观察酒窖中的温度，因此，我为View Model添加了一个单独的字段。你可能会问，为什么我们要关心Brew模型是否在View Model中？我要说的是，Brew模型可能会有不同的字段，而你可能需要将它序列化，通过网络传输它，或者其他的一些什么操作。因此，我们需要它的状态。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">observeValueForKeyPath</span><span class="params">(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer&lt;Void&gt;)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> context == &amp;brewContext &#123;</span><br><span class="line">            <span class="keyword">self</span>.updateTempLabel((change[<span class="type">NSKeyValueChangeNewKey</span>]) <span class="keyword">as</span> <span class="type">Float</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">super</span>.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>哇噢，这代码太多了？KVO实现产生了很多的样板代码，但是它还是比MVC实现更为轻量级，尤其是当我们考虑添加越来越多的功能到我们的应用中时,这些逻辑就会被移到View Model中。<a href="https://gist.github.com/vasarhelyia/e4fa64096517ae966d01" target="_blank" rel="external">这里</a>是MVVM实现的完整代码段。</p>
+<p>总之，MVVM实现好了很多，但是我们还有这还能再优化的感觉。现在，我们知道了展示可变数据模型到MVVM的View上的关键是数据绑定，既然这样，那还有什么比响应式编程适合这种情况？</p>
+<h2 id="响应式编程">响应式编程</h2><p>“Reactive programming is programming with asynchronous data streams.”<br>“响应式编程就是以异步数据流的形式进行编程。”</p>
+<p>如果你对这个概念还不熟悉，我建议你阅读一下<a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754" target="_blank" rel="external">这篇文章</a> （中文版在这里 : <a href="http://www.devtf.cn/?p=174" target="_blank" rel="external">那些年我们错过的响应式编程</a> ），这是一篇非常好的介绍。在响应式编程的世界里，任何东西都是流（ stream ）。下面这幅图就展示了将一个按钮点击或者触摸事件转换为流。</p>
+<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*JyZB_1WzJRNIY7o-." alt="">    </p>
+<p>如果运用响应式编程到我们的项目中，那么情况应该是这样的: 将socket数据看成是温度的流，这个流被UILabel监听着。转换它们的流程也就是上图的函数式编程所展示的那样，map、merge、filter等其他的操作，这个过程非常赞！让我们来看看这些概念如何跟Cocoa一起配合。</p>
+<h2 id="ReactiveCocoa">ReactiveCocoa</h2><p>当我们计划在Cocoa上使用响应式编程时，最好的选择就是使用<a href="https://github.com/ReactiveCocoa/ReactiveCocoa" target="_blank" rel="external">ReactiveCocoa</a>。ReactiveCocoa是一个受到<a href="http://en.wikipedia.org/wiki/Functional_reactive_programming" target="_blank" rel="external">函数式编程</a>启发的数据绑定框架。</p>
+<p>它通过信号来进行操作，这些信号被定义为push-driven的流。这意味着，一个信号代表了一个在未来会交付数据或者任意结果到它的观察者的异步工作流。除了数据模型变化会产生一个信号之外，ReactiveCocoa也提供了一些内置的UIKit/AppKit绑定，例如rac_textSignal和其他用用的东西。</p>
+<p>你可能略微地不确定什么时候才会计划启动你的下一个Swift项目，你可能也会想在这个项目中实现响应式编程。无需这样，github上的开发人员会帮助你实现这些功能。他们正在计划发布名为Great Swiftening的ReactiveCocoa 3.0版本，当然你也可以使用2.4.x版本，因为它们也足够稳定。</p>
+<p>Swift在集合类型上也内置了一些函数式操作，它们能很方便的执行某些操作，我们无需对此进行重复地工作。</p>
+<p>让我们看看使用ReactiveCocoa作为MVVM模式的数据绑定系统时我们如何创建一个ReactiveViewModel。看如下代码，我们的View Controller看起来是不是更优雅了？</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.brewViewModel.tempChangedSignal.<span class="built_in">map</span> &#123;</span><br><span class="line">            (temp: <span class="type">AnyObject</span>!) -&gt; <span class="type">AnyObject</span>! <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">return</span> <span class="type">NSString</span>(format:<span class="string">"%.2f ˚C"</span>, temp <span class="keyword">as</span> <span class="type">Float</span>)</span><br><span class="line">        &#125; ~&gt; <span class="type">RAC</span>(<span class="keyword">self</span>.tempLabel, <span class="string">"text"</span>)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>由于C式的复杂的宏在Swift中不可用，因此用于Objective-C的RAC宏被替换掉了。感谢Yusef Napora提供了一个直截了当的<a href="http://napora.org/a-swift-reaction/" target="_blank" rel="external">解决方法</a>，还有一种解决方法是在ColinEberhardt的这个<a href="https://github.com/ColinEberhardt/ReactiveSwiftFlickrSearch" target="_blank" rel="external">Sample App</a>中。</p>
+<p>现在我们回到酒窖气温检测项目中，我们已经准备好了运用响应式编程！我们看看剩下的代码: </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">"temperature_changed"</span>, callback: </span><br><span class="line">    &#123;(<span class="type">AnyObject</span> data) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">tempChangedSignal.sendNext(data[<span class="number">0</span>]).deliverOn(<span class="type">RACScheduler</span>.mainThreadScheduler())</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>在这里，我们仅仅创建了一个温度数据信号，并且确保UILabel的更新会被执行在主线程中。我对于ReactiveCocoa简直没有抵抗力了！现在我们来执行http请求、处理当试图在服务端初始化一个Brew对象时引发的错误，代码如下 :    </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSURLConnection</span>.sendAsynchronousRequest(request, queue: <span class="type">NSOperationQueue</span>(), completionHandler: &#123;</span><br><span class="line">                (response:<span class="type">NSURLResponse</span>!, data: <span class="type">NSData</span>!, error: <span class="type">NSError</span>!) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">                <span class="keyword">if</span> error == <span class="literal">nil</span> &#123;</span><br><span class="line">                    subscriber.sendNext(<span class="type">JSON</span>(data))</span><br><span class="line">                    subscriber.sendCompleted()</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    subscriber.sendError(error)</span><br><span class="line">                &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果成功我们将接收到的Json数据发送给订阅者，否则调用sendError函数将错误信息发送给订阅者。非常方便，不是吗？</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">syncSignal.subscribeError(&#123; (error: <span class="type">NSError</span>!) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">                <span class="type">UIAlertView</span>(title: <span class="string">"Error creating brew"</span>, message: error.localizedDescription, delegate: <span class="literal">nil</span>, cancelButtonTitle: <span class="string">"OK"</span>).show()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>我们仅仅是需要在ViewController中实现错误处理，然后等待着响应式编程的魔法降临到我们身上，例如 丢失连接。</p>
+<h2 id="总结">总结</h2><p>酒窖温度监测项目是一个真实的示例,起初我用Objective-C中的MVC实现.这种实现非常简单,却少了份惊喜.后来,Swift出现了,我理所当然地喜欢上这样的创新.因此我决定重写整个App.当我与繁重的控制器以及UI刷新机制斗争了许久之后,这些东西我不是很精通,所以我决定尝试响应式编程.由于我早已知道这与MVVM能够兼容,所以就决定尝试一下.这次经历清除了我一半代码.于是,经过ReactiveCocoa转换的App的价值感觉就像是剩下的代码的价值的两倍.从那时候起,做一些调整(比如根据一些数据改变按钮的状态)仅仅需要编写一行用于发送启用信号到按钮命令的代码,这几乎没有成本.想想使用原来的方式将花费多少时间呐！</p>
+<p>有很多其他的因素可能使你想尝试ReactiveCocoa和Swift。如果你想对如何酿造啤酒感兴趣，或者只是对这些代码感兴趣，那么你可以这<a href="https://github.com/brewfactory/BrewMobile" target="_blank" rel="external">这里(BrewMobile)</a>查看到所有的代码。如果你有更好的技术使得这个App变得更好，请让我知道！当然，也欢迎给我们贡献代码。</p>
+<p>在结束之前，分享一下我关于BrewMobile的未来的一些思考，我正在打算将React Native引入到BrewMobile。如果搞定了我会再次分享我的经验。</p>
+<h2 id="其他资料">其他资料</h2><h3 id="Swift">Swift</h3><ul>
+<li><a href="http://www.objc.io/issue-16/power-of-swift.html" target="_blank" rel="external">http://www.objc.io/issue-16/power-of-swift.html</a></li>
+<li><a href="https://designcode.io/swift-design" target="_blank" rel="external">https://designcode.io/swift-design</a></li>
+<li><a href="http://blog.scottlogic.com/2014/07/24/mvvm-reactivecocoa-swift.html" target="_blank" rel="external">http://blog.scottlogic.com/2014/07/24/mvvm-reactivecocoa-swift.html</a></li>
+<li><a href="http://www.objc.io/books/" target="_blank" rel="external">http://www.objc.io/books/</a></li>
+</ul>
+<h3 id="MVVM模式">MVVM模式</h3><p><a href="http://www.objc.io/issue-13/mvvm.html" target="_blank" rel="external">http://www.objc.io/issue-13/mvvm.html</a><br><a href="http://www.teehanlax.com/blog/model-view-viewmodel-for-ios/" target="_blank" rel="external">http://www.teehanlax.com/blog/model-view-viewmodel-for-ios/</a></p>
+<h3 id="响应式编程-1">响应式编程</h3><ul>
+<li><a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754" target="_blank" rel="external">https://gist.github.com/staltz/868e7e9bc2a7b8c1f754</a></li>
+<li><a href="http://blog.risingstack.com/functional-reactive-programming-with-the-power-of-nodejs-streams/" target="_blank" rel="external">http://blog.risingstack.com/functional-reactive-programming-with-the-power-of-nodejs-streams/</a></li>
+<li><a href="http://rxmarbles.com" target="_blank" rel="external">http://rxmarbles.com</a></li>
+</ul>
+<h3 id="ReactiveCocoa-1">ReactiveCocoa</h3><ul>
+<li><a href="https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/Documentation/DesignGuidelines.md" target="_blank" rel="external">https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/Documentation/DesignGuidelines.md</a></li>
+<li><a href="http://nshipster.com/reactivecocoa/" target="_blank" rel="external">http://nshipster.com/reactivecocoa/</a></li>
+</ul>
+<h3 id="Ghostbusters">Ghostbusters</h3><ul>
+<li><a href="https://itunes.apple.com/us/movie/ghostbusters/id532285804" target="_blank" rel="external">https://itunes.apple.com/us/movie/ghostbusters/id532285804</a></li>
+</ul>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Reactive/"> #Reactive </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Back-to-the-Future/">Swift Back to the Future</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/">Swift Access Sub-Controllers from a UINavigationController</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Swift的响应式编程"><span class="nav-number">1.</span> <span class="nav-text">Swift的响应式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC_与_MVVM"><span class="nav-number">1.1.</span> <span class="nav-text">MVC 与 MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式编程"><span class="nav-number">1.2.</span> <span class="nav-text">响应式编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactiveCocoa"><span class="nav-number">1.3.</span> <span class="nav-text">ReactiveCocoa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他资料"><span class="nav-number">1.5.</span> <span class="nav-text">其他资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift"><span class="nav-number">1.5.1.</span> <span class="nav-text">Swift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM模式"><span class="nav-number">1.5.2.</span> <span class="nav-text">MVVM模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式编程-1"><span class="nav-number">1.5.3.</span> <span class="nav-text">响应式编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactiveCocoa-1"><span class="nav-number">1.5.4.</span> <span class="nav-text">ReactiveCocoa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ghostbusters"><span class="nav-number">1.5.5.</span> <span class="nav-text">Ghostbusters</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/Swift-Reactive/';
+      var disqus_title = 'Swift Reactive';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/Swift-Reactive/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

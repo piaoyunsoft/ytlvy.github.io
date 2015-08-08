@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="EventKit," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Swift EventKit - Requesting Permission // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Swift EventKit - Requesting Permission
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-EventKit-Requesting-Permission/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-EventKit-Requesting-Permission/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="Swift_EventKit的初学者指南—请求权限">Swift  EventKit的初学者指南—请求权限</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/05/14/beginners-guide-to-eventkit-in-swift-requesting-permission/" target="_blank" rel="external">Beginner’s Guide to EventKit in Swift – Requesting Permission</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/" target="_blank" rel="external">Andrew</a></li>
+<li><a href="http://www.devtf.cn" target="_blank" rel="external">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/MollyMmm" target="_blank" rel="external">MollyMmm</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu" target="_blank" rel="external">Mr.Simple</a>  </li>
+<li>状态 : 校对完成</li>
+</ul>
+</blockquote>
+<p>EventKit为获取和操作用户日历事件和提醒提供了一系列的类.在下面的教程中,我的目标是带领你走出利用EventKit建立一个应用程序的第.我的目标是带领你迈出利用EventKit建立一个应用程序的第一步.我将演示如何向用户的日历请求许可,我还将展示几个处理用户响应的例子(当他们授予访问权限,或者拒绝).</p>
+<h1 id="Example_scenario">Example scenario</h1><h1 id="场景">场景</h1><p>让我们先提出一个基本方案，作为本教程的例子。</p>
+<p>假设我们正在构建一个应用程序，现在，有一个单一的视图控制器。在得到用户授权允许的情况下，我们希望这个视图控制器显示日历列表。如果用户拒绝访问,我们将向用户展示一个消息,用来说明我们的应用程序在没有访问权限时不能运行,我们也将允许他们通过单击一个按钮能够在他们的设备的设置中设置授权访问.</p>
+<p>我已经创建一个那样的应用程序作为例子—跳到GitHub中查看并研究这个例子的代码.</p>
+<blockquote>
+<p>资源</p>
+<p><a href="https://github.com/andrewcbancroft/EventTracker/tree/ask-for-permission" target="_blank" rel="external">Xcode工程示例</a></p>
+</blockquote>
+<h1 id="Storyboard_setup">Storyboard setup</h1><h1 id="故事面板设置">故事面板设置</h1><a id="more"></a>
+<p>你使用EventKit的第一步就是需要为自己创建一个用户界面来处理当你第一个程序启动时用户对”该程序可以访问你的日历吗?”对出不同的响应,不久,我们将得到如何请求这个许可的详情.但首先,让我们来剖析我们如何用对于一个许可操作导致的给定响应能够做正确的操作的一些视图来安排我们的故事板.</p>
+<p>用户可以授予访问权限,也可以拒绝授予访问权限来通知他们的日历或者提醒.我们需要为这两种情况做好准备.</p>
+<h1 id="当被授予访问权限时,tableview显示日历列表">当被授予访问权限时,tableview显示日历列表</h1><p>我今天持乐观态度,所以让我们开始处理从一开始用户就授予我们访问他们日历的权限的情况.</p>
+<p>当用户授予我们访问权限,我们想列出一个表视图的日历.在接下来的教程中,我们将担心数据源的设置.现在,我们将从实用工具栏中拽一个表格视图过来.</p>
+<p>为了得到填满整个屏幕的表视图,我做了几件事情.通常,当你从实用工具栏中拽一个表视图过来的时候,它会在故事板中填满整个场景.在布局中我向下拖顶部边缘知道它”捕捉”到我所期望的状态栏底部被定位的那行.然后,我设置了以下限制:</p>
+<blockquote>
+<ul>
+<li>Center X   </li>
+<li>Center Y </li>
+<li>Equal width to Superview</li>
+<li>Top space to Top Layout Guide for height.</li>
+</ul>
+</blockquote>
+<p>我已经创建了一个设置表视图的简短截屏,如果你想要一个完整的练习,可以参看下面链接的内容:</p>
+<blockquote>
+<p>Resources<br>资源</p>
+<p><a href="http://bit.ly/WatchSetUpTVFromACB" target="_blank" rel="external">Screencast: Setting Up a Table View</a></p>
+<p><a href="http://www.andrewcbancroft.com/2015/05/18/swift-how-to-setting-up-a-table-view/" target="_blank" rel="external"> Full transcript</a></p>
+</blockquote>
+<p>这里有这些约束的详细视图,以及故事板看起来像装表视图的视觉效果.</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/a10328aajw1eshuj6c424j20850ciwfn.jpg" alt="Detailed view of constraints"></p>
+<p><img src="http://ww2.sinaimg.cn/mw690/a10328aajw1eshuj777a3j212u0oxguc.jpg" alt="Table view in Storyboard"></p>
+<p>最后一点,在故事板中我已经将这个表视图的hidden属性设置为true.根据用户允许或者拒绝对日历的访问后,我将切换表的可见性,但我认为值得指出的是在我例子中表视图的初始状态是被隐藏.</p>
+<h1 id="访问被拒绝时的”需要许可”视图">访问被拒绝时的”需要许可”视图</h1><p>但有时,用户拒绝授权访问日历,在意识到这样做将导致基本上停止你应用程序所有的功能之前,如果你的整个应用程序或者只是该应用程序的一部分需要访问功能,你需要一种方法来告知用户,并为他们提供一种方法跳到用户设置,如果可能的话让用户手动授予访问权限.</p>
+<p>我在示例项目中的方法是在故事板场景中组织一个新的视图,该视图包含一个展示操作说明的标签和一个点击后使用户进入我们应用程序的设置界面的按钮.</p>
+<p>再次,一些约束涉及到在运行时使一些事物正确的显示.在这里我不会讲述这个细节,因为它很可能因为每一个执行操作而有一点不同.</p>
+<p>我将指出的意见事情是,这个视图的透明度已经被设置为0,以便如果用户拒绝授权,我能够展示一个逐渐消失的效果.下面就来看看在设置了隐藏“NeedPermissionsView”的场景：</p>
+<p><img src="http://ww3.sinaimg.cn/mw690/a10328aajw1eshuj6ra19j214p0ou12b.jpg" alt="Need permission view"></p>
+<h1 id="Event_Store的角色">Event Store的角色</h1><p>EventKit的核心是EKEventStore.EKEventStore是事物的中心.创建EKEventStore的一个实例,为开发人员提供了对用户的日历和提醒列表中执行各种读/写操作的API.</p>
+<p>一个与日历交互的视图控制器应该有一个引用EKEventStore的实例.这很容易被创建—这里是一个例子:</p>
+<blockquote>
+<p>ViewController.swift</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="typename">UIViewController</span>, <span class="typename">UITableViewDataSource</span>, <span class="typename">UITableViewDelegate &#123;</span></span></span><br><span class="line">    let eventStore = EKEventStore()</span><br><span class="line">    <span class="comment">// ...    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="检查日历的授权">检查日历的授权</h1><p>一旦我们有了引用EKEventStore的实例,我们可以做像检查用户是否授权访问他们的日历这样的事情.根据这里,我们可以做是否需要请求许可的决定,随后确定要显示的视图(表视图或者需要许可视图).</p>
+<p>我们在哪里检查日历授权很重要.我的建议是每次在视图出现时检查(即在viewWillAppear()中),因为用户首次授予访问权限,切换设置,拒绝访问的情况是完全有可能的.我们的应用程序需要做出适当的响应.</p>
+<p>In the example project provided with this article, I’ve created a function named checkCalendarAuthorizationStatus(). Here a peek at what it does:</p>
+<p>在这个文章提供的示例工程中,我已经创建了一个名为checkCalendarAuthorizationStatus()的函数.<br>接下来看看它的实现:</p>
+<blockquote>
+<p>ViewController.swift<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span>, <span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...    </span></span><br><span class="line">    <span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line">        checkCalendarAuthorizationStatus()</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="func"><span class="keyword">func</span> <span class="title">checkCalendarAuthorizationStatus</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> status = <span class="type">EKEventStore</span>.authorizationStatusForEntityType(<span class="type">EKEntityTypeEvent</span>)      </span><br><span class="line">        <span class="keyword">switch</span> (status) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="type">EKAuthorizationStatus</span>.<span class="type">NotDetermined</span>:</span><br><span class="line">                <span class="comment">// This happens on first-run</span></span><br><span class="line">                requestAccessToCalendar()</span><br><span class="line">            <span class="keyword">case</span> <span class="type">EKAuthorizationStatus</span>.<span class="type">Authorized</span>:</span><br><span class="line">                <span class="comment">// Things are in line with being able to show the calendars in the table view</span></span><br><span class="line">                loadCalendars()</span><br><span class="line">                refreshTableView()</span><br><span class="line">            <span class="keyword">case</span> <span class="type">EKAuthorizationStatus</span>.<span class="type">Restricted</span>, <span class="type">EKAuthorizationStatus</span>.<span class="type">Denied</span>:</span><br><span class="line">                <span class="comment">// We need to help them give us permission</span></span><br><span class="line">                needPermissionView.fadeIn()</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">let</span> alert = <span class="type">UIAlertView</span>(title: <span class="string">"Privacy Warning"</span>, message: <span class="string">"You have not granted permission for this app to access your Calendar"</span>, delegate: <span class="literal">nil</span>, cancelButtonTitle: <span class="string">"OK"</span>)</span><br><span class="line">                alert.show()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>这里关键的功能是EKEventStore的 authorizationStatusForEntityType实现的.传入的EKEntityTypeEvent用于跟用户日历进行交互.如果我们想要检查他们的提醒的权限,我们将在这里使用EKEntityTypeReminder.</p>
+<p>EKAuthorizationStatus的可能值根据switch里的相应的case来执行封装好的方便阅读的独立功能的逻辑代码.</p>
+<p>让我们一步步来看一看这些功能.</p>
+<h1 id="请求访问日历">请求访问日历</h1><p>正如标题所说的,所有的事情从这里开始.每当我们的应用程序加载和调用authorizationStatusForEntityType的时候,将返回NotDetermined的状态.就是在这一点上我们想请求访问日历.</p>
+<p>为了这样做,按照下面的方法定义requestAccessToCalendar函数:</p>
+<blockquote>
+<p>requestAccessToCalendar()<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class ViewController: <span class="built_in">UIViewController</span>, <span class="built_in">UITableViewDataSource</span>, <span class="built_in">UITableViewDelegate</span> &#123;</span><br><span class="line">   <span class="comment">// ...  </span></span><br><span class="line">   func requestAccessToCalendar() &#123;</span><br><span class="line">        eventStore<span class="variable">.requestAccessToEntityType</span>(EKEntityTypeEvent, completion: &#123;</span><br><span class="line">            (accessGranted: Bool, error: <span class="built_in">NSError</span>!) <span class="keyword">in</span>            </span><br><span class="line">            <span class="keyword">if</span> accessGranted == <span class="literal">true</span> &#123;</span><br><span class="line">                <span class="comment">// Ensure that UI refreshes happen back on the main thread!</span></span><br><span class="line">                <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), &#123;</span><br><span class="line">                    <span class="keyword">self</span><span class="variable">.loadCalendars</span>()</span><br><span class="line">                    <span class="keyword">self</span><span class="variable">.refreshTableView</span>()</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// Ensure that UI refreshes happen back on the main thread!</span></span><br><span class="line">                <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), &#123;</span><br><span class="line">                    <span class="keyword">self</span><span class="variable">.needPermissionView</span><span class="variable">.fadeIn</span>()</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>我们的EKEventStore实例提供了一个名为requestAccessToEntityType的函数.再次将EKEntityTypeEvent作为我们请求访问日历的参数传递.剩余的有趣的部分在我们提供的封装完的闭包里能够找到.</p>
+<p>在实现里有三个主要的事情需要注意:</p>
+<p>1.传递到闭包里的两个参数一个是用来说明访问权限是否被授予的Bool类型的,另一个是NSError.</p>
+<p>2.我们需要调用dispatch_async(),并表明我们要调回主队列中执行刷新UI的操作.</p>
+<p>3.self.needPermissionView.fadeIn()作为我操作中的一个UIView的拓展,<a href="https://github.com/andrewcbancroft/EventTracker/tree/ask-for-permission" target="_blank" rel="external">Swift中渐入/淡出动画的拓展类(Fade In / Out Animations as Class Extensions in Swift)</a>.</p>
+<h1 id="授予访问权限！加载日历和刷新表视图">授予访问权限！加载日历和刷新表视图</h1><p>当被允许访问的时候,我们可以调用eventStore实例中的calendarsForEntityType函数,并传递EKEntityTypeEvent去抓取用户日历的数组在我们的表视图中显示.下面就来看看:</p>
+<blockquote>
+<p>loadCalendars()<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span>, <span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">var</span> calendars: [<span class="type">EKCalendar</span>]?</span><br><span class="line">    <span class="comment">// ...    </span></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">loadCalendars</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.calendars = eventStore.calendarsForEntityType(<span class="type">EKEntityTypeEvent</span>) <span class="keyword">as</span>? [<span class="type">EKCalendar</span>]</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">refreshTableView</span><span class="params">()</span></span> &#123;</span><br><span class="line">        calendarsTableView.hidden = <span class="literal">false</span></span><br><span class="line">        calendarsTableView.reloadData()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="拒绝访问—显示需要许可视图">拒绝访问—显示需要许可视图</h1><p>当访问被拒绝的时候,我们需要弹出在故事板场景中创建的“Needs Permission View”.</p>
+<p>在这个视图中,上面的函数重新被调用,这样有一个能够让用户直接跳转到我们应用程序的设置页面中,以便他们能够从那里授权日历访问.这个按钮连线到了一个IBAction.下面有实现IBAction的例子:</p>
+<blockquote>
+<p>goToSettingsButtonTapped()<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span>, <span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="preprocessor">@IBAction</span> <span class="func"><span class="keyword">func</span> <span class="title">goToSettingsButtonTapped</span><span class="params">(sender: UIButton)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> openSettingsUrl = <span class="type">NSURL</span>(string: <span class="type">UIApplicationOpenSettingsURLString</span>)</span><br><span class="line">        <span class="type">UIApplication</span>.sharedApplication().openURL(openSettingsUrl!)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="结束语">结束语</h1><p>这几乎完成了使用 Event Kit的开始工作!对于checkCalendarAuthorizationStatus()函数的其余案例简单的重用,我只是简单的剖析了请求允许的过程.</p>
+<p>我鼓励你们<a href="https://github.com/andrewcbancroft/EventTracker/tree/ask-for-permission" target="_blank" rel="external">跳到Github</a>,并且作为你应用程序中利用Event Kit的开始,自己深入研究这些代码.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/EventKit/"> #EventKit </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/">Swift UIKit Dynamics - Tossing Views</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/">Swift Core Graphics Tutorial Part 1: Getting Started</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">187</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Swift_EventKit的初学者指南—请求权限"><span class="nav-number">1.</span> <span class="nav-text">Swift  EventKit的初学者指南—请求权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example_scenario"><span class="nav-number">2.</span> <span class="nav-text">Example scenario</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景"><span class="nav-number">3.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storyboard_setup"><span class="nav-number">4.</span> <span class="nav-text">Storyboard setup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#故事面板设置"><span class="nav-number">5.</span> <span class="nav-text">故事面板设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#当被授予访问权限时,tableview显示日历列表"><span class="nav-number">6.</span> <span class="nav-text">当被授予访问权限时,tableview显示日历列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问被拒绝时的”需要许可”视图"><span class="nav-number">7.</span> <span class="nav-text">访问被拒绝时的”需要许可”视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event_Store的角色"><span class="nav-number">8.</span> <span class="nav-text">Event Store的角色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查日历的授权"><span class="nav-number">9.</span> <span class="nav-text">检查日历的授权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#请求访问日历"><span class="nav-number">10.</span> <span class="nav-text">请求访问日历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#授予访问权限！加载日历和刷新表视图"><span class="nav-number">11.</span> <span class="nav-text">授予访问权限！加载日历和刷新表视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拒绝访问—显示需要许可视图"><span class="nav-number">12.</span> <span class="nav-text">拒绝访问—显示需要许可视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">13.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/08/08/Swift-EventKit-Requesting-Permission/';
+      var disqus_title = 'Swift EventKit - Requesting Permission';
+      var disqus_url = 'http://ytlvy.com/2015/08/08/Swift-EventKit-Requesting-Permission/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
