@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/06/Random/">
-                Random
+              <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
+                iOS Best Practices
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-06
+          發表於 2015-08-05
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/06/Random/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Random/"></span>
+            <a href="/2015/08/05/iOS-Best-Practices/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Best-Practices/"></span>
             </a>
           </span>
           
@@ -194,520 +194,27 @@
 
       
         
-          <h2 id="arc4random()">arc4random()</h2><h3 id="Random_int_between_0_and_N_-_1">Random int between 0 and N - 1</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Random_int_between_1_and_N">Random int between 1 and N</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span> + <span class="number">1</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Random_double_between_0_and_1">Random double between 0 and 1</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sra<span class="label">nd48</span><span class="comment">(time(0)</span>);</span><br><span class="line">double r = dra<span class="label">nd48</span><span class="comment">()</span>;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/Random/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/06/progress-memory-map/">
-                progress memory map
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/06/progress-memory-map/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/progress-memory-map/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/">翻译子</a></p>
-<h2 id="程序在内存中分布">程序在内存中分布</h2><p>内存管理是操作系统的核心. 对系统和编程人员来说这都是非常重要的.下面用 32位 系统举例.首先介绍程序如何在内存中分布.</p>
-<h3 id="虚拟地址空间">虚拟地址空间</h3><p>在多任务操作系统中, 每个进程拥有自己独立的内存沙箱. 这个沙箱就是指的<code>虚拟地址空间</code>(virtual address space), 在32位系统中, 就是一块4GB 大小的内存地址块. 这些虚拟地址和物理内存通过<code>page tables</code>来完成映射, <code>page tables</code>是由系统核心管理,进程可以进行访问. 一旦虚拟地址被启用, 会应用到所有的程序中, 包括系统核心. 因此虚拟地址的一部分, 需要被划分出来为系统核心保留使用.<br><img src="http://static.duartes.org/img/blogPosts/kernelUserMemorySplit.png" alt=""></p>
-<p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
-<p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
-<p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
-<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/progress-memory-map/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/06/what-happen-before-main/">
-                what happen before main
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/06/what-happen-before-main/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/what-happen-before-main/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/">转自</a></p>
-<h2 id="iOS程序main函数之前发生了什么">iOS程序main函数之前发生了什么</h2><h3 id="前言">前言</h3><p>一个iOS app的<code>main()</code>函数位于<code>main.m</code>中，这是我们熟知的程序入口。但对objc了解更多之后发现，程序在进入我们的main函数前已经执行了很多代码，比如熟知的<code>+ load</code>方法等。本文将跟随程序执行顺序，刨根问底，从<code>dyld</code>到<code>runtime</code>，看看main函数之前都发生了什么。</p>
-<h3 id="从dyld开始">从dyld开始</h3><h4 id="动态链接库">动态链接库</h4><p>iOS中用到的所有系统<code>framework</code>都是动态链接的，类比成插头和插排，静态链接的代码在编译后的静态链接过程就将插头和插排一个个插好，运行时直接执行二进制文件；而动态链接需要在程序启动时去完成“插插销”的过程，所以在我们写的代码执行前，动态连接器需要完成准备工作。</p>
-<p>这个是在xcode中看到的Link列表：<br><img src="http://ww4.sinaimg.cn/mw600/51530583jw1ejx4ul5susj20wg0803zh.jpg" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/what-happen-before-main/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/06/Autorelease/">
-                Autorelease
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/06/Autorelease/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Autorelease/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Autorelease">Autorelease</h2><p><img src="http://blog.sunnyxx.com/tags/objc%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95/page/3/" alt="转自"></p>
-<h3 id="Autorelease对象什么时候释放">Autorelease对象什么时候释放</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;在没有手加Autorelease Pool的情况下，Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop</p>
-<p>小实验<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *str = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"sunnyxx"</span>];</span><br><span class="line">    <span class="comment">// str是一个autorelease对象，设置一个weak的引用来观察它</span></span><br><span class="line">    reference = str;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: sunnyxx</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>由于这个vc在loadView之后便add到了window层级上，所以viewDidLoad和viewWillAppear是在同一个runloop调用的，因此在viewWillAppear中，这个autorelease的变量依然有值。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/Autorelease/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/04/IOS-进阶工具篇/">
-                IOS 进阶工具篇
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/04/IOS-进阶工具篇/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/04/IOS-进阶工具篇/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">第一部分：<span class="tag">iOS</span> 开发工具</span><br><span class="line">第2章使用<span class="tag">CocoaPods</span> 做依赖管理</span><br><span class="line">2<span class="class">.1</span> <span class="tag">CocoaPods</span> 简介</span><br><span class="line">2<span class="class">.2</span> <span class="tag">CocoaPods</span> 的安装和使用</span><br><span class="line">2<span class="class">.2</span><span class="class">.1</span> <span class="tag">CocoaPods</span> 的安装</span><br><span class="line">2<span class="class">.2</span><span class="class">.2</span> 使用<span class="tag">CocoaPods</span> 的镜像索引</span><br><span class="line">2<span class="class">.2</span><span class="class">.3</span> 使用<span class="tag">CocoaPods</span></span><br><span class="line">2<span class="class">.2</span><span class="class">.4</span> 查找第三方库</span><br><span class="line">2<span class="class">.3</span> 注意事项</span><br><span class="line">2<span class="class">.3</span><span class="class">.1</span> 关于<span class="class">.gitignore</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.2</span> 为自己的项目创建<span class="tag">podspec</span> 文件</span><br><span class="line">2<span class="class">.3</span><span class="class">.3</span> 使用私有的<span class="tag">pods</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.4</span> 不更新<span class="tag">podspec</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.5</span> 生成第三方库的帮助文档</span><br><span class="line">2<span class="class">.3</span><span class="class">.6</span> 原理</span><br><span class="line">第3章网络封包分析工具<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.1</span> <span class="tag">Charles</span> 简介</span><br><span class="line">3<span class="class">.2</span> <span class="tag">Charles</span> 的安装和使用</span><br><span class="line">3<span class="class">.2</span><span class="class">.1</span> 安装<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.2</span><span class="class">.2</span> 安装<span class="tag">SSL</span> 证书</span><br><span class="line">3<span class="class">.2</span><span class="class">.3</span> 将<span class="tag">Charles</span> 设置成系统代理</span><br><span class="line">3<span class="class">.2</span><span class="class">.4</span> <span class="tag">Charles</span> 主界面介绍</span><br><span class="line">3<span class="class">.2</span><span class="class">.5</span> 过滤网络请求</span><br><span class="line">3<span class="class">.3</span> 使用<span class="tag">Charles</span> 协助<span class="tag">iOS</span> 开发</span><br><span class="line">3<span class="class">.3</span><span class="class">.1</span> 截取<span class="tag">iPhone</span> 上的网络封包</span><br><span class="line">3<span class="class">.3</span><span class="class">.2</span> 模拟慢速网络</span><br><span class="line">3<span class="class">.4</span> 高级功能</span><br><span class="line">3<span class="class">.4</span><span class="class">.1</span> 截取<span class="tag">SSL</span> 信息</span><br><span class="line">3<span class="class">.4</span><span class="class">.2</span> 修改网络请求内容</span><br><span class="line">3<span class="class">.4</span><span class="class">.3</span> 修改服务器返回内容</span><br><span class="line">3<span class="class">.5</span> <span class="tag">Map</span> 功能</span><br><span class="line">3<span class="class">.6</span> <span class="tag">Rewrite</span> 功能</span><br><span class="line">3<span class="class">.7</span> <span class="tag">Breakpoints</span> 功能</span><br><span class="line">3<span class="class">.8</span> 总结</span><br><span class="line">3<span class="class">.9</span> 参考链接</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/04/IOS-进阶工具篇/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/03/Stack-And-Heap-OverFlow/">
-                Stack And Heap OverFlow
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-03
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/03/Stack-And-Heap-OverFlow/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/03/Stack-And-Heap-OverFlow/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>翻译自<a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html">https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html</a></p>
-<h2 id="栈溢出">栈溢出</h2><blockquote>
-<p>在大部分操作系统中, 每个程序拥有一个<strong><em>栈</em></strong>(多线程程序,每个线程拥有一个单独的栈), 栈用于局部变量的存储.<br>栈被划分为单元, 此单元被成为帧(frame), 每个帧包含了某个函数的某一调用的全部数据.这些数据包含: 函数参数, 全部的临时变量,和 linkage 信息(就是调用函数的地址. 以便当前代码执行完毕后, 返回原位置继续执行). 通过配置编译参数,也可以包含下一帧的顶部地址.数据的布局以及排序,由操作系统决定,不同系统略有差异.<br>当函数被调用的时候, 一个新的栈帧被添加到栈的顶部. 当函数返回时,顶部的栈帧被移除.在执行过程中, 程序只能直接访问栈顶帧得数据(指针除外, 但是不建议如此设计).这种设计,方便了递归调用的实现, 因为每个子递归调用拥有独立的临时变量和参数备份.<br>下图介绍了栈的组织结构.(这只是示意图, 实际情况要根据 cpu设计来决定)</p>
-</blockquote>
-<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/stack.gif" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/03/Stack-And-Heap-OverFlow/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/30/Dispatch-semaphore/">
-                Dispatch_semaphore
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/30/Dispatch-semaphore/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-semaphore/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><img src="/images/DispatchSemaphore.jpg" alt=""></p>
-<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
-<h3 id="functions">functions</h3><ul>
-<li>dispatch_semaphore_create</li>
-<li>dispatch_semaphore_wait (减少一个信号量)</li>
-<li>dispatch_semaphore_signal (增加一个信号量)</li>
+          <h1 id="iOS_Best_Practices">iOS Best Practices</h1><p>这里总结一下iOS最佳实践，主要参考Futurice developers的文章<a href="https://github.com/futurice/ios-good-practices">iOS Good Practices</a>，同时加上了一些自己的理解</p>
+<h2 id="目录">目录</h2><ul>
+<li><a href="#setup_project">初始化项目</a></li>
+<li><a href="#iOS_architecture">iOS架构</a></li>
+<li><a href="#api_design">API设计</a></li>
+<li><a href="#high_quality_code">高质量代码</a></li>
+<li><a href="#code_style">编码规范</a></li>
+<li><a href="#iOS_open_source_lib">iOS开源库</a></li>
+<li><a href="#iOS_basic_skills">iOS基本技能</a></li>
+<li><a href="#build_automation">自动化构建</a></li>
+<li><a href="#optimiaze_app">优化App</a></li>
 </ul>
-<h3 id="实例">实例</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)test4&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">3</span>;</span><br><span class="line">    __block <span class="keyword">int</span> mainData = <span class="number">0</span>;</span><br><span class="line">    __block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</span><br><span class="line">    __block dispatch_semaphore_t sem = dispatch_semaphore_create(<span class="number">2</span>);</span><br><span class="line">    dispatch_queue_t ioQueue = dispatch_queue_create(<span class="string">"com.dreamingwish.imagegcd.io"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue = dispatch_queue_create(<span class="string">"StudyBlocks"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_group_t <span class="keyword">group</span> = dispatch_group_create();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt;<span class="number">100</span>; i++) &#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);  <span class="comment">// -1 非零即通过</span></span><br><span class="line">            dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line"><span class="comment">//                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">                dispatch_group_async(<span class="keyword">group</span>, queue, ^&#123;</span><br><span class="line">                    <span class="keyword">sum</span> += data;</span><br><span class="line">                    </span><br><span class="line">                    __block <span class="keyword">int</span> nsum = <span class="keyword">sum</span>;</span><br><span class="line">                    dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line">                        NSLog(@<span class="string">" &gt;&gt; Sum: %d"</span>, nsum);</span><br><span class="line">                        </span><br><span class="line">                        dispatch_semaphore_signal(sem);  <span class="comment">// +1</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                    </span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dispatch_group_wait(<span class="keyword">group</span>, DISPATCH_TIME_FOREVER);</span><br><span class="line"><span class="comment">//    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>; j&lt;<span class="number">5</span>; j++) &#123;</span><br><span class="line">        mainData++;</span><br><span class="line">        NSLog(@<span class="string">" &gt;&gt; MainData: %d"</span>, mainData);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    dispatch_semaphore_signal(sem);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><b id="setup_project"></b></p>
+<h2 id="初始化项目">初始化项目</h2><h3 id="UI采用Interface_Builder还是手写代码">UI采用Interface Builder还是手写代码</h3><p>当开始一个iOS项目时，一个常见的问题就是编写所有的views是采用手写代码的方式还是使用Interface Builder的Storyboard或XIB文件。两种方式都可以实现相同UI效果，但几点需要考虑：</p>
+<h4 id="为什么使用代码？">为什么使用代码？</h4><ul>
+<li>当多人协作开发时，由于Storyboard复杂的XML结构，它更容易发生版本冲突，这比手写代码的方式更难合并代码。</li>
+<li>手写代码更容易地结构化和重用views，因此使你的代码库保持<a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>。</li>
+<li>所有的信息都在同一个地方。在Interface Builder中，你必须通过点击所有inspectors才能找到你想要的东西。</li>
+</ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/Dispatch-semaphore/#more">
+            <a class="btn" href="/2015/08/05/iOS-Best-Practices/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -740,8 +247,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/30/DispatchOnce/">
-                DispatchOnce
+              <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
+                parse crashLog manually
               </a>
             
           
@@ -750,7 +257,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-30
+          發表於 2015-08-04
         </span>
 
         
@@ -770,8 +277,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/30/DispatchOnce/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/DispatchOnce/"></span>
+            <a href="/2015/08/04/parse-crashLog-manually/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/parse-crashLog-manually/"></span>
             </a>
           </span>
           
@@ -786,183 +293,283 @@
 
       
         
-          <p><img src="/images/DispatchOnce.jpg" alt=""></p>
-<h2 id="Dispatch_Once">Dispatch_Once</h2><p>四种场景如上图</p>
+          <p><a href="http://foggry.com/blog/2015/07/27/ru-he-shou-dong-jie-xi-crashlog/">转自</a></p>
+<h2 id="如何手动解析CrashLog">如何手动解析CrashLog</h2><p>解决崩溃问题是移动应用开发者最日常的工作之一。如果是开发过程中遇到的崩溃，可以根据重现步骤调试，但线上版本就无能为力了。好在目前已经有很多不错的第三方CrashLog搜集平台（如友盟、Crashlytics等）为我们做好了解析工作，甚至在Xcode7里苹果也跟进了解析线上版本崩溃日志的功能，为开发者减轻了不少负担。尽管通常已经不需要我们手工处理CrashLog，了解CrashLog的还原原理和方法还是有必要的。</p>
+<h3 id="-dSYM">.dSYM</h3><p><code>.dSYM(debugging SYMbols)</code>又称为调试符号表，是苹果为了方便调试和定位问题而使用的一种调试方案，本质上使用的是起源于贝尔实验室的DWARF（Debugging With Attributed Record Formats），其在<code>.xcarchive</code>目录中的层次结构为：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.xcarchive</span><br><span class="line"><span class="comment">--dSYMs</span></span><br><span class="line">  |<span class="comment">--Your.app.dSYM</span></span><br><span class="line">    |<span class="comment">--Contents</span></span><br><span class="line">      |<span class="comment">--Resources</span></span><br><span class="line">        |<span class="comment">--DWARF</span></span><br></pre></td></tr></table></figure></p>
+<p>关于DWARF的具体内容以后有机会再说。我们能解析CrashLog全靠.dSYM文件，解析方式见后文。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/parse-crashLog-manually/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
+                iOS NSURLProtocal
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
+<ul>
+<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
+<li>如何优雅地进行流量统计</li>
+<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
+<li>怎么实现HTTP的同步请求</li>
+</ul>
+<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
+<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
+<ul>
+<li>自定义请求和响应</li>
+<li>提供自定义的全局缓存支持</li>
+<li>重定向网络请求</li>
+<li>提供HTTP Mocking (方便前期测试)</li>
+<li>其他一些全局的网络请求修改需求</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
+                dSYM parse tool
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
+<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
+                Variable Argument Lists
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
+<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
+<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
 <ol>
-<li>第一次执行，<code>block调用</code>，调用结束后需要置标记变量</li>
-<li>非第一次执行，而此时#1<code>block调用</code>尚未完成(预执行拿到的 obj 为 nil, 此时需要废弃此次预执行)，线程需进入等待#1状态</li>
-<li>非第一次执行，而此时#1<code>block调用</code>已经完成(预执行拿到的 obj 已经初始化完毕)此时线程的预执行是正确的, 之后可能继续执行,也可能由于时间问题,废弃此次预执行进入等待</li>
-<li>非第一次执行，而此时#1已经完成，线程预执行后, 直接跳过block而进行后续任务</li>
+<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
+<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
+<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
+<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
+<li>最后调用<code>va_end()</code>来进行清理。</li>
 </ol>
-<p>Dispatch_Once 保证了当第一个线程在进行alloc 对象时，有其他线程发起, 会废弃此线程的预执行，进入等待。在第一个线程结束时，将正在等待的线程唤醒。而实现这一机制的方法是在生成对象和变更identifier之间加入一个大于预执行时间的等待来实现的。</p>
-<h3 id="Dispatch_Once实现用到的技术">Dispatch_Once实现用到的技术</h3><ul>
-<li>原子操作 “原子比较交换函数” __sync_bool_compare_and_swap</li>
-<li>cpuid指令 实现大于预执行时间的延迟等待</li>
-<li>dispatch_thread_semaphore 来实现线程之间的等待和唤醒
+<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
+<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
+<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/DispatchOnce/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/30/UITableView-Cancel-Request/">
-                UITableView Cancel Request
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/30/UITableView-Cancel-Request/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/UITableView-Cancel-Request/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="仅加载可见Cell的图片">仅加载可见Cell的图片</h3><p>load images for just the visible rows in viewDidLoad and when the user stops scrolling<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(void)<span class="tag">viewDidLoad</span>&#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">-</span>(void)<span class="tag">scrollViewDidEndDecelerating</span>:(UIScrollView *)<span class="tag">scrollView</span> &#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/UITableView-Cancel-Request/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/30/CFRunLoop-examples/">
-                CFRunLoop examples
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/30/CFRunLoop-examples/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/CFRunLoop-examples/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="第一个">第一个</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include <span class="title">&lt;CoreFoundation/CoreFoundation.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_perform(<span class="keyword">void</span> *info __unused)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">"hello\n"</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_timer(<span class="built_in">CFRunLoopTimerRef</span> timer __unused, <span class="keyword">void</span> *info)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceSignal</span>(info);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">int</span>  </span><br><span class="line">main()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceRef</span> source;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceContext</span> source_context;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerRef</span> timer;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerContext</span> timer_context;  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;source_context, <span class="keyword">sizeof</span>(source_context));  </span><br><span class="line">    source_context<span class="variable">.perform</span> = _perform;  </span><br><span class="line">    source = <span class="built_in">CFRunLoopSourceCreate</span>(<span class="literal">NULL</span>, <span class="number">0</span>, &amp;source_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddSource</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), source, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;timer_context, <span class="keyword">sizeof</span>(timer_context));  </span><br><span class="line">    timer_context<span class="variable">.info</span> = source;  </span><br><span class="line">    timer = <span class="built_in">CFRunLoopTimerCreate</span>(<span class="literal">NULL</span>, <span class="built_in">CFAbsoluteTimeGetCurrent</span>(), <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, </span><br><span class="line">    _timer, &amp;timer_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddTimer</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), timer, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">CFRunLoopRun</span>();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/CFRunLoop-examples/#more">
+            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -988,7 +595,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/10/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/8/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/10/">&raquo;</a>
   </div>
 
 
@@ -1022,21 +629,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">201</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">98</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

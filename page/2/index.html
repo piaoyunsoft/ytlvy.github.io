@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Back-to-the-Future/">
-                Swift Back to the Future
+              <a class="post-title-link" href="/2015/08/22/Big-endian-Little-endian/">
+                Big-endian && Little-endian
               </a>
             
           
@@ -158,804 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Back-to-the-Future/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Back-to-the-Future/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="Swift的异步机制-Future">Swift的异步机制-Future</h1><hr>
-<blockquote>
-<ul>
-<li>原文链接 : <a href="https://realm.io/news/swift-summit-javier-soto-futures/">Back to the Future</a></li>
-<li>原文作者 : <a href="https://twitter.com/Javi">Javier Soto</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="http://shidanqing.net">sdq</a> </li>
-</ul>
-</blockquote>
-<p>我们在使用Objective-C写异步代码时常常会出现许多问题。它没有很好的错误处理机制，当你发现你需要在你的异步函数中创建新的异步函数它也没有一个很好的可伸缩实现。在这次演讲中，Javier Soto将演示实现一个能够简化异步API的Swift Future类型。并且创建一个Resule类型,我们可以在这个类型上调用map和andThen等操作。对于Swift来说，Futures的未来可能很会基于信号和eactiveCocoa 3。</p>
-<p>你可以在<a href="https://github.com/JaviSoto/Talks#swift-summit-2015-back-to-the-futures">这里</a>看到这次演讲中的代码。</p>
-<h2 id="更优雅地使用Swift">更优雅地使用Swift</h2><p>谢谢各位，很高兴和大家一起来聊一聊Swift，感谢组织者把我们聚集在一起并让我在这里演讲。我的名字叫Javi，是来自Twitter的iOS工程师。</p>
-<p>相比于Objective-C，我们在Swift里可以把很多事做得更好。我们已经在之前的演讲中看了不少例子，我想紧接着着他们，和大家谈论一下一种我想引入Swift的设计模式。这种设计模式会使我们的代码更为优雅。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Back-to-the-Future/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/Swift-Reactive/">
-                Swift Reactive
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Reactive/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Reactive/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="Swift的响应式编程">Swift的响应式编程</h1><hr>
-<blockquote>
-<ul>
-<li>原文链接 : <a href="https://medium.com/swift-programming/reactive-swift-3b6050375534">Reactive Swift</a></li>
-<li>原文作者 : <a href="https://medium.com/@vasarhelyia">Agnes Vasarhelyi</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/bboyefiyu">Mr.Simple</a> </li>
-<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
-<li>状态 :  完成</li>
-</ul>
-</blockquote>
-<p>让我们首先回到Apple刚推出Objective-C的继任者-Swift的时候，那真是一个非比寻常的时刻。<br>Siri还没有开启地狱之门，Prezi还没有支持订阅，那时的朝鲜也还没有hack任何人的email。一种新语言的出现让我个人非常兴奋，尤其是这是一种类型安全的脚本语言。虽然Swift还在快速的发展中，但是我们不必担心它是否已经稳定。当那一刻到来之时，我应该已经知道如何交付整洁的、可测试的代码。还要有非常灵活、流畅的UI？如果你对Objective-C 和 MVC之外的东西感兴趣，那么就请继续读下去吧。</p>
-<h2 id="MVC_与_MVVM">MVC 与 MVVM</h2><p>让我们从零开始，当我们设计一个应用时，你可能会先考虑应用的架构。Cocoa框架以<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html">Model-View-Controller</a> (也称为 MVC)为基础架构，它的结构如下图所示。</p>
-<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*pEvMKHBK9HeAgrYC." alt=""></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Reactive/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/">
-                Swift Access Sub-Controllers from a UINavigationController
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="在Swift开发中通过UINavigationController来访问Sub-Controllers">在Swift开发中通过UINavigationController来访问Sub-Controllers</h1><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">Access Sub-Controllers from a UINavigationController in Swift</a></li>
-<li>原文作者 : <a href="http://www.andrewcbancroft.com">Andrew Bancroft</a></li>
-<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">samw00</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">mrchenhao</a> </li>
-<li>状态 : 完成</li>
-</ul>
-</blockquote>
-<p>通过<code>AppDelegate</code>或者通过<code>prepareForSegue(_:sender:)</code>来访问<code>UINavigationController</code>的第一个子元素的访问顺序总是让我有点纳闷。这篇博文中有几段代码可以帮助你和我迅速的弄清楚如何在我们的Swift应用程序开发中和navigation controllers打交道。</p>
-<h2 id="AppDelegate">AppDelegate</h2><p>每一个iOS应用在其启动加载完成后都会显示一个根视图控制器。假设我们要搭建一个以导航控制器(navigation controller)为主的一个app…,也就是说我们这个app的第一（根）视图控制器是一个UINavigationController。在我们的Storyboard中，我们创建了一个简单的场景，给一个视图控制器添加了些UI控件和一些属性，然后我们将这个视图控制器嵌入在一个导航控制器中。</p>
-<p>但是如果我想在app启动之后再去设置视图控制器中的某些个属性呢？我们要如何才能做到这点呢？</p>
-<p>我一直把我在Storyboard中添加UI要素的第一个场景(first scene)视为“第一视图控制器”。但是，对iOS来说，导航控制器才是实际意义上的第一（根）视图控制器。</p>
-<p>当一个app把导航控制器视为其第一（根）视图器时，我们就需要在视图层级结构中“挖”的更深一点才能访问到我们之前所以为的“第一视图控制器“。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/">
-                Swift Increasing Performance by Reducing Dynamic Dispatch
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="通过减少动态分发来提高Swift的执行效率">通过减少动态分发来提高Swift的执行效率</h2><p>&gt;</p>
-<ul>
-<li>原文链接 : <a href="https://developer.apple.com/swift/blog/?id=27">Increasing Performance by Reducing Dynamic Dispatch</a></li>
-<li>原文作者 : <a href="https://developer.apple.com/swift">Apple官方博文</a></li>
-<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
-</ul>
-<p>和其他很多编程语言一样，Swift允许一个类重写其父类中声明的方法和属性。这意味着程序在运行时需要先确定要调用的方法和访问的属性是属于哪个类的，确定之后，则会执行间接调用（indirect call）或间接访问（indirect access）。这个运行机制称为<strong>动态分发</strong>（dynamic dispatch）。这个机制能够提高语言的表现力，但其付出的代价是在每次间接调用或间接访问时，会产生一定量的运行时开销（runtime overhead）。在执行敏感代码时，最好能避免产生这样的开销。这篇博客将罗列三种通过消除这动态分发机制来提高程序执行效率的方式：<code>final</code>，<code>private</code>和全模块优化（Whole Module Optimization）。</p>
-<p>Consider the following example:</p>
-<p>先来看看下面这段代码</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParticleModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> point = ( <span class="number">0.0</span>, <span class="number">0.0</span> )</span><br><span class="line">    <span class="keyword">var</span> velocity = <span class="number">100.0</span></span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">updatePoint</span><span class="params">(newPoint: <span class="params">(Double, Double)</span></span></span>, newVelocity: <span class="type">Double</span>) &#123;</span><br><span class="line">        point = newPoint</span><br><span class="line">        velocity = newVelocity</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">update</span><span class="params">(newP: <span class="params">(Double, Double)</span></span></span>, newV: <span class="type">Double</span>) &#123;</span><br><span class="line">        updatePoint(newP, newVelocity: newV)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="type">ParticalModel</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stride(from: <span class="number">0.0</span>, through: <span class="number">360</span>, by: <span class="number">1.0</span>) &#123;</span><br><span class="line">    p.update((i * sin(i), i), newV: i * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/">
-                How To Implement A Circular Image Loader Animation with CAShapeLayer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="使用CAShapeLayer来实现圆形图片加载动画">使用CAShapeLayer来实现圆形图片加载动画</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer">How To Implement A Circular Image Loader Animation with CAShapeLayer</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/rounak">Rounak Jain</a></li>
-<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
-<li>状态 :  校正完</li>
-</ul>
-</blockquote>
-<p>几个星期之前，Michael Villar在Motion试验中创建一个非常有趣的加载动画。</p>
-<p>下面的GIF图片展示这个加载动画，它将一个圆形进度指示器和圆形渐现动画结合。这个组合的效果有趣，独一无二和有点迷人。</p>
-<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Circle.gif" alt=""></p>
-<p>这个教程将会教你如何使用Swift和Core Animatoin来重新创建这个效果。让我们开始吧！</p>
-<h1 id="基础">基础</h1><p>首先下载这个教程的<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Starter.zip">启动项目</a>，然后编译和运行。过一会之后，你应该看到一个简单的image显示：</p>
-<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/StarterProject.png" alt=""></p>
-<p>这个启动项目已经预先在恰当的位置将views和加载逻辑编写好了。花一分钟来浏览来快速了解这个项目；那里有一个<strong>ViewController</strong>，<strong>ViewController</strong>里有一个命名为<strong>CustomImageView</strong>的<strong>UIImageView</strong>子类, 还有一个<strong>SDWebImage</strong>的方法被调用来加载image。</p>
-<p>你可能注意到当你第一次运行这个app的时候，当image下载时这个app似乎会暂停几秒，然后image会显示在屏幕。当然，此刻没有圆形进度指示器 - 你将会在这个教程中创建它！</p>
-<p>你会在两个步骤中创建这个动画：</p>
-<ol>
-<li><strong>圆形进度</strong>。首先，你会画一个圆形进度指示器，然后根据下载进度来更新它。</li>
-<li><strong>扩展圆形图片</strong>。第二，你会通过扩展的圆形窗口来揭示下载图片。</li>
-</ol>
-<p>紧跟着下面步骤来逐步实现！</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/Swift-Extensions-Nuances/">
-                Swift Extensions Nuances
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Extensions-Nuances/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Extensions-Nuances/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Swift扩展的三个微妙细节">Swift扩展的三个微妙细节</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/04/22/3-nuances-of-swift-extensions/">3 Nuances of Swift Extensions</a></li>
-<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
-<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
-<li>校对者:  </li>
-<li>状态 :  校对中 </li>
-</ul>
-</blockquote>
-<p>每当我初次翻看某文档时，我都走马观花似的快速阅过，还一边点着头一边喃喃自语说：“好！懂了，就这么回事！”，可是过后当我真正要运用到这些我以为已经理解了的知识点时，却发现实际情况和我想的往往不一样，每当这时我就懵了，心想：“哇哦…怎么回事？这和我想的完全不一样啊！文档里有说这事吗？”。</p>
-<p>最近的几次讨论促使我扪心自问是否真正的理解了Swift中的扩展。我阅读过关于扩展的文档，并且我“认为”我自己对这块内容已经是理解的相当透彻了。可是这几次讨论，加上自己私下通过敲代码的验证，让我发现了我原先不曾注意到几个微妙的细节。</p>
-<p><strong>更新</strong>：这篇文章刚一发表，Swift社区就出手襄助并帮助我弄明白了我最根本的纠结点在哪。为此，我写了另一篇文章“<a href="http://www.andrewcbancroft.com/2015/04/24/clarifying-swift-access-control-hint-swift-isnt-c-sharp/">阐明Swift访问控制</a>”进一步说明我之前的误解。为了避免犯我曾今犯过的错误，我建议大家去读一读。</p>
-<h2 id="三个关于扩展的微妙细节">三个关于扩展的微妙细节</h2><p>对下面列出的三个细节的思考严重挑战了我之前对Swift扩展的理解：</p>
-<ol>
-<li>Swift扩展对它所扩展类型的<strong>visibility</strong>。比如，扩展能访问被<code>private</code>所修饰的内容吗?</li>
-<li>定义扩展的位置是否对扩展的<strong>visibility</strong>有影响。比如我这有一个类型我想写个扩展，把扩展写在同一个源文件里和把扩展写在另一个文件里有什么区别吗？</li>
-<li>扩展里“成员”的默认访问修饰符以及是否给他们添加修饰对这个扩展作为一个类型的公共接口的影响。</li>
-</ol>
-<p>在我开始之前，假设我有一个公共结构体<code>Person</code>。这个结构体有一些私有属性，<code>name</code>，<code>gender</code>，和<code>age</code>。用一个枚举把<code>Gender</code>封装了一下。这个结构体看起来如下：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Extensions-Nuances/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-What’s-New-in-Swift-2/">
-                iOS What’s New in Swift 2
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-What’s-New-in-Swift-2/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Swift_2_有哪些新特性">Swift 2 有哪些新特性</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/108522/whats-new-in-swift-2">What’s New in Swift 2</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/gregheo">Greg Heo</a></li>
-<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
-<li>状态 :  校正完</li>
-</ul>
-</blockquote>
-<p>在WWDC我们发现Swift团队没有浪费时间在无谓的地方，而是致力于改善Swift 2。</p>
-<p>我们将会为你编写和录制很多关于Swift 2的教程，但在此期间我想强调Swift最令人兴奋的改变，为你可以在秋天迁移到Swift 2做准备。</p>
-<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/06/swift-new.jpg" alt=""></p>
-<h1 id="错误处理">错误处理</h1><p>正如Ray在<a href="http://www.raywenderlich.com/108379/wwdc-2015-initial-impressions">WWDC 2015 Initial Impressions</a>文章中提及，错误处理已经在Swift 2改进了。我们已经迁移到新的系统就像异常处理，而不是<strong>NSError</strong>对象和双指针。</p>
-<p>你可能对以下代码比较熟悉：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> drinkWithError(<span class="constant">nil</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一般在Cocoa，你传入一个<strong>NSError</strong>对象的引用(一个<strong>inout</strong>参数在Swift)，然后方法会赋值给错误变量。但问题是你可以传入一个nil到这里来完全忽略这个错误；或者，你可以传入<strong>NSError</strong>但从不检查它。</p>
-<p>Swift 2 为错误检查添加额外保护层。你可以使用<strong>throws</strong>关键字来指定那个函数和方法能够抛出一个错误。然后当你调用某样东西时，可以用<strong>do</strong>, <strong>try</strong>和<strong>catch</strong>多个关键字来捕捉和处理错误。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DrinkError</span>: <span class="title">ErrorType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">NoBeerRemainingError</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">drinkWithError</span><span class="params">()</span></span> throws &#123;</span><br><span class="line">  <span class="keyword">if</span> beer.isAvailable() &#123;</span><br><span class="line">    <span class="comment">// party!</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    throw <span class="type">DrinkError</span>.<span class="type">NoBeerRemainingError</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">tryToDrink</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    try drinkWithError()</span><br><span class="line">  &#125; catch &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里有几样东西需要强调的：</p>
-<ol>
-<li>为了创建一个错误可以抛出，只是创建一个继承<strong>ErrorType</strong>的<strong>enum</strong>。</li>
-<li>你需要使用<strong>throws</strong>关键字来标志任何函数可以抛出一个错误。</li>
-<li>这里抛出一个错误，它将会在section 4中被捕捉。</li>
-<li>你在一个<strong>do</strong>块中包含任何可以抛出一个错误的代码，而不是其他语言类似的<strong>try</strong>块中。然后，你添加一个<strong>try</strong>关键字到函数被调用的前面，而且这个函数能够抛出一个错误。</li>
-</ol>
-<p>新语法是非常简洁和易读。任何API当前使用<strong>NSError</strong>以后都会使用这种错误处理方式。</p>
-<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/06/throw-all-the-things-415x320.jpg" alt=""></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-What’s-New-in-Swift-2/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/swift-Core-Image-Tutorial/">
-                swift Core Image Tutorial
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/swift-Core-Image-Tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/swift-Core-Image-Tutorial/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Core_Image入门教程(swift)">Core Image入门教程(swift)</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">Core Image Tutorial: Getting Started</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/nicklockwood">Nick Lockwood</a></li>
-<li>译文出自 :<a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a>  </li>
-<li>状态 :  校正完</li>
-</ul>
-</blockquote>
-<p>Core Image是一个强大的框架，它能够让你轻松地对图像进行过滤。你能够通过修改图像的饱和度、色调或曝光率来获取各种特效。你也可以使用CPU或GPU更快地来处理图像数据，快到能够实时处理视频帧数据(video frame)。</p>
-<p>Core Image过滤器能够以链式的方式结合将多个特效应用到一个图像或视频帧数据。多个过滤器能够组合成单个过滤器应用在一个图像。通过每次与每个过滤器比较，这使它非常有效地处理图像。</p>
-<p>在这个教程中，你将会亲手实践如何使用Core Image.通过使用几个不同的过滤器，你会看到实时使用各种炫酷的特效是多么容易。</p>
-<h1 id="基础">基础</h1><p>在你开始之前，让我们先讨论在Core Image框架中几个很重要的类：</p>
-<ul>
-<li><strong>CIContext</strong>. 所有处理core image的工作都在CIContext完成。这个与Core Graphics或OpenGL context有几分相似。</li>
-<li><strong>CIImage</strong>. 这个类保存图像数据，它能够从UIImage，图像文件或像素数据等方式来创建。</li>
-<li><strong>CIFilter</strong>. CIFilter类有一个字典(dictionary)来定义特定属性的过滤器，比如常用过滤器有饱和度，颜色翻转，裁剪等属性，还有很多没列出来。</li>
-</ul>
-<h3 id="CoreImageFun">CoreImageFun</h3><p>打开Xcode并使用<strong>iOS \ Application \ Single View Application</strong>模板来创建一个新工程。输入<strong>CoreImageFun</strong>作为Product Name，选择iPhone为Devices option和确定使用<strong>swift</strong>作为编程语言。</p>
-<p>下载<a href="http://cdn5.raywenderlich.com/downloads/CIResources.zip">教程的资源</a>，并添加图片<strong>image.png</strong>到工程</p>
-<p>下一步，打开<strong>Main.storyboard</strong>你文件，拖拽一个image view到已存在的view，image view作为view的子视图。在Attributes Inspector中，设置image view的content mode属性为Aspect Fit，这样它就不会拉伸图片。</p>
-<p>下一步，确定Document Outline(在Interface Builder里canvas左边)是可见的 - 你可以从menu中<strong>Editor \ Show Document Outline</strong>来启用。</p>
-<p>按着control键从image view拖动到它的superview三次来添加三个约束(constraint)：</p>
-<ol>
-<li>添加一个Top Space to Layout Guide的约束，如果有必要的话，使用Size Inspector来设置约束的constant为0 </li>
-<li>添加一个Center Horizontally in Container的约束(同样也需要设置constant为0)</li>
-<li>添加一个Equal Width约束</li>
-</ol>
-<p>最后，为了约束image view的高度，按着control键从image view拖动到本身，然后添加一个Aspect Ratio约束，使用Size Inspector来设置它的multiplier的值为8:5对应宽高比和constant factor为0。最后，选择<strong>Editor \ Resolve Auto Layout Issues \ All Views in View Controller \ Update Frames</strong>，那么Interface Builder会根据这些约束来更新布局</p>
-<p>下一步，打开Assistant Editor，然后确保它显示<strong>ViewController.swift</strong>。按着control键从UIImageView拖动到刚刚打开的<strong>ViewController</strong>类的大括号。命名outlet为<strong>imageView</strong>，然后点击connect。</p>
-<p>编译和运行这个项目来确保目前进展顺利 - 你应该看到一个空屏。初始化设置完成，现在进入Core Image的世界。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/swift-Core-Image-Tutorial/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-Continuous-Integration-Deployment/">
-                iOS Continuous Integration & Deployment
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-22
         </span>
 
         
@@ -975,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Continuous-Integration-Deployment/"></span>
+            <a href="/2015/08/22/Big-endian-Little-endian/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/Big-endian-Little-endian/"></span>
             </a>
           </span>
           
@@ -991,27 +194,13 @@
 
       
         
-          <h2 id="iOS项目的持续集成与管理">iOS项目的持续集成与管理</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="https://medium.com/ribot-labs/continuous-integration-deployment-for-ios-projects-7358b72ca2e9">Continuous Integration &amp; Deployment for iOS Projects</a></li>
-<li>原文作者 : <a href="https://medium.com/@matto1990">Matt Oakes</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
-<li>状态 :  校正完 </li>
-</ul>
-</blockquote>
-<p>当实现新功能时，如果忽略可维护性而引入<a href="http://en.wikipedia.org/wiki/Technical_debt">技术债务</a>，那将会需要延迟解决它或导致增加维护成本。</p>
-<p>最近我们已经思考通过哪些方式来提高代码的质量：</p>
-<ul>
-<li>当代码的质量下降时，通过设置一些工具来马上提醒开发者</li>
-<li>文档化一些编码规范和思考在过去的几个项目中如何避免维护性差的问题</li>
-</ul>
-<p><strong>我将会简单地概括我们需要设置什么才能自动监控代码质量.</strong></p>
-<h1 id="基础">基础</h1><p>我们选择一个持续集成工具<a href="https://jenkins-ci.org/">Jenkins</a>，让它运行在一台放在我们工作室的Mac Mini。其实我不怎么喜欢Jenkins，但到目前为止，它是最稳定和最适合的工具来完成这些工作。</p>
-<p>我们已经通过<a href="https://brew.sh/">Homebrew</a>和<a href="https://github.com/sstephenson/rbenv">rbenv</a>来分别安装Jenkins和Ruby，而rbenv能够为我们提供一个最新和稳定的<a href="https://rubygems.org/">Ruby Gems</a>环境。有个Homebrew和Ruby Gems两个包管理工具之后，我们就几乎能够安装所有我们需要的工具，但很少会破坏与原有OS X系统更新提供的Ruby。</p>
+          <h2 id="大端序与小端序">大端序与小端序</h2><h3 id="何为大端序，小端序？">何为大端序，小端序？</h3><p>简单点说，就是字节的存储顺序，如果数据都是单字节的，那怎么存储无所谓了，但是对于多字节数据，比如int，double等，就要考虑存储的顺序了。注意字节序是硬件层面的东西，对于软件来说通常是透明的。再说白一点，字节序通常只和你使用的处理器架构有关，而和编程语言无关，比如常见的Intel x86系列就是小端序。</p>
+<h4 id="Big-endian（大端序）">Big-endian（大端序）</h4><p>数据的高位字节存放在地址的低端 低位字节存放在地址高端</p>
+<h4 id="Little-endian（小端序）">Little-endian（小端序）</h4><p>数据的高位字节存放在地址的高端 低位字节存放在地址低端</p>
+<h4 id="字节的高位与低位">字节的高位与低位</h4><p>举个例子，int a = 0x12345678 ; 那么左边12就是高位字节，右边的78就是低位字节，从左到右，由高到低，（注意，高低乃相对而言，比如56相对于78是高字节，相对于34是低字节）</p>
+<p>地址的高端与低端<br>0x00000001<br>0x00000002<br>0x00000003<br>0x00000004<br>从上倒下，由低到高，地址值小的为低端，地址值大的为高端。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Continuous-Integration-Deployment/#more">
+            <a class="btn" href="/2015/08/22/Big-endian-Little-endian/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1044,8 +233,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
-                iOS UITableviewCell Swipeable
+              <a class="post-title-link" href="/2015/08/11/iOS-NSNull-Detect/">
+                iOS NSNull Detect
               </a>
             
           
@@ -1054,7 +243,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
@@ -1074,8 +263,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            <a href="/2015/08/11/iOS-NSNull-Detect/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-NSNull-Detect/"></span>
             </a>
           </span>
           
@@ -1090,29 +279,277 @@
 
       
         
-          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
-<ul>
-<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
-</ul>
-</blockquote>
-<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
-<p>首先，让我们来看一下现有的解决方法。</p>
-<ul>
-<li>UITableViewRowAction (new in iOS 8)</li>
-</ul>
-<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
-<ul>
-<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
-</ul>
-<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
-<ul>
-<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
-</ul>
-<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+          <h2 id="Object-C中nil,_NULL跟NSNull">Object-C中nil, NULL跟NSNull</h2><p>相信不少开发者，都被NSNull坑过，最常见的是服务器返回的json里面，说好的字典、数组、数字，结果返回的是空值。这个时候，NSJSONSerialization 会自动把他们换成 NSNull。当我们再去用dict[@“hello”]的时候，就会出触发exception，导致程序崩溃。</p>
+<h3 id="最简单的做法">最简单的做法</h3><p>相信大家都知道，[NSNull null] 并不是一个工厂方法，而是一个单例模式，那么我们直接去判断赋值的这个指针是不是[NSNull null] 就好了。</p>
+<p>那么问题来了，编译器会多了一个warning，很烦人。</p>
+<p>在<a href="http://www.takingnotes.co/blog/2012/01/06/comparing-to-nsnull/" target="_blank" rel="external">这篇文章</a>里面介绍了各种做法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)someMethod </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">NSString</span> *aString = <span class="string">@"loremipsum"</span>; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// This will complain: "Comparison of distinct pointer types ('NSString *' and 'NSNull *')" </span></span><br><span class="line">    <span class="keyword">if</span> (aString != [<span class="built_in">NSNull</span> null]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// This works (at least for strings), but isEqual: does different things  </span></span><br><span class="line">    <span class="comment">// for different classes, so it's not ideal </span></span><br><span class="line">    <span class="keyword">if</span> ([aString isEqual:[<span class="built_in">NSNull</span> null]]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// If you cast it to the class you're comparing against </span></span><br><span class="line">    <span class="comment">// then you're good to go </span></span><br><span class="line">    <span class="keyword">if</span> (aString != (<span class="built_in">NSString</span> *)[<span class="built_in">NSNull</span> null]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// But we can also just cast it to id and </span></span><br><span class="line">    <span class="comment">// that works generically </span></span><br><span class="line">    <span class="keyword">if</span> (aString != (<span class="keyword">id</span>)[<span class="built_in">NSNull</span> null]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// The thing that would be really cool, </span></span><br><span class="line">    <span class="comment">// would be [NSNull null] returning </span></span><br><span class="line">    <span class="comment">// id (like in the sample category below). </span></span><br><span class="line">    <span class="comment">// Wouldn't count on that one though. </span></span><br><span class="line">    <span class="keyword">if</span> (aString != [<span class="built_in">NSNull</span> idNull]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些都不是非常漂亮的解决方案，这篇文章的作者推荐：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSNull</span> (<span class="title">idNull</span>) </span></span><br><span class="line">+ (<span class="keyword">id</span>)idNull; </span><br><span class="line"><span class="keyword">@end</span> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSNull</span> (<span class="title">idNull</span>) </span></span><br><span class="line">+ (<span class="keyword">id</span>)idNull &#123; <span class="keyword">return</span> [<span class="built_in">NSNull</span> null]; &#125; </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>或者呢<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[NSNull <span class="literal">null</span>] <span class="string">isEqual:</span>aString]) </span><br><span class="line">&#123; </span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="最终解决方案">最终解决方案</h3><p>上面的做法，都需要判断一次，还是很不优雅，为什么呢，我们还是不能像NULL，nil一样，直接拿来用，还是需要判断一下，这里推荐一套最漂亮的作法。</p>
+<p>陈航提供了一个<a href="https://gist.github.com/cyndibaby905/9828745" target="_blank" rel="external">gist</a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define NSNullObjects @[@<span class="title">""</span>,@0,@&#123;&#125;,@[]] </span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSNull</span> (<span class="title">InternalNullExtention</span>) </span></span><br><span class="line"><span class="keyword">@end</span> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSNull</span> (<span class="title">InternalNullExtention</span>) </span></span><br><span class="line"> </span><br><span class="line">- (<span class="built_in">NSMethodSignature</span>*)methodSignatureForSelector:(SEL)selector </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">NSMethodSignature</span>* signature = [<span class="keyword">super</span> methodSignatureForSelector:selector]; </span><br><span class="line">    <span class="keyword">if</span> (!signature) &#123; </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSObject</span> *object <span class="keyword">in</span> <span class="built_in">NSNullObjects</span>) &#123; </span><br><span class="line">            signature = [object methodSignatureForSelector:selector]; </span><br><span class="line">            <span class="keyword">if</span> (signature) &#123; </span><br><span class="line">                <span class="keyword">break</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> signature; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation </span><br><span class="line">&#123; </span><br><span class="line">    SEL aSelector = [anInvocation selector]; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSObject</span> *object <span class="keyword">in</span> <span class="built_in">NSNullObjects</span>) &#123; </span><br><span class="line">        <span class="keyword">if</span> ([object respondsToSelector:aSelector]) &#123; </span><br><span class="line">            [anInvocation invokeWithTarget:object]; </span><br><span class="line">            <span class="keyword">return</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    [<span class="keyword">self</span> doesNotRecognizeSelector:aSelector]; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>这里还提供一个日本人的封装方案：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"NSNull+OVNatural.h"</span> </span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSNull</span> (<span class="title">OVNatural</span>) </span></span><br><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)invocation </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> respondsToSelector:[invocation selector]]) &#123; </span><br><span class="line">        [invocation invokeWithTarget:<span class="keyword">self</span>]; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line">- (<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)selector </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">NSMethodSignature</span> *sig = [[<span class="built_in">NSNull</span> class] instanceMethodSignatureForSelector:selector]; </span><br><span class="line">    <span class="keyword">if</span>(sig == <span class="literal">nil</span>) &#123; </span><br><span class="line">        sig = [<span class="built_in">NSMethodSignature</span> signatureWithObjCTypes:<span class="string">"@^v^c"</span>]; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> sig; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="nil_判定">nil 判定</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断对象不空</span></span><br><span class="line"><span class="keyword">if</span>(object) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断对象为空</span></span><br><span class="line"><span class="keyword">if</span>(object == <span class="literal">nil</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//数组初始化，空值结束</span></span><br><span class="line"><span class="built_in">NSArray</span> *pageNames=[[<span class="built_in">NSArray</span> alloc] initWithObjects:<span class="string">@"DocumentList"</span>,<span class="string">@"AdvancedSearch"</span>,<span class="string">@"Statistics"</span>,<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断数组元素是否为空</span></span><br><span class="line"><span class="built_in">UIViewController</span> *controller=[<span class="built_in">NSArray</span> objectAtIndex:i];</span><br><span class="line"><span class="keyword">if</span>((<span class="built_in">NSNull</span> *)controller == [<span class="built_in">NSNull</span> null])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断字典对象的元素是否为空</span></span><br><span class="line"><span class="built_in">NSString</span> *userId=[<span class="built_in">NSDictionary</span> objectForKey:<span class="string">@"UserId"</span>];</span><br><span class="line"><span class="keyword">if</span>(userId == [<span class="built_in">NSNull</span> null])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/11/iOS-APP-Icon-Longpress-shake/">
+                iOS APP Icon Longpress shake
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/iOS-APP-Icon-Longpress-shake/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-APP-Icon-Longpress-shake/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS_APP图标长按抖动效果的实现（CAAnimation）">iOS APP图标长按抖动效果的实现（CAAnimation）</h2><p>实现效果:当长按图标时，图标抖动，点击图标以外区域时停止抖动</p>
+<p><img src="http://img.blog.csdn.net/20150808181226925" alt=""></p>
+<p>工程下载：<a href="https://github.com/Nongchaozhe/iconShakeDemo">github工程下载</a></p>
+<p>1) 视图代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIImageView</span> *imageView;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    imageView = [[<span class="built_in">UIImageView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">100</span>)];</span><br><span class="line">    imageView<span class="variable">.center</span> = <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.center</span>;</span><br><span class="line">    imageView<span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"icon1"</span>];</span><br><span class="line">    imageView<span class="variable">.userInteractionEnabled</span> = <span class="literal">YES</span>;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:imageView];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加长按手势</span></span><br><span class="line">    <span class="built_in">UILongPressGestureRecognizer</span> *recognize = [[<span class="built_in">UILongPressGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(longPress)];</span><br><span class="line">    <span class="comment">//长按响应时间</span></span><br><span class="line">    recognize<span class="variable">.minimumPressDuration</span> = <span class="number">1</span>;</span><br><span class="line">    [imageView addGestureRecognizer:recognize];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
+            <a class="btn" href="/2015/08/11/iOS-APP-Icon-Longpress-shake/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/">
+                iOS Music Background Play And Lock Screen Image
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.csdn.net/zsk_zane/article/details/47320621">reference</a></p>
+<h2 id="iOS_音乐后台播放及锁屏信息显示">iOS 音乐后台播放及锁屏信息显示</h2><p>实现音乐的后台播放，以及播放时，可以控制其暂停，下一首等操作，以及锁屏图片歌曲名等的显示<br>此实例需要真机调试，效果图如下： </p>
+<p><img src="http://img.blog.csdn.net/20150806175143383" alt=""></p>
+<p>工程下载：<a href="https://github.com/Nongchaozhe/MusicRemoteControl">github工程下载</a></p>
+<h3 id="实现步骤：">实现步骤：</h3><p>1) 首先修改info.plist</p>
+<p><img src="http://img.blog.csdn.net/20150806174938474" alt=""></p>
+<p>2) 其次引入两个需要的框架</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;AVFoundation/AVFoundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MediaPlayer/MediaPlayer.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>3) 设置播放器及后台播放</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"><span class="comment">//    设置后台播放</span></span><br><span class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//    设置播放器</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"那些花儿"</span> ofType:<span class="string">@"mp3"</span>] ];</span><br><span class="line">    _player = [[<span class="built_in">AVPlayer</span> alloc] initWithURL:url];</span><br><span class="line">    [_player play];</span><br><span class="line">    _isPlayingNow = <span class="literal">YES</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//后台播放显示信息设置</span></span><br><span class="line">    [<span class="keyword">self</span> setPlayingInfo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - 接收方法的设置</span></span><br><span class="line">- (<span class="keyword">void</span>)remoteControlReceivedWithEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line">    <span class="keyword">if</span> (event<span class="variable">.type</span> == <span class="built_in">UIEventTypeRemoteControl</span>) &#123;  <span class="comment">//判断是否为远程控制</span></span><br><span class="line">        <span class="keyword">switch</span> (event<span class="variable">.subtype</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span>  <span class="built_in">UIEventSubtypeRemoteControlPlay</span>:</span><br><span class="line">                <span class="keyword">if</span> (!_isPlayingNow) &#123;</span><br><span class="line">                    [_player play];</span><br><span class="line">                &#125;</span><br><span class="line">                _isPlayingNow = !_isPlayingNow;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPause</span>:</span><br><span class="line">                <span class="keyword">if</span> (_isPlayingNow) &#123;</span><br><span class="line">                    [_player pause];</span><br><span class="line">                &#125;</span><br><span class="line">                _isPlayingNow = !_isPlayingNow;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlNextTrack</span>:</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@"下一首"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPreviousTrack</span>:</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@"上一首 "</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/11/iOS-Crash-Bugs/">
+                iOS Crash Bugs
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/iOS-Crash-Bugs/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-Crash-Bugs/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Crash_Bug">Crash Bug</h2><p>1) ios7 下没有 <code>ContainString</code> API</p>
+<p>2) NSDictionary &amp; NSArray nil insert </p>
+<p>3) 数组越界 NSArray <code>out of bounds</code></p>
+<p>4) <code>substringwithrange</code> out of bounds</p>
+<p>5) <code>GPUImageView presentBufferForDisplay</code> — 内存泄露 或者 app 进入后台</p>
+<p>6) <code>locationOfTouch: inView:</code> </p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> (gestureRecognizer)<span class="tag">numberOfTouches</span> &gt; <span class="tag">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/11/iOS-Crash-Bugs/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1138,7 +575,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
   </div>
 
 
@@ -1172,21 +609,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">201</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">98</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

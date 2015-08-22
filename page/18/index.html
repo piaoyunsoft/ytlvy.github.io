@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-file-handler/">
-                ios 文件处理
+              <a class="post-title-link" href="/2015/07/13/iOS-Associated-Objects/">
+                iOS Associated Objects
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-13
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-file-handler/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-file-handler/"></span>
+            <a href="/2015/07/13/iOS-Associated-Objects/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Associated-Objects/"></span>
             </a>
           </span>
           
@@ -194,102 +194,21 @@
 
       
         
-          <h4 id="path">path</h4><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">NSMutableArray</span> *<span class="atom">marray</span>=[<span class="name">NSMutableArray</span> <span class="atom">array</span>];</span><br><span class="line"><span class="name">NSString</span> *<span class="atom">path</span>=[<span class="name">NSString</span> <span class="atom">pathWithComponents</span>:<span class="atom">marray</span>];</span><br><span class="line"></span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathComponents</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">isAbsolutePath</span>]</span><br><span class="line"><span class="name">NSLog</span>(@<span class="string">"%@"</span>,[<span class="atom">path</span> <span class="atom">lastPathComponent</span>]);//取得最后一个目录</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingLastPathComponent</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByAppendingPathComponent</span>:@<span class="string">"Documents"</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">pathExtension</span>]</span><br><span class="line">[<span class="atom">path</span> <span class="atom">stringByDeletingPathExtension</span>]</span><br><span class="line">[@<span class="string">"Users/KenshinCui/Desktop/test"</span> <span class="atom">stringByAppendingPathExtension</span>:@<span class="string">"mp3"</span>]</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-file-handler/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-system-service/">
-                ios系统服务
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-system-service/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-system-service/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="AddressBook">AddressBook</h4><p>AddressBook不能使用arc</p>
+          <h2 id="iOS_Associated_Objects">iOS Associated Objects</h2><p>关注以下三个问题:</p>
 <ol>
-<li>ABAddressBookRef 通讯录对象</li>
-<li>ABRecordRef  联系人或群组 ABRecordGetRecordType() ABRecordGetRecordID()</li>
-<li>ABPersonRef</li>
-<li>ABGroupRef</li>
-<li>ABPersonCreate():创建一个类型为“kABPersonType”的ABRecordRef</li>
-<li>ABRecordCopyValue():取得指定属性的值</li>
-<li>ABRecordCopyCompositeName():取得联系人（或群组）的复合信息（对于联系人则包括：姓、名、公司等信息，对于群组则返回组名称）</li>
-<li>ABRecordSetValue():设置ABRecordRef的属性值</li>
-<li>ABMutableMultiValueRef ABMultiValueAddValueAndLabel()方法依次添加属性值</li>
-<li>ABRecordRemoveValue():删除指定的属性值</li>
+<li>关联对象被存储在什么地方，是不是存放在被关联对象本身的内存中？</li>
+<li>关联对象的五种关联策略有什么区别，有什么坑？</li>
+<li>关联对象的生命周期是怎样的，什么时候被释放，什么时候被移除？</li>
 </ol>
+<h3 id="使用场景:">使用场景:</h3><p>按照 Mattt Thompson 大神的文章 Associated Objects 中的说法，<a href="http://nshipster.com/associated-objects/">Associated Objects</a> 主要有以下三个使用场景</p>
+<ol>
+<li>为现有的类添加私有变量以帮助实现细节；</li>
+<li>为现有的类添加公有属性；</li>
+<li>为 KVO 创建一个关联的观察者。</li>
+</ol>
+<p>从本质上看，第 1 、2 个场景其实是一个意思，唯一的区别就在于新添加的这个属性是公有的还是私有的而已。就目前来说，我在实际工作中使用得最多的是第 2 个场景，而第 3 个场景我还没有使用过<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-system-service/#more">
+            <a class="btn" href="/2015/07/13/iOS-Associated-Objects/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -322,8 +241,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-warning/">
-                手动让编译器报警
+              <a class="post-title-link" href="/2015/07/13/iOS-Category/">
+                iOS Category
               </a>
             
           
@@ -332,7 +251,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-13
         </span>
 
         
@@ -352,8 +271,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-warning/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-warning/"></span>
+            <a href="/2015/07/13/iOS-Category/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Category/"></span>
             </a>
           </span>
           
@@ -368,12 +287,22 @@
 
       
         
-          <h2 id="手动让编译器报警">手动让编译器报警</h2><pre><code><span class="id">#warning</span> sunnyxx
-<span class="id">#error</span> sunnyxx
-<span class="id">#pragma</span> message <span class="string">"sunnyxx"</span>
-<span class="id">#pragma</span> GCC warning <span class="string">"sunnyxx"</span>
-<span class="id">#pragma</span> GCC error <span class="string">"sunnyxx"</span>
-</code></pre>
+          <h2 id="category">category</h2><h3 id="category_简介">category 简介</h3><ul>
+<li>为已存在的类, 添加方法</li>
+<li>将类的实现, 分别存放在不同的文件中. 好处: a) 减少单体文件体积 b)按照功能划分 c)协作开发 d)按需加载</li>
+<li>声明私有方法</li>
+<li>模拟多继承</li>
+<li>把framework的私有方法公开</li>
+</ul>
+<h3 id="extension">extension</h3><blockquote>
+<p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
+<p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Category/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -403,8 +332,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/sublime-text-shortcut/">
-                Sublime text shortcut
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/">
+                iOS Runtime 运行时类与对象的编译处理
               </a>
             
           
@@ -413,275 +342,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/sublime-text-shortcut/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/sublime-text-shortcut/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mrc-and-and-arc/">
-                MRC &amp;&amp; ARC
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mrc-and-and-arc/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mrc-and-and-arc/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-bash-profile/">
-                MAC bin顺序
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-bash-profile/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-bash-profile/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/profile -&gt; (~<span class="regexp">/.bash_profile | ~/</span>.bash_login | ~<span class="regexp">/.profile) -&gt; ~/</span>.bashrc -&gt; /etc/bashrc -&gt; ~<span class="regexp">/.bash_logout</span></span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-directory/">
-                MAC 目录结构
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-directory/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-directory/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/  : <span class="keyword">this</span> is root directory</span><br><span class="line">/<span class="string">bin :</span> commands <span class="keyword">in</span> <span class="keyword">this</span> dir are all system installed user commands</span><br><span class="line">/<span class="string">sbin:</span>  commands <span class="keyword">in</span> <span class="keyword">this</span> dir are all system installed <span class="keyword">super</span> user commands</span><br><span class="line"><span class="regexp">/usr/</span><span class="string">bin:</span> user commands <span class="keyword">for</span> applications</span><br><span class="line"><span class="regexp">/usr/</span><span class="string">sbin:</span> <span class="keyword">super</span> user commands <span class="keyword">for</span> applications</span><br><span class="line"><span class="regexp">/usr/</span>local/<span class="string">bin :</span> application user commands</span><br><span class="line"><span class="regexp">/usr/</span>local/<span class="string">sbin:</span> application <span class="keyword">super</span> user commands</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/mac-programe-install-directory/">
-                MAC程序安装位置
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/MAC/">MAC</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -694,8 +362,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-programe-install-directory/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-programe-install-directory/"></span>
+            <a href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-运行时类与对象的编译处理/"></span>
             </a>
           </span>
           
@@ -710,8 +378,18 @@
 
       
         
-          <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local/bin</span><br><span class="line"></span><br><span class="line"><span class="comment">//homebrew</span></span><br><span class="line"><span class="regexp">/usr/</span>local/Cellar</span><br></pre></td></tr></table></figure>
-
+          <h2 id="iOS_Runtime运行时类与对象的编译处理">iOS Runtime运行时类与对象的编译处理</h2><p>Objective-C语言是一门动态语言，它将很多静态语言在编译和链接时期做的事放到了运行时来处理。这种动态语言的优势在于：我们写代码时更具灵活性，如我们可以把消息转发给我们想要的对象，或者随意交换一个方法的实现等。<br>这种特性意味着<code>Objective-C</code>不仅需要一个编译器，还需要一个运行时系统来执行编译的代码。对于Objective-C来说，这个运行时系统就像一个操作系统一样：它让所有的工作可以正常的运行。这个运行时系统即Objc Runtime。Objc Runtime其实是一个Runtime库，它基本上是用C和汇编写的，这个库使得C语言有了面向对象的能力。</p>
+<p>Runtime库主要做下面几件事：</p>
+<ol>
+<li>封装：在这个库中，对象可以用C语言中的结构体表示，而方法可以用C函数来实现，另外再加上了一些额外的特性。这些结构体和函数被runtime函数封装后，我们就可以在程序运行时创建，检查，修改类、对象和它们的方法了。</li>
+<li>找出方法的最终执行代码：当程序执行[object doSomething]时，会向消息接收者(object)发送一条消息(doSomething)，runtime会根据消息接收者是否能响应该消息而做出不同的反应。这将在后面详细介绍。</li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -741,8 +419,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/mac-delevoper-tools/">
-                mac delevoper tools
+              <a class="post-title-link" href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/">
+                iOS Event Delivery/ The Responder Chain
               </a>
             
           
@@ -751,17 +429,28 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-13
         </span>
 
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
         
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/mac-delevoper-tools/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-delevoper-tools/"></span>
+            <a href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Event-Delivery-The-Responder-Chain/"></span>
             </a>
           </span>
           
@@ -776,7 +465,23 @@
 
       
         
-          
+          <h2 id="Event_Delivery:_The_Responder_Chain">Event Delivery: The Responder Chain</h2><p>当你设计应用的时候, 应用需要动态响应事件. 例如: 点击事件, (可以在显示屏上的不同对象上多次触发), 你需要决定那个对象来响应此事件, 并且需要了解这个对象是如何接收事件的.</p>
+<p>当用户触发一个事件时, UIKit 创建一个<code>event object</code>, 此对象包含了需要处理的信息. 然后将此事件对象放入到当前 app 的事件队列中. 例如<code>touch</code>事件, 这种事件对象就是一个包含了一组<code>touch</code>的<code>UIEvent</code> 对象. <code>motion</code>事件, 此对象由你使用的<code>framework</code>和你感兴趣的<code>motion</code>类型来决定.</p>
+<ul>
+<li>Touch events. 当前 window 对象首先尝试将事件传送给 <code>touch</code> 触发的视图.这个视图被称为<code>hit-test</code> 视图. 寻找<code>hit-test</code>视图的过程被称为<code>hit-testing</code>, 将在下面描述.</li>
+<li>Motion and remote control events. 对于这些事件, 当前 window 对象会将 <code>shaking-motion</code> 或 <code>emote control event</code> 发送给<code>first responder</code>来响应.<code>first responder</code>也将在下面描述.</li>
+</ul>
+<h3 id="Hit-Testing_Returns_the_View_Where_a_Touch_Occurred">Hit-Testing Returns the View Where a Touch Occurred</h3><p>iOS 通过<code>hit-testing</code> 来寻找点击下方的视图. <code>Hit-Testing</code> 会查找任何包含该<code>touch</code>点坐标的视图对象, 规则为此坐标位于视图的<code>bounds</code>中, 如果包含, 会继续递归检测此视图的所有子视图. 在视图树中包含该点击的最下层视图, 即是<code>hit-test</code>视图. 当 iOS 决定了 <code>hit-test</code> 视图后, 会将点击事件发送给此视图来处理.</p>
+<p>说明如下, 假设用户点击了视图 E, iOS 查找<code>hit-test</code> 视图的逻辑如下:</p>
+<ol>
+<li>点击在视图 A 的范围内, 然后检测 子视图 B 和 C</li>
+<li>点击不再视图 B 范围内, 但是在视图 C 范围内, 继续检测 子视图 D 和 E</li>
+<li>点击不再视图 D 里, 但是在视图 E 中.
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Event-Delivery-The-Responder-Chain/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -806,8 +511,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/xcode-plugins/">
-                Xcode plugins
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-成员变量与属性/">
+                iOS Runtime 成员变量与属性
               </a>
             
           
@@ -816,17 +521,28 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-13
         </span>
 
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
         
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/xcode-plugins/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-plugins/"></span>
+            <a href="/2015/07/13/iOS-Runtime-成员变量与属性/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-成员变量与属性/"></span>
             </a>
           </span>
           
@@ -841,7 +557,14 @@
 
       
         
-          
+          <h3 id="习题内容">习题内容</h3><p>下面代码会? Compile Error / Runtime Crash / NSLog…?<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)speak &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"my name is %@"</span>, <span class="keyword">self</span><span class="variable">.name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Test</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">id</span> cls = [Sark class];</span><br><span class="line">        <span class="keyword">void</span> *obj = &amp;cls;</span><br><span class="line">        [(__bridge <span class="keyword">id</span>)obj speak];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        [[Test alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>答案：代码正常输出，输出结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="tag">-11-07</span> 14<span class="pseudo">:08</span><span class="pseudo">:25</span><span class="class">.698</span> <span class="tag">Test</span><span class="attr_selector">[1097:57255]</span> <span class="tag">my</span> <span class="tag">name</span> <span class="tag">is</span> &lt;<span class="rule"><span class="attribute">Test</span>:<span class="value"> <span class="number">0</span>x1001002d0&gt;</span></span></span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-成员变量与属性/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -864,7 +587,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/19/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/17/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/19/">&raquo;</a>
   </div>
 
 
@@ -898,21 +621,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">201</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">98</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

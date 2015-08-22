@@ -148,8 +148,373 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-Background-Modes-Tutorial/">
-                iOS Background Modes Tutorial
+              <a class="post-title-link" href="/2015/08/11/Audio-Basic-Knowleage/">
+                Audio Basic Knowleage
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Audio/">Audio</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/Audio-Basic-Knowleage/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Audio-Basic-Knowleage/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="音频编码基础知识">音频编码基础知识</h2><p>自然界中的声音非常复杂，波形极其复杂，通常我们采用的是脉冲代码调制编码，即PCM编码。PCM通过抽样、量化、编码三个步骤将连续变化的模拟信号转换为数字编码。</p>
+<h3 id="什么是采样率和采样大小（位/bit）。">什么是采样率和采样大小（位/bit）。</h3><p>声音其实是一种能量波，因此也有频率和振幅的特征，频率对应于时间轴线，振幅对应于电平轴线。波是无限光滑的，弦线可以看成由无数点组成，由于存储空间是相对有限的，数字编码过程中，必须对弦线的点进行采样。采样的过程就是抽取某点的频率值，很显然，在一秒中内抽取的点越多，获取得频率信息更丰富，为了复原波形，一次振动中，必须有2个点的采样，人耳能够感觉到的最高频率为20kHz，因此要满足人耳的听觉要求，则需要至少每秒进行40k次采样，用40kHz表达，这个40kHz就是采样率。我们常见的CD，采样率为44.1kHz。光有频率信息是不够的，我们还必须获得该频率的能量值并量化，用于表示信号强度。量化电平数为2的整数次幂，我们常见的CD位16bit的采样大小，即2的16次方。采样大小相对采样率更难理解，因为要显得抽象点，举个简单例子：假设对一个波进行8次采样，采样点分别对应的能量值分别为A1-A8，但我们只使用2bit的采样大小，结果我们只能保留A1-A8中4个点的值而舍弃另外4个。如果我们进行3bit的采样大小，则刚好记录下8个点的所有信息。采样率和采样大小的值越大，记录的波形更接近原始信号。</p>
+<h3 id="有损和无损">有损和无损</h3><p>根据采样率和采样大小可以得知，相对自然界的信号，音频编码最多只能做到无限接近，至少目前的技术只能这样了，相对自然界的信号，任何数字音频编码方案都是有损的，因为无法完全还原。在计算机应用中，能够达到最高保真水平的就是PCM编码，被广泛用于素材保存及音乐欣赏，CD、DVD以及我们常见的WAV文件中均有应用。因此，PCM约定俗成了无损编码，因为PCM代表了数字音频中最佳的保真水准，并不意味着PCM就能够确保信号绝对保真，PCM也只能做到最大程度的无限接近。我们而习惯性的把MP3列入有损音频编码范畴，是相对PCM编码的。强调编码的相对性的有损和无损，是为了告诉大家，要做到真正的无损是困难的，就像用数字去表达圆周率，不管精度多高，也只是无限接近，而不是真正等于圆周率的值。</p>
+<h3 id="为什么要使用音频压缩技术">为什么要使用音频压缩技术</h3><p>要算一个PCM音频流的码率是一件很轻松的事情，采样率值×采样大小值×声道数 bps。一个采样率为<code>44.1KHz</code>，采样大小为<code>16bit</code>，双声道的PCM编码的WAV文件，它的数据速率则为 <code>44.1K×16×2 =1411.2 Kbps</code>。我们常说<code>128K</code>的MP3，对应的WAV的参数，就是这个<code>1411.2 Kbps</code>，这个参数也被称为数据带宽，它和ADSL中的带宽是一个概念。将码率除以8,就可以得到这个WAV的数据速率，即<code>176.4KB/s</code>。这表示存储一秒钟采样率为<code>44.1KHz</code>，采样大小为<code>16bit</code>，双声道的PCM编码的音频信号，需要<code>176.4KB</code>的空间，1分钟则约为<code>10.34M</code>，这对大部分用户是不可接受的，尤其是喜欢在电脑上听音乐的朋友，要降低磁盘占用，只有2种方法，降低采样指标或者压缩。降低指标是不可取的，因此专家们研发了各种压缩方案。由于用途和针对的目标市场不一样，各种音频压缩编码所达到的音质和压缩比都不一样，在后面的文章中我们都会一一提到。有一点是可以肯定的，他们都压缩过。</p>
+<h3 id="频率与采样率的关系">频率与采样率的关系</h3><p>采样率表示了每秒对原始信号采样的次数，我们常见到的音频文件采样率多为44.1KHz，这意味着什么呢？假设我们有2段正弦波信号，分别为20Hz和20KHz，长度均为一秒钟，以对应我们能听到的最低频和最高频，分别对这两段信号进行40KHz的采样，我们可以得到一个什么样的结果呢？结果是：20Hz的信号每次振动被采样了40K/20=2000次，而20K的信号每次振动只有2次采样。显然，在相同的采样率下，记录低频的信息远比高频的详细。这也是为什么有些音响发烧友指责CD有数码声不够真实的原因，CD的44.1KHz采样也无法保证高频信号被较好记录。要较好的记录高频信号，看来需要更高的采样率，于是有些朋友在捕捉CD音轨的时候使用48KHz的采样率，这是不可取的！这其实对音质没有任何好处，对抓轨软件来说，保持和CD提供的44.1KHz一样的采样率才是最佳音质的保证之一，而不是去提高它。较高的采样率只有相对模拟信号的时候才有用，如果被采样的信号是数字的，请不要去尝试提高采样率。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/11/Convert-PCM-To-AAC/">
+                Convert PCM To AAC
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Audio/">Audio</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/Convert-PCM-To-AAC/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Convert-PCM-To-AAC/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.csdn.net/poechant/article/details/7435054">reference</a></p>
+<h2 id="音频编解码·实战篇（1）PCM转至AAC（AAC编码）">音频编解码·实战篇（1）PCM转至AAC（AAC编码）</h2><ul>
+<li>作者：柳大·Poechant</li>
+<li>博客：blog.csdn.net/poechant</li>
+<li>邮箱：zhongchao.ustc@gmail.com</li>
+<li>日期：April 7th, 2012</li>
+</ul>
+<p>这里利用FAAC来实现AAC编码。</p>
+<h3 id="下载安装_FAAC">下载安装 FAAC</h3><p>这里的安装过程是在 Mac 和 Linux 上实现的，Windows可以类似参考。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//downloads.sourceforge.net/faac/faac-1.28.tar.gz</span></span><br><span class="line">tar zxvf faac-<span class="number">1.28</span><span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">cd faac-<span class="number">1.28</span></span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>如果才用默认的 configure 中的 prefix path，那么安装后的 lib 和 .h 文件分别在/usr/local/lib和/usr/local/include，后面编译的时候会用到。</p>
+<p>如果编译过程中发现错误：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpeg4ip.h:126: <span class="keyword">error</span>: <span class="keyword">new</span> declaration ‘<span class="keyword">char</span>* strcasestr(<span class="keyword">const</span> <span class="keyword">char</span>*, <span class="keyword">const</span> <span class="keyword">char</span>*)’</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/11/Convert-PCM-To-AAC/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/11/Wave-And-PCM-Audio-Format/">
+                Wave And PCM Audio Format
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Audio/">Audio</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/Wave-And-PCM-Audio-Format/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Wave-And-PCM-Audio-Format/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.csdn.net/poechant/article/details/7436710">reference</a></p>
+<h2 id="音频编解码·格式篇（1）Wave_PCM_audio_format（WAV）">音频编解码·格式篇（1）Wave PCM audio format（WAV）</h2><ul>
+<li>作者：柳大·Poechant</li>
+<li>博客：Blog.CSDN.net/Poechant</li>
+<li>邮箱：zhongchao.ustc@gmail.com</li>
+<li>日期：April 6th, 2012</li>
+</ul>
+<h3 id="音频编解码基础">音频编解码基础</h3><ul>
+<li>采样率：声音信号在“模数转换”过程中单位时间内采样的次数。</li>
+<li>采样值：每一次采样周期内声音模拟信号的积分值。</li>
+<li>单声道：11.025 KHz 采样值，8 Bits 采样值（0x00 - 0xFF）。</li>
+<li>双声道：44.1 KHz 采样值，16 Bits 采样值。高八位表示左声道，低八位表示右声道。</li>
+</ul>
+<h3 id="WAV音频文件格式">WAV音频文件格式</h3><p>见下图：<br><img src="http://img.my.csdn.net/uploads/201204/08/1333820202_8901.png" alt=""></p>
+<p>1) 文件头</p>
+<ul>
+<li>RIFF/WAV 文件标识段</li>
+<li>声音数据格式说明段</li>
+</ul>
+<p>2) 数据体：由 PCM（脉冲编码调制）格式表示的样本组成。</p>
+<p>单声道 WAV 文件中，声道0代表左声道，声道1代表右声道；多声道 WAV 文件中，左右声道的样本是交替出现的。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/11/Wave-And-PCM-Audio-Format/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/09/git-flow/">
+                git flow
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Git/">Git</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/09/git-flow/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/09/git-flow/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://nvie.com/posts/a-successful-git-branching-model/">reference</a></p>
+<h2 id="A_successful_Git_branching_model">A successful Git branching model</h2><p><code>git flow</code> 工作流, 流转示意图:</p>
+<p><img src="http://nvie.com/img/git-model@2x.png" alt="git flow"></p>
+<h3 id="去中心化_和_中心化">去中心化 和 中心化</h3><p>此工作流中, 存在唯一的<code>中心仓库</code> — <code>origin</code>. 每个程序员向中心仓库, 拉取更新和提交更新. 然而, 程序员也可以被划分为小组, 来进入更进一步的划分, 先从这些<code>分中心仓库</code> 来拉取更新和提交更新, 先完成小组的同步, 再和中心仓库同步.</p>
+<p><img src="http://nvie.com/img/centr-decentr@2x.png" alt=""></p>
+<h3 id="主要分支">主要分支</h3><p>这个工作流的核心为两个主分支:</p>
+<ol>
+<li>Master</li>
+<li>Develop</li>
+</ol>
+<p><img src="http://nvie.com/img/main-branches@2x.png" alt=""></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/09/git-flow/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/">
+                Notes: The interesting things from WWDC, iOS 9, Swift 2
               </a>
             
           
@@ -178,8 +543,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Background-Modes-Tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Background-Modes-Tutorial/"></span>
+            <a href="/2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/"></span>
             </a>
           </span>
           
@@ -194,826 +559,56 @@
 
       
         
-          <h1 id="iOS后台模式开发指南">iOS后台模式开发指南</h1><hr>
-<blockquote>
+          <h2 id="WWDC中那些令人感兴趣的事物:iOS_9,_Swift_2">WWDC中那些令人感兴趣的事物:iOS 9, Swift 2</h2><blockquote>
 <ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/92428/background-modes-ios-swift-tutorial">Background Modes Tutorial: Getting Started</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/rayfix"> Ray Fix </a></li>
-<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
-<li>校对者:David Hu</li>
-<li>状态 :  已完成</li>
+<li>原文链接 : <a href="http://iosdevtips.co/post/121053658888/wwdc-ios-9-swift-2-notes" target="_blank" rel="external">Notes: The interesting things from WWDC, iOS 9, Swift 2</a></li>
+<li>原文作者: <a href="http://iosdevtips.co" target="_blank" rel="external">Rounak Jain</a></li>
+<li>译文出自: <a href="http://www.devtf.cn/" target="_blank" rel="external">开发技术前线http://www.devtf.cn/</a></li>
+<li>译者 : <a href="https://github.com/Lollypo" target="_blank" rel="external">Lollypo</a> </li>
+<li>校对者:<a href="https://github.com/bboyfeiyu" target="_blank" rel="external">Mr.Simple</a></li>
+<li>状态 :  完成</li>
 </ul>
 </blockquote>
-<p>更新说明:这个教程被Ray Fix更新为关于iOS和Swift的.原著作者为<a href="http://www.raywenderlich.com/29948/backgrounding-for-ios">Gustavo Ambrozio</a>.</p>
-<p>自从古老的iOS4以来,当用户点击home建的时候,你可以使你的APP们在内存中处于suspended(挂起)状态.即使APP仍停留在内存中,它的所有操作是被暂停的直到用户再次运行它.</p>
-<p>当然这个规则中有例外情况.在特定的情况下,这个APP仍然可以在后台中执行某些操作.这个教程会教你在什么时候怎么去用最常用的一些后台操作.</p>
-<p>每一次iOS的发布都会在后台操作和细节上的放宽限制，以此提升用户体验和延长电池寿命.对于在iOS中实现”真正”的多任务来说,后台模式不是一个神奇的解决办法.当用户切换到其他的APP应用时,大多数的APP应用仍然会完全的暂停运行.你的应用只被允许在很特殊的情况下才能在后台中继续运行.例如,这些包括播放音频,获取位置更新,或者从服务器获取最新内容的情况.</p>
-<p>iOS7之前,APP应用在真正暂停之前会有连续10分钟的时间去完成它们当前的操作.随着NSURLSession的出现,有了一种更为优雅的方式去应对大量的网络切换.因此,对于可用的后台运行时间已经减少到只有几分钟,而且不再必须为连续的.</p>
-<p>这样的后台模式可能不适合你.但如果合适,请继续阅读!</p>
-<p>接下来的学习中,将会有几个几个后台模式提供给你.在本教程中你将建立一个关于简单标签应用的工程,来探索从连续播放视频到周期性的获取更新内容的四种常见模式.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Background-Modes-Tutorial/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS8-iCloud/">
-                iOS8 iCloud
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS8-iCloud/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS8-iCloud/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS8使用icloud"><code>iOS8使用icloud</code></h2><blockquote>
+<p>今天WWDC上的Keynote非常棒,即便到目前为止还未结束.在开发者方面,已经有大量的新事物出现,其中包括有Swift 2, iOS 9, CloudKit等等.</p>
+<p>这里是我在浏览发布日志,API差异,新特性等内容时记录的笔记</p>
 <ul>
-<li>原文链接 : <a href="http://www.appcoda.com/cloudkit-introduction-tutorial/">Working with CloudKit in iOS 8</a></li>
-<li>译文出自 <a href="http://www.dectf.cn">开发技术前线</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+<li><p>你不需要加入$99的开发者计划就可以在真机上调试应用程序.此外,Mac与iOS开发者计划合并,可以节省一半支出:<br><img src="http://40.media.tumblr.com/ab8cf0d95f459e63bb10ded612e2fa34/tumblr_inline_npnb64YpK31qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>Interface Builder支持实时预览模糊与透明效果<br><img src="http://40.media.tumblr.com/ed19a7cbd80fe5ccb49f5a9102744eec/tumblr_inline_npnb8aLtBC1qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>Objective-C支持泛型,这意味着集合对象,如数组,字典可以像Swift一样指定类型<br><img src="http://40.media.tumblr.com/4ed77823bca27d89db84f654080d7d28/tumblr_inline_npnbbdudd01qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>新的名为 <a href="https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/UIStackView_Class_Reference/index.html#//apple_ref/doc/uid/TP40015256" target="_blank" rel="external">UIStackView</a>UI类,是Mac中NSStackView的一种实现.</p>
+</li>
+<li><p><a href="https://developer.apple.com/library/prerelease/ios/documentation/DataManagement/Conceptual/CloutKitWebServicesReference/Introduction/Introduction.html#//apple_ref/doc/uid/TP40015240" target="_blank" rel="external">CloudKit现在也可以在Web中使用</a></p>
+</li>
+<li><p>开放 CASpringAnimation!<br><img src="http://40.media.tumblr.com/65c41c82d295034c23ef986214404c6d/tumblr_inline_npnbg2mCrc1qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>应用程序现在可以作为拓展插入到Safari中,听起来有点像广告拦截器.此外,应用程序可以在Safari的共享链接填充内容</p>
+</li>
+<li><p>开发者现在可以使用 <code>SFSafariViewController</code>, 这可以共享Safari中中cookies, 自动填充以及其他Safari中的特性.</p>
+</li>
+<li><p><code>UIPickerView</code> 可转换为任意尺寸,而不必再使用那些丑陋的转换技巧.</p>
+</li>
+<li><p>iOS应用程序可在发出提醒展示一段文本域,此前仅限于Messages使用.</p>
+</li>
+<li><p>通讯录可通过面向对象的API来访问,而不是之前的C</p>
+</li>
+<li><p>电话API在低版本设备上不支持,这也许会导致编译时错误.现在有新的判断条件来决定是否执行代码,这可以有效避免使用新的API导致的应用程序崩溃:<br><img src="http://41.media.tumblr.com/c1875f851f168467e8e3bd435fa31f8d/tumblr_inline_npnbnvrUp31qh9cw7_500.png" alt=""></p>
+</li>
+<li><p><code>UICollectionView</code> 新添加了许多方法来支持交互式移动</p>
+</li>
+<li><p>新的名为 <code>UIFieldBehavior</code> 的 UIKit Dynamics类</p>
+</li>
+<li><p>Xcode Assets Catalog: 设备不会一次性下载所有尺寸的图片,而根据其自身的需要下载 1x, 2x 或 3x 的图片,大大减少了应用程序的大小.</p>
+</li>
 </ul>
-</blockquote>
-<p>对于开发者来说，如何用适当的方式来存储应用程序数据是一个比较重要的问题。 毫无疑问，任何应用都或多或少需要存储一些数据。对于一般的应用程序来说，被保存的数据各不相同，大部分时间都被存储在本地以便再次在相同的设备运行该应用程序。尽管这不是是唯一的选择。随着云服务的发展，一个应用程序也可以把数据存储在云端，既可以完全把数据存储在云端，也可以本地和远程都存储。</p>
-<p>有许多网络服务商提供云服务，通常会赠送一定的免费空间。其中之一就是苹果，也就是著名的云服务提供商iCloud。开发人员可以访问iCloud，把它作为一个存储方式。有多种方法可以从iCloud中存储和读取数据，但在本教程中，我们将专注于其中之一：CloudKitframework。<br><img src="http://img.blog.csdn.net/20150515220618400" alt="这里写图片描述"></p>
-<p>当你处理结构化数据（不是单纯的文件和文档）并希望将其保存在网络上的，使用CloudKit会非常方便。通过CloudKit，可以很容易的做到其它数据库能做的事情，代替数据库、记录等等。事实上，一条CloudKit记录就是iOS中大家都知道的字典，当然CloudKit还可以处理其它不同的数据。通过本教程，我们会发现使用这个框架是有趣的，而不是特别困难。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS8-iCloud/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-Autolayout-Practices/">
-                iOS Autolayout Practices
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Autolayout-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Autolayout-Practices/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2015/02/02/autolayout2/">reference</a></p>
-<h2 id="Autolayout小结">Autolayout小结</h2><h3 id="如何自动适应cell的高度">如何自动适应cell的高度</h3><p>在IOS的布局中，计算和适应cell的高度是个经典的问题, 在frame时代，我们都知道用<code>sizeWithFont:</code> 先计算出文字的高度，然后通过计算得出cell的高度，然后赋予<code>heightForRow:</code>。</p>
-<p>那在Autolayout时代如何计算cell的高度呢？因为sizeWithFont:方法已经不太实用了。其实Autolayout不但更简单，还可以不用写过多的计算代码达到自适应高度。</p>
-<p>理论上是可以通过已知的完整的Constraints和view的属性来计算高度的，我们可以通过<code>systemLayoutSizeFittingSize:</code>方法来获取计算出来cell的size，我们知道cell的高度需要在tableView的代理方法<code>tableView:heightForRowAtIndexPath:</code>中实现的，那么我们考虑从以下两点来做：</p>
-<ol>
-<li>通过创建一个额外的cell专门用来计算其高度</li>
-<li>因为计算需要布局，所以尽量让其只计算一次，计算完可以将高度保存起来</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Autolayout-Practices/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-shake-in-pull-to-refresh/">
-                iOS shake in pull to refresh
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-shake-in-pull-to-refresh/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-shake-in-pull-to-refresh/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2015/01/19/shake-in-pull-to-refresh/">reference</a></p>
-<h2 id="你的下拉刷新是否“抖”了一下">你的下拉刷新是否“抖”了一下</h2><p>在进入IOS8之后，你有没有注意到老式的下拉刷新可能会抖一下， 在下拉松开后，scrollView即将回到“刷新中…”的状态过程中的时候。如果你又这个问题，那不妨跟随我来看看怎么解决这个问题。</p>
-<h3 id="抖动的原因">抖动的原因</h3><p>我们先来看看在手松开之后我们对scrollView做了什么事情：</p>
-<p><code>ScrollViewDidEndDragging</code> =&gt; <code>setContentInset:</code></p>
-<p>为了保证在“Loading”的状态下，下拉刷新控件可以展示，我们对<code>contentInset</code>做了修改，增加了<code>inset</code>的<code>top</code>. 那这样一步操作为什么会导致scrollView抖动一下呢。</p>
-<p>我在<code>scrollViewDidScroll:</code>中打了个断点，来看看在<code>setContentInset:</code>之后发生了什么事情。 我设置的<code>inset.top = 64</code>; 结果发现scrollView的<code>contentOffset</code>发生了这样的变化：</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(0, -64)</span> =&gt; <span class="comment">(0, -133)</span> =&gt; <span class="comment">(0, -64)</span></span><br></pre></td></tr></table></figure>
-<p>由以上数据可以看出，contentOffset在这个过程中先被向下移动了一段，再回归正常。 猜测问题原因：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">下拉松开之后， scrollView本身的 <span class="keyword">bounce </span>效果 与 当前设置inset冲突了</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-shake-in-pull-to-refresh/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-float-trap/">
-                iOS float trap
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-float-trap/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-float-trap/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="float陷阱以及在Objc中的注意">float陷阱以及在Objc中的注意</h2><p>浮点数不准，这个貌似基本都知道。但是在开发中很多人没有对它的使用产生警觉。如果你在开发Cocoa应用，你可能使用过如下代码判断系统版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="built_in">float</span>Value] &gt;= <span class="number">7.0</span>) &#123;</span><br><span class="line">  //something support <span class="keyword">for</span> ios7</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样一段代码也的确工作良好，但是注意了如果你把比较的数值改为7.1，那么很有可能就会出问题。</p>
-<h3 id="浮点数不准">浮点数不准</h3><p>这一篇博文从二进制的表示方面说明了为什么浮点数不准，讲的很好，感兴趣的可以学习学习，学习这些感觉还是很有用的，也可以帮助我们定位一些诡异的问题。 <a href="http://www.ruanyifeng.com/blog/2010/06/ieee_floating-point_representation.html" target="_blank" rel="external">浮点数的二进制表示</a><br>在精确的比较中不要使用float<br>文章开头的系统版本的比较就是一个典型的例子，我们可以通过其他方法实现比较：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="attribute">compare</span>:@<span class="string">"7.1"</span>] != NSOrderedAscending) &#123;</span><br><span class="line">  <span class="comment">//something support for ios7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-Dispatch-async-usages-tips/">
-                iOS Dispatch_async usages tips
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Dispatch-async-usages-tips/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Dispatch-async-usages-tips/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2014/10/20/dispatch-asyncyi-bu-de-xiao-miao-yong/" target="_blank" rel="external">reference</a></p>
-<h2 id="Dispatch_async异步的小妙用">Dispatch_async异步的小妙用</h2><p>GCD 对于cocoa和cocoa Touch的开发者来说已经是在熟悉不过了，相信有些基础的人都能说出一些特性。但是今天我们不是讲GCD的介绍和使用bulabulabula. 本文就介绍下使用<code>dispatch_async</code>的一个小妙用，且看下文分解。</p>
-<p>我们都知道dispatch_async可以用来异步执行代码。你的第一反应的可能是后台、多线程 这样的字眼，但是异步执行不是就代表多线程，它只是代表代码的执行方式，知道这点可以做更多事情。</p>
-<h3 id="afterDelay">afterDelay</h3><p>你是否做过这样的事情，在修改一个bug时，把方法延迟执行，like this:</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(doSomething) <span class="string">withObject:</span>nil <span class="string">afterDelay:</span><span class="number">0.1</span>f];</span><br></pre></td></tr></table></figure>
-<p>Let me guess, 你一定是发现doSomething方法中所依赖的数据或环境还达不到，立即执行的话，可能会有问题。所以你就让doSomething延迟一点时间执行，保证它需要的数据或环境已经处理完成，改完打包测试，bug看起来已经修复了。</p>
-<p>这个问题从大多数场景来说的确已经修复了，但是在强迫症眼里，好像还是有些瑕疵，不是完美方案。</p>
-<p>两个问题，你怎么能100%确保你需要的数据或环境能再0.1s内准备完成呢； 另一个是数据准备完成到doSomething执行中间可能会有一段空白时间，有时是我们不希望的。那如何替代这个方案呢，如果你得doSomething需要的数据和环境是在主线程执行的，那么方案很简单：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self doSomething]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>你可能问了，我本来就在主线程执行任务，为什么还要往main_queue里面提交任务呢。巧妙的地方就在这，我们巧妙的把doSomething作为任务提交到主线程，它会等待主线程的任务一个个执行完成才执行，这样就可以巧妙的解决这个问题。</p>
-<p>不过注意，不是所有场景都适合这个用法，就像上面描述的，你要确保doSomething的依赖条件实在主线程中执行的。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
-                iOS Application Framework Think - Network
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
-<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
-<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
-<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
-<ol>
-<li>无法cancel这个请求</li>
-<li>占用了完整的一个线程</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
-                iOS Best Practices
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Best-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Best-Practices/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="iOS_Best_Practices">iOS Best Practices</h1><p>这里总结一下iOS最佳实践，主要参考Futurice developers的文章<a href="https://github.com/futurice/ios-good-practices">iOS Good Practices</a>，同时加上了一些自己的理解</p>
-<h2 id="目录">目录</h2><ul>
-<li><a href="#setup_project">初始化项目</a></li>
-<li><a href="#iOS_architecture">iOS架构</a></li>
-<li><a href="#api_design">API设计</a></li>
-<li><a href="#high_quality_code">高质量代码</a></li>
-<li><a href="#code_style">编码规范</a></li>
-<li><a href="#iOS_open_source_lib">iOS开源库</a></li>
-<li><a href="#iOS_basic_skills">iOS基本技能</a></li>
-<li><a href="#build_automation">自动化构建</a></li>
-<li><a href="#optimiaze_app">优化App</a></li>
+<h2 id="其他一些你可能感兴趣的链接:">其他一些你可能感兴趣的链接:</h2><ul>
+<li><a href="https://t.co/cOdmXdQ0EQ" target="_blank" rel="external">API差异</a></li>
+<li><a href="https://itunes.apple.com/us/book/swift-programming-language/id1002622538?mt=11" target="_blank" rel="external">Swift 2提前发布版电子书</a></li>
+<li><a href="http://t.co/5pU8P4iNEH" target="_blank" rel="external">Xcode 7 发布日志</a></li>
 </ul>
-<p><b id="setup_project"></b></p>
-<h2 id="初始化项目">初始化项目</h2><h3 id="UI采用Interface_Builder还是手写代码">UI采用Interface Builder还是手写代码</h3><p>当开始一个iOS项目时，一个常见的问题就是编写所有的views是采用手写代码的方式还是使用Interface Builder的Storyboard或XIB文件。两种方式都可以实现相同UI效果，但几点需要考虑：</p>
-<h4 id="为什么使用代码？">为什么使用代码？</h4><ul>
-<li>当多人协作开发时，由于Storyboard复杂的XML结构，它更容易发生版本冲突，这比手写代码的方式更难合并代码。</li>
-<li>手写代码更容易地结构化和重用views，因此使你的代码库保持<a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>。</li>
-<li>所有的信息都在同一个地方。在Interface Builder中，你必须通过点击所有inspectors才能找到你想要的东西。</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Best-Practices/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
 
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
-                parse crashLog manually
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/parse-crashLog-manually/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/parse-crashLog-manually/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://foggry.com/blog/2015/07/27/ru-he-shou-dong-jie-xi-crashlog/">转自</a></p>
-<h2 id="如何手动解析CrashLog">如何手动解析CrashLog</h2><p>解决崩溃问题是移动应用开发者最日常的工作之一。如果是开发过程中遇到的崩溃，可以根据重现步骤调试，但线上版本就无能为力了。好在目前已经有很多不错的第三方CrashLog搜集平台（如友盟、Crashlytics等）为我们做好了解析工作，甚至在Xcode7里苹果也跟进了解析线上版本崩溃日志的功能，为开发者减轻了不少负担。尽管通常已经不需要我们手工处理CrashLog，了解CrashLog的还原原理和方法还是有必要的。</p>
-<h3 id="-dSYM">.dSYM</h3><p><code>.dSYM(debugging SYMbols)</code>又称为调试符号表，是苹果为了方便调试和定位问题而使用的一种调试方案，本质上使用的是起源于贝尔实验室的DWARF（Debugging With Attributed Record Formats），其在<code>.xcarchive</code>目录中的层次结构为：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.xcarchive</span><br><span class="line"><span class="comment">--dSYMs</span></span><br><span class="line">  |<span class="comment">--Your.app.dSYM</span></span><br><span class="line">    |<span class="comment">--Contents</span></span><br><span class="line">      |<span class="comment">--Resources</span></span><br><span class="line">        |<span class="comment">--DWARF</span></span><br></pre></td></tr></table></figure></p>
-<p>关于DWARF的具体内容以后有机会再说。我们能解析CrashLog全靠.dSYM文件，解析方式见后文。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/parse-crashLog-manually/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
-                iOS NSURLProtocal
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
-<ul>
-<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
-<li>如何优雅地进行流量统计</li>
-<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
-<li>怎么实现HTTP的同步请求</li>
-</ul>
-<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
-<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
-<ul>
-<li>自定义请求和响应</li>
-<li>提供自定义的全局缓存支持</li>
-<li>重定向网络请求</li>
-<li>提供HTTP Mocking (方便前期测试)</li>
-<li>其他一些全局的网络请求修改需求</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -1036,7 +631,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </div>
 
 
@@ -1070,21 +665,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">201</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">98</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

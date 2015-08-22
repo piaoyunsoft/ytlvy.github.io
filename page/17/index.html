@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/appdelegate-shou-shen/">
-                Appdelegate瘦身
+              <a class="post-title-link" href="/2015/07/15/iOS-内存警告/">
+                iOS 内存警告
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-15
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/appdelegate-shou-shen/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appdelegate-shou-shen/"></span>
+            <a href="/2015/07/15/iOS-内存警告/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-内存警告/"></span>
             </a>
           </span>
           
@@ -194,173 +194,13 @@
 
       
         
-          <ul>
-<li>(BOOL)application:(UIApplication <em>)application<br>didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // …<br>  [FooModule setup];<br>  [[BarModule sharedInstance] setup];<br>  // …<br>  return YES;<br>}</li>
-</ul>
-<p>/// FooModule.m</p>
-<ul>
-<li>(void)load<br>{<br>  __block id observer =<br>  [[NSNotificationCenter defaultCenter]<br>   addObserverForName:UIApplicationDidFinishLaunchingNotification<br>   object:nil<br>   queue:nil<br>   usingBlock:^(NSNotification *note) {<pre><code><span class="attr_selector">[self setup]</span>; <span class="comment">// Do whatever you want</span>
-<span class="attr_selector">[[NSNotificationCenter defaultCenter]</span> <span class="tag">removeObserver</span><span class="pseudo">:observer</span>];
-</code></pre>   }];<br>}</li>
-</ul>
-<p>// 解释：<br>// + load方法在足够早的时间点被调用<br>// block版本的通知注册会产生一个<strong>NSObserver *对象用来给外部remove观察者<br>// block对observer对象的捕获早于函数的返回，所以若不加</strong>block，会捕获到nil<br>// 在block执行结束时移除observer，无需其他清理工作<br>// 这样，在模块内部就完成了在程序启动点代码的挂载</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/appstore-reject/">
-                appstore 被拒
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/appstore-reject/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appstore-reject/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="appstore_被拒原因">appstore 被拒原因</h2><ol>
-<li>解释虚拟货币的用途、获取途径</li>
-<li>有米等诱导用户下载应用，影响排名的</li>
-<li>微信、qq第三方登录不能让用户下载后，进行注册</li>
-<li>大转盘应用 没有声明次活动与苹果无关</li>
-<li>截图与具体应用不符，例如多按钮</li>
-<li>禁止的类库，没有从工程彻底删除，只是在xcode不可见</li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-memory-management/">
-                ios 内存管理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-memory-management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="__autoreleasing关键字">__autoreleasing关键字</h4><ol>
-<li>ARC下使用__autoreleasing修饰符修饰的变量会被注册到autoreleasepool中，和非ARC下调用autorelease方法的效果相同</li>
-<li>当方法名不是alloc/new/copy/mutableCopy时，使用return返回的对象强引用会被自动注册到autoreleasepool<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)array  &#123;  </span><br><span class="line">  <span class="keyword">id</span> obj = [[<span class="built_in">NSArray</span> alloc] init];  </span><br><span class="line">  <span class="keyword">return</span> obj;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>上述代码中，因为没有指定所有权修饰符，id obj就是默认的id __strong obj，即obj是强引用，这时，obj就会被添加到autoreleasepool中</p>
+          <p><a href="http://www.cnblogs.com/smileEvday/archive/2012/03/07/MemoryWarning.html">转自</a></p>
+<h1 id="内存警告">内存警告</h1><p>系统有四种内存警告</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelAny</span>      = -<span class="number">1</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelNormal</span>   =  <span class="number">0</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelWarning</span>  =  <span class="number">1</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelUrgent</span>   =  <span class="number">2</span>,</span><br><span class="line"><span class="constant">　   OSMemoryNotificationLevelCritical</span> =  <span class="number">3</span></span><br><span class="line">&#125; OSMemoryNotificationLevel;</span><br></pre></td></tr></table></figure>
+<p>　　通常我们在程序中接收到最多的就是Memory warning level 1，这个时候就证明系统内存紧张了，我们的程序必须做出相应，释放不必要的内存。通常如果我们处理得当的话，内存警告就会到此停止，恢复正常状态。如果我们在接收到<code>memory warning level 1</code>以后坐视不理的话，系统可能还会再尝试通知几次<code>level 1</code>，如果还是不去处理的话，系统将会发出更高一级的内存警告<code>level 2</code>，通常的结果就是我们的App被强制退出，系统收回内存。当然系统在发出level 2的警告时，也会取尝试做一些清理内存的事，例如关闭不必要的后台程序等。很显然我们不该寄希望于系统自己清理，这就好比你的胳膊被划破了，身体肯定会有自修复功能，但是如果伤口比较大的话，肯定还是需要人工处理一下的。</p>
+<p>到目前位置我还没有见过level 3的警告，根据stack over flow上面讲的”当发生level 3警告时，系统内核将会接管，很有可能关掉IOS的主界面进程（SpringBorad），甚至会重启”，照这个意思来说我们程序里面接收不到，也实属正常，系统自己的东西都被干掉了，我们肯定早被kill了。
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-memory-management/#more">
+            <a class="btn" href="/2015/07/15/iOS-内存警告/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -393,8 +233,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-third-party-frameworks/">
-                工程 第三方类库
+              <a class="post-title-link" href="/2015/07/15/iOS-Crash文件的解析/">
+                iOS Crash文件的解析
               </a>
             
           
@@ -403,7 +243,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-15
         </span>
 
         
@@ -423,8 +263,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-third-party-frameworks/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-third-party-frameworks/"></span>
+            <a href="/2015/07/15/iOS-Crash文件的解析/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-Crash文件的解析/"></span>
             </a>
           </span>
           
@@ -439,359 +279,12 @@
 
       
         
-          <h2 id="第三方类库">第三方类库</h2><pre><code><span class="constant">CocoaLumberjack</span>
-<span class="constant">FCUUID</span>
-iCarousel
-<span class="constant">Mantle</span>
-<span class="constant">PureLayout</span>
-<span class="constant">PromiseKit</span>
-<span class="constant">ReactiveCocoa</span>
-<span class="constant">ReactiveViewModel</span>
-<span class="constant">SWTableViewCell</span>
-<span class="constant">TSMessages</span>
-pop
-<span class="constant">RegexKitLite</span>
-<span class="constant">Flurry（</span>详尽的使用统计）
-<span class="constant">SDWebImage</span>
-<span class="constant">CorePlot（</span><span class="number">2</span>D图形绘图仪）
-<span class="constant">AFNetworking</span>
-iphone 崩溃日志分析工具symbolicatecrash
-<span class="constant">Quincy </span>崩溃日志分析工具
-流行第三方类库列表：<span class="symbol">http:</span>/<span class="regexp">/github.ibireme.com/github</span><span class="regexp">/list/ios</span><span class="regexp">/</span>
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-url-identifier-and-and-url-schemes/">
-                URL Identifier &amp;&amp; URL Schemes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-url-identifier-and-and-url-schemes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-url-identifier-and-and-url-schemes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="URL_Identifier_&amp;&amp;_URL_Schemes">URL Identifier &amp;&amp; URL Schemes</h2><pre><code>The <span class="built_in">URL</span> Identifier is <span class="operator">the</span> reversed domain address which is should be <span class="operator">the</span> same <span class="keyword">as</span> your Bundle Identifier e.g. com.companyname.appname
-
-The <span class="built_in">URL</span> Schemes is <span class="operator">the</span> <span class="built_in">start</span> <span class="operator">of</span> <span class="operator">the</span> <span class="built_in">URL</span> e.g <span class="string">'appname'</span>. When you call this <span class="keyword">as</span> <span class="operator">a</span> <span class="built_in">URL</span> <span class="keyword">it</span> targets <span class="operator">the</span> bundle identifier which launches <span class="operator">the</span> app.
-
-so... <span class="string">'appname://'</span> (<span class="operator">in</span> safari) will call com.companyname.appname
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-knowledge/">
-                ios 知识点
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-knowledge/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-knowledge/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="正确设定背景图片">正确设定背景图片</h4><ol>
-<li>创建小的重复的图片作为背景的, 使用UIColor的 colorWithPatternImage来设置背景色.</li>
-<li>大背景图, 在view中添加一个UIImageView作为一个子View</li>
-</ol>
-<h4 id="设定Shadow_Path">设定Shadow Path</h4><pre><code>view.layer.shadowPath = <span class="comment">[<span class="comment">[UIBezierPath bezierPathWithRect:view.bounds]</span> CGPath]</span>;
-</code></pre><h4 id="优化Table_View">优化Table View</h4><p>正确使用<code>reuseIdentifier</code>来重用cells<br>尽量使所有的view opaque，包括cell自身<br>避免渐变，图片缩放，后台选人<br>缓存行高<br>如果cell内现实的内容来自web，使用异步加载，缓存请求结果<br>使用<code>shadowPath</code>来画阴影<br>减少subviews的数量<br>尽量不适用<code>cellForRowAtIndexPath:</code>，如果你需要用到它，只用一次然后缓存结果<br>使用正确的数据结构来存储数据<br>使用<code>rowHeight</code>, <code>sectionFooterHeight</code> 和 <code>sectionHeaderHeight</code>来设定固定的高，不要请求delegate</p>
-<h4 id="选择是否缓存图片">选择是否缓存图片</h4><p>imageWithContentsOfFile 不缓存<br>imageNamed 缓存</p>
-<h4 id="block_array_need_copy_first">block array need copy first</h4><h4 id="查看引用计数">查看引用计数</h4><pre><code>NSLog<span class="list">(@<span class="string">"retain count = %d"</span>, _objc_rootRetainCount<span class="list">(<span class="keyword">obj</span>)</span>)</span><span class="comment">;</span>
-</code></pre><h4 id="将objc文件编译成C++文件">将objc文件编译成C++文件</h4><pre><code>clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code
-</code></pre><h4 id="nonatomic_&amp;&amp;_atomic">nonatomic &amp;&amp; atomic</h4><p>nonatomic属性读取的是内存数据（寄存器计算好的结果）<br>atomic就保证直接读取寄存器的数据</p>
-<h4 id="set_do_not_back_up_attribute">set do not back up attribute</h4><pre><code><span class="built_in">NSURL</span> * fileURL;
-fileURL = [ <span class="built_in">NSURL</span> fileURLWithPath: <span class="string">@"some/file/path"</span> ];
-[ fileURL setResourceValue: [<span class="built_in">NSNumber</span> numberWithBool: <span class="literal">YES</span>] forKey: <span class="built_in">NSURLIsExcludedFromBackupKey</span> error: <span class="literal">nil</span> ];
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/duan-dian-xu-chuan/">
-                断点续传
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/duan-dian-xu-chuan/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/duan-dian-xu-chuan/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <pre><code>[request <span class="string">addValue:</span>@<span class="string">"bytes=500-"</span> <span class="string">forHTTPHeaderField:</span>@<span class="string">"Range"</span>];
-_fileHandle = [NSFileHandle <span class="string">fileHandleForWritingAtPath:</span>_tempFilePath];
-_fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number">0</span>;
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-muti-thread/">
-                ios 多线程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-muti-thread/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-muti-thread/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="dispatch_queue_create">dispatch_queue_create</h4><pre><code>dispatch_queue_create生成的queue需要手动内存管理
-dispatch_release
-dispatch_retain
-dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create( <span class="string">"com.example.gcd.MyConcurrentDispatchQueue"</span>, DISPATCH_QUEUE_CONCURRENT);
-dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="string">"com.example.gcd.MySerialDispatchQueue"</span>, NULL);
-<span class="keyword">global</span> dispatch queues. They are concurrent dispatch queues <span class="keyword">that</span> are usable anywhere <span class="keyword">in</span> <span class="keyword">the</span> <span class="type">application</span>
-</code></pre>
+          <p><a href="http://www.cnblogs.com/smileEvday/p/Crash1.html">转自</a></p>
+<h1 id="iOS_Crash文件的解析">iOS Crash文件的解析</h1><p>开发程序的过程中不管我们已经如何小心，总是会在不经意间遇到程序闪退。脑补一下当你在一群人面前自信的拿着你的App做功能预演的时候，流畅的操作被无情地Crash打断。联想起老罗在发布Smartisan OS的时候说了，他准备了10个手机，如果一台有问题，就换一台，如果10台后挂了他就不做手机了。好了不闲扯了，今天就跟大家一起聊聊iOSCrash文件的组成以及常用的分析工具。</p>
+<p>　　有一个WWDC 2010的视频推荐大家抽空看看，视频名称<a href="https://developer.apple.com/videos/wwdc/2010/?id=317">“Understanding Crash Reports on iPhone OS”</a>，该视频详细讲解了Crash文件的结构。当然如果你没时间看的话，不妨阅读以下这篇文章。</p>
+<h2 id="Crash文件结构">Crash文件结构</h2><p>当程序运行Crash的时候，系统会把运行的最后时刻的运行信息记录下来，存储到一个文件中，也就是我们所说的Crash文件。iOS的Crash日志通常由以下6各部分组成。
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-muti-thread/#more">
+            <a class="btn" href="/2015/07/15/iOS-Crash文件的解析/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -824,8 +317,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-shake/">
-                ios手势 摇一摇
+              <a class="post-title-link" href="/2015/07/15/iOS-应用崩溃日志揭秘/">
+                iOS 应用崩溃日志揭秘
               </a>
             
           
@@ -834,7 +327,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-15
         </span>
 
         
@@ -854,8 +347,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-shake/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-shake/"></span>
+            <a href="/2015/07/15/iOS-应用崩溃日志揭秘/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-应用崩溃日志揭秘/"></span>
             </a>
           </span>
           
@@ -870,9 +363,18 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       
         
-          <h4 id="手势冲突">手势冲突</h4><p>在iOS中，如果一个手势A的识别部分是另一个手势B的子部分时，默认情况下A就会先识别，B就无法识别了。要解决这个冲突可以利用- (void)requireGestureRecognizerToFail:(UIGestureRecognizer *)otherGestureRecognizer;方法来完成 也就是说如果我们指定拖动手势的执行前提为轻扫手势失败就可以了，这样一来当我们手指轻轻滑动时系统会优先考虑轻扫手势，如果最后发现该操作不是轻扫，那么就会执行拖动。只要将下面的代码添加到添加手势之后就能解决这个问题了<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//解决在图片上滑动时拖动手势和轻扫手势的冲突</span></span><br><span class="line"><span class="attr_selector">[panGesture requireGestureRecognizerToFail:swipeGestureToRight]</span>;</span><br><span class="line"><span class="attr_selector">[panGesture requireGestureRecognizerToFail:swipeGestureToLeft]</span>;</span><br><span class="line"><span class="comment">//解决拖动和长按手势之间的冲突</span></span><br><span class="line"><span class="attr_selector">[longPressGesture requireGestureRecognizerToFail:panGesture]</span>;</span><br></pre></td></tr></table></figure></p>
+          <p><a href="http://www.raywenderlich.com/23704/demystifying-ios-application-crash-logs">翻译自</a></p>
+<h1 id="iOS应用崩溃日志揭秘1">iOS应用崩溃日志揭秘1</h1><p>作为一名应用开发者，你是否有过如下经历?</p>
+<p>为确保你的应用正确无误，在将其提交到应用商店之前，你必定进行了大量的测试工作。它在你的设备上也运行得很好，但是，上了应用商店后，还是有用户抱怨会闪退 !</p>
+<p>如果你跟我一样是个完美主义者，你肯定想将应用做到尽善尽美。于是你打开代码准备修复闪退的问题……但是，从何处着手呢？ 这时iOS崩溃日志派上用场了。在大多数情况下，你能从中了解到关于闪退的详尽、有用的信息。</p>
+<p>通过本教程，你将学习到一些常见的崩溃日志案例，以及如何从开发设备和iTunes Connect上获取崩溃日志文件。你还将学习到符号化（ symbolication）,从日志追踪到代码 。你还将学习调试一个在待定情况下会闪退的应用。</p>
+<p>让我们开始动手吧!</p>
+<h2 id="什么是崩溃日志，从哪里能得它?">什么是崩溃日志，从哪里能得它?</h2><p>iOS设备上的应用闪退时，操作系统会生成一个崩溃报告，也叫崩溃日志，保存在设备上。 崩溃日志上有很多有用的信息，包括应用是什么情况下闪退的。通常，上面有每个正在执行线程的完整堆栈跟踪信息，所以你能从中了解到闪退发生时各线程都在做什么，并分辨出闪退发生在哪个线程上。</p>
+<p>有几种方法可以从设备上获取崩溃日志。 设备与电脑上的iTunes Store同步后，会将崩溃日志保存在电脑上。根据电脑操作系统的不同，崩溃日志将保存在以下位置:</p>
+<p>Mac OS X:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/Library/</span>Logs<span class="regexp">/CrashReporter/M</span>obileDevice<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-shake/#more">
+            <a class="btn" href="/2015/07/15/iOS-应用崩溃日志揭秘/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -905,8 +407,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
           
             
-              <a class="post-title-link" href="/2015/05/27/c-static/">
-                c static关键字
+              <a class="post-title-link" href="/2015/07/13/iOS-property-attribute/">
+                iOS property attribute
               </a>
             
           
@@ -915,14 +417,14 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-05-27
+          發表於 2015-07-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/C/">C</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -935,8 +437,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/c-static/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/c-static/"></span>
+            <a href="/2015/07/13/iOS-property-attribute/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-property-attribute/"></span>
             </a>
           </span>
           
@@ -951,11 +453,110 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       
         
-          <h2 id="static">static</h2><ol>
-<li>static作用于变量时，该变量只会定义一次，以后在使用时不会重新定义，当static作用于全局变量时说明该变量只能在当前文件可以访问，其他文件中不能访问；</li>
-<li>static作用于函数时与作用于全局变量类似，表示声明或定义该函数是内部函数（又叫静态函数），在该函数所在文件外的其他文件中无法访问此函数</li>
+          <h2 id="iOS_property_&amp;&amp;_ivar_&amp;&amp;_local_variable">iOS property &amp;&amp; ivar &amp;&amp; local variable</h2><h3 id="default_attributes">default attributes</h3><ol>
+<li>property: atomic assign readwrite</li>
+<li>ivar &amp;&amp; local varibal: strong readwrite non-atomic</li>
 </ol>
+<blockquote>
+<p>atomic 在实现中通过加入 lock 的方式来保证多线程安全, 但是这只是很简单的一种线程安全, 只局限于此属性的读写.实际应用场景中, 业务的原子性, 是需要自己来实现的.</p>
+</blockquote>
+<h3 id="when_to_use_copy">when to use copy</h3><ol>
+<li>NSStrings: 为了防止其他地方修改</li>
+<li>block: 防止自动释放</li>
+<li>可变数据类型, 当你想阻止其他拥有者变更数据时.</li>
+</ol>
+<h3 id="尽量使用_copy_关键字">尽量使用 copy 关键字</h3><p>任何实现了<code>NSCopying</code>协议的类型, 都应该尽量采用<code>copy</code>. 因为我们定义的属性,在使用时可能是用一个可变的子属性来赋值的, 例如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Book</span> : <span class="title">NSObject</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stringExample &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSMutableString</span> *bookTitle = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"Best book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    Book *book = [[Book alloc] init];</span><br><span class="line">    book<span class="variable">.title</span> = bookTitle;</span><br><span class="line"> </span><br><span class="line">    [bookTitle setString:<span class="string">@"Worst book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"book title %@"</span>, book<span class="variable">.title</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-property-attribute/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
 
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/13/NSRunLoop深入理解/">
+                NSRunLoop深入理解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/NSRunLoop深入理解/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/NSRunLoop深入理解/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://www.cocoachina.com/ios/20150601/11970.html">转自</a></p>
+<h2 id="RunLoop">RunLoop</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;RunLoop 是 iOS 和 OS X 开发中非常基础的一个概念，这篇文章将从 CFRunLoop 的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用 RunLoop 实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
+<h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/NSRunLoop深入理解/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -978,7 +579,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/18/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/16/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/18/">&raquo;</a>
   </div>
 
 
@@ -1012,21 +613,21 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">201</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">98</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

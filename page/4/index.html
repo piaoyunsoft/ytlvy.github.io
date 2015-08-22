@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
-                dSYM parse tool
+              <a class="post-title-link" href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/">
+                Swift UIKit Dynamics Tutorial: Getting Started
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
+          發表於 2015-08-08
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
+            <a href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/"></span>
             </a>
           </span>
           
@@ -194,624 +194,29 @@
 
       
         
-          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
-<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
-                Variable Argument Lists
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
-<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
-<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
-<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
-<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
-<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
-<li>最后调用<code>va_end()</code>来进行清理。</li>
-</ol>
-<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
-<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
-<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-bit-computing/">
-                iOS bit computing
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-bit-computing/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-bit-computing/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_位与位运算">iOS 位与位运算</h2><h3 id="介绍">介绍</h3><p>位操作是程序设计中对位模式或二进制数的一元和二元操作. 在许多古老的微处理器上, 位运算比加减运算略快, 通常位运算比乘除法运算要快很多. 在现代架构中, 情况并非如此:位运算的运算速度通常与加法运算相同(仍然快于乘法运算).（摘自wikipedia）<br>OC作为c的扩展和超集，位运算自然使用的是c的操作符。c提供了6个位操作符，$，|，^，~，&lt;&lt;，&gt;&gt;。本文不打算做位运算的基础教学，只介绍一些开发中能用到的场景。</p>
-<h3 id="提高运算速度">提高运算速度</h3><p>如前一段所说，位运算的运算速度是通常与加法速度相当，但是快于乘法运算的。故而如果我们的程序对性能有要求，我们可以使用位运算来提高运算速度。比如：</p>
+          <h2 id="UIKit_Dynamics_教程:_起步">UIKit Dynamics 教程: 起步</h2><blockquote>
 <ul>
-<li>乘以2：n &lt;&lt; 1;</li>
-<li>除以2：n &gt;&gt; 1;</li>
-<li>乘以2的m次方：n &lt;&lt; m;</li>
-<li>除以2的m次方：n &gt;&gt; m;</li>
-<li>判断奇偶：(n &amp; 1) == 1;</li>
-<li>求平均数：(a + b) &gt;&gt; 1;</li>
-<li>……</li>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76147/uikit-dynamics-tutorial-swift">UIKit Dynamics Tutorial: Getting Started</a></li>
+<li>原文作者: <a href="http://www.raywenderlich.com/u/frosty">James Frost</a></li>
+<li>译文出自: <a href="http://www.devtf.cn/">开发技术前线http://www.devtf.cn/</a></li>
+<li>译者 : <a href="https://github.com/Lollypo">Lollypo</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a></li>
+<li>状态 :  完成</li>
 </ul>
-<p>基于乘除法的位运算提速还有很多，这里不一一列举。需要注意的是，你应当只在遇到性能瓶颈的时候，并且瓶颈的确是计算的时候才这么做。因为使用位运算并不利于程序的可读性和可维护性。（科学计算除外）</p>
-<h3 id="压缩空间">压缩空间</h3><p>以前接触过ACM的筒子们应该对状态压缩不陌生，状态压缩的目的在于把一个大数据用有限的内存空间来进行表示。比如 Programming Pearls 里面的一个经典示例：如何对最多有一千万条不重复的7位整数（电话号码）进行排序？且可使用的内存空间有大约1MB多。</p>
-<p>显而易见的常规做法既是做一个基于磁盘操作的外排序。然而如果转换一下思路，充分的使用内存中的每一个位，加上不存在重复的电话号码，以及不存在0和1开头的电话号码。我们只需要使用1000万个位（大约1.2mb），就能以集合的方式在内存里标记下所有的数据，从而轻松的实现位排序。此种方法大幅度的减少了IO时间，从而获得巨大的性能提升。</p>
-<p>ACM里面有大量的如果使用位来压缩空间的示例，状态压缩的动态规划等，此处不做展开，只告诉读者，充分的使用内存的每一个位，经常能带来意想不到的收获。但需要注意的是，状态的压缩和提取，都需要一定的计算量，有时一味的追求状态压缩，反而会降低效率。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-bit-computing/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-Toll-Free-Bridging/">
-                iOS Toll-Free Bridging
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-Toll-Free-Bridging/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-Toll-Free-Bridging/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">reference</a></p>
-<h2 id="Toll-Free_Bridging">Toll-Free Bridging</h2><h3 id="什么是_Toll-Free_Bridging">什么是 Toll-Free Bridging</h3><p>有一些数据类型是能够在 <code>Core Foundation Framework</code> 和 <code>Foundation Framework</code> 之间交换使用的。这意味着，对于同一个数据类型，你既可以将其作为参数传入 <code>Core Foundation</code>函数，也可以将其作为接收者对其发送 <code>Objective-C</code> 消息（即调用ObjC类方法）。这种在 <code>Core Foundation 和 Foundation</code> 之间交换使用数据类型的技术就叫 <code>Toll-Free Bridging</code>.</p>
-<p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
-<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-Toll-Free-Bridging/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-attribute-objc-designated-initializer/">
-                iOS attribute objc_designated_initializer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-attribute-objc-designated-initializer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-attribute-objc-designated-initializer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="https://leafduo.com/articles/2014/03/20/objc-designated-initializer/" target="_blank" rel="external">reference</a></p>
-<h2 id="attribute((objc_designated_initializer))"><strong>attribute</strong>((objc_designated_initializer))</h2><p>指定初始化器（<code>designated initializer</code>）是 Objective-C 中的一个重要的概念，但是很可惜的是，很多开发者（不知道为什么）并没能正确遵守关于指定初始化器的一些惯例。 </p>
-<p>之前，我们只能通过 code review 之类的方法来找出、修正这些问题；现在，clang 为我们提供了编译器级别的支持，能够找出不遵守管理的地方并给出警告，我们需要做的是标记出哪个初始化器是指定初始化器，例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">interface</span> FTBObject</span><br><span class="line"></span><br><span class="line">- (instancetype)init __<span class="function">attribute__</span>((objc_designated_initializer))</span>;</span><br><span class="line"></span><br><span class="line"><span class="at_rule">@<span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
-<p>通过在接口定义中指定指定初始化器，不仅编译器能够给出相关的警告，而且需要继承该类的开发者也可以不参考文档就知道哪个初始化器是指定初始化器。</p>
-<p>目前，clang 可以提供一系列警告，例如非指定初始化器没有调用其他初始化器、指定初始化器没有调用父类的指定初始化器、指定初始化器调用了非指定初始化器、子类没有复写父类的指定初始化器等。 具体的例子可以看这个<a href="https://llvm.org/svn/llvm-project/cfe/trunk/test/SemaObjC/attr-designated-init.m" target="_blank" rel="external">测试用例</a>。</p>
-<p>不幸的是，目前系统库的接口还没有这个属性，也就是说只有继承自己的代码和标记了这个指令的第三方库中的类才有用。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/ios-GPUImage-simple-use/">
-                ios GPUImage simple use
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/ios-GPUImage-simple-use/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/ios-GPUImage-simple-use/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="GPUImage">GPUImage</h2><p>GPUImage 作者是 Brad Larson，以 BSD 协议放出，能够在图像、实时摄像头影像和视频上使用 GPU 加速的滤镜和其他效果.</p>
-<h3 id="GPU_vs-_CPU">GPU vs. CPU</h3><p>每只 iPhone 都有两个处理器：一个 CPU，也就是中央处理器，和一个 GPU，也就是图形处理器。每个处理器都有它自己的优势，现代芯片架构（例如 Apple A4）把 CPU 和 GPU 集成在一个物理封装里。</p>
-<p>在 Xcode 里面写 C 和 Objective-C 的时候，产生的指令绝大部分会被 CPU 执行。相对地，GPU 是一枚专用芯片，专门用来做独立的小操作，例如图形渲染。GPU 执行的指令和 CPU 是有很大区别的，因此用特殊的语言来编写：OpenGL（特别地，在 iPhone 和 iPad 上使用 OpenGL ES）</p>
-<h3 id="渲染管线">渲染管线</h3><p><img src="http://nshipster.s3.amazonaws.com/gpuimage-pipeline.png" alt=""></p>
-<p>GPUImage 从本质上来说是一个渲染管线的 <code>Objective-C</code>抽象。从相机、网络或者磁盘上加载的源图像，在经过一系列滤镜处理后，最终输出到了 <code>view</code>、<code>graphics context</code> 或是数据流中。</p>
-<p>例如说，摄像头中的图像可以应用一个 Color Levels 滤镜，来模拟各种色盲效果，然后实时显示在一个 view 中。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GPUImageVideoCamera *videoCamera = [[GPUImageVideoCamera alloc]</span><br><span class="line"><span class="label">    initWithSessionPreset:</span>AVCaptureSessionPreset640x480</span><br><span class="line"><span class="label">           cameraPosition:</span>AVCaptureDevicePositionBack];</span><br><span class="line">videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;</span><br><span class="line"></span><br><span class="line">GPUImageFilter *filter = [[GPUImageLevelsFilter alloc] </span><br><span class="line"><span class="label">                            initWithFragmentShaderFromFile:</span>@<span class="string">"CustomShader"</span>];</span><br><span class="line">[filter <span class="string">setRedMin:</span><span class="number">0.299</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setGreenMin:</span><span class="number">0.587</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setBlueMin:</span><span class="number">0.114</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[videoCamera <span class="string">addTarget:</span>filter];</span><br><span class="line"></span><br><span class="line">GPUImageView *filteredVideoView = [[GPUImageView alloc] <span class="string">initWithFrame:</span>self.view.bounds)];</span><br><span class="line">[filter <span class="string">addTarget:</span>filteredVideoView];</span><br><span class="line">[self.view <span class="string">addSubView:</span>filteredVideoView];</span><br><span class="line"></span><br><span class="line">[videoCamera startCameraCapture];</span><br></pre></td></tr></table></figure></p>
-<p>或者，结合不同的颜色混合模式，图像效果和一些调整，你可以把静止图像转变成可以分享给你时髦的朋友们看看的精美图像（例子来自基于 GPUImage 的 FilterKit）。<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GPUImageFilterGroup *filter = <span class="comment">[<span class="comment">[FKGPUFilterGroup alloc]</span> init]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageSaturationFilter *saturationFilter = <span class="comment">[<span class="comment">[GPUImageSaturationFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[saturationFilter setSaturation:0.5]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageMonochromeFilter *monochromeFilter = <span class="comment">[<span class="comment">[GPUImageMonochromeFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setColor:(GPUVector4)&#123;0.0f, 0.0f, 1.0f, 1.0f&#125;]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setIntensity:0.2]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageVignetteFilter *vignetteFilter = <span class="comment">[<span class="comment">[GPUImageVignetteFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[vignetteFilter setVignetteEnd:0.7]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageExposureFilter *exposureFilter = <span class="comment">[<span class="comment">[GPUImageExposureFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[exposureFilter setExposure:0.3]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">[filter addGPUFilter:exposureFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:monochromeFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:saturationFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:vignetteFilter]</span>;</span><br></pre></td></tr></table></figure></p>
-<p>看完了 GPUImage 的功能，一定很兴奋吧。GPUImage 非常简单，可以马上开始使用（不需要了解 OpenGL），性能上也足够完成你想要的一切。不止是这样，它还自带了非常多的积木一样的部件 — 色彩调整，混合模式，你能想到的想不到的一切视觉效果。</p>
-<p>GPUImage 是开源社区少有的好东西，我们 Mac 和 iOS 开发者非常幸运的能拥有它。用 GPUImage 做些牛逼的东西，向其他人展示一个崭新的世界</p>
-<h3 id="吐槽">吐槽</h3><p>我自己也用过一点 GPUImage，方便是很方便，不光是省掉了 AVFoundation 的许多烦人的 setup 代码，还内置了许多滤镜效果。不过它也有不少坑，我遇到的一个就是占用太多内存，一段时间后就 crash 掉了，毕竟是处理视频，需要不少内存，iPhone 的内存又不太多，就要更加注意。我当时是加了一个 @autoreleasepool 就好多了。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
-                C programe memory management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Memory/">Memory</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/C-programe-memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
-<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
-<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
-                iOS application framework -- network layer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
-<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
-<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
-<p>这篇文章就主要会讲这些方面：</p>
+</blockquote>
+<p><strong>更新备注</strong>:本教程是由<a href="http://www.raywenderlich.com/u/ColinEberhardt">Colin Eberhardt</a>编写的<a href="http://www.raywenderlich.com/?page_id=48020"> iOS 7 by Tutorials</a>其中某章节的精简版本.由James Frost更新到iOS8并用Swift重写,在Xcode 6 beta 7版本上测试通过。</p>
+<p>iOS的设计目标鼓励你去创建数字界面模拟触摸，手势，改变方向等，就好像它们真实的物理对象而远非像素的集合。最终给予用户更深层级的交互而不是肤浅的拟真设计。</p>
+<p>这听起来感觉挺难的，因为让数字界面看起来是真实的远比让它感觉是真实的简单。不过好在你有一些漂亮的新工具:</p>
 <ul>
-<li>网络层跟业务对接部分的设计</li>
-<li>网络层的安全机制实现</li>
-<li>网络层的优化方案</li>
+<li><strong>UIKit Dynamics</strong> 是集成到UIKit中的物理引擎。这允许你创建一个感觉像是真实的界面，通过添加一些行为，例如重力，锚连接 (弹簧)以及力. 你可以定义你希望你的界面需要的物理特征, Dynamics会帮你关心其他的细枝末节。</li>
+<li><strong>Motion Effects</strong> 允许你创建类似于iOS 7 主屏幕中酷酷的视差效果. 基本上你可以利用手机加速器提供的数据来创建界面来模拟手机方向发生改变的反应。</li>
 </ul>
+<p>当一起使用的时候，由 Dynamics 与 Motion形成用户体验的工具，让你的界面给用户生活带来非同一般的体验。当观察到他们的操作是通过一种自然、动态的方式，你的用户将会与你的app进行更深层次的连接。</p>
+<blockquote>
+<p><strong>注意</strong>: 由于本教程编写的时候iOS 8 还处于测试中，因此<a href="http://www.raywenderlich.com/?p=74138">没有提供iOS8的截图</a>. 所有的截图都是iOS7环境下的,不过看起来与iOS 8相差不大.</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
+            <a class="btn" href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -844,8 +249,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-view-layer/">
-                iOS application framework -- view layer
+              <a class="post-title-link" href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/">
+                Swift UIKit Dynamics - Tossing Views
               </a>
             
           
@@ -854,14 +259,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
+          發表於 2015-08-08
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Framework/">Framework</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -874,8 +279,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-view-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-view-layer/"></span>
+            <a href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/"></span>
             </a>
           </span>
           
@@ -890,16 +295,24 @@
 
       
         
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_view层的组织和调用方案">iOS应用架构谈 view层的组织和调用方案</h2><h3 id="前言">前言</h3><p>《iOS应用架构谈 开篇》出来之后，很多人来催我赶紧出第二篇。这一篇文章出得相当艰难，因为公司里的破事儿特别多，我自己又有点私事儿，以至于能用来写博客的时间不够充分。</p>
-<p>现在好啦，第二篇出来了。</p>
-<hr>
-<p>当我们开始设计View层的架构时，往往是这个App还没有开始开发，或者这个App已经发过几个版本了，然后此时需要做非常彻底的重构。</p>
-<p>一般也就是这两种时机会去做View层架构，基于这个时机的特殊性，我们在这时候必须清楚认识到：View层的架构一旦实现或定型，在App发版后可修改的余地就已经非常之小了。因为它跟业务关联最为紧密，所以哪怕稍微动一点点，它所引发的蝴蝶效应都不见得是业务方能够hold住的。这样的情况，就要求我们在实现这个架构时，代码必须得改得勤快，不能偷懒。也必须抱着充分的自我怀疑态度，做决策时要拿捏好尺度。</p>
-<hr>
-<p>View层的架构非常之重要，在我看来，这部分架构是这系列文章涉及4个方面最重要的一部分，没有之一。为什么这么说？</p>
+          <h2 id="UIKit_Dynamics_和_Swift_教程：抛掷视图_(Tossing_Views)">UIKit Dynamics 和 Swift 教程：抛掷视图 (Tossing Views)</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/94719/uikit-dynamics-swift-tutorial-tossing-views">UIKit Dynamics and Swift Tutorial:Tossing Views</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com">Ray Wenderlich</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00">samw00</a> </li>
+<li>校对者: <a href="https://github.com/mrchenchao">mrchenchao</a></li>
+<li>状态 : 完成</li>
+</ul>
+</blockquote>
+<p>在这篇UIKit Dynamics教程中，你将学会如何通过添加手势，用一种很自然的方式将视图抛掷出屏幕的显示区域。如下图所示：</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2014/07/UIKitDynamics3.gif" alt="效果预览图"></p>
+<p>你可能已经在<a href="https://itunes.apple.com/us/app/tweetbot-3-for-twitter-iphone/id722294701">Tweetbot</a>这个流行的app里看到这一个技巧被大量的运用。</p>
+<p>这篇教程特别适合中级水平的开发人员，因为内容包括如何实现一些特别棒的特效，比如用原生的UIKit框架实现旋转(rotation)和飞离(fly-away)等动画效果。</p>
+<p>如果你刚刚接触UIKit dynamics, 也别紧张 － 因为这篇教程会一步一步引导你如何去做。</p>
+<p>废话不多说，让我们直切主题吧！</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-view-layer/#more">
+            <a class="btn" href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -932,8 +345,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-first/">
-                iOS application framework -- first
+              <a class="post-title-link" href="/2015/08/08/Swift-EventKit-Requesting-Permission/">
+                Swift EventKit - Requesting Permission
               </a>
             
           
@@ -942,14 +355,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
+          發表於 2015-08-08
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Framework/">Framework</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -962,8 +375,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-first/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-first/"></span>
+            <a href="/2015/08/08/Swift-EventKit-Requesting-Permission/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-EventKit-Requesting-Permission/"></span>
             </a>
           </span>
           
@@ -978,15 +391,224 @@
 
       
         
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html">reference</a></p>
-<h2 id="iOS应用架构谈_开篇">iOS应用架构谈 开篇</h2><h3 id="缘由">缘由</h3><p>之前安居客iOS app的第二版架构大部分内容是我做的，期间有总结了一些经验。在将近一年之后，前同事zzz在微信朋友圈上发了一个问题：假如问你一个<code>iOS or Android app</code>的架构，你会从哪些方面来说呢？</p>
-<p>当时看到这个问题正好在乘公车回家的路上，闲来无聊就答了一把。在zzz在微信朋友圈上追问了几个问题之后，我觉得有必要开个博客专门来讲讲一些个人见解。</p>
-<p>其实对于iOS客户端应用的架构来说，复杂度不亚于服务端，但侧重点和入手点却跟服务端不太一样。比如客户端应用就不需要考虑类似C10K的问题，正常的app就根本不需要考虑。</p>
-<p>这系列文章我会主要专注在iOS应用架构方面，很多方案也是基于iOS技术栈的特点而建立的。因为我个人不是很喜欢写Java，所以Android这边的我就不太了解了。如果你是Android开发者，你可以侧重看我提出的一些架构思想，毕竟不管做什么，思路是相通的，实现手段不同罢了。</p>
-<h3 id="当我们讨论客户端应用架构的时候，我们在讨论什么？">当我们讨论客户端应用架构的时候，我们在讨论什么？</h3><p>其实市面上大部分应用不外乎就是颠过来倒过去地做以下这些事情：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">|<span class="string"> 调用网络API  </span>|<span class="string"> --&gt; </span>|<span class="string">   展现列表    </span>|<span class="string"> --&gt; </span>|<span class="string">  选择列表    </span>|<span class="string"> --&gt; </span>|<span class="string">   展现单页   </span>|</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">                           ^                                        |<span class="string"></span><br><span class="line">                           </span>|<span class="string">                                        </span>|</span><br><span class="line">                           |<span class="string">                                        </span>|</span><br><span class="line">                           ------------------------------------------</span><br></pre></td></tr></table></figure></p>
-<p>简单来说就是调API，展示页面，然后跳转到别的地方再调API，再展示页面。</p>
+          <h1 id="Swift_EventKit的初学者指南—请求权限">Swift  EventKit的初学者指南—请求权限</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/05/14/beginners-guide-to-eventkit-in-swift-requesting-permission/">Beginner’s Guide to EventKit in Swift – Requesting Permission</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 : 校对完成</li>
+</ul>
+</blockquote>
+<p>EventKit为获取和操作用户日历事件和提醒提供了一系列的类.在下面的教程中,我的目标是带领你走出利用EventKit建立一个应用程序的第.我的目标是带领你迈出利用EventKit建立一个应用程序的第一步.我将演示如何向用户的日历请求许可,我还将展示几个处理用户响应的例子(当他们授予访问权限,或者拒绝).</p>
+<h1 id="Example_scenario">Example scenario</h1><h1 id="场景">场景</h1><p>让我们先提出一个基本方案，作为本教程的例子。</p>
+<p>假设我们正在构建一个应用程序，现在，有一个单一的视图控制器。在得到用户授权允许的情况下，我们希望这个视图控制器显示日历列表。如果用户拒绝访问,我们将向用户展示一个消息,用来说明我们的应用程序在没有访问权限时不能运行,我们也将允许他们通过单击一个按钮能够在他们的设备的设置中设置授权访问.</p>
+<p>我已经创建一个那样的应用程序作为例子—跳到GitHub中查看并研究这个例子的代码.</p>
+<blockquote>
+<p>资源</p>
+<p><a href="https://github.com/andrewcbancroft/EventTracker/tree/ask-for-permission">Xcode工程示例</a></p>
+</blockquote>
+<h1 id="Storyboard_setup">Storyboard setup</h1><h1 id="故事面板设置">故事面板设置</h1>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-first/#more">
+            <a class="btn" href="/2015/08/08/Swift-EventKit-Requesting-Permission/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/">
+                Swift Core Graphics Tutorial Part 1: Getting Started
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Core_Graphics教程第一部分(Swift)_-_起步">Core Graphics教程第一部分(Swift) - 起步</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1">Core Graphics Tutorial Part 1: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/caroline">Caroline Begbie </a></li>
+<li>译文出自 :  <a href="www.devtf.cn">开发技术前线</a></li>
+<li>译者 : <a href="https://github.com/sdq/">sdq</a>  <a href="https://github.com/StormXX/">StormXX</a></li>
+<li>校对者:  <a href="https://github.com/StormXX/">StormXX</a></li>
+</ul>
+</blockquote>
+<p>想象一下…当你完成了你的应用，它能够很好地运行，但是界面还缺少个人的风格。这时，你可以选择用PS画出一系列尺寸的图片，并希望Apple不会再推出一个<strong>@4x</strong>的retina显示尺寸…   </p>
+<p>或者，你可以领先一步，采用Core Graphics进行绘图，保证一个图片可以适应各种尺寸的屏幕。   </p>
+<p>Core Graphics是苹果的一个矢量图绘制框架 - 它是一个大型且给力的API、有很多需要去学习。不过别慌，这个系列的文章会带你由简入深地学习Core Graphics，最后你将可以在你的应用中创作令人惊叹的图片。   </p>
+<p>这是一个全新的系列，采用最新的方式来学习Core Graphics。这个系列完全和Xcode6与Swift保持同步，并且包含了一些很酷的新特性，比如<strong>@IBDesignable</strong>和<strong>@IBInspectable</strong>，这让学习Core Graphics变得更有趣也更容易。</p>
+<p>拿起可乐，让我们开始吧！</p>
+<h2 id="介绍Flo_-_一款记录喝水杯数的App">介绍Flo - 一款记录喝水杯数的App</h2><p>你将会完成一个追踪你喝水习惯的app。   </p>
+<p>Flo可以让你很轻松地追踪到你喝了多少水。人们说一天喝8杯水才是健康的，但是往往喝了几杯水之后我们就忘了记录了。这就是Flo使用的时候了，每当你喝完一杯水以后，你就可以在Flo上点击计数，Flo会为你记录喝水情况。你也可以在Flo上查看到过去7天的喝水状况。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/1-CompletedApp.gif" alt="demo"></p>
+<p>在这个系列的第一部分，你将会通过UIKit的画图方法创建三个控件。<br>第二部分中，你将会深入了解Core Graphics的内容并且学习绘图。<br>最后第三部分，你将会制作一个样式背景，并且获得自制的Core Graphics奖牌 ：）</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/">
+                Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Core_Graphics_教程第三部分(Swift)_-_Patterns_和_Playgrounds">Core Graphics 教程第三部分(Swift) - Patterns 和 Playgrounds</h2><blockquote>
+<ul>
+<li>原文链接：<a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3">Core Graphics Tutorial Part 3: Patterns and Playgrounds</a></li>
+<li>原文作者：<a href="http://www.raywenderlich.com/u/caroline"> Caroline Begbie </a></li>
+<li>译文出自：<a href="www.devtf.cn">开发者前线</a></li>
+<li>译者：<a href="https://github.com/MrLoong">MrLoong</a></li>
+<li>校对者：<a href="https://github.com/samw00">samw00</a></li>
+</ul>
+</blockquote>
+<p>欢迎回到Core Graphics 教学系列的第三也是最后一部分！Flo，你的water drinking tracking app将使用Core Graphics 进行最终的改进。</p>
+<p>在<a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1">第一部分</a>，你通过UIKit画了三个自定义形状的控件,<a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2">在第二部分</a>你创建了一个视图用来显示用户在过去一周的喝水量，并且研究了transforming the context transformation matrix (CTM)</p>
+<p>在这第三也是最后一部分，你将使<strong>Flo</strong>升级到它的最终形态，特别的是你将：</p>
+<ul>
+<li>创建一个重复的背景图案</li>
+<li>为成功每天喝掉8杯水的用户从头到尾画一枚奖章</li>
+</ul>
+<p>如果你还没有这个项目的源代码，从本系列的第二部分下载<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part2-6.3.zip"><strong>Flo工程</strong></a></p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt=""></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1012,7 +634,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
   </div>
 
 
@@ -1046,21 +668,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">201</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">分類</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">98</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
