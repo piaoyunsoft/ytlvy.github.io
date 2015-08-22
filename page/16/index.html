@@ -148,6 +148,323 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/17/iOS-category-dig/">
+                iOS category dig
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-category-dig/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-category-dig/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/03/05/objc_category_secret/" target="_blank" rel="external">转自</a></p>
+<h2 id="objc_category的秘密">objc category的秘密</h2><h3 id="category的真面目">category的真面目</h3><p>objc所有类和对象都是c结构体，category当然也一样，下面是runtime中category的结构：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="keyword">_category_t</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name; <span class="comment">// 1</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">_class_t</span> *cls; <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *instance_methods; <span class="comment">// 3</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *class_methods; <span class="comment">// 4</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_protocol_list_t</span> *protocols; <span class="comment">// 5</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_prop_list_t</span> *properties; <span class="comment">// 6</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>name</code> 注意，并不是<code>category</code>小括号里写的名字，而是类的名字</li>
+<li><code>cls</code> 要扩展的类对象，编译期间这个值是不会有的，在app被runtime加载时才会根据name对应到类对象</li>
+<li><code>instance_methods</code>这个category所有的-方法</li>
+<li><code>class_methods</code>这个category所有的+方法</li>
+<li><code>protocols</code>这个category实现的protocol，比较不常用在category里面实现协议，但是确实支持的</li>
+<li><code>properties</code>这个category所有的property，这也是category里面可以定义属性的原因，不过这个property不会@synthesize实例变量，一般有需求添加实例变量属性时会采用<code>objc_setAssociatedObject</code>和<code>objc_getAssociatedObject</code>方法绑定方法绑定，不过这种方法生成的与一个普通的实例变量完全是两码事。</li>
+</ol>
+<h3 id="编译器，你对category干了什么？">编译器，你对category干了什么？</h3><p>举个栗子看，定义下面一个类和它的category，实现忽略，保存为sark.h和sark.m</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">Sark </span>: NSObject</span><br><span class="line">- (void)speak;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@interface</span> Sark (GayExtention)</span><br><span class="line">- (void)burst;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<p>请出clang的重写命令：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>clang -rewrite-objc sark.m</span><br></pre></td></tr></table></figure>
+<p>同级目录下会生成sark.cpp，这就是objc代码重写成c++(基本就是c)的实现。<br>打开生成的文件，发现茫茫多，排除include进来的header，自己的代码都在文件尾部了，看看上面的category被编译器搞成什么样子了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> <span class="keyword">_category_t</span> _OBJC_$_CATEGORY_Sark_$_GayExtention __attribute__ ((used, section (<span class="string">"__DATA,__objc_const"</span>))) =</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"Sark"</span>,</span><br><span class="line">    <span class="number">0</span>, <span class="comment">// &amp;OBJC_CLASS_$_Sark,</span></span><br><span class="line">    (<span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *)&amp;_OBJC_$_CATEGORY_INSTANCE_METHODS_Sark_$_GayExtention,</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>先注意这个category的名字<code>_OBJC_$_CATEGORY_Sark_$_GayExtention</code>，这是一个按规则生成的符号了，中间的<code>Sark</code>是类名，后面的<code>GayExtention</code>是类别的名字，这也就是为什么同一个类的<code>category</code>名不能冲突了<br>对应看上面<code>_category_t</code>的定义，因为category里面只添加了一个<code>- burst</code>方法，所以只有实例方法那一项被填充了值<code>_OBJC_$_CATEGORY_INSTANCE_METHODS_Sark_$_GayExtention</code></p>
+<p>其中<code>_I_Sark_GayExtention_burst</code>符号就代表了category里面的<code>- burst</code>方法，同样遵循了一定的命名规范，里面的<code>I</code>表示实例方法</p>
+<p>最后，这个类的category们生成了一个数组，存在了<code>__DATA</code>段下的<code>__objc_catlistsection</code>里<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> _category_t *L_OBJC_LABEL_<span class="built_in">CATEGORY_</span>$ [<span class="number">1</span>] __attribute__((used, section (<span class="string">"__DATA, __objc_catlist, regular, no_dead_strip"</span>)))= &#123;</span><br><span class="line">    &amp;_OBJC_$_<span class="built_in">CATEGORY_Sark_</span>$_GayExtention,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>至此编译器的任务完成了。</p>
+<h3 id="runtime，我的category哪儿去了？">runtime，我的category哪儿去了？</h3><p>我们知道，category动态扩展了原来类的方法，在调用者看来好像原来类本来就有这些方法似的，有两个事实：</p>
+<ol>
+<li>不论有没有import category 的.h，都可以成功调用category的方法，都影响不到category的加载流程，import只是帮助了编译检查和链接过程</li>
+<li>runtime加载完成后，category的原始信息在类结构里将不会存在</li>
+</ol>
+<p>这需要探究下runtime对category的加载过程，这里就简单说一下</p>
+<ol>
+<li>objc runtime的加载入口是一个叫_objc_init的方法，在library加载前由libSystem dyld调用，进行初始化操作</li>
+<li>调用map_images方法将文件中的imagemap到内存</li>
+<li>调用_read_images方法初始化map后的image，这里面干了很多的事情，像load所有的类、协议和category，著名的+ load方法就是这一步调用的</li>
+<li>仔细看category的初始化，循环调用了_getObjc2CategoryList方法，这个方法拿出来看看：</li>
+<li>…</li>
+</ol>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define GETSECT(name, type, sectname)                                   \</span></span><br><span class="line">    <span class="typedef"><span class="keyword">type</span> *name<span class="container">(<span class="title">const</span> <span class="title">header_info</span> *<span class="title">hi</span>, <span class="title">size_t</span> *<span class="title">outCount</span>)</span>  \</span></span><br><span class="line">    &#123;                                                                   \</span><br><span class="line">        unsigned long byteCount = <span class="number">0</span>;                                    \</span><br><span class="line">        <span class="typedef"><span class="keyword">type</span> *<span class="keyword">data</span> = <span class="container">(<span class="title">type</span> *)</span>                                           \</span></span><br><span class="line">            getsectiondata(hi-&gt;mhdr, <span class="type">SEG_DATA</span>, sectname, &amp;byteCount);   \</span><br><span class="line">        *outCount = byteCount / sizeof(<span class="typedef"><span class="keyword">type</span>);                           \</span></span><br><span class="line">        return <span class="typedef"><span class="keyword">data</span>;                                                    \</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// ... //</span><br><span class="line"></span><br><span class="line"><span class="type">GETSECT</span>(_getObjc2CategoryList, category_t *, <span class="string">"__objc_catlist"</span>);</span><br></pre></td></tr></table></figure>
+<p>眼熟的<code>__objc_catlist</code>，就是上面category存放的数据段了，可以串连起来了</p>
+<p>在调用完<code>_getObjc2CategoryList</code>后，runtime终于开始了category的处理，简化的代码如下</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Process this category.</span></span><br><span class="line"><span class="comment">// First, register the category with its target class.</span></span><br><span class="line"><span class="comment">// Then, rebuild the class's method lists (etc) if</span></span><br><span class="line"><span class="comment">// the class is realized.</span></span><br><span class="line">BOOL classExists = NO;</span><br><span class="line"><span class="keyword">if</span> <span class="params">(cat-&gt;instanceMethods ||  cat-&gt;protocols  ||  cat-&gt;instanceProperties)</span></span><br><span class="line">&#123;</span><br><span class="line">    addUnattachedCategoryForClass<span class="params">(cat, cls, hi)</span>;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(isRealized<span class="params">(cls)</span>)</span> &#123;</span><br><span class="line">        remethodizeClass<span class="params">(cls)</span>;</span><br><span class="line">        classExists = YES;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="params">(cat-&gt;classMethods  ||  cat-&gt;protocols )</span></span><br><span class="line">&#123;</span><br><span class="line">    addUnattachedCategoryForClass<span class="params">(cat, cls-&gt;isa, hi)</span>;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(isRealized<span class="params">(cls-&gt;isa)</span>)</span> &#123;</span><br><span class="line">        remethodizeClass<span class="params">(cls-&gt;isa)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先分成两拨，一拨是实例对象相关的调用a<code>ddUnattachedCategoryForClass</code>，一拨是类对象相关的调用<code>addUnattachedCategoryForClass</code>，然后会调到<code>attachCategoryMethods</code>方法，这个方法把一个类所有的<code>category_list</code>的所有方法取出来组成一个<code>method_list_t **</code>，注意，这里是倒序添加的，也就是说，新生成的category的方法会先于旧的category的方法插入</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line"><span class="title">attachCategoryMethods</span><span class="params">(class_t *cls, category_list *cats,</span><br><span class="line">                      BOOL *inoutVtablesAffected)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!cats) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (PrintReplacedMethods) printReplacements(cls, cats);</span><br><span class="line"></span><br><span class="line">    BOOL isMeta = isMetaClass(cls);</span><br><span class="line">    <span class="keyword">method_list_t</span> **mlists = (<span class="keyword">method_list_t</span> **)</span><br><span class="line">        _malloc_internal(cats-&gt;count * <span class="keyword">sizeof</span>(*mlists));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Count backwards through cats to get newest categories first</span></span><br><span class="line">    <span class="keyword">int</span> mcount = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = cats-&gt;count;</span><br><span class="line">    BOOL fromBundle = NO;</span><br><span class="line">    <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">        <span class="keyword">method_list_t</span> *mlist = cat_method_list(cats-&gt;<span class="built_in">list</span>[i].cat, isMeta);</span><br><span class="line">        <span class="keyword">if</span> (mlist) &#123;</span><br><span class="line">            mlists[mcount++] = mlist;</span><br><span class="line">            fromBundle |= cats-&gt;<span class="built_in">list</span>[i].fromBundle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    attachMethodLists(cls, mlists, mcount, NO, fromBundle, inoutVtablesAffected);</span><br><span class="line"></span><br><span class="line">    _free_internal(mlists);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生成了所有method的list之后，调用attachMethodLists将所有方法前序添加进类的方法的数组中，也就是说，如果原来类的方法是a,b,c，类别的方法是1,2,3，那么插入之后的方法将会是1,2,3,a,b,c，也就是说，原来类的方法被category的方法覆盖了，但被覆盖的方法确实还在那里。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/ios-self-in-arc/">
+                ios self in arc
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/ios-self-in-arc/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/ios-self-in-arc/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/" target="_blank" rel="external">转自</a></p>
+<h2 id="ARC对self的内存管理">ARC对self的内存管理</h2><p>记录下前两天的一次讨论，源于网络库<code>YTKNetwork</code>中“YTKRequest.m”的 <code>- start</code> 方法其中的几行代码：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)start &#123;</span><br><span class="line">    // ......</span><br><span class="line">    YTKRequest *<span class="keyword">strongSelf </span>= <span class="keyword">self;</span><br><span class="line"></span>    [<span class="keyword">strongSelf.delegate </span>requestFinished:<span class="keyword">strongSelf];</span><br><span class="line"></span>    <span class="preprocessor">if</span> (<span class="keyword">strongSelf.successCompletionBlock) </span>&#123;</span><br><span class="line">        <span class="keyword">strongSelf.successCompletionBlock(strongSelf);</span><br><span class="line"></span>    &#125;</span><br><span class="line">    [<span class="keyword">strongSelf </span>clearCompletionBlock]<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体的问题大概是这样：</p>
+<ol>
+<li>调用方（如view controller）实例化并强引用YTKRequest对象，将自己作为其delegate</li>
+<li>调用方调用YTKRequest的 <code>- start</code> 方法发起网络请求</li>
+<li>调用方在 <code>- requestFinished:</code> 中执行了<code>self.request = nil</code>;</li>
+<li>YTKRequest中，<code>- start</code>方法在回调完-<code>requestFinished:</code> 后 BAD_ACCESS了</li>
+</ol>
+<p>也就是说，<code>- start</code>方法还未返回时，<code>self</code>就被外部释放了。作者发现了这个潜在的问题，所以在方法局部增设了一个<code>strongSelf</code>的强引用来保证self的生命周期延续到方法结束。问题是解决了，但是更希望知道原因。</p>
+<p>简化说明就是：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">foo</span> &#123;</span><br><span class="line">    <span class="comment">// self被delegate持有</span></span><br><span class="line">    <span class="attr_selector">[self.delegate callout]</span>; <span class="comment">// 外部释放了这个对象</span></span><br><span class="line">    <span class="comment">// 这里self野指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在想想还是比较不符合常理，入参的self居然不能保证这个函数执行完成。后来查阅了下文档，发现是ARC的(gao)机(de)制(gui)，clang的《这篇ARC文档》中有明确的解释，总结如下：</p>
+<ul>
+<li>ARC下，self既不是strong也不是weak，而是unsafe_unretained的，也就是说，入参的self被表示为：（init系列方法的self除外）</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)start &#123;</span><br><span class="line">   <span class="keyword">const</span> __unsafe_unretained YTKRequest *<span class="keyword">self</span>;</span><br><span class="line">   <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在方法调用时，ARC不会对self做retain或release，生命周期全由它的调用方来保证，如果调用方没有保证，就会出现上面的crash</li>
+<li>ARC这样做的原因是性能优化，objc中100%的方法（不是函数）调用第一个参数都是self，同时，99%的情况下，调用方都不会在方法执行时把这个对象释放，所以相比于在每个方法中插入对self的引用计数管理：<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)start &#123;</span><br><span class="line">    objc_retain(<span class="keyword">self</span>);</span><br><span class="line">    <span class="regexp">//</span> 其中的代码<span class="keyword">self</span>一定不会被释放</span><br><span class="line">    objc_release(<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>优化了的性能还真是比较可观。 而且，ARC也用了挺多方法来避免开发者进行额外的引用计数控制，比如方法的命名约定，通过判断方法是否以如init，alloc，new，copy等关键字开头来决定其内存管理方式。</p>
+<hr>
+<h4 id="One_more_thing">One more thing</h4><p>在写test时发现，下面两种调用方法会导致不同结果：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">viewDidLoad</span> &#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    <span class="attr_selector">[_request start]</span>; <span class="comment">// crash</span></span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="attr_selector">[self.request start]</span>; <span class="comment">// 正常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为self.request是一次方法调用，返回的结果被objc_retainAutoreleasedReturnValue方法在局部进行了一次强引用</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/iOS-Class-Clusters/">
+                iOS Class Clusters
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-Class-Clusters/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-Class-Clusters/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/12/18/class-cluster/" target="_blank" rel="external">转自</a></p>
+<h2 id="从NSArray看类簇">从NSArray看类簇</h2><h3 id="Class_Clusters">Class Clusters</h3><p>Class Clusters（类簇）是<code>抽象工厂</code>模式在iOS下的一种实现，众多常用类，如NSString，NSArray，NSDictionary，NSNumber都运作在这一模式下，它是接口简单性和扩展性的权衡体现，在我们完全不知情的情况下，偷偷隐藏了很多具体的实现类，只暴露出简单的接口。</p>
+<h3 id="NSArray的类簇">NSArray的类簇</h3><p>虽然<a href="https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/ClassClusters/ClassClusters.html" target="_blank" rel="external">官方文档</a>中拿<code>NSNumber</code>说事儿，但Foundation并没有像图中描述的那样为每个number都弄一个子类，于是研究下NSArray类簇的实现方式。</p>
+<h4 id="__NSPlacehodlerArray">__NSPlacehodlerArray</h4><p>熟悉这个模式的同学很可能看过下面的测试代码，将原有的alloc+init拆开写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> obj1 = [<span class="built_in">NSArray</span> alloc]; <span class="comment">// __NSPlacehodlerArray *</span></span><br><span class="line"><span class="keyword">id</span> obj2 = [<span class="built_in">NSMutableArray</span> alloc];  <span class="comment">// __NSPlacehodlerArray *</span></span><br><span class="line"><span class="keyword">id</span> obj3 = [obj1 init];  <span class="comment">// __NSArrayI *</span></span><br><span class="line"><span class="keyword">id</span> obj4 = [obj2 init];  <span class="comment">// __NSArrayM *</span></span><br></pre></td></tr></table></figure>
+<p>发现<code>+ alloc</code>后并非生成了我们期望的类实例，而是一个<code>__NSPlacehodlerArray</code>的中间对象，后面的<code>- init</code>或<code>- initWithXXXXX</code>消息都是发送给这个中间对象，再由它做工厂，生成真的对象。这里的<code>__NSArrayI</code>和<code>__NSArrayM</code>分别对应Immutable和Mutable（后面的I和M的意思）</p>
+<p>于是顺着思路猜实现，<code>__NSPlacehodlerArray</code>必定用某种方式存储了它是由谁alloc出来的这个信息，才能在init的时候知道要创建的是可变数组还是不可变数组</p>
+<p>于是乎很开心的去看了下*obj1的内存布局：</p>
+<p><img src="http://ww4.sinaimg.cn/large/51530583jw1em3doxs660j20l80j6go3.jpg" alt=""></p>
+<p>下面是32位模拟器中的内存布局（64位太长不好看就临时改32位了- -），第一个箭头是<code>*obj1</code>，第二个是<code>*obj2</code></p>
+<p><img src="http://ww3.sinaimg.cn/mw690/51530583jw1em3dvmuuanj213006maf2.jpg" alt=""></p>
+<p>我们知道，对象的前4字节（32位下）为isa指针，指向类对象地址，上图所示的<code>0x0051E768</code>就是<code>__NSPlacehodlerArray</code>类对象地址，可以从lldb下po这个地址来验证。</p>
+<p>那么问题来了，这个中间对象并没有储存任何信息诶（除了isa外就都是0了），那它init的时候咋知道该创建什么呢？<br>经过研究发现，Foundation用了一个很贱的比较静态实例地址方式来实现，伪代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *GetPlaceholderFor<span class="built_in">NSArray</span>() &#123;</span><br><span class="line">    <span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *instanceFor<span class="built_in">NSArray</span>;</span><br><span class="line">    <span class="keyword">if</span> (!instanceFor<span class="built_in">NSArray</span>) &#123;</span><br><span class="line">        instanceFor<span class="built_in">NSArray</span> = [[__<span class="built_in">NSPlacehodlerArray</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instanceFor<span class="built_in">NSArray</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *GetPlaceholderFor<span class="built_in">NSMutableArray</span>() &#123;</span><br><span class="line">    <span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *instanceFor<span class="built_in">NSMutableArray</span>;</span><br><span class="line">    <span class="keyword">if</span> (!instanceFor<span class="built_in">NSMutableArray</span>) &#123;</span><br><span class="line">        instanceFor<span class="built_in">NSMutableArray</span> = [[__<span class="built_in">NSPlacehodlerArray</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instanceFor<span class="built_in">NSMutableArray</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NSArray实现</span></span><br><span class="line">+ (<span class="keyword">id</span>)alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == [<span class="built_in">NSArray</span> class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> GetPlaceholderFor<span class="built_in">NSArray</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NSMutableArray实现</span></span><br><span class="line">+ (<span class="keyword">id</span>)alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == [<span class="built_in">NSMutableArray</span> class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> GetPlaceholderFor<span class="built_in">NSMutableArray</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// __NSPlacehodlerArray实现</span></span><br><span class="line">- (<span class="keyword">id</span>)init</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == GetPlaceholderFor<span class="built_in">NSArray</span>()) &#123;</span><br><span class="line">        <span class="keyword">self</span> = [[__<span class="built_in">NSArrayI</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">self</span> == GetPlaceholderFor<span class="built_in">NSMutableArray</span>()) &#123;</span><br><span class="line">        <span class="keyword">self</span> = [[__<span class="built_in">NSArrayM</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Foundation不是开源的，所以上面的代码是猜测的，思路大概就是这样，可以这样验证下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> obj1 = [<span class="built_in">NSArray</span> alloc]; </span><br><span class="line"><span class="keyword">id</span> obj2 = [<span class="built_in">NSArray</span> alloc];</span><br><span class="line"><span class="keyword">id</span> obj3 = [<span class="built_in">NSMutableArray</span> alloc];</span><br><span class="line"><span class="keyword">id</span> obj4 = [<span class="built_in">NSMutableArray</span> alloc];</span><br><span class="line"><span class="comment">// 1和2地址相同，3和4地址相同，无论多少次都相同，且地址相差16位</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="静态不可变空对象">静态不可变空对象</h4><p>除此之外，Foundation对<code>不可变</code>版本的空数组也做了个小优化：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSArray <span class="keyword">*</span>arr1 = [[NSArray alloc] init];</span><br><span class="line">NSArray <span class="keyword">*</span>arr2 = [[NSArray alloc] init];</span><br><span class="line">NSArray <span class="keyword">*</span>arr3 = <span class="comment">@[];</span></span><br><span class="line">NSArray <span class="keyword">*</span>arr4 = <span class="comment">@[];</span></span><br><span class="line">NSArray <span class="keyword">*</span>arr5 = <span class="comment">@[@1];</span></span><br></pre></td></tr></table></figure>
+<p>上边1-4号都指向了同一个对象，而arr5指向了另一个对象。</p>
+<p>若干个不可变的空数组间没有任何特异性，返回一个静态对象也理所应当。<br>不仅是NSArray，Foundation中如<code>NSString</code>, <code>NSDictionary</code>, <code>NSSet</code>等区分可变和不可变版本的类，空实例都是静态对象（NSString的空实例对象是常量区的@””）</p>
+<p>所以也给用这些方法来测试对象内存管理的同学提个醒，很容易意料之外的。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/17/iOS-interface-dig/">
                 objc@interface的设计哲学与设计技巧
               </a>
@@ -460,360 +777,6 @@ DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment"
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/16/LLDB/">
-                LLDB
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/16/LLDB/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/LLDB/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="build">build</h3><p>Programs normally have to be compiled with a special option to allow debugging to take place. On UNIX, the option for clang++ is the -g option. For example<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">clang</span><span class="literal">+</span><span class="literal">+</span> <span class="literal">-</span><span class="comment">Wall</span> <span class="literal">-</span><span class="comment">g</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">prog1</span> <span class="comment">prog1</span><span class="string">.</span><span class="comment">cpp</span></span><br></pre></td></tr></table></figure></p>
-<p>We also include the -Wall option, which lists warnings (the ‘all’ is to list all warnings). Note that this option leads to executable files that are larger and slower, so you may not want to use it for final distributions or time-critical programs. But you can always remove the debugging information from an executable without recompiling it with the strip command. For more information on that, see the man page for strip (i.e., run man strip from the command line).</p>
-<p>The -g option causes the compiler to include information about the source file (the .cpp file) that is needed for debugging as part of the executable file. This causes the executable to be larger in size, and slightly slower, but allows for debugging. So when you run the debugger, you specify the executable file (not the source file) as the input to the debugger.</p>
-<h3 id="Start_Using_lldb">Start Using lldb</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lldb pro<span class="keyword">g1</span></span><br></pre></td></tr></table></figure>
-<h3 id="Executing_your_Program">Executing your Program</h3><p>command-line arguments<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">run</span> <span class="bash"><span class="number">100</span> <span class="built_in">test</span>1.dat // prog1 <span class="number">100</span> <span class="built_in">test</span>1.dat</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="help">help</h3><p>(lldb) help</p>
-<h3 id="excution">excution</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>r / run</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>s / step</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>n / next</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>c / continue</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>si / ni</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>finish  <span class="list">(<span class="keyword">finishes</span> executing the current function and then pauses)</span></span><br></pre></td></tr></table></figure>
-<h3 id="break_point">break point</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb)<span class="tag">b</span> <span class="function"><span class="title">main</span><span class="params">(set a break at all function named main)</span></span></span><br><span class="line">(lldb)<span class="tag">b</span> test<span class="class">.c</span>:<span class="number">12</span></span><br><span class="line">(lldb)<span class="tag">b</span> -[NSString stringWithFormat:]</span><br><span class="line">(lldb)br s -S count /br set -SvtDataCenterFetchComplete:userData:</span><br><span class="line">(lldb)br list</span><br><span class="line">(lldb)br <span class="tag">del</span> [n]</span><br></pre></td></tr></table></figure>
-<h3 id="watch_point">watch point</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">write</span> global_var(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> exp -w <span class="keyword">write</span> -- my_ptr(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint <span class="keyword">in</span> pointer)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">read</span> global_var(<span class="keyword">set</span> <span class="keyword">read</span> watchpoint)</span><br><span class="line">(lldb) watch modify -c <span class="string">'(global==5)'</span> (<span class="keyword">set</span> condition <span class="keyword">on</span> watch point)</span><br></pre></td></tr></table></figure>
-<h3 id="examining_variables">examining variables</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame variable <span class="list">(<span class="keyword">all</span> the arguments and local variables )</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v -a <span class="list">(<span class="keyword">show</span> local variables for current frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v isChanged</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> target v</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> print a_var / po a_var</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display &lt;var&gt; <span class="list">(<span class="keyword">display</span> that variable<span class="quoted">'s</span> value each time the program execution hits a breakpoint)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display <span class="list">(<span class="keyword">show</span> all display variable)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> undisplay</span><br></pre></td></tr></table></figure>
-<h3 id="Changing_a_Variable’s_Value">Changing a Variable’s Value</h3><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">expr x </span>=<span class="string"> 5</span></span><br></pre></td></tr></table></figure>
-<h3 id="examining_thread">examining thread</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> f<span class="list">(<span class="keyword">see</span> current and surrounding lines)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> list <span class="list">(<span class="keyword">shows</span> a listing of the source code where the breakpoint occurred)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> thread backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> bt / backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> up<span class="list">(<span class="keyword">select</span> the stack frame that called the current stack frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> down<span class="list">(<span class="keyword">select</span> the stack frame that is called by the current stack frame)</span></span><br></pre></td></tr></table></figure>
-<h3 id="executabe_&amp;&amp;_shared_library">executabe &amp;&amp; shared library</h3><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image list(list the <span class="keyword">main</span> executable andall dependent <span class="literal">shared</span> libraries)</span><br><span class="line">(lldb) image <span class="literal">dump</span> sections (<span class="literal">dump</span> all sectionsf rom the <span class="keyword">main</span> executable <span class="keyword">and</span> any sharedlibraries))</span><br></pre></td></tr></table></figure>
-<h3 id="exaples">exaples</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_subroutine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello world"</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> *p = NULL;</span><br><span class="line">    my_subroutine();</span><br><span class="line">    *p = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">", "</span> &lt;&lt; *p &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>type run, and let it run to completion (really until it crashes)</li>
-<li>try the bt and f commands</li>
-<li>set up a break point at line 12, which is the line that is causing the crash</li>
-<li>type run, and confirm that you want to restart the program</li>
-<li>at the breakpoint, try printing out the value in p (p p); note that it is NULL</li>
-<li>set the p pointer, which is currently NULL, to point to a valud value (the int variable - x): expr p = &amp;x</li>
-<li>enter c to let it continue running, and it should finish without crashing this time</li>
-</ul>
-<h3 id="远程调试">远程调试</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect <span class="string">connect:</span><span class="comment">//192.168.1.117:1234</span></span><br></pre></td></tr></table></figure>
-<h3 id="打印进程模块">打印进程模块</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image <span class="keyword">list</span> -o -<span class="literal">f</span></span><br></pre></td></tr></table></figure>
-<h3 id="读取寄存器">读取寄存器</h3><p>register read       读取寄存器<br>x/nfu <addr>        以指定方式读取地址<br>    n 单元格式<br>    f 显示方式, 可取如下值：<br>        x 按十六进制格式显示变量<br>        d 按十进制格式显示变量<br>        u 按十进制格式显示无符号整型<br>        o 按八进制格式显示变量<br>        t 按二进制格式显示变量<br>        a 按十六进制格式显示变量<br>        i 指令地址格式<br>        c 按字符格式显示变量<br>        f 按浮点数格式显示变量<br>    u 地址单元的长度<br>        b 表示单字节<br>        h 表示双字节<br>        w 表示四字节<br>        g 表示八字节</addr></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/16/Atom/">
-                Atom
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IDE/">IDE</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/16/Atom/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/Atom/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://ninghao.net/blog/2073" target="_blank" rel="external">转自</a></p>
-<h2 id="Atom">Atom</h2><p>一款编辑器入门还是很简单的，学会怎么样创建，打开，编辑，保存文件就行。剩下的就是慢慢熟悉，Atom 会不断带给你惊喜，如果你想简化或者加快平时工作中的某些任务或者动作，你就可以去搜索一下，Atom 要么本身就为你提供你需要的功能，没有的话，也可以通过现成的插件（Packages）或者自定义的方式解决。</p>
-<h3 id="安装">安装</h3><p>如果你顺着我们的路线走过来，你的电脑上应该已经安装好了系统的包管理工具，Windows 上的 Chocolatey，Mac 上的 Homebrew，Atom 编辑器可以通过包管理工具来安装。</p>
-<p>Windows<br>用管理员的身份打开 Powershell，然后用 choco install 去安装 Atom：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco <span class="keyword">install</span> atom</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>提示：Atom 编辑器体积挺大，在国内由于网络环境问题，在下载的时候会比较慢，有时也可能出现不能连接到远程服务器的错误，解决的方法就是，准备 “梯子” </p>
-</blockquote>
-<p>Mac<br>打开系统的 终端，然后用 Homebrew 的 brew install 命令去安装 Atom：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>install Caskroom/cask/atom</span><br></pre></td></tr></table></figure></p>
-<p>在命令行下面安装完 Atom 以后，可以输入 atom ，后面指定一个目录，这样会用 Atom 编辑器打开这个目录。另外 Atom 编辑器还自带了一个包管理工具叫 apm （Atom Package Manager），用这个工具可以在命令行下面为编辑器去安装包 （Package） ，包就是 Atom 的插件。</p>
-<h3 id="Packages">Packages</h3><p>Atom 核心的功能是由 Core Packages（核心包） 提供的，另外还有 Community Packages（社区包），就是由社区成员自己开发并且分享出来的 Package。Atom 可以通过安装这些 Package 来扩展编辑器的功能。安装 Package 可以在 Atom 的配置界面上去搜索，然后安装，也可以使用 apm 在命令行下面管理编辑器的 Package 。</p>
-<p>Packages 列表：<a href="https://atom.io/packages" target="_blank" rel="external">https://atom.io/packages</a><br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-1.png" alt=""></p>
-<h4 id="安装包：通过配置界面">安装包：通过配置界面</h4><ol>
-<li>打开 Atom 编辑器。</li>
-<li>打开 Atom 的配置界面（Windows：ctrl + ,    Mac：command + , ）。</li>
-<li>点击边栏上的 Install（安装）。</li>
-<li>在界面上的 Install Packages 下面，选中 Packages 标签，然后搜索你想要安装的 Package。</li>
-<li>在搜索结果找到想要的 Package ，点击 Install 安装。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-11.png" alt=""></li>
-</ol>
-<h4 id="安装包：通过_apm">安装包：通过 apm</h4><ol>
-<li>打开命令行工具，Windows 用 Powershell，Mac 可以使用终端。</li>
-<li>搜索包用的是 apm search &lt;关键词&gt; 。</li>
-<li>找到想要的包以后，再用 apm install &lt;包的名字&gt;。</li>
-</ol>
-<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-12.png" alt=""></p>
-<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-13.png" alt=""></p>
-<p>下面，你可以搜索一个叫 Localization 的包，然后安装一下，这个包会为 Atom 的菜单栏提供一个中文翻译。下面我们再看一下怎么样去配置与管理包。</p>
-<h4 id="手动安装包emmet-atom">手动安装包emmet-atom</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/.atom/packages</span><br><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/emmetio/emmet-atom</span><br><span class="line"><span class="keyword">cd</span> emmet-atom</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<h4 id="管理包">管理包</h4><p>打开配置界面，在边栏上选中 Packages ，在这个界面上的 Communtity Packages 区域里，你可以找到自己安装的来自社区成员分享的包。Core Packages 下面是 Atom 编辑器核心自带的包。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-3.png" alt=""></p>
-<p>这里会显示包的名字，还有介绍，不想用的包，可以点击 Disable 按钮禁用它，或者直接点击 Uninstall 卸载掉包，点击 Settings 按钮可以打开包的配置界面，在这个界面上，你可以找到包的主页，说明的文档，可以查看包的源文件，还有相关的配置与快捷键。</p>
-<p>下面打开之前安装的 Localization 这个包的配置界面，然后在 Settings 区域里面，在 Current Language 下面的文本框里输入：Chinese - Simplified ，这样会把菜单栏的语言设置成简体中文，如果设置成 Chinese - Traditional，会把菜单栏设置成繁体中文。输入以后，用鼠标点一下浏览器的其它的地方，这样编辑器会保存你的配置。</p>
-<p>完成以后，想让设置生效，可以关掉并且重新打开编辑器，或者可以刷新一下编辑器</p>
-<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-4.png" alt=""></p>
-<p>刷新编辑器的快捷键：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Mac</span>    ：ctrl + alt + command + <span class="keyword">L</span></span><br><span class="line">Windows：ctrl + alt + <span class="literal">R</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="打开命令面板">打开命令面板</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">command</span> + <span class="built_in">shift</span> + P</span><br><span class="line">Windows：ctrl + <span class="built_in">shift</span> + P</span><br></pre></td></tr></table></figure>
-<p>搜索一下 tree view ，列出的就是跟树形视图相关的命令。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-8.png" alt=""></p>
-<h3 id="标签面板">标签面板</h3><p>在 Mac 上，你还可以使用 command + 数字 ，打开对应的标签面板。</p>
-<h3 id="分离面板">分离面板</h3><p>在编辑器上打开的文件可以分离到不同的面板上显示，你可以把编辑器分隔成上，下，左，右，四个部分。方法是，找到要分离显示的标签面板，鼠标右键点击，然后选择 Split Up，Split Down，Split Left 或者 Split Right。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-13.png" alt=""></p>
-<p>这些动作也都有对应的快捷键，可以打开命令面板（Mac：command + shift + P，Windows：ctrl + shift + P），然后搜索 Pane ，这样会显示出面板相关的操作命令。</p>
-<p>分离到上面<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">K</span> ↑</span></span><br><span class="line">Windows：ctrl + K ↑</span><br></pre></td></tr></table></figure></p>
-<h3 id="查找文件">查找文件</h3><p>目里的文件多了，想找到对应的文件，用鼠标点出这个文件很费事，可以用搜索找到文件。</p>
-<p>在已经打开的文件里找到你想要的文件：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">B</span></span></span><br><span class="line">Windows：ctrl + B</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-9.png" alt=""></p>
-<p>在整个项目里找到你需要的文件：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">P</span></span></span><br><span class="line">Windows：ctrl + P</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-10.png" alt=""></p>
-<p>查找文件里的内容<br>你可以搜索包含特定内容的文件，比如在当前打开的文件里搜索，或者也可以在整个项目里搜索，找到以后，可以把搜索的内容替换成新的内容。</p>
-<p>在当前打开的文件中搜索<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Mac</span>    ：command + <span class="literal">F</span></span><br><span class="line">Windows：ctrl + <span class="literal">F</span></span><br></pre></td></tr></table></figure></p>
-<p>比如我当前打开的是 humans.txt ，打开搜索，输入 name ，编辑器会高亮显示匹配搜索的内容。在 Replace in current buffer 里面，可以输入要替换成的东西，点击 Replace 会一个一个的替换，点击 Replace All 按钮，会替换全部的找到的地方。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-11.png" alt=""></p>
-<p>查找下一个地方<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">G</span></span></span><br><span class="line">Windows：F3</span><br></pre></td></tr></table></figure></p>
-<p>查找上一个地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">shift</span> + <span class="built_in">command</span> + G</span><br><span class="line">Windows：<span class="built_in">shift</span> + F3</span><br></pre></td></tr></table></figure></p>
-<p>在整个项目中搜索<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">shift</span> + <span class="built_in">command</span> + F</span><br><span class="line">Windows：<span class="built_in">shift</span> + ctrl + F</span><br></pre></td></tr></table></figure></p>
-<p>下面，是我搜索了项目中的 name ，回车以后，会显示出找到的结果，这个结果显示了包含搜索的内容的文件，还有出现这个内容的位置，点一下，会打开出现这个搜索内容的文件，并且会定位到对应的位置上。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-12.png" alt=""></p>
-<h3 id="常用插件">常用插件</h3><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ apm list -i -b</span><br><span class="line">Sublime-Style-Column-Selection<span class="variable">@1</span>.2.3</span><br><span class="line">atom-beautify<span class="variable">@0</span>.24.0</span><br><span class="line">autocomplete-plus<span class="variable">@2</span>.10.0</span><br><span class="line">autocomplete-snippets<span class="variable">@1</span>.3.0</span><br><span class="line"><span class="keyword">color</span>-picker<span class="variable">@1</span>.7.0</span><br><span class="line"><span class="keyword">file</span>-icons<span class="variable">@1</span>.5.5</span><br><span class="line">highlight-selected<span class="variable">@0</span>.9.2</span><br><span class="line">language-cmake<span class="variable">@0</span>.1.3</span><br><span class="line">language-lua<span class="variable">@0</span>.9.2</span><br><span class="line">lines<span class="variable">@0</span>.13.0</span><br><span class="line">linter</span><br><span class="line">linter-coffeelint<span class="variable">@0</span>.2.2</span><br><span class="line">linter-jshint<span class="variable">@0</span>.1.2</span><br><span class="line">linter-lua<span class="variable">@0</span>.1.5</span><br><span class="line">linter-luacheck<span class="variable">@0</span>.4.0</span><br><span class="line">minimap<span class="variable">@4</span>.8.0</span><br><span class="line">pretty-json</span><br></pre></td></tr></table></figure>
-<h3 id="常用命令">常用命令</h3><p>刷新编辑器<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + alt + <span class="command"><span class="keyword">command</span> + <span class="title">l</span></span></span><br></pre></td></tr></table></figure></p>
-<p>proxy<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apm config <span class="keyword">set</span> http_proxy <span class="string">"127.0.0.1:8087"</span></span><br><span class="line">$ apm config <span class="keyword">set</span> https_proxy <span class="string">"127.0.0.1:8087"</span></span><br><span class="line">$ apm config <span class="keyword">set</span> https_proxy <span class="string">"http://user:pass@host:port"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> <span class="string">"http_proxy=http://..."</span></span><br><span class="line">$ <span class="keyword">export</span> <span class="string">"https_proxy=http://..."</span></span><br><span class="line">$ apm <span class="keyword">install</span> minimap</span><br></pre></td></tr></table></figure>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ env | grep proxy</span><br><span class="line"> http_proxy=<span class="string">http:</span><span class="comment">//... OK</span></span><br><span class="line"> https_proxy=<span class="string">http:</span><span class="comment">//... OK</span></span><br><span class="line">$ apm install minimap</span><br><span class="line"> Installing minimap to <span class="regexp">/home/</span>user<span class="regexp">/.atom/</span>packages ✗</span><br><span class="line"> Request <span class="keyword">for</span> <span class="keyword">package</span> information <span class="string">failed:</span> getaddrinfo ENOTFOUND (ENOTFOUND)</span><br></pre></td></tr></table></figure>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ apm config <span class="keyword">ls</span></span><br><span class="line">$ apm <span class="keyword">update</span></span><br><span class="line">$ apm <span class="built_in">search</span> <span class="string">"Markdown"</span> --<span class="keyword">verbose</span></span><br><span class="line">$ apm <span class="keyword">update</span> --<span class="keyword">verbose</span></span><br><span class="line">apm --<span class="keyword">version</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/15/iOS-绘制1像素的线/">
-                iOS 绘制1像素的线
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/15/iOS-绘制1像素的线/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-绘制1像素的线/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="iOS_绘制1像素的线">iOS 绘制1像素的线</h1><h2 id="Point_Vs_Pixel">Point Vs Pixel</h2><p>iOS中当我们使用Quartz，UIKit，CoreAnimation等框架时，所有的坐标系统采用Point来衡量。系统在实际渲染到设置时会帮助我们处理Point到Pixel的转换。 这样做的好处隔离变化，即我们在布局的事后不需要关注当前设备是否为Retina，直接按照一套坐标系统来布局即可。</p>
-<p>实际使用中我们需要牢记下面这一点:</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">One point <span class="keyword">does</span> <span class="keyword">not</span> necessarily correspond <span class="keyword">to</span> one physical pixel.</span><br></pre></td></tr></table></figure>
-<p>1 Point的线在非Retina屏幕则是一个像素，在Retina屏幕上则可能是2个或者3个，取决于系统设备的DPI。</p>
-<p>iOS系统中，UIScreen，UIView，UIImage，CALayer类都提供相关属性来获取scale factor。 原生的绘制技术天然的帮我们处理了scale factor，例如在drawRect:方法中，UIKit自动的根据当前运行的设备设置了正切的scale factor。所以我们在drawRect: 方法中绘制的任何内容都会被自动缩放到设备的物理屏幕上。</p>
-<p>基于以上信息可以看出，我们大部分情况下都不需要去关注pixel，然而存在部分情况需要考虑像素的转化。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如画1个像素的分割线</span><br></pre></td></tr></table></figure>
-<p>看到这个问题你的第一想法可能是，直接根据当前屏幕的缩放因子计算出1 像素线对应的Point，然后设置线宽即可。 代码如下:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.0f</span> / [UIScreen mainScreen].scale</span><br></pre></td></tr></table></figure>
-<p>表面上看着一切正常了，但是通过实际的设备测试你会发现渲染出来的线宽并不是1个像素。</p>
-<blockquote>
-<p>Why?</p>
-</blockquote>
-<p>为了获得良好的视觉效果，绘图系统通常都会采用一个叫”antialiasing(反锯齿)”的技术，iOS也不例外。 显示屏幕有很多小的显示单元组成，可以接单的理解为一个单元就代表一个像素。如果要画一条黑线，条线刚好落在了一列或者一行显示显示单元之内，将会渲染出标准的一个像素的黑线。 但如果线落在了两个行或列的中间时，那么会得到一条”失真”的线，其实是两个像素宽的灰线。</p>
-<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250827276118632.png" alt=""></p>
-<blockquote>
-<p>Positions defined by whole-numbered points fall at the midpoint between pixels. For example, if you draw a one-pixel-wide vertical line from (1.0, 1.0) to (1.0, 10.0), you get a fuzzy grey line. If you draw a two-pixel-wide line, you get a solid black line because it fully covers two pixels (one on either side of the specified point). As a rule, lines that are an odd number of physical pixels wide appear softer than lines with widths measured in even numbers of physical pixels unless you adjust their position to make them cover pixels fully.</p>
-</blockquote>
-<p>官方解释如上，简单翻译一下:</p>
-<blockquote>
-<p>规定：奇数像素宽度的线在渲染的时候将会表现为柔和的宽度扩展到向上的整数宽度的线，除非你手动的调整线的位置，使线刚好落在一行或列的显示单元内。</p>
-</blockquote>
-<p>如何对齐呢？</p>
-<blockquote>
-<p>在非高清屏上，一个Point对应一个像素。为了防止”antialiasing”导致的奇数像素的线渲染时出现失真，你需要设置偏移0.5 Point。 在高清屏幕上，要绘制一个像素的线，需要设置线宽为0.5个Point，同事设置偏移为0.25 Point。 如果线宽为偶数Point的话，则不要去设置偏移，否则线条也会失真。</p>
-</blockquote>
-<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250824372995931.png" alt=""></p>
-<p>看了上述一通解释，我们了解了1像素宽的线条失真的原因，及解决办法。 至此问题貌似都解决了？再想想为什么在非Retina和Retina屏幕上调整位置时值不一样，前者为0.5Point，后者为0.25Point，那么scale为3的6 Plus设备又该调整多少呢？ 要回答这个问题，我们需要理解调整多少依旧什么原则。</p>
-<p><img src="http://images0.cnblogs.com/blog2015/302680/201506/251942350498849.png" alt=""></p>
-<p>再回过头来看看这上面的图片，图片中每一格子代表一个像素，而顶部标记的则代码我们布局时的坐标。 可以看到左边的非Retina屏幕，我们要在(3,0)这个位置画一条一个像素宽的竖线时，由于渲染的最小单位是像素，而(3,0)这个坐标恰好位于两个像素中间，此时系统会对坐标3左右两列的像素对填充，为了不至于线显得太宽，为对线的颜色淡化。那么根据上述信息我们可以得出，如果要画出一个像素宽的线，就得把绘制的坐标移动到(2.5, 0)或者(3.5,0)这个位置，这样系统渲染的时候刚好可以填充一列像素，也就是标准的一个像素的线。</p>
-<p>基于上面的分析，我们可以得出”Scale为3的6 Plus”设备如果要绘制1个像素宽的线条时，位置调整也应该是0.5像素，对应该的Point计算如下:</p>
-<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">1.0f</span> / <span class="list">[<span class="keyword">UIScreen</span> mainScreen].scale) / <span class="number">2</span><span class="comment">;</span></span></span></span><br></pre></td></tr></table></figure>
-<p>奉上一个画一像素线的一个宏:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_WIDTH           (<span class="number">1</span> / [UIScreen mainScreen].scale)</span><br><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_ADJUST_OFFSET   ((<span class="number">1</span> / [UIScreen mainScreen].scale) / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<p>使用代码如下:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> xPos = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">UIView</span> *view = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGrect</span>(x - SINGLE_LINE_ADJUST_OFFSET, <span class="number">0</span>, SINGLE_LINE_WIDTH, <span class="number">100</span>)];</span><br></pre></td></tr></table></figure>
-<h2 id="正确的绘制Grid线条">正确的绘制Grid线条</h2><p>贴上一个写的GridView的代码，代码中对Grid线条的奇数像素做了偏移，防止出现线条模糊的情况。</p>
-<p>SvGridView.h</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.h</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SvGridView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格间距，默认30</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridSpacing;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格线宽度，默认为1 pixel (1.0f / [UIScreen mainScreen].scale)</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridLineWidth;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格颜色，默认蓝色</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span>   *gridColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>SvGridView.m</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.m</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">"SvGridView.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_WIDTH           (1 / [UIScreen mainScreen].scale)</span></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_ADJUST_OFFSET   ((1 / [UIScreen mainScreen].scale) / 2)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SvGridView</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@synthesize</span> gridColor = _gridColor;</span><br><span class="line"><span class="keyword">@synthesize</span> gridSpacing = _gridSpacing;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line"></span><br><span class="line">        _gridColor = [<span class="built_in">UIColor</span> blueColor];</span><br><span class="line">        _gridLineWidth = SINGLE_LINE_WIDTH;</span><br><span class="line">        _gridSpacing = <span class="number">30</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridColor:(<span class="built_in">UIColor</span> *)gridColor</span><br><span class="line">&#123;</span><br><span class="line">    _gridColor = gridColor;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridSpacing:(<span class="built_in">CGFloat</span>)gridSpacing</span><br><span class="line">&#123;</span><br><span class="line">    _gridSpacing = gridSpacing;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridLineWidth:(<span class="built_in">CGFloat</span>)gridLineWidth</span><br><span class="line">&#123;</span><br><span class="line">    _gridLineWidth = gridLineWidth;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Only override drawRect: if you perform custom drawing.</span></span><br><span class="line"><span class="comment">// An empty implementation adversely affects performance during animation.</span></span><br><span class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextBeginPath</span>(context);</span><br><span class="line">    <span class="built_in">CGFloat</span> lineMargin = <span class="keyword">self</span><span class="variable">.gridSpacing</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  https://developer.apple.com/library/ios/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GraphicsDrawingOverview/GraphicsDrawingOverview.html</span><br><span class="line">     * 仅当要绘制的线宽为奇数像素时，绘制位置需要调整</span><br><span class="line">     */</span></span><br><span class="line">    <span class="built_in">CGFloat</span> pixelAdjustOffset = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (((<span class="keyword">int</span>)(<span class="keyword">self</span><span class="variable">.gridLineWidth</span> * [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.scale</span>) + <span class="number">1</span>) % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        pixelAdjustOffset = SINGLE_LINE_ADJUST_OFFSET;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGFloat</span> xPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="built_in">CGFloat</span> yPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="keyword">while</span> (xPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, xPos, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, xPos, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">        xPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (yPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, <span class="number">0</span>, yPos);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>, yPos);</span><br><span class="line">        yPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextSetLineWidth</span>(context, <span class="keyword">self</span><span class="variable">.gridLineWidth</span>);</span><br><span class="line">    <span class="built_in">CGContextSetStrokeColorWithColor</span>(context, <span class="keyword">self</span><span class="variable">.gridColor</span><span class="variable">.CGColor</span>);</span><br><span class="line">    <span class="built_in">CGContextStrokePath</span>(context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>使用方法如下：</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SvGridView *gridView = [[SvGridView alloc] initWithFrame:self.view.bounds]<span class="comment">;</span></span><br><span class="line">gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight<span class="comment">;</span></span><br><span class="line">gridView.alpha = 0.6<span class="comment">;</span></span><br><span class="line">gridView.gridColor = [UIColor greenColor]<span class="comment">;</span></span><br><span class="line">[self.view addSubview:gridView]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -852,7 +815,7 @@ DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment"
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -866,7 +829,7 @@ DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment"
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

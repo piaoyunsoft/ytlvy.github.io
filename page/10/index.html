@@ -148,6 +148,277 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
+                iOS NSURLProtocal
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
+<ul>
+<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
+<li>如何优雅地进行流量统计</li>
+<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
+<li>怎么实现HTTP的同步请求</li>
+</ul>
+<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
+<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
+<ul>
+<li>自定义请求和响应</li>
+<li>提供自定义的全局缓存支持</li>
+<li>重定向网络请求</li>
+<li>提供HTTP Mocking (方便前期测试)</li>
+<li>其他一些全局的网络请求修改需求</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
+                dSYM parse tool
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
+<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
+                Variable Argument Lists
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
+<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
+<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
+<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
+<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
+<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
+<li>最后调用<code>va_end()</code>来进行清理。</li>
+</ol>
+<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
+<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
+<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/04/iOS-bit-computing/">
                 iOS bit computing
               </a>
@@ -317,257 +588,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-attribute-objc-designated-initializer/">
-                iOS attribute objc_designated_initializer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-attribute-objc-designated-initializer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-attribute-objc-designated-initializer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="https://leafduo.com/articles/2014/03/20/objc-designated-initializer/" target="_blank" rel="external">reference</a></p>
-<h2 id="attribute((objc_designated_initializer))"><strong>attribute</strong>((objc_designated_initializer))</h2><p>指定初始化器（<code>designated initializer</code>）是 Objective-C 中的一个重要的概念，但是很可惜的是，很多开发者（不知道为什么）并没能正确遵守关于指定初始化器的一些惯例。 </p>
-<p>之前，我们只能通过 code review 之类的方法来找出、修正这些问题；现在，clang 为我们提供了编译器级别的支持，能够找出不遵守管理的地方并给出警告，我们需要做的是标记出哪个初始化器是指定初始化器，例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">interface</span> FTBObject</span><br><span class="line"></span><br><span class="line">- (instancetype)init __<span class="function">attribute__</span>((objc_designated_initializer))</span>;</span><br><span class="line"></span><br><span class="line"><span class="at_rule">@<span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
-<p>通过在接口定义中指定指定初始化器，不仅编译器能够给出相关的警告，而且需要继承该类的开发者也可以不参考文档就知道哪个初始化器是指定初始化器。</p>
-<p>目前，clang 可以提供一系列警告，例如非指定初始化器没有调用其他初始化器、指定初始化器没有调用父类的指定初始化器、指定初始化器调用了非指定初始化器、子类没有复写父类的指定初始化器等。 具体的例子可以看这个<a href="https://llvm.org/svn/llvm-project/cfe/trunk/test/SemaObjC/attr-designated-init.m" target="_blank" rel="external">测试用例</a>。</p>
-<p>不幸的是，目前系统库的接口还没有这个属性，也就是说只有继承自己的代码和标记了这个指令的第三方库中的类才有用。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/ios-GPUImage-simple-use/">
-                ios GPUImage simple use
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/ios-GPUImage-simple-use/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/ios-GPUImage-simple-use/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="GPUImage">GPUImage</h2><p>GPUImage 作者是 Brad Larson，以 BSD 协议放出，能够在图像、实时摄像头影像和视频上使用 GPU 加速的滤镜和其他效果.</p>
-<h3 id="GPU_vs-_CPU">GPU vs. CPU</h3><p>每只 iPhone 都有两个处理器：一个 CPU，也就是中央处理器，和一个 GPU，也就是图形处理器。每个处理器都有它自己的优势，现代芯片架构（例如 Apple A4）把 CPU 和 GPU 集成在一个物理封装里。</p>
-<p>在 Xcode 里面写 C 和 Objective-C 的时候，产生的指令绝大部分会被 CPU 执行。相对地，GPU 是一枚专用芯片，专门用来做独立的小操作，例如图形渲染。GPU 执行的指令和 CPU 是有很大区别的，因此用特殊的语言来编写：OpenGL（特别地，在 iPhone 和 iPad 上使用 OpenGL ES）</p>
-<h3 id="渲染管线">渲染管线</h3><p><img src="http://nshipster.s3.amazonaws.com/gpuimage-pipeline.png" alt=""></p>
-<p>GPUImage 从本质上来说是一个渲染管线的 <code>Objective-C</code>抽象。从相机、网络或者磁盘上加载的源图像，在经过一系列滤镜处理后，最终输出到了 <code>view</code>、<code>graphics context</code> 或是数据流中。</p>
-<p>例如说，摄像头中的图像可以应用一个 Color Levels 滤镜，来模拟各种色盲效果，然后实时显示在一个 view 中。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GPUImageVideoCamera *videoCamera = [[GPUImageVideoCamera alloc]</span><br><span class="line"><span class="label">    initWithSessionPreset:</span>AVCaptureSessionPreset640x480</span><br><span class="line"><span class="label">           cameraPosition:</span>AVCaptureDevicePositionBack];</span><br><span class="line">videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;</span><br><span class="line"></span><br><span class="line">GPUImageFilter *filter = [[GPUImageLevelsFilter alloc] </span><br><span class="line"><span class="label">                            initWithFragmentShaderFromFile:</span>@<span class="string">"CustomShader"</span>];</span><br><span class="line">[filter <span class="string">setRedMin:</span><span class="number">0.299</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setGreenMin:</span><span class="number">0.587</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setBlueMin:</span><span class="number">0.114</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[videoCamera <span class="string">addTarget:</span>filter];</span><br><span class="line"></span><br><span class="line">GPUImageView *filteredVideoView = [[GPUImageView alloc] <span class="string">initWithFrame:</span>self.view.bounds)];</span><br><span class="line">[filter <span class="string">addTarget:</span>filteredVideoView];</span><br><span class="line">[self.view <span class="string">addSubView:</span>filteredVideoView];</span><br><span class="line"></span><br><span class="line">[videoCamera startCameraCapture];</span><br></pre></td></tr></table></figure></p>
-<p>或者，结合不同的颜色混合模式，图像效果和一些调整，你可以把静止图像转变成可以分享给你时髦的朋友们看看的精美图像（例子来自基于 GPUImage 的 FilterKit）。<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GPUImageFilterGroup *filter = <span class="comment">[<span class="comment">[FKGPUFilterGroup alloc]</span> init]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageSaturationFilter *saturationFilter = <span class="comment">[<span class="comment">[GPUImageSaturationFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[saturationFilter setSaturation:0.5]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageMonochromeFilter *monochromeFilter = <span class="comment">[<span class="comment">[GPUImageMonochromeFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setColor:(GPUVector4)&#123;0.0f, 0.0f, 1.0f, 1.0f&#125;]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setIntensity:0.2]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageVignetteFilter *vignetteFilter = <span class="comment">[<span class="comment">[GPUImageVignetteFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[vignetteFilter setVignetteEnd:0.7]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageExposureFilter *exposureFilter = <span class="comment">[<span class="comment">[GPUImageExposureFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[exposureFilter setExposure:0.3]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">[filter addGPUFilter:exposureFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:monochromeFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:saturationFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:vignetteFilter]</span>;</span><br></pre></td></tr></table></figure></p>
-<p>看完了 GPUImage 的功能，一定很兴奋吧。GPUImage 非常简单，可以马上开始使用（不需要了解 OpenGL），性能上也足够完成你想要的一切。不止是这样，它还自带了非常多的积木一样的部件 — 色彩调整，混合模式，你能想到的想不到的一切视觉效果。</p>
-<p>GPUImage 是开源社区少有的好东西，我们 Mac 和 iOS 开发者非常幸运的能拥有它。用 GPUImage 做些牛逼的东西，向其他人展示一个崭新的世界</p>
-<h3 id="吐槽">吐槽</h3><p>我自己也用过一点 GPUImage，方便是很方便，不光是省掉了 AVFoundation 的许多烦人的 setup 代码，还内置了许多滤镜效果。不过它也有不少坑，我遇到的一个就是占用太多内存，一段时间后就 crash 掉了，毕竟是处理视频，需要不少内存，iPhone 的内存又不太多，就要更加注意。我当时是加了一个 @autoreleasepool 就好多了。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
-                C programe memory management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Memory/">Memory</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/C-programe-memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
-<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
-<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -606,7 +626,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -620,7 +640,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

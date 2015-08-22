@@ -148,6 +148,261 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/30/CFRunLoop-examples/">
+                CFRunLoop examples
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/CFRunLoop-examples/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/CFRunLoop-examples/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="第一个">第一个</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include <span class="title">&lt;CoreFoundation/CoreFoundation.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_perform(<span class="keyword">void</span> *info __unused)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">"hello\n"</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_timer(<span class="built_in">CFRunLoopTimerRef</span> timer __unused, <span class="keyword">void</span> *info)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceSignal</span>(info);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">int</span>  </span><br><span class="line">main()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceRef</span> source;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceContext</span> source_context;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerRef</span> timer;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerContext</span> timer_context;  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;source_context, <span class="keyword">sizeof</span>(source_context));  </span><br><span class="line">    source_context<span class="variable">.perform</span> = _perform;  </span><br><span class="line">    source = <span class="built_in">CFRunLoopSourceCreate</span>(<span class="literal">NULL</span>, <span class="number">0</span>, &amp;source_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddSource</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), source, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;timer_context, <span class="keyword">sizeof</span>(timer_context));  </span><br><span class="line">    timer_context<span class="variable">.info</span> = source;  </span><br><span class="line">    timer = <span class="built_in">CFRunLoopTimerCreate</span>(<span class="literal">NULL</span>, <span class="built_in">CFAbsoluteTimeGetCurrent</span>(), <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, </span><br><span class="line">    _timer, &amp;timer_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddTimer</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), timer, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">CFRunLoopRun</span>();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/CFRunLoop-examples/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/30/Dispatch-Sources/">
+                Dispatch Sources
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/Dispatch-Sources/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-Sources/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Dispatch_Sources">Dispatch Sources</h2><p>简单来说，是一种能够监控某种事件的对象。当事件发生的时候，此对象自动唤醒设置好的block，并在指定的queue中运行。</p>
+<h3 id="events_Type">events Type</h3><ul>
+<li>Mach port send right state changes.</li>
+<li>Mach port receive right state changes.</li>
+<li>External process state change.</li>
+<li>File descriptor ready for read.</li>
+<li>File descriptor ready for write.</li>
+<li>Filesystem node event.</li>
+<li>POSIX signal.</li>
+<li>Custom timer.</li>
+<li>Custom event.</li>
+</ul>
+<h3 id="Custom_Events">Custom Events</h3><p>通过<code>dispatch_source_merge_data</code>来发送消息，此方法取名<code>merge</code>的原因是，在事件回调执行前，GCD会自动合并累计的消息，直到对应的运行Queue有空闲，可以运行回调Block。所以，这是一种提高效率的方式，将多次消息合并成一个。<br>自定义事件分为：<code>DISPATCH_SOURCE_TYPE_DATA_ADD</code> 和 <code>DISPATCH_SOURCE_TYPE_DATA_OR</code>, 每个event Source有一个<code>unsigned long data</code>属性，用来合并<code>dispatch_source_merge_data</code>的参数。<code>dispatch_source_get_data</code>可以获取到当前的<code>data</code>数据。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/Dispatch-Sources/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/30/OSSpinLock/">
+                OSSpinLock
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/OSSpinLock/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/OSSpinLock/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="OSSpinLock">OSSpinLock</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/message.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;libkern/OSAtomic.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define ITERATIONS (1024*1024*32)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> disp=<span class="number">0</span>, land=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">    <span class="keyword">double</span> then, now;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i, count;</span><br><span class="line">    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">    OSSpinLock spinlock = OS_SPINLOCK_INIT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSAutoreleasePool</span> *pool = [<span class="built_in">NSAutoreleasePool</span> new];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLock</span> *lock = [<span class="built_in">NSLock</span> new];</span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        [lock lock];</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    IMP lockLock = [lock methodForSelector:<span class="keyword">@selector</span>(lock)];</span><br><span class="line">    IMP unlockLock = [lock methodForSelector:<span class="keyword">@selector</span>(unlock)];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        lockLock(lock,<span class="keyword">@selector</span>(lock));</span><br><span class="line">        unlockLock(lock,<span class="keyword">@selector</span>(unlock));</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock+IMP Cache: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ITERATIONS;++i) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"pthread_mutex: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        OSSpinLockLock(&amp;spinlock);</span><br><span class="line">        OSSpinLockUnlock(&amp;spinlock);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"OSSpinlock: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)&#123;</span><br><span class="line">        <span class="keyword">@synchronized</span>(obj) &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"@synchronized: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    [pool release];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/OSSpinLock/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/30/Cancel-a-NSBlockOperation/">
                 Cancel a NSBlockOperation
               </a>
@@ -295,290 +550,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/">
-                Valar Morghulis Valar Dohaeris
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/other/">other</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/Valar-Morghulis-Valar-Dohaeris/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><img src="http://ww4.sinaimg.cn/mw1024/8edf7b7agw1et5ppc4i12g20dw0697uc.gif" alt=""></p>
-<p>Valar Morghulis = 凡人皆有一死<br>Valar Dohaeris = 凡人皆须侍奉<br>这两句是需要放在一起理解的</p>
-<p>看字面意思，凡人皆有一死，似乎表明的是死亡的不可避免。满含悲观的情绪。这和史塔克的家族箴言一样，凛冬将至。对于命运我们无能为力。</p>
-<p>但是，这句话还伴随着另外那句：凡人皆须侍奉。这两句是高等瓦雷利亚语，缘起于千面之神和信仰它的神秘组织 无面者。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/16/ios-MRC-ARC/">
-                ios MRC && ARC
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/16/ios-MRC-ARC/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/ios-MRC-ARC/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="ARC">ARC</h2><h3 id="MRC">MRC</h3><h4 id="MRC内存管理原则">MRC内存管理原则</h4><p>􏰀1. You have ownership of any objects you create.<br>2.􏰀 You can take ownership of an object using retain.<br>􏰀3. When no longer needed, you must relinquish ownership of an object you own.<br>􏰀4. You must not relinquish ownership of an object you don’t own.</p>
-<table>
-<thead>
-<tr>
-<th>Action for Objective-C Object</th>
-<th>Objective-C Method</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create and have ownership of it</td>
-<td>alloc/new/copy/mutableCopy group</td>
-</tr>
-<tr>
-<td>Take ownership of it</td>
-<td>retian</td>
-</tr>
-<tr>
-<td>Relinquish it</td>
-<td>release</td>
-</tr>
-<tr>
-<td>Dispose of it</td>
-<td>dealloc</td>
-</tr>
-</tbody>
-</table>
-<h4 id="调用者持有">调用者持有</h4><p>Relinquishing Ownership of a Retained Object. 下面的例子将函数将自己持有的obj, 通过return传递给了调用者,由调用者来来持有此变量<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (id)allocObject</span><br><span class="line">&#123;</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">You</span> create an <span class="keyword">object</span> <span class="keyword">and</span> have ownership. */</span><br><span class="line">  id obj = [[<span class="type">NSObject</span> alloc] init];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">At</span> this moment, this <span class="keyword">method</span> has ownership <span class="keyword">of</span> the <span class="keyword">object</span>. */</span><br><span class="line">  <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/16/ios-MRC-ARC/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/15/ios-gcd/">
-                ios gcd
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/15/ios-gcd/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-gcd/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="GCD">GCD</h2><h3 id="befor_GCD">befor GCD</h3><h4 id="object_method">object method</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorInBackground:</span> <span class="string">withObject:</span></span><br><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorOnMainThread:</span> <span class="string">withObject:</span> <span class="string">waitUntilDone:</span></span><br></pre></td></tr></table></figure>
-<h3 id="多线程面临的问题">多线程面临的问题</h3><ol>
-<li>race condition</li>
-<li>dead lock</li>
-<li>too much threads consumes two much memory</li>
-</ol>
-<h4 id="多线程的意义">多线程的意义</h4><p>高交互性， 界面编程中，将耗时的操作放入到其他线程执行，避免影响到主线程界面响应</p>
-<h3 id="GCD_基础">GCD 基础</h3><h4 id="Dispatch_Queue_派发队列">Dispatch Queue 派发队列</h4><ol>
-<li>serial dispath queue  顺序派发队列</li>
-<li>concurrent dispath queue  并发派发队列</li>
-</ol>
-<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/15/ios-gcd/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -617,7 +588,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -631,7 +602,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

@@ -148,6 +148,259 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/08/iOS-float-trap/">
+                iOS float trap
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-float-trap/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-float-trap/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="float陷阱以及在Objc中的注意">float陷阱以及在Objc中的注意</h2><p>浮点数不准，这个貌似基本都知道。但是在开发中很多人没有对它的使用产生警觉。如果你在开发Cocoa应用，你可能使用过如下代码判断系统版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="built_in">float</span>Value] &gt;= <span class="number">7.0</span>) &#123;</span><br><span class="line">  //something support <span class="keyword">for</span> ios7</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样一段代码也的确工作良好，但是注意了如果你把比较的数值改为7.1，那么很有可能就会出问题。</p>
+<h3 id="浮点数不准">浮点数不准</h3><p>这一篇博文从二进制的表示方面说明了为什么浮点数不准，讲的很好，感兴趣的可以学习学习，学习这些感觉还是很有用的，也可以帮助我们定位一些诡异的问题。 <a href="http://www.ruanyifeng.com/blog/2010/06/ieee_floating-point_representation.html" target="_blank" rel="external">浮点数的二进制表示</a><br>在精确的比较中不要使用float<br>文章开头的系统版本的比较就是一个典型的例子，我们可以通过其他方法实现比较：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="attribute">compare</span>:@<span class="string">"7.1"</span>] != NSOrderedAscending) &#123;</span><br><span class="line">  <span class="comment">//something support for ios7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-Dispatch-async-usages-tips/">
+                iOS Dispatch_async usages tips
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-Dispatch-async-usages-tips/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Dispatch-async-usages-tips/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.cnbluebox.com/blog/2014/10/20/dispatch-asyncyi-bu-de-xiao-miao-yong/" target="_blank" rel="external">reference</a></p>
+<h2 id="Dispatch_async异步的小妙用">Dispatch_async异步的小妙用</h2><p>GCD 对于cocoa和cocoa Touch的开发者来说已经是在熟悉不过了，相信有些基础的人都能说出一些特性。但是今天我们不是讲GCD的介绍和使用bulabulabula. 本文就介绍下使用<code>dispatch_async</code>的一个小妙用，且看下文分解。</p>
+<p>我们都知道dispatch_async可以用来异步执行代码。你的第一反应的可能是后台、多线程 这样的字眼，但是异步执行不是就代表多线程，它只是代表代码的执行方式，知道这点可以做更多事情。</p>
+<h3 id="afterDelay">afterDelay</h3><p>你是否做过这样的事情，在修改一个bug时，把方法延迟执行，like this:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(doSomething) <span class="string">withObject:</span>nil <span class="string">afterDelay:</span><span class="number">0.1</span>f];</span><br></pre></td></tr></table></figure>
+<p>Let me guess, 你一定是发现doSomething方法中所依赖的数据或环境还达不到，立即执行的话，可能会有问题。所以你就让doSomething延迟一点时间执行，保证它需要的数据或环境已经处理完成，改完打包测试，bug看起来已经修复了。</p>
+<p>这个问题从大多数场景来说的确已经修复了，但是在强迫症眼里，好像还是有些瑕疵，不是完美方案。</p>
+<p>两个问题，你怎么能100%确保你需要的数据或环境能再0.1s内准备完成呢； 另一个是数据准备完成到doSomething执行中间可能会有一段空白时间，有时是我们不希望的。那如何替代这个方案呢，如果你得doSomething需要的数据和环境是在主线程执行的，那么方案很简单：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self doSomething]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>你可能问了，我本来就在主线程执行任务，为什么还要往main_queue里面提交任务呢。巧妙的地方就在这，我们巧妙的把doSomething作为任务提交到主线程，它会等待主线程的任务一个个执行完成才执行，这样就可以巧妙的解决这个问题。</p>
+<p>不过注意，不是所有场景都适合这个用法，就像上面描述的，你要确保doSomething的依赖条件实在主线程中执行的。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
+                iOS Application Framework Think - Network
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
+<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
+<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
+<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
+<ol>
+<li>无法cancel这个请求</li>
+<li>占用了完整的一个线程</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
                 iOS Best Practices
               </a>
@@ -320,277 +573,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
-                iOS NSURLProtocal
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
-<ul>
-<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
-<li>如何优雅地进行流量统计</li>
-<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
-<li>怎么实现HTTP的同步请求</li>
-</ul>
-<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
-<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
-<ul>
-<li>自定义请求和响应</li>
-<li>提供自定义的全局缓存支持</li>
-<li>重定向网络请求</li>
-<li>提供HTTP Mocking (方便前期测试)</li>
-<li>其他一些全局的网络请求修改需求</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
-                dSYM parse tool
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
-<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
-                Variable Argument Lists
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
-<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
-<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
-<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
-<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
-<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
-<li>最后调用<code>va_end()</code>来进行清理。</li>
-</ol>
-<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
-<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
-<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -629,7 +611,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -643,7 +625,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

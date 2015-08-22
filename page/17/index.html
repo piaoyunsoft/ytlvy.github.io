@@ -148,6 +148,360 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/16/LLDB/">
+                LLDB
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/LLDB/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/LLDB/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="build">build</h3><p>Programs normally have to be compiled with a special option to allow debugging to take place. On UNIX, the option for clang++ is the -g option. For example<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">clang</span><span class="literal">+</span><span class="literal">+</span> <span class="literal">-</span><span class="comment">Wall</span> <span class="literal">-</span><span class="comment">g</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">prog1</span> <span class="comment">prog1</span><span class="string">.</span><span class="comment">cpp</span></span><br></pre></td></tr></table></figure></p>
+<p>We also include the -Wall option, which lists warnings (the ‘all’ is to list all warnings). Note that this option leads to executable files that are larger and slower, so you may not want to use it for final distributions or time-critical programs. But you can always remove the debugging information from an executable without recompiling it with the strip command. For more information on that, see the man page for strip (i.e., run man strip from the command line).</p>
+<p>The -g option causes the compiler to include information about the source file (the .cpp file) that is needed for debugging as part of the executable file. This causes the executable to be larger in size, and slightly slower, but allows for debugging. So when you run the debugger, you specify the executable file (not the source file) as the input to the debugger.</p>
+<h3 id="Start_Using_lldb">Start Using lldb</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lldb pro<span class="keyword">g1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Executing_your_Program">Executing your Program</h3><p>command-line arguments<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">run</span> <span class="bash"><span class="number">100</span> <span class="built_in">test</span>1.dat // prog1 <span class="number">100</span> <span class="built_in">test</span>1.dat</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="help">help</h3><p>(lldb) help</p>
+<h3 id="excution">excution</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>r / run</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>s / step</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>n / next</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>c / continue</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>si / ni</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>finish  <span class="list">(<span class="keyword">finishes</span> executing the current function and then pauses)</span></span><br></pre></td></tr></table></figure>
+<h3 id="break_point">break point</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb)<span class="tag">b</span> <span class="function"><span class="title">main</span><span class="params">(set a break at all function named main)</span></span></span><br><span class="line">(lldb)<span class="tag">b</span> test<span class="class">.c</span>:<span class="number">12</span></span><br><span class="line">(lldb)<span class="tag">b</span> -[NSString stringWithFormat:]</span><br><span class="line">(lldb)br s -S count /br set -SvtDataCenterFetchComplete:userData:</span><br><span class="line">(lldb)br list</span><br><span class="line">(lldb)br <span class="tag">del</span> [n]</span><br></pre></td></tr></table></figure>
+<h3 id="watch_point">watch point</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">write</span> global_var(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> exp -w <span class="keyword">write</span> -- my_ptr(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint <span class="keyword">in</span> pointer)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">read</span> global_var(<span class="keyword">set</span> <span class="keyword">read</span> watchpoint)</span><br><span class="line">(lldb) watch modify -c <span class="string">'(global==5)'</span> (<span class="keyword">set</span> condition <span class="keyword">on</span> watch point)</span><br></pre></td></tr></table></figure>
+<h3 id="examining_variables">examining variables</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame variable <span class="list">(<span class="keyword">all</span> the arguments and local variables )</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v -a <span class="list">(<span class="keyword">show</span> local variables for current frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v isChanged</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> target v</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> print a_var / po a_var</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display &lt;var&gt; <span class="list">(<span class="keyword">display</span> that variable<span class="quoted">'s</span> value each time the program execution hits a breakpoint)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display <span class="list">(<span class="keyword">show</span> all display variable)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> undisplay</span><br></pre></td></tr></table></figure>
+<h3 id="Changing_a_Variable’s_Value">Changing a Variable’s Value</h3><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">expr x </span>=<span class="string"> 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="examining_thread">examining thread</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> f<span class="list">(<span class="keyword">see</span> current and surrounding lines)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> list <span class="list">(<span class="keyword">shows</span> a listing of the source code where the breakpoint occurred)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> thread backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> bt / backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> up<span class="list">(<span class="keyword">select</span> the stack frame that called the current stack frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> down<span class="list">(<span class="keyword">select</span> the stack frame that is called by the current stack frame)</span></span><br></pre></td></tr></table></figure>
+<h3 id="executabe_&amp;&amp;_shared_library">executabe &amp;&amp; shared library</h3><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image list(list the <span class="keyword">main</span> executable andall dependent <span class="literal">shared</span> libraries)</span><br><span class="line">(lldb) image <span class="literal">dump</span> sections (<span class="literal">dump</span> all sectionsf rom the <span class="keyword">main</span> executable <span class="keyword">and</span> any sharedlibraries))</span><br></pre></td></tr></table></figure>
+<h3 id="exaples">exaples</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_subroutine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello world"</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> *p = NULL;</span><br><span class="line">    my_subroutine();</span><br><span class="line">    *p = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">", "</span> &lt;&lt; *p &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type run, and let it run to completion (really until it crashes)</li>
+<li>try the bt and f commands</li>
+<li>set up a break point at line 12, which is the line that is causing the crash</li>
+<li>type run, and confirm that you want to restart the program</li>
+<li>at the breakpoint, try printing out the value in p (p p); note that it is NULL</li>
+<li>set the p pointer, which is currently NULL, to point to a valud value (the int variable - x): expr p = &amp;x</li>
+<li>enter c to let it continue running, and it should finish without crashing this time</li>
+</ul>
+<h3 id="远程调试">远程调试</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect <span class="string">connect:</span><span class="comment">//192.168.1.117:1234</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印进程模块">打印进程模块</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image <span class="keyword">list</span> -o -<span class="literal">f</span></span><br></pre></td></tr></table></figure>
+<h3 id="读取寄存器">读取寄存器</h3><p>register read       读取寄存器<br>x/nfu <addr>        以指定方式读取地址<br>    n 单元格式<br>    f 显示方式, 可取如下值：<br>        x 按十六进制格式显示变量<br>        d 按十进制格式显示变量<br>        u 按十进制格式显示无符号整型<br>        o 按八进制格式显示变量<br>        t 按二进制格式显示变量<br>        a 按十六进制格式显示变量<br>        i 指令地址格式<br>        c 按字符格式显示变量<br>        f 按浮点数格式显示变量<br>    u 地址单元的长度<br>        b 表示单字节<br>        h 表示双字节<br>        w 表示四字节<br>        g 表示八字节</addr></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/16/Atom/">
+                Atom
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IDE/">IDE</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/Atom/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/Atom/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://ninghao.net/blog/2073" target="_blank" rel="external">转自</a></p>
+<h2 id="Atom">Atom</h2><p>一款编辑器入门还是很简单的，学会怎么样创建，打开，编辑，保存文件就行。剩下的就是慢慢熟悉，Atom 会不断带给你惊喜，如果你想简化或者加快平时工作中的某些任务或者动作，你就可以去搜索一下，Atom 要么本身就为你提供你需要的功能，没有的话，也可以通过现成的插件（Packages）或者自定义的方式解决。</p>
+<h3 id="安装">安装</h3><p>如果你顺着我们的路线走过来，你的电脑上应该已经安装好了系统的包管理工具，Windows 上的 Chocolatey，Mac 上的 Homebrew，Atom 编辑器可以通过包管理工具来安装。</p>
+<p>Windows<br>用管理员的身份打开 Powershell，然后用 choco install 去安装 Atom：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco <span class="keyword">install</span> atom</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>提示：Atom 编辑器体积挺大，在国内由于网络环境问题，在下载的时候会比较慢，有时也可能出现不能连接到远程服务器的错误，解决的方法就是，准备 “梯子” </p>
+</blockquote>
+<p>Mac<br>打开系统的 终端，然后用 Homebrew 的 brew install 命令去安装 Atom：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>install Caskroom/cask/atom</span><br></pre></td></tr></table></figure></p>
+<p>在命令行下面安装完 Atom 以后，可以输入 atom ，后面指定一个目录，这样会用 Atom 编辑器打开这个目录。另外 Atom 编辑器还自带了一个包管理工具叫 apm （Atom Package Manager），用这个工具可以在命令行下面为编辑器去安装包 （Package） ，包就是 Atom 的插件。</p>
+<h3 id="Packages">Packages</h3><p>Atom 核心的功能是由 Core Packages（核心包） 提供的，另外还有 Community Packages（社区包），就是由社区成员自己开发并且分享出来的 Package。Atom 可以通过安装这些 Package 来扩展编辑器的功能。安装 Package 可以在 Atom 的配置界面上去搜索，然后安装，也可以使用 apm 在命令行下面管理编辑器的 Package 。</p>
+<p>Packages 列表：<a href="https://atom.io/packages" target="_blank" rel="external">https://atom.io/packages</a><br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-1.png" alt=""></p>
+<h4 id="安装包：通过配置界面">安装包：通过配置界面</h4><ol>
+<li>打开 Atom 编辑器。</li>
+<li>打开 Atom 的配置界面（Windows：ctrl + ,    Mac：command + , ）。</li>
+<li>点击边栏上的 Install（安装）。</li>
+<li>在界面上的 Install Packages 下面，选中 Packages 标签，然后搜索你想要安装的 Package。</li>
+<li>在搜索结果找到想要的 Package ，点击 Install 安装。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-11.png" alt=""></li>
+</ol>
+<h4 id="安装包：通过_apm">安装包：通过 apm</h4><ol>
+<li>打开命令行工具，Windows 用 Powershell，Mac 可以使用终端。</li>
+<li>搜索包用的是 apm search &lt;关键词&gt; 。</li>
+<li>找到想要的包以后，再用 apm install &lt;包的名字&gt;。</li>
+</ol>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-12.png" alt=""></p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150117-13.png" alt=""></p>
+<p>下面，你可以搜索一个叫 Localization 的包，然后安装一下，这个包会为 Atom 的菜单栏提供一个中文翻译。下面我们再看一下怎么样去配置与管理包。</p>
+<h4 id="手动安装包emmet-atom">手动安装包emmet-atom</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/.atom/packages</span><br><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/emmetio/emmet-atom</span><br><span class="line"><span class="keyword">cd</span> emmet-atom</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h4 id="管理包">管理包</h4><p>打开配置界面，在边栏上选中 Packages ，在这个界面上的 Communtity Packages 区域里，你可以找到自己安装的来自社区成员分享的包。Core Packages 下面是 Atom 编辑器核心自带的包。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-3.png" alt=""></p>
+<p>这里会显示包的名字，还有介绍，不想用的包，可以点击 Disable 按钮禁用它，或者直接点击 Uninstall 卸载掉包，点击 Settings 按钮可以打开包的配置界面，在这个界面上，你可以找到包的主页，说明的文档，可以查看包的源文件，还有相关的配置与快捷键。</p>
+<p>下面打开之前安装的 Localization 这个包的配置界面，然后在 Settings 区域里面，在 Current Language 下面的文本框里输入：Chinese - Simplified ，这样会把菜单栏的语言设置成简体中文，如果设置成 Chinese - Traditional，会把菜单栏设置成繁体中文。输入以后，用鼠标点一下浏览器的其它的地方，这样编辑器会保存你的配置。</p>
+<p>完成以后，想让设置生效，可以关掉并且重新打开编辑器，或者可以刷新一下编辑器</p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-4.png" alt=""></p>
+<p>刷新编辑器的快捷键：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Mac</span>    ：ctrl + alt + command + <span class="keyword">L</span></span><br><span class="line">Windows：ctrl + alt + <span class="literal">R</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="打开命令面板">打开命令面板</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">command</span> + <span class="built_in">shift</span> + P</span><br><span class="line">Windows：ctrl + <span class="built_in">shift</span> + P</span><br></pre></td></tr></table></figure>
+<p>搜索一下 tree view ，列出的就是跟树形视图相关的命令。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-8.png" alt=""></p>
+<h3 id="标签面板">标签面板</h3><p>在 Mac 上，你还可以使用 command + 数字 ，打开对应的标签面板。</p>
+<h3 id="分离面板">分离面板</h3><p>在编辑器上打开的文件可以分离到不同的面板上显示，你可以把编辑器分隔成上，下，左，右，四个部分。方法是，找到要分离显示的标签面板，鼠标右键点击，然后选择 Split Up，Split Down，Split Left 或者 Split Right。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-13.png" alt=""></p>
+<p>这些动作也都有对应的快捷键，可以打开命令面板（Mac：command + shift + P，Windows：ctrl + shift + P），然后搜索 Pane ，这样会显示出面板相关的操作命令。</p>
+<p>分离到上面<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">K</span> ↑</span></span><br><span class="line">Windows：ctrl + K ↑</span><br></pre></td></tr></table></figure></p>
+<h3 id="查找文件">查找文件</h3><p>目里的文件多了，想找到对应的文件，用鼠标点出这个文件很费事，可以用搜索找到文件。</p>
+<p>在已经打开的文件里找到你想要的文件：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">B</span></span></span><br><span class="line">Windows：ctrl + B</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-9.png" alt=""></p>
+<p>在整个项目里找到你需要的文件：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">P</span></span></span><br><span class="line">Windows：ctrl + P</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-10.png" alt=""></p>
+<p>查找文件里的内容<br>你可以搜索包含特定内容的文件，比如在当前打开的文件里搜索，或者也可以在整个项目里搜索，找到以后，可以把搜索的内容替换成新的内容。</p>
+<p>在当前打开的文件中搜索<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Mac</span>    ：command + <span class="literal">F</span></span><br><span class="line">Windows：ctrl + <span class="literal">F</span></span><br></pre></td></tr></table></figure></p>
+<p>比如我当前打开的是 humans.txt ，打开搜索，输入 name ，编辑器会高亮显示匹配搜索的内容。在 Replace in current buffer 里面，可以输入要替换成的东西，点击 Replace 会一个一个的替换，点击 Replace All 按钮，会替换全部的找到的地方。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-11.png" alt=""></p>
+<p>查找下一个地方<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="command"><span class="keyword">command</span> + <span class="title">G</span></span></span><br><span class="line">Windows：F3</span><br></pre></td></tr></table></figure></p>
+<p>查找上一个地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">shift</span> + <span class="built_in">command</span> + G</span><br><span class="line">Windows：<span class="built_in">shift</span> + F3</span><br></pre></td></tr></table></figure></p>
+<p>在整个项目中搜索<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac    ：<span class="built_in">shift</span> + <span class="built_in">command</span> + F</span><br><span class="line">Windows：<span class="built_in">shift</span> + ctrl + F</span><br></pre></td></tr></table></figure></p>
+<p>下面，是我搜索了项目中的 name ，回车以后，会显示出找到的结果，这个结果显示了包含搜索的内容的文件，还有出现这个内容的位置，点一下，会打开出现这个搜索内容的文件，并且会定位到对应的位置上。<br><img src="http://work.ninghao.net/wp-content/uploads/2015/01/QQ20150118-12.png" alt=""></p>
+<h3 id="常用插件">常用插件</h3><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ apm list -i -b</span><br><span class="line">Sublime-Style-Column-Selection<span class="variable">@1</span>.2.3</span><br><span class="line">atom-beautify<span class="variable">@0</span>.24.0</span><br><span class="line">autocomplete-plus<span class="variable">@2</span>.10.0</span><br><span class="line">autocomplete-snippets<span class="variable">@1</span>.3.0</span><br><span class="line"><span class="keyword">color</span>-picker<span class="variable">@1</span>.7.0</span><br><span class="line"><span class="keyword">file</span>-icons<span class="variable">@1</span>.5.5</span><br><span class="line">highlight-selected<span class="variable">@0</span>.9.2</span><br><span class="line">language-cmake<span class="variable">@0</span>.1.3</span><br><span class="line">language-lua<span class="variable">@0</span>.9.2</span><br><span class="line">lines<span class="variable">@0</span>.13.0</span><br><span class="line">linter</span><br><span class="line">linter-coffeelint<span class="variable">@0</span>.2.2</span><br><span class="line">linter-jshint<span class="variable">@0</span>.1.2</span><br><span class="line">linter-lua<span class="variable">@0</span>.1.5</span><br><span class="line">linter-luacheck<span class="variable">@0</span>.4.0</span><br><span class="line">minimap<span class="variable">@4</span>.8.0</span><br><span class="line">pretty-json</span><br></pre></td></tr></table></figure>
+<h3 id="常用命令">常用命令</h3><p>刷新编辑器<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + alt + <span class="command"><span class="keyword">command</span> + <span class="title">l</span></span></span><br></pre></td></tr></table></figure></p>
+<p>proxy<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apm config <span class="keyword">set</span> http_proxy <span class="string">"127.0.0.1:8087"</span></span><br><span class="line">$ apm config <span class="keyword">set</span> https_proxy <span class="string">"127.0.0.1:8087"</span></span><br><span class="line">$ apm config <span class="keyword">set</span> https_proxy <span class="string">"http://user:pass@host:port"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> <span class="string">"http_proxy=http://..."</span></span><br><span class="line">$ <span class="keyword">export</span> <span class="string">"https_proxy=http://..."</span></span><br><span class="line">$ apm <span class="keyword">install</span> minimap</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ env | grep proxy</span><br><span class="line"> http_proxy=<span class="string">http:</span><span class="comment">//... OK</span></span><br><span class="line"> https_proxy=<span class="string">http:</span><span class="comment">//... OK</span></span><br><span class="line">$ apm install minimap</span><br><span class="line"> Installing minimap to <span class="regexp">/home/</span>user<span class="regexp">/.atom/</span>packages ✗</span><br><span class="line"> Request <span class="keyword">for</span> <span class="keyword">package</span> information <span class="string">failed:</span> getaddrinfo ENOTFOUND (ENOTFOUND)</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ apm config <span class="keyword">ls</span></span><br><span class="line">$ apm <span class="keyword">update</span></span><br><span class="line">$ apm <span class="built_in">search</span> <span class="string">"Markdown"</span> --<span class="keyword">verbose</span></span><br><span class="line">$ apm <span class="keyword">update</span> --<span class="keyword">verbose</span></span><br><span class="line">apm --<span class="keyword">version</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/15/iOS-绘制1像素的线/">
+                iOS 绘制1像素的线
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/iOS-绘制1像素的线/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-绘制1像素的线/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="iOS_绘制1像素的线">iOS 绘制1像素的线</h1><h2 id="Point_Vs_Pixel">Point Vs Pixel</h2><p>iOS中当我们使用Quartz，UIKit，CoreAnimation等框架时，所有的坐标系统采用Point来衡量。系统在实际渲染到设置时会帮助我们处理Point到Pixel的转换。 这样做的好处隔离变化，即我们在布局的事后不需要关注当前设备是否为Retina，直接按照一套坐标系统来布局即可。</p>
+<p>实际使用中我们需要牢记下面这一点:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">One point <span class="keyword">does</span> <span class="keyword">not</span> necessarily correspond <span class="keyword">to</span> one physical pixel.</span><br></pre></td></tr></table></figure>
+<p>1 Point的线在非Retina屏幕则是一个像素，在Retina屏幕上则可能是2个或者3个，取决于系统设备的DPI。</p>
+<p>iOS系统中，UIScreen，UIView，UIImage，CALayer类都提供相关属性来获取scale factor。 原生的绘制技术天然的帮我们处理了scale factor，例如在drawRect:方法中，UIKit自动的根据当前运行的设备设置了正切的scale factor。所以我们在drawRect: 方法中绘制的任何内容都会被自动缩放到设备的物理屏幕上。</p>
+<p>基于以上信息可以看出，我们大部分情况下都不需要去关注pixel，然而存在部分情况需要考虑像素的转化。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如画1个像素的分割线</span><br></pre></td></tr></table></figure>
+<p>看到这个问题你的第一想法可能是，直接根据当前屏幕的缩放因子计算出1 像素线对应的Point，然后设置线宽即可。 代码如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.0f</span> / [UIScreen mainScreen].scale</span><br></pre></td></tr></table></figure>
+<p>表面上看着一切正常了，但是通过实际的设备测试你会发现渲染出来的线宽并不是1个像素。</p>
+<blockquote>
+<p>Why?</p>
+</blockquote>
+<p>为了获得良好的视觉效果，绘图系统通常都会采用一个叫”antialiasing(反锯齿)”的技术，iOS也不例外。 显示屏幕有很多小的显示单元组成，可以接单的理解为一个单元就代表一个像素。如果要画一条黑线，条线刚好落在了一列或者一行显示显示单元之内，将会渲染出标准的一个像素的黑线。 但如果线落在了两个行或列的中间时，那么会得到一条”失真”的线，其实是两个像素宽的灰线。</p>
+<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250827276118632.png" alt=""></p>
+<blockquote>
+<p>Positions defined by whole-numbered points fall at the midpoint between pixels. For example, if you draw a one-pixel-wide vertical line from (1.0, 1.0) to (1.0, 10.0), you get a fuzzy grey line. If you draw a two-pixel-wide line, you get a solid black line because it fully covers two pixels (one on either side of the specified point). As a rule, lines that are an odd number of physical pixels wide appear softer than lines with widths measured in even numbers of physical pixels unless you adjust their position to make them cover pixels fully.</p>
+</blockquote>
+<p>官方解释如上，简单翻译一下:</p>
+<blockquote>
+<p>规定：奇数像素宽度的线在渲染的时候将会表现为柔和的宽度扩展到向上的整数宽度的线，除非你手动的调整线的位置，使线刚好落在一行或列的显示单元内。</p>
+</blockquote>
+<p>如何对齐呢？</p>
+<blockquote>
+<p>在非高清屏上，一个Point对应一个像素。为了防止”antialiasing”导致的奇数像素的线渲染时出现失真，你需要设置偏移0.5 Point。 在高清屏幕上，要绘制一个像素的线，需要设置线宽为0.5个Point，同事设置偏移为0.25 Point。 如果线宽为偶数Point的话，则不要去设置偏移，否则线条也会失真。</p>
+</blockquote>
+<p>如下图所示: <img src="http://images0.cnblogs.com/blog2015/302680/201506/250824372995931.png" alt=""></p>
+<p>看了上述一通解释，我们了解了1像素宽的线条失真的原因，及解决办法。 至此问题貌似都解决了？再想想为什么在非Retina和Retina屏幕上调整位置时值不一样，前者为0.5Point，后者为0.25Point，那么scale为3的6 Plus设备又该调整多少呢？ 要回答这个问题，我们需要理解调整多少依旧什么原则。</p>
+<p><img src="http://images0.cnblogs.com/blog2015/302680/201506/251942350498849.png" alt=""></p>
+<p>再回过头来看看这上面的图片，图片中每一格子代表一个像素，而顶部标记的则代码我们布局时的坐标。 可以看到左边的非Retina屏幕，我们要在(3,0)这个位置画一条一个像素宽的竖线时，由于渲染的最小单位是像素，而(3,0)这个坐标恰好位于两个像素中间，此时系统会对坐标3左右两列的像素对填充，为了不至于线显得太宽，为对线的颜色淡化。那么根据上述信息我们可以得出，如果要画出一个像素宽的线，就得把绘制的坐标移动到(2.5, 0)或者(3.5,0)这个位置，这样系统渲染的时候刚好可以填充一列像素，也就是标准的一个像素的线。</p>
+<p>基于上面的分析，我们可以得出”Scale为3的6 Plus”设备如果要绘制1个像素宽的线条时，位置调整也应该是0.5像素，对应该的Point计算如下:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">1.0f</span> / <span class="list">[<span class="keyword">UIScreen</span> mainScreen].scale) / <span class="number">2</span><span class="comment">;</span></span></span></span><br></pre></td></tr></table></figure>
+<p>奉上一个画一像素线的一个宏:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_WIDTH           (<span class="number">1</span> / [UIScreen mainScreen].scale)</span><br><span class="line"><span class="hexcolor">#def</span>ine SINGLE_LINE_ADJUST_OFFSET   ((<span class="number">1</span> / [UIScreen mainScreen].scale) / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>使用代码如下:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> xPos = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">UIView</span> *view = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGrect</span>(x - SINGLE_LINE_ADJUST_OFFSET, <span class="number">0</span>, SINGLE_LINE_WIDTH, <span class="number">100</span>)];</span><br></pre></td></tr></table></figure>
+<h2 id="正确的绘制Grid线条">正确的绘制Grid线条</h2><p>贴上一个写的GridView的代码，代码中对Grid线条的奇数像素做了偏移，防止出现线条模糊的情况。</p>
+<p>SvGridView.h</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.h</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SvGridView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格间距，默认30</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridSpacing;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格线宽度，默认为1 pixel (1.0f / [UIScreen mainScreen].scale)</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>   gridLineWidth;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @brief 网格颜色，默认蓝色</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span>   *gridColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>SvGridView.m</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  SvGridView.m</span></span><br><span class="line"><span class="comment">//  SvSinglePixel</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by xiaoyong.cxy on 6/23/15.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015 smileEvday. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">"SvGridView.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_WIDTH           (1 / [UIScreen mainScreen].scale)</span></span><br><span class="line"><span class="preprocessor">#define SINGLE_LINE_ADJUST_OFFSET   ((1 / [UIScreen mainScreen].scale) / 2)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SvGridView</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@synthesize</span> gridColor = _gridColor;</span><br><span class="line"><span class="keyword">@synthesize</span> gridSpacing = _gridSpacing;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line"></span><br><span class="line">        _gridColor = [<span class="built_in">UIColor</span> blueColor];</span><br><span class="line">        _gridLineWidth = SINGLE_LINE_WIDTH;</span><br><span class="line">        _gridSpacing = <span class="number">30</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridColor:(<span class="built_in">UIColor</span> *)gridColor</span><br><span class="line">&#123;</span><br><span class="line">    _gridColor = gridColor;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridSpacing:(<span class="built_in">CGFloat</span>)gridSpacing</span><br><span class="line">&#123;</span><br><span class="line">    _gridSpacing = gridSpacing;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setGridLineWidth:(<span class="built_in">CGFloat</span>)gridLineWidth</span><br><span class="line">&#123;</span><br><span class="line">    _gridLineWidth = gridLineWidth;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Only override drawRect: if you perform custom drawing.</span></span><br><span class="line"><span class="comment">// An empty implementation adversely affects performance during animation.</span></span><br><span class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextBeginPath</span>(context);</span><br><span class="line">    <span class="built_in">CGFloat</span> lineMargin = <span class="keyword">self</span><span class="variable">.gridSpacing</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  https://developer.apple.com/library/ios/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GraphicsDrawingOverview/GraphicsDrawingOverview.html</span><br><span class="line">     * 仅当要绘制的线宽为奇数像素时，绘制位置需要调整</span><br><span class="line">     */</span></span><br><span class="line">    <span class="built_in">CGFloat</span> pixelAdjustOffset = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (((<span class="keyword">int</span>)(<span class="keyword">self</span><span class="variable">.gridLineWidth</span> * [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.scale</span>) + <span class="number">1</span>) % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        pixelAdjustOffset = SINGLE_LINE_ADJUST_OFFSET;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGFloat</span> xPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="built_in">CGFloat</span> yPos = lineMargin - pixelAdjustOffset;</span><br><span class="line">    <span class="keyword">while</span> (xPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, xPos, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, xPos, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">        xPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (yPos &lt; <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>) &#123;</span><br><span class="line">        <span class="built_in">CGContextMoveToPoint</span>(context, <span class="number">0</span>, yPos);</span><br><span class="line">        <span class="built_in">CGContextAddLineToPoint</span>(context, <span class="keyword">self</span><span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>, yPos);</span><br><span class="line">        yPos += lineMargin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGContextSetLineWidth</span>(context, <span class="keyword">self</span><span class="variable">.gridLineWidth</span>);</span><br><span class="line">    <span class="built_in">CGContextSetStrokeColorWithColor</span>(context, <span class="keyword">self</span><span class="variable">.gridColor</span><span class="variable">.CGColor</span>);</span><br><span class="line">    <span class="built_in">CGContextStrokePath</span>(context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>使用方法如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SvGridView *gridView = [[SvGridView alloc] initWithFrame:self.view.bounds]<span class="comment">;</span></span><br><span class="line">gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight<span class="comment">;</span></span><br><span class="line">gridView.alpha = 0.6<span class="comment">;</span></span><br><span class="line">gridView.gridColor = [UIColor greenColor]<span class="comment">;</span></span><br><span class="line">[self.view addSubview:gridView]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/15/iOS-内存警告/">
                 iOS 内存警告
               </a>
@@ -306,275 +660,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/15/iOS-应用崩溃日志揭秘/">
-                iOS 应用崩溃日志揭秘
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/15/iOS-应用崩溃日志揭秘/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-应用崩溃日志揭秘/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://www.raywenderlich.com/23704/demystifying-ios-application-crash-logs">翻译自</a></p>
-<h1 id="iOS应用崩溃日志揭秘1">iOS应用崩溃日志揭秘1</h1><p>作为一名应用开发者，你是否有过如下经历?</p>
-<p>为确保你的应用正确无误，在将其提交到应用商店之前，你必定进行了大量的测试工作。它在你的设备上也运行得很好，但是，上了应用商店后，还是有用户抱怨会闪退 !</p>
-<p>如果你跟我一样是个完美主义者，你肯定想将应用做到尽善尽美。于是你打开代码准备修复闪退的问题……但是，从何处着手呢？ 这时iOS崩溃日志派上用场了。在大多数情况下，你能从中了解到关于闪退的详尽、有用的信息。</p>
-<p>通过本教程，你将学习到一些常见的崩溃日志案例，以及如何从开发设备和iTunes Connect上获取崩溃日志文件。你还将学习到符号化（ symbolication）,从日志追踪到代码 。你还将学习调试一个在待定情况下会闪退的应用。</p>
-<p>让我们开始动手吧!</p>
-<h2 id="什么是崩溃日志，从哪里能得它?">什么是崩溃日志，从哪里能得它?</h2><p>iOS设备上的应用闪退时，操作系统会生成一个崩溃报告，也叫崩溃日志，保存在设备上。 崩溃日志上有很多有用的信息，包括应用是什么情况下闪退的。通常，上面有每个正在执行线程的完整堆栈跟踪信息，所以你能从中了解到闪退发生时各线程都在做什么，并分辨出闪退发生在哪个线程上。</p>
-<p>有几种方法可以从设备上获取崩溃日志。 设备与电脑上的iTunes Store同步后，会将崩溃日志保存在电脑上。根据电脑操作系统的不同，崩溃日志将保存在以下位置:</p>
-<p>Mac OS X:</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/Library/</span>Logs<span class="regexp">/CrashReporter/M</span>obileDevice<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/15/iOS-应用崩溃日志揭秘/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-property-attribute/">
-                iOS property attribute
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-property-attribute/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-property-attribute/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_property_&amp;&amp;_ivar_&amp;&amp;_local_variable">iOS property &amp;&amp; ivar &amp;&amp; local variable</h2><h3 id="default_attributes">default attributes</h3><ol>
-<li>property: atomic assign readwrite</li>
-<li>ivar &amp;&amp; local varibal: strong readwrite non-atomic</li>
-</ol>
-<blockquote>
-<p>atomic 在实现中通过加入 lock 的方式来保证多线程安全, 但是这只是很简单的一种线程安全, 只局限于此属性的读写.实际应用场景中, 业务的原子性, 是需要自己来实现的.</p>
-</blockquote>
-<h3 id="when_to_use_copy">when to use copy</h3><ol>
-<li>NSStrings: 为了防止其他地方修改</li>
-<li>block: 防止自动释放</li>
-<li>可变数据类型, 当你想阻止其他拥有者变更数据时.</li>
-</ol>
-<h3 id="尽量使用_copy_关键字">尽量使用 copy 关键字</h3><p>任何实现了<code>NSCopying</code>协议的类型, 都应该尽量采用<code>copy</code>. 因为我们定义的属性,在使用时可能是用一个可变的子属性来赋值的, 例如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Book</span> : <span class="title">NSObject</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stringExample &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSMutableString</span> *bookTitle = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"Best book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    Book *book = [[Book alloc] init];</span><br><span class="line">    book<span class="variable">.title</span> = bookTitle;</span><br><span class="line"> </span><br><span class="line">    [bookTitle setString:<span class="string">@"Worst book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"book title %@"</span>, book<span class="variable">.title</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-property-attribute/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/NSRunLoop深入理解/">
-                NSRunLoop深入理解
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/NSRunLoop深入理解/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/NSRunLoop深入理解/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://www.cocoachina.com/ios/20150601/11970.html">转自</a></p>
-<h2 id="RunLoop">RunLoop</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;RunLoop 是 iOS 和 OS X 开发中非常基础的一个概念，这篇文章将从 CFRunLoop 的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用 RunLoop 实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
-<h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
-<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/NSRunLoop深入理解/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -613,7 +698,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -627,7 +712,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

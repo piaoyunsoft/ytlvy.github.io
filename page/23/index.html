@@ -148,6 +148,290 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/">
+                Valar Morghulis Valar Dohaeris
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/other/">other</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/Valar-Morghulis-Valar-Dohaeris/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><img src="http://ww4.sinaimg.cn/mw1024/8edf7b7agw1et5ppc4i12g20dw0697uc.gif" alt=""></p>
+<p>Valar Morghulis = 凡人皆有一死<br>Valar Dohaeris = 凡人皆须侍奉<br>这两句是需要放在一起理解的</p>
+<p>看字面意思，凡人皆有一死，似乎表明的是死亡的不可避免。满含悲观的情绪。这和史塔克的家族箴言一样，凛冬将至。对于命运我们无能为力。</p>
+<p>但是，这句话还伴随着另外那句：凡人皆须侍奉。这两句是高等瓦雷利亚语，缘起于千面之神和信仰它的神秘组织 无面者。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/16/ios-MRC-ARC/">
+                ios MRC && ARC
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/16/ios-MRC-ARC/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/ios-MRC-ARC/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="ARC">ARC</h2><h3 id="MRC">MRC</h3><h4 id="MRC内存管理原则">MRC内存管理原则</h4><p>􏰀1. You have ownership of any objects you create.<br>2.􏰀 You can take ownership of an object using retain.<br>􏰀3. When no longer needed, you must relinquish ownership of an object you own.<br>􏰀4. You must not relinquish ownership of an object you don’t own.</p>
+<table>
+<thead>
+<tr>
+<th>Action for Objective-C Object</th>
+<th>Objective-C Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create and have ownership of it</td>
+<td>alloc/new/copy/mutableCopy group</td>
+</tr>
+<tr>
+<td>Take ownership of it</td>
+<td>retian</td>
+</tr>
+<tr>
+<td>Relinquish it</td>
+<td>release</td>
+</tr>
+<tr>
+<td>Dispose of it</td>
+<td>dealloc</td>
+</tr>
+</tbody>
+</table>
+<h4 id="调用者持有">调用者持有</h4><p>Relinquishing Ownership of a Retained Object. 下面的例子将函数将自己持有的obj, 通过return传递给了调用者,由调用者来来持有此变量<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (id)allocObject</span><br><span class="line">&#123;</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">You</span> create an <span class="keyword">object</span> <span class="keyword">and</span> have ownership. */</span><br><span class="line">  id obj = [[<span class="type">NSObject</span> alloc] init];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">At</span> this moment, this <span class="keyword">method</span> has ownership <span class="keyword">of</span> the <span class="keyword">object</span>. */</span><br><span class="line">  <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/16/ios-MRC-ARC/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/15/ios-gcd/">
+                ios gcd
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/15/ios-gcd/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-gcd/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="GCD">GCD</h2><h3 id="befor_GCD">befor GCD</h3><h4 id="object_method">object method</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorInBackground:</span> <span class="string">withObject:</span></span><br><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorOnMainThread:</span> <span class="string">withObject:</span> <span class="string">waitUntilDone:</span></span><br></pre></td></tr></table></figure>
+<h3 id="多线程面临的问题">多线程面临的问题</h3><ol>
+<li>race condition</li>
+<li>dead lock</li>
+<li>too much threads consumes two much memory</li>
+</ol>
+<h4 id="多线程的意义">多线程的意义</h4><p>高交互性， 界面编程中，将耗时的操作放入到其他线程执行，避免影响到主线程界面响应</p>
+<h3 id="GCD_基础">GCD 基础</h3><h4 id="Dispatch_Queue_派发队列">Dispatch Queue 派发队列</h4><ol>
+<li>serial dispath queue  顺序派发队列</li>
+<li>concurrent dispath queue  并发派发队列</li>
+</ol>
+<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/15/ios-gcd/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/15/ios-block/">
                 ios block
               </a>
@@ -303,252 +587,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/">
-                AutoLayout -- Content Compression Resistance & Content Hugging
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Content_Compression_Resistance_&amp;&amp;_Content_Hugging">Content Compression Resistance &amp;&amp; Content Hugging</h2><p>Auto Layout中, 存在Content Compression Resistance 和 Content Hugging 这两个概念.这两个概念是在<code>固有内容尺寸</code>（Intrinsic Content Size）之上起作用的.</p>
-<h3 id="Intrinsic_Content_Size">Intrinsic Content Size</h3><p>包含内容的UI控件, 由内容多少而决定的大小规则.</p>
-<h3 id="Content_Compression_Resistance_&amp;_Content_Hugging">Content Compression Resistance &amp; Content Hugging</h3><ol>
-<li>内容大小改变是指, 内容显示内容所占空间的长度来说的.</li>
-<li><code>内容抗压指数</code>，在父视图变小时, 会根据抗压指数来缩小各子控件;</li>
-<li><code>内容拥抱指数</code>, 内容越集中于控件中心, 周围空白越小.</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/08/objc-runtime-method-Cache/">
-                objc runtime method Cache
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/08/objc-runtime-method-Cache/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/objc-runtime-method-Cache/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="method_cache_更新机制">method cache 更新机制</h3><p>为了方便函数的查找, objc在运行时,引入了method cache机制,来快速定位函数.method cache的大小是动态更新的,在更新时, 将直接生成新容量的缓存, 并将旧的缓存放入到垃圾队列中,等待时机释放. 而时机的选择, 采用检测每个线程的program counter,来查看是否处于objc_msgSend.如果都不在,则释放.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BOOL ThreadsInMsgSend<span class="params">(void)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(thread in GetAllThreads<span class="params">()</span>)</span> &#123;</span><br><span class="line">        uintptr_t pc = thread.GetPC<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">if</span><span class="params">(pc &gt;= objc_msgSend_startAddress &amp;&amp; pc &lt;= objc_msgSend_endAddress)</span> &#123;</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bucket_t <span class="built_in">*</span>oldCache = class-&gt;cache;</span><br><span class="line">class-&gt;cache = malloc<span class="params">(newSize)</span>;</span><br><span class="line"></span><br><span class="line">append<span class="params">(gOldCachesList, oldCache)</span>;</span><br><span class="line"><span class="keyword">if</span><span class="params">(!ThreadsInMsgSend<span class="params">()</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(cache in gOldCachesList)</span> &#123;</span><br><span class="line">        free<span class="params">(cache)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    gOldCachesList.clear<span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/07/IOS-Multithreading-Memory-Management/">
-                IOS Multithreading && Memory Management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-07
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/07/IOS-Multithreading-Memory-Management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/IOS-Multithreading-Memory-Management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
-<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -587,7 +625,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -601,7 +639,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

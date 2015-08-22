@@ -148,6 +148,318 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/">
+                How To Implement A Circular Image Loader Animation with CAShapeLayer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="使用CAShapeLayer来实现圆形图片加载动画">使用CAShapeLayer来实现圆形图片加载动画</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer">How To Implement A Circular Image Loader Animation with CAShapeLayer</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/rounak">Rounak Jain</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>几个星期之前，Michael Villar在Motion试验中创建一个非常有趣的加载动画。</p>
+<p>下面的GIF图片展示这个加载动画，它将一个圆形进度指示器和圆形渐现动画结合。这个组合的效果有趣，独一无二和有点迷人。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Circle.gif" alt=""></p>
+<p>这个教程将会教你如何使用Swift和Core Animatoin来重新创建这个效果。让我们开始吧！</p>
+<h1 id="基础">基础</h1><p>首先下载这个教程的<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Starter.zip">启动项目</a>，然后编译和运行。过一会之后，你应该看到一个简单的image显示：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/StarterProject.png" alt=""></p>
+<p>这个启动项目已经预先在恰当的位置将views和加载逻辑编写好了。花一分钟来浏览来快速了解这个项目；那里有一个<strong>ViewController</strong>，<strong>ViewController</strong>里有一个命名为<strong>CustomImageView</strong>的<strong>UIImageView</strong>子类, 还有一个<strong>SDWebImage</strong>的方法被调用来加载image。</p>
+<p>你可能注意到当你第一次运行这个app的时候，当image下载时这个app似乎会暂停几秒，然后image会显示在屏幕。当然，此刻没有圆形进度指示器 - 你将会在这个教程中创建它！</p>
+<p>你会在两个步骤中创建这个动画：</p>
+<ol>
+<li><strong>圆形进度</strong>。首先，你会画一个圆形进度指示器，然后根据下载进度来更新它。</li>
+<li><strong>扩展圆形图片</strong>。第二，你会通过扩展的圆形窗口来揭示下载图片。</li>
+</ol>
+<p>紧跟着下面步骤来逐步实现！</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Extensions-Nuances/">
+                Swift Extensions Nuances
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Extensions-Nuances/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Extensions-Nuances/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Swift扩展的三个微妙细节">Swift扩展的三个微妙细节</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/04/22/3-nuances-of-swift-extensions/">3 Nuances of Swift Extensions</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+<li>校对者:  </li>
+<li>状态 :  校对中 </li>
+</ul>
+</blockquote>
+<p>每当我初次翻看某文档时，我都走马观花似的快速阅过，还一边点着头一边喃喃自语说：“好！懂了，就这么回事！”，可是过后当我真正要运用到这些我以为已经理解了的知识点时，却发现实际情况和我想的往往不一样，每当这时我就懵了，心想：“哇哦…怎么回事？这和我想的完全不一样啊！文档里有说这事吗？”。</p>
+<p>最近的几次讨论促使我扪心自问是否真正的理解了Swift中的扩展。我阅读过关于扩展的文档，并且我“认为”我自己对这块内容已经是理解的相当透彻了。可是这几次讨论，加上自己私下通过敲代码的验证，让我发现了我原先不曾注意到几个微妙的细节。</p>
+<p><strong>更新</strong>：这篇文章刚一发表，Swift社区就出手襄助并帮助我弄明白了我最根本的纠结点在哪。为此，我写了另一篇文章“<a href="http://www.andrewcbancroft.com/2015/04/24/clarifying-swift-access-control-hint-swift-isnt-c-sharp/">阐明Swift访问控制</a>”进一步说明我之前的误解。为了避免犯我曾今犯过的错误，我建议大家去读一读。</p>
+<h2 id="三个关于扩展的微妙细节">三个关于扩展的微妙细节</h2><p>对下面列出的三个细节的思考严重挑战了我之前对Swift扩展的理解：</p>
+<ol>
+<li>Swift扩展对它所扩展类型的<strong>visibility</strong>。比如，扩展能访问被<code>private</code>所修饰的内容吗?</li>
+<li>定义扩展的位置是否对扩展的<strong>visibility</strong>有影响。比如我这有一个类型我想写个扩展，把扩展写在同一个源文件里和把扩展写在另一个文件里有什么区别吗？</li>
+<li>扩展里“成员”的默认访问修饰符以及是否给他们添加修饰对这个扩展作为一个类型的公共接口的影响。</li>
+</ol>
+<p>在我开始之前，假设我有一个公共结构体<code>Person</code>。这个结构体有一些私有属性，<code>name</code>，<code>gender</code>，和<code>age</code>。用一个枚举把<code>Gender</code>封装了一下。这个结构体看起来如下：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Extensions-Nuances/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-What’s-New-in-Swift-2/">
+                iOS What’s New in Swift 2
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-What’s-New-in-Swift-2/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Swift_2_有哪些新特性">Swift 2 有哪些新特性</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/108522/whats-new-in-swift-2">What’s New in Swift 2</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/gregheo">Greg Heo</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>在WWDC我们发现Swift团队没有浪费时间在无谓的地方，而是致力于改善Swift 2。</p>
+<p>我们将会为你编写和录制很多关于Swift 2的教程，但在此期间我想强调Swift最令人兴奋的改变，为你可以在秋天迁移到Swift 2做准备。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/06/swift-new.jpg" alt=""></p>
+<h1 id="错误处理">错误处理</h1><p>正如Ray在<a href="http://www.raywenderlich.com/108379/wwdc-2015-initial-impressions">WWDC 2015 Initial Impressions</a>文章中提及，错误处理已经在Swift 2改进了。我们已经迁移到新的系统就像异常处理，而不是<strong>NSError</strong>对象和双指针。</p>
+<p>你可能对以下代码比较熟悉：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> drinkWithError(<span class="constant">nil</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般在Cocoa，你传入一个<strong>NSError</strong>对象的引用(一个<strong>inout</strong>参数在Swift)，然后方法会赋值给错误变量。但问题是你可以传入一个nil到这里来完全忽略这个错误；或者，你可以传入<strong>NSError</strong>但从不检查它。</p>
+<p>Swift 2 为错误检查添加额外保护层。你可以使用<strong>throws</strong>关键字来指定那个函数和方法能够抛出一个错误。然后当你调用某样东西时，可以用<strong>do</strong>, <strong>try</strong>和<strong>catch</strong>多个关键字来捕捉和处理错误。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DrinkError</span>: <span class="title">ErrorType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">NoBeerRemainingError</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">drinkWithError</span><span class="params">()</span></span> throws &#123;</span><br><span class="line">  <span class="keyword">if</span> beer.isAvailable() &#123;</span><br><span class="line">    <span class="comment">// party!</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    throw <span class="type">DrinkError</span>.<span class="type">NoBeerRemainingError</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">tryToDrink</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    try drinkWithError()</span><br><span class="line">  &#125; catch &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有几样东西需要强调的：</p>
+<ol>
+<li>为了创建一个错误可以抛出，只是创建一个继承<strong>ErrorType</strong>的<strong>enum</strong>。</li>
+<li>你需要使用<strong>throws</strong>关键字来标志任何函数可以抛出一个错误。</li>
+<li>这里抛出一个错误，它将会在section 4中被捕捉。</li>
+<li>你在一个<strong>do</strong>块中包含任何可以抛出一个错误的代码，而不是其他语言类似的<strong>try</strong>块中。然后，你添加一个<strong>try</strong>关键字到函数被调用的前面，而且这个函数能够抛出一个错误。</li>
+</ol>
+<p>新语法是非常简洁和易读。任何API当前使用<strong>NSError</strong>以后都会使用这种错误处理方式。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/06/throw-all-the-things-415x320.jpg" alt=""></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-What’s-New-in-Swift-2/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/08/swift-Core-Image-Tutorial/">
                 swift Core Image Tutorial
               </a>
@@ -348,294 +660,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
-                iOS UITableviewCell Swipeable
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
-<ul>
-<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
-</ul>
-</blockquote>
-<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
-<p>首先，让我们来看一下现有的解决方法。</p>
-<ul>
-<li>UITableViewRowAction (new in iOS 8)</li>
-</ul>
-<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
-<ul>
-<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
-</ul>
-<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
-<ul>
-<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
-</ul>
-<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-Background-Modes-Tutorial/">
-                iOS Background Modes Tutorial
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Background-Modes-Tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Background-Modes-Tutorial/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="iOS后台模式开发指南">iOS后台模式开发指南</h1><hr>
-<blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/92428/background-modes-ios-swift-tutorial">Background Modes Tutorial: Getting Started</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/rayfix"> Ray Fix </a></li>
-<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
-<li>校对者:David Hu</li>
-<li>状态 :  已完成</li>
-</ul>
-</blockquote>
-<p>更新说明:这个教程被Ray Fix更新为关于iOS和Swift的.原著作者为<a href="http://www.raywenderlich.com/29948/backgrounding-for-ios">Gustavo Ambrozio</a>.</p>
-<p>自从古老的iOS4以来,当用户点击home建的时候,你可以使你的APP们在内存中处于suspended(挂起)状态.即使APP仍停留在内存中,它的所有操作是被暂停的直到用户再次运行它.</p>
-<p>当然这个规则中有例外情况.在特定的情况下,这个APP仍然可以在后台中执行某些操作.这个教程会教你在什么时候怎么去用最常用的一些后台操作.</p>
-<p>每一次iOS的发布都会在后台操作和细节上的放宽限制，以此提升用户体验和延长电池寿命.对于在iOS中实现”真正”的多任务来说,后台模式不是一个神奇的解决办法.当用户切换到其他的APP应用时,大多数的APP应用仍然会完全的暂停运行.你的应用只被允许在很特殊的情况下才能在后台中继续运行.例如,这些包括播放音频,获取位置更新,或者从服务器获取最新内容的情况.</p>
-<p>iOS7之前,APP应用在真正暂停之前会有连续10分钟的时间去完成它们当前的操作.随着NSURLSession的出现,有了一种更为优雅的方式去应对大量的网络切换.因此,对于可用的后台运行时间已经减少到只有几分钟,而且不再必须为连续的.</p>
-<p>这样的后台模式可能不适合你.但如果合适,请继续阅读!</p>
-<p>接下来的学习中,将会有几个几个后台模式提供给你.在本教程中你将建立一个关于简单标签应用的工程,来探索从连续播放视频到周期性的获取更新内容的四种常见模式.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Background-Modes-Tutorial/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS8-iCloud/">
-                iOS8 iCloud
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS8-iCloud/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS8-iCloud/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS8使用icloud"><code>iOS8使用icloud</code></h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.appcoda.com/cloudkit-introduction-tutorial/">Working with CloudKit in iOS 8</a></li>
-<li>译文出自 <a href="http://www.dectf.cn">开发技术前线</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
-</ul>
-</blockquote>
-<p>对于开发者来说，如何用适当的方式来存储应用程序数据是一个比较重要的问题。 毫无疑问，任何应用都或多或少需要存储一些数据。对于一般的应用程序来说，被保存的数据各不相同，大部分时间都被存储在本地以便再次在相同的设备运行该应用程序。尽管这不是是唯一的选择。随着云服务的发展，一个应用程序也可以把数据存储在云端，既可以完全把数据存储在云端，也可以本地和远程都存储。</p>
-<p>有许多网络服务商提供云服务，通常会赠送一定的免费空间。其中之一就是苹果，也就是著名的云服务提供商iCloud。开发人员可以访问iCloud，把它作为一个存储方式。有多种方法可以从iCloud中存储和读取数据，但在本教程中，我们将专注于其中之一：CloudKitframework。<br><img src="http://img.blog.csdn.net/20150515220618400" alt="这里写图片描述"></p>
-<p>当你处理结构化数据（不是单纯的文件和文档）并希望将其保存在网络上的，使用CloudKit会非常方便。通过CloudKit，可以很容易的做到其它数据库能做的事情，代替数据库、记录等等。事实上，一条CloudKit记录就是iOS中大家都知道的字典，当然CloudKit还可以处理其它不同的数据。通过本教程，我们会发现使用这个框架是有趣的，而不是特别困难。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS8-iCloud/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -674,7 +698,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -688,7 +712,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

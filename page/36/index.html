@@ -148,6 +148,252 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/ios-uitextview-and-and-uitextfield/">
+                UITextView &amp;&amp; UITextField
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-uitextview-and-and-uitextfield/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-uitextview-and-and-uitextfield/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="UITextView">UITextView</h3><h4 id="ios7_textView_contentInsets">ios7 textView contentInsets</h4><pre><code>A text view <span class="keyword">is</span> a scroll view. iOS <span class="number">7</span> will <span class="keyword">add</span> a content offset automatically <span class="keyword">to</span> scroll views, <span class="keyword">as</span> it assumes they will want <span class="keyword">to</span> scroll up behind the nav bar <span class="keyword">and</span> title bar.
+<span class="keyword">To</span> prevent this, <span class="keyword">override</span> the <span class="keyword">new</span> <span class="function"><span class="keyword">method</span> <span class="title">on</span> <span class="title">UIViewController</span>, <span class="title">automaticallyAdjustsScrollViewInsets</span>, <span class="title">and</span> <span class="title">return</span> <span class="title">NO</span>.</span>
+</code></pre><h3 id="UITextField">UITextField</h3><h4 id="textfield_clear_button_bug">textfield clear button bug</h4><pre><code><span class="preprocessor">#pragma mark- gesture delegate</span>
+- (<span class="built_in">BOOL</span>)gestureRecognizer:(<span class="built_in">UIGestureRecognizer</span> *)gestureRecognizer shouldReceiveTouch:(<span class="built_in">UITouch</span> *)touch {
+    <span class="keyword">if</span> ([touch<span class="variable">.view</span> isKindOfClass:[<span class="built_in">UITextField</span> class]] ||
+        [touch<span class="variable">.view</span> isKindOfClass:[<span class="built_in">UIButton</span> class]])
+    {
+        <span class="keyword">return</span> <span class="literal">NO</span>;
+    }
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/appdelegate-shou-shen/">
+                Appdelegate瘦身
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/appdelegate-shou-shen/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appdelegate-shou-shen/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <ul>
+<li>(BOOL)application:(UIApplication <em>)application<br>didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // …<br>  [FooModule setup];<br>  [[BarModule sharedInstance] setup];<br>  // …<br>  return YES;<br>}</li>
+</ul>
+<p>/// FooModule.m</p>
+<ul>
+<li>(void)load<br>{<br>  __block id observer =<br>  [[NSNotificationCenter defaultCenter]<br>   addObserverForName:UIApplicationDidFinishLaunchingNotification<br>   object:nil<br>   queue:nil<br>   usingBlock:^(NSNotification *note) {<pre><code><span class="attr_selector">[self setup]</span>; <span class="comment">// Do whatever you want</span>
+<span class="attr_selector">[[NSNotificationCenter defaultCenter]</span> <span class="tag">removeObserver</span><span class="pseudo">:observer</span>];
+</code></pre>   }];<br>}</li>
+</ul>
+<p>// 解释：<br>// + load方法在足够早的时间点被调用<br>// block版本的通知注册会产生一个<strong>NSObserver *对象用来给外部remove观察者<br>// block对observer对象的捕获早于函数的返回，所以若不加</strong>block，会捕获到nil<br>// 在block执行结束时移除observer，无需其他清理工作<br>// 这样，在模块内部就完成了在程序启动点代码的挂载</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/appstore-reject/">
+                appstore 被拒
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/appstore-reject/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/appstore-reject/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="appstore_被拒原因">appstore 被拒原因</h2><ol>
+<li>解释虚拟货币的用途、获取途径</li>
+<li>有米等诱导用户下载应用，影响排名的</li>
+<li>微信、qq第三方登录不能让用户下载后，进行注册</li>
+<li>大转盘应用 没有声明次活动与苹果无关</li>
+<li>截图与具体应用不符，例如多按钮</li>
+<li>禁止的类库，没有从工程彻底删除，只是在xcode不可见</li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/ios-memory-management/">
                 ios 内存管理
               </a>
@@ -318,255 +564,6 @@ iphone 崩溃日志分析工具symbolicatecrash
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-url-identifier-and-and-url-schemes/">
-                URL Identifier &amp;&amp; URL Schemes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-url-identifier-and-and-url-schemes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-url-identifier-and-and-url-schemes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="URL_Identifier_&amp;&amp;_URL_Schemes">URL Identifier &amp;&amp; URL Schemes</h2><pre><code>The <span class="built_in">URL</span> Identifier is <span class="operator">the</span> reversed domain address which is should be <span class="operator">the</span> same <span class="keyword">as</span> your Bundle Identifier e.g. com.companyname.appname
-
-The <span class="built_in">URL</span> Schemes is <span class="operator">the</span> <span class="built_in">start</span> <span class="operator">of</span> <span class="operator">the</span> <span class="built_in">URL</span> e.g <span class="string">'appname'</span>. When you call this <span class="keyword">as</span> <span class="operator">a</span> <span class="built_in">URL</span> <span class="keyword">it</span> targets <span class="operator">the</span> bundle identifier which launches <span class="operator">the</span> app.
-
-so... <span class="string">'appname://'</span> (<span class="operator">in</span> safari) will call com.companyname.appname
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-knowledge/">
-                ios 知识点
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-knowledge/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-knowledge/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="正确设定背景图片">正确设定背景图片</h4><ol>
-<li>创建小的重复的图片作为背景的, 使用UIColor的 colorWithPatternImage来设置背景色.</li>
-<li>大背景图, 在view中添加一个UIImageView作为一个子View</li>
-</ol>
-<h4 id="设定Shadow_Path">设定Shadow Path</h4><pre><code>view.layer.shadowPath = <span class="comment">[<span class="comment">[UIBezierPath bezierPathWithRect:view.bounds]</span> CGPath]</span>;
-</code></pre><h4 id="优化Table_View">优化Table View</h4><p>正确使用<code>reuseIdentifier</code>来重用cells<br>尽量使所有的view opaque，包括cell自身<br>避免渐变，图片缩放，后台选人<br>缓存行高<br>如果cell内现实的内容来自web，使用异步加载，缓存请求结果<br>使用<code>shadowPath</code>来画阴影<br>减少subviews的数量<br>尽量不适用<code>cellForRowAtIndexPath:</code>，如果你需要用到它，只用一次然后缓存结果<br>使用正确的数据结构来存储数据<br>使用<code>rowHeight</code>, <code>sectionFooterHeight</code> 和 <code>sectionHeaderHeight</code>来设定固定的高，不要请求delegate</p>
-<h4 id="选择是否缓存图片">选择是否缓存图片</h4><p>imageWithContentsOfFile 不缓存<br>imageNamed 缓存</p>
-<h4 id="block_array_need_copy_first">block array need copy first</h4><h4 id="查看引用计数">查看引用计数</h4><pre><code>NSLog<span class="list">(@<span class="string">"retain count = %d"</span>, _objc_rootRetainCount<span class="list">(<span class="keyword">obj</span>)</span>)</span><span class="comment">;</span>
-</code></pre><h4 id="将objc文件编译成C++文件">将objc文件编译成C++文件</h4><pre><code>clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code
-</code></pre><h4 id="nonatomic_&amp;&amp;_atomic">nonatomic &amp;&amp; atomic</h4><p>nonatomic属性读取的是内存数据（寄存器计算好的结果）<br>atomic就保证直接读取寄存器的数据</p>
-<h4 id="set_do_not_back_up_attribute">set do not back up attribute</h4><pre><code><span class="built_in">NSURL</span> * fileURL;
-fileURL = [ <span class="built_in">NSURL</span> fileURLWithPath: <span class="string">@"some/file/path"</span> ];
-[ fileURL setResourceValue: [<span class="built_in">NSNumber</span> numberWithBool: <span class="literal">YES</span>] forKey: <span class="built_in">NSURLIsExcludedFromBackupKey</span> error: <span class="literal">nil</span> ];
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/duan-dian-xu-chuan/">
-                断点续传
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/duan-dian-xu-chuan/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/duan-dian-xu-chuan/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <pre><code>[request <span class="string">addValue:</span>@<span class="string">"bytes=500-"</span> <span class="string">forHTTPHeaderField:</span>@<span class="string">"Range"</span>];
-_fileHandle = [NSFileHandle <span class="string">fileHandleForWritingAtPath:</span>_tempFilePath];
-_fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number">0</span>;
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -605,7 +602,7 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -619,7 +616,7 @@ _fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number"
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

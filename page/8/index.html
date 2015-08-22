@@ -148,6 +148,294 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
+                iOS UITableviewCell Swipeable
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
+</ul>
+</blockquote>
+<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
+<p>首先，让我们来看一下现有的解决方法。</p>
+<ul>
+<li>UITableViewRowAction (new in iOS 8)</li>
+</ul>
+<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
+<ul>
+<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
+</ul>
+<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
+<ul>
+<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
+</ul>
+<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-Background-Modes-Tutorial/">
+                iOS Background Modes Tutorial
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-Background-Modes-Tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Background-Modes-Tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="iOS后台模式开发指南">iOS后台模式开发指南</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/92428/background-modes-ios-swift-tutorial">Background Modes Tutorial: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/rayfix"> Ray Fix </a></li>
+<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
+<li>校对者:David Hu</li>
+<li>状态 :  已完成</li>
+</ul>
+</blockquote>
+<p>更新说明:这个教程被Ray Fix更新为关于iOS和Swift的.原著作者为<a href="http://www.raywenderlich.com/29948/backgrounding-for-ios">Gustavo Ambrozio</a>.</p>
+<p>自从古老的iOS4以来,当用户点击home建的时候,你可以使你的APP们在内存中处于suspended(挂起)状态.即使APP仍停留在内存中,它的所有操作是被暂停的直到用户再次运行它.</p>
+<p>当然这个规则中有例外情况.在特定的情况下,这个APP仍然可以在后台中执行某些操作.这个教程会教你在什么时候怎么去用最常用的一些后台操作.</p>
+<p>每一次iOS的发布都会在后台操作和细节上的放宽限制，以此提升用户体验和延长电池寿命.对于在iOS中实现”真正”的多任务来说,后台模式不是一个神奇的解决办法.当用户切换到其他的APP应用时,大多数的APP应用仍然会完全的暂停运行.你的应用只被允许在很特殊的情况下才能在后台中继续运行.例如,这些包括播放音频,获取位置更新,或者从服务器获取最新内容的情况.</p>
+<p>iOS7之前,APP应用在真正暂停之前会有连续10分钟的时间去完成它们当前的操作.随着NSURLSession的出现,有了一种更为优雅的方式去应对大量的网络切换.因此,对于可用的后台运行时间已经减少到只有几分钟,而且不再必须为连续的.</p>
+<p>这样的后台模式可能不适合你.但如果合适,请继续阅读!</p>
+<p>接下来的学习中,将会有几个几个后台模式提供给你.在本教程中你将建立一个关于简单标签应用的工程,来探索从连续播放视频到周期性的获取更新内容的四种常见模式.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-Background-Modes-Tutorial/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS8-iCloud/">
+                iOS8 iCloud
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS8-iCloud/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS8-iCloud/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS8使用icloud"><code>iOS8使用icloud</code></h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.appcoda.com/cloudkit-introduction-tutorial/">Working with CloudKit in iOS 8</a></li>
+<li>译文出自 <a href="http://www.dectf.cn">开发技术前线</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+</ul>
+</blockquote>
+<p>对于开发者来说，如何用适当的方式来存储应用程序数据是一个比较重要的问题。 毫无疑问，任何应用都或多或少需要存储一些数据。对于一般的应用程序来说，被保存的数据各不相同，大部分时间都被存储在本地以便再次在相同的设备运行该应用程序。尽管这不是是唯一的选择。随着云服务的发展，一个应用程序也可以把数据存储在云端，既可以完全把数据存储在云端，也可以本地和远程都存储。</p>
+<p>有许多网络服务商提供云服务，通常会赠送一定的免费空间。其中之一就是苹果，也就是著名的云服务提供商iCloud。开发人员可以访问iCloud，把它作为一个存储方式。有多种方法可以从iCloud中存储和读取数据，但在本教程中，我们将专注于其中之一：CloudKitframework。<br><img src="http://img.blog.csdn.net/20150515220618400" alt="这里写图片描述"></p>
+<p>当你处理结构化数据（不是单纯的文件和文档）并希望将其保存在网络上的，使用CloudKit会非常方便。通过CloudKit，可以很容易的做到其它数据库能做的事情，代替数据库、记录等等。事实上，一条CloudKit记录就是iOS中大家都知道的字典，当然CloudKit还可以处理其它不同的数据。通过本教程，我们会发现使用这个框架是有趣的，而不是特别困难。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS8-iCloud/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/08/iOS-Autolayout-Practices/">
                 iOS Autolayout Practices
               </a>
@@ -313,259 +601,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-float-trap/">
-                iOS float trap
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-float-trap/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-float-trap/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="float陷阱以及在Objc中的注意">float陷阱以及在Objc中的注意</h2><p>浮点数不准，这个貌似基本都知道。但是在开发中很多人没有对它的使用产生警觉。如果你在开发Cocoa应用，你可能使用过如下代码判断系统版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="built_in">float</span>Value] &gt;= <span class="number">7.0</span>) &#123;</span><br><span class="line">  //something support <span class="keyword">for</span> ios7</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样一段代码也的确工作良好，但是注意了如果你把比较的数值改为7.1，那么很有可能就会出问题。</p>
-<h3 id="浮点数不准">浮点数不准</h3><p>这一篇博文从二进制的表示方面说明了为什么浮点数不准，讲的很好，感兴趣的可以学习学习，学习这些感觉还是很有用的，也可以帮助我们定位一些诡异的问题。 <a href="http://www.ruanyifeng.com/blog/2010/06/ieee_floating-point_representation.html" target="_blank" rel="external">浮点数的二进制表示</a><br>在精确的比较中不要使用float<br>文章开头的系统版本的比较就是一个典型的例子，我们可以通过其他方法实现比较：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="attribute">compare</span>:@<span class="string">"7.1"</span>] != NSOrderedAscending) &#123;</span><br><span class="line">  <span class="comment">//something support for ios7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-Dispatch-async-usages-tips/">
-                iOS Dispatch_async usages tips
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Dispatch-async-usages-tips/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Dispatch-async-usages-tips/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2014/10/20/dispatch-asyncyi-bu-de-xiao-miao-yong/" target="_blank" rel="external">reference</a></p>
-<h2 id="Dispatch_async异步的小妙用">Dispatch_async异步的小妙用</h2><p>GCD 对于cocoa和cocoa Touch的开发者来说已经是在熟悉不过了，相信有些基础的人都能说出一些特性。但是今天我们不是讲GCD的介绍和使用bulabulabula. 本文就介绍下使用<code>dispatch_async</code>的一个小妙用，且看下文分解。</p>
-<p>我们都知道dispatch_async可以用来异步执行代码。你的第一反应的可能是后台、多线程 这样的字眼，但是异步执行不是就代表多线程，它只是代表代码的执行方式，知道这点可以做更多事情。</p>
-<h3 id="afterDelay">afterDelay</h3><p>你是否做过这样的事情，在修改一个bug时，把方法延迟执行，like this:</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(doSomething) <span class="string">withObject:</span>nil <span class="string">afterDelay:</span><span class="number">0.1</span>f];</span><br></pre></td></tr></table></figure>
-<p>Let me guess, 你一定是发现doSomething方法中所依赖的数据或环境还达不到，立即执行的话，可能会有问题。所以你就让doSomething延迟一点时间执行，保证它需要的数据或环境已经处理完成，改完打包测试，bug看起来已经修复了。</p>
-<p>这个问题从大多数场景来说的确已经修复了，但是在强迫症眼里，好像还是有些瑕疵，不是完美方案。</p>
-<p>两个问题，你怎么能100%确保你需要的数据或环境能再0.1s内准备完成呢； 另一个是数据准备完成到doSomething执行中间可能会有一段空白时间，有时是我们不希望的。那如何替代这个方案呢，如果你得doSomething需要的数据和环境是在主线程执行的，那么方案很简单：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self doSomething]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>你可能问了，我本来就在主线程执行任务，为什么还要往main_queue里面提交任务呢。巧妙的地方就在这，我们巧妙的把doSomething作为任务提交到主线程，它会等待主线程的任务一个个执行完成才执行，这样就可以巧妙的解决这个问题。</p>
-<p>不过注意，不是所有场景都适合这个用法，就像上面描述的，你要确保doSomething的依赖条件实在主线程中执行的。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
-                iOS Application Framework Think - Network
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
-<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
-<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
-<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
-<ol>
-<li>无法cancel这个请求</li>
-<li>占用了完整的一个线程</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -604,7 +639,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -618,7 +653,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

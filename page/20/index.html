@@ -148,6 +148,262 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-Self-Super/">
+                iOS Runtime Self & Super
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/13/iOS-Runtime-Self-Super/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-Self-Super/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Self_&amp;&amp;_Super">Self &amp;&amp; Super</h2><h3 id="What_is_Super?">What is Super?</h3><p><code>Super</code> 是和 <code>Self</code> 一样的关键字, 不同的是, 它不能用作函数的参数, 只能接收消息.当接收消息的时候, 它会向父类搜索方法的定义. 如果在向上的类链中没有任何定义, 则程序会 crash.</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithValue<span class="number">1</span>:(id)<span class="keyword">value</span><span class="number">1</span> <span class="keyword">value</span><span class="number">2</span>:(id)<span class="keyword">value</span><span class="number">2</span></span><br><span class="line">&#123;</span><br><span class="line">    self = [<span class="keyword">super</span> initWithValue<span class="number">1</span>:<span class="keyword">value</span><span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (self) &#123;</span><br><span class="line">        <span class="number">_</span><span class="keyword">value</span><span class="number">2</span> = <span class="keyword">value</span><span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="messaging_super">messaging <code>super</code></h3><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_super</span> </span>&#123;</span><br><span class="line">    __unsafe_unretained id receiver;</span><br><span class="line">    __unsafe_unretained Class super_class;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">methodWithArgument</span>:(id)<span class="tag">arg</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr_selector">[super otherMethodWithArgument:arg]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)methodWithArgument:(id)arg</span><br><span class="line">&#123;</span><br><span class="line">    struct objc<span class="number">_</span><span class="keyword">super</span> <span class="keyword">super</span> = &#123;.receiver = self, .<span class="keyword">super</span><span class="number">_</span><span class="keyword">class</span> = <span class="number">0</span>xC<span class="number">0</span>FFEE&#125;;</span><br><span class="line"></span><br><span class="line">    objc<span class="number">_m</span>sgSendSuper(&amp;<span class="keyword">super</span>, <span class="annotation">@selector</span>(otherMethodWithArgument:), arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>objc_msgSendSuper</code> 将从父类的定义开始查找方法的实现. <code>super_class</code>是在 runtime 时, 动态生成的.<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-Self-Super/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/06/Random/">
+                Random
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/06/Random/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Random/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="arc4random()">arc4random()</h2><h3 id="Random_int_between_0_and_N_-_1">Random int between 0 and N - 1</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Random_int_between_1_and_N">Random int between 1 and N</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span> + <span class="number">1</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Random_double_between_0_and_1">Random double between 0 and 1</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sra<span class="label">nd48</span><span class="comment">(time(0)</span>);</span><br><span class="line">double r = dra<span class="label">nd48</span><span class="comment">()</span>;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/06/Random/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/06/progress-memory-map/">
+                progress memory map
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/06/progress-memory-map/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/progress-memory-map/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/">翻译子</a></p>
+<h2 id="程序在内存中分布">程序在内存中分布</h2><p>内存管理是操作系统的核心. 对系统和编程人员来说这都是非常重要的.下面用 32位 系统举例.首先介绍程序如何在内存中分布.</p>
+<h3 id="虚拟地址空间">虚拟地址空间</h3><p>在多任务操作系统中, 每个进程拥有自己独立的内存沙箱. 这个沙箱就是指的<code>虚拟地址空间</code>(virtual address space), 在32位系统中, 就是一块4GB 大小的内存地址块. 这些虚拟地址和物理内存通过<code>page tables</code>来完成映射, <code>page tables</code>是由系统核心管理,进程可以进行访问. 一旦虚拟地址被启用, 会应用到所有的程序中, 包括系统核心. 因此虚拟地址的一部分, 需要被划分出来为系统核心保留使用.<br><img src="http://static.duartes.org/img/blogPosts/kernelUserMemorySplit.png" alt=""></p>
+<p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
+<p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
+<p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
+<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/06/progress-memory-map/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/06/what-happen-before-main/">
                 what happen before main
               </a>
@@ -305,260 +561,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/04/IOS-进阶工具篇/">
-                IOS 进阶工具篇
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/04/IOS-进阶工具篇/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/04/IOS-进阶工具篇/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">第一部分：<span class="tag">iOS</span> 开发工具</span><br><span class="line">第2章使用<span class="tag">CocoaPods</span> 做依赖管理</span><br><span class="line">2<span class="class">.1</span> <span class="tag">CocoaPods</span> 简介</span><br><span class="line">2<span class="class">.2</span> <span class="tag">CocoaPods</span> 的安装和使用</span><br><span class="line">2<span class="class">.2</span><span class="class">.1</span> <span class="tag">CocoaPods</span> 的安装</span><br><span class="line">2<span class="class">.2</span><span class="class">.2</span> 使用<span class="tag">CocoaPods</span> 的镜像索引</span><br><span class="line">2<span class="class">.2</span><span class="class">.3</span> 使用<span class="tag">CocoaPods</span></span><br><span class="line">2<span class="class">.2</span><span class="class">.4</span> 查找第三方库</span><br><span class="line">2<span class="class">.3</span> 注意事项</span><br><span class="line">2<span class="class">.3</span><span class="class">.1</span> 关于<span class="class">.gitignore</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.2</span> 为自己的项目创建<span class="tag">podspec</span> 文件</span><br><span class="line">2<span class="class">.3</span><span class="class">.3</span> 使用私有的<span class="tag">pods</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.4</span> 不更新<span class="tag">podspec</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.5</span> 生成第三方库的帮助文档</span><br><span class="line">2<span class="class">.3</span><span class="class">.6</span> 原理</span><br><span class="line">第3章网络封包分析工具<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.1</span> <span class="tag">Charles</span> 简介</span><br><span class="line">3<span class="class">.2</span> <span class="tag">Charles</span> 的安装和使用</span><br><span class="line">3<span class="class">.2</span><span class="class">.1</span> 安装<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.2</span><span class="class">.2</span> 安装<span class="tag">SSL</span> 证书</span><br><span class="line">3<span class="class">.2</span><span class="class">.3</span> 将<span class="tag">Charles</span> 设置成系统代理</span><br><span class="line">3<span class="class">.2</span><span class="class">.4</span> <span class="tag">Charles</span> 主界面介绍</span><br><span class="line">3<span class="class">.2</span><span class="class">.5</span> 过滤网络请求</span><br><span class="line">3<span class="class">.3</span> 使用<span class="tag">Charles</span> 协助<span class="tag">iOS</span> 开发</span><br><span class="line">3<span class="class">.3</span><span class="class">.1</span> 截取<span class="tag">iPhone</span> 上的网络封包</span><br><span class="line">3<span class="class">.3</span><span class="class">.2</span> 模拟慢速网络</span><br><span class="line">3<span class="class">.4</span> 高级功能</span><br><span class="line">3<span class="class">.4</span><span class="class">.1</span> 截取<span class="tag">SSL</span> 信息</span><br><span class="line">3<span class="class">.4</span><span class="class">.2</span> 修改网络请求内容</span><br><span class="line">3<span class="class">.4</span><span class="class">.3</span> 修改服务器返回内容</span><br><span class="line">3<span class="class">.5</span> <span class="tag">Map</span> 功能</span><br><span class="line">3<span class="class">.6</span> <span class="tag">Rewrite</span> 功能</span><br><span class="line">3<span class="class">.7</span> <span class="tag">Breakpoints</span> 功能</span><br><span class="line">3<span class="class">.8</span> 总结</span><br><span class="line">3<span class="class">.9</span> 参考链接</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/04/IOS-进阶工具篇/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/03/Stack-And-Heap-OverFlow/">
-                Stack And Heap OverFlow
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-03
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/03/Stack-And-Heap-OverFlow/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/03/Stack-And-Heap-OverFlow/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>翻译自<a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html">https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html</a></p>
-<h2 id="栈溢出">栈溢出</h2><blockquote>
-<p>在大部分操作系统中, 每个程序拥有一个<strong><em>栈</em></strong>(多线程程序,每个线程拥有一个单独的栈), 栈用于局部变量的存储.<br>栈被划分为单元, 此单元被成为帧(frame), 每个帧包含了某个函数的某一调用的全部数据.这些数据包含: 函数参数, 全部的临时变量,和 linkage 信息(就是调用函数的地址. 以便当前代码执行完毕后, 返回原位置继续执行). 通过配置编译参数,也可以包含下一帧的顶部地址.数据的布局以及排序,由操作系统决定,不同系统略有差异.<br>当函数被调用的时候, 一个新的栈帧被添加到栈的顶部. 当函数返回时,顶部的栈帧被移除.在执行过程中, 程序只能直接访问栈顶帧得数据(指针除外, 但是不建议如此设计).这种设计,方便了递归调用的实现, 因为每个子递归调用拥有独立的临时变量和参数备份.<br>下图介绍了栈的组织结构.(这只是示意图, 实际情况要根据 cpu设计来决定)</p>
-</blockquote>
-<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/stack.gif" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/03/Stack-And-Heap-OverFlow/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/30/Dispatch-semaphore/">
-                Dispatch_semaphore
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/30/Dispatch-semaphore/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-semaphore/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><img src="/images/DispatchSemaphore.jpg" alt=""></p>
-<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
-<h3 id="functions">functions</h3><ul>
-<li>dispatch_semaphore_create</li>
-<li>dispatch_semaphore_wait (减少一个信号量)</li>
-<li>dispatch_semaphore_signal (增加一个信号量)</li>
-</ul>
-<h3 id="实例">实例</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)test4&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">3</span>;</span><br><span class="line">    __block <span class="keyword">int</span> mainData = <span class="number">0</span>;</span><br><span class="line">    __block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</span><br><span class="line">    __block dispatch_semaphore_t sem = dispatch_semaphore_create(<span class="number">2</span>);</span><br><span class="line">    dispatch_queue_t ioQueue = dispatch_queue_create(<span class="string">"com.dreamingwish.imagegcd.io"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue = dispatch_queue_create(<span class="string">"StudyBlocks"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_group_t <span class="keyword">group</span> = dispatch_group_create();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt;<span class="number">100</span>; i++) &#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);  <span class="comment">// -1 非零即通过</span></span><br><span class="line">            dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line"><span class="comment">//                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">                dispatch_group_async(<span class="keyword">group</span>, queue, ^&#123;</span><br><span class="line">                    <span class="keyword">sum</span> += data;</span><br><span class="line">                    </span><br><span class="line">                    __block <span class="keyword">int</span> nsum = <span class="keyword">sum</span>;</span><br><span class="line">                    dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line">                        NSLog(@<span class="string">" &gt;&gt; Sum: %d"</span>, nsum);</span><br><span class="line">                        </span><br><span class="line">                        dispatch_semaphore_signal(sem);  <span class="comment">// +1</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                    </span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dispatch_group_wait(<span class="keyword">group</span>, DISPATCH_TIME_FOREVER);</span><br><span class="line"><span class="comment">//    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>; j&lt;<span class="number">5</span>; j++) &#123;</span><br><span class="line">        mainData++;</span><br><span class="line">        NSLog(@<span class="string">" &gt;&gt; MainData: %d"</span>, mainData);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    dispatch_semaphore_signal(sem);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/Dispatch-semaphore/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -597,7 +599,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -611,7 +613,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
