@@ -1,0 +1,662 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Media," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Live Play With H264 & AAC By librtmp // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Live Play With H264 & AAC By librtmp
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/Live-Play-With-H264-AAC-By-librtmp/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Live-Play-With-H264-AAC-By-librtmp/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-28 14:17:54</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="http://www.codeman.net/2014/01/439.html" target="_blank" rel="external">reference</a></p>
+<h2 id="使用librtmp进行H264与AAC直播">使用librtmp进行H264与AAC直播</h2><h3 id="帧的划分">帧的划分</h3><h4 id="H-264帧">H.264帧</h4><p>对于H.264而言每帧的界定符为<code>00 00 00 01</code>或者<code>00 00 01</code>。</p>
+<p>比如下面的h264文件片断这就包函三帧数据<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">67</span> <span class="number">42</span> <span class="literal">C0</span> <span class="number">28</span> DA <span class="number">01</span> E0 <span class="number">08</span> <span class="number">9</span>F <span class="number">96</span> <span class="number">10</span> <span class="number">00</span></span><br><span class="line"><span class="number">00</span> <span class="number">03</span> <span class="number">00</span> <span class="number">10</span> <span class="number">00</span> <span class="number">00</span> <span class="number">03</span> <span class="number">01</span> <span class="number">48</span> <span class="literal">F1</span> <span class="number">83</span> <span class="number">2</span>A <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span></span><br><span class="line"><span class="number">68</span> CE <span class="number">3</span>C <span class="number">80</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">06</span> <span class="number">05</span> FF FF <span class="number">5</span>D DC <span class="number">45</span> E9 <span class="keyword">BD</span><br><span class="line"></span><span class="label">E6</span> <span class="literal">D9</span> <span class="number">48</span> <span class="keyword">B7 </span><span class="number">96</span> <span class="number">2</span>C <span class="literal">D8</span> <span class="number">20</span> <span class="literal">D9</span> <span class="number">23</span> EE EF …</span><br></pre></td></tr></table></figure></p>
+<p>第一帧是<code>00 00 00 01 67 42 C0 28 DA 01 E0 08 9F 96 10 00 00 03 00 10 00 00 03 01 48 F1 83 2A</code><br>第二帧是<code>00 00 00 01 68 CE 3C 80</code><br>第三帧是<code>00 00 01 06 05 FF FF 5D DC 45 E9 BD E6 D9 48 B7 96 2C D8 20 D9 23 EE EF ..</code></p>
+<p>帧类型有：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">NAL_SLICE = <span class="value"><span class="number">1</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_DPA = <span class="value"><span class="number">2</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_DPB = <span class="value"><span class="number">3</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_DPC = <span class="value"><span class="number">4</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_IDR = <span class="value"><span class="number">5</span></span></span></span><br><span class="line"><span class="setting">NAL_SEI = <span class="value"><span class="number">6</span></span></span></span><br><span class="line"><span class="setting">NAL_SPS = <span class="value"><span class="number">7</span></span></span></span><br><span class="line"><span class="setting">NAL_PPS = <span class="value"><span class="number">8</span></span></span></span><br><span class="line"><span class="setting">NAL_AUD = <span class="value"><span class="number">9</span></span></span></span><br><span class="line"><span class="setting">NAL_FILLER = <span class="value"><span class="number">12</span>,</span></span></span><br></pre></td></tr></table></figure></p>
+<p>我们发送RTMP数据时只需要知道四种帧类型，其它类型我都把它规类成非关键帧。<br>分别是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">NAL_SPS</span><span class="params">(<span class="number">7</span>)</span></span>, sps帧</span><br><span class="line"><span class="function"><span class="title">NAL_PPS</span><span class="params">(<span class="number">8</span>)</span></span>, pps帧</span><br><span class="line"><span class="function"><span class="title">NAL_SLICE_IDR</span><span class="params">(<span class="number">5</span>)</span></span>, 关键帧</span><br><span class="line"><span class="function"><span class="title">NAL_SLICE</span><span class="params">(<span class="number">1</span>)</span></span> 非关键帧</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>帧类型的方式判断为界面符后首字节的低四位。<br>第一帧的帧类型为: <code>0x67 &amp; 0x1F = 7</code>，这是一个SPS帧<br>第二帧的帧类型为: <code>0x68 &amp; 0x1F = 8</code>，这是一个PPS帧<br>第三帧的帧类型为: <code>0x06 &amp; 0x1F = 6</code>，这是一个SEI帧</p>
+<p>以上是我们利用帧界定符划分帧，并可以判断每一个帧的类型。</p>
+<p>注意：如果是压缩图像成H264帧，我们就可不必进行帧界定，因为每一次压缩的输出都明确了该帧的大小（包括界定符），每一次的压缩的结果可能包函多帧。一会具体讨论。</p>
+<h4 id="AAC帧">AAC帧</h4><p>对于AAC帧它的界定符是<code>FF F1</code></p>
+<p>这里我就不举例了，可通过查看AAC的二进制文件可以看到如下的帧结构。<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FF F<span class="number">1 50 80 24</span> 9F FD DE <span class="number">04 00 00 6</span>C <span class="number">69 62 66 61</span> <span class="number">61 63 20 31</span> 2E <span class="number">32 38 00 00</span> 42 15 95 ..</span><br></pre></td></tr></table></figure></p>
+<p>注意：那么对于AAC而言加上界定符每一帧的前7字节是帧的描述信息，也就是说AAC的祼数据是除去前面的7个字节的，在发送RTMP时，我们要去掉这7个字节。同样，如果我们是一边压缩一边发送RTMP，我们同样不需要界定帧，因为libfaac每次压缩完成的输出就是一个完整的帧数据，我们只需要将该帧打包发送即可。</p>
+<p>综合上面的所述，如果我们只是一边压缩一边将压缩结果发送到RTMP服务器，那我们就可以不用对帧进行界定，如果我们是发送H264与AAC文件，那我们就要对帧进行界定。</p>
+<h3 id="视频与音频的编码信息">视频与音频的编码信息</h3><p>如果我们只是简答的将压缩数据打包发送给RTMP服务器，那么RTMP服务器是不可以对数据进行解码和播放的，在这之前我们要将音视频的视频的编码信息发送给RTMP服务器。很多人可能苦于寻找下面的三个编码参数而不得要领。其实要想得到也是很简单的。</p>
+<h4 id="(H264)SPS">(H264)SPS</h4><p>对于H264而言，SPS就是编码后的第一帧。如果是读取H264文件，就是第一个帧界定符与第二帧界定符中间的数据长度是4。</p>
+<h4 id="(H264)PPS">(H264)PPS</h4><p>对于H264而言，PPS就是编码后的第二帧。如果是读取H264文件，就是第二个帧界定符与第三帧界定符中间的数据，长度不固定。</p>
+<h4 id="(AAC)AudioDecoderSpecificInfo">(AAC)AudioDecoderSpecificInfo</h4><p>这个长度为2个字节，可以通过计算或者调用函数获取。<br>建议通过调用<code>faacEncGetDecoderSpecificInfo(fh,&amp;spec,&amp;len)</code>;获取。<br>一般情况双声道44100采样下，该值是<code>0x1210</code></p>
+<h3 id="librtmp的使用">librtmp的使用</h3><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*分配与初始化*/</span></span><br><span class="line">rtmp = RTMP_Alloc<span class="params">()</span>;</span><br><span class="line">RTMP_Init<span class="params">(rtmp)</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*设置URL*/</span></span><br><span class="line"><span class="keyword">if</span> <span class="params">(RTMP_SetupURL<span class="params">(rtmp,rtmp_url)</span> == FALSE)</span> &#123;</span><br><span class="line">    <span class="built_in">log</span><span class="params">(LOG_ERR,<span class="string">"RTMP_SetupURL() failed!"</span>)</span>;</span><br><span class="line">    RTMP_Free<span class="params">(rtmp)</span>;</span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*设置可写,即发布流,这个函数必须在连接前使用,否则无效*/</span></span><br><span class="line">RTMP_EnableWrite<span class="params">(rtmp)</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*连接服务器*/</span></span><br><span class="line"><span class="keyword">if</span> <span class="params">(RTMP_Connect<span class="params">(rtmp, NULL)</span> == FALSE)</span> &#123;</span><br><span class="line">    <span class="built_in">log</span><span class="params">(LOG_ERR,<span class="string">"RTMP_Connect() failed!"</span>)</span>;</span><br><span class="line">    RTMP_Free<span class="params">(rtmp)</span>;</span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*连接流*/</span></span><br><span class="line"><span class="keyword">if</span> <span class="params">(RTMP_ConnectStream<span class="params">(rtmp,<span class="number">0</span>)</span> == FALSE)</span> &#123;</span><br><span class="line">    <span class="built_in">log</span><span class="params">(LOG_ERR,<span class="string">"RTMP_ConnectStream() failed!"</span>)</span>;</span><br><span class="line">    RTMP_Close<span class="params">(rtmp)</span>;</span><br><span class="line">    RTMP_Free<span class="params">(rtmp)</span>;</span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*定义包头长度,RTMP_MAX_HEADER_SIZE为rtmp.h中定义值为18*/</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor">#define RTMP_HEAD_SIZE   (sizeof(RTMPPacket)+RTMP_MAX_HEADER_SIZE)</span></span><br><span class="line"> </span><br><span class="line">RT<span class="built_in">MPPacket</span> * packet;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> * body;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*分配包内存和初始化,len为包体长度*/</span></span><br><span class="line">packet = (RT<span class="built_in">MPPacket</span> *)malloc(RT<span class="built_in">MP_HEAD_SIZE</span>+len);</span><br><span class="line">memset(packet,<span class="number">0</span>,RT<span class="built_in">MP_HEAD_SIZE</span>);</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*包体内存*/</span></span><br><span class="line">packet-&gt;m_body = (<span class="keyword">char</span> *)packet + RT<span class="built_in">MP_HEAD_SIZE</span>;</span><br><span class="line">body = (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)packet-&gt;m_body;</span><br><span class="line">packet-&gt;m_nBodySize = len;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * 此处省略包体填充</span><br><span class="line"> */</span></span><br><span class="line">packet-&gt;m_hasAbsTimestamp = <span class="number">0</span>;</span><br><span class="line">packet-&gt;m_packetType = RT<span class="built_in">MP_PACKET_TYPE_VIDEO</span>; <span class="comment">/*此处为类型有两种一种是音频,一种是视频*/</span></span><br><span class="line">packet-&gt;m_nInfoField2 = rtmp-&gt;m_stream_id;</span><br><span class="line">packet-&gt;m_nChannel = <span class="number">0x04</span>;</span><br><span class="line">packet-&gt;m_headerType = RT<span class="built_in">MP_PACKET_SIZE_LARGE</span>;</span><br><span class="line">packet-&gt;m_nTimeStamp = timeoffset;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*发送*/</span></span><br><span class="line"><span class="keyword">if</span> (RT<span class="built_in">MP_IsConnected</span>(rtmp)) &#123;</span><br><span class="line">    ret = RT<span class="built_in">MP_SendPacket</span>(rtmp,packet,<span class="literal">TRUE</span>); <span class="comment">/*TRUE为放进发送队列,FALSE是不放进发送队列,直接发送*/</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*释放内存*/</span></span><br><span class="line">free(packet);</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*关闭与释放*/</span></span><br><span class="line">RTMP_Close<span class="comment">(rtmp)</span>;</span><br><span class="line">RTMP_Free<span class="comment">(rtmp)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="包类型">包类型</h3><h4 id="H-264编码信息帧">H.264编码信息帧</h4><p>H.264的编码信息帧是发送给RTMP服务器称为AVC sequence header，RTMP服务器只有收到AVC sequence header中的sps,pps才能解析后续发送的H264帧。</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">int send_video_sps_pps()</span><br><span class="line">&#123;</span><br><span class="line">    RTMPPacket * packet<span class="comment">;</span></span><br><span class="line">    unsigned char * body<span class="comment">;</span></span><br><span class="line">    int i<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    packet = (RTMPPacket *)malloc(RTMP_HEAD_SIZE+1024)<span class="comment">;</span></span><br><span class="line">    memset(packet,0,RTMP_HEAD_SIZE)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    packet-&gt;m_body = (char *)packet + RTMP_HEAD_SIZE<span class="comment">;</span></span><br><span class="line">    body = (unsigned char *)packet-&gt;m_body<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    memcpy(winsys-&gt;pps,buf,len)<span class="comment">;</span></span><br><span class="line">    winsys-&gt;pps_len = len<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    i = 0<span class="comment">;</span></span><br><span class="line">    body[i++] = 0x17<span class="comment">;</span></span><br><span class="line">    body[i++] = 0x00<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    body[i++] = 0x00<span class="comment">;</span></span><br><span class="line">    body[i++] = 0x00<span class="comment">;</span></span><br><span class="line">    body[i++] = 0x00<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*AVCDecoderConfigurationRecord*/</span><br><span class="line">    body[i++] = 0x01<span class="comment">;</span></span><br><span class="line">    body[i++] = sps[1]<span class="comment">;</span></span><br><span class="line">    body[i++] = sps[2]<span class="comment">;</span></span><br><span class="line">    body[i++] = sps[3]<span class="comment">;</span></span><br><span class="line">    body[i++] = 0xff<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*sps*/</span><br><span class="line">    body[i++]   = 0xe1<span class="comment">;</span></span><br><span class="line">    body[i++] = (sps_len &gt;&gt; 8) &amp; 0xff<span class="comment">;</span></span><br><span class="line">    body[i++] = sps_len &amp; 0xff<span class="comment">;</span></span><br><span class="line">    memcpy(&amp;body[i],sps,sps_len)<span class="comment">;</span></span><br><span class="line">    i +=  sps_len<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*pps*/</span><br><span class="line">    body[i++]   = 0x01<span class="comment">;</span></span><br><span class="line">    body[i++] = (pps_len &gt;&gt; 8) &amp; 0xff<span class="comment">;</span></span><br><span class="line">    body[i++] = (pps_len) &amp; 0xff<span class="comment">;</span></span><br><span class="line">    memcpy(&amp;body[i],pps,pps_len)<span class="comment">;</span></span><br><span class="line">    i +=  pps_len<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    packet-&gt;m_packetType = RTMP_PACKET_TYPE_VIDEO<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nBodySize = i<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nChannel = 0x04<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nTimeStamp = 0<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_hasAbsTimestamp = 0<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_headerType = RTMP_PACKET_SIZE_MEDIUM<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nInfoField2 = rtmp-&gt;m_stream_id<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*调用发送接口*/</span><br><span class="line">    RTMP_SendPacket(rtmp,packet,TRUE)<span class="comment">;</span></span><br><span class="line">    free(packet)<span class="comment">;    </span></span><br><span class="line"> </span><br><span class="line">    return 0<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sps与pps怎么获取到呢？</p>
+<p>在前面已经说过，H264的第1帧是sps帧,pps是第2帧。</p>
+<p>我们在编码时会调用如下接口<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">size = x264_encoder_encode<span class="params">(cx-&gt;hd,&amp;nal,&amp;n,pic,&amp;pout)</span>;</span><br><span class="line"> </span><br><span class="line">int i,last;</span><br><span class="line"><span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>,last = <span class="number">0</span>;i &lt; n;i++)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(nal[i].i_type == NAL_SPS)</span> &#123;</span><br><span class="line"> </span><br><span class="line">        sps_len = nal[i].i_payload-<span class="number">4</span>;</span><br><span class="line">        memcpy<span class="params">(sps,nal[i].p_payload+<span class="number">4</span>,sps_len)</span>;</span><br><span class="line"> </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="params">(nal[i].i_type == NAL_PPS)</span> &#123;</span><br><span class="line"> </span><br><span class="line">        pps_len = nal[i].i_payload-<span class="number">4</span>;</span><br><span class="line">        memcpy<span class="params">(pps,nal[i].p_payload+<span class="number">4</span>,pps_len)</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*发送sps pps*/</span></span><br><span class="line">        send_video_sps_pps<span class="params">()</span>;    </span><br><span class="line"> </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*发送普通帧*/</span></span><br><span class="line">        send_rtmp_video<span class="params">(nal[i].p_payload,nal[i].i_payload)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    last += nal[i].i_payload;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我完全可以不用知道sps,pps的具体意义:)</p>
+<h4 id="H-264关键帧_&amp;_H-264非关键帧">H.264关键帧  &amp; H.264非关键帧</h4><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">int send_rtmp_video(unsigned char * buf,int len)</span><br><span class="line">&#123;</span><br><span class="line">    int type<span class="comment">;</span></span><br><span class="line">    long timeoffset<span class="comment">;</span></span><br><span class="line">    RTMPPacket * packet<span class="comment">;</span></span><br><span class="line">    unsigned char * body<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    timeoffset = GetTickCount() - start_time<span class="comment">;  /*start_time为开始直播时的时间戳*/</span></span><br><span class="line"> </span><br><span class="line">    /*去掉帧界定符*/</span><br><span class="line">    if (buf[2] == 0x00) &#123; /*<span class="number">00 00 00 01</span>*/</span><br><span class="line">            buf += 4<span class="comment">;</span></span><br><span class="line">            len -= 4<span class="comment">;</span></span><br><span class="line">    &#125; else if (buf[2] == 0x01)&#123; /*00 00 01*/</span><br><span class="line">            buf += 3<span class="comment">;</span></span><br><span class="line">            len -= 3<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">    type = buf[0]&amp;0x1f<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    packet = (RTMPPacket *)base_malloc(RTMP_HEAD_SIZE+len+9)<span class="comment">;</span></span><br><span class="line">    memset(packet,0,RTMP_HEAD_SIZE)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    packet-&gt;m_body = (char *)packet + RTMP_HEAD_SIZE<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nBodySize = len + 9<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*send video packet*/</span><br><span class="line">    body = (unsigned char *)packet-&gt;m_body<span class="comment">;</span></span><br><span class="line">    memset(body,0,len+9)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*key frame*/</span><br><span class="line">    body[0] = 0x27<span class="comment">;</span></span><br><span class="line">    if (type == NAL_SLICE_IDR) &#123;</span><br><span class="line">            body[0] = 0x17<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    body[1] = 0x01<span class="comment">;   /*nal unit*/</span></span><br><span class="line">    body[2] = 0x00<span class="comment">;</span></span><br><span class="line">    body[3] = 0x00<span class="comment">;</span></span><br><span class="line">    body[4] = 0x00<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    body[5] = (len &gt;&gt; 24) &amp; 0xff<span class="comment">;</span></span><br><span class="line">    body[6] = (len &gt;&gt; 16) &amp; 0xff<span class="comment">;</span></span><br><span class="line">    body[7] = (len &gt;&gt;  8) &amp; 0xff<span class="comment">;</span></span><br><span class="line">    body[8] = (len ) &amp; 0xff<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*copy data*/</span><br><span class="line">    memcpy(&amp;body[9],buf,len)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    packet-&gt;m_hasAbsTimestamp = 0<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_packetType = RTMP_PACKET_TYPE_VIDEO<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nInfoField2 = winsys-&gt;rtmp-&gt;m_stream_id<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nChannel = 0x04<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_headerType = RTMP_PACKET_SIZE_LARGE<span class="comment">;</span></span><br><span class="line">    packet-&gt;m_nTimeStamp = timeoffset<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    /*调用发送接口*/</span><br><span class="line">    RTMP_SendPacket(rtmp,packet,TRUE)<span class="comment">;</span></span><br><span class="line">    free(packet)<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里要说明一下：</p>
+<p>在libx264中每一次调用<code>x264_encoder_encode</code>输出了n个帧，我们要从这n个帧里找出sps和pps，剩下的分次全部发送nal，sps与pps的帧界定符都是<code>00 00 00 01</code>，而普通帧可能是<code>00 00 00 01</code>也有可能<code>00 00 01</code>。<br>比如说x264_encoder_encode输出了6帧。<br>分别是 sps帧,pps帧，关键帧，非关键帧，非关键帧，非关键帧。<br>发送结果应该是,sps,pps合成为一帧调用发送函数，剩下4帧，除去每个nal的界定符，分别发送每一个nal。</p>
+<p>如果x264_encoder_encode里没有sps帧与pps帧，则结果除去第一帧的界定符所以帧做为一个整体调用发送函数，它们的类型是由第一帧类型决定。</p>
+<p>另外，H264的流的第1帧一定是sps帧(包含帧界定符为8个字节),第2帧一定是pps帧。</p>
+<h4 id="AAC编码信息">AAC编码信息</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> cap_rtmp_sendaac_spec(<span class="keyword">unsigned</span> <span class="keyword">char</span> *spec_buf,<span class="keyword">int</span> spec_len)</span><br><span class="line">&#123;</span><br><span class="line">    RT<span class="built_in">MPPacket</span> * packet;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> * body;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line"> </span><br><span class="line">    len = spec_len;  <span class="comment">/*spec data长度,一般是2*/</span></span><br><span class="line"> </span><br><span class="line">    packet = (RT<span class="built_in">MPPacket</span> *)base_malloc(RT<span class="built_in">MP_HEAD_SIZE</span>+len+<span class="number">2</span>);</span><br><span class="line">    memset(packet,<span class="number">0</span>,RT<span class="built_in">MP_HEAD_SIZE</span>);</span><br><span class="line"> </span><br><span class="line">    packet-&gt;m_body = (<span class="keyword">char</span> *)packet + RT<span class="built_in">MP_HEAD_SIZE</span>;</span><br><span class="line">    body = (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)packet-&gt;m_body;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/*AF 00 + AAC RAW data*/</span></span><br><span class="line">    body[<span class="number">0</span>] = <span class="number">0xAF</span>;</span><br><span class="line">    body[<span class="number">1</span>] = <span class="number">0x00</span>;</span><br><span class="line">    memcpy(&amp;body[<span class="number">2</span>],spec_buf,len); <span class="comment">/*spec_buf是AAC sequence header数据*/</span></span><br><span class="line"> </span><br><span class="line">    packet-&gt;m_packetType = RT<span class="built_in">MP_PACKET_TYPE_AUDIO</span>;</span><br><span class="line">    packet-&gt;m_nBodySize = len+<span class="number">2</span>;</span><br><span class="line">    packet-&gt;m_nChannel = <span class="number">0x04</span>;</span><br><span class="line">    packet-&gt;m_nTimeStamp = <span class="number">0</span>;</span><br><span class="line">    packet-&gt;m_hasAbsTimestamp = <span class="number">0</span>;</span><br><span class="line">    packet-&gt;m_headerType = RT<span class="built_in">MP_PACKET_SIZE_LARGE</span>;</span><br><span class="line">    packet-&gt;m_nInfoField2 = rtmp-&gt;m_stream_id;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/*调用发送接口*/</span></span><br><span class="line">    RT<span class="built_in">MP_SendPacket</span>(rtmp,packet,<span class="literal">TRUE</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于音频解码参数AAC sequence header是通过</p>
+<p>下面是获得AAC sequence header的方法</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">char *buf<span class="comment">;</span></span><br><span class="line">int len<span class="comment">;</span></span><br><span class="line">faacEncGetDecoderSpecificInfo(fh,&amp;buf,&amp;len)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">memcpy(spec_buf,buf,len)<span class="comment">;</span></span><br><span class="line">spec_len = len<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">/*释放系统内存*/</span><br><span class="line">free(buf)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>另外如果你是打开aac文件进行发送，那么你可以尝试自己计算这个值，其实也很简单，打开faac源代码看一下faacEncGetDecoderSpecificInfo的实现，也就是几个移位的事:)。<br>对于一般情况44100Hz双声道，这个值是0x1210，偷懒就是直接用这个值吧。</p>
+<h4 id="AAC普通数据">AAC普通数据</h4><p>如前面所述，发送AAC的普通数据要改造一下，因为AAC的前7个字节（包括帧界定符）对于RTMP服务器来说是无用的。<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">void * cap_dialog_send_audio(unsigned char * buf,int len)</span><br><span class="line">&#123;</span><br><span class="line">    long timeoffset<span class="comment">;</span></span><br><span class="line">    timeoffset = GetTickCount() - start_time<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    buf += 7<span class="comment">;</span></span><br><span class="line">    len += 7<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">    if (len &gt; 0) &#123;</span><br><span class="line">        RTMPPacket * packet<span class="comment">;</span></span><br><span class="line">        unsigned char * body<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">        packet = (RTMPPacket *)malloc(RTMP_HEAD_SIZE+len+2)<span class="comment">;</span></span><br><span class="line">        memset(packet,0,RTMP_HEAD_SIZE)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">        packet-&gt;m_body = (char *)packet + RTMP_HEAD_SIZE<span class="comment">;</span></span><br><span class="line">        body = (unsigned char *)packet-&gt;m_body<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">        /*AF 01 + AAC RAW data*/</span><br><span class="line">        body[0] = 0xAF<span class="comment">;</span></span><br><span class="line">        body[1] = 0x01<span class="comment">;</span></span><br><span class="line">        memcpy(&amp;body[2],buf,len)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">        packet-&gt;m_packetType = RTMP_PACKET_TYPE_AUDIO<span class="comment">;</span></span><br><span class="line">        packet-&gt;m_nBodySize = len+2<span class="comment">;</span></span><br><span class="line">        packet-&gt;m_nChannel = 0x04<span class="comment">;</span></span><br><span class="line">        packet-&gt;m_nTimeStamp = timeoffset<span class="comment">;</span></span><br><span class="line">        packet-&gt;m_hasAbsTimestamp = 0<span class="comment">;</span></span><br><span class="line">        packet-&gt;m_headerType = RTMP_PACKET_SIZE_MEDIUM<span class="comment">;</span></span><br><span class="line">        packet-&gt;m_nInfoField2 = rtmp-&gt;m_stream_id<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line">        /*调用发送接口*/</span><br><span class="line">        RTMP_SendPacket(rtmp,packet,TRUE)<span class="comment">;</span></span><br><span class="line">        free(packet)<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">    return 0<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此所有流程均结束了。<br>要注意的几件事：<br>libRTMP多线程发送有时候可能会出现问题，不知道是什么问题，最好改成队列发送。<br>将填充好的packet通过消息或者其它方式发送给其它线程，发送线程统一发送即可。</p>
+<h3 id="参考文档">参考文档</h3><p>《Video File Format Specification Version 10》 <a href="http://www.adobe.com/content/dam/Adobe/en/devnet/flv/pdfs/video_file_format_spec_v10.pdf" target="_blank" rel="external">http://www.adobe.com/content/dam/Adobe/en/devnet/flv/pdfs/video_file_format_spec_v10.pdf</a><br>《H264视频通过RTMP直播》 <a href="http://blog.csdn.net/firehood_/article/details/8783589" target="_blank" rel="external">http://blog.csdn.net/firehood_/article/details/8783589</a><br>rtmpdump-2.3</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Media/"> #Media </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/01/Live-Play-By-rtmp/">Live Play By rtmp</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/22/iOS-Version-Number-Auto-Increase/">iOS Version Number Auto Increase</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用librtmp进行H264与AAC直播"><span class="nav-number">1.</span> <span class="nav-text">使用librtmp进行H264与AAC直播</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帧的划分"><span class="nav-number">1.1.</span> <span class="nav-text">帧的划分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#H-264帧"><span class="nav-number">1.1.1.</span> <span class="nav-text">H.264帧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AAC帧"><span class="nav-number">1.1.2.</span> <span class="nav-text">AAC帧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视频与音频的编码信息"><span class="nav-number">1.2.</span> <span class="nav-text">视频与音频的编码信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#(H264)SPS"><span class="nav-number">1.2.1.</span> <span class="nav-text">(H264)SPS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#(H264)PPS"><span class="nav-number">1.2.2.</span> <span class="nav-text">(H264)PPS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#(AAC)AudioDecoderSpecificInfo"><span class="nav-number">1.2.3.</span> <span class="nav-text">(AAC)AudioDecoderSpecificInfo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#librtmp的使用"><span class="nav-number">1.3.</span> <span class="nav-text">librtmp的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包类型"><span class="nav-number">1.4.</span> <span class="nav-text">包类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#H-264编码信息帧"><span class="nav-number">1.4.1.</span> <span class="nav-text">H.264编码信息帧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#H-264关键帧_&_H-264非关键帧"><span class="nav-number">1.4.2.</span> <span class="nav-text">H.264关键帧  & H.264非关键帧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AAC编码信息"><span class="nav-number">1.4.3.</span> <span class="nav-text">AAC编码信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AAC普通数据"><span class="nav-number">1.4.4.</span> <span class="nav-text">AAC普通数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-number">1.5.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/01/Live-Play-With-H264-AAC-By-librtmp/';
+      var disqus_title = 'Live Play With H264 & AAC By librtmp';
+      var disqus_url = 'http://ytlvy.com/2015/09/01/Live-Play-With-H264-AAC-By-librtmp/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

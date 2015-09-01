@@ -148,73 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-network/">
-                ios 网络
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-network/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-network/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/3d-matrix/">
-                3D Matrix
+              <a class="post-title-link" href="/2015/05/27/flickr-primary-key-generate/">
+                flickr 主键生成策略
               </a>
             
           
@@ -230,7 +165,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Math/">Math</a>
+              <a href="/categories/Bigdata/">Bigdata</a>
 
               
               
@@ -243,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/3d-matrix/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/3d-matrix/"></span>
+            <a href="/2015/05/27/flickr-primary-key-generate/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/flickr-primary-key-generate/"></span>
             </a>
           </span>
           
@@ -259,10 +194,12 @@
 
       
         
-          <h2 id="3D_Matrix">3D Matrix</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string">1   0   0   0</span>|<span class="string">         </span>|<span class="string">x</span>|<span class="string">       </span>|<span class="string">x</span>|</span><br><span class="line">|<span class="string">0   1   0   0</span>|<span class="string">    *    </span>|<span class="string">y</span>|<span class="string">    =  </span>|<span class="string">y</span>|</span><br><span class="line">|<span class="string">0   0   1   0</span>|<span class="string">         </span>|<span class="string">z</span>|<span class="string">       </span>|<span class="string">z</span>|</span><br><span class="line">|<span class="string">0   0   0   1</span>|<span class="string">         </span>|<span class="string">1</span>|<span class="string">       </span>|<span class="string">1</span>|</span><br></pre></td></tr></table></figure>
-<h3 id="Identity_Matrix">Identity Matrix</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string">1   0   0   0</span>|</span><br><span class="line">|<span class="string">0   1   0   0</span>|</span><br><span class="line">|<span class="string">0   0   1   0</span>|</span><br><span class="line">|<span class="string">0   0   0   1</span>|</span><br></pre></td></tr></table></figure>
+          <h2 id="flickr_主键生成策略">flickr 主键生成策略</h2><p><img src="http://ww1.sinaimg.cn/large/67a6a651gw1dujgqcx9ncj.jpg" alt="flickr采用的sharding主键生成方案示意图"></p>
+<h3 id="整体思想">整体思想</h3><blockquote>
+<p>flickr这一方案的整体思想是：建立两台以上的数据库ID生成服务器，每个服务器都有一张记录各表当前ID的Sequence表，但是Sequence中ID增长的步长是服务器的数量，起始值依次错开，这样相当于把ID的生成散列到了每个服务器节点上。例如：如果我们设置两台数据库ID生成服务器，那么就让一台的Sequence表的ID起始值为1,每次增长步长为2,另一台的Sequence表的ID起始值为2,每次增长步长也为2，那么结果就是奇数的ID都将从第一台服务器上生成，偶数的ID都从第二台服务器上生成，这样就将生成ID的压力均匀分散到两台服务器上，同时配合应用程序的控制，当一个服务器失效后，系统能自动切换到另一个服务器上获取ID，从而保证了系统的容错。</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/3d-matrix/#more">
+            <a class="btn" href="/2015/05/27/flickr-primary-key-generate/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -295,8 +232,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-global-style/">
-                全局样式
+              <a class="post-title-link" href="/2015/05/27/reactivecocoa-example-1-nsurlsession/">
+                ReactiveCocoa应用1---NSURLSession封装
               </a>
             
           
@@ -316,6 +253,14 @@
 
               
               
+                ， 
+              
+
+            
+              <a href="/categories/IOS/FP/">FP</a>
+
+              
+              
 
             
           </span>
@@ -325,8 +270,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-global-style/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-global-style/"></span>
+            <a href="/2015/05/27/reactivecocoa-example-1-nsurlsession/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/reactivecocoa-example-1-nsurlsession/"></span>
             </a>
           </span>
           
@@ -341,39 +286,87 @@
 
       
         
-          <h3 id="全局样式">全局样式</h3><pre><code>- (<span class="keyword">void</span>)setStyle{
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle: <span class="built_in">UIStatusBarStyleLightContent</span>];
+          <h3 id="ReactiveCocoa应用1—-NSURLSession封装">ReactiveCocoa应用1—-NSURLSession封装</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="string">fetchJSONFromSession:</span>(NSURLSession *)session <span class="string">withRequest:</span>(NSURLRequest *)request &#123;</span><br><span class="line">    <span class="keyword">return</span> [[[RACSignal <span class="string">createSignal:</span>^RACDisposable *(id&lt;RACSubscriber&gt; subscriber)</span><br><span class="line">    &#123;</span><br><span class="line">        NSURLSessionDataTask *dataTask = [session <span class="string">dataTaskWithRequest:</span>request <span class="string">completionHandler:</span>^(NSData *data, NSURLResponse *response, NSError *error)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (! error) &#123;</span><br><span class="line">                NSError *jsonError = nil;</span><br><span class="line">                NSString* newStr = [[NSString alloc] <span class="string">initWithData:</span>data <span class="string">encoding:</span>NSUTF8StringEncoding];</span><br><span class="line">                id json = [NSJSONSerialization <span class="string">JSONObjectWithData:</span>data <span class="string">options:</span>kNilOptions <span class="string">error:</span>&amp;jsonError];</span><br><span class="line">                <span class="keyword">if</span> (! jsonError) &#123;</span><br><span class="line">                    NSDictionary *dataOfDictionary = (NSDictionary *)json;</span><br><span class="line">                    <span class="keyword">if</span> (dataOfDictionary[@<span class="string">"stat"</span>] &amp;&amp; [dataOfDictionary[@<span class="string">"stat"</span>] integerValue] == <span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        [subscriber <span class="string">sendNext:</span> json[@<span class="string">"data"</span>]];</span><br><span class="line">                        [subscriber sendCompleted];</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        NSString *errmsg = dataOfDictionary[@<span class="string">"msg"</span>];</span><br><span class="line">                        <span class="keyword">if</span> (![errmsg <span class="string">isKindOfClass:</span>[NSString <span class="class"><span class="keyword">class</span>]]) &#123;</span></span><br><span class="line">                            errmsg = @<span class="string">"服务器未知错误"</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                       [subscriber <span class="string">sendError:</span>[NSError <span class="string">errorWithDomain:</span>[AppConstants httpHost] <span class="string">code:</span>[dataOfDictionary[@<span class="string">"stat"</span>] integerValue] <span class="string">userInfo:</span>@&#123;<span class="string">NSLocalizedDescriptionKey:</span>errmsg&#125;]];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    DDLogError(@<span class="string">"function: json 组装错误:%@"</span>, [jsonError localizedDescription]);</span><br><span class="line">                    <span class="keyword">if</span> (jsonError != nil) &#123;</span><br><span class="line">                        [subscriber <span class="string">sendError:</span>jsonError];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                DDLogError(@<span class="string">"function: dataTask error: %@"</span>, [error localizedDescription]);</span><br><span class="line">                [subscriber <span class="string">sendError:</span>error];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [dataTask resume];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> [RACDisposable <span class="string">disposableWithBlock:</span>^&#123;</span><br><span class="line">            [dataTask cancel];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;] logError] replayLazily];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
 
-    [[<span class="built_in">UIBarButtonItem</span> appearanceWhenContainedIn:[<span class="built_in">UINavigationBar</span> class], <span class="literal">nil</span>] setTitleTextAttributes:
-     @{<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> blackColor],
-       <span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>]
-       } forState:<span class="built_in">UIControlStateNormal</span>];
+    <div class="post-footer">
+      
 
-    [[<span class="built_in">UIBarButtonItem</span> appearanceWhenContainedIn:[<span class="built_in">UINavigationBar</span> class], <span class="literal">nil</span>] setTitleTextAttributes:
-     @{<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> whiteColor],
-       <span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>]
-       } forState:<span class="built_in">UIControlStateHighlighted</span>];
+      
 
-    <span class="comment">// [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xFC6259)];</span>
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
 
-    <span class="comment">// Uncomment to change the color of back button</span>
-    [[<span class="built_in">UINavigationBar</span> appearance] setTintColor:[<span class="built_in">UIColor</span> whiteColor]];
 
-    <span class="comment">// Uncomment to assign a custom backgroung image</span>
-    <span class="comment">// [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavBar-Background"] forBarMetrics:UIBarMetricsDefault];</span>
+    
+      
 
-    <span class="comment">// Uncomment to change the back indicator image</span>
-    <span class="comment">// [[UINavigationBar appearance] setBackgroundColor:[UIColor blackColor]];</span>
-    <span class="comment">// [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@""]];</span>
+  <div class="post post-type-normal ">
+    <div class="post-header">
 
-    <span class="comment">// Uncomment to change the font style of the title</span>
-    <span class="built_in">NSShadow</span> *shadow = [[<span class="built_in">NSShadow</span> alloc] init];
-    shadow<span class="variable">.shadowColor</span> = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.0</span> green:<span class="number">0.0</span> blue:<span class="number">0.0</span> alpha:<span class="number">0.8</span>];
-    shadow<span class="variable">.shadowOffset</span> = <span class="built_in">CGSizeMake</span>(<span class="number">0</span>, <span class="number">1</span>);
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/mac-proxy-config/">
+                MAC 代理设置
+              </a>
+            
+          
+        </h1>
+      
 
-    [[<span class="built_in">UINavigationBar</span> appearance] setTitleTextAttributes: [<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys:[<span class="built_in">UIColor</span> colorWithRed:<span class="number">245.0</span>/<span class="number">255.0</span> green:<span class="number">245.0</span>/<span class="number">255.0</span> blue:<span class="number">245.0</span>/<span class="number">255.0</span> alpha:<span class="number">1.0</span>], <span class="built_in">NSForegroundColorAttributeName</span>,shadow, <span class="built_in">NSShadowAttributeName</span>,[<span class="built_in">UIFont</span> preferredFontForTextStyle:<span class="built_in">UIFontTextStyleHeadline</span>], <span class="built_in">NSFontAttributeName</span>, <span class="literal">nil</span>]];
-    [[<span class="built_in">UINavigationBar</span> appearance] setTitleVerticalPositionAdjustment:<span class="number">0.0</span> forBarMetrics:<span class="built_in">UIBarMetricsDefault</span>];
-}
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/MAC/">MAC</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/mac-proxy-config/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/mac-proxy-config/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="Command_line_proxy">Command line proxy</h4><pre><code><span class="built_in">export</span> http_proxy=<span class="string">"http://127.0.0.1:8087"</span>
+<span class="built_in">export</span> https_proxy=<span class="string">"http://127.0.0.1:8087"</span>
+<span class="built_in">unset</span> http_proxy
+<span class="built_in">unset</span> https_proxy
+</code></pre><h3 id="svn_proxy">svn proxy</h3><pre><code><span class="keyword">sublime </span>~/.<span class="keyword">subversion/servers</span>
 </code></pre>
         
       
@@ -404,8 +397,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-animation/">
-                ios 动画
+              <a class="post-title-link" href="/2015/05/27/xcode-submit-behind-proxy/">
+                代理环境下 xcode submit 失败解决---xcode6.3更新
               </a>
             
           
@@ -421,7 +414,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Xcode/">Xcode</a>
 
               
               
@@ -434,8 +427,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-animation/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-animation/"></span>
+            <a href="/2015/05/27/xcode-submit-behind-proxy/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-submit-behind-proxy/"></span>
             </a>
           </span>
           
@@ -450,13 +443,24 @@
 
       
         
-          <h4 id="动画保持结果">动画保持结果</h4><pre><code><span class="attribute">fillMode </span>=<span class="string"> kCAFillModeForwards</span>
-</code></pre><h4 id="CAKeyframeAnimation_动画使用_开始、暂停动画">CAKeyframeAnimation 动画使用 开始、暂停动画</h4><h5 id="开始一个帧动画">开始一个帧动画</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)showAlertAnimation &#123;  </span><br><span class="line">    <span class="built_in">CAKeyframeAnimation</span> *animation = [<span class="built_in">CAKeyframeAnimation</span></span><br><span class="line">                       animationWithKeyPath:<span class="string">@"transform"</span>]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//方式1：放大再缩小（类似系统alert）  </span></span><br><span class="line">    <span class="comment">//如果需要更好的效果  </span></span><br><span class="line">    <span class="comment">//可以添加 .keyTimes 属性。  </span></span><br><span class="line">    <span class="built_in">NSMutableArray</span> *values = [<span class="built_in">NSMutableArray</span> array]; </span><br><span class="line">    [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.1</span>, <span class="number">0.1</span>, <span class="number">1.0</span>)]];</span><br><span class="line">    [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">1.2</span>, <span class="number">1.2</span>, <span class="number">1.0</span>)]]; </span><br><span class="line">     [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.9</span>, <span class="number">0.9</span>, <span class="number">0.9</span>)]];</span><br><span class="line">      [values addObject:</span><br><span class="line">                [<span class="built_in">NSValue</span> valueWith<span class="built_in">CATransform3D</span>:<span class="built_in">CATransform3DMakeScale</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>)]]; </span><br><span class="line">      animation<span class="variable">.values</span> = values; </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="comment">//方式2:直接缩小  </span></span><br><span class="line">    animation<span class="variable">.fillMode</span> = k<span class="built_in">CAFillModeForwards</span>;  </span><br><span class="line">    animation<span class="variable">.removedOnCompletion</span> = <span class="literal">NO</span>;  </span><br><span class="line">    animation<span class="variable">.duration</span> = .<span class="number">3</span>;  </span><br><span class="line">      </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.alertView</span><span class="variable">.layer</span> addAnimation:animation forKey:<span class="string">@"showAlert"</span>];  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-animation/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
+          <p>由于公司网络需要设置代理才能访问外网，此时通过xocde提交应用到itunesconnect的时候会出现443访问失败的错误，可以通过下面的方法来解决。</p>
+<blockquote>
+<ol>
+<li>Go to Application Loader java folder :<br>/Applications/Xcode.app/Contents/Applications/“Application Loader.app”/Contents/MacOS/itms/java/lib</li>
+</ol>
+<blockquote>
+<p>//xcode6.3<br>/Applications/Xcode.app/Contents/Applications/“Application Loader.app”/Contents/itms/java/lib</p>
+</blockquote>
+<ol>
+<li><p>Open net.properties file with “sublime text” or “text mate”</p>
+</li>
+<li><p>Change “#https.proxyPort=443” proxy port to “https.proxyPort=80”</p>
+</li>
+<li><p>Save the file and reopen Application Loader and Try again.</p>
+</li>
+</ol>
+</blockquote>
+
         
       
     </div>
@@ -486,8 +490,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-uitableview/">
-                UITableview
+              <a class="post-title-link" href="/2015/05/27/block/">
+                Block
               </a>
             
           
@@ -500,24 +504,13 @@
         </span>
 
         
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
 
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-uitableview/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-uitableview/"></span>
+            <a href="/2015/05/27/block/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/block/"></span>
             </a>
           </span>
           
@@ -532,20 +525,7 @@
 
       
         
-          <h3 id="UITableview">UITableview</h3><h4 id="UITableView每次滑动一行，类似scroll_page_enable">UITableView每次滑动一行，类似scroll page enable</h4><pre><code>- (<span class="typename">void</span>)<span class="string">scrollViewDidEndDragging:</span>(UIScrollView *)scrollView <span class="string">willDecelerate:</span>(BOOL)decelerate{  
-    <span class="keyword">if</span>(decelerate) <span class="keyword">return</span>;  
-    [self <span class="string">scrollViewDidEndDecelerating:</span>scrollView];  
-}  
-
-- (<span class="typename">void</span>)<span class="string">scrollViewDidEndDecelerating:</span>(UITableView *)tableView {  
-    [tableView <span class="string">scrollToRowAtIndexPath:</span>[tableView <span class="string">indexPathForRowAtPoint:</span> CGPointMake(tableView.contentOffset.x, tableView.contentOffset.y+tableView.rowHeight/<span class="number">2</span>)] <span class="string">atScrollPosition:</span>UITableViewScrollPositionTop <span class="string">animated:</span>YES];  
-}  
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-uitableview/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -568,7 +548,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/34/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/36/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/34/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/36/">&raquo;</a>
   </div>
 
 
@@ -602,7 +582,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -616,7 +596,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

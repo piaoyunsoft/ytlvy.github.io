@@ -1,0 +1,686 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> iOS Deep study // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              iOS Deep study
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/iOS-Deep-study/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/iOS-Deep-study/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-23 10:35:14</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="https://blog.0xbbc.com/2015/04/ios-dep%E7%A0%94%E7%A9%B61-%E5%88%9B%E5%BB%BAsection/" target="_blank" rel="external">reference</a></p>
+<h1 id="iOS_DEP_研究">iOS DEP 研究</h1><h2 id="创建Section">创建Section</h2><p>将加密的程序放在一个Section中，外壳运行时解密该Section，并执行解密后的程序</p>
+<h3 id="通过other_linker_flags创建">通过other linker flags创建</h3><p><a href="http://bbs.iosre.com/t/tweak-app-app-tweak/438" target="_blank" rel="external">这篇文章</a>提到过如何通过创建Section来防止dylib依附。其具体方法是在other linker flags中填入如下内容：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Wl,-sectcreate,__RESTRICT,__restrict,<span class="regexp">/dev/</span><span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<p>那么我们要创建自己的Section的话，就可以修改为如下格式：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Wl,-sectcreate,SEGMENT_NAME,SECTION_NAME,<span class="regexp">/dev/</span><span class="keyword">null</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就可以创建一个size为1，段名字为SEGMENT_NAME，Section名为SECTION_NAME的Section了。</p>
+<p>那么因为我们要把加密数据放进去，所以最后一个参数改为我们的加密文件的路径即可。</p>
+<p>你可以在ld(1)中的Options that control additional content找到这部分内容。</p>
+<a id="more"></a>
+<h3 id="通过代码创建">通过代码创建</h3><p>下面来说说怎么用代码创建一个Section。<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">__declspec</span>(<span class="function">allocate</span>(<span class="string">"__0xBBC,__code"</span>))</span><br><span class="line"><span class="tag">void</span> <span class="tag">func</span>()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>随后找个地方用一下func()就行，如果func()没有被调用的话，默认不会编译进可执行文件。</p>
+<p>之后都将使用第一种方式创建Section。</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%8812.22.44.png" alt=""></p>
+<h2 id="获取vmaddr与ASLR">获取vmaddr与ASLR</h2><p>在创建Section之后，我们需要获取该Section的vmaddr和这个外壳程序运行时的ASLR，然后才能正确跳转。</p>
+<h3 id="获取vmaddr">获取vmaddr</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import &lt;mach-o/getsect.h&gt;</span></span><br><span class="line"><span class="preprocessor">#import &lt;mach-o/loader.h&gt;</span></span><br><span class="line"><span class="preprocessor">#import &lt;unistd.h&gt;</span></span><br><span class="line"><span class="preprocessor">#import &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#import &lt;iostream&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> __arm64__ || __x86_64__</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SEGMENT_COMMAND segment_command_64</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SECTION section_64</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">else</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SEGMENT_COMMAND segment_command</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SECTION section</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">struct</span> SEGMENT_COMMAND * myseg = getsegbyname(<span class="string">"__0xBBC"</span>);</span><br><span class="line">        <span class="keyword">if</span> (myseg) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Segment __0xBBC Init Prot: %d\n"</span>,myseg-&gt;initprot);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Segment __0xBBC Max Prot: %d\n"</span>,myseg-&gt;maxprot);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Segment __0xBBC vmaddr: 0x%llX\n"</span>,(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>)myseg-&gt;vmaddr);</span><br><span class="line">            <span class="keyword">const</span> <span class="keyword">struct</span> SECTION * mysect = getsectbyname(<span class="string">"__0xBBC"</span>, <span class="string">"__code"</span>);</span><br><span class="line">            <span class="keyword">if</span> (mysect) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Section __code flags: %X\n"</span>,mysect-&gt;flags);</span><br><span class="line">                <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Section __code size: "</span>&lt;&lt;mysect-&gt;size&lt;&lt;<span class="built_in">std</span>::endl;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Section __code addr: 0x%llX\n"</span>,(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>)mysect-&gt;addr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>iPod touch 5下的运行结果，64位下会有所不同。</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%8812.37.22.png" alt=""></p>
+<p>在MachOView中验证的确是拿到了正确的数据。</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%8812.42.11.png" alt=""></p>
+<h3 id="获取ASLR">获取ASLR</h3><p>先引入头文件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#import</span> &lt;<span class="tag">dlfcn</span><span class="class">.h</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后同样的，针对32位和64位处理一下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">if</span> __arm64__ || __x86_64__</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> FILE_BASE_ADDR 0x100000000</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">else</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> FILE_BASE_ADDR 0x4000</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>最后在适当的地方加上：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Dl_info info;</span><br><span class="line"><span class="keyword">if</span> (dladdr((<span class="keyword">const</span> <span class="keyword">void</span> *)main, &amp;info))&#123;</span><br><span class="line">    <span class="keyword">int</span> * fbase = (<span class="keyword">int</span>*)info.dli_fbase;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"ASLR: 0x%lX\n"</span>, <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">long</span>&gt;(fbase) - FILE_BASE_ADDR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以通过在lldb里执行：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image <span class="keyword">list</span> -o -<span class="literal">f</span></span><br></pre></td></tr></table></figure></p>
+<p>来验证我们所取得的地址的正确性。如下图</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%8812.54.56.png" alt=""></p>
+<h2 id="写入Section">写入Section</h2><p>拿到vmaddr和ASLR之后，就可以正确计算出Section的内存地址，然后重新写入数据。不过这里为了演示简便，我们直接把解密之后的数据放在了壳程序的代码中，其实这样调试起来也更方便。</p>
+<p>解密之后的数据：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">unsignedint sectionData[] = &#123;<span class="number">0xA0E1000E</span>,<span class="number">0xE0800001</span>,<span class="number">0xE12FFF30</span>&#125;<span class="comment">;</span></span><br><span class="line">// Encrypt      Decrypt      ASM</span><br><span class="line">// <span class="number">0xCB927360</span>   <span class="number">0xA0E1000E</span>   <span class="keyword">mov</span>  <span class="literal">r0</span>, lr</span><br><span class="line">// <span class="number">0x8BF3736F</span>   <span class="number">0xE0800001</span>   <span class="keyword">add</span>  <span class="literal">r0</span>, <span class="literal">r0</span>, <span class="literal">r1</span></span><br><span class="line">// <span class="number">0x8A5C8C5E</span>   <span class="number">0xE12FFF30</span>   blx  <span class="literal">r0</span></span><br></pre></td></tr></table></figure></p>
+<p>计算正确的内存地址，更改段属性，写入解密数据，最后跳转执行。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vm_address_t</span> addr = myseg-&gt;vmaddr + <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">long</span>&gt;(info.dli_fbase) - FILE_BASE_ADDR;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> __arm64__ || __x86_64__</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"__0xBBC,__code at 0x%lX\n"</span>,addr);</span><br><span class="line"><span class="preprocessor">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"__0xBBC,__code at 0x%X\n"</span>,addr);</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">kern_return_t</span> err = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更改段属性为RWE</span></span><br><span class="line">err = vm_protect(<span class="keyword">mach_t</span>ask_self_, addr, myseg-&gt;vmsize, <span class="number">0</span>, VM_PROT_ALL);</span><br><span class="line"><span class="keyword">if</span> (err == KERN_SUCCESS) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[vm_protect] KERN_SUCCESS![0]\n"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[vm_protect] KERN_ERROR![%d]\n"</span>,err);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 写入数据</span></span><br><span class="line">err = vm_write(<span class="keyword">mach_t</span>ask_self_, addr, (<span class="keyword">vm_offset_t</span>)&amp;sectionData, <span class="keyword">sizeof</span>(sectionData));</span><br><span class="line"><span class="keyword">if</span> (err == KERN_SUCCESS) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[vm_write]   KERN_SUCCESS![0]\n"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[vm_write] KERN_ERROR![%d]\n"</span>,err);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 跳转执行</span></span><br><span class="line">(*((<span class="keyword">void</span> (*)())(addr)))();</span><br></pre></td></tr></table></figure>
+<p>编译好了之后记得用MachOView改段属性的Max Protect：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.14.06.png" alt=""></p>
+<p>执行结果：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.12.59.png" alt=""></p>
+<h3 id="更改指令集">更改指令集</h3><p>刚才写入Section之后，虽然是成功运行，没有任何报错，但是我还没有解释清楚那个谜之数据是怎么来的。</p>
+<p>虽然在注释里写出了ASM，但是里面其实是有坑的。</p>
+<p>解密之后的数据：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">unsignedint sectionData[] = &#123;<span class="number">0xA0E1000E</span>,<span class="number">0xE0800001</span>,<span class="number">0xE12FFF30</span>&#125;<span class="comment">;</span></span><br><span class="line">// Encrypt      Decrypt      ASM</span><br><span class="line">// <span class="number">0xCB927360</span>   <span class="number">0xA0E1000E</span>   <span class="keyword">mov</span>  <span class="literal">r0</span>, lr</span><br><span class="line">// <span class="number">0x8BF3736F</span>   <span class="number">0xE0800001</span>   <span class="keyword">add</span>  <span class="literal">r0</span>, <span class="literal">r0</span>, <span class="literal">r1</span></span><br><span class="line">// <span class="number">0x8A5C8C5E</span>   <span class="number">0xE12FFF30</span>   blx  <span class="literal">r0</span></span><br></pre></td></tr></table></figure></p>
+<p>让我们用之前所讲的第一种创建Section的方法写一下吧：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">__declspec(allocate(<span class="string">"__0xBBC,__code"</span>))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * agrv[])</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 确保func()被编译</span></span><br><span class="line">    <span class="keyword">if</span> (ULLONG_MAX == argc) func();</span><br><span class="line">    Dl_info info;</span><br><span class="line">    <span class="keyword">if</span> (dladdr((<span class="keyword">const</span> <span class="keyword">void</span> *)main, &amp;info))&#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">struct</span> SEGMENT_COMMAND * myseg = getsegbyname(<span class="string">"__0xBBC"</span>);</span><br><span class="line">        <span class="keyword">vm_address_t</span> addr = myseg-&gt;vmaddr + <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">long</span>&gt;(info.dli_fbase) - FILE_BASE_ADDR;</span><br><span class="line">        (*((<span class="keyword">void</span> (*)())(addr)))();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在MachOView中设置好段属性之后，通过debugserver调试：（在设备上）</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">debugserver</span> -x <span class="keyword">backboard </span>*:<span class="number">1234</span> /segment</span><br></pre></td></tr></table></figure>
+<p>在lldb里下一个断点在dladdr上，<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">b</span> dladdr</span><br></pre></td></tr></table></figure></p>
+<p>之后一路按’n’，等执行到<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">*</span></span><span class="list">(<span class="list">(<span class="keyword">void</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span>)</span><span class="list">()</span>)</span><span class="list">(<span class="keyword">addr</span>)</span>)</span>)</span><span class="list">()</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>如图：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.39.31.png" alt=""></p>
+<p>按’si’单步跟进，直到lldb显示：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.39.49.png" alt=""></p>
+<p>此时在lldb中使用’dis’，可以看到</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.39.53.png" alt=""></p>
+<p>教练，这和Hopper里看到的不一样啊！！！</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.51.03.png" alt=""></p>
+<p>其实用’dis -A thumb’就和Hopper里看见的一样了：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%881.40.44.png" alt=""></p>
+<p>但是！请注意！</p>
+<p>lldb之所以默认从thumb变到ARM的反汇编模式，是因为设备上的CPU模式发生了变化，不信你可以在单步跟进func()之前输入’dis’和’dis -A thumb’，你看到的反汇编结果会是一样的！</p>
+<p>于是这就要求我们嵌入在Section的指令必须是ARM的！</p>
+<p>那么要怎么生成ARM指令的程序呢，在Xcode上还没找到。。。</p>
+<p>thumb指令被当成ARM指令之后，不是可能正常执行的：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%882.23.58.png" alt=""></p>
+<h4 id="生成ARM指令的程序">生成ARM指令的程序</h4><p>不过借助LLVM框架还是可以完成的：</p>
+<p>nico.m文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">nico</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Nico~Nico~Ni\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ llc -march arm -mcpu generic nico<span class="class">.ll</span> -o nico<span class="class">.s</span></span><br><span class="line">$ clang nico<span class="class">.s</span> -x assembler -arch armv7 -e _nico -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -o nico</span><br></pre></td></tr></table></figure></p>
+<p>这样编译出来的就是ARM指令的程序：</p>
+<p><img src="https://dn-0xbbc-blog.qbox.me/wp-content/uploads/2015/04/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2015-04-20-%E4%B8%8B%E5%8D%882.18.12.png" alt=""></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/01/How-Not-to-Crash/">How Not to Crash</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/01/iOS-optimization/">iOS optimization</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS_DEP_研究"><span class="nav-number">1.</span> <span class="nav-text">iOS DEP 研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Section"><span class="nav-number">1.1.</span> <span class="nav-text">创建Section</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过other_linker_flags创建"><span class="nav-number">1.1.1.</span> <span class="nav-text">通过other linker flags创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过代码创建"><span class="nav-number">1.1.2.</span> <span class="nav-text">通过代码创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取vmaddr与ASLR"><span class="nav-number">1.2.</span> <span class="nav-text">获取vmaddr与ASLR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取vmaddr"><span class="nav-number">1.2.1.</span> <span class="nav-text">获取vmaddr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取ASLR"><span class="nav-number">1.2.2.</span> <span class="nav-text">获取ASLR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写入Section"><span class="nav-number">1.3.</span> <span class="nav-text">写入Section</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更改指令集"><span class="nav-number">1.3.1.</span> <span class="nav-text">更改指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成ARM指令的程序"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">生成ARM指令的程序</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/01/iOS-Deep-study/';
+      var disqus_title = 'iOS Deep study';
+      var disqus_url = 'http://ytlvy.com/2015/09/01/iOS-Deep-study/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

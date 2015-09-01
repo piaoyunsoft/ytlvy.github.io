@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-url-identifier-and-and-url-schemes/">
-                URL Identifier &amp;&amp; URL Schemes
+              <a class="post-title-link" href="/2015/05/27/ios-string/">
+                ios 字符串处理
               </a>
             
           
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-url-identifier-and-and-url-schemes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-url-identifier-and-and-url-schemes/"></span>
+            <a href="/2015/05/27/ios-string/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-string/"></span>
             </a>
           </span>
           
@@ -194,264 +194,10 @@
 
       
         
-          <h2 id="URL_Identifier_&amp;&amp;_URL_Schemes">URL Identifier &amp;&amp; URL Schemes</h2><pre><code>The <span class="built_in">URL</span> Identifier is <span class="operator">the</span> reversed domain address which is should be <span class="operator">the</span> same <span class="keyword">as</span> your Bundle Identifier e.g. com.companyname.appname
-
-The <span class="built_in">URL</span> Schemes is <span class="operator">the</span> <span class="built_in">start</span> <span class="operator">of</span> <span class="operator">the</span> <span class="built_in">URL</span> e.g <span class="string">'appname'</span>. When you call this <span class="keyword">as</span> <span class="operator">a</span> <span class="built_in">URL</span> <span class="keyword">it</span> targets <span class="operator">the</span> bundle identifier which launches <span class="operator">the</span> app.
-
-so... <span class="string">'appname://'</span> (<span class="operator">in</span> safari) will call com.companyname.appname
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-knowledge/">
-                ios 知识点
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-knowledge/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-knowledge/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="正确设定背景图片">正确设定背景图片</h4><ol>
-<li>创建小的重复的图片作为背景的, 使用UIColor的 colorWithPatternImage来设置背景色.</li>
-<li>大背景图, 在view中添加一个UIImageView作为一个子View</li>
-</ol>
-<h4 id="设定Shadow_Path">设定Shadow Path</h4><pre><code>view.layer.shadowPath = <span class="comment">[<span class="comment">[UIBezierPath bezierPathWithRect:view.bounds]</span> CGPath]</span>;
-</code></pre><h4 id="优化Table_View">优化Table View</h4><p>正确使用<code>reuseIdentifier</code>来重用cells<br>尽量使所有的view opaque，包括cell自身<br>避免渐变，图片缩放，后台选人<br>缓存行高<br>如果cell内现实的内容来自web，使用异步加载，缓存请求结果<br>使用<code>shadowPath</code>来画阴影<br>减少subviews的数量<br>尽量不适用<code>cellForRowAtIndexPath:</code>，如果你需要用到它，只用一次然后缓存结果<br>使用正确的数据结构来存储数据<br>使用<code>rowHeight</code>, <code>sectionFooterHeight</code> 和 <code>sectionHeaderHeight</code>来设定固定的高，不要请求delegate</p>
-<h4 id="选择是否缓存图片">选择是否缓存图片</h4><p>imageWithContentsOfFile 不缓存<br>imageNamed 缓存</p>
-<h4 id="block_array_need_copy_first">block array need copy first</h4><h4 id="查看引用计数">查看引用计数</h4><pre><code>NSLog<span class="list">(@<span class="string">"retain count = %d"</span>, _objc_rootRetainCount<span class="list">(<span class="keyword">obj</span>)</span>)</span><span class="comment">;</span>
-</code></pre><h4 id="将objc文件编译成C++文件">将objc文件编译成C++文件</h4><pre><code>clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code
-</code></pre><h4 id="nonatomic_&amp;&amp;_atomic">nonatomic &amp;&amp; atomic</h4><p>nonatomic属性读取的是内存数据（寄存器计算好的结果）<br>atomic就保证直接读取寄存器的数据</p>
-<h4 id="set_do_not_back_up_attribute">set do not back up attribute</h4><pre><code><span class="built_in">NSURL</span> * fileURL;
-fileURL = [ <span class="built_in">NSURL</span> fileURLWithPath: <span class="string">@"some/file/path"</span> ];
-[ fileURL setResourceValue: [<span class="built_in">NSNumber</span> numberWithBool: <span class="literal">YES</span>] forKey: <span class="built_in">NSURLIsExcludedFromBackupKey</span> error: <span class="literal">nil</span> ];
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/duan-dian-xu-chuan/">
-                断点续传
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/duan-dian-xu-chuan/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/duan-dian-xu-chuan/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <pre><code>[request <span class="string">addValue:</span>@<span class="string">"bytes=500-"</span> <span class="string">forHTTPHeaderField:</span>@<span class="string">"Range"</span>];
-_fileHandle = [NSFileHandle <span class="string">fileHandleForWritingAtPath:</span>_tempFilePath];
-_fileOffset = _fileHandle ? [_fileHandle seekToEndOfFile] : <span class="number">0</span>;
-</code></pre>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/ios-muti-thread/">
-                ios 多线程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-muti-thread/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-muti-thread/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="dispatch_queue_create">dispatch_queue_create</h4><pre><code>dispatch_queue_create生成的queue需要手动内存管理
-dispatch_release
-dispatch_retain
-dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create( <span class="string">"com.example.gcd.MyConcurrentDispatchQueue"</span>, DISPATCH_QUEUE_CONCURRENT);
-dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="string">"com.example.gcd.MySerialDispatchQueue"</span>, NULL);
-<span class="keyword">global</span> dispatch queues. They are concurrent dispatch queues <span class="keyword">that</span> are usable anywhere <span class="keyword">in</span> <span class="keyword">the</span> <span class="type">application</span>
-</code></pre>
+          <h3 id="字符串">字符串</h3><h4 id="字符创建区别">字符创建区别</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="string">"sss"</span> 创建在常量区</span><br><span class="line">[NSString <span class="string">stringWithFormat:</span>@<span class="string">"Hello world"</span>] 创建在堆上</span><br></pre></td></tr></table></figure>
+<h4 id="字符串比较">字符串比较</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> &#123;</span><br><span class="line">   <span class="built_in">NSOrderedAscending</span> = -<span class="number">1</span>,</span><br><span class="line">   <span class="built_in">NSOrderedSame</span>,</span><br><span class="line">   <span class="built_in">NSOrderedDescending</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NSInteger</span> <span class="built_in">NSComparisonResult</span>;</span><br><span class="line"><span class="built_in">NSString</span> caseInsensitiveCompare:<span class="string">@"Response"</span> == <span class="built_in">NSOrderedSame</span></span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-muti-thread/#more">
+            <a class="btn" href="/2015/05/27/ios-string/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -484,8 +230,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-shake/">
-                ios手势 摇一摇
+              <a class="post-title-link" href="/2015/05/27/ios-autolayout/">
+                ios 自动布局
               </a>
             
           
@@ -514,8 +260,8 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-shake/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-shake/"></span>
+            <a href="/2015/05/27/ios-autolayout/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-autolayout/"></span>
             </a>
           </span>
           
@@ -530,12 +276,267 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
       
         
-          <h4 id="手势冲突">手势冲突</h4><p>在iOS中，如果一个手势A的识别部分是另一个手势B的子部分时，默认情况下A就会先识别，B就无法识别了。要解决这个冲突可以利用- (void)requireGestureRecognizerToFail:(UIGestureRecognizer *)otherGestureRecognizer;方法来完成 也就是说如果我们指定拖动手势的执行前提为轻扫手势失败就可以了，这样一来当我们手指轻轻滑动时系统会优先考虑轻扫手势，如果最后发现该操作不是轻扫，那么就会执行拖动。只要将下面的代码添加到添加手势之后就能解决这个问题了<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//解决在图片上滑动时拖动手势和轻扫手势的冲突</span></span><br><span class="line"><span class="attr_selector">[panGesture requireGestureRecognizerToFail:swipeGestureToRight]</span>;</span><br><span class="line"><span class="attr_selector">[panGesture requireGestureRecognizerToFail:swipeGestureToLeft]</span>;</span><br><span class="line"><span class="comment">//解决拖动和长按手势之间的冲突</span></span><br><span class="line"><span class="attr_selector">[longPressGesture requireGestureRecognizerToFail:panGesture]</span>;</span><br></pre></td></tr></table></figure></p>
+          <h3 id="自动布局">自动布局</h3><h4 id="IOS7_UIlabel_高度bug">IOS7 UIlabel 高度bug</h4><pre><code><span class="comment">//需要设置</span>
+lb1<span class="variable">.lineBreakMode</span> = <span class="built_in">NSLineBreakByCharWrapping</span>;
+</code></pre><h4 id="自动布局bug">自动布局bug</h4><pre><code>使用autolayout时 <span class="keyword">button不能点击 </span>可能是因为<span class="keyword">button的parentView </span>没有自动扩展开
+</code></pre><h4 id="系统自带autolayout">系统自带autolayout</h4><pre><code>viewsDictionary = NSDictionaryOfVariableBindings(scrollView, imageView);
+[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[scrollView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[self.<span class="keyword">view</span> addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[scrollView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"H:|[imageView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+[scrollView addConstraint<span class="variable">s:</span>[NSLayoutConstraint constraintsWithVisualForma<span class="variable">t:</span>@<span class="string">"V:|[imageView]|"</span> 
+                                            option<span class="variable">s:0</span> metric<span class="variable">s:</span> <span class="number">0</span> <span class="keyword">view</span><span class="variable">s:viewsDictionary</span>]];
+</code></pre><h4 id="AutoLayout_priority">AutoLayout priority</h4><pre><code>[UIView <span class="string">autoSetPriority:</span>UILayoutPriorityRequired <span class="string">forConstraints:</span>^{
+    [self.titleLabel <span class="string">autoSetContentCompressionResistancePriorityForAxis:</span>ALAxisVertical];
+}];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTop <span class="string">withInset:</span>kLabelVerticalInsets];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeLeading <span class="string">withInset:</span>kLabelHorizontalInsets];
+[self.titleLabel <span class="string">autoPinEdgeToSuperviewEdge:</span>ALEdgeTrailing <span class="string">withInset:</span>kLabelHorizontalInsets];
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-is-modal/">
+                ios 是否模态弹出
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-is-modal/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-is-modal/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="是否模态弹出">是否模态弹出</h2><pre><code>- (<span class="built_in">BOOL</span>)isModal {
+     <span class="keyword">if</span>([<span class="keyword">self</span> presentingViewController])
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+     <span class="keyword">if</span>([[<span class="keyword">self</span> presentingViewController] presentedViewController] == <span class="keyword">self</span>)
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+     <span class="keyword">if</span>([[[<span class="keyword">self</span> navigationController] presentingViewController] presentedViewController] == [<span class="keyword">self</span> navigationController])
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+     <span class="keyword">if</span>([[[<span class="keyword">self</span> tabBarController] presentingViewController] isKindOfClass:[<span class="built_in">UITabBarController</span> class]])
+         <span class="keyword">return</span> <span class="literal">YES</span>;
+
+    <span class="keyword">return</span> <span class="literal">NO</span>;
+ }
+</code></pre>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-notification-push/">
+                ios Notification push
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-notification-push/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-notification-push/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="Event">Event</h3><h4 id="注册一个消息中心">注册一个消息中心</h4><pre><code><span class="built_in">NSString</span> *<span class="keyword">const</span> GameToIPhoneNotification = <span class="string">@"GameToIPhoneNotification"</span>; 
+<span class="built_in">NSNotificationCenter</span> *center = [<span class="built_in">NSNotificationCenter</span> defaultCenter];
+[center addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(onToIphone:) name:GameToIPhoneNotification object:<span class="literal">nil</span>];
+-(<span class="keyword">void</span>)onToIphone:(<span class="built_in">NSNotification</span>*)notify
+</code></pre><h4 id="调用信息">调用信息</h4><pre><code><span class="built_in">NSNotificationCenter</span> * center = [<span class="built_in">NSNotificationCenter</span> defaultCenter];   
+[center postNotificationName:GameToIPhoneNotification object:<span class="literal">nil</span> userInfo:[<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys: [<span class="built_in">NSNumber</span> numberWithInt:SMSRecommendNotification] , <span class="string">@"actcode"</span>,<span class="literal">nil</span>]];
+
+[<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys: [<span class="built_in">NSNumber</span> numberWithInt:SMSRecommendNotification] 这个是传递给-(<span class="keyword">void</span>)onToIphone:(<span class="built_in">NSNotification</span>*)notify 的参数    
+</code></pre>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/27/ios-shake/#more">
+            <a class="btn" href="/2015/05/27/ios-notification-push/#more">
               閱讀全文 &raquo;
             </a>
           </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-network/">
+                ios 网络
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-network/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-network/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          
         
       
     </div>
@@ -558,7 +559,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/38/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/36/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/38/">&raquo;</a>
   </div>
 
 
@@ -592,7 +593,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -606,7 +607,7 @@ dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(<span class="stri
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

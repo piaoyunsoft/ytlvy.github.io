@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/11/iOS-APP-Icon-Longpress-shake/">
-                iOS APP Icon Longpress shake
+              <a class="post-title-link" href="/2015/09/01/LRC-simple-introduction/">
+                LRC simple introduction
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-11
+          發表於 2015-09-01
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/11/iOS-APP-Icon-Longpress-shake/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-APP-Icon-Longpress-shake/"></span>
+            <a href="/2015/09/01/LRC-simple-introduction/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/LRC-simple-introduction/"></span>
             </a>
           </span>
           
@@ -194,366 +194,393 @@
 
       
         
-          <h2 id="iOS_APP图标长按抖动效果的实现（CAAnimation）">iOS APP图标长按抖动效果的实现（CAAnimation）</h2><p>实现效果:当长按图标时，图标抖动，点击图标以外区域时停止抖动</p>
-<p><img src="http://img.blog.csdn.net/20150808181226925" alt=""></p>
-<p>工程下载：<a href="https://github.com/Nongchaozhe/iconShakeDemo">github工程下载</a></p>
-<p>1) 视图代码</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIImageView</span> *imageView;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    imageView = [[<span class="built_in">UIImageView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">100</span>)];</span><br><span class="line">    imageView<span class="variable">.center</span> = <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.center</span>;</span><br><span class="line">    imageView<span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"icon1"</span>];</span><br><span class="line">    imageView<span class="variable">.userInteractionEnabled</span> = <span class="literal">YES</span>;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:imageView];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加长按手势</span></span><br><span class="line">    <span class="built_in">UILongPressGestureRecognizer</span> *recognize = [[<span class="built_in">UILongPressGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(longPress)];</span><br><span class="line">    <span class="comment">//长按响应时间</span></span><br><span class="line">    recognize<span class="variable">.minimumPressDuration</span> = <span class="number">1</span>;</span><br><span class="line">    [imageView addGestureRecognizer:recognize];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/11/iOS-APP-Icon-Longpress-shake/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/">
-                iOS Music Background Play And Lock Screen Image
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.csdn.net/zsk_zane/article/details/47320621">reference</a></p>
-<h2 id="iOS_音乐后台播放及锁屏信息显示">iOS 音乐后台播放及锁屏信息显示</h2><p>实现音乐的后台播放，以及播放时，可以控制其暂停，下一首等操作，以及锁屏图片歌曲名等的显示<br>此实例需要真机调试，效果图如下： </p>
-<p><img src="http://img.blog.csdn.net/20150806175143383" alt=""></p>
-<p>工程下载：<a href="https://github.com/Nongchaozhe/MusicRemoteControl">github工程下载</a></p>
-<h3 id="实现步骤：">实现步骤：</h3><p>1) 首先修改info.plist</p>
-<p><img src="http://img.blog.csdn.net/20150806174938474" alt=""></p>
-<p>2) 其次引入两个需要的框架</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;AVFoundation/AVFoundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MediaPlayer/MediaPlayer.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>3) 设置播放器及后台播放</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"><span class="comment">//    设置后台播放</span></span><br><span class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//    设置播放器</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"那些花儿"</span> ofType:<span class="string">@"mp3"</span>] ];</span><br><span class="line">    _player = [[<span class="built_in">AVPlayer</span> alloc] initWithURL:url];</span><br><span class="line">    [_player play];</span><br><span class="line">    _isPlayingNow = <span class="literal">YES</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//后台播放显示信息设置</span></span><br><span class="line">    [<span class="keyword">self</span> setPlayingInfo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - 接收方法的设置</span></span><br><span class="line">- (<span class="keyword">void</span>)remoteControlReceivedWithEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line">    <span class="keyword">if</span> (event<span class="variable">.type</span> == <span class="built_in">UIEventTypeRemoteControl</span>) &#123;  <span class="comment">//判断是否为远程控制</span></span><br><span class="line">        <span class="keyword">switch</span> (event<span class="variable">.subtype</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span>  <span class="built_in">UIEventSubtypeRemoteControlPlay</span>:</span><br><span class="line">                <span class="keyword">if</span> (!_isPlayingNow) &#123;</span><br><span class="line">                    [_player play];</span><br><span class="line">                &#125;</span><br><span class="line">                _isPlayingNow = !_isPlayingNow;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPause</span>:</span><br><span class="line">                <span class="keyword">if</span> (_isPlayingNow) &#123;</span><br><span class="line">                    [_player pause];</span><br><span class="line">                &#125;</span><br><span class="line">                _isPlayingNow = !_isPlayingNow;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlNextTrack</span>:</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@"下一首"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPreviousTrack</span>:</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@"上一首 "</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/11/iOS-Crash-Bugs/">
-                iOS Crash Bugs
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/11/iOS-Crash-Bugs/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-Crash-Bugs/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Crash_Bug">Crash Bug</h2><p>1) ios7 下没有 <code>ContainString</code> API</p>
-<p>2) NSDictionary &amp; NSArray nil insert </p>
-<p>3) 数组越界 NSArray <code>out of bounds</code></p>
-<p>4) <code>substringwithrange</code> out of bounds</p>
-<p>5) <code>GPUImageView presentBufferForDisplay</code> — 内存泄露 或者 app 进入后台</p>
-<p>6) <code>locationOfTouch: inView:</code> </p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> (gestureRecognizer)<span class="tag">numberOfTouches</span> &gt; <span class="tag">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/11/iOS-Crash-Bugs/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/11/Audio-Basic-Knowleage/">
-                Audio Basic Knowleage
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Audio/">Audio</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/11/Audio-Basic-Knowleage/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Audio-Basic-Knowleage/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="音频编码基础知识">音频编码基础知识</h2><p>自然界中的声音非常复杂，波形极其复杂，通常我们采用的是脉冲代码调制编码，即PCM编码。PCM通过抽样、量化、编码三个步骤将连续变化的模拟信号转换为数字编码。</p>
-<h3 id="什么是采样率和采样大小（位/bit）。">什么是采样率和采样大小（位/bit）。</h3><p>声音其实是一种能量波，因此也有频率和振幅的特征，频率对应于时间轴线，振幅对应于电平轴线。波是无限光滑的，弦线可以看成由无数点组成，由于存储空间是相对有限的，数字编码过程中，必须对弦线的点进行采样。采样的过程就是抽取某点的频率值，很显然，在一秒中内抽取的点越多，获取得频率信息更丰富，为了复原波形，一次振动中，必须有2个点的采样，人耳能够感觉到的最高频率为20kHz，因此要满足人耳的听觉要求，则需要至少每秒进行40k次采样，用40kHz表达，这个40kHz就是采样率。我们常见的CD，采样率为44.1kHz。光有频率信息是不够的，我们还必须获得该频率的能量值并量化，用于表示信号强度。量化电平数为2的整数次幂，我们常见的CD位16bit的采样大小，即2的16次方。采样大小相对采样率更难理解，因为要显得抽象点，举个简单例子：假设对一个波进行8次采样，采样点分别对应的能量值分别为A1-A8，但我们只使用2bit的采样大小，结果我们只能保留A1-A8中4个点的值而舍弃另外4个。如果我们进行3bit的采样大小，则刚好记录下8个点的所有信息。采样率和采样大小的值越大，记录的波形更接近原始信号。</p>
-<h3 id="有损和无损">有损和无损</h3><p>根据采样率和采样大小可以得知，相对自然界的信号，音频编码最多只能做到无限接近，至少目前的技术只能这样了，相对自然界的信号，任何数字音频编码方案都是有损的，因为无法完全还原。在计算机应用中，能够达到最高保真水平的就是PCM编码，被广泛用于素材保存及音乐欣赏，CD、DVD以及我们常见的WAV文件中均有应用。因此，PCM约定俗成了无损编码，因为PCM代表了数字音频中最佳的保真水准，并不意味着PCM就能够确保信号绝对保真，PCM也只能做到最大程度的无限接近。我们而习惯性的把MP3列入有损音频编码范畴，是相对PCM编码的。强调编码的相对性的有损和无损，是为了告诉大家，要做到真正的无损是困难的，就像用数字去表达圆周率，不管精度多高，也只是无限接近，而不是真正等于圆周率的值。</p>
-<h3 id="为什么要使用音频压缩技术">为什么要使用音频压缩技术</h3><p>要算一个PCM音频流的码率是一件很轻松的事情，采样率值×采样大小值×声道数 bps。一个采样率为<code>44.1KHz</code>，采样大小为<code>16bit</code>，双声道的PCM编码的WAV文件，它的数据速率则为 <code>44.1K×16×2 =1411.2 Kbps</code>。我们常说<code>128K</code>的MP3，对应的WAV的参数，就是这个<code>1411.2 Kbps</code>，这个参数也被称为数据带宽，它和ADSL中的带宽是一个概念。将码率除以8,就可以得到这个WAV的数据速率，即<code>176.4KB/s</code>。这表示存储一秒钟采样率为<code>44.1KHz</code>，采样大小为<code>16bit</code>，双声道的PCM编码的音频信号，需要<code>176.4KB</code>的空间，1分钟则约为<code>10.34M</code>，这对大部分用户是不可接受的，尤其是喜欢在电脑上听音乐的朋友，要降低磁盘占用，只有2种方法，降低采样指标或者压缩。降低指标是不可取的，因此专家们研发了各种压缩方案。由于用途和针对的目标市场不一样，各种音频压缩编码所达到的音质和压缩比都不一样，在后面的文章中我们都会一一提到。有一点是可以肯定的，他们都压缩过。</p>
-<h3 id="频率与采样率的关系">频率与采样率的关系</h3><p>采样率表示了每秒对原始信号采样的次数，我们常见到的音频文件采样率多为44.1KHz，这意味着什么呢？假设我们有2段正弦波信号，分别为20Hz和20KHz，长度均为一秒钟，以对应我们能听到的最低频和最高频，分别对这两段信号进行40KHz的采样，我们可以得到一个什么样的结果呢？结果是：20Hz的信号每次振动被采样了40K/20=2000次，而20K的信号每次振动只有2次采样。显然，在相同的采样率下，记录低频的信息远比高频的详细。这也是为什么有些音响发烧友指责CD有数码声不够真实的原因，CD的44.1KHz采样也无法保证高频信号被较好记录。要较好的记录高频信号，看来需要更高的采样率，于是有些朋友在捕捉CD音轨的时候使用48KHz的采样率，这是不可取的！这其实对音质没有任何好处，对抓轨软件来说，保持和CD提供的44.1KHz一样的采样率才是最佳音质的保证之一，而不是去提高它。较高的采样率只有相对模拟信号的时候才有用，如果被采样的信号是数字的，请不要去尝试提高采样率。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/11/Convert-PCM-To-AAC/">
-                Convert PCM To AAC
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Audio/">Audio</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/11/Convert-PCM-To-AAC/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Convert-PCM-To-AAC/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.csdn.net/poechant/article/details/7435054">reference</a></p>
-<h2 id="音频编解码·实战篇（1）PCM转至AAC（AAC编码）">音频编解码·实战篇（1）PCM转至AAC（AAC编码）</h2><ul>
-<li>作者：柳大·Poechant</li>
-<li>博客：blog.csdn.net/poechant</li>
-<li>邮箱：zhongchao.ustc@gmail.com</li>
-<li>日期：April 7th, 2012</li>
+          <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-23 08:41:30</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
 </ul>
-<p>这里利用FAAC来实现AAC编码。</p>
-<h3 id="下载安装_FAAC">下载安装 FAAC</h3><p>这里的安装过程是在 Mac 和 Linux 上实现的，Windows可以类似参考。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//downloads.sourceforge.net/faac/faac-1.28.tar.gz</span></span><br><span class="line">tar zxvf faac-<span class="number">1.28</span><span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">cd faac-<span class="number">1.28</span></span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>如果才用默认的 configure 中的 prefix path，那么安装后的 lib 和 .h 文件分别在/usr/local/lib和/usr/local/include，后面编译的时候会用到。</p>
-<p>如果编译过程中发现错误：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpeg4ip.h:126: <span class="keyword">error</span>: <span class="keyword">new</span> declaration ‘<span class="keyword">char</span>* strcasestr(<span class="keyword">const</span> <span class="keyword">char</span>*, <span class="keyword">const</span> <span class="keyword">char</span>*)’</span><br></pre></td></tr></table></figure></p>
+<h2 id="LRC文件介绍">LRC文件介绍</h2><p>Lrc是英文lyric（歌词）的缩写，被用做歌词文件的扩展名。以lrc为扩展名的歌词文件可以在各类数码播放器中同步显示。</p>
+<h3 id="格式">格式</h3><p>[分钟:秒.毫秒]歌词</p>
+<p>用记事本按照上述格式写好后,将拓展名改为lrc即可做出该文件.LRC歌词是一种通过编辑器把歌词按歌曲歌词出现的时间编辑成一个文件，在播放歌曲时同步依次显示出来的一种歌词文件。把歌曲和LRC歌词命为相同的文件名放在同一目录下，用带显示歌词功能的播放器播放歌曲时歌词就可以同步显示显示，方便查看和学歌。</p>
+<p>lrc歌词是一种包含着”[<em>:</em>]”形式的”标签”的、基于纯文本的歌词专用格式，这种格式的歌词可以用普通的文字处理软件查看、编辑。当然，要进行高效的lrc歌词制作需要专门的软件（如千千静听，Winamp等）。</p>
+<p>lrc歌词文本中含有两类标签：</p>
+<ol>
+<li>标识标签，其格式为”[标识名:值]”主要包含以下预定义的标签： [ar:歌手名]、[ti:歌曲名]、[al:专辑名]、[by:编辑者(指lrc歌词的制作人)]、[offset:时间补偿值] （其单位是毫秒，正值表示整体提前，负值相反。这是用于总体调整显示快慢的，但多数的MP3可能不会支持这种标签）。</li>
+<li>是时间标签，形式为”[mm:ss]”或”[mm:ss.fff]”(分钟数:秒数:毫秒数)，时间标签需位于某行歌词中的句首部分，一行歌词可以包含多个时间标签(比如歌词中的迭句部分)。当歌曲播放到达某一时间点时，MP3就会寻找对应的时间标签并显示标签后面的歌词文本，这样就完成了”歌词同步”的功能。</li>
+</ol>
+<h3 id="详解">详解</h3><h4 id="时间标签（Time-tag）">时间标签（Time-tag）</h4><p>　　形式为”[mm:ss]”或”[mm:ss.ff]”（分钟数:秒数）。数字须为非负整数，比如”[12:34.5]”是有效的，而”[0x0C:-34.5]”无效。　它可以位于某行歌词中的任意位置。一行歌词可以包含多个时间标签（比如歌词中的迭句部分）。根据这些时间标签，用户端程序会按顺序依次高亮显示歌词，从而实现卡拉OK功能。另外，标签无须排序。</p>
+<h4 id="标识标签（ID-tags）">标识标签（ID-tags）</h4><p>其格式为”[标识名:值]”。大小写等价。以下是预定义的标签。<br>[ar:艺人名]<br>[ti:曲名]<br>[al:专辑名]<br>[by:编者（指编辑LRC歌词的人）]<br>[offset:时间补偿值] 其单位是毫秒，正值表示整体提前，负值相反。这是用于总体调整显示快慢的。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/11/Convert-PCM-To-AAC/#more">
+            <a class="btn" href="/2015/09/01/LRC-simple-introduction/#more">
               閱讀全文 &raquo;
             </a>
           </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/rtmp-live-procedure/">
+                rtmp live procedure
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/rtmp-live-procedure/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/rtmp-live-procedure/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-28 15:55:28</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="http://www.codeman.net/2014/06/529.html" target="_blank" rel="external">reference</a></p>
+<h2 id="rtmp直播流程">rtmp直播流程</h2><p>下面是通过RTMP抓包所得，左侧是客户端Flash Media Live Encoder，右侧是服务器Flash Media Server</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">+--------------+                                        +--------------+</span><br><span class="line">|<span class="string"> Client(FMLE) </span>|<span class="string">                                        </span>|<span class="string"> Server (FMS) </span>|</span><br><span class="line">+--------------+                                        +--------------+</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                          C0 C1                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    +----</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                        S0 S1 S2                        </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------</span>|<span class="string"> handshake</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                           C2                           </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    +----</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                 connect('live_server')                 </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">         Windows Acknowledgement Size 2500000           </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------</span>|</span><br><span class="line">       |<span class="string">                                                        </span>|<span class="string"> connect</span><br><span class="line">       </span>|<span class="string">           Set Peer BandWith 2500000,Dynamic            </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------</span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                 Set Chunk Size 1024                    </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------</span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">        _result('NetConnection.Connect.Success')        </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------+----</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">              releaseStream('livestream')               </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">               FCPulbic('livestream')                   </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                    createStream()                      </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|<span class="string"> publish</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                      _result()                         </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------</span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">     publish('livestream?videoKeyframeFrequency=5')     </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                 Set Chunk Size 1024                    </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">         onStatus('NetStream.Publish.Start')            </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------+----</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                    @setDataFrame()                     </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                     Video Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                Set Chunk Size 418                      </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                     Audio Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|<span class="string"> av data</span><br><span class="line">       </span>|<span class="string">                     Audio Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                     Video Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                     Audio Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                     Audio Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                     Video Data                         </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                    FCUnpublish()                       </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    +----</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                    closeStream()                       </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|<span class="string"> close</span><br><span class="line">       </span>|<span class="string">        onStatus('NetStream.Unpublish.Success')         </span>|</span><br><span class="line">       |<span class="string">    &lt;---------------------------------------------------</span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                    deleteStream()                      </span>|</span><br><span class="line">       |<span class="string">---------------------------------------------------&gt;    +----</span><br><span class="line">       </span>|<span class="string">                                                        </span>|</span><br><span class="line">       |<span class="string">                                                        </span>|</span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/Live-Play-By-rtmp/">
+                Live Play By rtmp
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/Live-Play-By-rtmp/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Live-Play-By-rtmp/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-28 15:47:41</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="http://blog.csdn.net/firehood_/article/details/8783589">reference</a></p>
+<h2 id="H264视频通过RTMP直播">H264视频通过RTMP直播</h2><p>前面的文章中提到了通过RTSP（Real Time Streaming Protocol）的方式来实现视频的直播，但RTSP方式的一个弊端是如果需要支持客户端通过网页来访问，就需要在在页面中嵌入一个ActiveX控件，而ActiveX一般都需要签名才能正常使用，否则用户在使用时还需要更改浏览器设置，并且ActiveX还只支持IE内核的浏览器，Chrome、FireFox需要IE插件才能运行，因此会特别影响用户体验。而RTMP(Real Time Messaging Protocol)很好的解决了这一个问题。由于RTMP是针对FLASH的流媒体协议，视频通过RTMP直播后，只需要在WEB上嵌入一个Web Player（如Jwplayer）即可观看，而且对平台也没什么限制，还可以方便的通过手机观看。</p>
+<p>视频通过RTMP方式发布需要一个RTMP Server(常见的有FMS、Wowza Media Server， 开源的有CRtmpServer、Red5等)，原始视频只要按照RTMP协议发送给RTMP Server就可以RTMP视频流的发布了。为了便于视频的打包发布，封装了一个RTMPStream，目前只支持发送H264的视频文件。可以直接发送H264数据帧或H264文件，RTMPStream提供的接口如下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> CRTMPStream    </span><br><span class="line">&#123;    </span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">    CRTMPStream(<span class="keyword">void</span>);    </span><br><span class="line">    ~CRTMPStream(<span class="keyword">void</span>);    </span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">    <span class="comment">// 连接到RTMP Server    </span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">Connect</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* url)</span></span>;    </span><br><span class="line">    <span class="comment">// 断开连接    </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Close</span><span class="params">()</span></span>;    </span><br><span class="line">    <span class="comment">// 发送MetaData    </span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">SendMetadata</span><span class="params">(LPRTMPMetadata lpMetaData)</span></span>;    </span><br><span class="line">    <span class="comment">// 发送H264数据帧    </span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">SendH264Packet</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *data,<span class="keyword">unsigned</span> <span class="keyword">int</span> size,<span class="keyword">bool</span> bIsKeyFrame,<span class="keyword">unsigned</span> <span class="keyword">int</span> nTimeStamp)</span></span>;    </span><br><span class="line">    <span class="comment">// 发送H264文件    </span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">SendH264File</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pFileName)</span></span>;    </span><br><span class="line"><span class="comment">//...    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/01/Live-Play-By-rtmp/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/Live-Play-With-H264-AAC-By-librtmp/">
+                Live Play With H264 & AAC By librtmp
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/Live-Play-With-H264-AAC-By-librtmp/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Live-Play-With-H264-AAC-By-librtmp/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-28 14:17:54</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="http://www.codeman.net/2014/01/439.html">reference</a></p>
+<h2 id="使用librtmp进行H264与AAC直播">使用librtmp进行H264与AAC直播</h2><h3 id="帧的划分">帧的划分</h3><h4 id="H-264帧">H.264帧</h4><p>对于H.264而言每帧的界定符为<code>00 00 00 01</code>或者<code>00 00 01</code>。</p>
+<p>比如下面的h264文件片断这就包函三帧数据<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">67</span> <span class="number">42</span> <span class="literal">C0</span> <span class="number">28</span> DA <span class="number">01</span> E0 <span class="number">08</span> <span class="number">9</span>F <span class="number">96</span> <span class="number">10</span> <span class="number">00</span></span><br><span class="line"><span class="number">00</span> <span class="number">03</span> <span class="number">00</span> <span class="number">10</span> <span class="number">00</span> <span class="number">00</span> <span class="number">03</span> <span class="number">01</span> <span class="number">48</span> <span class="literal">F1</span> <span class="number">83</span> <span class="number">2</span>A <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span></span><br><span class="line"><span class="number">68</span> CE <span class="number">3</span>C <span class="number">80</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">06</span> <span class="number">05</span> FF FF <span class="number">5</span>D DC <span class="number">45</span> E9 <span class="keyword">BD</span><br><span class="line"></span><span class="label">E6</span> <span class="literal">D9</span> <span class="number">48</span> <span class="keyword">B7 </span><span class="number">96</span> <span class="number">2</span>C <span class="literal">D8</span> <span class="number">20</span> <span class="literal">D9</span> <span class="number">23</span> EE EF …</span><br></pre></td></tr></table></figure></p>
+<p>第一帧是<code>00 00 00 01 67 42 C0 28 DA 01 E0 08 9F 96 10 00 00 03 00 10 00 00 03 01 48 F1 83 2A</code><br>第二帧是<code>00 00 00 01 68 CE 3C 80</code><br>第三帧是<code>00 00 01 06 05 FF FF 5D DC 45 E9 BD E6 D9 48 B7 96 2C D8 20 D9 23 EE EF ..</code></p>
+<p>帧类型有：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">NAL_SLICE = <span class="value"><span class="number">1</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_DPA = <span class="value"><span class="number">2</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_DPB = <span class="value"><span class="number">3</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_DPC = <span class="value"><span class="number">4</span></span></span></span><br><span class="line"><span class="setting">NAL_SLICE_IDR = <span class="value"><span class="number">5</span></span></span></span><br><span class="line"><span class="setting">NAL_SEI = <span class="value"><span class="number">6</span></span></span></span><br><span class="line"><span class="setting">NAL_SPS = <span class="value"><span class="number">7</span></span></span></span><br><span class="line"><span class="setting">NAL_PPS = <span class="value"><span class="number">8</span></span></span></span><br><span class="line"><span class="setting">NAL_AUD = <span class="value"><span class="number">9</span></span></span></span><br><span class="line"><span class="setting">NAL_FILLER = <span class="value"><span class="number">12</span>,</span></span></span><br></pre></td></tr></table></figure></p>
+<p>我们发送RTMP数据时只需要知道四种帧类型，其它类型我都把它规类成非关键帧。<br>分别是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">NAL_SPS</span><span class="params">(<span class="number">7</span>)</span></span>, sps帧</span><br><span class="line"><span class="function"><span class="title">NAL_PPS</span><span class="params">(<span class="number">8</span>)</span></span>, pps帧</span><br><span class="line"><span class="function"><span class="title">NAL_SLICE_IDR</span><span class="params">(<span class="number">5</span>)</span></span>, 关键帧</span><br><span class="line"><span class="function"><span class="title">NAL_SLICE</span><span class="params">(<span class="number">1</span>)</span></span> 非关键帧</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/01/Live-Play-With-H264-AAC-By-librtmp/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/22/iOS-Version-Number-Auto-Increase/">
+                iOS Version Number Auto Increase
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-22
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/22/iOS-Version-Number-Auto-Increase/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/iOS-Version-Number-Auto-Increase/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Build号_自动增长">Build号 自动增长</h2><p>在 iOS 应用的 <code>Info.plist</code> 中有两个版本号，即 Version 和 Build，对应键值为 <code>CFBundleShortVersionString</code> 和 <code>CFBundleVersion</code>。 一个是应用程序本身发布时的版本号，一个是表示这个发布版的二进制代码是第几次编译得到的。在 iOS8 之前由于苹果并没有约束这两者的关系，本人一般就把两个填一样的，如 2.1.4 等，也一直没出过问题，但是 最近由于苹果加入了测试功能，所有上传的 Build 都会保存，然后第一个因为某原因审核不过，再上传第 二个就出现了 Build 号冲突的问题。于是想到这才是 Build 的正确使用方法，它本应该是个整数， 在 Version 保持不变，Build 应该是要随着编译次数增长的！</p>
+<h3 id="自动增长">自动增长</h3><p>那么如何让 Build 号自动增加呢？很早前搜到过一段代码，现在可以用上了：</p>
+<ol>
+<li>在 XCode 中选中项目，打开 Build Phases，如下图：</li>
+</ol>
+<p><img src="http://rickytan.cn/images/run-script.png" alt=""></p>
+<ol>
+<li>点 “+” 增加一个过程，选择“Run Script”，移到“Link Binary With Libraries”之后，并贴入以下代码：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># xcode-build-bump.sh</span><br><span class="line"># @desc Auto-increment the build number every time the project is run. </span><br><span class="line"># @usage</span><br><span class="line"># 1. <span class="operator"><span class="keyword">Select</span>: your Target <span class="keyword">in</span> Xcode</span><br><span class="line"># <span class="number">2.</span> <span class="keyword">Select</span>: Build Phases Tab</span><br><span class="line"># <span class="number">3.</span> <span class="keyword">Select</span>: <span class="keyword">Add</span> Build Phase -&gt; <span class="keyword">Add</span> Run Script</span><br><span class="line"># <span class="number">4.</span> Paste code below <span class="keyword">in</span> <span class="keyword">to</span> new <span class="string">"Run Script"</span> <span class="keyword">section</span></span><br><span class="line"># <span class="number">5.</span> Drag the <span class="string">"Run Script"</span> below <span class="string">"Link Binaries With Libraries"</span></span><br><span class="line"># <span class="number">6.</span> Insure that your <span class="keyword">starting</span> build <span class="built_in">number</span> <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">to</span> a whole <span class="built_in">integer</span> <span class="keyword">and</span> <span class="keyword">not</span> a <span class="built_in">float</span> (e.g. <span class="number">1</span>, <span class="keyword">not</span> <span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line">buildNumber=$(/usr/libexec/PlistBuddy -c <span class="string">"Print CFBundleVersion"</span> <span class="string">"$&#123;PROJECT_DIR&#125;/$&#123;INFOPLIST_FILE&#125;"</span>)</span><br><span class="line">buildNumber=$(($buildNumber + <span class="number">1</span>))</span><br><span class="line">/usr/libexec/PlistBuddy -c <span class="string">"Set :CFBundleVersion $buildNumber"</span> <span class="string">"$&#123;PROJECT_DIR&#125;/$&#123;INFOPLIST_FILE&#125;"</span></span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>For Version </li>
+</ol>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># xcode-version-bump.sh</span></span><br><span class="line"><span class="comment"># @desc Auto-increment the version number (only) when a project is archived for export. </span></span><br><span class="line"><span class="comment"># @usage</span></span><br><span class="line"><span class="comment"># 1. Select: your Target in Xcode</span></span><br><span class="line"><span class="comment"># 2. Select: Build Phases Tab</span></span><br><span class="line"><span class="comment"># 3. Select: Add Build Phase -&gt; Add Run Script</span></span><br><span class="line"><span class="comment"># 4. Paste code below in to new "Run Script" section</span></span><br><span class="line"><span class="comment"># 5. Check the checkbox "Run script only when installing"</span></span><br><span class="line"><span class="comment"># 6. Drag the "Run Script" below "Link Binaries With Libraries"</span></span><br><span class="line"><span class="comment"># 7. Insure your starting version number is in SemVer format (e.g. 1.0.0)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This splits a two-decimal version string, such as "0.45.123", allowing us to increment the third position.</span></span><br><span class="line">VERSIONNUM=$(/usr/libexec/PlistBuddy -c <span class="string">"Print CFBundleShortVersionString"</span> <span class="string">"<span class="constant">$&#123;PROJECT_DIR&#125;</span>/<span class="constant">$&#123;INFOPLIST_FILE&#125;</span>"</span>)</span><br><span class="line">NEWSUBVERSION=`echo <span class="variable">$VERSIONNUM</span> | awk -F <span class="string">"."</span> '&#123;<span class="literal">print</span> <span class="variable">$3</span>&#125;'`</span><br><span class="line">NEWSUBVERSION=$((<span class="variable">$NEWSUBVERSION</span> + <span class="number">1</span>))</span><br><span class="line">NEWVERSIONSTRING=`echo <span class="variable">$VERSIONNUM</span> | awk -F <span class="string">"."</span> '&#123;<span class="literal">print</span> <span class="variable">$1</span> <span class="string">"."</span> <span class="variable">$2</span> <span class="string">".'<span class="variable">$NEWSUBVERSION</span>'"</span> &#125;'`</span><br><span class="line">/usr/libexec/PlistBuddy -c <span class="string">"Set :CFBundleShortVersionString <span class="variable">$NEWVERSIONSTRING</span>"</span> <span class="string">"<span class="constant">$&#123;PROJECT_DIR&#125;</span>/<span class="constant">$&#123;INFOPLIST_FILE&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+
         
       
     </div>
@@ -576,7 +603,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
   </div>
 
 
@@ -610,7 +637,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -624,7 +651,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

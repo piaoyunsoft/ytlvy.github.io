@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-EventKit-Requesting-Permission/">
-                Swift EventKit - Requesting Permission
+              <a class="post-title-link" href="/2015/08/22/C-programming-pointer/">
+                C programming -- pointer
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-22
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-EventKit-Requesting-Permission/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-EventKit-Requesting-Permission/"></span>
+            <a href="/2015/08/22/C-programming-pointer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-pointer/"></span>
             </a>
           </span>
           
@@ -194,28 +194,17 @@
 
       
         
-          <h1 id="Swift_EventKit的初学者指南—请求权限">Swift  EventKit的初学者指南—请求权限</h1><hr>
-<blockquote>
+          <p><a href="http://www.cnblogs.com/kenshincui/p/3848442.html">reference</a></p>
+<h2 id="C语言之指针">C语言之指针</h2><h3 id="概览">概览</h3><p>指针是C语言的精髓，但是很多初学者往往对于指针的概念并不深刻，以至于学完之后随着时间的推移越来越模糊，感觉指针难以掌握，本文通过简单的例子试图将指针解释清楚，今天的重点有几个方面：</p>
 <ul>
-<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/05/14/beginners-guide-to-eventkit-in-swift-requesting-permission/">Beginner’s Guide to EventKit in Swift – Requesting Permission</a></li>
-<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
-<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
-<li>状态 : 校对完成</li>
+<li>什么是指针</li>
+<li>数组和指针</li>
+<li>函数指针</li>
 </ul>
-</blockquote>
-<p>EventKit为获取和操作用户日历事件和提醒提供了一系列的类.在下面的教程中,我的目标是带领你走出利用EventKit建立一个应用程序的第.我的目标是带领你迈出利用EventKit建立一个应用程序的第一步.我将演示如何向用户的日历请求许可,我还将展示几个处理用户响应的例子(当他们授予访问权限,或者拒绝).</p>
-<h1 id="Example_scenario">Example scenario</h1><h1 id="场景">场景</h1><p>让我们先提出一个基本方案，作为本教程的例子。</p>
-<p>假设我们正在构建一个应用程序，现在，有一个单一的视图控制器。在得到用户授权允许的情况下，我们希望这个视图控制器显示日历列表。如果用户拒绝访问,我们将向用户展示一个消息,用来说明我们的应用程序在没有访问权限时不能运行,我们也将允许他们通过单击一个按钮能够在他们的设备的设置中设置授权访问.</p>
-<p>我已经创建一个那样的应用程序作为例子—跳到GitHub中查看并研究这个例子的代码.</p>
-<blockquote>
-<p>资源</p>
-<p><a href="https://github.com/andrewcbancroft/EventTracker/tree/ask-for-permission">Xcode工程示例</a></p>
-</blockquote>
-<h1 id="Storyboard_setup">Storyboard setup</h1><h1 id="故事面板设置">故事面板设置</h1>
+<h3 id="什么是指针">什么是指针</h3><p>存放变量地址的变量我们称之为“指针变量”,简单的说变量p中存储的是变量a的地址,那么p就可以称为是指针变量,或者说p指向a。当我们访问a变量的时候其实是程序先根据a取得a对应的地址，再到这个地址对应的存储空间中拿到a的值，这种方式我们称之为“直接引用”；而当我们通过p取得a的时候首先要先根据p转换成p对应的存储地址，再根据这个地址到其对应的存储空间中拿到存储内容，它的内容其实就是a的地址，然后根据这个地址到对应的存储空间中取得对应的内容，这个内容就是a的值，这种通过p找到a对应地址再取值的方式成为“间接引用”。这里以表格形式列出a和p的存储以帮助大家理解上面说的内容：</p>
+<p><img src="http://images.cnitblog.com/blog/62046/201407/161307139741921.png" alt=""></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-EventKit-Requesting-Permission/#more">
+            <a class="btn" href="/2015/08/22/C-programming-pointer/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -248,8 +237,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/">
-                Swift Core Graphics Tutorial Part 1: Getting Started
+              <a class="post-title-link" href="/2015/08/22/C-programming-memory-scope/">
+                C programming -- memory & scope
               </a>
             
           
@@ -258,14 +247,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-22
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -278,8 +267,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/"></span>
+            <a href="/2015/08/22/C-programming-memory-scope/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-memory-scope/"></span>
             </a>
           </span>
           
@@ -294,26 +283,25 @@
 
       
         
-          <h2 id="Core_Graphics教程第一部分(Swift)_-_起步">Core Graphics教程第一部分(Swift) - 起步</h2><blockquote>
+          <p>@charset “UTF-8”;<br>/**</p>
 <ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1">Core Graphics Tutorial Part 1: Getting Started</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/caroline">Caroline Begbie </a></li>
-<li>译文出自 :  <a href="www.devtf.cn">开发技术前线</a></li>
-<li>译者 : <a href="https://github.com/sdq/">sdq</a>  <a href="https://github.com/StormXX/">StormXX</a></li>
-<li>校对者:  <a href="https://github.com/StormXX/">StormXX</a></li>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-15 16:02:00</li>
+<li>@version $Id$</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.</li>
+<li>*/</li>
 </ul>
-</blockquote>
-<p>想象一下…当你完成了你的应用，它能够很好地运行，但是界面还缺少个人的风格。这时，你可以选择用PS画出一系列尺寸的图片，并希望Apple不会再推出一个<strong>@4x</strong>的retina显示尺寸…   </p>
-<p>或者，你可以领先一步，采用Core Graphics进行绘图，保证一个图片可以适应各种尺寸的屏幕。   </p>
-<p>Core Graphics是苹果的一个矢量图绘制框架 - 它是一个大型且给力的API、有很多需要去学习。不过别慌，这个系列的文章会带你由简入深地学习Core Graphics，最后你将可以在你的应用中创作令人惊叹的图片。   </p>
-<p>这是一个全新的系列，采用最新的方式来学习Core Graphics。这个系列完全和Xcode6与Swift保持同步，并且包含了一些很酷的新特性，比如<strong>@IBDesignable</strong>和<strong>@IBInspectable</strong>，这让学习Core Graphics变得更有趣也更容易。</p>
-<p>拿起可乐，让我们开始吧！</p>
-<h2 id="介绍Flo_-_一款记录喝水杯数的App">介绍Flo - 一款记录喝水杯数的App</h2><p>你将会完成一个追踪你喝水习惯的app。   </p>
-<p>Flo可以让你很轻松地追踪到你喝了多少水。人们说一天喝8杯水才是健康的，但是往往喝了几杯水之后我们就忘了记录了。这就是Flo使用的时候了，每当你喝完一杯水以后，你就可以在Flo上点击计数，Flo会为你记录喝水情况。你也可以在Flo上查看到过去7天的喝水状况。</p>
-<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/1-CompletedApp.gif" alt="demo"></p>
-<p>在这个系列的第一部分，你将会通过UIKit的画图方法创建三个控件。<br>第二部分中，你将会深入了解Core Graphics的内容并且学习绘图。<br>最后第三部分，你将会制作一个样式背景，并且获得自制的Core Graphics奖牌 ：）</p>
+<h2 id="概述">概述</h2><p>基本上每种语言都要讨论这个话题，C语言也不例外，因为只有你完全了解每个变量或函数存储方式、作用范围和销毁时间才可能正确的使用这门语言。今天将着重介绍C语言中变量作用范围、存储方式、生命周期、作用域和可访问性。</p>
+<ul>
+<li>变量作用范围</li>
+<li>存储方式</li>
+<li>可访问性</li>
+</ul>
+<h3 id="变量作用范围">变量作用范围</h3><p>在C语言中变量从作用范围包括全局变量和局部变量。全局变量在定义之后所有的函数中均可以使用，只要前面的代码修改了，那么后面的代码中再使用就是修改后的值；局部变量的作用范围一般在一个函数内部（通常在一对大括号{}内），外面的程序无法访问它，它却可以访问外面的变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  ScopeAndLifeCycle</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by Kenshin Cui on 14-7-12.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2014年 Kenshin Cui. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">changeValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">    a=<span class="number">2</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%d\n"</span>,a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> b=<span class="number">1</span>;</span><br><span class="line">    changeValue(); <span class="comment">//结果：a=2</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%d,b=%d\n"</span>,a,b); <span class="comment">//结果：a=2,b=1 ，因为changeValue修改了这个全局变量</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/#more">
+            <a class="btn" href="/2015/08/22/C-programming-memory-scope/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -346,8 +334,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/">
-                Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds
+              <a class="post-title-link" href="/2015/08/22/Big-endian-Little-endian/">
+                Big-endian && Little-endian
               </a>
             
           
@@ -356,14 +344,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-22
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -376,8 +364,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/"></span>
+            <a href="/2015/08/22/Big-endian-Little-endian/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/Big-endian-Little-endian/"></span>
             </a>
           </span>
           
@@ -392,26 +380,13 @@
 
       
         
-          <h2 id="Core_Graphics_教程第三部分(Swift)_-_Patterns_和_Playgrounds">Core Graphics 教程第三部分(Swift) - Patterns 和 Playgrounds</h2><blockquote>
-<ul>
-<li>原文链接：<a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3">Core Graphics Tutorial Part 3: Patterns and Playgrounds</a></li>
-<li>原文作者：<a href="http://www.raywenderlich.com/u/caroline"> Caroline Begbie </a></li>
-<li>译文出自：<a href="www.devtf.cn">开发者前线</a></li>
-<li>译者：<a href="https://github.com/MrLoong">MrLoong</a></li>
-<li>校对者：<a href="https://github.com/samw00">samw00</a></li>
-</ul>
-</blockquote>
-<p>欢迎回到Core Graphics 教学系列的第三也是最后一部分！Flo，你的water drinking tracking app将使用Core Graphics 进行最终的改进。</p>
-<p>在<a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1">第一部分</a>，你通过UIKit画了三个自定义形状的控件,<a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2">在第二部分</a>你创建了一个视图用来显示用户在过去一周的喝水量，并且研究了transforming the context transformation matrix (CTM)</p>
-<p>在这第三也是最后一部分，你将使<strong>Flo</strong>升级到它的最终形态，特别的是你将：</p>
-<ul>
-<li>创建一个重复的背景图案</li>
-<li>为成功每天喝掉8杯水的用户从头到尾画一枚奖章</li>
-</ul>
-<p>如果你还没有这个项目的源代码，从本系列的第二部分下载<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part2-6.3.zip"><strong>Flo工程</strong></a></p>
-<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt=""></p>
+          <h2 id="大端序与小端序">大端序与小端序</h2><h3 id="何为大端序，小端序？">何为大端序，小端序？</h3><p>简单点说，就是字节的存储顺序，如果数据都是单字节的，那怎么存储无所谓了，但是对于多字节数据，比如int，double等，就要考虑存储的顺序了。注意字节序是硬件层面的东西，对于软件来说通常是透明的。再说白一点，字节序通常只和你使用的处理器架构有关，而和编程语言无关，比如常见的Intel x86系列就是小端序。</p>
+<h4 id="Big-endian（大端序）">Big-endian（大端序）</h4><p>数据的高位字节存放在地址的低端 低位字节存放在地址高端</p>
+<h4 id="Little-endian（小端序）">Little-endian（小端序）</h4><p>数据的高位字节存放在地址的高端 低位字节存放在地址低端</p>
+<h4 id="字节的高位与低位">字节的高位与低位</h4><p>举个例子，int a = 0x12345678 ; 那么左边12就是高位字节，右边的78就是低位字节，从左到右，由高到低，（注意，高低乃相对而言，比如56相对于78是高字节，相对于34是低字节）</p>
+<p>地址的高端与低端<br>0x00000001<br>0x00000002<br>0x00000003<br>0x00000004<br>从上倒下，由低到高，地址值小的为低端，地址值大的为高端。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#more">
+            <a class="btn" href="/2015/08/22/Big-endian-Little-endian/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -444,8 +419,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/">
-                Swift Core Graphics Tutorial Part 2: Gradients and Contexts
+              <a class="post-title-link" href="/2015/08/11/iOS-NSNull-Detect/">
+                iOS NSNull Detect
               </a>
             
           
@@ -454,14 +429,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -474,8 +449,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/"></span>
+            <a href="/2015/08/11/iOS-NSNull-Detect/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-NSNull-Detect/"></span>
             </a>
           </span>
           
@@ -490,32 +465,18 @@
 
       
         
-          <h2 id="Core_Graphics教程第二部分(Swift)_-_Gradients_与_Context">Core Graphics教程第二部分(Swift) - Gradients 与 Context</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2">Core Graphics Tutorial Part 2: Gradients and Contexts</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/caroline">caroline</a></li>
-<li>译文出自 :  <a href="http://www.devtf.cn">开发技术前线</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">HarriesChen</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">HarriesChen</a></li>
-</ul>
-</blockquote>
-<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt="FinalApp"></p>
-<p><em>更新时间  04/15/2015</em> 为Xcode 6.3 和 Swift1.2更新</p>
-<p>欢迎回到我们的Swift核心绘图教程系列！</p>
-<p>在<a href="http://www.raywenderlich.com/?p=90690">第一部分</a>中,你学习到了使用storyboard绘制线条和矩形.</p>
-<p>在第二部部分中，你将深入核心绘图，使用CGContext实现渐变效果</p>
-<h2 id="核心绘图">核心绘图</h2><p>你现在已经从简单的UIKit深入到核心绘图。</p>
-<p>下图是各个框架的关系图：</p>
-<p><a href="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-Architecture.png"><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-Architecture-433x320.png" alt="2-Architecture"></a></p>
-<p>UIKit是在最顶层，使用最友好的框架。你使用过UIBezierPath的就是在UIKit层中对Core Graphics层中CGPath的封装。</p>
-<p>你可以看到 Core Graphics 的对象和方法都是CG开头的，非常容易辨认。</p>
-<p>另外CG方法都是C方法，在调用的时候不需要明确的指定参数名，和一般Swift调用方法不一样。</p>
-<h2 id="从Graph_View开始">从Graph View开始</h2>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
+          <h2 id="Object-C中nil,_NULL跟NSNull">Object-C中nil, NULL跟NSNull</h2><p>相信不少开发者，都被NSNull坑过，最常见的是服务器返回的json里面，说好的字典、数组、数字，结果返回的是空值。这个时候，NSJSONSerialization 会自动把他们换成 NSNull。当我们再去用dict[@“hello”]的时候，就会出触发exception，导致程序崩溃。</p>
+<h3 id="最简单的做法">最简单的做法</h3><p>相信大家都知道，[NSNull null] 并不是一个工厂方法，而是一个单例模式，那么我们直接去判断赋值的这个指针是不是[NSNull null] 就好了。</p>
+<p>那么问题来了，编译器会多了一个warning，很烦人。</p>
+<p>在<a href="http://www.takingnotes.co/blog/2012/01/06/comparing-to-nsnull/" target="_blank" rel="external">这篇文章</a>里面介绍了各种做法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)someMethod </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">NSString</span> *aString = <span class="string">@"loremipsum"</span>; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// This will complain: "Comparison of distinct pointer types ('NSString *' and 'NSNull *')" </span></span><br><span class="line">    <span class="keyword">if</span> (aString != [<span class="built_in">NSNull</span> null]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// This works (at least for strings), but isEqual: does different things  </span></span><br><span class="line">    <span class="comment">// for different classes, so it's not ideal </span></span><br><span class="line">    <span class="keyword">if</span> ([aString isEqual:[<span class="built_in">NSNull</span> null]]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// If you cast it to the class you're comparing against </span></span><br><span class="line">    <span class="comment">// then you're good to go </span></span><br><span class="line">    <span class="keyword">if</span> (aString != (<span class="built_in">NSString</span> *)[<span class="built_in">NSNull</span> null]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// But we can also just cast it to id and </span></span><br><span class="line">    <span class="comment">// that works generically </span></span><br><span class="line">    <span class="keyword">if</span> (aString != (<span class="keyword">id</span>)[<span class="built_in">NSNull</span> null]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// The thing that would be really cool, </span></span><br><span class="line">    <span class="comment">// would be [NSNull null] returning </span></span><br><span class="line">    <span class="comment">// id (like in the sample category below). </span></span><br><span class="line">    <span class="comment">// Wouldn't count on that one though. </span></span><br><span class="line">    <span class="keyword">if</span> (aString != [<span class="built_in">NSNull</span> idNull]) </span><br><span class="line">    &#123; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些都不是非常漂亮的解决方案，这篇文章的作者推荐：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSNull</span> (<span class="title">idNull</span>) </span></span><br><span class="line">+ (<span class="keyword">id</span>)idNull; </span><br><span class="line"><span class="keyword">@end</span> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSNull</span> (<span class="title">idNull</span>) </span></span><br><span class="line">+ (<span class="keyword">id</span>)idNull &#123; <span class="keyword">return</span> [<span class="built_in">NSNull</span> null]; &#125; </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>或者呢<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[NSNull <span class="literal">null</span>] <span class="string">isEqual:</span>aString]) </span><br><span class="line">&#123; </span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="最终解决方案">最终解决方案</h3><p>上面的做法，都需要判断一次，还是很不优雅，为什么呢，我们还是不能像NULL，nil一样，直接拿来用，还是需要判断一下，这里推荐一套最漂亮的作法。</p>
+<p>陈航提供了一个<a href="https://gist.github.com/cyndibaby905/9828745" target="_blank" rel="external">gist</a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define NSNullObjects @[@<span class="title">""</span>,@0,@&#123;&#125;,@[]] </span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSNull</span> (<span class="title">InternalNullExtention</span>) </span></span><br><span class="line"><span class="keyword">@end</span> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSNull</span> (<span class="title">InternalNullExtention</span>) </span></span><br><span class="line"> </span><br><span class="line">- (<span class="built_in">NSMethodSignature</span>*)methodSignatureForSelector:(SEL)selector </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">NSMethodSignature</span>* signature = [<span class="keyword">super</span> methodSignatureForSelector:selector]; </span><br><span class="line">    <span class="keyword">if</span> (!signature) &#123; </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSObject</span> *object <span class="keyword">in</span> <span class="built_in">NSNullObjects</span>) &#123; </span><br><span class="line">            signature = [object methodSignatureForSelector:selector]; </span><br><span class="line">            <span class="keyword">if</span> (signature) &#123; </span><br><span class="line">                <span class="keyword">break</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line"> </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> signature; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation </span><br><span class="line">&#123; </span><br><span class="line">    SEL aSelector = [anInvocation selector]; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSObject</span> *object <span class="keyword">in</span> <span class="built_in">NSNullObjects</span>) &#123; </span><br><span class="line">        <span class="keyword">if</span> ([object respondsToSelector:aSelector]) &#123; </span><br><span class="line">            [anInvocation invokeWithTarget:object]; </span><br><span class="line">            <span class="keyword">return</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    [<span class="keyword">self</span> doesNotRecognizeSelector:aSelector]; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>这里还提供一个日本人的封装方案：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"NSNull+OVNatural.h"</span> </span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSNull</span> (<span class="title">OVNatural</span>) </span></span><br><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)invocation </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> respondsToSelector:[invocation selector]]) &#123; </span><br><span class="line">        [invocation invokeWithTarget:<span class="keyword">self</span>]; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line">- (<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)selector </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">NSMethodSignature</span> *sig = [[<span class="built_in">NSNull</span> class] instanceMethodSignatureForSelector:selector]; </span><br><span class="line">    <span class="keyword">if</span>(sig == <span class="literal">nil</span>) &#123; </span><br><span class="line">        sig = [<span class="built_in">NSMethodSignature</span> signatureWithObjCTypes:<span class="string">"@^v^c"</span>]; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> sig; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="nil_判定">nil 判定</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断对象不空</span></span><br><span class="line"><span class="keyword">if</span>(object) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断对象为空</span></span><br><span class="line"><span class="keyword">if</span>(object == <span class="literal">nil</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//数组初始化，空值结束</span></span><br><span class="line"><span class="built_in">NSArray</span> *pageNames=[[<span class="built_in">NSArray</span> alloc] initWithObjects:<span class="string">@"DocumentList"</span>,<span class="string">@"AdvancedSearch"</span>,<span class="string">@"Statistics"</span>,<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断数组元素是否为空</span></span><br><span class="line"><span class="built_in">UIViewController</span> *controller=[<span class="built_in">NSArray</span> objectAtIndex:i];</span><br><span class="line"><span class="keyword">if</span>((<span class="built_in">NSNull</span> *)controller == [<span class="built_in">NSNull</span> null])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断字典对象的元素是否为空</span></span><br><span class="line"><span class="built_in">NSString</span> *userId=[<span class="built_in">NSDictionary</span> objectForKey:<span class="string">@"UserId"</span>];</span><br><span class="line"><span class="keyword">if</span>(userId == [<span class="built_in">NSNull</span> null])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
         
       
     </div>
@@ -545,8 +506,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Memory-management/">
-                Swift Memory management
+              <a class="post-title-link" href="/2015/08/11/iOS-APP-Icon-Longpress-shake/">
+                iOS APP Icon Longpress shake
               </a>
             
           
@@ -555,14 +516,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -575,8 +536,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Memory-management/"></span>
+            <a href="/2015/08/11/iOS-APP-Icon-Longpress-shake/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-APP-Icon-Longpress-shake/"></span>
             </a>
           </span>
           
@@ -591,21 +552,13 @@
 
       
         
-          <h2 id="Swift和自动引用计数(ARC)整理之强，弱和无主引用">Swift和自动引用计数(ARC)整理之强，弱和无主引用</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/05/08/strong-weak-and-unowned-sorting-out-arc-and-swift/">Strong, Weak, and Unowned - Sorting out ARC and Swift</a></li>
-<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
-<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
-<li>校对者:  <a href="https://github.com/bboyfeiyu/">MrSimple</a> </li>
-<li>状态 :  完成</li>
-</ul>
-</blockquote>
-<p>我敢打赌有相当一部分的Swfit开发者纠结于<code>strong</code>（强引用），<code>weak</code>（弱引用)和<code>unowned</code>（无主引用）这几种不同类型的引用方式对他们的代码在运行时所造成的影响。如果我的日子依赖于自动引用计数（ARC）,我想我是不会费神来尝试解释其中的奥妙的。</p>
-<p>在我每次声明变量或是常量时，我都不是特别确定到底应该用哪种类型的引用，为了让自己不再纠结，我最终决定把<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html">苹果官方关于ARC的文档</a>拿出来拜读，试着去理解和消化里面的每一句话。这篇文章尝试着把我脑里关于Swift和自动引用计数（ARC）的整理分享给大家。</p>
-<p>这篇文章稍微有点长所以我想：“为何不先把总结直接抛出来让小伙伴们先睹为快呢？然后如果实好奇再继续看我是如何得出这总结的”。所以下面献上我的总结！</p>
+          <h2 id="iOS_APP图标长按抖动效果的实现（CAAnimation）">iOS APP图标长按抖动效果的实现（CAAnimation）</h2><p>实现效果:当长按图标时，图标抖动，点击图标以外区域时停止抖动</p>
+<p><img src="http://img.blog.csdn.net/20150808181226925" alt=""></p>
+<p>工程下载：<a href="https://github.com/Nongchaozhe/iconShakeDemo">github工程下载</a></p>
+<p>1) 视图代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIImageView</span> *imageView;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    imageView = [[<span class="built_in">UIImageView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">100</span>)];</span><br><span class="line">    imageView<span class="variable">.center</span> = <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.center</span>;</span><br><span class="line">    imageView<span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"icon1"</span>];</span><br><span class="line">    imageView<span class="variable">.userInteractionEnabled</span> = <span class="literal">YES</span>;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:imageView];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加长按手势</span></span><br><span class="line">    <span class="built_in">UILongPressGestureRecognizer</span> *recognize = [[<span class="built_in">UILongPressGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(longPress)];</span><br><span class="line">    <span class="comment">//长按响应时间</span></span><br><span class="line">    recognize<span class="variable">.minimumPressDuration</span> = <span class="number">1</span>;</span><br><span class="line">    [imageView addGestureRecognizer:recognize];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Memory-management/#more">
+            <a class="btn" href="/2015/08/11/iOS-APP-Icon-Longpress-shake/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -631,7 +584,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/6/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/6/">&raquo;</a>
   </div>
 
 
@@ -665,7 +618,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -679,7 +632,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

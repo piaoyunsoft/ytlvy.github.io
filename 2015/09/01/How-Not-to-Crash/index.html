@@ -1,0 +1,822 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> How Not to Crash // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              How Not to Crash
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/How-Not-to-Crash/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/How-Not-to-Crash/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="How_Not_to_Crash">How Not to Crash</h1><h2 id="KVO_and_Manual_Bindings">KVO and Manual Bindings</h2><h3 id="Bindings_循环引用">Bindings 循环引用</h3><p>假定按钮有 <code>title</code> 属性, 此属性和 controller 的 kTitleKey 绑定.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> NSString *kTitleKey = @<span class="string">"title"</span>;</span><br><span class="line">[self.button <span class="string">bind:</span>kTitleKey <span class="string">toObject:</span>self <span class="string">withKeyPath:</span>kTitleKey <span class="string">options:</span>nil];</span><br></pre></td></tr></table></figure>
+<p>以上代码会造成 crash.</p>
+<p>原因: 绑定 retain 了 <code>toObject</code>, 也就是说 <code>button</code> 持有了 <code>controller</code>, 同时 <code>controller</code> 又持有 <code>button</code><br>从而造成<strong>循环引用</strong>。</p>
+<p>第二种可能, 当 controller 被释放后, 如果监听未取消, 也会造成崩溃</p>
+<h3 id="KVO_意味着完美">KVO 意味着完美</h3><p>假设我们有个 model 模块, model.title 的改变会更新 controller.title, 然后更新 button.title.</p>
+<p>在 controller 中:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSString</span> *)title &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.modelObject</span>.​title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">NSSet</span> *)keyPaths​ForValues​AffectingTitle &#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="built_in">NSSet</span> setWithObject:​<span class="string">@"modelObject.title"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>以下情况会造成崩溃: 当 modelObject 被释放后, 因为他还还有 observer.<br>而如果 controller 持有 modelObject 的话, 又多了一个废弃的对象.</p>
+<h3 id="不完美解决方案">不完美解决方案</h3><p>controller 有一个方法 <code>invalidate</code> 来打破循环持有. 一旦破坏后, dealloc 方法将被顺利执行.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)invalidate &#123;</span><br><span class="line">  [<span class="keyword">self</span><span class="variable">.button</span> unbind:kTitleKey];</span><br><span class="line">  <span class="keyword">self</span><span class="variable">.modelObject</span> = <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不完美的原因: 引用计数是一个很好的方案, 它保证了在没有扔和强引用的情况下, dealloc 被调用. 这也使得 dealloc 方法成为一个很好的地方来处理 observer 的删除和其他一些事情.</p>
+<p>然而当你使用 invalidate 方法时, 等于你手动来解决引用计数的问题. 你需要在适当正确的时间来调用该方法.然而这是很难保证永远不犯错的.</p>
+<h3 id="比较好的解决方案">比较好的解决方案</h3><p>在 controller 中放弃使用 <code>keyPaths​ForValues​AffectingTitle</code> 和 <code>bind:​toObject:​withKeyPath:​options:</code>, 采用自定义 setter.</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)setTitle:(NSString *)<span class="built_in">title</span> &#123;</span><br><span class="line">  _title = <span class="built_in">title</span>;</span><br><span class="line">  self.button.<span class="built_in">title</span> = <span class="built_in">title</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这解决了一半的问题, 当 controller.title 更新时, button.title 也会随之更新</p>
+<p>我们不能对 modelObject 做同样的操作, 因为 modelObject 不知道 controller. 所以, 我们采用 controller 来监控 modelObject.title</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.modelObject <span class="string">addObserver:</span>self <span class="string">forKeyPath:</span>​kTitleKey <span class="string">options:</span><span class="number">0</span> <span class="string">context:</span>​kTitleContext];</span><br></pre></td></tr></table></figure>
+<p>然后再 KVO 方法中 监听 kTitleContext, 然后 <code>self.title = self.modelObject.title</code>. 这样就没有引用循环, 但是需要在 controller 的 <code>dealloc</code> 方法中添加</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[_modelObject <span class="string">removeObserver:</span>​self <span class="string">forKeyPath:</span>kTitleKey <span class="string">context:</span>​kTitleContext];</span><br></pre></td></tr></table></figure>
+<h4 id="总结">总结</h4><p>此方案修复了循环引用的问题, 同时也不需要你在特定的时候来手动调用 <code>invalidate</code> 方法, 很安全.</p>
+<p>一些建议:</p>
+<ol>
+<li>不要在任何情况下使用 <code>bind:​toObject:​withKeyPath:​options:</code>. </li>
+<li>采用自定义 setter 比采用自定义的 getter 要好, 当处理变化传递的时候</li>
+<li>避免采用手动的方式来干预引用计数, 因为我们总会犯错.</li>
+</ol>
+<h2 id="Mutation_Exceptions">Mutation Exceptions</h2><p>当你遍历一个可变集合时, 突然收到一个遍历过程中,集合被改变的<code>error</code>, 然后程序崩溃.你可以通过一个简单的技巧来避免此类问题: 不要遍历一个可变的集合.</p>
+<h3 id="不同意">不同意</h3><p>也许你认为只要不在集合变化的情况下遍历即可, 你也许有足够的认知在你的代码中,可以安全的遍历一个可变的集合.当然,你可以这样想, 你也应该这样想.</p>
+<p>然而, 写出不崩溃的代码就是要排除一切可能的情况. 这是关于最小化犯错的机会, 同时最小化在未来的更新中出现错误.</p>
+<h3 id="可变集合不应该作为公共接口">可变集合不应该作为公共接口</h3><p>一个对象, 极少乃至不应该出现有可变集合作为公共接口的情况, 可变集合应该在对象的内部.(即使不可避免, 这样的集合也应该被声明为只读状态)</p>
+<p>示例如下:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSArray</span> *operations;</span><br></pre></td></tr></table></figure></p>
+<p>内部:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">NSMutableArray</span> *mutableOperations;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSArray</span> *)operations &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.mutableOperations</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这完全合法, 因为 mutableOperations 是一个 NSMutableArray, 同时也是一个 NSArray.</p>
+<h3 id="被声明为不可变集合,_实际上就应该是不可变集合">被声明为不可变集合, 实际上就应该是不可变集合</h3><p>在上面的例子中, 你声明了 <code>operations</code> 作为一个 NSArray (可以安全的遍历), 另外一个人, 也可能是你自己, 在六个月后不会意识到实际上, 返回的是一个可变的集合, 其是不能保证被安全遍历的.</p>
+<p>正确的做法:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSArray</span> *)operations &#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="keyword">self</span><span class="variable">.mutableOperations</span> <span class="keyword">copy</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你也许会考虑到效率或者内存问题, 然而我能够确认: 我是一个效率极客, 我经过大量<code>Instruments</code>的测试来确认事情反而会更快, 并使用了很少的内存. 同时我也从未发现这会造成任何问题.如果你的应用存在内存问题, 可定不是这个引起的, 你应该关注其他的方面.(也许你认为应该采用 @autoreleasepool 来尽早释放这样备份)</p>
+<h3 id="奖励:_不要信任任何人">奖励: 不要信任任何人</h3><p>我曾经修复过一个可变造成的错误, 当遍历 <code>NSTextStorage layoutManagers</code>的时候:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span> *layoutManagers;</span><br></pre></td></tr></table></figure>
+<p>这个属性是 NSArray, 可以安全的遍历, 真好. 然而这是个谎言, 在 debugger 中我发现, 它实际上是一个 NSMutableArray(__NSArrayM). </p>
+<p>通常的建议, 当你从其他地方获得一个集合时, 直接遍历他的 copy.</p>
+<h2 id="NSNotification">NSNotification</h2><p>通常我更喜欢 NSNotification (比起 KVO 绑定来说). 因为 NSNotification 可以更容易不犯错</p>
+<h3 id="造成崩溃仅有的情况">造成崩溃仅有的情况</h3><p>当一个对象注册了一个监听, 然后在没有取消注册的情况下, 此对象被释放了, 然后 app 会在 notification 被 post 的时候崩溃. 这是你应该避免的, 下面是来介绍如何避免的.</p>
+<h3 id="The_Big_Rule">The Big Rule</h3><p>我有一个简单, 粗暴的规则: NSNotifications 应该在主线程被 post. 没有例外, 如果一段代码在一个线程中执行, 然后他需要发起通知, 则应该在主线程来发起.</p>
+<p>这避免了所有NSNotification在子线程中发起的神奇的 bug, 同时也避免了由取消注册引起的资源竞争.</p>
+<p>其实一个应用的所有代码都应该在主线程中被执行的. 在其他线程中执行的代码应该和其他一切隔绝, 同时在多个对象协同工作时, 应该采用 <code>delegate</code> 方式.</p>
+<p><strong>确保所有的消息都在主线程被发起(post)</strong>.</p>
+<h3 id="Blanket_Unregistering">Blanket Unregistering</h3><p>不应该采用单独释放的方式</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[NSNotificationCenter defaultCenter]</span> <span class="tag">removeObserver</span><span class="pseudo">:self</span> <span class="tag">name</span><span class="pseudo">:kSomeNotificationName</span> <span class="tag">object</span><span class="pseudo">:someObject</span>];</span><br><span class="line"><span class="attr_selector">[[NSNotificationCenter defaultCenter]</span> <span class="tag">removeObserver</span><span class="pseudo">:self</span> <span class="tag">name</span><span class="pseudo">:kSomeOtherNotificationName</span> <span class="tag">object</span><span class="pseudo">:someOtherObject</span>];</span><br></pre></td></tr></table></figure>
+<p>应该采用 <code>[[NSNotificationCenter defaultCenter] removeObserver:self];</code> 的方式来取消注册, 以此来避免, 他人由于大意而忘记取消的问题.</p>
+<h3 id="Beware_Double_Registrations_小心多次注册">Beware Double Registrations 小心多次注册</h3><p>多次注册会导致被调用多次, 系统没有自动合并的操作.(这种情况在早先的代码中经常出现, 那时人们认为注册应该被写在 viewDidLoad中, 然而记住一件事情, 视图是可能被 unload 和 reloaded, 这也就意味着多次注册)</p>
+<p>你的通知回调中应该有防止多次调用的相关逻辑, 同时一个对象也不应该被多次注册同一个消息监听</p>
+<h3 id="Register_in_init,_unregister_in_dealloc">Register in init, unregister in dealloc</h3><p>在 init 方法中注册, 在 dealloc 中取消监听.因为一个对象的 init 方法只能被调用一次, 同理 dealloc 也是.我们可以通过这个特点来平衡 注册和取消.</p>
+<h3 id="Avoid_addObserverForName">Avoid addObserverForName</h3><p>一些人喜欢 <code>-[NSNotificationCenter addObserverForName:​object:​queue:​usingBlock:]</code>, 因为这看来很时尚, 因为他是基于 block 的.</p>
+<p>但这是个坏主意, 你可能确实少写了一个函数, 但是却多持有了一个对象, 同时还需要在合适的时间来调用 <code>removeObserver:</code>. 这意味着空取消是不生效的, 你需要自己来保证其正确性.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> observer = [[<span class="built_in">NSNotificationCenter</span> defaultCenter] </span><br><span class="line">                        addObserverForName:<span class="string">@"com.app.livedata.jsonupdated"</span></span><br><span class="line">                          object:<span class="literal">nil</span> </span><br><span class="line">                          queue:[<span class="built_in">NSOperationQueue</span> mainQueue] </span><br><span class="line">                          usingBlock:^(<span class="built_in">NSNotification</span> *notif) &#123;</span><br><span class="line">                              <span class="built_in">NSLog</span>(<span class="string">@"JSONUPDATED"</span>);</span><br><span class="line">                          &#125;];</span><br></pre></td></tr></table></figure>
+<p>在 dealloc 中:<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[NSNotificationCenter defaultCenter] removeObserver:observer]<span class="comment">;</span></span><br><span class="line">observer = nil<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Threading">Threading</h2><p>简单的规则, 尽量在主线程中操作, 因为现在的设备足够出色. </p>
+<h3 id="主线程规则">主线程规则</h3><p>出特殊情况外, 将所有代码在主线程运行, 且仅在主线程运行. </p>
+<p>这可以解决很多问题, 例如在主线程 发送通知和取消通知, 在主线程操作 KVO.</p>
+<h3 id="Objects_That_Live_in_Their_Own_Little_World">Objects That Live in Their Own Little World</h3><p>如果你发现, 某些操作会造成主线程的阻塞, 必须放到其他线程执行时, 一定要保证这些对象的隔离.例如 JSON 的处理.</p>
+<ol>
+<li>我不希望 model 层了解 JSON 的存在</li>
+<li>我要处理 NSNull, 时间转换, 以及其他一切需要转换的事情</li>
+</ol>
+<p>我采用 NSOperationQueue 或 GCD queue 来执行 NSData 的转换. (总是采用队列, 不要使用 detachThreadSelector 或者 performSelecotrInBackground)</p>
+<p>这些对象被隔离在自己单独的线程中, 他们除了自己和初始化时传入的参数外, 不知道任何的其他外界事物. 一旦在队列中创建, 他们就是不可变的状态, 他们不应该监控任何东西, 也不应该被监听. 这保证了他们是线程安全的.</p>
+<h3 id="同时在多个对象协同">同时在多个对象协同</h3><p>某些时候多个对象间需要协同合作, 比如 RSS 分析器. 在这个例子中, 有三个主要对象: <code>SAX praser wrapper</code>, <code>delegate</code>, <code>the intermediate objects the delegate creates</code>(例如返回的对象)</p>
+<ol>
+<li>The SAX parser wrapper knows about the NSData it was initialized with, and it knows it has a delegate.</li>
+<li>The SAX parser delegate knows about the intermediate objects it’s creating.</li>
+<li>The intermediate objects don’t know about anything.</li>
+</ol>
+<p>这时候应该采用 <code>delegate</code> 模式来解决. 以保证对象的隔离以及松散度.</p>
+<h3 id="Worst-Case_Scenario">Worst-Case Scenario</h3><p>You really don’t want to update model objects on background threads. It’s a crash-making machine. But testing and profiling may tell you that you need to.</p>
+<p>Try to break down the problem. If updating the model is okay except for this one thing — something that involves turning NSData into a UIImage or NSImage, for instance — then move just that slow part to a background task. (Creating an image from data or a file is a perfectly good thing to move off the main thread. It’s easily isolatable.)</p>
+<p>It could be that the problem is the database: perhaps you find that it’s otherwise fast to create objects and update properties in memory, even a whole bunch of them. In that case, you might do what I do, which is de-couple the database calls from the main thread. (It’s not that hard: the database code needs to run on a serial background queue, and it should do everything in the exact some order that things happen in the main thread.)</p>
+<p>Which is to say: there are options.</p>
+<p>But if you still find that you have to update the model on a background thread, then you just have to do it. Remember that the rest of your app is on the main thread, so when posting notifications and so on, do so on the main thread.</p>
+<h3 id="Summary">Summary</h3><p>Do everything on the main thread. Don’t even think about queues and background threads. Enjoy paradise!</p>
+<p>If, after testing and profiling, you find you do have to move some things to a background queue, pick things that can be perfectly isolated, and make sure they’re perfectly isolated. Use delegates; do not use KVO or notifications.</p>
+<p>If, in the end, you still need to do some tricky things — like updating your model on a background queue — remember that the rest of your app is either running on the main thread or is little isolated things that you don’t need to think about while writing this tricky code. Then: be careful, and don’t be optimistic. (Optimists write crashes.)</p>
+<h2 id="Threading,_part_2">Threading, part 2</h2><p>The object creating the background task handles the result of the task. This is a hard rule.</p>
+<p>Usually the object creating the task is an object that lasts for the lifetime of the app. An example might be an image cache — the cache may get emptied during the lifetime of the app, but the cache object lasts for the duration.</p>
+<p>Another example is something like Vesper’s VSAccount object. There’s always a single VSAccount instance. The user may or may not have a server account. The user may change which server account they’re using. But there’s a single VSAccount object which lasts for the lifetime of the app.</p>
+<p>(Note: obviously, an app that manages multiple accounts would do things differently. But Vesper manages at most one server account, so this works perfectly well. In Vesper’s case, multiple accounts falls under the YAGNI rule.)</p>
+<p>The VSAccount object is responsible for sending http requests to the server and handling the result. It turns JSON into intermediate objects on a background queue.</p>
+<p>It calls the JSON processor with NSData-to-process and a callback block. When the processor is finished, it calls that block on the main thread:</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="params">(callback)</span> &#123;</span><br><span class="line">  dispatch_async<span class="params">(dispatch_get_main_queue<span class="params">()</span>, ^&#123;</span><br><span class="line">    callback<span class="params">(parsedObjects)</span></span><br><span class="line">  &#125;)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This is such a common pattern for me — calling a block that takes one parameter on the main queue — that I have a common function for it. The JSON processor really just does something like this:</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BSCallBlockWithParameter<span class="list">(<span class="keyword">callback</span>, parsedObjects)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p><code>BSCallBlockWithParameter</code> looks something like this:</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="params">(!callback)</span></span><br><span class="line">  return;</span><br><span class="line">&#125;</span><br><span class="line">dispatch_async<span class="params">(dispatch_get_main_queue<span class="params">()</span>, ^&#123;</span><br><span class="line">  callback<span class="params">(parsedObjects)</span>;</span><br><span class="line">&#125;)</span>;</span><br></pre></td></tr></table></figure>
+<p>I use this all the time. Super handy.</p>
+<h3 id="The_key_to_making_this_work">The key to making this work</h3><p>I don’t ever want to worry that the object that created the background task might go away, so I create background tasks only from objects that last the lifetime of the app.</p>
+<p>You don’t want to get into the situation where an object that creates a background task goes away (or is torn-down partly or completely) before that task is finished and calls back. It’s a potentially complex subject, and I don’t even want to think about it. (I hate the weak-self dance, for starters.)</p>
+<p>And that’s exactly the mindset you need when writing code that doesn’t crash: if something is complex, then it’s error-prone. Find a way to make it drop-dead simple.</p>
+<p>(You could figure out a complex thing and prove that it’s correct — but will you have doubts later and feel the need to audit that code? Will it break if you breathe on it wrong? Or if someone else touches it?)</p>
+<p><strong><em>So I do the simple thing: use objects that won’t get deallocated.</em></strong></p>
+<p>But there’s an escape hatch worth remembering: <strong>a callback block can call class methods and C functions safely</strong>. Instance methods are unsafe if the instance disappears — but class methods and C functions are conceptually safe to call.</p>
+<p>I don’t use this knowledge very often, but I have found it useful from time to time. Use sparingly if at all.</p>
+<h2 id="Properties_and_Accessors">Properties and Accessors</h2><p>This gives me the willies:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)someRandomMethod &#123;</span><br><span class="line">  some stuff…</span><br><span class="line">  <span class="keyword">_t</span>hing = otherThing;</span><br><span class="line">  other stuff…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You could prove that it’s correct. You’re using ARC, so the proper retains and releases are added. And nobody is observing _thing.</p>
+<p>Fine. It’s legal and it works.</p>
+<p>Say you realize that thing should be observable. So every place you set thing, you bracket the call:<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[self willChangeValueForKey:kThingKey]</span><span class="comment">;</span></span><br><span class="line"><span class="setting">_thing = <span class="value">otherThing;</span></span></span><br><span class="line"><span class="title">[self didChangeValueForKey:kThingKey]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>Also legal, also works.</p>
+<p>The problem is the future: later today, tomorrow, or in six months, you or somebody else writes a custom setter for thing — maybe because you need something like self.needsDisplay = YES when thing is set — and now you have a bug where the view doesn’t redraw whenever thing changes.</p>
+<p>Or worse: perhaps that future custom setter tears down an observer and sets up a new one whenever thing changes. Since you’re setting _thing directly, the observations won’t be maintained properly, and you’ll get crashes.</p>
+<p>The answer is a simple rule: use the accessor when getting and setting properties.</p>
+<p>In other words, do this:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)someRandomMethod &#123;</span><br><span class="line">  some stuff…</span><br><span class="line">  self.<span class="keyword">thing</span> = otherThing;</span><br><span class="line">  other stuff…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This works whether or not you have a custom setter. When setting thing, you don’t have to care one way or the other.</p>
+<p>(Here’s the simple test of a programming rule: if you can’t go wrong by following it, but you can go wrong by not following it, then you should follow it.)</p>
+<p>(Don’t worry about the performance issue of going through accessors. I’m a performance junkie, and I’ve never seen this become a problem. If your app develops performance issues, profile it and find out the real cause.)</p>
+<h3 id="Exceptions">Exceptions</h3><p>You should not go through the accessor in four places: <strong><em>init methods, dealloc, custom getter, and custom setter</em></strong>. This avoids side effects.</p>
+<p>If you need a side effect — removing an observer, for instance, in dealloc — that you’d normally place in the setter, make it a separate method and call it from the setter and from dealloc. (Also consider that adding and removing observers outside of init and dealloc is a possible sign that your code needs refactoring.)</p>
+<h3 id="Auto-synthesize">Auto-synthesize</h3><p>Don’t create instance variables, ever. Declare properties instead.</p>
+<p>Properties auto-synthesize instance variables. Use @synthesize only when Xcode tells you you need to.</p>
+<h3 id="Use_ARC">Use ARC</h3><p>And if you have non-ARC code, upgrade it to use ARC. Manual memory management is error-prone. Even someone with years of experience will make mistakes from time to time, and mistakes can cause crashes (or memory leaks or abandoned memory, at best).</p>
+<p>Normally I don’t advocate editing working code that’s running fine — but if you have code that needs maintaining, do yourself and your co-workers a favor and convert it to ARC. (Everybody is going to get worse at manual memory management over time. And there are no points added for being a hero.)</p>
+<p>(It is possible to run into performance issues with ARC, particularly if you’re dealing with lots of objects in a loop. Remember to use autorelease pools. And don’t jump to conclusions: use the profiler.)</p>
+<p>(Also: the ARC converter may not always do what you want. If you use it, check the changes it makes. Remember that you can convert one file at a time. Targets can have both ARC and non-ARC files.)</p>
+<h3 id="Don’t_do-&gt;this">Don’t do-&gt;this</h3><p>This gives me the screaming meemies: thing-&gt;property. No.</p>
+<h3 id="dealloc">dealloc</h3><p>If you don’t need dealloc (since you’re using ARC), then don’t create it. There’s no need to set properties to nil in dealloc.</p>
+<p>A big exception is delegates: nil out the delegates.</p>
+<h3 id="Use_weak">Use weak</h3><p>Weak is awesome. Delegates, for instance, should be weak.</p>
+<p>Parents should retain their children, but children should have a weak reference to their parents (if they have a reference at all). Weak gets you out of those invalidate methods where you break retain cycles.</p>
+<p>Do not, under any circumstances whatsoever, use unsafe_unretained. It’s a trap. You might as well do this:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine CRASHING_BUG unsafe_unretained</span><br></pre></td></tr></table></figure></p>
+<p>It’s literally called unsafe.</p>
+<p>Don’t run with scissors. Heck — don’t even touch these scissors. They have a bunch of poison on them.</p>
+<h2 id="Dealing_with_Nothing">Dealing with Nothing</h2><p>Consider this line of code:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[thing doStuff]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>If <code>thing</code> is nil, it’s no problem. No crash. Nothing at all happens.</p>
+<p>But you can’t generalize from that that nil is okay in all cases:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[self doStuff:thing]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>If <code>thing</code> is nil, then what happens? If depends on the implementation of <code>doStuff:</code> — <strong>it might crash</strong>. Consider this code:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">menuItem.title = <span class="keyword">thing</span>;</span><br></pre></td></tr></table></figure>
+<p>If <code>menuItem</code> is an NSMenuItem, then it crashes when thing is nil. The header for NSMenuItem doesn’t say that, and the documentation only hints at it (“If you do not want a title, use an empty string (@””), not nil.”)</p>
+<p>This means you need to make sure thing is non-nil. You may be quite certain that it’s non-nil. But consider a case I once fixed, where thing was the name of a font. There was no reason for me to expect that the system API for getting a font name would ever return nil — except that it did, sometimes (rarely, of course, and never on my machine, no matter what I did).</p>
+<p>Things to know:</p>
+<ol>
+<li><p>Nil receivers are okay — as long as your code is okay with nothing happening.</p>
+</li>
+<li><p>Nil parameters may or may not be okay. When calling system APIs, the headers and documentation don’t always tell you what could happen. (This may change when they make greater use of nullability annotations.)</p>
+</li>
+<li><p>Trust no one.</p>
+</li>
+</ol>
+<h3 id="Assertions">Assertions</h3><p>Assertions are a great way of documenting assumptions and requirements, and of making sure those assumptions are true. Assertions should not run in the release build (see the ENABLE_NS_ASSERTIONS Xcode setting).</p>
+<p>One of my favorites is NSParameterAssert, which I use almost exclusively as a nil check for parameters that must not be nil.</p>
+<p>It’s super-easy to use:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (<span class="tag">void</span>)<span class="rule"><span class="attribute">someMethod</span>:<span class="value">(id)someParameter &#123;</span><br><span class="line">  <span class="function">NSParameterAssert</span>(someParameter)</span></span>;</span><br><span class="line">  …<span class="tag">do</span> <span class="tag">whatever</span>…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In the future I’ll probably start using nullability annotations and NSParameterAssert. Both. (I’ll also write some Swift code in the future, which is a whole other thing when it comes to nil. But I’m not talking about that today, partly because I’m not yet enough of an expert in Swift to have good advice.)</p>
+<p>I also use NSAssert fairly often. NSAssert takes an expression, and a comment — but I’m lazy, and I make the comment nil. (Which is fine in this case.)</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSAssert<span class="list">(<span class="keyword">something</span> == somethingElse, <span class="literal">nil</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>(A note about laziness: the lazy programmer doesn’t write crash bugs, because they don’t want to fix them later.)</p>
+<h3 id="My_favorite_crashing_bug">My favorite crashing bug</h3><p>Years ago, my app NetNewsWire had a crash-log catcher. At launch it would grab the latest crash log from disk and offer to send it to me.</p>
+<p>With some OS X release (10.5, I think) Apple changed the format for crash logs on disk. I think they had been one file per app, and Apple switched to one file per crash. I had to write new code to handle the new format.</p>
+<p>I made the change. It went to beta testers, who used the app extensively. Weeks passed. All good.</p>
+<p>Then, on the day I released this version, I got a ton of reports from people who said, “It’s crashing on launch! But it works fine after launching it again.”</p>
+<p>Here’s the deal: the new code crashed when there were no crash logs at all. And then, on the next launch — now that there’s a crash log — it would not crash. (Yes, a self-healing crashing bug. In the crash log catcher. Such meta.)</p>
+<p>Of course this meant that it crashed immediately for all new users, not just for people who’d been lucky enough never to get a crash.</p>
+<p>This was a big reminder to me: always consider the case where there’s nothing. Nothing happens all the time. Nothing is pretty normal. But it might take special handling, and it should always be considered.</p>
+<h3 id="A_less_cool_crashing_bug">A less cool crashing bug</h3><p>I don’t think this shipped — I think it was just in beta code.</p>
+<p>Vesper syncing talks to a server. The server returns JSON data. The Cocoa JSON deserializer turns JSON nulls into NSNull objects.</p>
+<p>Vesper was expecting an NSString, and got an NSNull. Vesper tried to call a string method on that NSNull, and it crashed.</p>
+<p>On the surface this seems like a tough case, because you can’t be sure that the type of a given object in JSON text will be what you expect. You’re looking for a string and you get an NSNull.</p>
+<p>Well, NSNull is one of those things you want to keep as isolated as possible. It’s a walking code smell (though I don’t know what an alternative would be in the case of JSON nulls). (And you should never deliberately use it outside of JSON. Almost never. Super-duper-rare. Like once every few years, and only if you really, really have to. Maybe not even then.)</p>
+<p>This is part of why, as I mentioned previously, I like to turn JSON into intermediate objects. A big part of this is centralizing the handling of NSNull objects — I don’t want them to leak out into other parts of the app, where anything they touch turns stinky.</p>
+<p>But there’s another point, which is this: whoever wrote the server side is your sworn enemy. He or she hates you very, very much.</p>
+<p>Now, in the case of Vesper, that was me. But I still have to code as if the server author has my personal and professional destruction as their sole motivation. (Even though I know the guy, and he’s cool. He likes kittens.) And that doesn’t mean just checking for NSNull — which is normal in JSON anyway — but being careful with the types of every single piece of data.</p>
+<p>Anything could be anything, at any time.</p>
+<p>(It’s not turtles all the way down. You’re expecting turtles — but that would be too easy. It might be nothing all the way down.)</p>
+<h3 id="Total_other_thing">Total other thing</h3><p><strong><em>Initialize your variables</em></strong>. Just do it. If I had a nickel for every crashing bug I’ve fixed just by initializing a variable to nil — well, I’d have some nickels. You want zero nickels.</p>
+<p>Not initializing your variables is like playing with gasoline and saying it’s okay because the matches are in your pocket.</p>
+<h2 id="Infrastructure">Infrastructure</h2><p>Even if you think your app is crash-free, you need to collect crash logs — because there’s no such thing as crash-free: it can only be free of known crashing bugs.</p>
+<p>There are a few different services for this, and the ones I’ve tried are pretty good, so I’m not going to make a specific recommendation.</p>
+<p>But there are a few things it should do:</p>
+<p>Crash logs should be collected without a user having to find them and send them to you. It should be automatic-ish (users should probably be prompted, if on OS X; on iOS nobody seems to expect a prompt).</p>
+<p>There should be a way to group crash logs, and you should get a total for each group, so you know which ones are frequent and which aren’t.</p>
+<p>You should be able to mark a group as resolved.</p>
+<p>It’s not enough, of course, just to collect crash logs. You should look at them regularly. (I look at crash logs every morning.)</p>
+<h3 id="Bug_tracker">Bug tracker</h3><p>Have one.</p>
+<p>For my personal projects I use a combination of Lighthouse, OmniOutliner, and pen-and-paper — but you should use whatever works for you, as long as your crashes get into your bug tracker and don’t get lost.</p>
+<p>(Lighthouse is a good bug tracker. For mapping out big new features or entire apps I like OmniOutliner, where I can build a tree of things-to-do. For short-term things — for the 10 steps needed to complete a single task — I like pen and paper, since it’s tiring to rely on short-term memory, since pen and paper doesn’t disturb the on-screen context.)</p>
+<h3 id="Errors_and_warnings">Errors and warnings</h3><p>Xcode by default doesn’t turn on enough errors and warnings. I strongly recommend Peter Hosey’s set.</p>
+<p>The point is to remove doubt from your code.</p>
+<p>I go a step further, which I also recommend: I turn on treat warnings as errors. This means that, yes, I can’t even debug locally if there’s a warning — but the discipline is worth it. It means that whenever my app is actually running, there are not even any warnings.</p>
+<h3 id="Instruments">Instruments</h3><p>Instruments is wonderful. It’s a very good idea to check how much memory your app allocates, and it’s super-important to check for leaks.</p>
+<p>And if you’re getting crashes, it’s a good idea to use the Zombies tool. Your problem might not be related to zombies, but, when in doubt, it’s worth ruling out.</p>
+<h2 id="Mindset">Mindset</h2><p>You know the old line about not writing code that’s as clever as you are, because it will take someone even smarter than you to debug it?</p>
+<p>I used to think that means I should write code that’s about 80% as clever as I am. Save a little bit for debugging.</p>
+<p>But over the years I’ve come to think that I should write code that’s about 10% as clever as I am. And I’ve come to believe that true cleverness is in making code so clear and obvious that it looks like nothing at all.</p>
+<p>And that’s why I have rules like do everything on the main thread except for perfectly isolatable things and avoid unsafe_unretained always and so on.</p>
+<p>This means I don’t get bonus points for being a code magician. I don’t pull rabbits out of hats and I certainly don’t walk tightropes. I won’t even look at tightropes.</p>
+<p>I do difficult things as needed, but the goal even with the difficult things is to write the simplest and most-readable code that I can. If, in the end, the code looks easy — unimpressive, even, as if a middle-school kid could have written it — then good.</p>
+<p>In the small, this means that methods tend to be small and focused with little nesting. In the large, architecture and naming is iterated-over until it feels inevitable, as if no thought went into it because it all must have been obvious.</p>
+<p>It means not getting too abstract. Explicitness is obviousness. But it also means not getting too non-general, either — there are times when two or three things are really the same thing, and they can be generalized without harming maintainability. (And there are times when they can’t.)</p>
+<p>I avoid tight coupling and large structures — except for when the best solution really is for x to know about y.</p>
+<p>And I keep learning and getting better.</p>
+<h3 id="Time">Time</h3><p>The thing that separates programming from painting, writing, architecture, and composing music is that there is no finished product. There are released versions, yes, but there’s no finishing, there’s only abandoning.</p>
+<p>Code exists in time, and maybe across many people — and you don’t even know how long or who. This should never be out of your mind.</p>
+<h3 id="Cape,_mask">Cape, mask</h3><p>When I was younger I wanted to be a code magician — or, really, a hero. But I learned that actual software quality is more important than what I imagine other people think of me.</p>
+<p>And, more: quality is a reward that’s almost spiritual. It’s an act of devotion, both selfish and unselfish, to something more important than ego.</p>
+<p>Selfish because the process of striving for quality makes you a better person. And unselfish because better code and better software is better for other people.</p>
+<p>And the first thing other people ask of your software is that, if they launch it, it stays launched. Any programmer who can’t bring themselves to care about that — or who rationalizes away crashing as a fact of life these days — isn’t taking this great fun we are privileged to have seriously enough.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/01/Inter-Process-Communication/">Inter-Process Communication</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/01/iOS-Deep-study/">iOS Deep study</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How_Not_to_Crash"><span class="nav-number">1.</span> <span class="nav-text">How Not to Crash</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#KVO_and_Manual_Bindings"><span class="nav-number">1.1.</span> <span class="nav-text">KVO and Manual Bindings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bindings_循环引用"><span class="nav-number">1.1.1.</span> <span class="nav-text">Bindings 循环引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KVO_意味着完美"><span class="nav-number">1.1.2.</span> <span class="nav-text">KVO 意味着完美</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不完美解决方案"><span class="nav-number">1.1.3.</span> <span class="nav-text">不完美解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较好的解决方案"><span class="nav-number">1.1.4.</span> <span class="nav-text">比较好的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mutation_Exceptions"><span class="nav-number">1.2.</span> <span class="nav-text">Mutation Exceptions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不同意"><span class="nav-number">1.2.1.</span> <span class="nav-text">不同意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变集合不应该作为公共接口"><span class="nav-number">1.2.2.</span> <span class="nav-text">可变集合不应该作为公共接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#被声明为不可变集合,_实际上就应该是不可变集合"><span class="nav-number">1.2.3.</span> <span class="nav-text">被声明为不可变集合, 实际上就应该是不可变集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#奖励:_不要信任任何人"><span class="nav-number">1.2.4.</span> <span class="nav-text">奖励: 不要信任任何人</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSNotification"><span class="nav-number">1.3.</span> <span class="nav-text">NSNotification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#造成崩溃仅有的情况"><span class="nav-number">1.3.1.</span> <span class="nav-text">造成崩溃仅有的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The_Big_Rule"><span class="nav-number">1.3.2.</span> <span class="nav-text">The Big Rule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blanket_Unregistering"><span class="nav-number">1.3.3.</span> <span class="nav-text">Blanket Unregistering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beware_Double_Registrations_小心多次注册"><span class="nav-number">1.3.4.</span> <span class="nav-text">Beware Double Registrations 小心多次注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register_in_init,_unregister_in_dealloc"><span class="nav-number">1.3.5.</span> <span class="nav-text">Register in init, unregister in dealloc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Avoid_addObserverForName"><span class="nav-number">1.3.6.</span> <span class="nav-text">Avoid addObserverForName</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Threading"><span class="nav-number">1.4.</span> <span class="nav-text">Threading</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主线程规则"><span class="nav-number">1.4.1.</span> <span class="nav-text">主线程规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Objects_That_Live_in_Their_Own_Little_World"><span class="nav-number">1.4.2.</span> <span class="nav-text">Objects That Live in Their Own Little World</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时在多个对象协同"><span class="nav-number">1.4.3.</span> <span class="nav-text">同时在多个对象协同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worst-Case_Scenario"><span class="nav-number">1.4.4.</span> <span class="nav-text">Worst-Case Scenario</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">1.4.5.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Threading,_part_2"><span class="nav-number">1.5.</span> <span class="nav-text">Threading, part 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The_key_to_making_this_work"><span class="nav-number">1.5.1.</span> <span class="nav-text">The key to making this work</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties_and_Accessors"><span class="nav-number">1.6.</span> <span class="nav-text">Properties and Accessors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exceptions"><span class="nav-number">1.6.1.</span> <span class="nav-text">Exceptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Auto-synthesize"><span class="nav-number">1.6.2.</span> <span class="nav-text">Auto-synthesize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use_ARC"><span class="nav-number">1.6.3.</span> <span class="nav-text">Use ARC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Don’t_do->this"><span class="nav-number">1.6.4.</span> <span class="nav-text">Don’t do->this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dealloc"><span class="nav-number">1.6.5.</span> <span class="nav-text">dealloc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use_weak"><span class="nav-number">1.6.6.</span> <span class="nav-text">Use weak</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dealing_with_Nothing"><span class="nav-number">1.7.</span> <span class="nav-text">Dealing with Nothing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Assertions"><span class="nav-number">1.7.1.</span> <span class="nav-text">Assertions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#My_favorite_crashing_bug"><span class="nav-number">1.7.2.</span> <span class="nav-text">My favorite crashing bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A_less_cool_crashing_bug"><span class="nav-number">1.7.3.</span> <span class="nav-text">A less cool crashing bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Total_other_thing"><span class="nav-number">1.7.4.</span> <span class="nav-text">Total other thing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Infrastructure"><span class="nav-number">1.8.</span> <span class="nav-text">Infrastructure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug_tracker"><span class="nav-number">1.8.1.</span> <span class="nav-text">Bug tracker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Errors_and_warnings"><span class="nav-number">1.8.2.</span> <span class="nav-text">Errors and warnings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instruments"><span class="nav-number">1.8.3.</span> <span class="nav-text">Instruments</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mindset"><span class="nav-number">1.9.</span> <span class="nav-text">Mindset</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">1.9.1.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cape,_mask"><span class="nav-number">1.9.2.</span> <span class="nav-text">Cape, mask</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/01/How-Not-to-Crash/';
+      var disqus_title = 'How Not to Crash';
+      var disqus_url = 'http://ytlvy.com/2015/09/01/How-Not-to-Crash/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

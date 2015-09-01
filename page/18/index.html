@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/15/iOS-应用崩溃日志揭秘/">
-                iOS 应用崩溃日志揭秘
+              <a class="post-title-link" href="/2015/07/17/ARC-dealloc-cxx-destruct/">
+                ARC dealloc cxx_destruct
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-15
+          發表於 2015-07-17
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/15/iOS-应用崩溃日志揭秘/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/15/iOS-应用崩溃日志揭秘/"></span>
+            <a href="/2015/07/17/ARC-dealloc-cxx-destruct/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/ARC-dealloc-cxx-destruct/"></span>
             </a>
           </span>
           
@@ -194,384 +194,519 @@
 
       
         
-          <p><a href="http://www.raywenderlich.com/23704/demystifying-ios-application-crash-logs">翻译自</a></p>
-<h1 id="iOS应用崩溃日志揭秘1">iOS应用崩溃日志揭秘1</h1><p>作为一名应用开发者，你是否有过如下经历?</p>
-<p>为确保你的应用正确无误，在将其提交到应用商店之前，你必定进行了大量的测试工作。它在你的设备上也运行得很好，但是，上了应用商店后，还是有用户抱怨会闪退 !</p>
-<p>如果你跟我一样是个完美主义者，你肯定想将应用做到尽善尽美。于是你打开代码准备修复闪退的问题……但是，从何处着手呢？ 这时iOS崩溃日志派上用场了。在大多数情况下，你能从中了解到关于闪退的详尽、有用的信息。</p>
-<p>通过本教程，你将学习到一些常见的崩溃日志案例，以及如何从开发设备和iTunes Connect上获取崩溃日志文件。你还将学习到符号化（ symbolication）,从日志追踪到代码 。你还将学习调试一个在待定情况下会闪退的应用。</p>
-<p>让我们开始动手吧!</p>
-<h2 id="什么是崩溃日志，从哪里能得它?">什么是崩溃日志，从哪里能得它?</h2><p>iOS设备上的应用闪退时，操作系统会生成一个崩溃报告，也叫崩溃日志，保存在设备上。 崩溃日志上有很多有用的信息，包括应用是什么情况下闪退的。通常，上面有每个正在执行线程的完整堆栈跟踪信息，所以你能从中了解到闪退发生时各线程都在做什么，并分辨出闪退发生在哪个线程上。</p>
-<p>有几种方法可以从设备上获取崩溃日志。 设备与电脑上的iTunes Store同步后，会将崩溃日志保存在电脑上。根据电脑操作系统的不同，崩溃日志将保存在以下位置:</p>
-<p>Mac OS X:</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/Library/</span>Logs<span class="regexp">/CrashReporter/M</span>obileDevice<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/15/iOS-应用崩溃日志揭秘/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-property-attribute/">
-                iOS property attribute
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-property-attribute/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-property-attribute/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_property_&amp;&amp;_ivar_&amp;&amp;_local_variable">iOS property &amp;&amp; ivar &amp;&amp; local variable</h2><h3 id="default_attributes">default attributes</h3><ol>
-<li>property: atomic assign readwrite</li>
-<li>ivar &amp;&amp; local varibal: strong readwrite non-atomic</li>
+          <p><a href="http://blog.sunnyxx.com/2014/04/02/objc_dig_arc_dealloc/" target="_blank" rel="external">转</a></p>
+<h1 id="ARC下dealloc过程及-cxx_destruct的探究">ARC下dealloc过程及.cxx_destruct的探究</h1><h2 id="我是前言">我是前言</h2><p>这次探索源自于自己一直以来对ARC的一个疑问，在MRC时代，经常写下面的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)dealloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.array</span> = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.string</span> = <span class="literal">nil</span>;</span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">    <span class="comment">// 非Objc对象内存的释放，如CFRelease(...)</span></span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">    [<span class="keyword">super</span> dealloc];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对象析构时将内部其他对象release掉，申请的非Objc对象的内存当然也一并处理掉，最后调用super，继续将父类对象做析构。而现如今到了ARC时代，只剩下了下面的代码：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">dealloc</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">    <span class="comment">// 非Objc对象内存的释放，如CFRelease(...)</span></span><br><span class="line">    <span class="comment">// ... //</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题来了：</p>
+<ol>
+<li>这个对象实例变量（Ivars）的释放去哪儿了？</li>
+<li>没有显示的调用[super dealloc]，上层的析构去哪儿了？</li>
 </ol>
+<h2 id="ARC文档中对dealloc过程的解释">ARC文档中对dealloc过程的解释</h2><p><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#dealloc" target="_blank" rel="external">llvm官方的ARC文档</a> 中对ARC下的dealloc过程做了简单说明，从中还是能找出些有用的信息：</p>
 <blockquote>
-<p>atomic 在实现中通过加入 lock 的方式来保证多线程安全, 但是这只是很简单的一种线程安全, 只局限于此属性的读写.实际应用场景中, 业务的原子性, 是需要自己来实现的.</p>
+<p>A class may provide a method definition for an instance method named dealloc. This method will be called after the final release of the object but before it is deallocated or any of its instance variables are destroyed. The superclass’s implementation of dealloc will be called automatically when the method returns.</p>
 </blockquote>
-<h3 id="when_to_use_copy">when to use copy</h3><ol>
-<li>NSStrings: 为了防止其他地方修改</li>
-<li>block: 防止自动释放</li>
-<li>可变数据类型, 当你想阻止其他拥有者变更数据时.</li>
-</ol>
-<h3 id="尽量使用_copy_关键字">尽量使用 copy 关键字</h3><p>任何实现了<code>NSCopying</code>协议的类型, 都应该尽量采用<code>copy</code>. 因为我们定义的属性,在使用时可能是用一个可变的子属性来赋值的, 例如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Book</span> : <span class="title">NSObject</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stringExample &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSMutableString</span> *bookTitle = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"Best book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    Book *book = [[Book alloc] init];</span><br><span class="line">    book<span class="variable">.title</span> = bookTitle;</span><br><span class="line"> </span><br><span class="line">    [bookTitle setString:<span class="string">@"Worst book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"book title %@"</span>, book<span class="variable">.title</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-property-attribute/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/NSRunLoop深入理解/">
-                NSRunLoop深入理解
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/NSRunLoop深入理解/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/NSRunLoop深入理解/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://www.cocoachina.com/ios/20150601/11970.html">转自</a></p>
-<h2 id="RunLoop">RunLoop</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;RunLoop 是 iOS 和 OS X 开发中非常基础的一个概念，这篇文章将从 CFRunLoop 的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用 RunLoop 实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
-<h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
-<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/NSRunLoop深入理解/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Associated-Objects/">
-                iOS Associated Objects
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Associated-Objects/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Associated-Objects/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_Associated_Objects">iOS Associated Objects</h2><p>关注以下三个问题:</p>
-<ol>
-<li>关联对象被存储在什么地方，是不是存放在被关联对象本身的内存中？</li>
-<li>关联对象的五种关联策略有什么区别，有什么坑？</li>
-<li>关联对象的生命周期是怎样的，什么时候被释放，什么时候被移除？</li>
-</ol>
-<h3 id="使用场景:">使用场景:</h3><p>按照 Mattt Thompson 大神的文章 Associated Objects 中的说法，<a href="http://nshipster.com/associated-objects/">Associated Objects</a> 主要有以下三个使用场景</p>
-<ol>
-<li>为现有的类添加私有变量以帮助实现细节；</li>
-<li>为现有的类添加公有属性；</li>
-<li>为 KVO 创建一个关联的观察者。</li>
-</ol>
-<p>从本质上看，第 1 、2 个场景其实是一个意思，唯一的区别就在于新添加的这个属性是公有的还是私有的而已。就目前来说，我在实际工作中使用得最多的是第 2 个场景，而第 3 个场景我还没有使用过<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Associated-Objects/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Category/">
-                iOS Category
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Category/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Category/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="category">category</h2><h3 id="category_简介">category 简介</h3><ul>
-<li>为已存在的类, 添加方法</li>
-<li>将类的实现, 分别存放在不同的文件中. 好处: a) 减少单体文件体积 b)按照功能划分 c)协作开发 d)按需加载</li>
-<li>声明私有方法</li>
-<li>模拟多继承</li>
-<li>把framework的私有方法公开</li>
-</ul>
-<h3 id="extension">extension</h3><blockquote>
-<p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
-<p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
+<p>大概意思是：dealloc方法在最后一次release后被调用，但此时实例变量（Ivars）并未释放，父类的dealloc的方法将在子类dealloc方法返回后自动调用</p>
+<blockquote>
+<p>The instance variables for an ARC-compiled class will be destroyed at some point after control enters the dealloc method for the root class of the class. The ordering of the destruction of instance variables is unspecified, both within a single class and between subclasses and superclasses.</p>
 </blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Category/#more">
-              閱讀全文 &raquo;
+<p>理解：ARC下对象的实例变量在根类[NSObject dealloc]中释放（通常root class都是NSObject），变量释放顺序各种不确定（一个类内的不确定，子类和父类间也不确定，也就是说不用care释放顺序）</p>
+<p>所以，不用主调[super dealloc]是因为自动调了，后面再说如何实现的；ARC下实例变量在根类NSObject析构时析构，下面就探究下。</p>
+<hr>
+<h2 id="NSObject的析构过程">NSObject的析构过程</h2><p>通过apple的runtime源码，不难发现NSObject执行<code>dealloc</code>时调用<code>_objc_rootDealloc</code>继而调用<code>object_dispose</code>随后调用<code>objc_destructInstance</code>方法，前几步都是条件判断和简单的跳转，最后的这个函数如下：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">*</span>objc_destructInstance<span class="params">(id obj)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(obj)</span> &#123;</span><br><span class="line">        Class isa_gen = _object_getClass<span class="params">(obj)</span>;</span><br><span class="line">        class_t <span class="built_in">*</span>isa = newcls<span class="params">(isa_gen)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Read all of the flags at once for performance.</span></span><br><span class="line">        bool cxx = hasCxxStructors<span class="params">(isa)</span>;</span><br><span class="line">        bool assoc = <span class="built_in">!</span>UseGC &amp;&amp; _class_instancesHaveAssociatedObjects<span class="params">(isa_gen)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// This order is important.</span></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(cxx)</span> object_cxxDestruct<span class="params">(obj)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(assoc)</span> _object_remove_assocations<span class="params">(obj)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(!UseGC)</span> objc_clear_deallocating<span class="params">(obj)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单明确的干了三件事：</p>
+<ol>
+<li>执行一个叫<code>object_cxxDestruct</code>的东西干了点什么事</li>
+<li>执行<code>_object_remove_assocations</code>去除和这个对象<code>assocate</code>的对象</li>
+<li>执行<code>objc_clear_deallocating</code>，清空引用计数表并清除弱引用表，将所有<code>weak</code>引用指nil（这也就是weak变量能安全置空的所在）</li>
+</ol>
+<p>所以，所探寻的ARC自动释放实例变量的地方就在cxxDestruct这个东西里面没跑了。</p>
+<hr>
+<h2 id="探寻隐藏的-cxx_destruct">探寻隐藏的.cxx_destruct</h2><p>上面找到的名为<code>object_cxxDestruct</code>的方法最终成为下面的调用：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">static void object_cxxDestructFromClass<span class="params">(id obj, Class cls)</span></span><br><span class="line">&#123;</span><br><span class="line">    void <span class="params">(*dtor)</span><span class="params">(id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Call cls's dtor first, then superclasses's dtors.</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> <span class="params">( ; cls != NULL; cls = _class_getSuperclass<span class="params">(cls)</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(!_class_hasCxxStructors<span class="params">(cls)</span>)</span> return; </span><br><span class="line">        dtor = <span class="params">(void<span class="params">(*)</span><span class="params">(id)</span>)</span></span><br><span class="line">            lookupMethodInClassAndLoadCache<span class="params">(cls, SEL_cxx_destruct)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(dtor != <span class="params">(void<span class="params">(*)</span><span class="params">(id)</span>)</span>_objc_msgForward_internal)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="params">(PrintCxxCtors)</span> &#123;</span><br><span class="line">                _objc_inform<span class="params">(<span class="string">"CXX: calling C++ destructors for class %s"</span>, </span><br><span class="line">                             _class_getName<span class="params">(cls)</span>)</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="params">(*dtor)</span><span class="params">(obj)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码也不难理解，沿着继承链逐层向上搜寻SEL_cxx_destruct这个selector，找到函数实现(void (*)(id)(函数指针)并执行。<br>搜索这个selector的声明，发现是名为.cxx_destruct的方法，以点开头的名字，我想和unix的文件一样，是有隐藏属性的</p>
+<p>从<a href="http://my.safaribooksonline.com/book/programming/objective-c/9780132908641/3dot-memory-management/ch03" target="_blank" rel="external">这篇文章</a>中：</p>
+<blockquote>
+<p>ARC actually creates a -.cxx_destruct method to handle freeing instance variables. This method was originally created for calling C++ destructors automatically when an object was destroyed.</p>
+</blockquote>
+<p>和《Effective Objective-C 2.0》中提到的：</p>
+<blockquote>
+<p>When the compiler saw that an object contained C++ objects, it would generate a method called .cxx_destruct. ARC piggybacks on this method and emits the required cleanup code within it.</p>
+</blockquote>
+<p>可以了解到，<code>.cxx_destruct</code>方法原本是为了C++对象析构的，ARC借用了这个方法插入代码实现了自动内存释放的工作</p>
+<h2 id="通过实验找出-cxx_destruct">通过实验找出.cxx_destruct</h2><p>最好的办法还是写个测试代码把这个隐藏的方法找出来，其实在runtime中运行已经没什么隐藏可言了，简单的类结构如下：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">Father </span>: NSObject</span><br><span class="line"><span class="variable">@property</span> (nonatomic, copy) NSString *name;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@interface</span> <span class="attribute">Son </span>: Father</span><br><span class="line"><span class="variable">@property</span> (nonatomic, copy) NSArray *toys;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<p>只有两个简单的属性，找个地方写简单的测试代码：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// before new</span></span><br><span class="line">    Son *son = [Son <span class="keyword">new</span>];</span><br><span class="line">    son.name = @<span class="string">"sark"</span>;</span><br><span class="line">    son.toys = @[@<span class="string">"sunny"</span>, @<span class="string">"xx"</span>];</span><br><span class="line">    <span class="comment">// after new</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gone</span></span><br></pre></td></tr></table></figure>
+<p>主要目的是为了让这个对象走<code>dealloc</code>方法，新建的son对象过了大括号作用域就会释放了，所以在<code>after new</code>这行son对象初始化完成，在<code>gone</code>这行son对象被dealloc</p>
+<p>个人一直喜欢使用<a href="https://github.com/garnett/DLIntrospection" target="_blank" rel="external">NSObject+DLIntrospection</a>这个扩展作为调试工具，可以轻松打出一个类的方法，变量等等。</p>
+<p>将这个扩展引入工程内，在<code>after new</code>处设置一个断点，run，trigger后使用lldb命令用这个扩展输出Son类所有的方法名：</p>
+<p><img src="http://ww3.sinaimg.cn/large/51530583gw1ef27srhw7lj208b05ujrq.jpg" alt=""></p>
+<p>发现了这个<code>.cxx_destruct</code>方法，经过几次试验，发现：</p>
+<ol>
+<li>只有在ARC下这个方法才会出现（试验代码的情况下）</li>
+<li>只有当前类拥有实例变量时（不论是不是用property）这个方法才会出现，且父类的实例变量不会导致子类拥有这个方法</li>
+<li>出现这个方法和变量是否被赋值，赋值成什么没有关系</li>
+</ol>
+<h2 id="使用watchpoint定位内存释放时刻">使用watchpoint定位内存释放时刻</h2><p>依然在after new断点处，输入lldb命令：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchpoint <span class="built_in">set</span> <span class="built_in">variable</span> son<span class="subst">-&gt;</span>_name</span><br></pre></td></tr></table></figure></p>
+<p>将name的变量加入<code>watchpoint</code>，当这个变量被修改时会触发trigger：</p>
+<p><img src="http://ww3.sinaimg.cn/large/51530583gw1ef28rn41lcj20fs03aq3b.jpg" alt=""></p>
+<p>从中可以看出，在这个时刻，<code>_name</code>从0x00006b98变成了0x0，也就是nil，赶紧看下调用栈：</p>
+<p><img src="http://ww1.sinaimg.cn/large/51530583gw1ef2911o40zj20a605yweu.jpg" alt=""></p>
+<p>发现果然跟到了<code>.cxx_destruct</code>方法，而且是在objc_storeStrong的过程中释放</p>
+<h1 id="刨根问底-cxx_destruct">刨根问底.cxx_destruct</h1><p>知道了ARC下对象实例变量的释放过程在<code>.cxx_destruct</code>内完成，但这个函数内部发生了什么，是如何调用<code>objc_storeStrong</code>释放变量的呢？<br>从上面的探究中知道，<code>.cxx_destruct</code>是编译器生成的代码，那它很可能在clang前端编译时完成，这让我联想到clang的Code Generation，因为之前曾经使用<code>clang -rewrite-objc xxx.m</code>时查看过官方文档留下了些印象，于是google：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.cxx_destruct</span> site:clang<span class="class">.llvm</span><span class="class">.org</span></span><br></pre></td></tr></table></figure></p>
+<p>结果发现clang的doxygen文档中<code>CodeGenModule</code>模块正是这部分的实现代码，cxx相关的代码生成部分源码在<br><a href="http://clang.llvm.org/doxygen/CodeGenModule_8cpp-source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CodeGenModule_8cpp-source.html</a><br>位于1827行，删减掉离题部分如下：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// EmitObjCIvarInitializations - Emit information for ivar initialization</span></span><br><span class="line"><span class="comment">/// for an implementation.</span></span><br><span class="line">void CodeGenModule::EmitObjCIvarInitializations<span class="params">(ObjCImplementationDecl *D)</span> </span><br><span class="line">&#123;</span><br><span class="line">    DeclContext<span class="built_in">*</span> DC = const_cast&lt;DeclContext<span class="built_in">*</span>&gt;<span class="params">(dyn_cast&lt;DeclContext&gt;<span class="params">(D)</span>)</span>;</span><br><span class="line">    assert<span class="params">(DC &amp;&amp; <span class="string">"EmitObjCIvarInitializations - null DeclContext"</span>)</span>;</span><br><span class="line">    IdentifierInfo <span class="built_in">*</span>II = &amp;getContext<span class="params">()</span>.Idents.get<span class="params">(<span class="string">".cxx_destruct"</span>)</span>;</span><br><span class="line">    Selector cxxSelector = getContext<span class="params">()</span>.Selectors.getSelector<span class="params">(<span class="number">0</span>, &amp;II)</span>;</span><br><span class="line">    ObjCMethodDecl <span class="built_in">*</span>DTORMethod = ObjCMethodDecl::Create<span class="params">(getContext<span class="params">()</span>, </span><br><span class="line">                                                        D-&gt;getLocation<span class="params">()</span>,</span><br><span class="line">                                                        D-&gt;getLocation<span class="params">()</span>, cxxSelector,</span><br><span class="line">                                                        getContext<span class="params">()</span>.VoidTy, <span class="number">0</span>, </span><br><span class="line">                                                        DC, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>,</span><br><span class="line">                                                        ObjCMethodDecl::Required)</span>;</span><br><span class="line">   D-&gt;addInstanceMethod<span class="params">(DTORMethod)</span>;</span><br><span class="line">   CodeGenFunction<span class="params">(*this)</span>.GenerateObjCCtorDtorMethod<span class="params">(D, DTORMethod, <span class="literal">false</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数大概作用是：获取.<code>cxx_destruct</code>的selector，创建Method，并加入到这个Class的方法列表中，最后一行的调用才是真的创建这个方法的实现。这个方法位于<br><a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a></p>
+<p>1354行，包含了构造和析构的cxx方法，继续跟随<code>.cxx_destruct</code>，最终调用<code>emitCXXDestructMethod</code>函数，代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> emitCXXDestructMethod(CodeGenFunction &amp;<span class="built_in">CGF</span>, Obj<span class="built_in">CImplementationDecl</span> *impl) </span><br><span class="line">&#123;</span><br><span class="line">   CodeGenFunction::RunCleanupsScope scope(<span class="built_in">CGF</span>);</span><br><span class="line"> </span><br><span class="line">   llvm::Value *<span class="keyword">self</span> = <span class="built_in">CGF</span><span class="variable">.LoadObjCSelf</span>();</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">const</span> Obj<span class="built_in">CInterfaceDecl</span> *iface = impl-&gt;getClassInterface();</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">const</span> Obj<span class="built_in">CIvarDecl</span> *ivar = iface-&gt;all_declared_ivar_begin(); ivar; ivar = ivar-&gt;getNextIvar()) </span><br><span class="line">   &#123;</span><br><span class="line">     QualType type = ivar-&gt;getType();</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Check whether the ivar is a destructible type.</span></span><br><span class="line">     QualType::DestructionKind dtorKind = type<span class="variable">.isDestructedType</span>();</span><br><span class="line">     <span class="keyword">if</span> (!dtorKind) <span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">     CodeGenFunction::Destroyer *destroyer = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">     <span class="comment">// Use a call to objc_storeStrong to destroy strong ivars, for the</span></span><br><span class="line">     <span class="comment">// general benefit of the tools.</span></span><br><span class="line">     <span class="keyword">if</span> (dtorKind == QualType::DK_objc_strong_lifetime) &#123;</span><br><span class="line">       destroyer = destroyARCStrongWithStore;</span><br><span class="line"> </span><br><span class="line">     <span class="comment">// Otherwise use the default for the destruction kind.</span></span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       destroyer = <span class="built_in">CGF</span><span class="variable">.getDestroyer</span>(dtorKind);</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     CleanupKind cleanupKind = <span class="built_in">CGF</span><span class="variable">.getCleanupKind</span>(dtorKind);</span><br><span class="line">     <span class="built_in">CGF</span><span class="variable">.EHStack</span><span class="variable">.pushCleanup</span>&lt;DestroyIvar&gt;(cleanupKind, <span class="keyword">self</span>, ivar, destroyer,</span><br><span class="line">                                          cleanupKind &amp; EHCleanup);</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   assert(scope<span class="variable">.requiresCleanups</span>() &amp;&amp; <span class="string">"nothing to do in .cxx_destruct?"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析这段代码以及其中调用后发现：它遍历当前对象所有的实例变量（Ivars)，调用<code>objc_storeStrong</code>，从clang的ARC文档上可以找到<code>objc_storeStrong</code>的示意代码实现如下：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">id <span class="title">objc_storeStrong</span>(<span class="params">id *<span class="keyword">object</span>, id <span class="keyword">value</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">value</span> = [<span class="keyword">value</span> retain];</span><br><span class="line">  id oldValue = *<span class="keyword">object</span>;</span><br><span class="line">  *<span class="keyword">object</span> = <span class="keyword">value</span>;</span><br><span class="line">  [oldValue release];</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>.cxx_destruct</code>进行形如<code>objc_storeStrong(&amp;ivar, null)</code>的调用后，这个实例变量就被release和设置成nil了<br>注：真实的实现可以参考 <a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a> 2078行</p>
+<h2 id="自动调用[super_dealloc]的实现">自动调用[super dealloc]的实现</h2><p>按照上面的思路，自动调用<code>[super dealloc]</code>也一定是CodeGen干的工作了<br>位于 <a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a> 492行<br><code>StartObjCMethod</code>方法中：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="params">(ident-&gt;isStr<span class="params">(<span class="string">"dealloc"</span>)</span>)</span></span><br><span class="line">   EHStack.pushCleanup&lt;FinishARCDealloc&gt;<span class="params">(getARCCleanupKind<span class="params">()</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>上面代码可以得知在调用<code>dealloc</code>方法时被插入了代码，由FinishARCDealloc结构定义：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct <span class="type">FinishARCDealloc</span> : <span class="type">EHScopeStack</span>::<span class="type">Cleanup</span> &#123;</span><br><span class="line">   <span class="type">void</span> <span class="type">Emit</span>(<span class="type">CodeGenFunction</span> &amp;<span class="type">CGF</span>, <span class="type">Flags</span> flags) override &#123;</span><br><span class="line">     <span class="keyword">const</span> <span class="type">ObjCMethodDecl</span> *<span class="keyword">method</span> = <span class="keyword">cast</span>&lt;<span class="type">ObjCMethodDecl</span>&gt;(<span class="type">CGF</span>.<span class="type">CurCodeDecl</span>);</span><br><span class="line"> </span><br><span class="line">     <span class="keyword">const</span> <span class="type">ObjCImplDecl</span> *impl = <span class="keyword">cast</span>&lt;<span class="type">ObjCImplDecl</span>&gt;(<span class="keyword">method</span>-&gt;getDeclContext());</span><br><span class="line">     <span class="keyword">const</span> <span class="type">ObjCInterfaceDecl</span> *iface = impl-&gt;getClassInterface();</span><br><span class="line">     <span class="keyword">if</span> (!iface-&gt;getSuperClass()) <span class="keyword">return</span>;</span><br><span class="line"> </span><br><span class="line">     <span class="type">bool</span> isCategory = isa&lt;<span class="type">ObjCCategoryImplDecl</span>&gt;(impl);</span><br><span class="line"> </span><br><span class="line">     // <span class="type">Call</span> [super dealloc] <span class="keyword">if</span> we have a superclass.</span><br><span class="line">     llvm::<span class="type">Value</span> *self = <span class="type">CGF</span>.<span class="type">LoadObjCSelf</span>();</span><br><span class="line"> </span><br><span class="line">     <span class="type">CallArgList</span> args;</span><br><span class="line">     <span class="type">CGF</span>.<span class="type">CGM</span>.getObjCRuntime().<span class="type">GenerateMessageSendSuper</span>(<span class="type">CGF</span>, <span class="type">ReturnValueSlot</span>(),</span><br><span class="line">                                                       <span class="type">CGF</span>.getContext().<span class="type">VoidTy</span>,</span><br><span class="line">                                                       <span class="keyword">method</span>-&gt;getSelector(),</span><br><span class="line">                                                       iface,</span><br><span class="line">                                                       isCategory,</span><br><span class="line">                                                       self,</span><br><span class="line">                                                       /*<span class="keyword">is</span> class msg*/ <span class="literal">false</span>,</span><br><span class="line">                                                       args,</span><br><span class="line">                                                       <span class="keyword">method</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>上面代码基本上就是向父类转发dealloc的调用，实现了自动调用[super dealloc]方法。</p>
+<h2 id="总结">总结</h2><ol>
+<li>ARC下对象的成员变量于编译器插入的.cxx_desctruct方法自动释放</li>
+<li>ARC下[super dealloc]方法也由编译器自动插入</li>
+<li>所谓编译器插入代码过程需要进一步了解，还不清楚其运作方式</li>
+<li>clang的CodeGen也值得深入研究一下</li>
+</ol>
+<h2 id="References：">References：</h2><p><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html" target="_blank" rel="external">http://clang.llvm.org/docs/AutomaticReferenceCounting.html</a><br><a href="http://my.safaribooksonline.com/book/programming/objective-c/9780132908641/3dot-memory-management/ch03" target="_blank" rel="external">http://my.safaribooksonline.com/book/programming/objective-c/9780132908641/3dot-memory-management/ch03</a><br><a href="http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html" target="_blank" rel="external">http://clang.llvm.org/doxygen/CGObjC_8cpp_source.html</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/ios-attribute-cleanup/">
+                ios attribute cleanup
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/ios-attribute-cleanup/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/ios-attribute-cleanup/"></span>
             </a>
-          </div>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/09/15/objc-attribute-cleanup/" target="_blank" rel="external">转自</a></p>
+<h2 id="黑魔法attribute((cleanup))">黑魔法<strong>attribute</strong>((cleanup))</h2><p>编译器属性<strong>attribute</strong>用于向编译器描述特殊的标识、检查或优化，几个常用的用法看<a href="http://nshipster.com/__attribute__/" target="_blank" rel="external">mattt大神的文章</a>就好。今天发现一个名为cleanup的黑魔法属性，简单介绍下。</p>
+<h3 id="基本用法">基本用法</h3><p><code>__attribute__((cleanup(...)))</code>，用于修饰一个变量，在它的作用域结束时可以自动执行一个指定的方法，如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定一个cleanup方法，注意入参是所修饰变量的地址，类型要一样</span></span><br><span class="line"><span class="comment">// 对于指向objc对象的指针(id *)，如果不强制声明__strong默认是__autoreleasing，造成类型不匹配</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> stringCleanUp(__<span class="keyword">strong</span> <span class="built_in">NSString</span> **string) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, *string);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在某个方法中：</span></span><br><span class="line">&#123;</span><br><span class="line">    __<span class="keyword">strong</span> <span class="built_in">NSString</span> *string __attribute__((cleanup(stringCleanUp))) = <span class="string">@"sunnyxx"</span>;</span><br><span class="line">&#125; <span class="comment">// 当运行到这个作用域结束时，自动调用stringCleanUp</span></span><br></pre></td></tr></table></figure>
+<p>所谓作用域结束，包括大括号结束、return、goto、break、exception等各种情况。<br>当然，可以修饰的变量不止NSString，自定义Class或基本类型都是可以的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义的Class</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> sarkCleanUp(__<span class="keyword">strong</span> Sark **sark) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, *sark);</span><br><span class="line">&#125;</span><br><span class="line">__<span class="keyword">strong</span> Sark *sark __attribute__((cleanup(sarkCleanUp))) = [Sark new];</span><br><span class="line"><span class="comment">// 基本类型</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> intCleanUp(<span class="built_in">NSInteger</span> *integer) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, *integer);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">NSInteger</span> integer __attribute__((cleanup(intCleanUp))) = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>假如一个作用域内有若干个cleanup的变量，他们的调用顺序是先入后出的栈式顺序；<br>而且，cleanup是先于这个对象的dealloc调用的。</p>
+<h3 id="进阶用法">进阶用法</h3><p>既然<code>__attribute__((cleanup(...)))</code>可以用来修饰变量，block当然也是其中之一，写一个block的cleanup函数非常有趣：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// <span class="type">void</span>(^<span class="keyword">block</span>)(<span class="type">void</span>)的指针是<span class="type">void</span>(^*<span class="keyword">block</span>)(<span class="type">void</span>)</span><br><span class="line"><span class="keyword">static</span> <span class="type">void</span> blockCleanUp(__strong <span class="type">void</span>(^*<span class="keyword">block</span>)(<span class="type">void</span>)) &#123;</span><br><span class="line">    (*<span class="keyword">block</span>)();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>于是在一个作用域里声明一个block：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 加了个`unused`的attribute用来消除`unused variable`的warning</span></span><br><span class="line">    __strong void<span class="params">(^block)</span><span class="params">(void)</span> __attribute__<span class="params">(<span class="params">(cleanup<span class="params">(blockCleanUp)</span>, unused)</span>)</span> = ^&#123;</span><br><span class="line">        NSLog<span class="params">(@<span class="string">"I'm dying..."</span>)</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125; <span class="comment">// 这里输出"I'm dying..."</span></span><br></pre></td></tr></table></figure>
+<p>这里不得不提万能的<code>Reactive Cocoa</code>中神奇的<code>@onExit</code>方法，其实正是上面的写法，简单定义个宏：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine onExit\</span><br><span class="line">    __strong <span class="function"><span class="title">void</span><span class="params">(^block)</span><span class="params">(void)</span></span> __attribute__((<span class="function"><span class="title">cleanup</span><span class="params">(blockCleanUp)</span></span>, unused)) = ^</span><br></pre></td></tr></table></figure>
+<p>用这个宏就能将一段写在前面的代码最后执行：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    onExit &#123;</span><br><span class="line">        <span class="function">NSLog</span>(<span class="at_rule">@<span class="string">"yo"</span>);</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125; <span class="comment">// Log "yo"</span></span><br></pre></td></tr></table></figure>
+<p>这样的写法可以将成对出现的代码写在一起，比如说一个lock：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSRecursiveLock</span> *aLock = [[<span class="built_in">NSRecursiveLock</span> alloc] init];</span><br><span class="line">[aLock lock];</span><br><span class="line"><span class="comment">// 这里</span></span><br><span class="line"><span class="comment">//     有</span></span><br><span class="line"><span class="comment">//        100多万行</span></span><br><span class="line">[aLock unlock]; <span class="comment">// 看到这儿的时候早忘了和哪个lock对应着了</span></span><br></pre></td></tr></table></figure>
+<p>用了<code>onExit</code>之后，代码更集中了：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSRecursiveLock</span> *aLock = [[<span class="built_in">NSRecursiveLock</span> alloc] init];</span><br><span class="line">[aLock lock];</span><br><span class="line">onExit &#123;</span><br><span class="line">    [aLock unlock]; <span class="comment">// 妈妈再也不用担心我忘写后半段了</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 这里</span></span><br><span class="line"><span class="comment">//    爱多少行</span></span><br><span class="line"><span class="comment">//           就多少行</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/ios-arc-dig/">
+                ios arc dig
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/ios-arc-dig/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/ios-arc-dig/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/03/15/objc_arc_secret/" target="_blank" rel="external">转自</a></p>
+<h2 id="objc_arc的简单探索">objc arc的简单探索</h2><h3 id="ARC_or_not？">ARC or not？</h3><p><code>Automatic Reference Counting</code>是objc发展以来相当重要的一个进步</p>
+<blockquote>
+<p>对于开发者，任何能降低开发难度，简化代码的功能，我们都应该去了解和使用。<br>我们应该利用一切“偷懒”的机会，将软件开发的复杂度分解并控制在一个个小的范围内，使得对于分解后的每一个小的任务，都能被新手掌握和维护。</p>
+</blockquote>
+<p>基于简化开发的思想来看，ARC绝对是一个<strong>没理由拒绝</strong>的技术进步。<br>ARC随着iOS5问世，到现在iOS8都快出了，你还在手动写retain，release么？除了固守思想外，对ARC的恐惧大都来自对它的未知。</p>
+<p>比如我在公司尝试说服team使用ARC时被质疑的几个问题：</p>
+<ol>
+<li><p>ARC和Java的GC一样，会导致一部分性能损耗？<br>首先，ARC和GC是两码事，ARC是编译时编译器“帮你”插入了原本需要自己手写的内存管理代码，而非像GC一样运行时的垃圾回收系统</p>
+</li>
+<li><p>ARC内存不知道什么时候释放，导致不可控的内存涨落？<br>了解ARC的原理后，就知道，ARC下编译器插入的内存管理的代码是经过优化的，对于使用完的内存，多运行一行代码都不会浪费，可以这么说，手写的内存管理必须达到很严谨的水平才可能达到ARC自动生成的一样完整且没有疏漏</p>
+</li>
+<li><p>ARC下面自己不管理内存，很不爽，很没有安全感<br>这纯粹是习惯的问题了，开发者的目标是用最简化的手段完成一个最可靠的程序，进步需要改变的。好在编译选项中提供了<code>-fobjc-arc</code>和<code>-fno-objc-arc</code>来保证整个的变革的继续下去，就像社会主义中国里的港澳</p>
+</li>
+</ol>
+<h3 id="ARC的约定">ARC的约定</h3><p>使用ARC之后一个费解的地方是，一个方法生成的对象，没有任何附加标示，ARC怎么知道生成的对象是不是<code>autorelease</code>的呢？</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> <span class="string">Sark :</span> NSObject</span><br><span class="line">+ (instancetype)<span class="string">sarkWithMark:</span>(NSString *)mark; <span class="comment">// 1</span></span><br><span class="line">- (instancetype)<span class="string">initWithMark:</span>(NSString *)mark; <span class="comment">// 2</span></span><br><span class="line"><span class="annotation">@end</span></span><br></pre></td></tr></table></figure>
+<p>这是非ARC时常用的手段，1生成autorelease对象，2生成普通对象，而现在ARC不能调用autorelease，使用时怎么能知道呢？</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="collection">&#123;</span><br><span class="line">    // ...</span><br><span class="line">    Sark *sark1 = <span class="collection">[Sark sarkWithMark:@<span class="string">"萨萨萨"</span>]</span><span class="comment">;</span></span><br><span class="line">    Sark *sark2 = <span class="collection">[<span class="collection">[Sark alloc]</span> initWithMark:@<span class="string">"萨萨萨"</span>]</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>使用约定，NS定义了下面三个编译属性</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine NS_RETURNS_RETAINED __attribute__((ns_returns_retained))</span><br><span class="line"><span class="hexcolor">#def</span>ine NS_RETURNS_NOT_RETAINED __attribute__((ns_returns_not_retained))</span><br><span class="line"><span class="hexcolor">#def</span>ine NS_RETURNS_INNER_POINTER __attribute__((objc_returns_inner_pointer))</span><br></pre></td></tr></table></figure>
+<p>这三个属性是Clang自己使用的标示，除非<strong>特殊情况</strong>不要自己使用，但是这些对理解ARC是很有帮助的。<br>这里还要介绍一个概念，<code>Method family</code></p>
+<blockquote>
+<p>An Objective-C method may fall into a method family, which is a conventional set of behaviors ascribed to it by the Cocoa conventions.</p>
+</blockquote>
+<p>指的是命名上表示一类型的方法，比如<code>- init</code>和<code>- initWithMark:</code>都属于init的family<br>于是乎，编译器约定，对于<code>alloc</code>, <code>init</code>, <code>copy</code>, <code>mutableCopy</code>, <code>new</code>这几个家族的方法，后面默认加<code>NS_RETURNS_RETAINED</code>标识；而其他不指名标识的family的方法默认添加<code>NS_RETURNS_NOT_RETAINED</code>标识<br>也就是说刚才的方法，在编译器看来是这样的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line">+ (instancetype)sarkWithMark:(<span class="built_in">NSString</span> *)mark <span class="built_in">NS_RETURNS_NOT_RETAINED</span>; <span class="comment">// 1</span></span><br><span class="line">- (instancetype)initWithMark:(<span class="built_in">NSString</span> *)mark <span class="built_in">NS_RETURNS_RETAINED</span>; <span class="comment">// 2</span></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>这也就是为什么ARC下面，不能把一个属性定义成名字是这样的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *newString; <span class="comment">// 编译器不允许</span></span><br></pre></td></tr></table></figure>
+<p><code>- newString</code>就成了new家族的方法，内存就不对了<br>对于<code>NS_RETURNS_INNER_POINTER</code>这货，主要使用在返回的是一个对象的内部C指针的情况，如NSString的方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (__<span class="keyword">strong</span> <span class="keyword">const</span> <span class="keyword">char</span> *)UTF8String <span class="built_in">NS_RETURNS_INNER_POINTER</span>;</span><br></pre></td></tr></table></figure>
+<p>就使用了这个标识，这个就不深入研究了，直接上文档：</p>
+<blockquote>
+<p>An Objective-C method returning a non-retainable pointer may be annotated with the objc_returns_inner_pointer attribute to indicate that it returns a handle to the internal data of an object, and that this reference will be invalidated if the object is destroyed. When such a message is sent to an object, the object’s lifetime will be extended until at least the earliest of:<br>the last use of the returned pointer, or any pointer derived from it, in the calling function or<br>the autorelease pool is restored to a previous state.</p>
+</blockquote>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/iOS-kvo-dig/">
+                iOS kvo dig
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-kvo-dig/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-kvo-dig/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/03/09/objc_kvo_secret/" target="_blank" rel="external">转自</a></p>
+<h2 id="objc_kvo简单探索">objc kvo简单探索</h2><p><code>KVO(Key Value Observing)</code>，是观察者模式在Foundation中的实现</p>
+<h3 id="KVO的原理">KVO的原理</h3><p>简而言之就是：</p>
+<ol>
+<li>当一个object有观察者时，动态创建这个object的类的子类</li>
+<li>对于每个被观察的property，重写其set方法</li>
+<li>在重写的set方法中调用- willChangeValueForKey:和- didChangeValueForKey:通知观察者</li>
+<li>当一个property没有观察者时，删除重写的方法</li>
+<li>当没有observer观察任何一个property时，删除动态创建的子类</li>
+</ol>
+<p>空说无凭，简单验证下。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line">Sark *sark = [Sark new];</span><br><span class="line"><span class="comment">// breakpoint 1</span></span><br><span class="line">[sark addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"name"</span> options:<span class="built_in">NSKeyValueObservingOptionNew</span> context:<span class="literal">nil</span>];</span><br><span class="line"><span class="comment">// breakpoint 2</span></span><br><span class="line">sark<span class="variable">.name</span> = <span class="string">@"萨萨萨"</span>;</span><br><span class="line">[sark removeObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"name"</span>];</span><br><span class="line"><span class="comment">// breakpoint 3</span></span><br></pre></td></tr></table></figure>
+<p>断住后分别使用- class和object_getClass()打出sark对象的Class和真实的Class</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// breakpoint 1</span></span><br><span class="line">(lldb) po sark<span class="class">.class</span></span><br><span class="line">Sark</span><br><span class="line">(lldb) po <span class="function"><span class="title">object_getClass</span><span class="params">(sark)</span></span></span><br><span class="line">Sark</span><br><span class="line"></span><br><span class="line"><span class="comment">// breakpoint 2</span></span><br><span class="line">(lldb) po sark<span class="class">.class</span></span><br><span class="line">Sark</span><br><span class="line">(lldb) po <span class="function"><span class="title">object_getClass</span><span class="params">(sark)</span></span></span><br><span class="line">NSKVONotifying_Sark</span><br><span class="line"></span><br><span class="line"><span class="comment">// breakpoint 3</span></span><br><span class="line">(lldb) po sark<span class="class">.class</span></span><br><span class="line">Sark</span><br><span class="line">(lldb) po <span class="function"><span class="title">object_getClass</span><span class="params">(sark)</span></span></span><br><span class="line">Sark</span><br></pre></td></tr></table></figure>
+<p>上面的结果说明，在sark对象被观察时，framework使用runtime动态创建了一个Sark类的子类<code>NSKVONotifying_Sark</code><br>而且为了隐藏这个行为，<code>NSKVONotifying_Sark</code>重写了<code>- class</code>方法返回之前的类，就好像什么也没发生过一样<br>但是使用<code>object_getClass()</code>时就暴露了，因为这个方法返回的是这个对象的isa指针，这个指针指向的一定是个这个对象的类对象</p>
+<hr>
+<p>然后来偷窥一下这个动态类实现的方法，这里请出一个NSObject的扩展NSObject+DLIntrospection，它封装了打印一个类的方法、属性、协议等常用调试方法，一目了然。<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">@interface NSObject (DLIntrospection)</span></span><br><span class="line">+ (NSArray <span class="keyword">*</span>)classes;</span><br><span class="line">+ (NSArray <span class="keyword">*</span>)properties;</span><br><span class="line">+ (NSArray <span class="keyword">*</span>)instanceVariables;</span><br><span class="line">+ (NSArray <span class="keyword">*</span>)classMethods;</span><br><span class="line">+ (NSArray <span class="keyword">*</span>)instanceMethods;</span><br><span class="line"></span><br><span class="line">+ (NSArray <span class="keyword">*</span>)protocols;</span><br><span class="line">+ (NSDictionary <span class="keyword">*</span>)descriptionForProtocol:(Protocol <span class="keyword">*</span>)proto;</span><br><span class="line"></span><br><span class="line">+ (NSString <span class="keyword">*</span>)parentClassHierarchy;</span><br><span class="line"><span class="comment">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>然后继续在刚才的断点处调试：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// breakpoint 1</span></span><br><span class="line"><span class="params">(lldb)</span> po [object_getClass<span class="params">(sark)</span> instanceMethods]</span><br><span class="line">&lt;__NSArrayI <span class="number">0</span>x8e9aa00&gt;<span class="params">(</span><br><span class="line">- <span class="params">(void)</span>setName:<span class="params">(id)</span>arg0 ,</span><br><span class="line">- <span class="params">(void)</span>.cxx_destruct,</span><br><span class="line">- <span class="params">(id)</span>name</span><br><span class="line">)</span></span><br><span class="line"><span class="comment">// breakpoint 2</span></span><br><span class="line"><span class="params">(lldb)</span> po [object_getClass<span class="params">(sark)</span> instanceMethods]</span><br><span class="line">&lt;__NSArrayI <span class="number">0</span>x8d55870&gt;<span class="params">(</span><br><span class="line">- <span class="params">(void)</span>setName:<span class="params">(id)</span>arg0 ,</span><br><span class="line">- <span class="params">(class)</span>class,</span><br><span class="line">- <span class="params">(void)</span>dealloc,</span><br><span class="line">- <span class="params">(BOOL)</span>_isKVOA</span><br><span class="line">)</span></span><br><span class="line"><span class="comment">// breakpoint 3</span></span><br><span class="line"><span class="params">(lldb)</span> po [object_getClass<span class="params">(sark)</span> instanceMethods]</span><br><span class="line">&lt;__NSArrayI <span class="number">0</span>x8e9cff0&gt;<span class="params">(</span><br><span class="line">- <span class="params">(void)</span>setName:<span class="params">(id)</span>arg0 ,</span><br><span class="line">- <span class="params">(void)</span>.cxx_destruct,</span><br><span class="line">- <span class="params">(id)</span>name</span><br><span class="line">)</span></span><br></pre></td></tr></table></figure>
+<p>从上面breakpoint2的打印可以看出，动态类重写了4个方法：</p>
+<ol>
+<li><code>- setName:</code> 最主要的重写方法，set值时调用通知函数</li>
+<li><code>- class</code> 隐藏自己必备啊，返回原来类的class</li>
+<li><code>- dealloc</code> 做清理犯罪现场工作</li>
+<li><code>- _isKVOA</code> 这就是内部使用的标示了，判断这个类有没被KVO动态生成子类</li>
+</ol>
+<hr>
+<p>接下来验证一下KVO重写set方法后是否调用了<code>- willChangeValueForKey:</code>和<code>- didChangeValueForKey:</code><br>最直接的验证方法就是在Sark类中重写这两个方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)willChangeValueForKey:(<span class="built_in">NSString</span> *)key</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromSelector</span>(_cmd));</span><br><span class="line">    [<span class="keyword">super</span> willChangeValueForKey:key];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didChangeValueForKey:(<span class="built_in">NSString</span> *)key</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromSelector</span>(_cmd));</span><br><span class="line">    [<span class="keyword">super</span> didChangeValueForKey:key];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/iOS-category-dig/">
+                iOS category dig
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-category-dig/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-category-dig/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/03/05/objc_category_secret/" target="_blank" rel="external">转自</a></p>
+<h2 id="objc_category的秘密">objc category的秘密</h2><h3 id="category的真面目">category的真面目</h3><p>objc所有类和对象都是c结构体，category当然也一样，下面是runtime中category的结构：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="keyword">_category_t</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name; <span class="comment">// 1</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="keyword">_class_t</span> *cls; <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *instance_methods; <span class="comment">// 3</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *class_methods; <span class="comment">// 4</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_protocol_list_t</span> *protocols; <span class="comment">// 5</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_prop_list_t</span> *properties; <span class="comment">// 6</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>name</code> 注意，并不是<code>category</code>小括号里写的名字，而是类的名字</li>
+<li><code>cls</code> 要扩展的类对象，编译期间这个值是不会有的，在app被runtime加载时才会根据name对应到类对象</li>
+<li><code>instance_methods</code>这个category所有的-方法</li>
+<li><code>class_methods</code>这个category所有的+方法</li>
+<li><code>protocols</code>这个category实现的protocol，比较不常用在category里面实现协议，但是确实支持的</li>
+<li><code>properties</code>这个category所有的property，这也是category里面可以定义属性的原因，不过这个property不会@synthesize实例变量，一般有需求添加实例变量属性时会采用<code>objc_setAssociatedObject</code>和<code>objc_getAssociatedObject</code>方法绑定方法绑定，不过这种方法生成的与一个普通的实例变量完全是两码事。</li>
+</ol>
+<h3 id="编译器，你对category干了什么？">编译器，你对category干了什么？</h3><p>举个栗子看，定义下面一个类和它的category，实现忽略，保存为sark.h和sark.m</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">Sark </span>: NSObject</span><br><span class="line">- (void)speak;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@interface</span> Sark (GayExtention)</span><br><span class="line">- (void)burst;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<p>请出clang的重写命令：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>clang -rewrite-objc sark.m</span><br></pre></td></tr></table></figure>
+<p>同级目录下会生成sark.cpp，这就是objc代码重写成c++(基本就是c)的实现。<br>打开生成的文件，发现茫茫多，排除include进来的header，自己的代码都在文件尾部了，看看上面的category被编译器搞成什么样子了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> <span class="keyword">_category_t</span> _OBJC_$_CATEGORY_Sark_$_GayExtention __attribute__ ((used, section (<span class="string">"__DATA,__objc_const"</span>))) =</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"Sark"</span>,</span><br><span class="line">    <span class="number">0</span>, <span class="comment">// &amp;OBJC_CLASS_$_Sark,</span></span><br><span class="line">    (<span class="keyword">const</span> <span class="keyword">struct</span> <span class="keyword">_method_list_t</span> *)&amp;_OBJC_$_CATEGORY_INSTANCE_METHODS_Sark_$_GayExtention,</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>先注意这个category的名字<code>_OBJC_$_CATEGORY_Sark_$_GayExtention</code>，这是一个按规则生成的符号了，中间的<code>Sark</code>是类名，后面的<code>GayExtention</code>是类别的名字，这也就是为什么同一个类的<code>category</code>名不能冲突了<br>对应看上面<code>_category_t</code>的定义，因为category里面只添加了一个<code>- burst</code>方法，所以只有实例方法那一项被填充了值<code>_OBJC_$_CATEGORY_INSTANCE_METHODS_Sark_$_GayExtention</code></p>
+<p>其中<code>_I_Sark_GayExtention_burst</code>符号就代表了category里面的<code>- burst</code>方法，同样遵循了一定的命名规范，里面的<code>I</code>表示实例方法</p>
+<p>最后，这个类的category们生成了一个数组，存在了<code>__DATA</code>段下的<code>__objc_catlistsection</code>里<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> _category_t *L_OBJC_LABEL_<span class="built_in">CATEGORY_</span>$ [<span class="number">1</span>] __attribute__((used, section (<span class="string">"__DATA, __objc_catlist, regular, no_dead_strip"</span>)))= &#123;</span><br><span class="line">    &amp;_OBJC_$_<span class="built_in">CATEGORY_Sark_</span>$_GayExtention,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>至此编译器的任务完成了。</p>
+<h3 id="runtime，我的category哪儿去了？">runtime，我的category哪儿去了？</h3><p>我们知道，category动态扩展了原来类的方法，在调用者看来好像原来类本来就有这些方法似的，有两个事实：</p>
+<ol>
+<li>不论有没有import category 的.h，都可以成功调用category的方法，都影响不到category的加载流程，import只是帮助了编译检查和链接过程</li>
+<li>runtime加载完成后，category的原始信息在类结构里将不会存在</li>
+</ol>
+<p>这需要探究下runtime对category的加载过程，这里就简单说一下</p>
+<ol>
+<li>objc runtime的加载入口是一个叫_objc_init的方法，在library加载前由libSystem dyld调用，进行初始化操作</li>
+<li>调用map_images方法将文件中的imagemap到内存</li>
+<li>调用_read_images方法初始化map后的image，这里面干了很多的事情，像load所有的类、协议和category，著名的+ load方法就是这一步调用的</li>
+<li>仔细看category的初始化，循环调用了_getObjc2CategoryList方法，这个方法拿出来看看：</li>
+<li>…</li>
+</ol>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define GETSECT(name, type, sectname)                                   \</span></span><br><span class="line">    <span class="typedef"><span class="keyword">type</span> *name<span class="container">(<span class="title">const</span> <span class="title">header_info</span> *<span class="title">hi</span>, <span class="title">size_t</span> *<span class="title">outCount</span>)</span>  \</span></span><br><span class="line">    &#123;                                                                   \</span><br><span class="line">        unsigned long byteCount = <span class="number">0</span>;                                    \</span><br><span class="line">        <span class="typedef"><span class="keyword">type</span> *<span class="keyword">data</span> = <span class="container">(<span class="title">type</span> *)</span>                                           \</span></span><br><span class="line">            getsectiondata(hi-&gt;mhdr, <span class="type">SEG_DATA</span>, sectname, &amp;byteCount);   \</span><br><span class="line">        *outCount = byteCount / sizeof(<span class="typedef"><span class="keyword">type</span>);                           \</span></span><br><span class="line">        return <span class="typedef"><span class="keyword">data</span>;                                                    \</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// ... //</span><br><span class="line"></span><br><span class="line"><span class="type">GETSECT</span>(_getObjc2CategoryList, category_t *, <span class="string">"__objc_catlist"</span>);</span><br></pre></td></tr></table></figure>
+<p>眼熟的<code>__objc_catlist</code>，就是上面category存放的数据段了，可以串连起来了</p>
+<p>在调用完<code>_getObjc2CategoryList</code>后，runtime终于开始了category的处理，简化的代码如下</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Process this category.</span></span><br><span class="line"><span class="comment">// First, register the category with its target class.</span></span><br><span class="line"><span class="comment">// Then, rebuild the class's method lists (etc) if</span></span><br><span class="line"><span class="comment">// the class is realized.</span></span><br><span class="line">BOOL classExists = NO;</span><br><span class="line"><span class="keyword">if</span> <span class="params">(cat-&gt;instanceMethods ||  cat-&gt;protocols  ||  cat-&gt;instanceProperties)</span></span><br><span class="line">&#123;</span><br><span class="line">    addUnattachedCategoryForClass<span class="params">(cat, cls, hi)</span>;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(isRealized<span class="params">(cls)</span>)</span> &#123;</span><br><span class="line">        remethodizeClass<span class="params">(cls)</span>;</span><br><span class="line">        classExists = YES;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="params">(cat-&gt;classMethods  ||  cat-&gt;protocols )</span></span><br><span class="line">&#123;</span><br><span class="line">    addUnattachedCategoryForClass<span class="params">(cat, cls-&gt;isa, hi)</span>;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(isRealized<span class="params">(cls-&gt;isa)</span>)</span> &#123;</span><br><span class="line">        remethodizeClass<span class="params">(cls-&gt;isa)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先分成两拨，一拨是实例对象相关的调用a<code>ddUnattachedCategoryForClass</code>，一拨是类对象相关的调用<code>addUnattachedCategoryForClass</code>，然后会调到<code>attachCategoryMethods</code>方法，这个方法把一个类所有的<code>category_list</code>的所有方法取出来组成一个<code>method_list_t **</code>，注意，这里是倒序添加的，也就是说，新生成的category的方法会先于旧的category的方法插入</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line"><span class="title">attachCategoryMethods</span><span class="params">(class_t *cls, category_list *cats,</span><br><span class="line">                      BOOL *inoutVtablesAffected)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!cats) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (PrintReplacedMethods) printReplacements(cls, cats);</span><br><span class="line"></span><br><span class="line">    BOOL isMeta = isMetaClass(cls);</span><br><span class="line">    <span class="keyword">method_list_t</span> **mlists = (<span class="keyword">method_list_t</span> **)</span><br><span class="line">        _malloc_internal(cats-&gt;count * <span class="keyword">sizeof</span>(*mlists));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Count backwards through cats to get newest categories first</span></span><br><span class="line">    <span class="keyword">int</span> mcount = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = cats-&gt;count;</span><br><span class="line">    BOOL fromBundle = NO;</span><br><span class="line">    <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">        <span class="keyword">method_list_t</span> *mlist = cat_method_list(cats-&gt;<span class="built_in">list</span>[i].cat, isMeta);</span><br><span class="line">        <span class="keyword">if</span> (mlist) &#123;</span><br><span class="line">            mlists[mcount++] = mlist;</span><br><span class="line">            fromBundle |= cats-&gt;<span class="built_in">list</span>[i].fromBundle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    attachMethodLists(cls, mlists, mcount, NO, fromBundle, inoutVtablesAffected);</span><br><span class="line"></span><br><span class="line">    _free_internal(mlists);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生成了所有method的list之后，调用attachMethodLists将所有方法前序添加进类的方法的数组中，也就是说，如果原来类的方法是a,b,c，类别的方法是1,2,3，那么插入之后的方法将会是1,2,3,a,b,c，也就是说，原来类的方法被category的方法覆盖了，但被覆盖的方法确实还在那里。</p>
+
         
       
     </div>
@@ -594,7 +729,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/19/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/17/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/19/">&raquo;</a>
   </div>
 
 
@@ -628,7 +763,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -642,7 +777,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

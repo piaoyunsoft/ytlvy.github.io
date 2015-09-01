@@ -1,0 +1,678 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="Cxx," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Cxx Deleting destructors and virtual operator delete // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Cxx Deleting destructors and virtual operator delete
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-30 20:51:45</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="http://eli.thegreenplace.net/2015/c-deleting-destructors-and-virtual-operator-delete/" target="_blank" rel="external">reference</a></p>
+<h2 id="C++:_Deleting_destructors_and_virtual_operator_delete">C++: Deleting destructors and virtual operator delete</h2><p>This post starts with a fairly obscure topic - how an overloaded operator delete behaves in light of polymorphism; amazingly, it then gets even more obscure - shedding light on the trickery the compiler employs to make this work, by generating more than one destructor for certain classes. If you’re into such things, read on. If not, sorry about that; I heard that three new Javascript libraries were released this week for MVC JSON-based dynamic CSS layout. Everyone’s switching! Hurry up to keep up with the cool guys and leave this grumpy compiler engineer to mumble to himself.</p>
+<h3 id="Virtual_operator_delete?">Virtual operator delete?</h3><p>Consider this code sample:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">class <span class="keyword">Animal</span> &#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void <span class="keyword">say</span>() = 0;</span><br><span class="line">  virtual ~<span class="keyword">Animal</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Sheep : public <span class="keyword">Animal</span> &#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void <span class="keyword">say</span>() &#123;</span><br><span class="line">    printf(<span class="string">"Sheep says baaaaa\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual ~Sheep() &#123;</span><br><span class="line">    printf(<span class="string">"Sheep is dead\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  void operator delete(void* p) &#123;</span><br><span class="line">    printf(<span class="string">"Reclaiming Sheep storage from %p\n"</span>, p);</span><br><span class="line">    ::operator delete(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv) &#123;</span><br><span class="line">  <span class="keyword">Animal</span>* ap = new Sheep;</span><br><span class="line">  ap-&gt;<span class="keyword">say</span>();</span><br><span class="line">  delete ap;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>What happens when ap is deleted? Two things:</p>
+<ol>
+<li>The destructor of the object pointed to by ap is called.</li>
+<li>operator <code>delete</code> is called on ap to reclaim heap storage.</li>
+</ol>
+<p>Part 1 is fairly clear: the static type of <code>ap</code> is <code>Animal</code>, but the compiler knows that <code>Animal</code> has a virtual destructor. So it looks up the actual destructor to invoke in the virtual table stored in the object <code>ap</code> points to. Since the dynamic type of <code>ap</code> is Sheep, the destructor found there will be <code>Sheep::~Sheep</code>, which is correct.</p>
+<p>What about that operator <code>delete</code>, though? Is operator <code>delete</code> virtual too? Is is also stored in the virtual table? Because if it isn’t, how does the compiler know which operator delete to invoke?</p>
+<p>No, operator <code>delete</code> is not virtual. It is not stored in the virtual table. In fact, operator delete is a static member. The C++11 standard says so explicitly in secton 12.5:</p>
+<blockquote>
+<p>Any deallocation function for a class X is a static member (even if not explicitly declared <strong><em>static</em></strong>).</p>
+</blockquote>
+<p>It also adds:</p>
+<blockquote>
+<p> Since member allocation and deallocation functions are static they cannot be virtual.</p>
+</blockquote>
+<p>And if you keep reading, it actually mandates that even though this is the case, when the base destructor is virtual operator delete will be correctly looked up in the scope of the class that is the dynamic, not the static type of the object.</p>
+<p>Indeed, the code snippet above works correctly and prints:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sheep says baaaaa</span><br><span class="line">Sheep <span class="keyword">is</span> dead</span><br><span class="line">Reclaiming Sheep storage <span class="keyword">from</span> <span class="number">0x1ed1be0</span></span><br></pre></td></tr></table></figure>
+<h3 id="Deleting_destructor">Deleting destructor</h3><p>So how does this work, if operator delete is not virtual? Then answer is in a special destructor created for by the compiler. It’s called the deleting destructor and its existence is described by the <a href="https://mentorembedded.github.io/cxx-abi/abi.html" target="_blank" rel="external">Itanium C++ ABI</a>:</p>
+<blockquote>
+<p> deleting destructor of a class T - A function that, in addition to the actions required of a complete object destructor, calls the appropriate deallocation function (i.e,. operator delete) for T.</p>
+</blockquote>
+<p>The ABI goes on to provide more details:</p>
+<blockquote>
+<p> The entries for virtual destructors are actually pairs of entries. The first destructor, called the complete object destructor, performs the destruction without calling delete() on the object. The second destructor, called the deleting destructor, calls delete() after destroying the object.</p>
+</blockquote>
+<p>So now the mechanics of this operation should be fairly clear. The compiler mimics “virtuality” of operator delete by invoking it from the destructor. Since the destructor is virtual, what ends up called eventually is the destructor for the dynamic type of the object. In our example this would be the destructor of Sheep, which can call the right operator delete since it’s in the same static scope.</p>
+<p>However, as the ABI says, such classes need two destructors. If an object is destructed but not deleted from the heap, calling operator delete is wrong. So a separate version of the destructor exists for non-delete destructions.</p>
+<h3 id="Examining_how_the_compiler_implements_deleting_destructors">Examining how the compiler implements deleting destructors</h3><p>That’s quite a bit of theory. Let’s see how this is done in practice by studying the machine code generated by gcc for our code sample. First, I’ll slightly modify main to invoke another function that just creates and discards a new Sheep without involving the heap.</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void foo() &#123;</span><br><span class="line">  Sheep s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv) &#123;</span><br><span class="line">  <span class="keyword">Animal</span>* ap = new Sheep;</span><br><span class="line">  ap-&gt;<span class="keyword">say</span>();</span><br><span class="line">  delete ap;</span><br><span class="line"></span><br><span class="line">  foo();</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>And compiling this with the flags [1]:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -O2 -g -<span class="keyword">static</span> -<span class="built_in">std</span>=c++<span class="number">11</span> -fno-<span class="keyword">inline</span> -fno-exceptions</span><br></pre></td></tr></table></figure>
+<p>We get the following disassembly for main. I’ve annotated the disassembly with comments to explain what’s going on:</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0000000000400</span>cf0 &lt;main&gt;:</span><br><span class="line">  <span class="number">400</span>cf0:    push   <span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>cf1:    mov    <span class="variable">$0</span>x8,<span class="variable">%edi</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Call operator new to allocate a new object of type Sheep, and call</span></span><br><span class="line">  <span class="comment">// the constructor of Sheep. Neither Sheep nor Animal have fields, so</span></span><br><span class="line">  <span class="comment">// their size is 8 bytes for the virtual table pointer.</span></span><br><span class="line">  <span class="comment">// The pointer to the object will live in %rbx. The vtable pointer in this</span></span><br><span class="line">  <span class="comment">// object (set up by the constructor of Sheep) points to the the virtual</span></span><br><span class="line">  <span class="comment">// table of Sheep, because this is the actual type of the object (even</span></span><br><span class="line">  <span class="comment">// though we hold it by a pointer to Animal here).</span></span><br><span class="line">  <span class="number">400</span>cf6:    callq  <span class="number">401750</span> &lt;_Znwm&gt;</span><br><span class="line">  <span class="number">400</span>cfb:    mov    <span class="variable">%rax</span>,<span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>cfe:    mov    <span class="variable">%rax</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">400</span>d01:    callq  <span class="number">4011</span>f0 &lt;_ZN5SheepC1Ev&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The first 8 bytes of an Animal object is the vtable pointer. So move</span></span><br><span class="line">  <span class="comment">// the address of vtable into %rax, and the object pointer itself ("this")</span></span><br><span class="line">  <span class="comment">// into %rdi.</span></span><br><span class="line">  <span class="comment">// Since the vtable's first entry is the say() method, the call that</span></span><br><span class="line">  <span class="comment">// actually happens here is Sheep::say(ap) where ap is the object pointer</span></span><br><span class="line">  <span class="comment">// passed into the (implicit) "this" parameter.</span></span><br><span class="line">  <span class="number">400</span>d06:    mov    (<span class="variable">%rbx</span>),<span class="variable">%rax</span></span><br><span class="line">  <span class="number">400</span>d09:    mov    <span class="variable">%rbx</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">400</span>d0c:    callq  <span class="variable">*(</span><span class="variable">%rax</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Once again, move the vtable address into %rax and the object pointer</span></span><br><span class="line">  <span class="comment">// into %rdi. This time, invoke the function that lives at offset 0x10 in</span></span><br><span class="line">  <span class="comment">// the vtable. This is the deleting destructor, as we'll soon see.</span></span><br><span class="line">  <span class="number">400</span>d0e:    mov    (<span class="variable">%rbx</span>),<span class="variable">%rax</span></span><br><span class="line">  <span class="number">400</span>d11:    mov    <span class="variable">%rbx</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">400</span>d14:    callq  <span class="variable">*0x10</span>(<span class="variable">%rax</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally call foo() and return.</span></span><br><span class="line">  <span class="number">400</span>d17:    callq  <span class="number">4010</span>d0 &lt;_Z3foov&gt;</span><br><span class="line">  <span class="number">400</span>d1c:    xor    <span class="variable">%eax</span>,<span class="variable">%eax</span></span><br><span class="line">  <span class="number">400</span>d1e:    pop    <span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>d1f:    retq</span><br></pre></td></tr></table></figure>
+<p>A diagram of the memory layout of the virtual table for Sheep can be helpful here. Since neither Animal nor Sheep have any fields, the only “contents” of a Sheep object is the vtable pointer which occupies the first 8 bytes:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">                          Virtual table for Sheep:</span><br><span class="line">ap:</span><br><span class="line">--------------            -----------------------</span><br><span class="line">| vtable ptr | ---------&gt; |     Sheep::<span class="keyword">say</span>()    |  0x00</span><br><span class="line">--------------            -----------------------</span><br><span class="line">                          |   Sheep::~Sheep()   |  0x08</span><br><span class="line">                          -----------------------</span><br><span class="line">                          | Sheep deleting dtor |  0x10</span><br><span class="line">                          -----------------------</span><br></pre></td></tr></table></figure>
+<p>The two destructors seen here have the roles described earlier. Let’s see their annotated disassembly:<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sheep::~Sheep</span></span><br><span class="line"><span class="number">0000000000401140</span> &lt;_ZN5SheepD1Ev&gt;:</span><br><span class="line">  <span class="comment">// Call printf("Sheep is dead\n")</span></span><br><span class="line">  <span class="number">401140</span>:    push   <span class="variable">%rbx</span></span><br><span class="line">  <span class="number">401141</span>:    mov    <span class="variable">$0</span>x49dc7c,<span class="variable">%esi</span></span><br><span class="line">  <span class="number">401146</span>:    mov    <span class="variable">%rdi</span>,<span class="variable">%rbx</span></span><br><span class="line">  <span class="number">401149</span>:    movq   <span class="variable">$0</span>x49dd50,(<span class="variable">%rdi</span>)</span><br><span class="line">  <span class="number">401150</span>:    xor    <span class="variable">%eax</span>,<span class="variable">%eax</span></span><br><span class="line">  <span class="number">401152</span>:    mov    <span class="variable">$0</span>x1,<span class="variable">%edi</span></span><br><span class="line">  <span class="number">401157</span>:    callq  <span class="number">446260</span> &lt;___printf_chk&gt;</span><br><span class="line">  <span class="number">40115</span>c:    mov    <span class="variable">%rbx</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">40115</span>f:    pop    <span class="variable">%rbx</span></span><br><span class="line">  <span class="comment">// Call Animal::~Animal, destroying the base class. <span class="doctag">Note</span> the cool tail</span></span><br><span class="line">  <span class="comment">// call here (using jmpq instead of a call instruction - control does not</span></span><br><span class="line">  <span class="comment">// return here but the return instruction from _ZN6AnimalD1Ev will return</span></span><br><span class="line">  <span class="comment">// straight to the caller).</span></span><br><span class="line">  <span class="number">401160</span>:    jmpq   <span class="number">4010</span>f0 &lt;_ZN6AnimalD1Ev&gt;</span><br><span class="line">  <span class="number">401165</span>:    nopw   <span class="variable">%cs</span>:<span class="number">0x0</span>(<span class="variable">%rax</span>,<span class="variable">%rax</span>,<span class="number">1</span>)</span><br><span class="line">  <span class="number">40116</span>f:    nop</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sheep deleting destructor. The D0 part of the mangled name for deleting</span></span><br><span class="line"><span class="comment">// destructors, as opposed to D1 for the regular destructor, is mandated by</span></span><br><span class="line"><span class="comment">// the ABI name mangling rules.</span></span><br><span class="line"><span class="number">00000000004011</span>c0 &lt;_ZN5SheepD0Ev&gt;:</span><br><span class="line">  <span class="number">4011</span>c0:    push   <span class="variable">%rbx</span></span><br><span class="line">  <span class="comment">// Call Sheep::~Sheep</span></span><br><span class="line">  <span class="number">4011</span>c1:    mov    <span class="variable">%rdi</span>,<span class="variable">%rbx</span></span><br><span class="line">  <span class="number">4011</span>c4:    callq  <span class="number">401140</span> &lt;_ZN5SheepD1Ev&gt;</span><br><span class="line">  <span class="number">4011</span>c9:    mov    <span class="variable">%rbx</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">4011</span>cc:    pop    <span class="variable">%rbx</span></span><br><span class="line">  <span class="comment">// Call Sheep::operator delete</span></span><br><span class="line">  <span class="number">4011</span>cd:    jmpq   <span class="number">401190</span> &lt;_ZN5SheepdlEPv&gt;</span><br><span class="line">  <span class="number">4011</span>d2:    nopw   <span class="variable">%cs</span>:<span class="number">0x0</span>(<span class="variable">%rax</span>,<span class="variable">%rax</span>,<span class="number">1</span>)</span><br><span class="line">  <span class="number">4011</span>dc:    nopl   <span class="number">0x0</span>(<span class="variable">%rax</span>)</span><br></pre></td></tr></table></figure></p>
+<p>Now, going back to the amended code sample, let’s see what code is generated for foo:</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">00000000004010d0 &lt;_Z3foov&gt;:</span><br><span class="line">  4010d0:    <span class="keyword">sub</span>    <span class="number">$0</span>x18,%<span class="literal">rsp</span></span><br><span class="line">  4010d4:    <span class="keyword">mov</span>    %<span class="literal">rsp</span>,%<span class="literal">rdi</span></span><br><span class="line">  4010d7:    <span class="keyword">movq</span>   <span class="number">$0</span>x49dd30,(%<span class="literal">rsp</span>)</span><br><span class="line">  4010df:    callq  <span class="number">401140</span> &lt;_ZN5SheepD1Ev&gt;</span><br><span class="line">  4010e4:    <span class="keyword">add</span>    <span class="number">$0</span>x18,%<span class="literal">rsp</span></span><br><span class="line">  4010e8:    retq</span><br><span class="line">  4010e9:    nopl   <span class="number">0x0</span>(%<span class="literal">rax</span>)</span><br></pre></td></tr></table></figure>
+<p><code>foo</code> just calls <code>Sheep::~Sheep</code>. It shouldn’t call the deleting destructor, because it does not actually delete an object from the heap.</p>
+<p>It is also interesting to examine how the destructor(s) of <code>Animal</code> look, since unlike <code>Sheep</code>, <code>Animal</code> does not define a custom operator delete:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// <span class="keyword">Animal</span>::~<span class="keyword">Animal</span></span><br><span class="line">00000000004010f0 &lt;_ZN6AnimalD1Ev&gt;:</span><br><span class="line">  4010f0:    movq   $0x49dcf0,(%rdi)</span><br><span class="line">  4010f7:    retq</span><br><span class="line">  4010f8:    nopl   0x0(%rax,%rax,1)</span><br><span class="line"></span><br><span class="line">// <span class="keyword">Animal</span> deleting destructor</span><br><span class="line">0000000000401100 &lt;_ZN6AnimalD0Ev&gt;:</span><br><span class="line">  401100:    push   %rbx</span><br><span class="line">  // Call <span class="keyword">Animal</span>::~<span class="keyword">Animal</span></span><br><span class="line">  401101:    mov    %rdi,%rbx</span><br><span class="line">  401104:    callq  4010f0 &lt;_ZN6AnimalD1Ev&gt;</span><br><span class="line">  401109:    mov    %rbx,%rdi</span><br><span class="line">  40110c:    pop    %rbx</span><br><span class="line">  // Call global ::operator::delete</span><br><span class="line">  40110d:    jmpq   4011f0 &lt;_ZdlPv&gt;</span><br><span class="line">  401112:    nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line">  40111c:    nopl   0x0(%rax)</span><br></pre></td></tr></table></figure>
+<p>As expected, the destructor of Animal calls the global ::operator delete.</p>
+<h3 id="Classes_with_virtual_destructors_vs-_regular_destructors">Classes with virtual destructors vs. regular destructors</h3><p>I want to emphasize that this special treatment - generation of a deleting destructor, is done not for classes that have a custom operator delete, but for all classes with virtual destructors. This is because when we delete an object through a pointer to the base class, the compiler has no way of knowing what operator delete to invoke, so this has to be done for every class where the destructor is virtual [2]. Here’s a clarifying example:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;cstdio&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Regular &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  ~Regular() &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Regular dtor\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Virtual &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">virtual</span> ~Virtual() &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Virtual dtor\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">  Regular* hr = <span class="keyword">new</span> Regular;</span><br><span class="line">  <span class="keyword">delete</span> hr;</span><br><span class="line"></span><br><span class="line">  Virtual* hv = <span class="keyword">new</span> Virtual;</span><br><span class="line">  <span class="keyword">delete</span> hv;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The only difference between Regular and Virtual here is the destructor being virtual in the latter. Let’s examine the machine code for main to see how the two delete statements are lowered:</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0000000000400</span>cf0 &lt;main&gt;:</span><br><span class="line">  <span class="number">400</span>cf0:       push   <span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>cf1:       mov    <span class="variable">$0</span>x1,<span class="variable">%edi</span></span><br><span class="line">  <span class="comment">// Allocate a new Regular object with the global ::operator new</span></span><br><span class="line">  <span class="number">400</span>cf6:       callq  <span class="number">4016</span>a0 &lt;_Znwm&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If hr != nullptr, call Regular::~Regular, and then call the global</span></span><br><span class="line">  <span class="comment">// ::operator delete on hr.</span></span><br><span class="line">  <span class="number">400</span>cfb:       test   <span class="variable">%rax</span>,<span class="variable">%rax</span></span><br><span class="line">  <span class="number">400</span>cfe:       mov    <span class="variable">%rax</span>,<span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>d01:       je     <span class="number">400</span>d13 &lt;main+<span class="number">0x23</span>&gt;</span><br><span class="line">  <span class="number">400</span>d03:       mov    <span class="variable">%rax</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">400</span>d06:       callq  <span class="number">401130</span> &lt;_ZN7RegularD1Ev&gt;</span><br><span class="line">  <span class="number">400</span>d0b:       mov    <span class="variable">%rbx</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">400</span>d0e:       callq  <span class="number">401160</span> &lt;_ZdlPv&gt;</span><br><span class="line">  <span class="number">400</span>d13:       mov    <span class="variable">$0</span>x8,<span class="variable">%edi</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Allocate a new Virtual object with the global ::operator new</span></span><br><span class="line">  <span class="number">400</span>d18:       callq  <span class="number">4016</span>a0 &lt;_Znwm&gt;</span><br><span class="line">  <span class="number">400</span>d1d:       mov    <span class="variable">%rax</span>,<span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>d20:       mov    <span class="variable">%rax</span>,<span class="variable">%rdi</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Call the constructor for Virtual. We didn't define a default</span></span><br><span class="line">  <span class="comment">// constructor, but the compiler did - to populate the vtable pointer</span></span><br><span class="line">  <span class="comment">// properly.</span></span><br><span class="line">  <span class="number">400</span>d23:       callq  <span class="number">401150</span> &lt;_ZN7VirtualC1Ev&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If hv != nullptr, call the deleting destructor of Virtual through the</span></span><br><span class="line">  <span class="comment">// virtual table. Do not call operator delete for vr; this will be done by</span></span><br><span class="line">  <span class="comment">// the deleting destructor.</span></span><br><span class="line">  <span class="number">400</span>d28:       test   <span class="variable">%rbx</span>,<span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>d2b:       je     <span class="number">400</span>d36 &lt;main+<span class="number">0x46</span>&gt;</span><br><span class="line">  <span class="number">400</span>d2d:       mov    (<span class="variable">%rbx</span>),<span class="variable">%rax</span></span><br><span class="line">  <span class="number">400</span>d30:       mov    <span class="variable">%rbx</span>,<span class="variable">%rdi</span></span><br><span class="line">  <span class="number">400</span>d33:       callq  <span class="variable">*0x8</span>(<span class="variable">%rax</span>)</span><br><span class="line">  <span class="number">400</span>d36:       xor    <span class="variable">%eax</span>,<span class="variable">%eax</span></span><br><span class="line">  <span class="number">400</span>d38:       pop    <span class="variable">%rbx</span></span><br><span class="line">  <span class="number">400</span>d39:       retq</span><br><span class="line">  <span class="number">400</span>d3a:       nopw   <span class="number">0x0</span>(<span class="variable">%rax</span>,<span class="variable">%rax</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>The key difference here is that for deleting Regular, the compiler inserts a call to the (global) operator delete after the destructor. However, for Virtual it can’t do that so it just calls the deleting destructor, which will take care of the deletion as we’ve seen earlier.</p>
+<hr>
+<p>[1] Why this set of options? Without -O2, the code produced by the compiler is overly verbose. With -O2 it’s much better but most function calls are inlined, making the special calls generated for the deleting destructor hard to follow; hence -fno-inline. I’m also disabling exceptions because these complicate the code around destructors without being relevant to the main goal of the article.<br>[2]<br>One of the derived classes may declare its own operator delete, and the compiler doesn’t know that. In fact, a pointer to a derived class can come from a shared library that was built completely separately from the main program (as this sample demonstrates ).</p>
+<p>But even if none of the derived classes defines a custom operator delete, it’s important to know the dynamic type of the deleted object when the destructor is called to pass the correct address to the global operator delete. An interesting discussion of this issue can be found in this Reddit comment thread.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Cxx/"> #Cxx </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/01/get-rid-of-Warnnings/">get rid of Warnnings</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/01/LRC-simple-introduction/">LRC simple introduction</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C++:_Deleting_destructors_and_virtual_operator_delete"><span class="nav-number">1.</span> <span class="nav-text">C++: Deleting destructors and virtual operator delete</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual_operator_delete?"><span class="nav-number">1.1.</span> <span class="nav-text">Virtual operator delete?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deleting_destructor"><span class="nav-number">1.2.</span> <span class="nav-text">Deleting destructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Examining_how_the_compiler_implements_deleting_destructors"><span class="nav-number">1.3.</span> <span class="nav-text">Examining how the compiler implements deleting destructors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Classes_with_virtual_destructors_vs-_regular_destructors"><span class="nav-number">1.4.</span> <span class="nav-text">Classes with virtual destructors vs. regular destructors</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/';
+      var disqus_title = 'Cxx Deleting destructors and virtual operator delete';
+      var disqus_url = 'http://ytlvy.com/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

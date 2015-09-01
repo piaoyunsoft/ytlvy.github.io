@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-float-trap/">
-                iOS float trap
+              <a class="post-title-link" href="/2015/08/08/Swift-Back-to-the-Future/">
+                Swift Back to the Future
               </a>
             
           
@@ -165,7 +165,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-float-trap/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-float-trap/"></span>
+            <a href="/2015/08/08/Swift-Back-to-the-Future/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Back-to-the-Future/"></span>
             </a>
           </span>
           
@@ -194,10 +194,24 @@
 
       
         
-          <h2 id="float陷阱以及在Objc中的注意">float陷阱以及在Objc中的注意</h2><p>浮点数不准，这个貌似基本都知道。但是在开发中很多人没有对它的使用产生警觉。如果你在开发Cocoa应用，你可能使用过如下代码判断系统版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="built_in">float</span>Value] &gt;= <span class="number">7.0</span>) &#123;</span><br><span class="line">  //something support <span class="keyword">for</span> ios7</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样一段代码也的确工作良好，但是注意了如果你把比较的数值改为7.1，那么很有可能就会出问题。</p>
-<h3 id="浮点数不准">浮点数不准</h3><p>这一篇博文从二进制的表示方面说明了为什么浮点数不准，讲的很好，感兴趣的可以学习学习，学习这些感觉还是很有用的，也可以帮助我们定位一些诡异的问题。 <a href="http://www.ruanyifeng.com/blog/2010/06/ieee_floating-point_representation.html" target="_blank" rel="external">浮点数的二进制表示</a><br>在精确的比较中不要使用float<br>文章开头的系统版本的比较就是一个典型的例子，我们可以通过其他方法实现比较：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> ([[[UIDevice currentDevice] systemVersion] <span class="attribute">compare</span>:@<span class="string">"7.1"</span>] != NSOrderedAscending) &#123;</span><br><span class="line">  <span class="comment">//something support for ios7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
+          <h1 id="Swift的异步机制-Future">Swift的异步机制-Future</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="https://realm.io/news/swift-summit-javier-soto-futures/">Back to the Future</a></li>
+<li>原文作者 : <a href="https://twitter.com/Javi">Javier Soto</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="http://shidanqing.net">sdq</a> </li>
+</ul>
+</blockquote>
+<p>我们在使用Objective-C写异步代码时常常会出现许多问题。它没有很好的错误处理机制，当你发现你需要在你的异步函数中创建新的异步函数它也没有一个很好的可伸缩实现。在这次演讲中，Javier Soto将演示实现一个能够简化异步API的Swift Future类型。并且创建一个Resule类型,我们可以在这个类型上调用map和andThen等操作。对于Swift来说，Futures的未来可能很会基于信号和eactiveCocoa 3。</p>
+<p>你可以在<a href="https://github.com/JaviSoto/Talks#swift-summit-2015-back-to-the-futures">这里</a>看到这次演讲中的代码。</p>
+<h2 id="更优雅地使用Swift">更优雅地使用Swift</h2><p>谢谢各位，很高兴和大家一起来聊一聊Swift，感谢组织者把我们聚集在一起并让我在这里演讲。我的名字叫Javi，是来自Twitter的iOS工程师。</p>
+<p>相比于Objective-C，我们在Swift里可以把很多事做得更好。我们已经在之前的演讲中看了不少例子，我想紧接着着他们，和大家谈论一下一种我想引入Swift的设计模式。这种设计模式会使我们的代码更为优雅。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Back-to-the-Future/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -227,8 +241,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-Dispatch-async-usages-tips/">
-                iOS Dispatch_async usages tips
+              <a class="post-title-link" href="/2015/08/08/Swift-Reactive/">
+                Swift Reactive
               </a>
             
           
@@ -244,7 +258,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -257,8 +271,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Dispatch-async-usages-tips/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Dispatch-async-usages-tips/"></span>
+            <a href="/2015/08/08/Swift-Reactive/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Reactive/"></span>
             </a>
           </span>
           
@@ -273,17 +287,25 @@
 
       
         
-          <p><a href="http://blog.cnbluebox.com/blog/2014/10/20/dispatch-asyncyi-bu-de-xiao-miao-yong/" target="_blank" rel="external">reference</a></p>
-<h2 id="Dispatch_async异步的小妙用">Dispatch_async异步的小妙用</h2><p>GCD 对于cocoa和cocoa Touch的开发者来说已经是在熟悉不过了，相信有些基础的人都能说出一些特性。但是今天我们不是讲GCD的介绍和使用bulabulabula. 本文就介绍下使用<code>dispatch_async</code>的一个小妙用，且看下文分解。</p>
-<p>我们都知道dispatch_async可以用来异步执行代码。你的第一反应的可能是后台、多线程 这样的字眼，但是异步执行不是就代表多线程，它只是代表代码的执行方式，知道这点可以做更多事情。</p>
-<h3 id="afterDelay">afterDelay</h3><p>你是否做过这样的事情，在修改一个bug时，把方法延迟执行，like this:</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(doSomething) <span class="string">withObject:</span>nil <span class="string">afterDelay:</span><span class="number">0.1</span>f];</span><br></pre></td></tr></table></figure>
-<p>Let me guess, 你一定是发现doSomething方法中所依赖的数据或环境还达不到，立即执行的话，可能会有问题。所以你就让doSomething延迟一点时间执行，保证它需要的数据或环境已经处理完成，改完打包测试，bug看起来已经修复了。</p>
-<p>这个问题从大多数场景来说的确已经修复了，但是在强迫症眼里，好像还是有些瑕疵，不是完美方案。</p>
-<p>两个问题，你怎么能100%确保你需要的数据或环境能再0.1s内准备完成呢； 另一个是数据准备完成到doSomething执行中间可能会有一段空白时间，有时是我们不希望的。那如何替代这个方案呢，如果你得doSomething需要的数据和环境是在主线程执行的，那么方案很简单：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self doSomething]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>你可能问了，我本来就在主线程执行任务，为什么还要往main_queue里面提交任务呢。巧妙的地方就在这，我们巧妙的把doSomething作为任务提交到主线程，它会等待主线程的任务一个个执行完成才执行，这样就可以巧妙的解决这个问题。</p>
-<p>不过注意，不是所有场景都适合这个用法，就像上面描述的，你要确保doSomething的依赖条件实在主线程中执行的。</p>
-
+          <h1 id="Swift的响应式编程">Swift的响应式编程</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/swift-programming/reactive-swift-3b6050375534">Reactive Swift</a></li>
+<li>原文作者 : <a href="https://medium.com/@vasarhelyia">Agnes Vasarhelyi</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/bboyefiyu">Mr.Simple</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
+<li>状态 :  完成</li>
+</ul>
+</blockquote>
+<p>让我们首先回到Apple刚推出Objective-C的继任者-Swift的时候，那真是一个非比寻常的时刻。<br>Siri还没有开启地狱之门，Prezi还没有支持订阅，那时的朝鲜也还没有hack任何人的email。一种新语言的出现让我个人非常兴奋，尤其是这是一种类型安全的脚本语言。虽然Swift还在快速的发展中，但是我们不必担心它是否已经稳定。当那一刻到来之时，我应该已经知道如何交付整洁的、可测试的代码。还要有非常灵活、流畅的UI？如果你对Objective-C 和 MVC之外的东西感兴趣，那么就请继续读下去吧。</p>
+<h2 id="MVC_与_MVVM">MVC 与 MVVM</h2><p>让我们从零开始，当我们设计一个应用时，你可能会先考虑应用的架构。Cocoa框架以<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html">Model-View-Controller</a> (也称为 MVC)为基础架构，它的结构如下图所示。</p>
+<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*pEvMKHBK9HeAgrYC." alt=""></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Reactive/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -313,8 +335,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
-                iOS Application Framework Think - Network
+              <a class="post-title-link" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/">
+                Swift Access Sub-Controllers from a UINavigationController
               </a>
             
           
@@ -323,14 +345,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-05
+          發表於 2015-08-08
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -343,8 +365,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
+            <a href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/"></span>
             </a>
           </span>
           
@@ -359,199 +381,218 @@
 
       
         
-          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
-<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
-<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
-<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
+          <h1 id="在Swift开发中通过UINavigationController来访问Sub-Controllers">在Swift开发中通过UINavigationController来访问Sub-Controllers</h1><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">Access Sub-Controllers from a UINavigationController in Swift</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">samw00</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">mrchenhao</a> </li>
+<li>状态 : 完成</li>
+</ul>
+</blockquote>
+<p>通过<code>AppDelegate</code>或者通过<code>prepareForSegue(_:sender:)</code>来访问<code>UINavigationController</code>的第一个子元素的访问顺序总是让我有点纳闷。这篇博文中有几段代码可以帮助你和我迅速的弄清楚如何在我们的Swift应用程序开发中和navigation controllers打交道。</p>
+<h2 id="AppDelegate">AppDelegate</h2><p>每一个iOS应用在其启动加载完成后都会显示一个根视图控制器。假设我们要搭建一个以导航控制器(navigation controller)为主的一个app…,也就是说我们这个app的第一（根）视图控制器是一个UINavigationController。在我们的Storyboard中，我们创建了一个简单的场景，给一个视图控制器添加了些UI控件和一些属性，然后我们将这个视图控制器嵌入在一个导航控制器中。</p>
+<p>但是如果我想在app启动之后再去设置视图控制器中的某些个属性呢？我们要如何才能做到这点呢？</p>
+<p>我一直把我在Storyboard中添加UI要素的第一个场景(first scene)视为“第一视图控制器”。但是，对iOS来说，导航控制器才是实际意义上的第一（根）视图控制器。</p>
+<p>当一个app把导航控制器视为其第一（根）视图器时，我们就需要在视图层级结构中“挖”的更深一点才能访问到我们之前所以为的“第一视图控制器“。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/">
+                Swift Increasing Performance by Reducing Dynamic Dispatch
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="通过减少动态分发来提高Swift的执行效率">通过减少动态分发来提高Swift的执行效率</h2><p>&gt;</p>
+<ul>
+<li>原文链接 : <a href="https://developer.apple.com/swift/blog/?id=27">Increasing Performance by Reducing Dynamic Dispatch</a></li>
+<li>原文作者 : <a href="https://developer.apple.com/swift">Apple官方博文</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+</ul>
+<p>和其他很多编程语言一样，Swift允许一个类重写其父类中声明的方法和属性。这意味着程序在运行时需要先确定要调用的方法和访问的属性是属于哪个类的，确定之后，则会执行间接调用（indirect call）或间接访问（indirect access）。这个运行机制称为<strong>动态分发</strong>（dynamic dispatch）。这个机制能够提高语言的表现力，但其付出的代价是在每次间接调用或间接访问时，会产生一定量的运行时开销（runtime overhead）。在执行敏感代码时，最好能避免产生这样的开销。这篇博客将罗列三种通过消除这动态分发机制来提高程序执行效率的方式：<code>final</code>，<code>private</code>和全模块优化（Whole Module Optimization）。</p>
+<p>Consider the following example:</p>
+<p>先来看看下面这段代码</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParticleModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> point = ( <span class="number">0.0</span>, <span class="number">0.0</span> )</span><br><span class="line">    <span class="keyword">var</span> velocity = <span class="number">100.0</span></span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">updatePoint</span><span class="params">(newPoint: <span class="params">(Double, Double)</span></span></span>, newVelocity: <span class="type">Double</span>) &#123;</span><br><span class="line">        point = newPoint</span><br><span class="line">        velocity = newVelocity</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">update</span><span class="params">(newP: <span class="params">(Double, Double)</span></span></span>, newV: <span class="type">Double</span>) &#123;</span><br><span class="line">        updatePoint(newP, newVelocity: newV)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="type">ParticalModel</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stride(from: <span class="number">0.0</span>, through: <span class="number">360</span>, by: <span class="number">1.0</span>) &#123;</span><br><span class="line">    p.update((i * sin(i), i), newV: i * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/">
+                How To Implement A Circular Image Loader Animation with CAShapeLayer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="使用CAShapeLayer来实现圆形图片加载动画">使用CAShapeLayer来实现圆形图片加载动画</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer">How To Implement A Circular Image Loader Animation with CAShapeLayer</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/rounak">Rounak Jain</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>几个星期之前，Michael Villar在Motion试验中创建一个非常有趣的加载动画。</p>
+<p>下面的GIF图片展示这个加载动画，它将一个圆形进度指示器和圆形渐现动画结合。这个组合的效果有趣，独一无二和有点迷人。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Circle.gif" alt=""></p>
+<p>这个教程将会教你如何使用Swift和Core Animatoin来重新创建这个效果。让我们开始吧！</p>
+<h1 id="基础">基础</h1><p>首先下载这个教程的<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Starter.zip">启动项目</a>，然后编译和运行。过一会之后，你应该看到一个简单的image显示：</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/StarterProject.png" alt=""></p>
+<p>这个启动项目已经预先在恰当的位置将views和加载逻辑编写好了。花一分钟来浏览来快速了解这个项目；那里有一个<strong>ViewController</strong>，<strong>ViewController</strong>里有一个命名为<strong>CustomImageView</strong>的<strong>UIImageView</strong>子类, 还有一个<strong>SDWebImage</strong>的方法被调用来加载image。</p>
+<p>你可能注意到当你第一次运行这个app的时候，当image下载时这个app似乎会暂停几秒，然后image会显示在屏幕。当然，此刻没有圆形进度指示器 - 你将会在这个教程中创建它！</p>
+<p>你会在两个步骤中创建这个动画：</p>
 <ol>
-<li>无法cancel这个请求</li>
-<li>占用了完整的一个线程</li>
+<li><strong>圆形进度</strong>。首先，你会画一个圆形进度指示器，然后根据下载进度来更新它。</li>
+<li><strong>扩展圆形图片</strong>。第二，你会通过扩展的圆形窗口来揭示下载图片。</li>
 </ol>
+<p>紧跟着下面步骤来逐步实现！</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
-                iOS Best Practices
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Best-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Best-Practices/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="iOS_Best_Practices">iOS Best Practices</h1><p>这里总结一下iOS最佳实践，主要参考Futurice developers的文章<a href="https://github.com/futurice/ios-good-practices">iOS Good Practices</a>，同时加上了一些自己的理解</p>
-<h2 id="目录">目录</h2><ul>
-<li><a href="#setup_project">初始化项目</a></li>
-<li><a href="#iOS_architecture">iOS架构</a></li>
-<li><a href="#api_design">API设计</a></li>
-<li><a href="#high_quality_code">高质量代码</a></li>
-<li><a href="#code_style">编码规范</a></li>
-<li><a href="#iOS_open_source_lib">iOS开源库</a></li>
-<li><a href="#iOS_basic_skills">iOS基本技能</a></li>
-<li><a href="#build_automation">自动化构建</a></li>
-<li><a href="#optimiaze_app">优化App</a></li>
-</ul>
-<p><b id="setup_project"></b></p>
-<h2 id="初始化项目">初始化项目</h2><h3 id="UI采用Interface_Builder还是手写代码">UI采用Interface Builder还是手写代码</h3><p>当开始一个iOS项目时，一个常见的问题就是编写所有的views是采用手写代码的方式还是使用Interface Builder的Storyboard或XIB文件。两种方式都可以实现相同UI效果，但几点需要考虑：</p>
-<h4 id="为什么使用代码？">为什么使用代码？</h4><ul>
-<li>当多人协作开发时，由于Storyboard复杂的XML结构，它更容易发生版本冲突，这比手写代码的方式更难合并代码。</li>
-<li>手写代码更容易地结构化和重用views，因此使你的代码库保持<a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>。</li>
-<li>所有的信息都在同一个地方。在Interface Builder中，你必须通过点击所有inspectors才能找到你想要的东西。</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Best-Practices/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
-                parse crashLog manually
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/parse-crashLog-manually/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/parse-crashLog-manually/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://foggry.com/blog/2015/07/27/ru-he-shou-dong-jie-xi-crashlog/">转自</a></p>
-<h2 id="如何手动解析CrashLog">如何手动解析CrashLog</h2><p>解决崩溃问题是移动应用开发者最日常的工作之一。如果是开发过程中遇到的崩溃，可以根据重现步骤调试，但线上版本就无能为力了。好在目前已经有很多不错的第三方CrashLog搜集平台（如友盟、Crashlytics等）为我们做好了解析工作，甚至在Xcode7里苹果也跟进了解析线上版本崩溃日志的功能，为开发者减轻了不少负担。尽管通常已经不需要我们手工处理CrashLog，了解CrashLog的还原原理和方法还是有必要的。</p>
-<h3 id="-dSYM">.dSYM</h3><p><code>.dSYM(debugging SYMbols)</code>又称为调试符号表，是苹果为了方便调试和定位问题而使用的一种调试方案，本质上使用的是起源于贝尔实验室的DWARF（Debugging With Attributed Record Formats），其在<code>.xcarchive</code>目录中的层次结构为：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.xcarchive</span><br><span class="line"><span class="comment">--dSYMs</span></span><br><span class="line">  |<span class="comment">--Your.app.dSYM</span></span><br><span class="line">    |<span class="comment">--Contents</span></span><br><span class="line">      |<span class="comment">--Resources</span></span><br><span class="line">        |<span class="comment">--DWARF</span></span><br></pre></td></tr></table></figure></p>
-<p>关于DWARF的具体内容以后有机会再说。我们能解析CrashLog全靠.dSYM文件，解析方式见后文。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/parse-crashLog-manually/#more">
+            <a class="btn" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -577,7 +618,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/10/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/8/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/10/">&raquo;</a>
   </div>
 
 
@@ -611,7 +652,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -625,7 +666,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

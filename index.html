@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/iOS-Version-Number-Auto-Increase/">
-                iOS Version Number Auto Increase
+              <a class="post-title-link" href="/2015/09/01/QQ-LRC/">
+                QQ LRC
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-22
+          發表於 2015-09-01
         </span>
 
         
@@ -178,98 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/iOS-Version-Number-Auto-Increase/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/iOS-Version-Number-Auto-Increase/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Build号_自动增长">Build号 自动增长</h2><p>在 iOS 应用的 <code>Info.plist</code> 中有两个版本号，即 Version 和 Build，对应键值为 <code>CFBundleShortVersionString</code> 和 <code>CFBundleVersion</code>。 一个是应用程序本身发布时的版本号，一个是表示这个发布版的二进制代码是第几次编译得到的。在 iOS8 之前由于苹果并没有约束这两者的关系，本人一般就把两个填一样的，如 2.1.4 等，也一直没出过问题，但是 最近由于苹果加入了测试功能，所有上传的 Build 都会保存，然后第一个因为某原因审核不过，再上传第 二个就出现了 Build 号冲突的问题。于是想到这才是 Build 的正确使用方法，它本应该是个整数， 在 Version 保持不变，Build 应该是要随着编译次数增长的！</p>
-<h3 id="自动增长">自动增长</h3><p>那么如何让 Build 号自动增加呢？很早前搜到过一段代码，现在可以用上了：</p>
-<ol>
-<li>在 XCode 中选中项目，打开 Build Phases，如下图：</li>
-</ol>
-<p><img src="http://rickytan.cn/images/run-script.png" alt=""></p>
-<ol>
-<li>点 “+” 增加一个过程，选择“Run Script”，移到“Link Binary With Libraries”之后，并贴入以下代码：</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># xcode-build-bump.sh</span><br><span class="line"># @desc Auto-increment the build number every time the project is run. </span><br><span class="line"># @usage</span><br><span class="line"># 1. <span class="operator"><span class="keyword">Select</span>: your Target <span class="keyword">in</span> Xcode</span><br><span class="line"># <span class="number">2.</span> <span class="keyword">Select</span>: Build Phases Tab</span><br><span class="line"># <span class="number">3.</span> <span class="keyword">Select</span>: <span class="keyword">Add</span> Build Phase -&gt; <span class="keyword">Add</span> Run Script</span><br><span class="line"># <span class="number">4.</span> Paste code below <span class="keyword">in</span> <span class="keyword">to</span> new <span class="string">"Run Script"</span> <span class="keyword">section</span></span><br><span class="line"># <span class="number">5.</span> Drag the <span class="string">"Run Script"</span> below <span class="string">"Link Binaries With Libraries"</span></span><br><span class="line"># <span class="number">6.</span> Insure that your <span class="keyword">starting</span> build <span class="built_in">number</span> <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">to</span> a whole <span class="built_in">integer</span> <span class="keyword">and</span> <span class="keyword">not</span> a <span class="built_in">float</span> (e.g. <span class="number">1</span>, <span class="keyword">not</span> <span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line">buildNumber=$(/usr/libexec/PlistBuddy -c <span class="string">"Print CFBundleVersion"</span> <span class="string">"$&#123;PROJECT_DIR&#125;/$&#123;INFOPLIST_FILE&#125;"</span>)</span><br><span class="line">buildNumber=$(($buildNumber + <span class="number">1</span>))</span><br><span class="line">/usr/libexec/PlistBuddy -c <span class="string">"Set :CFBundleVersion $buildNumber"</span> <span class="string">"$&#123;PROJECT_DIR&#125;/$&#123;INFOPLIST_FILE&#125;"</span></span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>For Version </li>
-</ol>
-<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># xcode-version-bump.sh</span></span><br><span class="line"><span class="comment"># @desc Auto-increment the version number (only) when a project is archived for export. </span></span><br><span class="line"><span class="comment"># @usage</span></span><br><span class="line"><span class="comment"># 1. Select: your Target in Xcode</span></span><br><span class="line"><span class="comment"># 2. Select: Build Phases Tab</span></span><br><span class="line"><span class="comment"># 3. Select: Add Build Phase -&gt; Add Run Script</span></span><br><span class="line"><span class="comment"># 4. Paste code below in to new "Run Script" section</span></span><br><span class="line"><span class="comment"># 5. Check the checkbox "Run script only when installing"</span></span><br><span class="line"><span class="comment"># 6. Drag the "Run Script" below "Link Binaries With Libraries"</span></span><br><span class="line"><span class="comment"># 7. Insure your starting version number is in SemVer format (e.g. 1.0.0)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This splits a two-decimal version string, such as "0.45.123", allowing us to increment the third position.</span></span><br><span class="line">VERSIONNUM=$(/usr/libexec/PlistBuddy -c <span class="string">"Print CFBundleShortVersionString"</span> <span class="string">"<span class="constant">$&#123;PROJECT_DIR&#125;</span>/<span class="constant">$&#123;INFOPLIST_FILE&#125;</span>"</span>)</span><br><span class="line">NEWSUBVERSION=`echo <span class="variable">$VERSIONNUM</span> | awk -F <span class="string">"."</span> '&#123;<span class="literal">print</span> <span class="variable">$3</span>&#125;'`</span><br><span class="line">NEWSUBVERSION=$((<span class="variable">$NEWSUBVERSION</span> + <span class="number">1</span>))</span><br><span class="line">NEWVERSIONSTRING=`echo <span class="variable">$VERSIONNUM</span> | awk -F <span class="string">"."</span> '&#123;<span class="literal">print</span> <span class="variable">$1</span> <span class="string">"."</span> <span class="variable">$2</span> <span class="string">".'<span class="variable">$NEWSUBVERSION</span>'"</span> &#125;'`</span><br><span class="line">/usr/libexec/PlistBuddy -c <span class="string">"Set :CFBundleShortVersionString <span class="variable">$NEWVERSIONSTRING</span>"</span> <span class="string">"<span class="constant">$&#123;PROJECT_DIR&#125;</span>/<span class="constant">$&#123;INFOPLIST_FILE&#125;</span>"</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/22/SDWebimage-pitfall/">
-                SDWebimage pitfall
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/22/SDWebimage-pitfall/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/SDWebimage-pitfall/"></span>
+            <a href="/2015/09/01/QQ-LRC/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/QQ-LRC/"></span>
             </a>
           </span>
           
@@ -288,104 +198,27 @@
 <ul>
 <li></li>
 <li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
-<li>@date    2015-08-22 20:50:22</li>
+<li>@date    2015-08-23 09:22:47</li>
 <li>@version 0.0.1</li>
 <li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
 </ul>
-<h2 id="SDWebImage_缓存相关用法">SDWebImage 缓存相关用法</h2><h3 id="计算缓存大小的方法：">计算缓存大小的方法：</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSUInteger</span>)getSize &#123;  </span><br><span class="line">    __block <span class="built_in">NSUInteger</span> size = <span class="number">0</span>;  </span><br><span class="line">    <span class="built_in">dispatch_sync</span>(<span class="keyword">self</span><span class="variable">.ioQueue</span>, ^&#123;  </span><br><span class="line">        <span class="built_in">NSDirectoryEnumerator</span> *fileEnumerator = [_fileManager enumeratorAtPath:<span class="keyword">self</span><span class="variable">.diskCachePath</span>];  </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSString</span> *fileName <span class="keyword">in</span> fileEnumerator) &#123;  </span><br><span class="line">            <span class="built_in">NSString</span> *filePath = [<span class="keyword">self</span><span class="variable">.diskCachePath</span> stringByAppendingPathComponent:fileName];  </span><br><span class="line">            <span class="built_in">NSDictionary</span> *attrs = [[<span class="built_in">NSFileManager</span> defaultManager] attributesOfItemAtPath:filePath error:<span class="literal">nil</span>];  </span><br><span class="line">            size += [attrs fileSize];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;);  </span><br><span class="line">    <span class="keyword">return</span> size;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="清除缓存">清除缓存</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDImageCache *imageCache = [SDImageCache sharedImageCache]<span class="comment">;</span></span><br><span class="line">[imageCache clearMemory]<span class="comment">;</span></span><br><span class="line">[imageCache clearDisk]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h3 id="关闭解压">关闭解压</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[SDImageCache sharedImageCache]</span> <span class="rule"><span class="attribute">setShouldDecompressImages</span>:<span class="value">NO]</span></span>;</span><br><span class="line"><span class="attr_selector">[[SDWebImageDownloader sharedDownloader]</span> <span class="rule"><span class="attribute">setShouldDecompressImages</span>:<span class="value">NO]</span></span>;</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/22/iOS-Audio-Lockscreen/">
-                iOS Audio Lockscreen 
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/22/iOS-Audio-Lockscreen/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/iOS-Audio-Lockscreen/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS音乐后台播放及锁屏相关">iOS音乐后台播放及锁屏相关</h2><h3 id="音乐后台播放">音乐后台播放</h3><ol>
-<li>首先修改info.plist </li>
-</ol>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Required <span class="attribute">background</span> modes  -- [</span><br><span class="line">  item0   ==&gt; App plays <span class="tag">audio</span> or streams audio/<span class="tag">video</span> using AirPlay</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20150806174938474" alt=""></p>
+<p><a href="https://blog.0xbbc.com/2015/03/qq%E9%9F%B3%E4%B9%90%E7%9A%84qrc%E6%AD%8C%E8%AF%8D%E5%88%86%E6%9E%90/">reference</a></p>
+<h2 id="QQ音乐的QRC歌词分析">QQ音乐的QRC歌词分析</h2><h3 id="QRC_Sample">QRC Sample</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">&lt;QrcInfos&gt;</span><br><span class="line">&lt;QrcHeadInfo SaveTime="<span class="number">1400298876</span>" Version="100"/&gt;</span><br><span class="line">&lt;LyricInfo LyricCount="1"&gt;</span><br><span class="line">&lt;Lyric_1 LyricType="1" LyricContent="[ti:<span class="keyword">A</span> Sky Full of Stars]</span><br><span class="line">[ar:Coldplay]</span><br><span class="line">[al:Ghost Stories]</span><br><span class="line">[by:]</span><br><span class="line">[offset:0]</span><br><span class="line">[<span class="number">750,1330</span>]<span class="keyword">A</span> (<span class="number">750,180</span>)Sky (<span class="number">930,180</span>)Full (<span class="number">1110,150</span>)of (<span class="number">1260,180</span>)Stars (<span class="number">1440,140</span>)- (<span class="number">1580,160</span>)Coldplay(<span class="number">1740,340</span>)</span><br><span class="line">[<span class="number">17598,1070</span>]Cause (<span class="number">17598,230</span>)you're (<span class="number">17828,210</span>)a (<span class="number">18038,250</span>)sky,(<span class="number">18288,380</span>)</span><br><span class="line">[<span class="number">19488,2660</span>]cause (<span class="number">19488,210</span>)you're (<span class="number">19698,260</span>)a (<span class="number">19958,200</span>)sky (<span class="number">20158,1130</span>)full (<span class="number">21288,220</span>)of (<span class="number">21508,260</span>)stars(<span class="number">21768,380</span>)</span><br><span class="line">[<span class="number">25128,2850</span>]I'm (<span class="number">25128,270</span>)gonna (<span class="number">25398,350</span>)give (<span class="number">25748,550</span>)you (<span class="number">27028,220</span>)my (<span class="number">27248,350</span>)heart(<span class="number">27598,380</span>)</span><br><span class="line">[<span class="number">33028,1180</span>]Cause (<span class="number">33028,180</span>)you're (<span class="number">33208,210</span>)a (<span class="number">33418,230</span>)sky,(<span class="number">33648,560</span>)</span><br><span class="line">[<span class="number">34808,2710</span>]cause (<span class="number">34808,430</span>)you're (<span class="number">35238,190</span>)a (<span class="number">35428,460</span>)sky (<span class="number">35888,820</span>)full (<span class="number">36708,190</span>)of (<span class="number">36898,230</span>)stars(<span class="number">37128,390</span>)</span><br><span class="line">[<span class="number">40858,2499</span>]Cause (<span class="number">40858,180</span>)you (<span class="number">41038,190</span>)light (<span class="number">41228,1270</span>)up (<span class="number">42498,200</span>)the (<span class="number">42698,200</span>)path(<span class="number">42898,459</span>)</span><br><span class="line">[<span class="number">48257,4709</span>]I (<span class="number">48257,260</span>)don't (<span class="number">48517,260</span>)care, (<span class="number">48777,460</span>)go (<span class="number">50017,240</span>)on (<span class="number">50257,360</span>)and (<span class="number">50617,220</span>)tear (<span class="number">50837,950</span>)me (<span class="number">51787,520</span>)apart(<span class="number">52307,659</span>)</span><br><span class="line">[<span class="number">55896,2909</span>]I (<span class="number">55896,300</span>)don't (<span class="number">56196,250</span>)care (<span class="number">56446,899</span>)if (<span class="number">57345,390</span>)you (<span class="number">57735,270</span>)do(<span class="number">58005,800</span>)</span><br><span class="line">[<span class="number">63625,1020</span>]Cause (<span class="number">63625,200</span>)in (<span class="number">63825,220</span>)a (<span class="number">64045,210</span>)sky,(<span class="number">64255,390</span>)</span><br><span class="line">[<span class="number">65585,2580</span>]cause (<span class="number">65585,200</span>)in (<span class="number">65785,190</span>)a (<span class="number">65975,180</span>)sky (<span class="number">66155,630</span>)full (<span class="number">67405,190</span>)of (<span class="number">67595,200</span>)stars(<span class="number">67795,370</span>)</span><br><span class="line">[<span class="number">69215,1130</span>]I (<span class="number">69215,200</span>)think (<span class="number">69415,160</span>)I (<span class="number">69575,170</span>)saw (<span class="number">69745,260</span>)you(<span class="number">70005,340</span>)</span><br><span class="line">[<span class="number">102247,1010</span>]Cause (<span class="number">102247,240</span>)you're (<span class="number">102487,210</span>)a (<span class="number">102697,220</span>)sky,(<span class="number">102917,340</span>)</span><br><span class="line">[<span class="number">103967,2550</span>]cause (<span class="number">103967,260</span>)you're (<span class="number">104227,190</span>)a (<span class="number">104417,210</span>)sky (<span class="number">104627,330</span>)full (<span class="number">105677,230</span>)of (<span class="number">105907,230</span>)stars(<span class="number">106137,380</span>)</span><br><span class="line">[<span class="number">109717,3710</span>]I (<span class="number">109717,210</span>)want (<span class="number">109927,210</span>)to (<span class="number">110137,200</span>)die (<span class="number">110337,360</span>)in (<span class="number">111527,210</span>)your (<span class="number">111737,220</span>)arms, (<span class="number">111957,440</span>)arms(<span class="number">113107,320</span>)</span><br><span class="line">[<span class="number">117507,4609</span>]Cause (<span class="number">117507,220</span>)you (<span class="number">117727,190</span>)get (<span class="number">117917,190</span>)lighter (<span class="number">118107,350</span>)the (<span class="number">119307,220</span>)more (<span class="number">119527,1090</span>)it (<span class="number">120617,510</span>)gets (<span class="number">121127,390</span>)dark(<span class="number">121517,599</span>)</span><br><span class="line">[<span class="number">125096,2730</span>]I'm (<span class="number">125096,200</span>)going (<span class="number">125296,240</span>)to (<span class="number">125536,340</span>)give (<span class="number">125876,1000</span>)you (<span class="number">126876,200</span>)my (<span class="number">127076,250</span>)heart(<span class="number">127326,500</span>)</span><br><span class="line">[<span class="number">131126,2840</span>]And (<span class="number">131126,450</span>)I (<span class="number">131576,1180</span>)don't (<span class="number">132756,470</span>)care,(<span class="number">133226,740</span>)</span><br><span class="line">[<span class="number">134666,2600</span>]go (<span class="number">134666,210</span>)on (<span class="number">134876,260</span>)and (<span class="number">135136,190</span>)tear (<span class="number">135326,1150</span>)me (<span class="number">136476,370</span>)apart(<span class="number">136846,420</span>)</span><br><span class="line">[<span class="number">140456,2580</span>]And (<span class="number">140456,210</span>)I (<span class="number">140666,290</span>)don't (<span class="number">140956,200</span>)care (<span class="number">141156,690</span>)if (<span class="number">141846,450</span>)you (<span class="number">142296,210</span>)do(<span class="number">142506,530</span>)</span><br><span class="line">[<span class="number">148266,960</span>]Cause (<span class="number">148266,190</span>)in (<span class="number">148456,210</span>)a (<span class="number">148666,190</span>)sky,(<span class="number">148856,370</span>)</span><br><span class="line">[<span class="number">150026,2890</span>]cause (<span class="number">150026,220</span>)in (<span class="number">150246,180</span>)a (<span class="number">150426,200</span>)sky (<span class="number">150626,1220</span>)full (<span class="number">151846,210</span>)of (<span class="number">152056,220</span>)stars(<span class="number">152276,640</span>)</span><br><span class="line">[<span class="number">153956,3280</span>]I (<span class="number">153956,190</span>)think (<span class="number">154146,200</span>)I (<span class="number">154346,340</span>)see (<span class="number">154686,290</span>)you(<span class="number">154976,2260</span>)</span><br><span class="line">[<span class="number">161426,1989</span>]I (<span class="number">161426,210</span>)think (<span class="number">161636,170</span>)I (<span class="number">161806,570</span>)see (<span class="number">162376,460</span>)you(<span class="number">162836,579</span>)</span><br><span class="line">[<span class="number">217294,1340</span>]Because (<span class="number">217294,300</span>)you're (<span class="number">217594,250</span>)a (<span class="number">217844,330</span>)sky,(<span class="number">218174,460</span>)</span><br><span class="line">[<span class="number">219324,2580</span>]you're (<span class="number">219324,240</span>)a (<span class="number">219564,240</span>)sky (<span class="number">219804,1130</span>)full (<span class="number">220934,220</span>)of (<span class="number">221154,280</span>)stars(<span class="number">221434,470</span>)</span><br><span class="line">[<span class="number">222474,1740</span>]Such (<span class="number">222474,260</span>)a (<span class="number">222734,260</span>)Heavenly (<span class="number">222994,570</span>)view(<span class="number">223564,650</span>)</span><br><span class="line">[<span class="number">229794,3499</span>]You're (<span class="number">229794,210</span>)such (<span class="number">230004,200</span>)a (<span class="number">230204,220</span>)Heavenly (<span class="number">230424,709</span>)view(<span class="number">231133,2160</span>)</span><br><span class="line">"/&gt;</span><br><span class="line">&lt;/LyricInfo&gt;</span><br><span class="line">&lt;/QrcInfos&gt;</span><br></pre></td></tr></table></figure>
+<p>简单来说就是一份XML文档，</p>
 <ol>
-<li>其次引入两个需要的框架</li>
+<li>根节点是<code>&lt;QrcInfos&gt;</code>。</li>
+<li>子节点<code>&lt;QrcHeadInfo SaveTime=&quot;1400298876&quot; Version=&quot;100&quot;/&gt;</code>记录了这份QRC歌词的保存时间和版本号，这里的版本应该是指当前QRC的版本，而非歌词内容的版本。</li>
+<li>接下来的<LyricInfo LyricCount="1">记录了这份QRC里面保存的歌词数量。</li>
+<li>然后根据歌词数量，从1开始，对应歌词的节点名为&lt;Lyric_$i<br>其中$i为对应的index。</li>
 </ol>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;AVFoundation/AVFoundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MediaPlayer/MediaPlayer.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>比如，第一个歌词就应该是：</p>
+<Lyric_1 LyricType="1" LyricContent="Lyric Content ... "/>
+
 <ol>
-<li>设置播放器及后台播放</li>
+<li>LyricContent 前面部分和普通的LRC一样，但是在时间轴部分用了新的格式。</li>
 </ol>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"><span class="comment">//    设置后台播放</span></span><br><span class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//    设置播放器</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"那些花儿"</span> ofType:<span class="string">@"mp3"</span>] ];</span><br><span class="line">    _player = [[<span class="built_in">AVPlayer</span> alloc] initWithURL:url];</span><br><span class="line">    [_player play];</span><br><span class="line">    _isPlayingNow = <span class="literal">YES</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//后台播放显示信息设置</span></span><br><span class="line">    [<span class="keyword">self</span> setPlayingInfo];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/iOS-Audio-Lockscreen/#more">
+            <a class="btn" href="/2015/09/01/QQ-LRC/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -418,8 +251,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/C-programming-Precompile/">
-                C programming -- Precompile
+              <a class="post-title-link" href="/2015/09/01/Microsoft-Office-2016-crack/">
+                Microsoft Office 2016 crack
               </a>
             
           
@@ -428,7 +261,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-22
+          發表於 2015-09-01
         </span>
 
         
@@ -448,98 +281,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/C-programming-Precompile/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-Precompile/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://www.cnblogs.com/kenshincui/p/3854242.html">reference</a></p>
-<h2 id="C语言之预处理">C语言之预处理</h2><h3 id="概述">概述</h3><p>大家都知道一个C程序的运行包括编译和链接两个阶段，其实在编译之前预处理器首先要进行预处理操作，将处理完产生的一个新的源文件进行编译。由于预处理指令是在编译之前就进行了，因此很多时候它要比在程序运行时进行操作效率高。在C语言中包括三类预处理指令，今天将一一介绍：</p>
-<ul>
-<li>宏定义</li>
-<li>条件编译</li>
-<li>文件包含</li>
-</ul>
-<h3 id="宏定义">宏定义</h3><p>对于程序中经常用到的一些常量或者简短的函数我们通常使用宏定义来处理，这样做的好处是对于程序中所有的配置我们可以统一在宏定义中进行管理，而且由于宏定义是在程序编译之前进行替换相比定义成全局变量或函数效率更高。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  Pretreatment</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by Kenshin Cui on 14-6-28.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2014年 Kenshin Cui. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> PI 3.14 <span class="comment">//宏定义一般大写</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> R 10</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> S 2*PI*R <span class="comment">//在另一个宏里面引用了上面的宏</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> r=<span class="number">10.5</span>;</span><br><span class="line">    <span class="keyword">double</span> area=PI*r*r;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"area=%.2f\n"</span>,area);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">double</span> a=S;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%.2f\n"</span>,a);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"PI=3.14\n"</span>);<span class="comment">//注意输出结果不是3.14=3.14而是PI=3.14，字符串中的PI并不会被替换</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">undef</span> PI <span class="comment">//强制终止宏定义，否则它的范围一直到文件结束</span></span></span><br><span class="line">    <span class="keyword">int</span> PI=<span class="number">3.1415926</span>;</span><br><span class="line">    <span class="keyword">double</span> area2=PI*r*r;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"area2=%.2f\n"</span>,area2);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>宏定义实际的操作就是在预处理时进行对应替换，这个阶段不管语法是否正确，而且对于字符串中出现的宏名不会进行替换。宏定义的功能事实上是非常强大的，除了简单的常量替换还可以传入参数：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/C-programming-Precompile/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/22/C-programming-Struct/">
-                C programming -- Struct
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/22/C-programming-Struct/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-Struct/"></span>
+            <a href="/2015/09/01/Microsoft-Office-2016-crack/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Microsoft-Office-2016-crack/"></span>
             </a>
           </span>
           
@@ -557,22 +300,282 @@
           <p>@charset “UTF-8”;<br>/**</p>
 <ul>
 <li></li>
-<li>@authors Your Name (you@example.org)</li>
-<li>@date    2015-08-16 11:06:45</li>
-<li>@version $Id$</li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-28 15:17:41</li>
+<li>@version 0.0.1</li>
 <li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
 </ul>
-<p><a href="http://www.cnblogs.com/kenshincui/p/3856543.html">reference</a></p>
-<h2 id="C语言之构造类型">C语言之构造类型</h2><h3 id="概述">概述</h3><p>在第一节中我们就提到C语言的构造类型，分为：数组、结构体、枚举、共用体，当然前面数组的内容已经说了很多了，这一节将会重点说一下其他三种类型。</p>
-<ul>
-<li>结构体</li>
-<li>枚举</li>
-<li>共用体</li>
-</ul>
-<h3 id="结构体">结构体</h3><p>数组中存储的是一系列相同的数据类型，那么如果想让一个变量存储不同的数据类型就要使用结构体，结构体定义类似于C++、C#、Java等高级语言中类的定义，但事实上它们又有着很大的区别。结构体是一种类型，并非一个变量，只是这种类型可以由其他C语言基本类型共同组成。</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.c</span><br><span class="line">//  ConstructedType</span><br><span class="line">//</span><br><span class="line">//  Created by Kenshin Cui on 14-7-18.</span><br><span class="line">//  Copyright (c) 2014年 Kenshin Cui. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">//结构体类型Date</span><br><span class="line">struct Date&#123;</span><br><span class="line">    int year;</span><br><span class="line">    int month;</span><br><span class="line">    int day;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct <span class="keyword">Person</span>&#123;</span><br><span class="line">    char *name;</span><br><span class="line">    int age;</span><br><span class="line">    struct Date birthday;//一个结构体中使用了另一个结构体类型，结构体类型变量声明前必须加上struct关键字</span><br><span class="line">    float height;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv<span class="comment">[]</span>) &#123;</span><br><span class="line">    struct <span class="keyword">Person</span> p=&#123;<span class="string">"Kenshin"</span>,28,&#123;1986,8,8&#125;,1.72&#125;;</span><br><span class="line">    //定义结构体变量并初始化,不允许先定义再直接初始化，例如：struct <span class="keyword">Person</span> p;p=&#123;<span class="string">"Kenshin"</span>,28,&#123;1986,8,8&#125;,1.72&#125;;是错误的，但是可以分别赋值，例如p.name=<span class="string">"Kenshin"</span></span><br><span class="line">    </span><br><span class="line">    printf(<span class="string">"name=%s,age=%d,birthday=%d-%d-%d,height=%.2f\n"</span>,p.name,p.age,p.birthday.year,p.birthday.month,p.birthday.day,p.height); </span><br><span class="line">    //结果：name=Kenshin,age=28,birthday=1986-8-8,height=1.72，结构体的引用是通过<span class="string">"结构体变量.成员名称"</span>(注意和结构体指针访问结构体成员变量区分，结构体指针使用p-&gt;a的形式访问)</span><br><span class="line">    </span><br><span class="line">    printf(<span class="string">"len(Date)=%lu,len(Person)=%lu\n"</span>,sizeof(struct Date),sizeof(struct <span class="keyword">Person</span>)); </span><br><span class="line">    //结果：len(Date)=12,len(<span class="keyword">Person</span>)=32</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://bbs.feng.com/read-htm-tid-9789140.html" target="_blank" rel="external">reference</a></p>
+<h2 id="Microsoft_Office_2016_(15-13-1)_破解步骤">Microsoft Office 2016 (15.13.1) 破解步骤</h2><h3 id=""> </h3><ol>
+<li>制作自签名证书，并将其命名为Codesign；制作自签名证书的方法参见：[url=<a href="http://hiderefer.com/?http://bd808.com/blog/2013/10/21" target="_blank" rel="external">http://hiderefer.com/?http://bd808.com/blog/2013/10/21</a> … tificate-for-xcode/]<a href="http://bd808.com/blog/2013/10/21/creati" target="_blank" rel="external">http://bd808.com/blog/2013/10/21/creati</a> … for-xcode/[/url]。</li>
+<li>确保Microsoft Office 2016 15.13.1为干净安装的版本，如果希望测试某个App是否可行，可以单独下载该更新，安装一遍。下载位置参见：<a href="https://support.microsoft.com/zh-cn/kb/3082420。" target="_blank" rel="external">https://support.microsoft.com/zh-cn/kb/3082420。</a></li>
+<li>执行下面的脚本，一个一个来，不宜一次全部执行。</li>
+<li>在执行过程中，会询问要替换现有证书，是否允许，同意替换。</li>
+<li>如果在启动过程中出现要联机验证，拒绝就是了。</li>
+</ol>
+<h3 id="-1"> </h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">read -s -n1 -p  "Patching Microsoft Office Outlook (15.13.1)..."</span><br><span class="line">sudo perl -i -pe 's|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>74<span class="command">\x</span>1D|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>90<span class="command">\x</span>90|' /Applications/Microsoft<span class="command">\ </span>Outlook.app/Contents/Frameworks/MicrosoftSetupUI.framework/Versions/Current/MicrosoftSetupUI</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>Outlook.app/Contents/Frameworks/MicrosoftSetupUI.framework</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>Outlook.app</span><br><span class="line"></span><br><span class="line">read -s -n1 -p  "Patching Microsoft Office Word (15.13.1)..."</span><br><span class="line">sudo perl -i -pe 's|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>74<span class="command">\x</span>1D|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>90<span class="command">\x</span>90|' /Applications/Microsoft<span class="command">\ </span>Word.app/Contents/Frameworks/MicrosoftSetupUI.framework/Versions/Current/MicrosoftSetupUI</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>Word.app/Contents/Frameworks/MicrosoftSetupUI.framework</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>Word.app</span><br><span class="line"></span><br><span class="line">read -s -n1 -p  "Patching Microsoft Office Excel (15.13.1)..."</span><br><span class="line">sudo perl -i -pe 's|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>74<span class="command">\x</span>1D|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>90<span class="command">\x</span>90|' /Applications/Microsoft<span class="command">\ </span>Excel.app/Contents/Frameworks/MicrosoftSetupUI.framework/Versions/Current/MicrosoftSetupUI</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>Excel.app/Contents/Frameworks/MicrosoftSetupUI.framework</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>Excel.app</span><br><span class="line"></span><br><span class="line">read -s -n1 -p  "Patching Microsoft Office PowerPoint (15.13.1)..."</span><br><span class="line">sudo perl -i -pe 's|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>74<span class="command">\x</span>1D|<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>90<span class="command">\x</span>90|' /Applications/Microsoft<span class="command">\ </span>PowerPoint.app/Contents/Frameworks/MicrosoftSetupUI.framework/Versions/Current/MicrosoftSetupUI</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>PowerPoint.app/Contents/Frameworks/MicrosoftSetupUI.framework</span><br><span class="line">sudo codesign -f -s Codesign /Applications/Microsoft<span class="command">\ </span>PowerPoint.app</span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/Inter-Process-Communication/">
+                Inter-Process Communication
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/Inter-Process-Communication/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Inter-Process-Communication/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Inter-Process_Communication">Inter-Process Communication</h2><h3 id="Mach_Ports">Mach Ports</h3><p>Sending a message<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">natural_t</span> data;</span><br><span class="line"><span class="keyword">mach_port_t</span> port;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="keyword">mach_msg_header_t</span> header;</span><br><span class="line">    <span class="keyword">mach_msg_body_t</span> body;</span><br><span class="line">    <span class="keyword">mach_msg_type_descriptor_t</span> type;</span><br><span class="line">&#125; message;</span><br><span class="line"></span><br><span class="line">message.header = (<span class="keyword">mach_msg_header_t</span>) &#123;</span><br><span class="line">    .msgh_remote_port = port,</span><br><span class="line">    .msgh_local_port = MACH_PORT_NULL,</span><br><span class="line">    .msgh_bits = MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, <span class="number">0</span>),</span><br><span class="line">    .msgh_size = <span class="keyword">sizeof</span>(message)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">message.body = (<span class="keyword">mach_msg_body_t</span>) &#123;</span><br><span class="line">    .msgh_descriptor_count = <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">message.type = (<span class="keyword">mach_msg_type_descriptor_t</span>) &#123;</span><br><span class="line">    .pad1 = data,</span><br><span class="line">    .pad2 = <span class="keyword">sizeof</span>(data)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">mach_msg_return_t</span> error = mach_msg_send(&amp;message.header);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (error == MACH_MSG_SUCCESS) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/C-programming-Struct/#more">
+            <a class="btn" href="/2015/09/01/Inter-Process-Communication/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/How-Not-to-Crash/">
+                How Not to Crash
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/How-Not-to-Crash/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/How-Not-to-Crash/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="How_Not_to_Crash">How Not to Crash</h1><h2 id="KVO_and_Manual_Bindings">KVO and Manual Bindings</h2><h3 id="Bindings_循环引用">Bindings 循环引用</h3><p>假定按钮有 <code>title</code> 属性, 此属性和 controller 的 kTitleKey 绑定.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> NSString *kTitleKey = @<span class="string">"title"</span>;</span><br><span class="line">[self.button <span class="string">bind:</span>kTitleKey <span class="string">toObject:</span>self <span class="string">withKeyPath:</span>kTitleKey <span class="string">options:</span>nil];</span><br></pre></td></tr></table></figure>
+<p>以上代码会造成 crash.</p>
+<p>原因: 绑定 retain 了 <code>toObject</code>, 也就是说 <code>button</code> 持有了 <code>controller</code>, 同时 <code>controller</code> 又持有 <code>button</code><br>从而造成<strong>循环引用</strong>。</p>
+<p>第二种可能, 当 controller 被释放后, 如果监听未取消, 也会造成崩溃</p>
+<h3 id="KVO_意味着完美">KVO 意味着完美</h3><p>假设我们有个 model 模块, model.title 的改变会更新 controller.title, 然后更新 button.title.</p>
+<p>在 controller 中:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSString</span> *)title &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.modelObject</span>.​title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">NSSet</span> *)keyPaths​ForValues​AffectingTitle &#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="built_in">NSSet</span> setWithObject:​<span class="string">@"modelObject.title"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/01/How-Not-to-Crash/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/iOS-Deep-study/">
+                iOS Deep study
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/iOS-Deep-study/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/iOS-Deep-study/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-23 10:35:14</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="https://blog.0xbbc.com/2015/04/ios-dep%E7%A0%94%E7%A9%B61-%E5%88%9B%E5%BB%BAsection/">reference</a></p>
+<h1 id="iOS_DEP_研究">iOS DEP 研究</h1><h2 id="创建Section">创建Section</h2><p>将加密的程序放在一个Section中，外壳运行时解密该Section，并执行解密后的程序</p>
+<h3 id="通过other_linker_flags创建">通过other linker flags创建</h3><p><a href="http://bbs.iosre.com/t/tweak-app-app-tweak/438">这篇文章</a>提到过如何通过创建Section来防止dylib依附。其具体方法是在other linker flags中填入如下内容：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Wl,-sectcreate,__RESTRICT,__restrict,<span class="regexp">/dev/</span><span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<p>那么我们要创建自己的Section的话，就可以修改为如下格式：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Wl,-sectcreate,SEGMENT_NAME,SECTION_NAME,<span class="regexp">/dev/</span><span class="keyword">null</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就可以创建一个size为1，段名字为SEGMENT_NAME，Section名为SECTION_NAME的Section了。</p>
+<p>那么因为我们要把加密数据放进去，所以最后一个参数改为我们的加密文件的路径即可。</p>
+<p>你可以在ld(1)中的Options that control additional content找到这部分内容。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/01/iOS-Deep-study/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -598,7 +601,7 @@
 
   
   <div class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </div>
 
 
@@ -632,7 +635,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -646,7 +649,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/">
-                AutoLayout -- Content Compression Resistance & Content Hugging
+              <a class="post-title-link" href="/2015/07/03/Stack-And-Heap-OverFlow/">
+                Stack And Heap OverFlow
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-08
+          發表於 2015-07-03
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/"></span>
+            <a href="/2015/07/03/Stack-And-Heap-OverFlow/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/03/Stack-And-Heap-OverFlow/"></span>
             </a>
           </span>
           
@@ -194,15 +194,194 @@
 
       
         
-          <h2 id="Content_Compression_Resistance_&amp;&amp;_Content_Hugging">Content Compression Resistance &amp;&amp; Content Hugging</h2><p>Auto Layout中, 存在Content Compression Resistance 和 Content Hugging 这两个概念.这两个概念是在<code>固有内容尺寸</code>（Intrinsic Content Size）之上起作用的.</p>
-<h3 id="Intrinsic_Content_Size">Intrinsic Content Size</h3><p>包含内容的UI控件, 由内容多少而决定的大小规则.</p>
-<h3 id="Content_Compression_Resistance_&amp;_Content_Hugging">Content Compression Resistance &amp; Content Hugging</h3><ol>
-<li>内容大小改变是指, 内容显示内容所占空间的长度来说的.</li>
-<li><code>内容抗压指数</code>，在父视图变小时, 会根据抗压指数来缩小各子控件;</li>
-<li><code>内容拥抱指数</code>, 内容越集中于控件中心, 周围空白越小.</li>
+          <p>翻译自<a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html">https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Articles/BufferOverflows.html</a></p>
+<h2 id="栈溢出">栈溢出</h2><blockquote>
+<p>在大部分操作系统中, 每个程序拥有一个<strong><em>栈</em></strong>(多线程程序,每个线程拥有一个单独的栈), 栈用于局部变量的存储.<br>栈被划分为单元, 此单元被成为帧(frame), 每个帧包含了某个函数的某一调用的全部数据.这些数据包含: 函数参数, 全部的临时变量,和 linkage 信息(就是调用函数的地址. 以便当前代码执行完毕后, 返回原位置继续执行). 通过配置编译参数,也可以包含下一帧的顶部地址.数据的布局以及排序,由操作系统决定,不同系统略有差异.<br>当函数被调用的时候, 一个新的栈帧被添加到栈的顶部. 当函数返回时,顶部的栈帧被移除.在执行过程中, 程序只能直接访问栈顶帧得数据(指针除外, 但是不建议如此设计).这种设计,方便了递归调用的实现, 因为每个子递归调用拥有独立的临时变量和参数备份.<br>下图介绍了栈的组织结构.(这只是示意图, 实际情况要根据 cpu设计来决定)</p>
+</blockquote>
+<p><img src="https://developer.apple.com/library/mac/documentation/Security/Conceptual/SecureCodingGuide/Art/stack.gif" alt=""><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/03/Stack-And-Heap-OverFlow/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/30/Dispatch-semaphore/">
+                Dispatch_semaphore
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/Dispatch-semaphore/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-semaphore/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><img src="/images/DispatchSemaphore.jpg" alt=""></p>
+<h2 id="Dispatch_semaphore">Dispatch_semaphore</h2><p><code>semaphore</code> 通过<code>dispatch_semaphore_create</code>创建一个信号量来实现多线程并发数控制, 此信号量为最高可进行的并发数. 通过<code>dispatch_semaphore_wait</code>来消耗一个信号量,并进入其后的执行逻辑, 在逻辑执行完毕后,通过<code>dispatch_semaphore_signal</code>来释放一个信号量, 并唤醒正在等待的线程. 如果<code>dispatch_semaphore_wait</code>操作时,信号量为0则进入等待状态.</p>
+<h3 id="functions">functions</h3><ul>
+<li>dispatch_semaphore_create</li>
+<li>dispatch_semaphore_wait (减少一个信号量)</li>
+<li>dispatch_semaphore_signal (增加一个信号量)</li>
+</ul>
+<h3 id="实例">实例</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)test4&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">3</span>;</span><br><span class="line">    __block <span class="keyword">int</span> mainData = <span class="number">0</span>;</span><br><span class="line">    __block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</span><br><span class="line">    __block dispatch_semaphore_t sem = dispatch_semaphore_create(<span class="number">2</span>);</span><br><span class="line">    dispatch_queue_t ioQueue = dispatch_queue_create(<span class="string">"com.dreamingwish.imagegcd.io"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue = dispatch_queue_create(<span class="string">"StudyBlocks"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_group_t <span class="keyword">group</span> = dispatch_group_create();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt;<span class="number">100</span>; i++) &#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);  <span class="comment">// -1 非零即通过</span></span><br><span class="line">            dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line"><span class="comment">//                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">                dispatch_group_async(<span class="keyword">group</span>, queue, ^&#123;</span><br><span class="line">                    <span class="keyword">sum</span> += data;</span><br><span class="line">                    </span><br><span class="line">                    __block <span class="keyword">int</span> nsum = <span class="keyword">sum</span>;</span><br><span class="line">                    dispatch_group_async(<span class="keyword">group</span>, ioQueue, ^&#123;</span><br><span class="line">                        NSLog(@<span class="string">" &gt;&gt; Sum: %d"</span>, nsum);</span><br><span class="line">                        </span><br><span class="line">                        dispatch_semaphore_signal(sem);  <span class="comment">// +1</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                    </span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dispatch_group_wait(<span class="keyword">group</span>, DISPATCH_TIME_FOREVER);</span><br><span class="line"><span class="comment">//    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>; j&lt;<span class="number">5</span>; j++) &#123;</span><br><span class="line">        mainData++;</span><br><span class="line">        NSLog(@<span class="string">" &gt;&gt; MainData: %d"</span>, mainData);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    dispatch_semaphore_signal(sem);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/30/Dispatch-semaphore/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/30/DispatchOnce/">
+                DispatchOnce
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/30/DispatchOnce/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/DispatchOnce/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><img src="/images/DispatchOnce.jpg" alt=""></p>
+<h2 id="Dispatch_Once">Dispatch_Once</h2><p>四种场景如上图</p>
+<ol>
+<li>第一次执行，<code>block调用</code>，调用结束后需要置标记变量</li>
+<li>非第一次执行，而此时#1<code>block调用</code>尚未完成(预执行拿到的 obj 为 nil, 此时需要废弃此次预执行)，线程需进入等待#1状态</li>
+<li>非第一次执行，而此时#1<code>block调用</code>已经完成(预执行拿到的 obj 已经初始化完毕)此时线程的预执行是正确的, 之后可能继续执行,也可能由于时间问题,废弃此次预执行进入等待</li>
+<li>非第一次执行，而此时#1已经完成，线程预执行后, 直接跳过block而进行后续任务</li>
 </ol>
+<p>Dispatch_Once 保证了当第一个线程在进行alloc 对象时，有其他线程发起, 会废弃此线程的预执行，进入等待。在第一个线程结束时，将正在等待的线程唤醒。而实现这一机制的方法是在生成对象和变更identifier之间加入一个大于预执行时间的等待来实现的。</p>
+<h3 id="Dispatch_Once实现用到的技术">Dispatch_Once实现用到的技术</h3><ul>
+<li>原子操作 “原子比较交换函数” __sync_bool_compare_and_swap</li>
+<li>cpuid指令 实现大于预执行时间的延迟等待</li>
+<li>dispatch_thread_semaphore 来实现线程之间的等待和唤醒
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#more">
+            <a class="btn" href="/2015/06/30/DispatchOnce/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -235,8 +414,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/08/objc-runtime-method-Cache/">
-                objc runtime method Cache
+              <a class="post-title-link" href="/2015/06/30/UITableView-Cancel-Request/">
+                UITableView Cancel Request
               </a>
             
           
@@ -245,7 +424,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-08
+          發表於 2015-06-30
         </span>
 
         
@@ -265,8 +444,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/08/objc-runtime-method-Cache/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/objc-runtime-method-Cache/"></span>
+            <a href="/2015/06/30/UITableView-Cancel-Request/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/UITableView-Cancel-Request/"></span>
             </a>
           </span>
           
@@ -281,87 +460,9 @@
 
       
         
-          <h3 id="method_cache_更新机制">method cache 更新机制</h3><p>为了方便函数的查找, objc在运行时,引入了method cache机制,来快速定位函数.method cache的大小是动态更新的,在更新时, 将直接生成新容量的缓存, 并将旧的缓存放入到垃圾队列中,等待时机释放. 而时机的选择, 采用检测每个线程的program counter,来查看是否处于objc_msgSend.如果都不在,则释放.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BOOL ThreadsInMsgSend<span class="params">(void)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(thread in GetAllThreads<span class="params">()</span>)</span> &#123;</span><br><span class="line">        uintptr_t pc = thread.GetPC<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">if</span><span class="params">(pc &gt;= objc_msgSend_startAddress &amp;&amp; pc &lt;= objc_msgSend_endAddress)</span> &#123;</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bucket_t <span class="built_in">*</span>oldCache = class-&gt;cache;</span><br><span class="line">class-&gt;cache = malloc<span class="params">(newSize)</span>;</span><br><span class="line"></span><br><span class="line">append<span class="params">(gOldCachesList, oldCache)</span>;</span><br><span class="line"><span class="keyword">if</span><span class="params">(!ThreadsInMsgSend<span class="params">()</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(cache in gOldCachesList)</span> &#123;</span><br><span class="line">        free<span class="params">(cache)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    gOldCachesList.clear<span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/07/IOS-Multithreading-Memory-Management/">
-                IOS Multithreading && Memory Management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-07
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/07/IOS-Multithreading-Memory-Management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/IOS-Multithreading-Memory-Management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
-<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="仅加载可见Cell的图片">仅加载可见Cell的图片</h3><p>load images for just the visible rows in viewDidLoad and when the user stops scrolling<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span>(void)<span class="tag">viewDidLoad</span>&#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">-</span>(void)<span class="tag">scrollViewDidEndDecelerating</span>:(UIScrollView *)<span class="tag">scrollView</span> &#123;</span><br><span class="line">    <span class="tag">for</span> (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) &#123;</span><br><span class="line">        <span class="attr_selector">[self loadImageForCellAtPath:indexPath]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/#more">
+            <a class="btn" href="/2015/06/30/UITableView-Cancel-Request/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -394,8 +495,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/07/ice-girl/">
-                冰之魔女
+              <a class="post-title-link" href="/2015/06/30/CFRunLoop-examples/">
+                CFRunLoop examples
               </a>
             
           
@@ -404,123 +505,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-07
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/default/">default</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/07/ice-girl/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/ice-girl/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-        <div class="post-gallery">
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" />
-            </a>
-          
-            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" rel="gallery_cidn375hp00edqce987jw31nf">
-              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" />
-            </a>
-          
-        </div>
-      
-
-      
-        
-          <h2 id="冰之魔女">冰之魔女</h2>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/06/ios-nspredicate/">
-                IOS NSPredicate
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-06
+          發表於 2015-06-30
         </span>
 
         
@@ -540,8 +525,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/06/ios-nspredicate/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-nspredicate/"></span>
+            <a href="/2015/06/30/CFRunLoop-examples/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/CFRunLoop-examples/"></span>
             </a>
           </span>
           
@@ -556,9 +541,9 @@
 
       
         
-          <h3 id="NSPredicate">NSPredicate</h3><p>NSPredicate is a Foundation class that specifies how data should be fetched or filtered.<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSPredicate</span> *bobPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"firstName = 'Bob'"</span>];</span><br><span class="line"><span class="built_in">NSPredicate</span> *thirtiesPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"age &gt;= 30"</span>];</span><br><span class="line"></span><br><span class="line">[people filterdArrayUsingPredicate:bobPredicate];</span><br></pre></td></tr></table></figure></p>
+          <h3 id="第一个">第一个</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include <span class="title">&lt;CoreFoundation/CoreFoundation.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_perform(<span class="keyword">void</span> *info __unused)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">"hello\n"</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>  </span><br><span class="line">_timer(<span class="built_in">CFRunLoopTimerRef</span> timer __unused, <span class="keyword">void</span> *info)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceSignal</span>(info);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">int</span>  </span><br><span class="line">main()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceRef</span> source;  </span><br><span class="line">    <span class="built_in">CFRunLoopSourceContext</span> source_context;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerRef</span> timer;  </span><br><span class="line">    <span class="built_in">CFRunLoopTimerContext</span> timer_context;  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;source_context, <span class="keyword">sizeof</span>(source_context));  </span><br><span class="line">    source_context<span class="variable">.perform</span> = _perform;  </span><br><span class="line">    source = <span class="built_in">CFRunLoopSourceCreate</span>(<span class="literal">NULL</span>, <span class="number">0</span>, &amp;source_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddSource</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), source, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    bzero(&amp;timer_context, <span class="keyword">sizeof</span>(timer_context));  </span><br><span class="line">    timer_context<span class="variable">.info</span> = source;  </span><br><span class="line">    timer = <span class="built_in">CFRunLoopTimerCreate</span>(<span class="literal">NULL</span>, <span class="built_in">CFAbsoluteTimeGetCurrent</span>(), <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, </span><br><span class="line">    _timer, &amp;timer_context);  </span><br><span class="line">    <span class="built_in">CFRunLoopAddTimer</span>(<span class="built_in">CFRunLoopGetCurrent</span>(), timer, k<span class="built_in">CFRunLoopCommonModes</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">CFRunLoopRun</span>();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/06/ios-nspredicate/#more">
+            <a class="btn" href="/2015/06/30/CFRunLoop-examples/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -584,7 +569,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/25/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/23/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/25/">&raquo;</a>
   </div>
 
 
@@ -618,7 +603,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -632,7 +617,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS-NSTimer-Overflow/">
-                iOS NSTimer Overflow
+              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
+                dSYM parse tool
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-NSTimer-Overflow/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-NSTimer-Overflow/"></span>
+            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
             </a>
           </span>
           
@@ -194,10 +194,10 @@
 
       
         
-          <h2 id="NSTimer">NSTimer</h2><h3 id="fire">fire</h3><p>我们先用 NSTimer 来做个简单的计时器，每隔5秒钟在控制台输出 Fire 。比较想当然的做法是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DetailViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSTimer</span> *timer;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DetailViewController</span></span></span><br><span class="line">- (<span class="keyword">IBAction</span>)fireButtonPressed:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    _timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">3.0</span>f</span><br><span class="line">                                              target:<span class="keyword">self</span></span><br><span class="line">                                            selector:<span class="keyword">@selector</span>(timerFire:)</span><br><span class="line">                                            userInfo:<span class="literal">nil</span></span><br><span class="line">                                             repeats:<span class="literal">YES</span>];</span><br><span class="line">    [_timer fire];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)timerFire:(<span class="keyword">id</span>)userinfo &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Fire"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>运行之后确实在控制台每隔3秒钟输出一次 <code>Fire</code> ，然而当我们从这个界面跳转到其他界面的时候却发现：控制台还在源源不断的输出着 Fire 。看来 Timer 并没有停止。</p>
+          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
+<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-NSTimer-Overflow/#more">
+            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -230,8 +230,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/Swift-Exception-Handle/">
-                Swift Exception Handle
+              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
+                Variable Argument Lists
               </a>
             
           
@@ -240,106 +240,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/Swift-Exception-Handle/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Swift-Exception-Handle/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.callmewhy.com/2015/04/20/error-handling-in-swift/">转自</a></p>
-<h2 id="Swift_中的异常处理">Swift 中的异常处理</h2><h3 id="问题">问题</h3><p>在开发过程中，异常处理算是比较常见的问题了。</p>
-<p>举一个比较常见的例子：用户修改注册的邮箱，大概分为以下几个步骤：</p>
-<ul>
-<li>接收到一个用户的请求：我要修改邮箱地址</li>
-<li>验证一下请求是否合法，将请求进行格式转化</li>
-<li>更新以前的邮箱地址记录</li>
-<li>给新的邮箱地址发送验证邮件</li>
-<li>将结果返回给用户</li>
-</ul>
-<p>上面的步骤如果一切顺利，那代码肯定干净利落，但是人生不如意十有八九，上面的步骤很容易出现问题：</p>
-<ul>
-<li>用户把邮箱地址填成了家庭地址</li>
-<li>用户是个黑客，没登录就发送了更新请求</li>
-<li>发送验证邮件的时候服务器爆炸了，发送邮件失败</li>
-</ul>
-<p>各种异常都会导致这次操作的失败。</p>
-<h3 id="方案一">方案一</h3><p>在传统的处理方案里，一般是遇到异常就往上抛：<br><img src="http://segmentfault.com/img/bVlsK9" alt=""></p>
-<p>这种方案想必大家都不陌生，比如下面这段代码：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSError</span> *err = <span class="keyword">nil</span>;</span><br><span class="line"><span class="type">CGFloat</span> <span class="literal">result</span> = [<span class="type">MathTool</span> divide:<span class="number">2</span>.<span class="number">5</span> by:<span class="number">3</span>.<span class="number">0</span> error:&amp;err];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">"%@"</span>, err)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    [<span class="type">MathTool</span> doSomethingWithResult:<span class="literal">result</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Swift-Exception-Handle/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/iOS-ARC-Practices/">
-                iOS ARC Practices
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -359,8 +260,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-ARC-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-ARC-Practices/"></span>
+            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
             </a>
           </span>
           
@@ -375,22 +276,21 @@
 
       
         
-          <p><a href="http://amattn.com/p/arc_best_practices.html">转自</a></p>
-<h2 id="ARC_最佳实践">ARC 最佳实践</h2><h3 id="General">General</h3><p>1) 数值变量应该使用 assign：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> scalarInt;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> scalarFloat;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGPoint</span> scalarStruct;</span><br></pre></td></tr></table></figure></p>
-<p>2) 在层次结构上属于下一级的对象应该使用 strong ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">id</span> childObject;</span><br></pre></td></tr></table></figure></p>
-<p>3) 在层次结构上属于上一级的对象应该使用 weak ，另外，当出现循环引用的时候也应该使用 weak ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> parentObject;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSObject</span> &lt;SomeDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure></p>
-<p>4) 闭包应该使用 copy ：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) SomeBlockType someBlock;</span><br></pre></td></tr></table></figure>
-<p>5) 在 dealloc 里：</p>
-<ul>
-<li>从观察者中移除 (remove observers)</li>
-<li>取消订阅通知 (unregister for notifications)</li>
-<li>设置非 weak 的委托为 nil (set any non-weak delegates to nil)</li>
-<li>关闭所有的计时器 (invalidate any timers)</li>
-</ul>
-<p>6) 所有的 IBOutlet 都应该是 weak 的。除非顶层的 IBOutlet 应该是 strong 的，比如 UIViewController 的 View 是需要直接拥有的，所以应该设置成 strong </p>
+          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
+<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
+<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
+<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
+<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
+<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
+<li>最后调用<code>va_end()</code>来进行清理。</li>
+</ol>
+<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
+<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
+<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-ARC-Practices/#more">
+            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -423,8 +323,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/">
-                iOS9 NSAppTransportSecurity Bypass
+              <a class="post-title-link" href="/2015/08/04/iOS-bit-computing/">
+                iOS bit computing
               </a>
             
           
@@ -433,7 +333,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -453,8 +353,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS9-NSAppTransportSecurity-Bypass/"></span>
+            <a href="/2015/08/04/iOS-bit-computing/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-bit-computing/"></span>
             </a>
           </span>
           
@@ -469,18 +369,23 @@
 
       
         
-          <h2 id="Configuring_App_Transport_Security_Exceptions_in_iOS_9_and_OSX_10-11">Configuring App Transport Security Exceptions in iOS 9 and OSX 10.11</h2><h3 id="What_is_App_Transport_Security_(ATS)?">What is App Transport Security (ATS)?</h3><p>At WWDC 2015, Apple announced “App Transport Security” for iOS 9 and OSX 10.11 El Capitan. The <a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-SW1">“What’s New in iOS”</a> guide for iOS 9 explains:</p>
-<blockquote>
-<p>App Transport Security (ATS) lets an app add a declaration to its Info.plist file that specifies the domains with which it needs secure communication. ATS prevents accidental disclosure, provides secure default behavior, and is easy to adopt. You should adopt ATS as soon as possible, regardless of whether you’re creating a new app or updating an existing one.<br>If you’re developing a new app, you should use HTTPS exclusively. If you have an existing app, you should use HTTPS as much as you can right now, and create a plan for migrating the rest of your app as soon as possible.</p>
-</blockquote>
-<p>In simple terms, this means that if your application attempts to connect to any HTTP server (in this example, yourserver.com) that doesn’t support the latest SSL technology (TLSv1.2), your connections will fail with an error like this:<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CFNetwork SSLHandshake failed (-<span class="number">9801</span>)</span><br><span class="line">Error <span class="variable">Domain=</span>NSURLErrorDomain <span class="variable">Code=</span>-<span class="number">1200</span> <span class="string">"An SSL error has occurred and a secure connection to the server cannot be made."</span> <span class="variable">UserInfo=</span><span class="number">0</span>x7fb080442170 &#123;<span class="variable">NSURLErrorFailingURLPeerTrustErrorKey=</span>&lt;SecTrustRef: <span class="number">0</span>x7fb08043b380&gt;, <span class="variable">NSLocalizedRecoverySuggestion=</span>Would you like to connect to the server anyway?, <span class="variable">_kCFStreamErrorCodeKey=</span>-<span class="number">9802</span>, <span class="variable">NSUnderlyingError=</span><span class="number">0</span>x7fb08055bc00 <span class="string">"The operation couldn’t be completed. (kCFErrorDomainCFNetwork error -1200.)"</span>, <span class="variable">NSLocalizedDescription=</span>An SSL error has occurred <span class="constant">and</span> a secure connection to the server cannot be made., <span class="variable">NSErrorFailingURLKey=</span>https://yourserver.com, <span class="variable">NSErrorFailingURLStringKey=</span>https://yourserver.com, <span class="variable">_kCFStreamErrorDomainKey=</span><span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Curiously, you’ll notice that the connection attempts to change the http protocol to https to protect against mistakes in your code where you may have accidentally misconfigured the URL. In some cases, this might actually work, but it’s also confusing.</p>
-<h3 id="WARNING:_ATS_is_good_for_you_and_your_users_and_you_shouldn’t_disable_it!"><strong>WARNING: ATS is good for you and your users and you shouldn’t disable it!</strong></h3><p>The reason why Apple is pushing so aggressively to force secure connections is because it’s the right thing to do. Protecting personal data from being compromised over insecure wireless connections, among other things, is great for users. Just because these exceptions exist doesn’t mean you should actually use them.</p>
-<p>If your application is connecting to third party APIs that you can’t control (such as in my case, where my application Routesy connects to public transit APIs that don’t yet support SSL) or serving as a means to load syndicated content (a browser or a news reader, for instance), these techniques might be useful to you.</p>
-<p>The bottom line is, if you run your own API server, FIX YOUR SSL. Thanks to Dave DeLong for reminding me that I should clarify that disabling ATS is a bad idea.</p>
-<p>That being said…<br>
+          <h2 id="iOS_位与位运算">iOS 位与位运算</h2><h3 id="介绍">介绍</h3><p>位操作是程序设计中对位模式或二进制数的一元和二元操作. 在许多古老的微处理器上, 位运算比加减运算略快, 通常位运算比乘除法运算要快很多. 在现代架构中, 情况并非如此:位运算的运算速度通常与加法运算相同(仍然快于乘法运算).（摘自wikipedia）<br>OC作为c的扩展和超集，位运算自然使用的是c的操作符。c提供了6个位操作符，$，|，^，~，&lt;&lt;，&gt;&gt;。本文不打算做位运算的基础教学，只介绍一些开发中能用到的场景。</p>
+<h3 id="提高运算速度">提高运算速度</h3><p>如前一段所说，位运算的运算速度是通常与加法速度相当，但是快于乘法运算的。故而如果我们的程序对性能有要求，我们可以使用位运算来提高运算速度。比如：</p>
+<ul>
+<li>乘以2：n &lt;&lt; 1;</li>
+<li>除以2：n &gt;&gt; 1;</li>
+<li>乘以2的m次方：n &lt;&lt; m;</li>
+<li>除以2的m次方：n &gt;&gt; m;</li>
+<li>判断奇偶：(n &amp; 1) == 1;</li>
+<li>求平均数：(a + b) &gt;&gt; 1;</li>
+<li>……</li>
+</ul>
+<p>基于乘除法的位运算提速还有很多，这里不一一列举。需要注意的是，你应当只在遇到性能瓶颈的时候，并且瓶颈的确是计算的时候才这么做。因为使用位运算并不利于程序的可读性和可维护性。（科学计算除外）</p>
+<h3 id="压缩空间">压缩空间</h3><p>以前接触过ACM的筒子们应该对状态压缩不陌生，状态压缩的目的在于把一个大数据用有限的内存空间来进行表示。比如 Programming Pearls 里面的一个经典示例：如何对最多有一千万条不重复的7位整数（电话号码）进行排序？且可使用的内存空间有大约1MB多。</p>
+<p>显而易见的常规做法既是做一个基于磁盘操作的外排序。然而如果转换一下思路，充分的使用内存中的每一个位，加上不存在重复的电话号码，以及不存在0和1开头的电话号码。我们只需要使用1000万个位（大约1.2mb），就能以集合的方式在内存里标记下所有的数据，从而轻松的实现位排序。此种方法大幅度的减少了IO时间，从而获得巨大的性能提升。</p>
+<p>ACM里面有大量的如果使用位来压缩空间的示例，状态压缩的动态规划等，此处不做展开，只告诉读者，充分的使用内存的每一个位，经常能带来意想不到的收获。但需要注意的是，状态的压缩和提取，都需要一定的计算量，有时一味的追求状态压缩，反而会降低效率。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#more">
+            <a class="btn" href="/2015/08/04/iOS-bit-computing/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -513,8 +418,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/sqlite-insert-replace/">
-                sqlite insert replace
+              <a class="post-title-link" href="/2015/08/04/iOS-Toll-Free-Bridging/">
+                iOS Toll-Free Bridging
               </a>
             
           
@@ -523,14 +428,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Sqlite/">Sqlite</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -543,8 +448,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/sqlite-insert-replace/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/sqlite-insert-replace/"></span>
+            <a href="/2015/08/04/iOS-Toll-Free-Bridging/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-Toll-Free-Bridging/"></span>
             </a>
           </span>
           
@@ -559,11 +464,97 @@
 
       
         
-          <h2 id="Sqlite_insert_&amp;&amp;_replace">Sqlite insert &amp;&amp; replace</h2><p>Assuming 3 columns in the table.. ID, NAME, ROLE</p>
-<h3 id="BAD:_This_will_insert_or_replace_all_columns_with_new_values_for_ID=1:">BAD: This will insert or replace all columns with new values for ID=1:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, name, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'John Foo'</span>, <span class="string">'CEO'</span>);</span></span><br></pre></td></tr></table></figure>
-<h3 id="BAD:_This_will_insert_or_replace_2_of_the_columns…_the_NAME_column_will_be_set_to_NULL_or_the_default_value:">BAD: This will insert or replace 2 of the columns… the NAME column will be set to NULL or the default value:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'code monkey'</span>);</span></span><br></pre></td></tr></table></figure>
-<h3 id="GOOD:_This_will_update_2_of_the_columns-_When_ID=1_exists,_the_NAME_will_be_unaffected-_When_ID=1_does_not_exist,_the_name_will_be_default_(NULL)-">GOOD: This will update 2 of the columns. When ID=1 exists, the NAME will be unaffected. When ID=1 does not exist, the name will be default (NULL).</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, role, name) </span><br><span class="line">  <span class="keyword">VALUES</span> (  <span class="number">1</span>, </span><br><span class="line">            <span class="string">'code monkey'</span>,</span><br><span class="line">            (<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> Employee <span class="keyword">WHERE</span> id = <span class="number">1</span>)</span><br><span class="line">          );</span></span><br></pre></td></tr></table></figure>
-<h3 id="GOOD:_This_will_update_2_of_the_columns-_When_ID=1_exists,_the_ROLE_will_be_unaffected-_When_ID=1_does_not_exist,_the_role_will_be_set_to_‘Benchwarmer’_instead_of_the_default_value-">GOOD: This will update 2 of the columns. When ID=1 exists, the ROLE will be unaffected. When ID=1 does not exist, the role will be set to ‘Benchwarmer’ instead of the default value.</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, name, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (  <span class="number">1</span>, </span><br><span class="line">            <span class="string">'Susan Bar'</span>,</span><br><span class="line">            <span class="keyword">COALESCE</span>((<span class="keyword">SELECT</span> role <span class="keyword">FROM</span> Employee <span class="keyword">WHERE</span> id = <span class="number">1</span>), <span class="string">'Benchwarmer'</span>)</span><br><span class="line">          );</span></span><br></pre></td></tr></table></figure>
+          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">reference</a></p>
+<h2 id="Toll-Free_Bridging">Toll-Free Bridging</h2><h3 id="什么是_Toll-Free_Bridging">什么是 Toll-Free Bridging</h3><p>有一些数据类型是能够在 <code>Core Foundation Framework</code> 和 <code>Foundation Framework</code> 之间交换使用的。这意味着，对于同一个数据类型，你既可以将其作为参数传入 <code>Core Foundation</code>函数，也可以将其作为接收者对其发送 <code>Objective-C</code> 消息（即调用ObjC类方法）。这种在 <code>Core Foundation 和 Foundation</code> 之间交换使用数据类型的技术就叫 <code>Toll-Free Bridging</code>.</p>
+<p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
+<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-Toll-Free-Bridging/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-attribute-objc-designated-initializer/">
+                iOS attribute objc_designated_initializer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-attribute-objc-designated-initializer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-attribute-objc-designated-initializer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="https://leafduo.com/articles/2014/03/20/objc-designated-initializer/" target="_blank" rel="external">reference</a></p>
+<h2 id="attribute((objc_designated_initializer))"><strong>attribute</strong>((objc_designated_initializer))</h2><p>指定初始化器（<code>designated initializer</code>）是 Objective-C 中的一个重要的概念，但是很可惜的是，很多开发者（不知道为什么）并没能正确遵守关于指定初始化器的一些惯例。 </p>
+<p>之前，我们只能通过 code review 之类的方法来找出、修正这些问题；现在，clang 为我们提供了编译器级别的支持，能够找出不遵守管理的地方并给出警告，我们需要做的是标记出哪个初始化器是指定初始化器，例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">interface</span> FTBObject</span><br><span class="line"></span><br><span class="line">- (instancetype)init __<span class="function">attribute__</span>((objc_designated_initializer))</span>;</span><br><span class="line"></span><br><span class="line"><span class="at_rule">@<span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<p>通过在接口定义中指定指定初始化器，不仅编译器能够给出相关的警告，而且需要继承该类的开发者也可以不参考文档就知道哪个初始化器是指定初始化器。</p>
+<p>目前，clang 可以提供一系列警告，例如非指定初始化器没有调用其他初始化器、指定初始化器没有调用父类的指定初始化器、指定初始化器调用了非指定初始化器、子类没有复写父类的指定初始化器等。 具体的例子可以看这个<a href="https://llvm.org/svn/llvm-project/cfe/trunk/test/SemaObjC/attr-designated-init.m" target="_blank" rel="external">测试用例</a>。</p>
+<p>不幸的是，目前系统库的接口还没有这个属性，也就是说只有继承自己的代码和标记了这个指令的第三方库中的类才有用。</p>
 
         
       
@@ -587,7 +578,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/14/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/12/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/14/">&raquo;</a>
   </div>
 
 
@@ -621,7 +612,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -635,7 +626,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

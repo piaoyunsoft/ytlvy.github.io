@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
-                iOS UITableviewCell Swipeable
+              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/">
+                Swift Core Graphics Tutorial Part 1: Getting Started
               </a>
             
           
@@ -165,7 +165,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/"></span>
             </a>
           </span>
           
@@ -194,29 +194,26 @@
 
       
         
-          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
+          <h2 id="Core_Graphics教程第一部分(Swift)_-_起步">Core Graphics教程第一部分(Swift) - 起步</h2><blockquote>
 <ul>
-<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
+<li>原文链接 : <a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1">Core Graphics Tutorial Part 1: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/caroline">Caroline Begbie </a></li>
+<li>译文出自 :  <a href="www.devtf.cn">开发技术前线</a></li>
+<li>译者 : <a href="https://github.com/sdq/">sdq</a>  <a href="https://github.com/StormXX/">StormXX</a></li>
+<li>校对者:  <a href="https://github.com/StormXX/">StormXX</a></li>
 </ul>
 </blockquote>
-<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
-<p>首先，让我们来看一下现有的解决方法。</p>
-<ul>
-<li>UITableViewRowAction (new in iOS 8)</li>
-</ul>
-<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
-<ul>
-<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
-</ul>
-<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
-<ul>
-<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
-</ul>
-<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+<p>想象一下…当你完成了你的应用，它能够很好地运行，但是界面还缺少个人的风格。这时，你可以选择用PS画出一系列尺寸的图片，并希望Apple不会再推出一个<strong>@4x</strong>的retina显示尺寸…   </p>
+<p>或者，你可以领先一步，采用Core Graphics进行绘图，保证一个图片可以适应各种尺寸的屏幕。   </p>
+<p>Core Graphics是苹果的一个矢量图绘制框架 - 它是一个大型且给力的API、有很多需要去学习。不过别慌，这个系列的文章会带你由简入深地学习Core Graphics，最后你将可以在你的应用中创作令人惊叹的图片。   </p>
+<p>这是一个全新的系列，采用最新的方式来学习Core Graphics。这个系列完全和Xcode6与Swift保持同步，并且包含了一些很酷的新特性，比如<strong>@IBDesignable</strong>和<strong>@IBInspectable</strong>，这让学习Core Graphics变得更有趣也更容易。</p>
+<p>拿起可乐，让我们开始吧！</p>
+<h2 id="介绍Flo_-_一款记录喝水杯数的App">介绍Flo - 一款记录喝水杯数的App</h2><p>你将会完成一个追踪你喝水习惯的app。   </p>
+<p>Flo可以让你很轻松地追踪到你喝了多少水。人们说一天喝8杯水才是健康的，但是往往喝了几杯水之后我们就忘了记录了。这就是Flo使用的时候了，每当你喝完一杯水以后，你就可以在Flo上点击计数，Flo会为你记录喝水情况。你也可以在Flo上查看到过去7天的喝水状况。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2014/12/1-CompletedApp.gif" alt="demo"></p>
+<p>在这个系列的第一部分，你将会通过UIKit的画图方法创建三个控件。<br>第二部分中，你将会深入了解Core Graphics的内容并且学习绘图。<br>最后第三部分，你将会制作一个样式背景，并且获得自制的Core Graphics奖牌 ：）</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
+            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-1-Getting-Started/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -249,8 +246,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-Background-Modes-Tutorial/">
-                iOS Background Modes Tutorial
+              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/">
+                Swift Core Graphics Tutorial Part 3: Patterns and Playgrounds
               </a>
             
           
@@ -266,7 +263,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -279,8 +276,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Background-Modes-Tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Background-Modes-Tutorial/"></span>
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/"></span>
             </a>
           </span>
           
@@ -295,25 +292,26 @@
 
       
         
-          <h1 id="iOS后台模式开发指南">iOS后台模式开发指南</h1><hr>
-<blockquote>
+          <h2 id="Core_Graphics_教程第三部分(Swift)_-_Patterns_和_Playgrounds">Core Graphics 教程第三部分(Swift) - Patterns 和 Playgrounds</h2><blockquote>
 <ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/92428/background-modes-ios-swift-tutorial">Background Modes Tutorial: Getting Started</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/rayfix"> Ray Fix </a></li>
-<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
-<li>校对者:David Hu</li>
-<li>状态 :  已完成</li>
+<li>原文链接：<a href="http://www.raywenderlich.com/90695/modern-core-graphics-with-swift-part-3">Core Graphics Tutorial Part 3: Patterns and Playgrounds</a></li>
+<li>原文作者：<a href="http://www.raywenderlich.com/u/caroline"> Caroline Begbie </a></li>
+<li>译文出自：<a href="www.devtf.cn">开发者前线</a></li>
+<li>译者：<a href="https://github.com/MrLoong">MrLoong</a></li>
+<li>校对者：<a href="https://github.com/samw00">samw00</a></li>
 </ul>
 </blockquote>
-<p>更新说明:这个教程被Ray Fix更新为关于iOS和Swift的.原著作者为<a href="http://www.raywenderlich.com/29948/backgrounding-for-ios">Gustavo Ambrozio</a>.</p>
-<p>自从古老的iOS4以来,当用户点击home建的时候,你可以使你的APP们在内存中处于suspended(挂起)状态.即使APP仍停留在内存中,它的所有操作是被暂停的直到用户再次运行它.</p>
-<p>当然这个规则中有例外情况.在特定的情况下,这个APP仍然可以在后台中执行某些操作.这个教程会教你在什么时候怎么去用最常用的一些后台操作.</p>
-<p>每一次iOS的发布都会在后台操作和细节上的放宽限制，以此提升用户体验和延长电池寿命.对于在iOS中实现”真正”的多任务来说,后台模式不是一个神奇的解决办法.当用户切换到其他的APP应用时,大多数的APP应用仍然会完全的暂停运行.你的应用只被允许在很特殊的情况下才能在后台中继续运行.例如,这些包括播放音频,获取位置更新,或者从服务器获取最新内容的情况.</p>
-<p>iOS7之前,APP应用在真正暂停之前会有连续10分钟的时间去完成它们当前的操作.随着NSURLSession的出现,有了一种更为优雅的方式去应对大量的网络切换.因此,对于可用的后台运行时间已经减少到只有几分钟,而且不再必须为连续的.</p>
-<p>这样的后台模式可能不适合你.但如果合适,请继续阅读!</p>
-<p>接下来的学习中,将会有几个几个后台模式提供给你.在本教程中你将建立一个关于简单标签应用的工程,来探索从连续播放视频到周期性的获取更新内容的四种常见模式.</p>
+<p>欢迎回到Core Graphics 教学系列的第三也是最后一部分！Flo，你的water drinking tracking app将使用Core Graphics 进行最终的改进。</p>
+<p>在<a href="http://www.raywenderlich.com/90690/modern-core-graphics-with-swift-part-1">第一部分</a>，你通过UIKit画了三个自定义形状的控件,<a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2">在第二部分</a>你创建了一个视图用来显示用户在过去一周的喝水量，并且研究了transforming the context transformation matrix (CTM)</p>
+<p>在这第三也是最后一部分，你将使<strong>Flo</strong>升级到它的最终形态，特别的是你将：</p>
+<ul>
+<li>创建一个重复的背景图案</li>
+<li>为成功每天喝掉8杯水的用户从头到尾画一枚奖章</li>
+</ul>
+<p>如果你还没有这个项目的源代码，从本系列的第二部分下载<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/Flo-Part2-6.3.zip"><strong>Flo工程</strong></a></p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt=""></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Background-Modes-Tutorial/#more">
+            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-3-Patterns-and-Playgrounds/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -346,8 +344,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS8-iCloud/">
-                iOS8 iCloud
+              <a class="post-title-link" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/">
+                Swift Core Graphics Tutorial Part 2: Gradients and Contexts
               </a>
             
           
@@ -363,7 +361,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -376,8 +374,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS8-iCloud/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS8-iCloud/"></span>
+            <a href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/"></span>
             </a>
           </span>
           
@@ -392,18 +390,29 @@
 
       
         
-          <h2 id="iOS8使用icloud"><code>iOS8使用icloud</code></h2><blockquote>
+          <h2 id="Core_Graphics教程第二部分(Swift)_-_Gradients_与_Context">Core Graphics教程第二部分(Swift) - Gradients 与 Context</h2><blockquote>
 <ul>
-<li>原文链接 : <a href="http://www.appcoda.com/cloudkit-introduction-tutorial/">Working with CloudKit in iOS 8</a></li>
-<li>译文出自 <a href="http://www.dectf.cn">开发技术前线</a></li>
-<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+<li>原文链接 : <a href="http://www.raywenderlich.com/90693/modern-core-graphics-with-swift-part-2">Core Graphics Tutorial Part 2: Gradients and Contexts</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/caroline">caroline</a></li>
+<li>译文出自 :  <a href="http://www.devtf.cn">开发技术前线</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao">HarriesChen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">HarriesChen</a></li>
 </ul>
 </blockquote>
-<p>对于开发者来说，如何用适当的方式来存储应用程序数据是一个比较重要的问题。 毫无疑问，任何应用都或多或少需要存储一些数据。对于一般的应用程序来说，被保存的数据各不相同，大部分时间都被存储在本地以便再次在相同的设备运行该应用程序。尽管这不是是唯一的选择。随着云服务的发展，一个应用程序也可以把数据存储在云端，既可以完全把数据存储在云端，也可以本地和远程都存储。</p>
-<p>有许多网络服务商提供云服务，通常会赠送一定的免费空间。其中之一就是苹果，也就是著名的云服务提供商iCloud。开发人员可以访问iCloud，把它作为一个存储方式。有多种方法可以从iCloud中存储和读取数据，但在本教程中，我们将专注于其中之一：CloudKitframework。<br><img src="http://img.blog.csdn.net/20150515220618400" alt="这里写图片描述"></p>
-<p>当你处理结构化数据（不是单纯的文件和文档）并希望将其保存在网络上的，使用CloudKit会非常方便。通过CloudKit，可以很容易的做到其它数据库能做的事情，代替数据库、记录等等。事实上，一条CloudKit记录就是iOS中大家都知道的字典，当然CloudKit还可以处理其它不同的数据。通过本教程，我们会发现使用这个框架是有趣的，而不是特别困难。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/FinalApp-192x320.png" alt="FinalApp"></p>
+<p><em>更新时间  04/15/2015</em> 为Xcode 6.3 和 Swift1.2更新</p>
+<p>欢迎回到我们的Swift核心绘图教程系列！</p>
+<p>在<a href="http://www.raywenderlich.com/?p=90690">第一部分</a>中,你学习到了使用storyboard绘制线条和矩形.</p>
+<p>在第二部部分中，你将深入核心绘图，使用CGContext实现渐变效果</p>
+<h2 id="核心绘图">核心绘图</h2><p>你现在已经从简单的UIKit深入到核心绘图。</p>
+<p>下图是各个框架的关系图：</p>
+<p><a href="http://cdn2.raywenderlich.com/wp-content/uploads/2014/12/2-Architecture.png"><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2014/12/2-Architecture-433x320.png" alt="2-Architecture"></a></p>
+<p>UIKit是在最顶层，使用最友好的框架。你使用过UIBezierPath的就是在UIKit层中对Core Graphics层中CGPath的封装。</p>
+<p>你可以看到 Core Graphics 的对象和方法都是CG开头的，非常容易辨认。</p>
+<p>另外CG方法都是C方法，在调用的时候不需要明确的指定参数名，和一般Swift调用方法不一样。</p>
+<h2 id="从Graph_View开始">从Graph View开始</h2>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS8-iCloud/#more">
+            <a class="btn" href="/2015/08/08/Swift-Core-Graphics-Tutorial-Part-2-Gradients-and-Contexts/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -436,8 +445,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-Autolayout-Practices/">
-                iOS Autolayout Practices
+              <a class="post-title-link" href="/2015/08/08/Swift-Memory-management/">
+                Swift Memory management
               </a>
             
           
@@ -453,7 +462,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -466,8 +475,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Autolayout-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Autolayout-Practices/"></span>
+            <a href="/2015/08/08/Swift-Memory-management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Memory-management/"></span>
             </a>
           </span>
           
@@ -482,16 +491,21 @@
 
       
         
-          <p><a href="http://blog.cnbluebox.com/blog/2015/02/02/autolayout2/">reference</a></p>
-<h2 id="Autolayout小结">Autolayout小结</h2><h3 id="如何自动适应cell的高度">如何自动适应cell的高度</h3><p>在IOS的布局中，计算和适应cell的高度是个经典的问题, 在frame时代，我们都知道用<code>sizeWithFont:</code> 先计算出文字的高度，然后通过计算得出cell的高度，然后赋予<code>heightForRow:</code>。</p>
-<p>那在Autolayout时代如何计算cell的高度呢？因为sizeWithFont:方法已经不太实用了。其实Autolayout不但更简单，还可以不用写过多的计算代码达到自适应高度。</p>
-<p>理论上是可以通过已知的完整的Constraints和view的属性来计算高度的，我们可以通过<code>systemLayoutSizeFittingSize:</code>方法来获取计算出来cell的size，我们知道cell的高度需要在tableView的代理方法<code>tableView:heightForRowAtIndexPath:</code>中实现的，那么我们考虑从以下两点来做：</p>
-<ol>
-<li>通过创建一个额外的cell专门用来计算其高度</li>
-<li>因为计算需要布局，所以尽量让其只计算一次，计算完可以将高度保存起来</li>
-</ol>
+          <h2 id="Swift和自动引用计数(ARC)整理之强，弱和无主引用">Swift和自动引用计数(ARC)整理之强，弱和无主引用</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/05/08/strong-weak-and-unowned-sorting-out-arc-and-swift/">Strong, Weak, and Unowned - Sorting out ARC and Swift</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+<li>校对者:  <a href="https://github.com/bboyfeiyu/">MrSimple</a> </li>
+<li>状态 :  完成</li>
+</ul>
+</blockquote>
+<p>我敢打赌有相当一部分的Swfit开发者纠结于<code>strong</code>（强引用），<code>weak</code>（弱引用)和<code>unowned</code>（无主引用）这几种不同类型的引用方式对他们的代码在运行时所造成的影响。如果我的日子依赖于自动引用计数（ARC）,我想我是不会费神来尝试解释其中的奥妙的。</p>
+<p>在我每次声明变量或是常量时，我都不是特别确定到底应该用哪种类型的引用，为了让自己不再纠结，我最终决定把<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html">苹果官方关于ARC的文档</a>拿出来拜读，试着去理解和消化里面的每一句话。这篇文章尝试着把我脑里关于Swift和自动引用计数（ARC）的整理分享给大家。</p>
+<p>这篇文章稍微有点长所以我想：“为何不先把总结直接抛出来让小伙伴们先睹为快呢？然后如果实好奇再继续看我是如何得出这总结的”。所以下面献上我的总结！</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Autolayout-Practices/#more">
+            <a class="btn" href="/2015/08/08/Swift-Memory-management/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -524,8 +538,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-shake-in-pull-to-refresh/">
-                iOS shake in pull to refresh
+              <a class="post-title-link" href="/2015/08/08/Swift-custom-view-controller-transitions-tutorial/">
+                Swift custom-view-controller-transitions-tutorial
               </a>
             
           
@@ -541,7 +555,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -554,8 +568,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-shake-in-pull-to-refresh/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-shake-in-pull-to-refresh/"></span>
+            <a href="/2015/08/08/Swift-custom-view-controller-transitions-tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-custom-view-controller-transitions-tutorial/"></span>
             </a>
           </span>
           
@@ -570,16 +584,19 @@
 
       
         
-          <p><a href="http://blog.cnbluebox.com/blog/2015/01/19/shake-in-pull-to-refresh/">reference</a></p>
-<h2 id="你的下拉刷新是否“抖”了一下">你的下拉刷新是否“抖”了一下</h2><p>在进入IOS8之后，你有没有注意到老式的下拉刷新可能会抖一下， 在下拉松开后，scrollView即将回到“刷新中…”的状态过程中的时候。如果你又这个问题，那不妨跟随我来看看怎么解决这个问题。</p>
-<h3 id="抖动的原因">抖动的原因</h3><p>我们先来看看在手松开之后我们对scrollView做了什么事情：</p>
-<p><code>ScrollViewDidEndDragging</code> =&gt; <code>setContentInset:</code></p>
-<p>为了保证在“Loading”的状态下，下拉刷新控件可以展示，我们对<code>contentInset</code>做了修改，增加了<code>inset</code>的<code>top</code>. 那这样一步操作为什么会导致scrollView抖动一下呢。</p>
-<p>我在<code>scrollViewDidScroll:</code>中打了个断点，来看看在<code>setContentInset:</code>之后发生了什么事情。 我设置的<code>inset.top = 64</code>; 结果发现scrollView的<code>contentOffset</code>发生了这样的变化：</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(0, -64)</span> =&gt; <span class="comment">(0, -133)</span> =&gt; <span class="comment">(0, -64)</span></span><br></pre></td></tr></table></figure>
-<p>由以上数据可以看出，contentOffset在这个过程中先被向下移动了一段，再回归正常。 猜测问题原因：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">下拉松开之后， scrollView本身的 <span class="keyword">bounce </span>效果 与 当前设置inset冲突了</span><br></pre></td></tr></table></figure></p>
+          <h1 id="使用Swift自定义ViewController切换效果与动画">使用Swift自定义ViewController切换效果与动画</h1><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.appcoda.com/custom-view-controller-transitions-tutorial/">custom-view-controller-transitions-tutorial</a></li>
+<li>原文作者 : <a href="http://www.appcoda.com/custom-view-controller-transitions-tutorial/">joyce echessa</a></li>
+<li><a href="www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https:www.devtd.cn">Shopie</a>  </li>
+</ul>
+</blockquote>
+<p>当我们把从Apple iOS设备上内置的app从一个view切换到另一个的时候，我们可以看到各种不同的动态切换。比如，把详细view controller滑动到主view controller时呈现出的切换动画（通常在短信app或设置app中可以看到），以及代表了不同view controller之间切换的各种不间断过渡。</p>
+<p>iOS 7引入了自定义view controller切换，使得开发人员能够在他们的app中实现不同 view controller之间的自定义切换动画。我们通过本教程来看看如何自定义切换动画。本教程还会讲到如何创建手势切换，也就是交互式切换。首先，大家需要下载starter项目，我们在后续的整个教程中将会用到。</p>
+<p><img src="http://www.appcoda.com/wp-content/uploads/2015/03/custom-view-transition.jpg" alt="pic-1"></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-shake-in-pull-to-refresh/#more">
+            <a class="btn" href="/2015/08/08/Swift-custom-view-controller-transitions-tutorial/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -605,7 +622,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/9/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/9/">&raquo;</a>
   </div>
 
 
@@ -639,7 +656,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -653,7 +670,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

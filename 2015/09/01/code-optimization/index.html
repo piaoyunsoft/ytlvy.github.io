@@ -1,0 +1,680 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> code optimization // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              code optimization
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/code-optimization/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/code-optimization/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>@charset “UTF-8”;<br>/**</p>
+<ul>
+<li></li>
+<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
+<li>@date    2015-08-30 08:22:51</li>
+<li>@version 0.0.1</li>
+<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
+</ul>
+<p><a href="">reference</a></p>
+<h2 id="我是如何收拾代码的">我是如何收拾代码的</h2><h3 id="注释">注释</h3><p>虽说好的代码不用注释,但是那得是好的代码..好记性不如烂笔头，好好写注释可以给自己和自己的小伙伴省下很多时间.<br>注释都是// 或是/<em> 注释 </em>/ ，这样的通用注释不做多说明，这里介绍一些稍带技巧的注释：</p>
+<h4 id="参数的注释">参数的注释</h4><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIButton <span class="keyword">*</span>btnSend;/<span class="keyword">*</span><span class="keyword">*</span><span class="variable">&lt; 发送按钮 */</span></span><br></pre></td></tr></table></figure>
+<p>在调用时可以得到提示，在内容比较多时比较好用，我有时候脑子短路要想好一会才能记得当初定义的变量是做什么用的。</p>
+<h4 id="方法的注释">方法的注释</h4><p>如果你的方法是没有参数的，只需要写一句注释，那只需要在方法前加注释就行了</p>
+<p>type 1<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/<span class="emphasis">** table 相关设置 *</span>/</span></span></span><br><span class="line">-(<span class="keyword">void</span>)configTable&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>type 2（插件：VVDocument）使用此插件可以很便捷的为自己的代码添加注释<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span>!</span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@author joanfen, 15-05-14 12:05:22</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@brief  相关设置</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">-(void)configTable&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的注释 在你调用时会显示你所添加注释，如图<br><a id="more"></a><br><img src="http://static.oschina.net/uploads/space/2015/0514/121231_jCac_735123.png" alt=""></p>
+<p>有参数的注释<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span>!</span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@Author joanfen, 15-05-13 14:01:51</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@method POST</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@see XRClass</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@brief  链接解析</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param linkAddressStr 链接地址</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br></pre></td></tr></table></figure></p>
+<p>大家使用VVDocument 的插件来写注释就对了。这样的注释自己写起来太费事，没有插件我真不愿意写。</p>
+<h4 id="方法分区">方法分区</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#pragma</span> <span class="tag">mark</span> - &lt;注释，也可不写，没有注释时就只显示一条分割线&gt;</span><br><span class="line"><span class="id">#pragma</span> <span class="tag">mark</span> 注释</span><br></pre></td></tr></table></figure>
+<p>区别：带 - 的会显示一条分割线</p>
+<p><img src="http://static.oschina.net/uploads/space/2015/0514/162252_0ZSV_735123.png" alt=""></p>
+<p>便于简单快速的查找方法</p>
+<h4 id="添加提示信息">添加提示信息</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">error</span> &lt;提示信息&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果加上这样的错误提示，在 Build 时 XCode 会提示编译错误：</p>
+<p><img src="http://static.oschina.net/uploads/space/2015/0514/162847_OcyP_735123.png" alt=""></p>
+<p><img src="http://static.oschina.net/uploads/space/2015/0514/162847_FcKX_735123.png" alt=""></p>
+<p>在某部分代码没有完成，而且如果提交会导致问题时可以加上这样的提示信息来提醒自己。</p>
+<p>如果你觉得只是想提醒自己来完成，并不需要加上红色的 error 信息，你可以尝试使用<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">warning</span> &lt;提示信息&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样的话在编译时提示信息是这样的</p>
+<p><img src="http://static.oschina.net/uploads/space/2015/0514/163150_wHPF_735123.png" alt=""></p>
+<p>使用场景</p>
+<p>在替换某个类时，需要删除原有的代码，再进行替换，每次删除一个我就加一行同样的 warning，最后新的写好之后，搜索这行 waring，将调用方法填充，大大提高效率；</p>
+<p>UI 写好了，数据部分还没有好，将逻辑梳理好，方法写好，加上 warning ，包含 deadline，需要完成的工作，在后台数据可测时，再来完成，不写的话有时候真的脑子短路，有时候半天都不记得当时是准备怎么弄的，尤其在开发量大的时候，原谅我是一个容易脑子短路的人，-_-。</p>
+<h3 id="使用常量">使用常量</h3><p>常见使用宏，const 常量，枚举等来定义常量，避免将一个数字或者是字符串重复写多次，而是定义成常量，便于统一管理，也减少出错的几率</p>
+<p>推荐两篇关于常量的博客： <a href="http://onevcat.com/2014/01/black-magic-in-macro/" target="_blank" rel="external">宏定义的黑魔法</a>， <a href="http://tutuge.me/2015/03/11/Effective-Objective-C-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Item-4-%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E5%AE%9A%E4%B9%89%E5%B8%B8%E9%87%8F/" target="_blank" rel="external">如何正确定义常量</a></p>
+<h4 id="宏">宏</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine</span><br></pre></td></tr></table></figure>
+<p>宏大家应该都不陌生，这里不展开赘述，请看上面的博文，我在去年看了宏定义的黑魔法这篇博文之后，曾经一度超级喜欢用宏，不管是字符串，方法，还是高度，动画时长这一类常量，我都喜欢用宏来定义，直到我看见了后面的如何正确定义常量这篇博客，我才清醒一点。</p>
+<h4 id="const_常量">const 常量</h4><p>现在使用的多得是 const 常量</p>
+<p>在方法体内使用<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> CGFloat KCellHight = <span class="number">126.f</span>;</span><br></pre></td></tr></table></figure></p>
+<p>在类文件中使用, 在.m 文件中<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">CGFloat</span> KXRBtnSendHeight = <span class="number">44</span>;</span><br></pre></td></tr></table></figure></p>
+<p>如果需要提供给外部使用，使用 extern 修饰：</p>
+<p>只需要在.h 中使用 extern 外部声明即可<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="built_in">CGFloat</span> KXRBtnSendHeight;<span class="comment">/**&lt; send按钮高度 */</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="枚举">枚举</h4><p>在判断 table 的 section，row，控件的 tag，或是点击的 index，或是自己定义的 type 时，不要直接使用数字判断，如果类型多，使用枚举，少，可以使用上文中的宏或是const 常量</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef <span class="class"><span class="keyword">enum</span> : <span class="title">NSUInteger</span> </span>&#123;</span><br><span class="line"><span class="constant">    XRTypeRegular</span> = <span class="number">10</span>,</span><br><span class="line"><span class="constant">    XRTypeSimple</span> = <span class="number">20</span>,</span><br><span class="line">&#125; XRType;</span><br></pre></td></tr></table></figure>
+<p>在判断 type 时，使用这样的语法，这是最基本的，看到直接 == 10这样的代码，没有办法忍<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="class"><span class="keyword">type</span> </span>== XRTypeRegular)</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用_Category_或是基类">使用 Category 或是基类</h3><p>这个部分不是很好给出代码实例，要实例的话想想当初做各级员工结算工资的课程设计吧，只作简要说明。</p>
+<p>在逻辑比较繁杂，某个类代码量非常庞大时，可以考虑使用基类，将公有的属性和方法在基类中实现，自己在使用时只需要关注一些单独的逻辑即可，可以大大提高代码效率。</p>
+<p>使用 category 是对某个类进行一些简单的扩展，在 category 中定义的方法等同于类的方法，是一样的，为了让功能划分更纯粹一些，一言以蔽之，强迫症。。</p>
+<p>给出一个小场景：比如我定义了一个 UITableViewCell 的类，在 A，B，C 的视图控制器中样式都是一样的，但是在D 的视图控制器中需要对它进行一些改造，这样的话就可以在 D 的类中加上一个 Category来进行操作，在 D 中直接调用这个方法即可<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DViewController.h</span></span><br><span class="line"><span class="variable">@interface</span> DViewController&#123;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="variable">@interface</span> <span class="function">ModuleCell</span>(diff)</span><br><span class="line"><span class="function">-</span>(void)<span class="attribute">diffTheCellByParam</span>:(id)param;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DViewController.m</span></span><br><span class="line"><span class="variable">@implementation</span> DViewController</span><br><span class="line"> </span><br><span class="line"><span class="variable">@end</span></span><br><span class="line">#pragma mark - </span><br><span class="line"><span class="variable">@implementation</span> <span class="function">ModuleCell</span>(diff)</span><br><span class="line"><span class="function">-</span>(void)<span class="attribute">diffTheCellByParam</span>:(id)param&#123;</span><br><span class="line">    <span class="comment">// Do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用_MVC">使用 MVC</h3><p>MVC 模式是最常见的模式，而且在学习的第一时间就有接触，可能有些人看到这儿觉得，你这不是废话？这谁不知道。</p>
+<p>但是我发现在 Objective-C 这个大家庭中，这个模式是遵守的最差的，相信你们一定见过在 ViewController 中写完所有的数据处理，UI 渲染，视图跳转各类动画的经典案例，因为我们就是这类型创造者，新手应该都是这样过来的（只是说明是一个大概率事件，很多资深其他平台开发者转过来时这方面是做的非常好的）。</p>
+<ol>
+<li><p>把数据的处理（获取，筛选，排序等）工作放在 Model 中，所谓 Model，新建一个继承自 NSObject（一般是 NSObject） 的类，用来处理数据，直接调用即可；</p>
+</li>
+<li><p>把视图的渲染放在 View 中（简单的视图加载可直接在 Controller 中完成），在遇到比较繁杂，需要几百行代码来完成时，如果你是用 xib或是 storyboard 配合代码，这部分无需这么严格，公用的视图必然是放在 View 中了；</p>
+</li>
+<li><p>视图控制器 Controller 中只用来调用数据，显示数据，视图的加载，跳转等工作。</p>
+</li>
+</ol>
+<p>视图内容在繁杂时可以考虑使用多个视图控制器联合控制一个页面，如 Apple 的 TabBarController 的工作机理。<br>将视图以 AddChildViewController 的方式添加到当前视图。<br>在 A 控制器中添加 B 控制器的视图，这样 A 同时包含了 A 和 B 的视图，B 视图中得 UI 逻辑依然在 B 中进行处理<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BViewController </span>*secondVC = VCFromSB(storyboardPatient, <span class="comment">@"XRPatientAllVC");</span></span><br><span class="line">[<span class="keyword">self.view </span><span class="keyword">addSubview:secondVC.view];</span><br><span class="line"></span>[<span class="keyword">self </span><span class="keyword">addChildViewController:secondVC];</span><br><span class="line"></span>[secondVC didMoveToParentViewController:<span class="keyword">self];// </span>将<span class="keyword">B </span>视图的 UI 响应事件移到 A 中，如果不这样操作，只要点击<span class="keyword">B </span>视图中得按钮或是滚动 table 就会崩溃</span><br></pre></td></tr></table></figure></p>
+<p>案例不是太好写，要写得好长一篇文章了，我还得想一项目，可以参考这部分文章：更轻量的 ViewControllers</p>
+<h3 id="代码规范">代码规范</h3><p>代码规范这事儿 各人有各人的习惯，不多说，但是你得有个规范，别想咋就咋，到时候害的是自己Over</p>
+<p>噢，还有件事儿，OC 的代码跟写文章一样这事儿我们都知道，每次都被后端工程师过来吐槽也是醉了，在写参数超过2个的方法时，大家按照冒号对个齐，会好看很多，我也不是逼你这样做，你就随意感受下吧</p>
+<p><img src="http://static.oschina.net/uploads/space/2015/0514/181511_1zw7_735123.png" alt=""></p>
+<p>最后，多复用，多重构，多写注释，祝大家都有一份整洁有条理的代码。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/01/iOS-locksreen-operation/">iOS locksreen operation</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/01/get-rid-of-Warnnings/">get rid of Warnnings</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#我是如何收拾代码的"><span class="nav-number">1.</span> <span class="nav-text">我是如何收拾代码的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注释"><span class="nav-number">1.1.</span> <span class="nav-text">注释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数的注释"><span class="nav-number">1.1.1.</span> <span class="nav-text">参数的注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法的注释"><span class="nav-number">1.1.2.</span> <span class="nav-text">方法的注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法分区"><span class="nav-number">1.1.3.</span> <span class="nav-text">方法分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加提示信息"><span class="nav-number">1.1.4.</span> <span class="nav-text">添加提示信息</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用常量"><span class="nav-number">1.2.</span> <span class="nav-text">使用常量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#宏"><span class="nav-number">1.2.1.</span> <span class="nav-text">宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const_常量"><span class="nav-number">1.2.2.</span> <span class="nav-text">const 常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#枚举"><span class="nav-number">1.2.3.</span> <span class="nav-text">枚举</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用_Category_或是基类"><span class="nav-number">1.3.</span> <span class="nav-text">使用 Category 或是基类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用_MVC"><span class="nav-number">1.4.</span> <span class="nav-text">使用 MVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码规范"><span class="nav-number">1.5.</span> <span class="nav-text">代码规范</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/01/code-optimization/';
+      var disqus_title = 'code optimization';
+      var disqus_url = 'http://ytlvy.com/2015/09/01/code-optimization/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

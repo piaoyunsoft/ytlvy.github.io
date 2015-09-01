@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
-                iOS NSURLProtocal
+              <a class="post-title-link" href="/2015/08/08/Swift-Extensions-Nuances/">
+                Swift Extensions Nuances
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
+          發表於 2015-08-08
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
+            <a href="/2015/08/08/Swift-Extensions-Nuances/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Extensions-Nuances/"></span>
             </a>
           </span>
           
@@ -194,199 +194,28 @@
 
       
         
-          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
+          <h2 id="Swift扩展的三个微妙细节">Swift扩展的三个微妙细节</h2><blockquote>
 <ul>
-<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
-<li>如何优雅地进行流量统计</li>
-<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
-<li>怎么实现HTTP的同步请求</li>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/04/22/3-nuances-of-swift-extensions/">3 Nuances of Swift Extensions</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+<li>校对者:  </li>
+<li>状态 :  校对中 </li>
 </ul>
-<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
-<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
-<ul>
-<li>自定义请求和响应</li>
-<li>提供自定义的全局缓存支持</li>
-<li>重定向网络请求</li>
-<li>提供HTTP Mocking (方便前期测试)</li>
-<li>其他一些全局的网络请求修改需求</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
-                dSYM parse tool
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
-<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
-                Variable Argument Lists
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
-<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
-<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>每当我初次翻看某文档时，我都走马观花似的快速阅过，还一边点着头一边喃喃自语说：“好！懂了，就这么回事！”，可是过后当我真正要运用到这些我以为已经理解了的知识点时，却发现实际情况和我想的往往不一样，每当这时我就懵了，心想：“哇哦…怎么回事？这和我想的完全不一样啊！文档里有说这事吗？”。</p>
+<p>最近的几次讨论促使我扪心自问是否真正的理解了Swift中的扩展。我阅读过关于扩展的文档，并且我“认为”我自己对这块内容已经是理解的相当透彻了。可是这几次讨论，加上自己私下通过敲代码的验证，让我发现了我原先不曾注意到几个微妙的细节。</p>
+<p><strong>更新</strong>：这篇文章刚一发表，Swift社区就出手襄助并帮助我弄明白了我最根本的纠结点在哪。为此，我写了另一篇文章“<a href="http://www.andrewcbancroft.com/2015/04/24/clarifying-swift-access-control-hint-swift-isnt-c-sharp/">阐明Swift访问控制</a>”进一步说明我之前的误解。为了避免犯我曾今犯过的错误，我建议大家去读一读。</p>
+<h2 id="三个关于扩展的微妙细节">三个关于扩展的微妙细节</h2><p>对下面列出的三个细节的思考严重挑战了我之前对Swift扩展的理解：</p>
 <ol>
-<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
-<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
-<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
-<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
-<li>最后调用<code>va_end()</code>来进行清理。</li>
+<li>Swift扩展对它所扩展类型的<strong>visibility</strong>。比如，扩展能访问被<code>private</code>所修饰的内容吗?</li>
+<li>定义扩展的位置是否对扩展的<strong>visibility</strong>有影响。比如我这有一个类型我想写个扩展，把扩展写在同一个源文件里和把扩展写在另一个文件里有什么区别吗？</li>
+<li>扩展里“成员”的默认访问修饰符以及是否给他们添加修饰对这个扩展作为一个类型的公共接口的影响。</li>
 </ol>
-<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
-<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
-<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
+<p>在我开始之前，假设我有一个公共结构体<code>Person</code>。这个结构体有一些私有属性，<code>name</code>，<code>gender</code>，和<code>age</code>。用一个枚举把<code>Gender</code>封装了一下。这个结构体看起来如下：</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
+            <a class="btn" href="/2015/08/08/Swift-Extensions-Nuances/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -419,8 +248,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/iOS-bit-computing/">
-                iOS bit computing
+              <a class="post-title-link" href="/2015/08/08/iOS-What’s-New-in-Swift-2/">
+                iOS What’s New in Swift 2
               </a>
             
           
@@ -429,14 +258,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
+          發表於 2015-08-08
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Swift/">Swift</a>
 
               
               
@@ -449,8 +278,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-bit-computing/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-bit-computing/"></span>
+            <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-What’s-New-in-Swift-2/"></span>
             </a>
           </span>
           
@@ -465,23 +294,36 @@
 
       
         
-          <h2 id="iOS_位与位运算">iOS 位与位运算</h2><h3 id="介绍">介绍</h3><p>位操作是程序设计中对位模式或二进制数的一元和二元操作. 在许多古老的微处理器上, 位运算比加减运算略快, 通常位运算比乘除法运算要快很多. 在现代架构中, 情况并非如此:位运算的运算速度通常与加法运算相同(仍然快于乘法运算).（摘自wikipedia）<br>OC作为c的扩展和超集，位运算自然使用的是c的操作符。c提供了6个位操作符，$，|，^，~，&lt;&lt;，&gt;&gt;。本文不打算做位运算的基础教学，只介绍一些开发中能用到的场景。</p>
-<h3 id="提高运算速度">提高运算速度</h3><p>如前一段所说，位运算的运算速度是通常与加法速度相当，但是快于乘法运算的。故而如果我们的程序对性能有要求，我们可以使用位运算来提高运算速度。比如：</p>
+          <h2 id="Swift_2_有哪些新特性">Swift 2 有哪些新特性</h2><blockquote>
 <ul>
-<li>乘以2：n &lt;&lt; 1;</li>
-<li>除以2：n &gt;&gt; 1;</li>
-<li>乘以2的m次方：n &lt;&lt; m;</li>
-<li>除以2的m次方：n &gt;&gt; m;</li>
-<li>判断奇偶：(n &amp; 1) == 1;</li>
-<li>求平均数：(a + b) &gt;&gt; 1;</li>
-<li>……</li>
+<li>原文链接 : <a href="http://www.raywenderlich.com/108522/whats-new-in-swift-2">What’s New in Swift 2</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/gregheo">Greg Heo</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完</li>
 </ul>
-<p>基于乘除法的位运算提速还有很多，这里不一一列举。需要注意的是，你应当只在遇到性能瓶颈的时候，并且瓶颈的确是计算的时候才这么做。因为使用位运算并不利于程序的可读性和可维护性。（科学计算除外）</p>
-<h3 id="压缩空间">压缩空间</h3><p>以前接触过ACM的筒子们应该对状态压缩不陌生，状态压缩的目的在于把一个大数据用有限的内存空间来进行表示。比如 Programming Pearls 里面的一个经典示例：如何对最多有一千万条不重复的7位整数（电话号码）进行排序？且可使用的内存空间有大约1MB多。</p>
-<p>显而易见的常规做法既是做一个基于磁盘操作的外排序。然而如果转换一下思路，充分的使用内存中的每一个位，加上不存在重复的电话号码，以及不存在0和1开头的电话号码。我们只需要使用1000万个位（大约1.2mb），就能以集合的方式在内存里标记下所有的数据，从而轻松的实现位排序。此种方法大幅度的减少了IO时间，从而获得巨大的性能提升。</p>
-<p>ACM里面有大量的如果使用位来压缩空间的示例，状态压缩的动态规划等，此处不做展开，只告诉读者，充分的使用内存的每一个位，经常能带来意想不到的收获。但需要注意的是，状态的压缩和提取，都需要一定的计算量，有时一味的追求状态压缩，反而会降低效率。</p>
+</blockquote>
+<p>在WWDC我们发现Swift团队没有浪费时间在无谓的地方，而是致力于改善Swift 2。</p>
+<p>我们将会为你编写和录制很多关于Swift 2的教程，但在此期间我想强调Swift最令人兴奋的改变，为你可以在秋天迁移到Swift 2做准备。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/06/swift-new.jpg" alt=""></p>
+<h1 id="错误处理">错误处理</h1><p>正如Ray在<a href="http://www.raywenderlich.com/108379/wwdc-2015-initial-impressions">WWDC 2015 Initial Impressions</a>文章中提及，错误处理已经在Swift 2改进了。我们已经迁移到新的系统就像异常处理，而不是<strong>NSError</strong>对象和双指针。</p>
+<p>你可能对以下代码比较熟悉：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> drinkWithError(<span class="constant">nil</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般在Cocoa，你传入一个<strong>NSError</strong>对象的引用(一个<strong>inout</strong>参数在Swift)，然后方法会赋值给错误变量。但问题是你可以传入一个nil到这里来完全忽略这个错误；或者，你可以传入<strong>NSError</strong>但从不检查它。</p>
+<p>Swift 2 为错误检查添加额外保护层。你可以使用<strong>throws</strong>关键字来指定那个函数和方法能够抛出一个错误。然后当你调用某样东西时，可以用<strong>do</strong>, <strong>try</strong>和<strong>catch</strong>多个关键字来捕捉和处理错误。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DrinkError</span>: <span class="title">ErrorType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">NoBeerRemainingError</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">drinkWithError</span><span class="params">()</span></span> throws &#123;</span><br><span class="line">  <span class="keyword">if</span> beer.isAvailable() &#123;</span><br><span class="line">    <span class="comment">// party!</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    throw <span class="type">DrinkError</span>.<span class="type">NoBeerRemainingError</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">tryToDrink</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    try drinkWithError()</span><br><span class="line">  &#125; catch &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有几样东西需要强调的：</p>
+<ol>
+<li>为了创建一个错误可以抛出，只是创建一个继承<strong>ErrorType</strong>的<strong>enum</strong>。</li>
+<li>你需要使用<strong>throws</strong>关键字来标志任何函数可以抛出一个错误。</li>
+<li>这里抛出一个错误，它将会在section 4中被捕捉。</li>
+<li>你在一个<strong>do</strong>块中包含任何可以抛出一个错误的代码，而不是其他语言类似的<strong>try</strong>块中。然后，你添加一个<strong>try</strong>关键字到函数被调用的前面，而且这个函数能够抛出一个错误。</li>
+</ol>
+<p>新语法是非常简洁和易读。任何API当前使用<strong>NSError</strong>以后都会使用这种错误处理方式。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/06/throw-all-the-things-415x320.jpg" alt=""></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-bit-computing/#more">
+            <a class="btn" href="/2015/08/08/iOS-What’s-New-in-Swift-2/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -514,8 +356,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/iOS-Toll-Free-Bridging/">
-                iOS Toll-Free Bridging
+              <a class="post-title-link" href="/2015/08/08/swift-Core-Image-Tutorial/">
+                swift Core Image Tutorial
               </a>
             
           
@@ -524,7 +366,119 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-04
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/swift-Core-Image-Tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/swift-Core-Image-Tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Core_Image入门教程(swift)">Core Image入门教程(swift)</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">Core Image Tutorial: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/nicklockwood">Nick Lockwood</a></li>
+<li>译文出自 :<a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>Core Image是一个强大的框架，它能够让你轻松地对图像进行过滤。你能够通过修改图像的饱和度、色调或曝光率来获取各种特效。你也可以使用CPU或GPU更快地来处理图像数据，快到能够实时处理视频帧数据(video frame)。</p>
+<p>Core Image过滤器能够以链式的方式结合将多个特效应用到一个图像或视频帧数据。多个过滤器能够组合成单个过滤器应用在一个图像。通过每次与每个过滤器比较，这使它非常有效地处理图像。</p>
+<p>在这个教程中，你将会亲手实践如何使用Core Image.通过使用几个不同的过滤器，你会看到实时使用各种炫酷的特效是多么容易。</p>
+<h1 id="基础">基础</h1><p>在你开始之前，让我们先讨论在Core Image框架中几个很重要的类：</p>
+<ul>
+<li><strong>CIContext</strong>. 所有处理core image的工作都在CIContext完成。这个与Core Graphics或OpenGL context有几分相似。</li>
+<li><strong>CIImage</strong>. 这个类保存图像数据，它能够从UIImage，图像文件或像素数据等方式来创建。</li>
+<li><strong>CIFilter</strong>. CIFilter类有一个字典(dictionary)来定义特定属性的过滤器，比如常用过滤器有饱和度，颜色翻转，裁剪等属性，还有很多没列出来。</li>
+</ul>
+<h3 id="CoreImageFun">CoreImageFun</h3><p>打开Xcode并使用<strong>iOS \ Application \ Single View Application</strong>模板来创建一个新工程。输入<strong>CoreImageFun</strong>作为Product Name，选择iPhone为Devices option和确定使用<strong>swift</strong>作为编程语言。</p>
+<p>下载<a href="http://cdn5.raywenderlich.com/downloads/CIResources.zip">教程的资源</a>，并添加图片<strong>image.png</strong>到工程</p>
+<p>下一步，打开<strong>Main.storyboard</strong>你文件，拖拽一个image view到已存在的view，image view作为view的子视图。在Attributes Inspector中，设置image view的content mode属性为Aspect Fit，这样它就不会拉伸图片。</p>
+<p>下一步，确定Document Outline(在Interface Builder里canvas左边)是可见的 - 你可以从menu中<strong>Editor \ Show Document Outline</strong>来启用。</p>
+<p>按着control键从image view拖动到它的superview三次来添加三个约束(constraint)：</p>
+<ol>
+<li>添加一个Top Space to Layout Guide的约束，如果有必要的话，使用Size Inspector来设置约束的constant为0 </li>
+<li>添加一个Center Horizontally in Container的约束(同样也需要设置constant为0)</li>
+<li>添加一个Equal Width约束</li>
+</ol>
+<p>最后，为了约束image view的高度，按着control键从image view拖动到本身，然后添加一个Aspect Ratio约束，使用Size Inspector来设置它的multiplier的值为8:5对应宽高比和constant factor为0。最后，选择<strong>Editor \ Resolve Auto Layout Issues \ All Views in View Controller \ Update Frames</strong>，那么Interface Builder会根据这些约束来更新布局</p>
+<p>下一步，打开Assistant Editor，然后确保它显示<strong>ViewController.swift</strong>。按着control键从UIImageView拖动到刚刚打开的<strong>ViewController</strong>类的大括号。命名outlet为<strong>imageView</strong>，然后点击connect。</p>
+<p>编译和运行这个项目来确保目前进展顺利 - 你应该看到一个空屏。初始化设置完成，现在进入Core Image的世界。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/swift-Core-Image-Tutorial/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-Continuous-Integration-Deployment/">
+                iOS Continuous Integration & Deployment
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
         </span>
 
         
@@ -544,8 +498,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-Toll-Free-Bridging/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-Toll-Free-Bridging/"></span>
+            <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Continuous-Integration-Deployment/"></span>
             </a>
           </span>
           
@@ -560,13 +514,128 @@
 
       
         
-          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">reference</a></p>
-<h2 id="Toll-Free_Bridging">Toll-Free Bridging</h2><h3 id="什么是_Toll-Free_Bridging">什么是 Toll-Free Bridging</h3><p>有一些数据类型是能够在 <code>Core Foundation Framework</code> 和 <code>Foundation Framework</code> 之间交换使用的。这意味着，对于同一个数据类型，你既可以将其作为参数传入 <code>Core Foundation</code>函数，也可以将其作为接收者对其发送 <code>Objective-C</code> 消息（即调用ObjC类方法）。这种在 <code>Core Foundation 和 Foundation</code> 之间交换使用数据类型的技术就叫 <code>Toll-Free Bridging</code>.</p>
-<p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
-<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
+          <h2 id="iOS项目的持续集成与管理">iOS项目的持续集成与管理</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ribot-labs/continuous-integration-deployment-for-ios-projects-7358b72ca2e9">Continuous Integration &amp; Deployment for iOS Projects</a></li>
+<li>原文作者 : <a href="https://medium.com/@matto1990">Matt Oakes</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完 </li>
+</ul>
+</blockquote>
+<p>当实现新功能时，如果忽略可维护性而引入<a href="http://en.wikipedia.org/wiki/Technical_debt">技术债务</a>，那将会需要延迟解决它或导致增加维护成本。</p>
+<p>最近我们已经思考通过哪些方式来提高代码的质量：</p>
+<ul>
+<li>当代码的质量下降时，通过设置一些工具来马上提醒开发者</li>
+<li>文档化一些编码规范和思考在过去的几个项目中如何避免维护性差的问题</li>
+</ul>
+<p><strong>我将会简单地概括我们需要设置什么才能自动监控代码质量.</strong></p>
+<h1 id="基础">基础</h1><p>我们选择一个持续集成工具<a href="https://jenkins-ci.org/">Jenkins</a>，让它运行在一台放在我们工作室的Mac Mini。其实我不怎么喜欢Jenkins，但到目前为止，它是最稳定和最适合的工具来完成这些工作。</p>
+<p>我们已经通过<a href="https://brew.sh/">Homebrew</a>和<a href="https://github.com/sstephenson/rbenv">rbenv</a>来分别安装Jenkins和Ruby，而rbenv能够为我们提供一个最新和稳定的<a href="https://rubygems.org/">Ruby Gems</a>环境。有个Homebrew和Ruby Gems两个包管理工具之后，我们就几乎能够安装所有我们需要的工具，但很少会破坏与原有OS X系统更新提供的Ruby。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-Toll-Free-Bridging/#more">
+            <a class="btn" href="/2015/08/08/iOS-Continuous-Integration-Deployment/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
+                iOS UITableviewCell Swipeable
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
+</ul>
+</blockquote>
+<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
+<p>首先，让我们来看一下现有的解决方法。</p>
+<ul>
+<li>UITableViewRowAction (new in iOS 8)</li>
+</ul>
+<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
+<ul>
+<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
+</ul>
+<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
+<ul>
+<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
+</ul>
+<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -592,7 +661,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
   </div>
 
 
@@ -626,7 +695,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -640,7 +709,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

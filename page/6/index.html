@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-custom-view-controller-transitions-tutorial/">
-                Swift custom-view-controller-transitions-tutorial
+              <a class="post-title-link" href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/">
+                iOS Music Background Play And Lock Screen Image
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-custom-view-controller-transitions-tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-custom-view-controller-transitions-tutorial/"></span>
+            <a href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/"></span>
             </a>
           </span>
           
@@ -194,19 +194,18 @@
 
       
         
-          <h1 id="使用Swift自定义ViewController切换效果与动画">使用Swift自定义ViewController切换效果与动画</h1><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.appcoda.com/custom-view-controller-transitions-tutorial/">custom-view-controller-transitions-tutorial</a></li>
-<li>原文作者 : <a href="http://www.appcoda.com/custom-view-controller-transitions-tutorial/">joyce echessa</a></li>
-<li><a href="www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https:www.devtd.cn">Shopie</a>  </li>
-</ul>
-</blockquote>
-<p>当我们把从Apple iOS设备上内置的app从一个view切换到另一个的时候，我们可以看到各种不同的动态切换。比如，把详细view controller滑动到主view controller时呈现出的切换动画（通常在短信app或设置app中可以看到），以及代表了不同view controller之间切换的各种不间断过渡。</p>
-<p>iOS 7引入了自定义view controller切换，使得开发人员能够在他们的app中实现不同 view controller之间的自定义切换动画。我们通过本教程来看看如何自定义切换动画。本教程还会讲到如何创建手势切换，也就是交互式切换。首先，大家需要下载starter项目，我们在后续的整个教程中将会用到。</p>
-<p><img src="http://www.appcoda.com/wp-content/uploads/2015/03/custom-view-transition.jpg" alt="pic-1"></p>
+          <p><a href="http://blog.csdn.net/zsk_zane/article/details/47320621">reference</a></p>
+<h2 id="iOS_音乐后台播放及锁屏信息显示">iOS 音乐后台播放及锁屏信息显示</h2><p>实现音乐的后台播放，以及播放时，可以控制其暂停，下一首等操作，以及锁屏图片歌曲名等的显示<br>此实例需要真机调试，效果图如下： </p>
+<p><img src="http://img.blog.csdn.net/20150806175143383" alt=""></p>
+<p>工程下载：<a href="https://github.com/Nongchaozhe/MusicRemoteControl">github工程下载</a></p>
+<h3 id="实现步骤：">实现步骤：</h3><p>1) 首先修改info.plist</p>
+<p><img src="http://img.blog.csdn.net/20150806174938474" alt=""></p>
+<p>2) 其次引入两个需要的框架</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;AVFoundation/AVFoundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MediaPlayer/MediaPlayer.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>3) 设置播放器及后台播放</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"><span class="comment">//    设置后台播放</span></span><br><span class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//    设置播放器</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"那些花儿"</span> ofType:<span class="string">@"mp3"</span>] ];</span><br><span class="line">    _player = [[<span class="built_in">AVPlayer</span> alloc] initWithURL:url];</span><br><span class="line">    [_player play];</span><br><span class="line">    _isPlayingNow = <span class="literal">YES</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//后台播放显示信息设置</span></span><br><span class="line">    [<span class="keyword">self</span> setPlayingInfo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - 接收方法的设置</span></span><br><span class="line">- (<span class="keyword">void</span>)remoteControlReceivedWithEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line">    <span class="keyword">if</span> (event<span class="variable">.type</span> == <span class="built_in">UIEventTypeRemoteControl</span>) &#123;  <span class="comment">//判断是否为远程控制</span></span><br><span class="line">        <span class="keyword">switch</span> (event<span class="variable">.subtype</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span>  <span class="built_in">UIEventSubtypeRemoteControlPlay</span>:</span><br><span class="line">                <span class="keyword">if</span> (!_isPlayingNow) &#123;</span><br><span class="line">                    [_player play];</span><br><span class="line">                &#125;</span><br><span class="line">                _isPlayingNow = !_isPlayingNow;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPause</span>:</span><br><span class="line">                <span class="keyword">if</span> (_isPlayingNow) &#123;</span><br><span class="line">                    [_player pause];</span><br><span class="line">                &#125;</span><br><span class="line">                _isPlayingNow = !_isPlayingNow;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlNextTrack</span>:</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@"下一首"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPreviousTrack</span>:</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@"上一首 "</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-custom-view-controller-transitions-tutorial/#more">
+            <a class="btn" href="/2015/08/11/iOS-Music-Background-Play-And-Lock-Screen-Image/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -239,8 +238,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Back-to-the-Future/">
-                Swift Back to the Future
+              <a class="post-title-link" href="/2015/08/11/iOS-Crash-Bugs/">
+                iOS Crash Bugs
               </a>
             
           
@@ -249,14 +248,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -269,8 +268,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Back-to-the-Future/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Back-to-the-Future/"></span>
+            <a href="/2015/08/11/iOS-Crash-Bugs/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/iOS-Crash-Bugs/"></span>
             </a>
           </span>
           
@@ -285,21 +284,15 @@
 
       
         
-          <h1 id="Swift的异步机制-Future">Swift的异步机制-Future</h1><hr>
-<blockquote>
-<ul>
-<li>原文链接 : <a href="https://realm.io/news/swift-summit-javier-soto-futures/">Back to the Future</a></li>
-<li>原文作者 : <a href="https://twitter.com/Javi">Javier Soto</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="http://shidanqing.net">sdq</a> </li>
-</ul>
-</blockquote>
-<p>我们在使用Objective-C写异步代码时常常会出现许多问题。它没有很好的错误处理机制，当你发现你需要在你的异步函数中创建新的异步函数它也没有一个很好的可伸缩实现。在这次演讲中，Javier Soto将演示实现一个能够简化异步API的Swift Future类型。并且创建一个Resule类型,我们可以在这个类型上调用map和andThen等操作。对于Swift来说，Futures的未来可能很会基于信号和eactiveCocoa 3。</p>
-<p>你可以在<a href="https://github.com/JaviSoto/Talks#swift-summit-2015-back-to-the-futures">这里</a>看到这次演讲中的代码。</p>
-<h2 id="更优雅地使用Swift">更优雅地使用Swift</h2><p>谢谢各位，很高兴和大家一起来聊一聊Swift，感谢组织者把我们聚集在一起并让我在这里演讲。我的名字叫Javi，是来自Twitter的iOS工程师。</p>
-<p>相比于Objective-C，我们在Swift里可以把很多事做得更好。我们已经在之前的演讲中看了不少例子，我想紧接着着他们，和大家谈论一下一种我想引入Swift的设计模式。这种设计模式会使我们的代码更为优雅。</p>
+          <h2 id="Crash_Bug">Crash Bug</h2><p>1) ios7 下没有 <code>ContainString</code> API</p>
+<p>2) NSDictionary &amp; NSArray nil insert </p>
+<p>3) 数组越界 NSArray <code>out of bounds</code></p>
+<p>4) <code>substringwithrange</code> out of bounds</p>
+<p>5) <code>GPUImageView presentBufferForDisplay</code> — 内存泄露 或者 app 进入后台</p>
+<p>6) <code>locationOfTouch: inView:</code> </p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> (gestureRecognizer)<span class="tag">numberOfTouches</span> &gt; <span class="tag">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Back-to-the-Future/#more">
+            <a class="btn" href="/2015/08/11/iOS-Crash-Bugs/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -332,8 +325,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Reactive/">
-                Swift Reactive
+              <a class="post-title-link" href="/2015/08/11/Audio-Basic-Knowleage/">
+                Audio Basic Knowleage
               </a>
             
           
@@ -342,14 +335,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/Audio/">Audio</a>
 
               
               
@@ -362,8 +355,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Reactive/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Reactive/"></span>
+            <a href="/2015/08/11/Audio-Basic-Knowleage/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Audio-Basic-Knowleage/"></span>
             </a>
           </span>
           
@@ -378,22 +371,101 @@
 
       
         
-          <h1 id="Swift的响应式编程">Swift的响应式编程</h1><hr>
-<blockquote>
-<ul>
-<li>原文链接 : <a href="https://medium.com/swift-programming/reactive-swift-3b6050375534">Reactive Swift</a></li>
-<li>原文作者 : <a href="https://medium.com/@vasarhelyia">Agnes Vasarhelyi</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/bboyefiyu">Mr.Simple</a> </li>
-<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
-<li>状态 :  完成</li>
+          <h2 id="音频编码基础知识">音频编码基础知识</h2><p>自然界中的声音非常复杂，波形极其复杂，通常我们采用的是脉冲代码调制编码，即PCM编码。PCM通过抽样、量化、编码三个步骤将连续变化的模拟信号转换为数字编码。</p>
+<h3 id="什么是采样率和采样大小（位/bit）。">什么是采样率和采样大小（位/bit）。</h3><p>声音其实是一种能量波，因此也有频率和振幅的特征，频率对应于时间轴线，振幅对应于电平轴线。波是无限光滑的，弦线可以看成由无数点组成，由于存储空间是相对有限的，数字编码过程中，必须对弦线的点进行采样。采样的过程就是抽取某点的频率值，很显然，在一秒中内抽取的点越多，获取得频率信息更丰富，为了复原波形，一次振动中，必须有2个点的采样，人耳能够感觉到的最高频率为20kHz，因此要满足人耳的听觉要求，则需要至少每秒进行40k次采样，用40kHz表达，这个40kHz就是采样率。我们常见的CD，采样率为44.1kHz。光有频率信息是不够的，我们还必须获得该频率的能量值并量化，用于表示信号强度。量化电平数为2的整数次幂，我们常见的CD位16bit的采样大小，即2的16次方。采样大小相对采样率更难理解，因为要显得抽象点，举个简单例子：假设对一个波进行8次采样，采样点分别对应的能量值分别为A1-A8，但我们只使用2bit的采样大小，结果我们只能保留A1-A8中4个点的值而舍弃另外4个。如果我们进行3bit的采样大小，则刚好记录下8个点的所有信息。采样率和采样大小的值越大，记录的波形更接近原始信号。</p>
+<h3 id="有损和无损">有损和无损</h3><p>根据采样率和采样大小可以得知，相对自然界的信号，音频编码最多只能做到无限接近，至少目前的技术只能这样了，相对自然界的信号，任何数字音频编码方案都是有损的，因为无法完全还原。在计算机应用中，能够达到最高保真水平的就是PCM编码，被广泛用于素材保存及音乐欣赏，CD、DVD以及我们常见的WAV文件中均有应用。因此，PCM约定俗成了无损编码，因为PCM代表了数字音频中最佳的保真水准，并不意味着PCM就能够确保信号绝对保真，PCM也只能做到最大程度的无限接近。我们而习惯性的把MP3列入有损音频编码范畴，是相对PCM编码的。强调编码的相对性的有损和无损，是为了告诉大家，要做到真正的无损是困难的，就像用数字去表达圆周率，不管精度多高，也只是无限接近，而不是真正等于圆周率的值。</p>
+<h3 id="为什么要使用音频压缩技术">为什么要使用音频压缩技术</h3><p>要算一个PCM音频流的码率是一件很轻松的事情，采样率值×采样大小值×声道数 bps。一个采样率为<code>44.1KHz</code>，采样大小为<code>16bit</code>，双声道的PCM编码的WAV文件，它的数据速率则为 <code>44.1K×16×2 =1411.2 Kbps</code>。我们常说<code>128K</code>的MP3，对应的WAV的参数，就是这个<code>1411.2 Kbps</code>，这个参数也被称为数据带宽，它和ADSL中的带宽是一个概念。将码率除以8,就可以得到这个WAV的数据速率，即<code>176.4KB/s</code>。这表示存储一秒钟采样率为<code>44.1KHz</code>，采样大小为<code>16bit</code>，双声道的PCM编码的音频信号，需要<code>176.4KB</code>的空间，1分钟则约为<code>10.34M</code>，这对大部分用户是不可接受的，尤其是喜欢在电脑上听音乐的朋友，要降低磁盘占用，只有2种方法，降低采样指标或者压缩。降低指标是不可取的，因此专家们研发了各种压缩方案。由于用途和针对的目标市场不一样，各种音频压缩编码所达到的音质和压缩比都不一样，在后面的文章中我们都会一一提到。有一点是可以肯定的，他们都压缩过。</p>
+<h3 id="频率与采样率的关系">频率与采样率的关系</h3><p>采样率表示了每秒对原始信号采样的次数，我们常见到的音频文件采样率多为44.1KHz，这意味着什么呢？假设我们有2段正弦波信号，分别为20Hz和20KHz，长度均为一秒钟，以对应我们能听到的最低频和最高频，分别对这两段信号进行40KHz的采样，我们可以得到一个什么样的结果呢？结果是：20Hz的信号每次振动被采样了40K/20=2000次，而20K的信号每次振动只有2次采样。显然，在相同的采样率下，记录低频的信息远比高频的详细。这也是为什么有些音响发烧友指责CD有数码声不够真实的原因，CD的44.1KHz采样也无法保证高频信号被较好记录。要较好的记录高频信号，看来需要更高的采样率，于是有些朋友在捕捉CD音轨的时候使用48KHz的采样率，这是不可取的！这其实对音质没有任何好处，对抓轨软件来说，保持和CD提供的44.1KHz一样的采样率才是最佳音质的保证之一，而不是去提高它。较高的采样率只有相对模拟信号的时候才有用，如果被采样的信号是数字的，请不要去尝试提高采样率。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/11/Convert-PCM-To-AAC/">
+                Convert PCM To AAC
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Audio/">Audio</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/11/Convert-PCM-To-AAC/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Convert-PCM-To-AAC/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.csdn.net/poechant/article/details/7435054">reference</a></p>
+<h2 id="音频编解码·实战篇（1）PCM转至AAC（AAC编码）">音频编解码·实战篇（1）PCM转至AAC（AAC编码）</h2><ul>
+<li>作者：柳大·Poechant</li>
+<li>博客：blog.csdn.net/poechant</li>
+<li>邮箱：zhongchao.ustc@gmail.com</li>
+<li>日期：April 7th, 2012</li>
 </ul>
-</blockquote>
-<p>让我们首先回到Apple刚推出Objective-C的继任者-Swift的时候，那真是一个非比寻常的时刻。<br>Siri还没有开启地狱之门，Prezi还没有支持订阅，那时的朝鲜也还没有hack任何人的email。一种新语言的出现让我个人非常兴奋，尤其是这是一种类型安全的脚本语言。虽然Swift还在快速的发展中，但是我们不必担心它是否已经稳定。当那一刻到来之时，我应该已经知道如何交付整洁的、可测试的代码。还要有非常灵活、流畅的UI？如果你对Objective-C 和 MVC之外的东西感兴趣，那么就请继续读下去吧。</p>
-<h2 id="MVC_与_MVVM">MVC 与 MVVM</h2><p>让我们从零开始，当我们设计一个应用时，你可能会先考虑应用的架构。Cocoa框架以<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html">Model-View-Controller</a> (也称为 MVC)为基础架构，它的结构如下图所示。</p>
-<p><img src="https://d262ilb51hltx0.cloudfront.net/max/1600/0*pEvMKHBK9HeAgrYC." alt=""></p>
+<p>这里利用FAAC来实现AAC编码。</p>
+<h3 id="下载安装_FAAC">下载安装 FAAC</h3><p>这里的安装过程是在 Mac 和 Linux 上实现的，Windows可以类似参考。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//downloads.sourceforge.net/faac/faac-1.28.tar.gz</span></span><br><span class="line">tar zxvf faac-<span class="number">1.28</span><span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">cd faac-<span class="number">1.28</span></span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>如果才用默认的 configure 中的 prefix path，那么安装后的 lib 和 .h 文件分别在/usr/local/lib和/usr/local/include，后面编译的时候会用到。</p>
+<p>如果编译过程中发现错误：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpeg4ip.h:126: <span class="keyword">error</span>: <span class="keyword">new</span> declaration ‘<span class="keyword">char</span>* strcasestr(<span class="keyword">const</span> <span class="keyword">char</span>*, <span class="keyword">const</span> <span class="keyword">char</span>*)’</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Reactive/#more">
+            <a class="btn" href="/2015/08/11/Convert-PCM-To-AAC/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -426,8 +498,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/">
-                Swift Access Sub-Controllers from a UINavigationController
+              <a class="post-title-link" href="/2015/08/11/Wave-And-PCM-Audio-Format/">
+                Wave And PCM Audio Format
               </a>
             
           
@@ -436,14 +508,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-11
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/Audio/">Audio</a>
 
               
               
@@ -456,8 +528,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/"></span>
+            <a href="/2015/08/11/Wave-And-PCM-Audio-Format/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/Wave-And-PCM-Audio-Format/"></span>
             </a>
           </span>
           
@@ -472,114 +544,29 @@
 
       
         
-          <h1 id="在Swift开发中通过UINavigationController来访问Sub-Controllers">在Swift开发中通过UINavigationController来访问Sub-Controllers</h1><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">Access Sub-Controllers from a UINavigationController in Swift</a></li>
-<li>原文作者 : <a href="http://www.andrewcbancroft.com">Andrew Bancroft</a></li>
-<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="http://www.andrewcbancroft.com/2015/06/02/access-sub-controllers-from-a-uinavigationcontroller-in-swift/">samw00</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">mrchenhao</a> </li>
-<li>状态 : 完成</li>
+          <p><a href="http://blog.csdn.net/poechant/article/details/7436710">reference</a></p>
+<h2 id="音频编解码·格式篇（1）Wave_PCM_audio_format（WAV）">音频编解码·格式篇（1）Wave PCM audio format（WAV）</h2><ul>
+<li>作者：柳大·Poechant</li>
+<li>博客：Blog.CSDN.net/Poechant</li>
+<li>邮箱：zhongchao.ustc@gmail.com</li>
+<li>日期：April 6th, 2012</li>
 </ul>
-</blockquote>
-<p>通过<code>AppDelegate</code>或者通过<code>prepareForSegue(_:sender:)</code>来访问<code>UINavigationController</code>的第一个子元素的访问顺序总是让我有点纳闷。这篇博文中有几段代码可以帮助你和我迅速的弄清楚如何在我们的Swift应用程序开发中和navigation controllers打交道。</p>
-<h2 id="AppDelegate">AppDelegate</h2><p>每一个iOS应用在其启动加载完成后都会显示一个根视图控制器。假设我们要搭建一个以导航控制器(navigation controller)为主的一个app…,也就是说我们这个app的第一（根）视图控制器是一个UINavigationController。在我们的Storyboard中，我们创建了一个简单的场景，给一个视图控制器添加了些UI控件和一些属性，然后我们将这个视图控制器嵌入在一个导航控制器中。</p>
-<p>但是如果我想在app启动之后再去设置视图控制器中的某些个属性呢？我们要如何才能做到这点呢？</p>
-<p>我一直把我在Storyboard中添加UI要素的第一个场景(first scene)视为“第一视图控制器”。但是，对iOS来说，导航控制器才是实际意义上的第一（根）视图控制器。</p>
-<p>当一个app把导航控制器视为其第一（根）视图器时，我们就需要在视图层级结构中“挖”的更深一点才能访问到我们之前所以为的“第一视图控制器“。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Access-Sub-Controllers-from-a-UINavigationController/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/">
-                Swift Increasing Performance by Reducing Dynamic Dispatch
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="通过减少动态分发来提高Swift的执行效率">通过减少动态分发来提高Swift的执行效率</h2><p>&gt;</p>
-<ul>
-<li>原文链接 : <a href="https://developer.apple.com/swift/blog/?id=27">Increasing Performance by Reducing Dynamic Dispatch</a></li>
-<li>原文作者 : <a href="https://developer.apple.com/swift">Apple官方博文</a></li>
-<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+<h3 id="音频编解码基础">音频编解码基础</h3><ul>
+<li>采样率：声音信号在“模数转换”过程中单位时间内采样的次数。</li>
+<li>采样值：每一次采样周期内声音模拟信号的积分值。</li>
+<li>单声道：11.025 KHz 采样值，8 Bits 采样值（0x00 - 0xFF）。</li>
+<li>双声道：44.1 KHz 采样值，16 Bits 采样值。高八位表示左声道，低八位表示右声道。</li>
 </ul>
-<p>和其他很多编程语言一样，Swift允许一个类重写其父类中声明的方法和属性。这意味着程序在运行时需要先确定要调用的方法和访问的属性是属于哪个类的，确定之后，则会执行间接调用（indirect call）或间接访问（indirect access）。这个运行机制称为<strong>动态分发</strong>（dynamic dispatch）。这个机制能够提高语言的表现力，但其付出的代价是在每次间接调用或间接访问时，会产生一定量的运行时开销（runtime overhead）。在执行敏感代码时，最好能避免产生这样的开销。这篇博客将罗列三种通过消除这动态分发机制来提高程序执行效率的方式：<code>final</code>，<code>private</code>和全模块优化（Whole Module Optimization）。</p>
-<p>Consider the following example:</p>
-<p>先来看看下面这段代码</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParticleModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> point = ( <span class="number">0.0</span>, <span class="number">0.0</span> )</span><br><span class="line">    <span class="keyword">var</span> velocity = <span class="number">100.0</span></span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">updatePoint</span><span class="params">(newPoint: <span class="params">(Double, Double)</span></span></span>, newVelocity: <span class="type">Double</span>) &#123;</span><br><span class="line">        point = newPoint</span><br><span class="line">        velocity = newVelocity</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">update</span><span class="params">(newP: <span class="params">(Double, Double)</span></span></span>, newV: <span class="type">Double</span>) &#123;</span><br><span class="line">        updatePoint(newP, newVelocity: newV)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="type">ParticalModel</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stride(from: <span class="number">0.0</span>, through: <span class="number">360</span>, by: <span class="number">1.0</span>) &#123;</span><br><span class="line">    p.update((i * sin(i), i), newV: i * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="WAV音频文件格式">WAV音频文件格式</h3><p>见下图：<br><img src="http://img.my.csdn.net/uploads/201204/08/1333820202_8901.png" alt=""></p>
+<p>1) 文件头</p>
+<ul>
+<li>RIFF/WAV 文件标识段</li>
+<li>声音数据格式说明段</li>
+</ul>
+<p>2) 数据体：由 PCM（脉冲编码调制）格式表示的样本组成。</p>
+<p>单声道 WAV 文件中，声道0代表左声道，声道1代表右声道；多声道 WAV 文件中，左右声道的样本是交替出现的。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Increasing-Performance-by-Reducing-Dynamic-Dispatch/#more">
+            <a class="btn" href="/2015/08/11/Wave-And-PCM-Audio-Format/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -605,7 +592,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/7/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/7/">&raquo;</a>
   </div>
 
 
@@ -639,7 +626,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -653,7 +640,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

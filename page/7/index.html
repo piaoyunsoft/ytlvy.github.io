@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/">
-                How To Implement A Circular Image Loader Animation with CAShapeLayer
+              <a class="post-title-link" href="/2015/08/09/git-flow/">
+                git flow
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-08
+          發表於 2015-08-09
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/Git/">Git</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/"></span>
+            <a href="/2015/08/09/git-flow/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/09/git-flow/"></span>
             </a>
           </span>
           
@@ -194,32 +194,19 @@
 
       
         
-          <h2 id="使用CAShapeLayer来实现圆形图片加载动画">使用CAShapeLayer来实现圆形图片加载动画</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer">How To Implement A Circular Image Loader Animation with CAShapeLayer</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/rounak">Rounak Jain</a></li>
-<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/Lollypo">Lollypo</a>  </li>
-<li>状态 :  校正完</li>
-</ul>
-</blockquote>
-<p>几个星期之前，Michael Villar在Motion试验中创建一个非常有趣的加载动画。</p>
-<p>下面的GIF图片展示这个加载动画，它将一个圆形进度指示器和圆形渐现动画结合。这个组合的效果有趣，独一无二和有点迷人。</p>
-<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/02/Circle.gif" alt=""></p>
-<p>这个教程将会教你如何使用Swift和Core Animatoin来重新创建这个效果。让我们开始吧！</p>
-<h1 id="基础">基础</h1><p>首先下载这个教程的<a href="http://cdn1.raywenderlich.com/wp-content/uploads/2015/02/ImageLoaderIndicator-Starter.zip">启动项目</a>，然后编译和运行。过一会之后，你应该看到一个简单的image显示：</p>
-<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/02/StarterProject.png" alt=""></p>
-<p>这个启动项目已经预先在恰当的位置将views和加载逻辑编写好了。花一分钟来浏览来快速了解这个项目；那里有一个<strong>ViewController</strong>，<strong>ViewController</strong>里有一个命名为<strong>CustomImageView</strong>的<strong>UIImageView</strong>子类, 还有一个<strong>SDWebImage</strong>的方法被调用来加载image。</p>
-<p>你可能注意到当你第一次运行这个app的时候，当image下载时这个app似乎会暂停几秒，然后image会显示在屏幕。当然，此刻没有圆形进度指示器 - 你将会在这个教程中创建它！</p>
-<p>你会在两个步骤中创建这个动画：</p>
+          <p><a href="http://nvie.com/posts/a-successful-git-branching-model/">reference</a></p>
+<h2 id="A_successful_Git_branching_model">A successful Git branching model</h2><p><code>git flow</code> 工作流, 流转示意图:</p>
+<p><img src="http://nvie.com/img/git-model@2x.png" alt="git flow"></p>
+<h3 id="去中心化_和_中心化">去中心化 和 中心化</h3><p>此工作流中, 存在唯一的<code>中心仓库</code> — <code>origin</code>. 每个程序员向中心仓库, 拉取更新和提交更新. 然而, 程序员也可以被划分为小组, 来进入更进一步的划分, 先从这些<code>分中心仓库</code> 来拉取更新和提交更新, 先完成小组的同步, 再和中心仓库同步.</p>
+<p><img src="http://nvie.com/img/centr-decentr@2x.png" alt=""></p>
+<h3 id="主要分支">主要分支</h3><p>这个工作流的核心为两个主分支:</p>
 <ol>
-<li><strong>圆形进度</strong>。首先，你会画一个圆形进度指示器，然后根据下载进度来更新它。</li>
-<li><strong>扩展圆形图片</strong>。第二，你会通过扩展的圆形窗口来揭示下载图片。</li>
+<li>Master</li>
+<li>Develop</li>
 </ol>
-<p>紧跟着下面步骤来逐步实现！</p>
+<p><img src="http://nvie.com/img/main-branches@2x.png" alt=""></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/How-To-Implement-A-Circular-Image-Loader-Animation-with-CAShapeLayer/#more">
+            <a class="btn" href="/2015/08/09/git-flow/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -252,328 +239,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/Swift-Extensions-Nuances/">
-                Swift Extensions Nuances
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/Swift-Extensions-Nuances/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Extensions-Nuances/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Swift扩展的三个微妙细节">Swift扩展的三个微妙细节</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/04/22/3-nuances-of-swift-extensions/">3 Nuances of Swift Extensions</a></li>
-<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
-<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
-<li>校对者:  </li>
-<li>状态 :  校对中 </li>
-</ul>
-</blockquote>
-<p>每当我初次翻看某文档时，我都走马观花似的快速阅过，还一边点着头一边喃喃自语说：“好！懂了，就这么回事！”，可是过后当我真正要运用到这些我以为已经理解了的知识点时，却发现实际情况和我想的往往不一样，每当这时我就懵了，心想：“哇哦…怎么回事？这和我想的完全不一样啊！文档里有说这事吗？”。</p>
-<p>最近的几次讨论促使我扪心自问是否真正的理解了Swift中的扩展。我阅读过关于扩展的文档，并且我“认为”我自己对这块内容已经是理解的相当透彻了。可是这几次讨论，加上自己私下通过敲代码的验证，让我发现了我原先不曾注意到几个微妙的细节。</p>
-<p><strong>更新</strong>：这篇文章刚一发表，Swift社区就出手襄助并帮助我弄明白了我最根本的纠结点在哪。为此，我写了另一篇文章“<a href="http://www.andrewcbancroft.com/2015/04/24/clarifying-swift-access-control-hint-swift-isnt-c-sharp/">阐明Swift访问控制</a>”进一步说明我之前的误解。为了避免犯我曾今犯过的错误，我建议大家去读一读。</p>
-<h2 id="三个关于扩展的微妙细节">三个关于扩展的微妙细节</h2><p>对下面列出的三个细节的思考严重挑战了我之前对Swift扩展的理解：</p>
-<ol>
-<li>Swift扩展对它所扩展类型的<strong>visibility</strong>。比如，扩展能访问被<code>private</code>所修饰的内容吗?</li>
-<li>定义扩展的位置是否对扩展的<strong>visibility</strong>有影响。比如我这有一个类型我想写个扩展，把扩展写在同一个源文件里和把扩展写在另一个文件里有什么区别吗？</li>
-<li>扩展里“成员”的默认访问修饰符以及是否给他们添加修饰对这个扩展作为一个类型的公共接口的影响。</li>
-</ol>
-<p>在我开始之前，假设我有一个公共结构体<code>Person</code>。这个结构体有一些私有属性，<code>name</code>，<code>gender</code>，和<code>age</code>。用一个枚举把<code>Gender</code>封装了一下。这个结构体看起来如下：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/Swift-Extensions-Nuances/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-What’s-New-in-Swift-2/">
-                iOS What’s New in Swift 2
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-What’s-New-in-Swift-2/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Swift_2_有哪些新特性">Swift 2 有哪些新特性</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/108522/whats-new-in-swift-2">What’s New in Swift 2</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/gregheo">Greg Heo</a></li>
-<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
-<li>状态 :  校正完</li>
-</ul>
-</blockquote>
-<p>在WWDC我们发现Swift团队没有浪费时间在无谓的地方，而是致力于改善Swift 2。</p>
-<p>我们将会为你编写和录制很多关于Swift 2的教程，但在此期间我想强调Swift最令人兴奋的改变，为你可以在秋天迁移到Swift 2做准备。</p>
-<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/06/swift-new.jpg" alt=""></p>
-<h1 id="错误处理">错误处理</h1><p>正如Ray在<a href="http://www.raywenderlich.com/108379/wwdc-2015-initial-impressions">WWDC 2015 Initial Impressions</a>文章中提及，错误处理已经在Swift 2改进了。我们已经迁移到新的系统就像异常处理，而不是<strong>NSError</strong>对象和双指针。</p>
-<p>你可能对以下代码比较熟悉：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> drinkWithError(<span class="constant">nil</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一般在Cocoa，你传入一个<strong>NSError</strong>对象的引用(一个<strong>inout</strong>参数在Swift)，然后方法会赋值给错误变量。但问题是你可以传入一个nil到这里来完全忽略这个错误；或者，你可以传入<strong>NSError</strong>但从不检查它。</p>
-<p>Swift 2 为错误检查添加额外保护层。你可以使用<strong>throws</strong>关键字来指定那个函数和方法能够抛出一个错误。然后当你调用某样东西时，可以用<strong>do</strong>, <strong>try</strong>和<strong>catch</strong>多个关键字来捕捉和处理错误。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DrinkError</span>: <span class="title">ErrorType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">NoBeerRemainingError</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">drinkWithError</span><span class="params">()</span></span> throws &#123;</span><br><span class="line">  <span class="keyword">if</span> beer.isAvailable() &#123;</span><br><span class="line">    <span class="comment">// party!</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    throw <span class="type">DrinkError</span>.<span class="type">NoBeerRemainingError</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">tryToDrink</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    try drinkWithError()</span><br><span class="line">  &#125; catch &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里有几样东西需要强调的：</p>
-<ol>
-<li>为了创建一个错误可以抛出，只是创建一个继承<strong>ErrorType</strong>的<strong>enum</strong>。</li>
-<li>你需要使用<strong>throws</strong>关键字来标志任何函数可以抛出一个错误。</li>
-<li>这里抛出一个错误，它将会在section 4中被捕捉。</li>
-<li>你在一个<strong>do</strong>块中包含任何可以抛出一个错误的代码，而不是其他语言类似的<strong>try</strong>块中。然后，你添加一个<strong>try</strong>关键字到函数被调用的前面，而且这个函数能够抛出一个错误。</li>
-</ol>
-<p>新语法是非常简洁和易读。任何API当前使用<strong>NSError</strong>以后都会使用这种错误处理方式。</p>
-<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/06/throw-all-the-things-415x320.jpg" alt=""></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-What’s-New-in-Swift-2/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/swift-Core-Image-Tutorial/">
-                swift Core Image Tutorial
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/08/swift-Core-Image-Tutorial/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/swift-Core-Image-Tutorial/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Core_Image入门教程(swift)">Core Image入门教程(swift)</h2><blockquote>
-<ul>
-<li>原文链接 : <a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">Core Image Tutorial: Getting Started</a></li>
-<li>原文作者 : <a href="http://www.raywenderlich.com/u/nicklockwood">Nick Lockwood</a></li>
-<li>译文出自 :<a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a>  </li>
-<li>状态 :  校正完</li>
-</ul>
-</blockquote>
-<p>Core Image是一个强大的框架，它能够让你轻松地对图像进行过滤。你能够通过修改图像的饱和度、色调或曝光率来获取各种特效。你也可以使用CPU或GPU更快地来处理图像数据，快到能够实时处理视频帧数据(video frame)。</p>
-<p>Core Image过滤器能够以链式的方式结合将多个特效应用到一个图像或视频帧数据。多个过滤器能够组合成单个过滤器应用在一个图像。通过每次与每个过滤器比较，这使它非常有效地处理图像。</p>
-<p>在这个教程中，你将会亲手实践如何使用Core Image.通过使用几个不同的过滤器，你会看到实时使用各种炫酷的特效是多么容易。</p>
-<h1 id="基础">基础</h1><p>在你开始之前，让我们先讨论在Core Image框架中几个很重要的类：</p>
-<ul>
-<li><strong>CIContext</strong>. 所有处理core image的工作都在CIContext完成。这个与Core Graphics或OpenGL context有几分相似。</li>
-<li><strong>CIImage</strong>. 这个类保存图像数据，它能够从UIImage，图像文件或像素数据等方式来创建。</li>
-<li><strong>CIFilter</strong>. CIFilter类有一个字典(dictionary)来定义特定属性的过滤器，比如常用过滤器有饱和度，颜色翻转，裁剪等属性，还有很多没列出来。</li>
-</ul>
-<h3 id="CoreImageFun">CoreImageFun</h3><p>打开Xcode并使用<strong>iOS \ Application \ Single View Application</strong>模板来创建一个新工程。输入<strong>CoreImageFun</strong>作为Product Name，选择iPhone为Devices option和确定使用<strong>swift</strong>作为编程语言。</p>
-<p>下载<a href="http://cdn5.raywenderlich.com/downloads/CIResources.zip">教程的资源</a>，并添加图片<strong>image.png</strong>到工程</p>
-<p>下一步，打开<strong>Main.storyboard</strong>你文件，拖拽一个image view到已存在的view，image view作为view的子视图。在Attributes Inspector中，设置image view的content mode属性为Aspect Fit，这样它就不会拉伸图片。</p>
-<p>下一步，确定Document Outline(在Interface Builder里canvas左边)是可见的 - 你可以从menu中<strong>Editor \ Show Document Outline</strong>来启用。</p>
-<p>按着control键从image view拖动到它的superview三次来添加三个约束(constraint)：</p>
-<ol>
-<li>添加一个Top Space to Layout Guide的约束，如果有必要的话，使用Size Inspector来设置约束的constant为0 </li>
-<li>添加一个Center Horizontally in Container的约束(同样也需要设置constant为0)</li>
-<li>添加一个Equal Width约束</li>
-</ol>
-<p>最后，为了约束image view的高度，按着control键从image view拖动到本身，然后添加一个Aspect Ratio约束，使用Size Inspector来设置它的multiplier的值为8:5对应宽高比和constant factor为0。最后，选择<strong>Editor \ Resolve Auto Layout Issues \ All Views in View Controller \ Update Frames</strong>，那么Interface Builder会根据这些约束来更新布局</p>
-<p>下一步，打开Assistant Editor，然后确保它显示<strong>ViewController.swift</strong>。按着control键从UIImageView拖动到刚刚打开的<strong>ViewController</strong>类的大括号。命名outlet为<strong>imageView</strong>，然后点击connect。</p>
-<p>编译和运行这个项目来确保目前进展顺利 - 你应该看到一个空屏。初始化设置完成，现在进入Core Image的世界。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/swift-Core-Image-Tutorial/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/08/iOS-Continuous-Integration-Deployment/">
-                iOS Continuous Integration & Deployment
+              <a class="post-title-link" href="/2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/">
+                Notes: The interesting things from WWDC, iOS 9, Swift 2
               </a>
             
           
@@ -602,8 +269,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Continuous-Integration-Deployment/"></span>
+            <a href="/2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Notes-The-interesting-things-from-WWDC-iOS-9-Swift-2/"></span>
             </a>
           </span>
           
@@ -618,27 +285,350 @@
 
       
         
-          <h2 id="iOS项目的持续集成与管理">iOS项目的持续集成与管理</h2><blockquote>
+          <h2 id="WWDC中那些令人感兴趣的事物:iOS_9,_Swift_2">WWDC中那些令人感兴趣的事物:iOS 9, Swift 2</h2><blockquote>
 <ul>
-<li>原文链接 : <a href="https://medium.com/ribot-labs/continuous-integration-deployment-for-ios-projects-7358b72ca2e9">Continuous Integration &amp; Deployment for iOS Projects</a></li>
-<li>原文作者 : <a href="https://medium.com/@matto1990">Matt Oakes</a></li>
-<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
-<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
-<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
-<li>状态 :  校正完 </li>
+<li>原文链接 : <a href="http://iosdevtips.co/post/121053658888/wwdc-ios-9-swift-2-notes" target="_blank" rel="external">Notes: The interesting things from WWDC, iOS 9, Swift 2</a></li>
+<li>原文作者: <a href="http://iosdevtips.co" target="_blank" rel="external">Rounak Jain</a></li>
+<li>译文出自: <a href="http://www.devtf.cn/" target="_blank" rel="external">开发技术前线http://www.devtf.cn/</a></li>
+<li>译者 : <a href="https://github.com/Lollypo" target="_blank" rel="external">Lollypo</a> </li>
+<li>校对者:<a href="https://github.com/bboyfeiyu" target="_blank" rel="external">Mr.Simple</a></li>
+<li>状态 :  完成</li>
 </ul>
 </blockquote>
-<p>当实现新功能时，如果忽略可维护性而引入<a href="http://en.wikipedia.org/wiki/Technical_debt">技术债务</a>，那将会需要延迟解决它或导致增加维护成本。</p>
-<p>最近我们已经思考通过哪些方式来提高代码的质量：</p>
+<p>今天WWDC上的Keynote非常棒,即便到目前为止还未结束.在开发者方面,已经有大量的新事物出现,其中包括有Swift 2, iOS 9, CloudKit等等.</p>
+<p>这里是我在浏览发布日志,API差异,新特性等内容时记录的笔记</p>
 <ul>
-<li>当代码的质量下降时，通过设置一些工具来马上提醒开发者</li>
-<li>文档化一些编码规范和思考在过去的几个项目中如何避免维护性差的问题</li>
+<li><p>你不需要加入$99的开发者计划就可以在真机上调试应用程序.此外,Mac与iOS开发者计划合并,可以节省一半支出:<br><img src="http://40.media.tumblr.com/ab8cf0d95f459e63bb10ded612e2fa34/tumblr_inline_npnb64YpK31qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>Interface Builder支持实时预览模糊与透明效果<br><img src="http://40.media.tumblr.com/ed19a7cbd80fe5ccb49f5a9102744eec/tumblr_inline_npnb8aLtBC1qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>Objective-C支持泛型,这意味着集合对象,如数组,字典可以像Swift一样指定类型<br><img src="http://40.media.tumblr.com/4ed77823bca27d89db84f654080d7d28/tumblr_inline_npnbbdudd01qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>新的名为 <a href="https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/UIStackView_Class_Reference/index.html#//apple_ref/doc/uid/TP40015256" target="_blank" rel="external">UIStackView</a>UI类,是Mac中NSStackView的一种实现.</p>
+</li>
+<li><p><a href="https://developer.apple.com/library/prerelease/ios/documentation/DataManagement/Conceptual/CloutKitWebServicesReference/Introduction/Introduction.html#//apple_ref/doc/uid/TP40015240" target="_blank" rel="external">CloudKit现在也可以在Web中使用</a></p>
+</li>
+<li><p>开放 CASpringAnimation!<br><img src="http://40.media.tumblr.com/65c41c82d295034c23ef986214404c6d/tumblr_inline_npnbg2mCrc1qh9cw7_500.png" alt=""></p>
+</li>
+<li><p>应用程序现在可以作为拓展插入到Safari中,听起来有点像广告拦截器.此外,应用程序可以在Safari的共享链接填充内容</p>
+</li>
+<li><p>开发者现在可以使用 <code>SFSafariViewController</code>, 这可以共享Safari中中cookies, 自动填充以及其他Safari中的特性.</p>
+</li>
+<li><p><code>UIPickerView</code> 可转换为任意尺寸,而不必再使用那些丑陋的转换技巧.</p>
+</li>
+<li><p>iOS应用程序可在发出提醒展示一段文本域,此前仅限于Messages使用.</p>
+</li>
+<li><p>通讯录可通过面向对象的API来访问,而不是之前的C</p>
+</li>
+<li><p>电话API在低版本设备上不支持,这也许会导致编译时错误.现在有新的判断条件来决定是否执行代码,这可以有效避免使用新的API导致的应用程序崩溃:<br><img src="http://41.media.tumblr.com/c1875f851f168467e8e3bd435fa31f8d/tumblr_inline_npnbnvrUp31qh9cw7_500.png" alt=""></p>
+</li>
+<li><p><code>UICollectionView</code> 新添加了许多方法来支持交互式移动</p>
+</li>
+<li><p>新的名为 <code>UIFieldBehavior</code> 的 UIKit Dynamics类</p>
+</li>
+<li><p>Xcode Assets Catalog: 设备不会一次性下载所有尺寸的图片,而根据其自身的需要下载 1x, 2x 或 3x 的图片,大大减少了应用程序的大小.</p>
+</li>
 </ul>
-<p><strong>我将会简单地概括我们需要设置什么才能自动监控代码质量.</strong></p>
-<h1 id="基础">基础</h1><p>我们选择一个持续集成工具<a href="https://jenkins-ci.org/">Jenkins</a>，让它运行在一台放在我们工作室的Mac Mini。其实我不怎么喜欢Jenkins，但到目前为止，它是最稳定和最适合的工具来完成这些工作。</p>
-<p>我们已经通过<a href="https://brew.sh/">Homebrew</a>和<a href="https://github.com/sstephenson/rbenv">rbenv</a>来分别安装Jenkins和Ruby，而rbenv能够为我们提供一个最新和稳定的<a href="https://rubygems.org/">Ruby Gems</a>环境。有个Homebrew和Ruby Gems两个包管理工具之后，我们就几乎能够安装所有我们需要的工具，但很少会破坏与原有OS X系统更新提供的Ruby。</p>
+<h2 id="其他一些你可能感兴趣的链接:">其他一些你可能感兴趣的链接:</h2><ul>
+<li><a href="https://t.co/cOdmXdQ0EQ" target="_blank" rel="external">API差异</a></li>
+<li><a href="https://itunes.apple.com/us/book/swift-programming-language/id1002622538?mt=11" target="_blank" rel="external">Swift 2提前发布版电子书</a></li>
+<li><a href="http://t.co/5pU8P4iNEH" target="_blank" rel="external">Xcode 7 发布日志</a></li>
+</ul>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/">
+                Swift UIKit Dynamics Tutorial: Getting Started
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="UIKit_Dynamics_教程:_起步">UIKit Dynamics 教程: 起步</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76147/uikit-dynamics-tutorial-swift">UIKit Dynamics Tutorial: Getting Started</a></li>
+<li>原文作者: <a href="http://www.raywenderlich.com/u/frosty">James Frost</a></li>
+<li>译文出自: <a href="http://www.devtf.cn/">开发技术前线http://www.devtf.cn/</a></li>
+<li>译者 : <a href="https://github.com/Lollypo">Lollypo</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a></li>
+<li>状态 :  完成</li>
+</ul>
+</blockquote>
+<p><strong>更新备注</strong>:本教程是由<a href="http://www.raywenderlich.com/u/ColinEberhardt">Colin Eberhardt</a>编写的<a href="http://www.raywenderlich.com/?page_id=48020"> iOS 7 by Tutorials</a>其中某章节的精简版本.由James Frost更新到iOS8并用Swift重写,在Xcode 6 beta 7版本上测试通过。</p>
+<p>iOS的设计目标鼓励你去创建数字界面模拟触摸，手势，改变方向等，就好像它们真实的物理对象而远非像素的集合。最终给予用户更深层级的交互而不是肤浅的拟真设计。</p>
+<p>这听起来感觉挺难的，因为让数字界面看起来是真实的远比让它感觉是真实的简单。不过好在你有一些漂亮的新工具:</p>
+<ul>
+<li><strong>UIKit Dynamics</strong> 是集成到UIKit中的物理引擎。这允许你创建一个感觉像是真实的界面，通过添加一些行为，例如重力，锚连接 (弹簧)以及力. 你可以定义你希望你的界面需要的物理特征, Dynamics会帮你关心其他的细枝末节。</li>
+<li><strong>Motion Effects</strong> 允许你创建类似于iOS 7 主屏幕中酷酷的视差效果. 基本上你可以利用手机加速器提供的数据来创建界面来模拟手机方向发生改变的反应。</li>
+</ul>
+<p>当一起使用的时候，由 Dynamics 与 Motion形成用户体验的工具，让你的界面给用户生活带来非同一般的体验。当观察到他们的操作是通过一种自然、动态的方式，你的用户将会与你的app进行更深层次的连接。</p>
+<blockquote>
+<p><strong>注意</strong>: 由于本教程编写的时候iOS 8 还处于测试中，因此<a href="http://www.raywenderlich.com/?p=74138">没有提供iOS8的截图</a>. 所有的截图都是iOS7环境下的,不过看起来与iOS 8相差不大.</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/08/iOS-Continuous-Integration-Deployment/#more">
+            <a class="btn" href="/2015/08/08/Swift-UIKit-Dynamics-Tutorial-Getting-Started/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/">
+                Swift UIKit Dynamics - Tossing Views
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="UIKit_Dynamics_和_Swift_教程：抛掷视图_(Tossing_Views)">UIKit Dynamics 和 Swift 教程：抛掷视图 (Tossing Views)</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/94719/uikit-dynamics-swift-tutorial-tossing-views">UIKit Dynamics and Swift Tutorial:Tossing Views</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com">Ray Wenderlich</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00">samw00</a> </li>
+<li>校对者: <a href="https://github.com/mrchenchao">mrchenchao</a></li>
+<li>状态 : 完成</li>
+</ul>
+</blockquote>
+<p>在这篇UIKit Dynamics教程中，你将学会如何通过添加手势，用一种很自然的方式将视图抛掷出屏幕的显示区域。如下图所示：</p>
+<p><img src="http://cdn1.raywenderlich.com/wp-content/uploads/2014/07/UIKitDynamics3.gif" alt="效果预览图"></p>
+<p>你可能已经在<a href="https://itunes.apple.com/us/app/tweetbot-3-for-twitter-iphone/id722294701">Tweetbot</a>这个流行的app里看到这一个技巧被大量的运用。</p>
+<p>这篇教程特别适合中级水平的开发人员，因为内容包括如何实现一些特别棒的特效，比如用原生的UIKit框架实现旋转(rotation)和飞离(fly-away)等动画效果。</p>
+<p>如果你刚刚接触UIKit dynamics, 也别紧张 － 因为这篇教程会一步一步引导你如何去做。</p>
+<p>废话不多说，让我们直切主题吧！</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-UIKit-Dynamics-Tossing-Views/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/Swift-EventKit-Requesting-Permission/">
+                Swift EventKit - Requesting Permission
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-EventKit-Requesting-Permission/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-EventKit-Requesting-Permission/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="Swift_EventKit的初学者指南—请求权限">Swift  EventKit的初学者指南—请求权限</h1><hr>
+<blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/05/14/beginners-guide-to-eventkit-in-swift-requesting-permission/">Beginner’s Guide to EventKit in Swift – Requesting Permission</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/MollyMmm">MollyMmm</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 : 校对完成</li>
+</ul>
+</blockquote>
+<p>EventKit为获取和操作用户日历事件和提醒提供了一系列的类.在下面的教程中,我的目标是带领你走出利用EventKit建立一个应用程序的第.我的目标是带领你迈出利用EventKit建立一个应用程序的第一步.我将演示如何向用户的日历请求许可,我还将展示几个处理用户响应的例子(当他们授予访问权限,或者拒绝).</p>
+<h1 id="Example_scenario">Example scenario</h1><h1 id="场景">场景</h1><p>让我们先提出一个基本方案，作为本教程的例子。</p>
+<p>假设我们正在构建一个应用程序，现在，有一个单一的视图控制器。在得到用户授权允许的情况下，我们希望这个视图控制器显示日历列表。如果用户拒绝访问,我们将向用户展示一个消息,用来说明我们的应用程序在没有访问权限时不能运行,我们也将允许他们通过单击一个按钮能够在他们的设备的设置中设置授权访问.</p>
+<p>我已经创建一个那样的应用程序作为例子—跳到GitHub中查看并研究这个例子的代码.</p>
+<blockquote>
+<p>资源</p>
+<p><a href="https://github.com/andrewcbancroft/EventTracker/tree/ask-for-permission">Xcode工程示例</a></p>
+</blockquote>
+<h1 id="Storyboard_setup">Storyboard setup</h1><h1 id="故事面板设置">故事面板设置</h1>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-EventKit-Requesting-Permission/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -664,7 +654,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/8/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/8/">&raquo;</a>
   </div>
 
 
@@ -698,7 +688,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">204</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -712,7 +702,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
