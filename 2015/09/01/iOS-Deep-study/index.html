@@ -189,15 +189,7 @@
       
 
       
-        <p>@charset “UTF-8”;<br>/**</p>
-<ul>
-<li></li>
-<li>@authors yanjie Guo (ytlvy2008@gmail.com)</li>
-<li>@date    2015-08-23 10:35:14</li>
-<li>@version 0.0.1</li>
-<li>Copyright (c) 2015年 Guo yanjie. All rights reserved.<br>*/</li>
-</ul>
-<p><a href="https://blog.0xbbc.com/2015/04/ios-dep%E7%A0%94%E7%A9%B61-%E5%88%9B%E5%BB%BAsection/" target="_blank" rel="external">reference</a></p>
+        <p><a href="https://blog.0xbbc.com/2015/04/ios-dep%E7%A0%94%E7%A9%B61-%E5%88%9B%E5%BB%BAsection/" target="_blank" rel="external">reference</a></p>
 <h1 id="iOS_DEP_研究">iOS DEP 研究</h1><h2 id="创建Section">创建Section</h2><p>将加密的程序放在一个Section中，外壳运行时解密该Section，并执行解密后的程序</p>
 <h3 id="通过other_linker_flags创建">通过other linker flags创建</h3><p><a href="http://bbs.iosre.com/t/tweak-app-app-tweak/438" target="_blank" rel="external">这篇文章</a>提到过如何通过创建Section来防止dylib依附。其具体方法是在other linker flags中填入如下内容：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Wl,-sectcreate,__RESTRICT,__restrict,<span class="regexp">/dev/</span><span class="keyword">null</span></span><br></pre></td></tr></table></figure>
