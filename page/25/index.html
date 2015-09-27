@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/30/Dispatch-Sources/">
-                Dispatch Sources
+              <a class="post-title-link" href="/2015/07/06/Random/">
+                Random
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-30
+          發表於 2015-07-06
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/30/Dispatch-Sources/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Dispatch-Sources/"></span>
+            <a href="/2015/07/06/Random/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Random/"></span>
             </a>
           </span>
           
@@ -194,21 +194,11 @@
 
       
         
-          <h2 id="Dispatch_Sources">Dispatch Sources</h2><p>简单来说，是一种能够监控某种事件的对象。当事件发生的时候，此对象自动唤醒设置好的block，并在指定的queue中运行。</p>
-<h3 id="events_Type">events Type</h3><ul>
-<li>Mach port send right state changes.</li>
-<li>Mach port receive right state changes.</li>
-<li>External process state change.</li>
-<li>File descriptor ready for read.</li>
-<li>File descriptor ready for write.</li>
-<li>Filesystem node event.</li>
-<li>POSIX signal.</li>
-<li>Custom timer.</li>
-<li>Custom event.</li>
-</ul>
-<h3 id="Custom_Events">Custom Events</h3><p>通过<code>dispatch_source_merge_data</code>来发送消息，此方法取名<code>merge</code>的原因是，在事件回调执行前，GCD会自动合并累计的消息，直到对应的运行Queue有空闲，可以运行回调Block。所以，这是一种提高效率的方式，将多次消息合并成一个。<br>自定义事件分为：<code>DISPATCH_SOURCE_TYPE_DATA_ADD</code> 和 <code>DISPATCH_SOURCE_TYPE_DATA_OR</code>, 每个event Source有一个<code>unsigned long data</code>属性，用来合并<code>dispatch_source_merge_data</code>的参数。<code>dispatch_source_get_data</code>可以获取到当前的<code>data</code>数据。</p>
+          <h2 id="arc4random()">arc4random()</h2><h3 id="Random_int_between_0_and_N_-_1">Random int between 0 and N - 1</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Random_int_between_1_and_N">Random int between 1 and N</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span> + <span class="number">1</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Random_double_between_0_and_1">Random double between 0 and 1</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sra<span class="label">nd48</span><span class="comment">(time(0)</span>);</span><br><span class="line">double r = dra<span class="label">nd48</span><span class="comment">()</span>;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/Dispatch-Sources/#more">
+            <a class="btn" href="/2015/07/06/Random/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -241,8 +231,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/30/OSSpinLock/">
-                OSSpinLock
+              <a class="post-title-link" href="/2015/07/06/progress-memory-map/">
+                progress memory map
               </a>
             
           
@@ -251,7 +241,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-30
+          發表於 2015-07-06
         </span>
 
         
@@ -271,8 +261,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/30/OSSpinLock/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/OSSpinLock/"></span>
+            <a href="/2015/07/06/progress-memory-map/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/progress-memory-map/"></span>
             </a>
           </span>
           
@@ -287,9 +277,15 @@
 
       
         
-          <h2 id="OSSpinLock">OSSpinLock</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/message.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;libkern/OSAtomic.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define ITERATIONS (1024*1024*32)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> disp=<span class="number">0</span>, land=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">    <span class="keyword">double</span> then, now;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i, count;</span><br><span class="line">    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">    OSSpinLock spinlock = OS_SPINLOCK_INIT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSAutoreleasePool</span> *pool = [<span class="built_in">NSAutoreleasePool</span> new];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLock</span> *lock = [<span class="built_in">NSLock</span> new];</span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        [lock lock];</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    IMP lockLock = [lock methodForSelector:<span class="keyword">@selector</span>(lock)];</span><br><span class="line">    IMP unlockLock = [lock methodForSelector:<span class="keyword">@selector</span>(unlock)];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        lockLock(lock,<span class="keyword">@selector</span>(lock));</span><br><span class="line">        unlockLock(lock,<span class="keyword">@selector</span>(unlock));</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"NSLock+IMP Cache: %f sec\n"</span>, now-then);    </span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ITERATIONS;++i) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"pthread_mutex: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i) &#123;</span><br><span class="line">        OSSpinLockLock(&amp;spinlock);</span><br><span class="line">        OSSpinLockUnlock(&amp;spinlock);</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"OSSpinlock: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line"></span><br><span class="line">    then = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;ITERATIONS; ++i)&#123;</span><br><span class="line">        <span class="keyword">@synchronized</span>(obj) &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    now = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    printf(<span class="string">"@synchronized: %f sec\n"</span>, now-then);</span><br><span class="line"></span><br><span class="line">    [pool release];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p><a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/">翻译子</a></p>
+<h2 id="程序在内存中分布">程序在内存中分布</h2><p>内存管理是操作系统的核心. 对系统和编程人员来说这都是非常重要的.下面用 32位 系统举例.首先介绍程序如何在内存中分布.</p>
+<h3 id="虚拟地址空间">虚拟地址空间</h3><p>在多任务操作系统中, 每个进程拥有自己独立的内存沙箱. 这个沙箱就是指的<code>虚拟地址空间</code>(virtual address space), 在32位系统中, 就是一块4GB 大小的内存地址块. 这些虚拟地址和物理内存通过<code>page tables</code>来完成映射, <code>page tables</code>是由系统核心管理,进程可以进行访问. 一旦虚拟地址被启用, 会应用到所有的程序中, 包括系统核心. 因此虚拟地址的一部分, 需要被划分出来为系统核心保留使用.<br><img src="http://static.duartes.org/img/blogPosts/kernelUserMemorySplit.png" alt=""></p>
+<p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
+<p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
+<p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
+<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/30/OSSpinLock/#more">
+            <a class="btn" href="/2015/07/06/progress-memory-map/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -322,8 +318,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/30/Cancel-a-NSBlockOperation/">
-                Cancel a NSBlockOperation
+              <a class="post-title-link" href="/2015/07/06/what-happen-before-main/">
+                what happen before main
               </a>
             
           
@@ -332,7 +328,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-30
+          發表於 2015-07-06
         </span>
 
         
@@ -352,8 +348,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/30/Cancel-a-NSBlockOperation/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/Cancel-a-NSBlockOperation/"></span>
+            <a href="/2015/07/06/what-happen-before-main/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/what-happen-before-main/"></span>
             </a>
           </span>
           
@@ -368,86 +364,12 @@
 
       
         
-          <h3 id="make_NSBlockOperation_cancelable">make NSBlockOperation cancelable</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSBlockOperation</span> *operation = [[<span class="built_in">NSBlockOperation</span> alloc] init];</span><br><span class="line">__<span class="keyword">weak</span> <span class="built_in">NSBlockOperation</span> *weakOperation = operation;</span><br><span class="line">[operation addExecutionBlock:^&#123;</span><br><span class="line">   <span class="keyword">while</span>( ! [weakOperation isCancelled])&#123;</span><br><span class="line">      <span class="comment">//do something...</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/22/Xcode-Notes/">
-                Xcode Notes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Xcode/">Xcode</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/22/Xcode-Notes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/22/Xcode-Notes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="快捷键">快捷键</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">⌘（command）、⌥（option）、⇧（shift）、⇪（caps <span class="operator"><span class="keyword">lock</span>）、</span><br><span class="line">⌃（control）、↩（<span class="keyword">return</span>）、⌅（enter）</span><br><span class="line"></span><br><span class="line">^ + <span class="number">1</span>                 <span class="keyword">corresponding</span> Nib/Storyboard file</span><br><span class="line">^ + <span class="number">2</span>                 <span class="keyword">show</span> the previous history</span><br><span class="line">^ + <span class="number">6</span>                 methods list</span><br><span class="line"></span><br><span class="line">^ + ⌘ + <span class="keyword">left</span>         <span class="keyword">go</span> back</span><br><span class="line">⌘ + Shift + O        jump <span class="keyword">to</span> a particular filename method</span><br><span class="line">⌘ + L                <span class="keyword">go</span> <span class="keyword">to</span> line</span><br><span class="line">⌘ + Y                toggle <span class="keyword">all</span> breakpoints</span><br><span class="line">⌘ + <span class="number">0</span>                toggle <span class="keyword">left</span> panel</span><br><span class="line">⌘ + <span class="number">1</span>                <span class="keyword">show</span> Project Nacigator</span><br><span class="line"></span><br><span class="line">^ + P                 移动光标到上一行</span><br><span class="line">^ + N                 移动光标到下一行</span><br><span class="line">^ + A                 移动光标到本行行首</span><br><span class="line">^ + E                 移动光标到本行行尾</span><br><span class="line">^ + D                 删除光标右边的字符</span><br><span class="line">^ + K                 删除空行/光标到行尾</span><br><span class="line">^ + L                 将插入点置于窗口正中</span><br><span class="line"></span><br><span class="line">⌘ + ⌥ + d           显示／隐藏 dock</span><br><span class="line"></span><br><span class="line">Fn + <span class="keyword">Delete</span>           删除光标后的一个字符</span><br><span class="line">⌘ + <span class="keyword">Delete</span>           删除光标至行首的内容</span><br><span class="line"></span><br><span class="line">⌘ + ⇧ + ;</span>           调出拼写检查对话框。</span><br><span class="line">⌘ + ⌥ + =           xib <span class="operator"><span class="keyword">update</span> frame</span></span><br></pre></td></tr></table></figure>
+          <p><a href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/">转自</a></p>
+<h2 id="iOS程序main函数之前发生了什么">iOS程序main函数之前发生了什么</h2><h3 id="前言">前言</h3><p>一个iOS app的<code>main()</code>函数位于<code>main.m</code>中，这是我们熟知的程序入口。但对objc了解更多之后发现，程序在进入我们的main函数前已经执行了很多代码，比如熟知的<code>+ load</code>方法等。本文将跟随程序执行顺序，刨根问底，从<code>dyld</code>到<code>runtime</code>，看看main函数之前都发生了什么。</p>
+<h3 id="从dyld开始">从dyld开始</h3><h4 id="动态链接库">动态链接库</h4><p>iOS中用到的所有系统<code>framework</code>都是动态链接的，类比成插头和插排，静态链接的代码在编译后的静态链接过程就将插头和插排一个个插好，运行时直接执行二进制文件；而动态链接需要在程序启动时去完成“插插销”的过程，所以在我们写的代码执行前，动态连接器需要完成准备工作。</p>
+<p>这个是在xcode中看到的Link列表：<br><img src="http://ww4.sinaimg.cn/mw600/51530583jw1ejx4ul5susj20wg0803zh.jpg" alt=""><br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/22/Xcode-Notes/#more">
+            <a class="btn" href="/2015/07/06/what-happen-before-main/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -480,8 +402,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/">
-                Valar Morghulis Valar Dohaeris
+              <a class="post-title-link" href="/2015/07/06/Autorelease/">
+                Autorelease
               </a>
             
           
@@ -490,14 +412,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-16
+          發表於 2015-07-06
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/other/">other</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -510,8 +432,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/Valar-Morghulis-Valar-Dohaeris/"></span>
+            <a href="/2015/07/06/Autorelease/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Autorelease/"></span>
             </a>
           </span>
           
@@ -526,12 +448,93 @@
 
       
         
-          <p><img src="http://ww4.sinaimg.cn/mw1024/8edf7b7agw1et5ppc4i12g20dw0697uc.gif" alt=""></p>
-<p>Valar Morghulis = 凡人皆有一死<br>Valar Dohaeris = 凡人皆须侍奉<br>这两句是需要放在一起理解的</p>
-<p>看字面意思，凡人皆有一死，似乎表明的是死亡的不可避免。满含悲观的情绪。这和史塔克的家族箴言一样，凛冬将至。对于命运我们无能为力。</p>
-<p>但是，这句话还伴随着另外那句：凡人皆须侍奉。这两句是高等瓦雷利亚语，缘起于千面之神和信仰它的神秘组织 无面者。<br>
+          <h2 id="Autorelease">Autorelease</h2><p><img src="http://blog.sunnyxx.com/tags/objc%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95/page/3/" alt="转自"></p>
+<h3 id="Autorelease对象什么时候释放">Autorelease对象什么时候释放</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;在没有手加Autorelease Pool的情况下，Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop</p>
+<p>小实验<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *str = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"sunnyxx"</span>];</span><br><span class="line">    <span class="comment">// str是一个autorelease对象，设置一个weak的引用来观察它</span></span><br><span class="line">    reference = str;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: sunnyxx</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于这个vc在loadView之后便add到了window层级上，所以viewDidLoad和viewWillAppear是在同一个runloop调用的，因此在viewWillAppear中，这个autorelease的变量依然有值。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/16/Valar-Morghulis-Valar-Dohaeris/#more">
+            <a class="btn" href="/2015/07/06/Autorelease/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/04/IOS-进阶工具篇/">
+                IOS 进阶工具篇
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/04/IOS-进阶工具篇/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/04/IOS-进阶工具篇/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">第一部分：<span class="tag">iOS</span> 开发工具</span><br><span class="line">第2章使用<span class="tag">CocoaPods</span> 做依赖管理</span><br><span class="line">2<span class="class">.1</span> <span class="tag">CocoaPods</span> 简介</span><br><span class="line">2<span class="class">.2</span> <span class="tag">CocoaPods</span> 的安装和使用</span><br><span class="line">2<span class="class">.2</span><span class="class">.1</span> <span class="tag">CocoaPods</span> 的安装</span><br><span class="line">2<span class="class">.2</span><span class="class">.2</span> 使用<span class="tag">CocoaPods</span> 的镜像索引</span><br><span class="line">2<span class="class">.2</span><span class="class">.3</span> 使用<span class="tag">CocoaPods</span></span><br><span class="line">2<span class="class">.2</span><span class="class">.4</span> 查找第三方库</span><br><span class="line">2<span class="class">.3</span> 注意事项</span><br><span class="line">2<span class="class">.3</span><span class="class">.1</span> 关于<span class="class">.gitignore</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.2</span> 为自己的项目创建<span class="tag">podspec</span> 文件</span><br><span class="line">2<span class="class">.3</span><span class="class">.3</span> 使用私有的<span class="tag">pods</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.4</span> 不更新<span class="tag">podspec</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.5</span> 生成第三方库的帮助文档</span><br><span class="line">2<span class="class">.3</span><span class="class">.6</span> 原理</span><br><span class="line">第3章网络封包分析工具<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.1</span> <span class="tag">Charles</span> 简介</span><br><span class="line">3<span class="class">.2</span> <span class="tag">Charles</span> 的安装和使用</span><br><span class="line">3<span class="class">.2</span><span class="class">.1</span> 安装<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.2</span><span class="class">.2</span> 安装<span class="tag">SSL</span> 证书</span><br><span class="line">3<span class="class">.2</span><span class="class">.3</span> 将<span class="tag">Charles</span> 设置成系统代理</span><br><span class="line">3<span class="class">.2</span><span class="class">.4</span> <span class="tag">Charles</span> 主界面介绍</span><br><span class="line">3<span class="class">.2</span><span class="class">.5</span> 过滤网络请求</span><br><span class="line">3<span class="class">.3</span> 使用<span class="tag">Charles</span> 协助<span class="tag">iOS</span> 开发</span><br><span class="line">3<span class="class">.3</span><span class="class">.1</span> 截取<span class="tag">iPhone</span> 上的网络封包</span><br><span class="line">3<span class="class">.3</span><span class="class">.2</span> 模拟慢速网络</span><br><span class="line">3<span class="class">.4</span> 高级功能</span><br><span class="line">3<span class="class">.4</span><span class="class">.1</span> 截取<span class="tag">SSL</span> 信息</span><br><span class="line">3<span class="class">.4</span><span class="class">.2</span> 修改网络请求内容</span><br><span class="line">3<span class="class">.4</span><span class="class">.3</span> 修改服务器返回内容</span><br><span class="line">3<span class="class">.5</span> <span class="tag">Map</span> 功能</span><br><span class="line">3<span class="class">.6</span> <span class="tag">Rewrite</span> 功能</span><br><span class="line">3<span class="class">.7</span> <span class="tag">Breakpoints</span> 功能</span><br><span class="line">3<span class="class">.8</span> 总结</span><br><span class="line">3<span class="class">.9</span> 参考链接</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/04/IOS-进阶工具篇/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -557,7 +560,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/26/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/24/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/26/">&raquo;</a>
   </div>
 
 
@@ -591,7 +594,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

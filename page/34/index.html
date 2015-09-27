@@ -148,8 +148,85 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/coreimage-example/">
-                Core Image使用
+              <a class="post-title-link" href="/2015/05/27/xcode-plugins-update-tool/">
+                更新XcodePlugins脚本
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Xcode/">Xcode</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/xcode-plugins-update-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/xcode-plugins-update-tool/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>ios8.2  ——— A16FF353-8441-459E-A50C-B071F53F51B7<br>ios8.3 ———- 9F75337B-21B4-4ADC-B558-F9CADF7073A7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line">PLIST_BUDDY=/usr/libexec/PlistBuddy</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">add_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="string">"<span class="variable">$PLIST_BUDDY</span>"</span> -c <span class="string">"Add DVTPlugInCompatibilityUUIDs:10 string <span class="variable">$2</span>"</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">has_compatibility</span></span>() &#123;</span><br><span class="line">  <span class="variable">$PLIST_BUDDY</span> -c <span class="string">'Print DVTPlugInCompatibilityUUIDs'</span> \</span><br><span class="line">    <span class="string">"<span class="variable">$1</span>/Contents/Info.plist"</span>|grep -q <span class="string">"<span class="variable">$2</span>"</span></span><br><span class="line">  <span class="built_in">return</span> $?</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"<span class="variable">$HOME</span>/Library/Application Support/Developer/Shared/Xcode/Plug-ins"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> `ls <span class="operator">-d</span> *`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> `has_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7`</span><br><span class="line">  <span class="keyword">then</span></span><br><span class="line">    <span class="literal">true</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Plugin <span class="variable">$file</span> is now compatible with Xcode 6.0 GM"</span></span><br><span class="line">    add_compatibility <span class="string">"<span class="variable">$file</span>"</span> <span class="number">9</span>F75337B-<span class="number">21</span>B4-<span class="number">4</span>ADC-B558-F9CADF7073A7</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/">
+                IOS8.3 NSMutableURLRequest需手动设置Content-Type
               </a>
             
           
@@ -178,8 +255,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/coreimage-example/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/coreimage-example/"></span>
+            <a href="/2015/05/27/ios8-nsmutableurlrequest-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios8-nsmutableurlrequest-bugfix/"></span>
             </a>
           </span>
           
@@ -194,9 +271,99 @@
 
       
         
-          <p>首先创建一个径向渐变的滤镜，该滤镜是从白到黑的渐变方式，白色区域的半径默认是100。接着将其与一张使用CIDarkenBlendMode滤镜的图片合成。CIDarkenBlendMode的作用是背景图片样本将被源图片的黑色部分替换掉。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* moi = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.jpeg"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIImage</span>* moi2 = [[<span class="built_in">CIImage</span> alloc] initWith<span class="built_in">CGImage</span>:moi<span class="variable">.CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIFilter</span>* grad = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIRadialGradient"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIVector</span>* center = [<span class="built_in">CIVector</span> vectorWithX:moi<span class="variable">.size</span><span class="variable">.width</span> / <span class="number">2.0</span> Y:moi<span class="variable">.size</span><span class="variable">.height</span> / <span class="number">2.0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用setValue：forKey：方法设置滤镜属性</span></span><br><span class="line">[grad setValue:center forKey:<span class="string">@"inputCenter"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定滤镜名时提供所有滤镜键值对</span></span><br><span class="line"><span class="built_in">CIFilter</span>* dark = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIDarkenBlendMode"</span> keysAndValues:<span class="string">@"inputImage"</span>, grad<span class="variable">.outputImage</span>, <span class="string">@"inputBackgroundImage"</span>, moi2, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CIContext</span>* c = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> moi3 = [c create<span class="built_in">CGImage</span>:dark<span class="variable">.outputImage</span> fromRect:moi2<span class="variable">.extent</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* moi4 = [<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:moi3 scale:moi<span class="variable">.scale</span> orientation:moi<span class="variable">.imageOrientation</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(moi3);</span><br></pre></td></tr></table></figure>
-<p><img src="http://images.cnitblog.com/blog/429321/201212/27103647-2fcd19d1ca1e4a0d9f42e2c79687e881.png" alt="图片合成图"></p>
+          <p>引用：<a href="http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update" target="_blank" rel="external">http://stackoverflow.com/questions/29528293/nsmutableurlrequest-body-malformed-after-ios-8-3-update</a></p>
+<p>IOS8.3开始 NSMutableURLRequest需要手动设置Content-Type，否则导致服务器接受参数失败的错误，请添加如下代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[request <span class="built_in">set</span>Value:@<span class="string">"application/json"</span> <span class="keyword">for</span>HTTPHeaderField:@<span class="string">"Content-Type"</span>];</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/ios-third-party-frames-conflict-bugfix/">
+                第三方类库重复冲突解决
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/ios-third-party-frames-conflict-bugfix/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-third-party-frames-conflict-bugfix/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="第三方类库重复冲突解决">第三方类库重复冲突解决</h2><h3 id="复制-a文件">复制.a文件</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/ &amp;&amp; <span class="built_in">mkdir</span> librepack &amp;&amp; <span class="keyword">cd</span> librepack</span><br><span class="line"><span class="keyword">cp</span> /Users/tony/Desktop/XXXProject/Lib/libMiPushSDK.<span class="keyword">a</span> ./libx.<span class="keyword">a</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看包信息">查看包信息</h3><p><code>lipo -info libx.a</code></p>
+<h3 id="解包">解包</h3><p>如果提示fat file，那么代表这个包是支持多平台的，例如armv7，armv7s，i386等，这需要我们逐一做解包重打包操作。否则我们只需要做一次[1-6]操作即可</p>
+<ol>
+<li>创建临时文件夹，用于存放armv7平台解压后的.o文件：<code>mkdir armv7</code></li>
+<li>取出armv7平台的包：<code>lipo libx.a -thin armv7 -output armv7/libx-armv7.a</code></li>
+<li>查看库中所包含的文件列表：<code>ar -t armv7/libx-armv7.a</code></li>
+<li>解压出object file（即.o后缀文件）：<code>cd armv7 &amp;&amp; ar xv libx-armv7.a</code></li>
+<li>找到冲突的包（JSONKit），删除掉<code>rm JSONKit.o</code></li>
+<li>重新打包object file：<code>cd .. &amp;&amp; ar rcs libx-armv7.a armv7/*.o</code>，可以再次使用[2]中命令确认是否已成功将文件去除</li>
+<li>将其他几个平台(armv7s, i386)包逐一做上述[1-6]操作</li>
+<li>重新合并为fat file的.a文件：<br><code>lipo -create libx-armv7.a libx-armv7s.a libx-i386.a -output libMiPushSDK-new.a</code></li>
+<li>拷贝到项目中覆盖源文件：<br><code>cp libMiPushSDK-new.a /Users/tony/Desktop/XXXProject/Lib/libMiPushSDK.a</code></li>
+</ol>
+<p>参考:<a href="http://itony.me/674.html" target="_blank" rel="external">http://itony.me/674.html</a></p>
 
         
       
@@ -227,8 +394,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/ios-cgimage-bugfix/">
-                CGImage绘制倒置修复
+              <a class="post-title-link" href="/2015/05/27/bss-data-pragma/">
+                [译]BSS数据段的意义
               </a>
             
           
@@ -248,6 +415,14 @@
 
               
               
+                ， 
+              
+
+            
+              <a href="/categories/IOS/Base/">Base</a>
+
+              
+              
 
             
           </span>
@@ -257,8 +432,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/ios-cgimage-bugfix/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/ios-cgimage-bugfix/"></span>
+            <a href="/2015/05/27/bss-data-pragma/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/bss-data-pragma/"></span>
             </a>
           </span>
           
@@ -273,86 +448,23 @@
 
       
         
-          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span>* mars = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"Mars.png"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> sz = [mars size];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsCG = [mars <span class="built_in">CGImage</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGSize</span> szCG = <span class="built_in">CGSizeMake</span>(<span class="built_in">CGImageGetWidth</span>(marsCG), <span class="built_in">CGImageGetHeight</span>(marsCG));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsLeft = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRef</span> marsRight = <span class="built_in">CGImageCreateWithImageInRect</span>(marsCG, <span class="built_in">CGRectMake</span>(szCG<span class="variable">.width</span>/<span class="number">2.0</span>,<span class="number">0</span>,szCG<span class="variable">.width</span>/<span class="number">2.0</span>,szCG<span class="variable">.height</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="built_in">CGSizeMake</span>(sz<span class="variable">.width</span>*<span class="number">1.5</span>, sz<span class="variable">.height</span>), <span class="literal">NO</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsLeft scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line">[[<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:marsRight scale:[mars scale] orientation:<span class="built_in">UIImageOrientationUp</span>] drawAtPoint:<span class="built_in">CGPointMake</span>(sz<span class="variable">.width</span>,<span class="number">0</span>)];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span>* im = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGImageRelease</span>(marsLeft); <span class="built_in">CGImageRelease</span>(marsRight);</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/">
-                Using SWRevealViewController Together With RBStoryboardLink
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/using-swrevealviewcontroller-together-with-rbstoryboardlink/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>://samwize.com/<span class="number">2015</span>/<span class="number">03</span>/<span class="number">26</span>/<span class="keyword">using</span>-swrevealviewcontroller-together-<span class="operator">with</span>-rbstoryboardlink/</span><br></pre></td></tr></table></figure>
-<p>I posted about how to modularize storyboard using RBStoryboardLink and how to use SWRevealViewController.<br>But to use both of them together is not straight forward.<br>This is because both library makes use of custom segues to do what they want to do. And it is not possible for you to customize 1 segue to satisfy both!<br>To make them work together:<br>Create the <code>RBStoryboardLink</code> suggorate view controller and setup <code>storyboardName</code> as per normal, but don’t create any segue to it. It will be alone.<br>Give it a storyboard ID eg. “surrogate”<br>Don’t use <code>SWRevealViewControllerSeguePushController</code> segue too<br>Instead, call the revealViewController’s <code>pushFrontViewController</code> method manually.<br>The code:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">IBAction</span>)buttonTapped:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *vc = [<span class="keyword">self</span><span class="variable">.storyboard</span> instantiateViewControllerWithIdentifier:<span class="string">@"surrogate"</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.revealViewController</span> pushFrontViewController:vc animated:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>If the view controller is not getting behind the status bar correctly, set <code>needsTopLayoutGuide</code> key to NO in the suggorate.</p>
+          <p>摘录：<a href="http://stackoverflow.com/questions/9535250/why-is-the-bss-segment-required" target="_blank" rel="external">http://stackoverflow.com/questions/9535250/why-is-the-bss-segment-required</a></p>
+<h2 id="一个典型的_C_程序内存特征将会有如下几个区域：">一个典型的 C 程序内存特征将会有如下几个区域：</h2><blockquote>
+<ul>
+<li>文本段（Text segment）</li>
+<li>已初始化数据段（Initialized data segment）</li>
+<li>未初始化数据段（Uninitialized data segment）</li>
+<li>栈（Stack）</li>
+<li>堆（Heap）</li>
+</ul>
+</blockquote>
+<p><img src="http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/Memory-Layout-300x255.gif" alt=""></p>
+<h3 id=""> </h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdlib.h&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化 存放在`已初始化数据段`也叫data段</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> b[<span class="number">20</span>]; <span class="comment">/* 未初始化 存放在 BSS数据段 */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">   ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="BSS数据段的意义—-减少程序大小">BSS数据段的意义—-减少程序大小</h3><p>在嵌入式系统中，数据和常量存储在真实的ROM（闪存）中。嵌入式系统启动时，首先要设置好所有静态存贮持久对象，然后才会调用main函数。伪代码如下：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">for</span>(i<span class="number">=0</span><span class="comment">; i&lt;all_explicitly_initialized_objects; i++)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="preprocessor">.data</span>[i] = init_value[i]<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="label">memset</span>(.<span class="keyword">bss, </span> <span class="number">0</span>,  all_implicitly_initialized_objects)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>此时，data段和bss段存储于RAM，而init_value则存贮于ROM。如果只有一个数据段的话，ROM中将存贮好多0，从而增加ROM的大小。</p>
+<h3 id="效率">效率</h3><p>由于BSS段的存在，在设置初始化数据时，可以线性操作，从而避免了需要到ROM中取init_value的操作，节省时间。</p>
+<p>memset 执行效率高</p>
 
         
       
@@ -383,8 +495,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/">
-                Pitfall: NSLayoutConstraint Breaking in UICollectionView
+              <a class="post-title-link" href="/2015/05/27/vim-one-click-config/">
+                一键配置vim
               </a>
             
           
@@ -400,7 +512,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Vim/">Vim</a>
 
               
               
@@ -413,8 +525,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/pitfall-nslayoutconstraint-breaking-in-uicollectionview/"></span>
+            <a href="/2015/05/27/vim-one-click-config/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/vim-one-click-config/"></span>
             </a>
           </span>
           
@@ -429,86 +541,12 @@
 
       
         
-          <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[cell.contentView setTranslatesAutoresizingMaskIntoConstraints:NO]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/27/how-to-use-reflect-to-set-a-struct-field/">
-                How to Use Reflect to Set a Struct Field
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-27
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Golang/">Golang</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/27/how-to-use-reflect-to-set-a-struct-field/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/27/how-to-use-reflect-to-set-a-struct-field/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>Golang reflect package is one of the hardest to understand.<br>Yet reflect is one of the most powerful because you can inspect a struct and it’s fields during runtime, and change it.<br>Go isn’t as simple to understand as other languages such as Python in using reflection. Just try reading their <a href="http://blog.golang.org/laws-of-reflection" target="_blank" rel="external">laws of reflection</a>.<br>But setting a field of a struct by name could be a one liner. There is a nice answer in <a href="http://stackoverflow.com/a/6396678/242682" target="_blank" rel="external">Stack Overflow</a>.<br>In short, if you want to set a struct <figure class="highlight"><figcaption><span>object when you know the field name to set, this is the code:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;</span><br></pre></td></tr></table></figure></p>
-<p>func setFoo(foo *Foo, field string, value string) {<br>    v := reflect.ValueOf(foo).Elem().FieldByName(field)<br>    if v.IsValid() {<br>        v.SetString(value)<br>    }<br>}<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If you want to <span class="built_in">print</span> all the fields <span class="keyword">of</span> `<span class="javascript">foo</span>`, <span class="keyword">this</span> <span class="keyword">is</span> the <span class="attribute">code</span>:</span><br></pre></td></tr></table></figure></p>
-<p>s := reflect.ValueOf(foo).Elem()<br>typeOfT := s.Type()<br>for i := 0; i &lt; s.NumField(); i++ {<br>    f := s.Field(i)<br>    fmt.Printf(“%d: %s %s = %v\n”, i,<br>        typeOfT.Field(i).Name, f.Type(), f.Interface())<br>}<br>```</p>
+          <h3 id="一键配置vim">一键配置vim</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/spf13/spf13-<span class="keyword">vim</span>/<span class="number">3.0</span>/bootstrap.<span class="keyword">sh</span> -L &gt; spf13-<span class="keyword">vim</span>.<span class="keyword">sh</span> &amp;&amp; <span class="keyword">sh</span> spf13-<span class="keyword">vim</span>.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+<h3 id="bug更正">bug更正</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sublime </span>vundle-vimfiles/plugin/settings/CtrlP.vim</span><br></pre></td></tr></table></figure>
+<hr>
+<p>before <code>let g:ctrlp_custom_ignore = ..</code> insert below code</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unlet</span> <span class="variable">g:ctrlp_custom_ignore</span></span><br></pre></td></tr></table></figure>
+<p>参考自: <a href="https://github.com/spf13/spf13-vim/issues/444" target="_blank" rel="external">https://github.com/spf13/spf13-vim/issues/444</a></p>
 
         
       
@@ -532,7 +570,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/33/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/35/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/33/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/35/">&raquo;</a>
   </div>
 
 
@@ -566,7 +604,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/">
-                ios nil  Nil NULL NSNull
+              <a class="post-title-link" href="/2015/06/08/objc-runtime-method-Cache/">
+                objc runtime method Cache
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-05
+          發表於 2015-06-08
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/"></span>
+            <a href="/2015/06/08/objc-runtime-method-Cache/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/objc-runtime-method-Cache/"></span>
             </a>
           </span>
           
@@ -194,11 +194,87 @@
 
       
         
-          <h2 id="nil_Nil_NULL_NSNull">nil Nil NULL NSNull</h2><blockquote>
-<p>C represents nothing as 0 for primitive values, and NULL for pointers (which is equivalent to 0 in a pointer context)<br>Objective-C builds on C’s representation of nothing by adding nil. nil is an object pointer to nothing. Although semantically distinct from NULL, they are equivalent to one another.<br>On the framework level, Foundation defines the NSNull class, which defines a single class method, +null, which returns a singleton NSNull instance. NSNull is different from nil or NULL, in that it is an actual object, rather than a zero value.<br>Additionally, in Foundation/NSObjCRuntime.h, Nil is defined as a class pointer to nothing. This lesser-known title- case cousin of nil doesn’t show up much very often, but it’s at least worth noting.</p>
-</blockquote>
+          <h3 id="method_cache_更新机制">method cache 更新机制</h3><p>为了方便函数的查找, objc在运行时,引入了method cache机制,来快速定位函数.method cache的大小是动态更新的,在更新时, 将直接生成新容量的缓存, 并将旧的缓存放入到垃圾队列中,等待时机释放. 而时机的选择, 采用检测每个线程的program counter,来查看是否处于objc_msgSend.如果都不在,则释放.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BOOL ThreadsInMsgSend<span class="params">(void)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(thread in GetAllThreads<span class="params">()</span>)</span> &#123;</span><br><span class="line">        uintptr_t pc = thread.GetPC<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">if</span><span class="params">(pc &gt;= objc_msgSend_startAddress &amp;&amp; pc &lt;= objc_msgSend_endAddress)</span> &#123;</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bucket_t <span class="built_in">*</span>oldCache = class-&gt;cache;</span><br><span class="line">class-&gt;cache = malloc<span class="params">(newSize)</span>;</span><br><span class="line"></span><br><span class="line">append<span class="params">(gOldCachesList, oldCache)</span>;</span><br><span class="line"><span class="keyword">if</span><span class="params">(!ThreadsInMsgSend<span class="params">()</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span><span class="params">(cache in gOldCachesList)</span> &#123;</span><br><span class="line">        free<span class="params">(cache)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    gOldCachesList.clear<span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/07/IOS-Multithreading-Memory-Management/">
+                IOS Multithreading && Memory Management
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-07
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/07/IOS-Multithreading-Memory-Management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/IOS-Multithreading-Memory-Management/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
+<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/05/ios-nil-slash-nil-slash-null-slash-nsnull/#more">
+            <a class="btn" href="/2015/06/07/IOS-Multithreading-Memory-Management/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -231,8 +307,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/05/ios-static-formatter/">
-                ios static formatter
+              <a class="post-title-link" href="/2015/06/07/ice-girl/">
+                冰之魔女
               </a>
             
           
@@ -241,7 +317,123 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-05
+          發表於 2015-06-07
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/default/">default</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/07/ice-girl/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/ice-girl/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+        <div class="post-gallery">
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉1.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉2.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉3.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉4.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉5.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉6.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉7.jpg" />
+            </a>
+          
+            <a class="post-gallery-img fancybox" href="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" rel="gallery_cif2jhoet00gg97k3wb9ympj9">
+              <img src="http://7jpswx.com1.z0.glb.clouddn.com/冰之魔女－艾拉8.jpg" />
+            </a>
+          
+        </div>
+      
+
+      
+        
+          <h2 id="冰之魔女">冰之魔女</h2>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/06/ios-nspredicate/">
+                IOS NSPredicate
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-06
         </span>
 
         
@@ -261,8 +453,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/05/ios-static-formatter/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-static-formatter/"></span>
+            <a href="/2015/06/06/ios-nspredicate/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-nspredicate/"></span>
             </a>
           </span>
           
@@ -277,9 +469,9 @@
 
       
         
-          <h3 id="Re-Using_Formatter_Instances">Re-Using Formatter Instances</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)fooWithNumber: (<span class="built_in">NSNumber</span> *)num&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="built_in">NSNumberFormatter</span> *_formatter = <span class="literal">nil</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">  <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">    _formatter = [[<span class="built_in">NSNumberFormatter</span> alloc] init];</span><br><span class="line">    [_formatter setNumberStyle: <span class="built_in">NSNumberFormatterDecimalStyle</span>];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSString</span> *string = [_formatter stringFromNumber: number];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="NSPredicate">NSPredicate</h3><p>NSPredicate is a Foundation class that specifies how data should be fetched or filtered.<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSPredicate</span> *bobPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"firstName = 'Bob'"</span>];</span><br><span class="line"><span class="built_in">NSPredicate</span> *thirtiesPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"age &gt;= 30"</span>];</span><br><span class="line"></span><br><span class="line">[people filterdArrayUsingPredicate:bobPredicate];</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/05/ios-static-formatter/#more">
+            <a class="btn" href="/2015/06/06/ios-nspredicate/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -312,8 +504,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/05/ios-cfstringtransform/">
-                ios CFStringTransform
+              <a class="post-title-link" href="/2015/06/06/ios-nssortdescriptor/">
+                IOS NSSortDescriptor
               </a>
             
           
@@ -322,183 +514,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/IOS/Swift/">Swift</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/05/ios-cfstringtransform/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-cfstringtransform/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var mutableString = <span class="built_in">NSMutableString</span>(string: <span class="string">"Hello! こんにちは! สวัสดี! مرحبا! 您好!"</span>) as <span class="built_in">CFMutableStringRef</span></span><br><span class="line"><span class="built_in">CFStringTransform</span>(mutableString, <span class="literal">nil</span>, k<span class="built_in">CFStringTransformToLatin</span>, Boolean(<span class="number">0</span>))</span><br><span class="line"><span class="comment">//Hello! こんにちは! สวัสดี! مرحبا! 您好! → Hello! kon'nichiha! s̄wạs̄dī! mrḥbạ! nín hǎo!</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CFStringTransform</span>(mutableString, <span class="literal">nil</span>, k<span class="built_in">CFStringTransformStripCombiningMarks</span>, Boolean(<span class="number">0</span>))</span><br><span class="line"><span class="comment">//Hello! kon'nichiha! s̄wạs̄dī! mrḥbạ! nín hǎo! → Hello! kon'nichiha! swasdi! mrhba! nin hao!</span></span><br><span class="line"></span><br><span class="line">let tokenizer = <span class="built_in">CFStringTokenizerCreate</span>(<span class="literal">nil</span>, mutableString, <span class="built_in">CFRangeMake</span>(<span class="number">0</span>, <span class="built_in">CFStringGetLength</span>(mutableString)), <span class="number">0</span>, <span class="built_in">CFLocaleCopyCurrent</span>())</span><br><span class="line"></span><br><span class="line">var mutableTokens: [String] = []</span><br><span class="line">var type: <span class="built_in">CFStringTokenizerTokenType</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    type = <span class="built_in">CFStringTokenizerAdvanceToNextToken</span>(tokenizer)</span><br><span class="line">    let range = <span class="built_in">CFStringTokenizerGetCurrentTokenRange</span>(tokenizer)</span><br><span class="line">    let token = <span class="built_in">CFStringCreateWithSubstring</span>(<span class="literal">nil</span>, mutableString, range) as <span class="built_in">NSString</span></span><br><span class="line">    mutableTokens<span class="variable">.append</span>(token)</span><br><span class="line">&#125; <span class="keyword">while</span> type != <span class="variable">.None</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//(hello, kon'nichiha, swasdi, mrhba, nin, hao)</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/31/websocket-tunnel-over-cloud-ide/">
-                Websocket Tunnel Over Cloud IDE
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-31
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/FQ/">FQ</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/31/websocket-tunnel-over-cloud-ide/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/31/websocket-tunnel-over-cloud-ide/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="bbs">bbs</h3><blockquote>
-<p><a href="https://groups.google.com/forum/#!forum/go-gost">https://groups.google.com/forum/#!forum/go-gost</a></p>
-</blockquote>
-<h3 id="原理">原理</h3><blockquote>
-<p>在平台中建立websocket服务器，将数据通过websocket传输给客户端实现一个tunnel</p>
-</blockquote>
-<h3 id="cloud_Ide">cloud Ide</h3><ul>
-<li>Cloud 9：<a href="https://c9.io">https://c9.io</a></li>
-<li>Koding：<a href="https://koding.com/">https://koding.com/</a></li>
-<li>Nitrous：<a href="https://lite.nitrous.io/">https://lite.nitrous.io/</a></li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/31/websocket-tunnel-over-cloud-ide/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/30/ios-send-sms/">
-                ios send SMS
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-05-30
+          發表於 2015-06-06
         </span>
 
         
@@ -518,8 +534,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/30/ios-send-sms/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/30/ios-send-sms/"></span>
+            <a href="/2015/06/06/ios-nssortdescriptor/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-nssortdescriptor/"></span>
             </a>
           </span>
           
@@ -534,9 +550,14 @@
 
       
         
-          <figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;termios.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSString</span>(<span class="title">UCS2Encoding</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span>*)ucs2EncodingString&#123;</span><br><span class="line">    <span class="built_in">NSMutableString</span> *result = [<span class="built_in">NSMutableString</span> string];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; [<span class="keyword">self</span> length]; i++) &#123;</span><br><span class="line">        <span class="keyword">unichar</span> unic = [<span class="keyword">self</span> characterAtIndex:i];</span><br><span class="line">        [result appendFormat:<span class="string">@"%04hX"</span>,unic];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithString:result];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">- (<span class="built_in">NSString</span>*)ucs2DecodingString&#123;</span><br><span class="line">    <span class="built_in">NSUInteger</span> length = [<span class="keyword">self</span> length]/<span class="number">4</span>;</span><br><span class="line">    <span class="keyword">unichar</span> *buf = malloc(<span class="keyword">sizeof</span>(<span class="keyword">unichar</span>)*length);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *scanString = [<span class="keyword">self</span> UTF8String];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">        sscanf(scanString+i*<span class="number">4</span>, <span class="string">"%04hX"</span>, buf+i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [[<span class="built_in">NSString</span> alloc] initWithCharacters:buf length:length];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span>*)hexSwipString&#123;</span><br><span class="line">    <span class="keyword">unichar</span> *oldBuf = malloc([<span class="keyword">self</span> length]*<span class="keyword">sizeof</span>(<span class="keyword">unichar</span>));</span><br><span class="line">    <span class="keyword">unichar</span> *newBuf = malloc([<span class="keyword">self</span> length]*<span class="keyword">sizeof</span>(<span class="keyword">unichar</span>));</span><br><span class="line">    [<span class="keyword">self</span> getCharacters:oldBuf range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, [<span class="keyword">self</span> length])];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; [<span class="keyword">self</span> length]; i+=<span class="number">2</span>) &#123;</span><br><span class="line">        newBuf[i] = oldBuf[i+<span class="number">1</span>];</span><br><span class="line">        newBuf[i+<span class="number">1</span>] = oldBuf[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSString</span> *result = [<span class="built_in">NSString</span> stringWithCharacters:newBuf length:[<span class="keyword">self</span> length]];</span><br><span class="line">    free(oldBuf);</span><br><span class="line">    free(newBuf);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+          <h2 id="NSSortDescriptor">NSSortDescriptor</h2><p>NSSortDescriptor objects are constructed with the following parameters:</p>
+<ol>
+<li>key: for a given collection, the key for the corresponding value to be sorted on for each object in the collection</li>
+<li>ascending: a boolean specifying whether the collection should be sorted in ascending (YES) or descending (NO) order</li>
+<li>a selector (SEL) or comparator (NSComparator)</li>
+</ol>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/30/ios-send-sms/#more">
+            <a class="btn" href="/2015/06/06/ios-nssortdescriptor/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -562,7 +583,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/30/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/28/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/30/">&raquo;</a>
   </div>
 
 
@@ -596,7 +617,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

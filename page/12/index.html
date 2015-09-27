@@ -148,8 +148,328 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/08/iOS-Dispatch-async-usages-tips/">
-                iOS Dispatch_async usages tips
+              <a class="post-title-link" href="/2015/08/08/Swift-Extensions-Nuances/">
+                Swift Extensions Nuances
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/Swift-Extensions-Nuances/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/Swift-Extensions-Nuances/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Swift扩展的三个微妙细节">Swift扩展的三个微妙细节</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.andrewcbancroft.com/2015/04/22/3-nuances-of-swift-extensions/">3 Nuances of Swift Extensions</a></li>
+<li>原文作者 : <a href="http://www.andrewcbancroft.com/">Andrew Bancroft</a></li>
+<li>译文出自 : <a href="www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samw00/">samw00</a> </li>
+<li>校对者:  </li>
+<li>状态 :  校对中 </li>
+</ul>
+</blockquote>
+<p>每当我初次翻看某文档时，我都走马观花似的快速阅过，还一边点着头一边喃喃自语说：“好！懂了，就这么回事！”，可是过后当我真正要运用到这些我以为已经理解了的知识点时，却发现实际情况和我想的往往不一样，每当这时我就懵了，心想：“哇哦…怎么回事？这和我想的完全不一样啊！文档里有说这事吗？”。</p>
+<p>最近的几次讨论促使我扪心自问是否真正的理解了Swift中的扩展。我阅读过关于扩展的文档，并且我“认为”我自己对这块内容已经是理解的相当透彻了。可是这几次讨论，加上自己私下通过敲代码的验证，让我发现了我原先不曾注意到几个微妙的细节。</p>
+<p><strong>更新</strong>：这篇文章刚一发表，Swift社区就出手襄助并帮助我弄明白了我最根本的纠结点在哪。为此，我写了另一篇文章“<a href="http://www.andrewcbancroft.com/2015/04/24/clarifying-swift-access-control-hint-swift-isnt-c-sharp/">阐明Swift访问控制</a>”进一步说明我之前的误解。为了避免犯我曾今犯过的错误，我建议大家去读一读。</p>
+<h2 id="三个关于扩展的微妙细节">三个关于扩展的微妙细节</h2><p>对下面列出的三个细节的思考严重挑战了我之前对Swift扩展的理解：</p>
+<ol>
+<li>Swift扩展对它所扩展类型的<strong>visibility</strong>。比如，扩展能访问被<code>private</code>所修饰的内容吗?</li>
+<li>定义扩展的位置是否对扩展的<strong>visibility</strong>有影响。比如我这有一个类型我想写个扩展，把扩展写在同一个源文件里和把扩展写在另一个文件里有什么区别吗？</li>
+<li>扩展里“成员”的默认访问修饰符以及是否给他们添加修饰对这个扩展作为一个类型的公共接口的影响。</li>
+</ol>
+<p>在我开始之前，假设我有一个公共结构体<code>Person</code>。这个结构体有一些私有属性，<code>name</code>，<code>gender</code>，和<code>age</code>。用一个枚举把<code>Gender</code>封装了一下。这个结构体看起来如下：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/Swift-Extensions-Nuances/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-What’s-New-in-Swift-2/">
+                iOS What’s New in Swift 2
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-What’s-New-in-Swift-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-What’s-New-in-Swift-2/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Swift_2_有哪些新特性">Swift 2 有哪些新特性</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/108522/whats-new-in-swift-2">What’s New in Swift 2</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/gregheo">Greg Heo</a></li>
+<li>译文出自 : <a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>在WWDC我们发现Swift团队没有浪费时间在无谓的地方，而是致力于改善Swift 2。</p>
+<p>我们将会为你编写和录制很多关于Swift 2的教程，但在此期间我想强调Swift最令人兴奋的改变，为你可以在秋天迁移到Swift 2做准备。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/06/swift-new.jpg" alt=""></p>
+<h1 id="错误处理">错误处理</h1><p>正如Ray在<a href="http://www.raywenderlich.com/108379/wwdc-2015-initial-impressions">WWDC 2015 Initial Impressions</a>文章中提及，错误处理已经在Swift 2改进了。我们已经迁移到新的系统就像异常处理，而不是<strong>NSError</strong>对象和双指针。</p>
+<p>你可能对以下代码比较熟悉：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> drinkWithError(<span class="constant">nil</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般在Cocoa，你传入一个<strong>NSError</strong>对象的引用(一个<strong>inout</strong>参数在Swift)，然后方法会赋值给错误变量。但问题是你可以传入一个nil到这里来完全忽略这个错误；或者，你可以传入<strong>NSError</strong>但从不检查它。</p>
+<p>Swift 2 为错误检查添加额外保护层。你可以使用<strong>throws</strong>关键字来指定那个函数和方法能够抛出一个错误。然后当你调用某样东西时，可以用<strong>do</strong>, <strong>try</strong>和<strong>catch</strong>多个关键字来捕捉和处理错误。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DrinkError</span>: <span class="title">ErrorType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">NoBeerRemainingError</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">drinkWithError</span><span class="params">()</span></span> throws &#123;</span><br><span class="line">  <span class="keyword">if</span> beer.isAvailable() &#123;</span><br><span class="line">    <span class="comment">// party!</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    throw <span class="type">DrinkError</span>.<span class="type">NoBeerRemainingError</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">tryToDrink</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 4</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    try drinkWithError()</span><br><span class="line">  &#125; catch &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not drink beer! :["</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有几样东西需要强调的：</p>
+<ol>
+<li>为了创建一个错误可以抛出，只是创建一个继承<strong>ErrorType</strong>的<strong>enum</strong>。</li>
+<li>你需要使用<strong>throws</strong>关键字来标志任何函数可以抛出一个错误。</li>
+<li>这里抛出一个错误，它将会在section 4中被捕捉。</li>
+<li>你在一个<strong>do</strong>块中包含任何可以抛出一个错误的代码，而不是其他语言类似的<strong>try</strong>块中。然后，你添加一个<strong>try</strong>关键字到函数被调用的前面，而且这个函数能够抛出一个错误。</li>
+</ol>
+<p>新语法是非常简洁和易读。任何API当前使用<strong>NSError</strong>以后都会使用这种错误处理方式。</p>
+<p><img src="http://cdn4.raywenderlich.com/wp-content/uploads/2015/06/throw-all-the-things-415x320.jpg" alt=""></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-What’s-New-in-Swift-2/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/swift-Core-Image-Tutorial/">
+                swift Core Image Tutorial
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Swift/">Swift</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/swift-Core-Image-Tutorial/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/swift-Core-Image-Tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Core_Image入门教程(swift)">Core Image入门教程(swift)</h2><blockquote>
+<ul>
+<li>原文链接 : <a href="http://www.raywenderlich.com/76285/beginning-core-image-swift">Core Image Tutorial: Getting Started</a></li>
+<li>原文作者 : <a href="http://www.raywenderlich.com/u/nicklockwood">Nick Lockwood</a></li>
+<li>译文出自 :<a href="http://www.devtf.cn">开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Harries Chen</a>  </li>
+<li>状态 :  校正完</li>
+</ul>
+</blockquote>
+<p>Core Image是一个强大的框架，它能够让你轻松地对图像进行过滤。你能够通过修改图像的饱和度、色调或曝光率来获取各种特效。你也可以使用CPU或GPU更快地来处理图像数据，快到能够实时处理视频帧数据(video frame)。</p>
+<p>Core Image过滤器能够以链式的方式结合将多个特效应用到一个图像或视频帧数据。多个过滤器能够组合成单个过滤器应用在一个图像。通过每次与每个过滤器比较，这使它非常有效地处理图像。</p>
+<p>在这个教程中，你将会亲手实践如何使用Core Image.通过使用几个不同的过滤器，你会看到实时使用各种炫酷的特效是多么容易。</p>
+<h1 id="基础">基础</h1><p>在你开始之前，让我们先讨论在Core Image框架中几个很重要的类：</p>
+<ul>
+<li><strong>CIContext</strong>. 所有处理core image的工作都在CIContext完成。这个与Core Graphics或OpenGL context有几分相似。</li>
+<li><strong>CIImage</strong>. 这个类保存图像数据，它能够从UIImage，图像文件或像素数据等方式来创建。</li>
+<li><strong>CIFilter</strong>. CIFilter类有一个字典(dictionary)来定义特定属性的过滤器，比如常用过滤器有饱和度，颜色翻转，裁剪等属性，还有很多没列出来。</li>
+</ul>
+<h3 id="CoreImageFun">CoreImageFun</h3><p>打开Xcode并使用<strong>iOS \ Application \ Single View Application</strong>模板来创建一个新工程。输入<strong>CoreImageFun</strong>作为Product Name，选择iPhone为Devices option和确定使用<strong>swift</strong>作为编程语言。</p>
+<p>下载<a href="http://cdn5.raywenderlich.com/downloads/CIResources.zip">教程的资源</a>，并添加图片<strong>image.png</strong>到工程</p>
+<p>下一步，打开<strong>Main.storyboard</strong>你文件，拖拽一个image view到已存在的view，image view作为view的子视图。在Attributes Inspector中，设置image view的content mode属性为Aspect Fit，这样它就不会拉伸图片。</p>
+<p>下一步，确定Document Outline(在Interface Builder里canvas左边)是可见的 - 你可以从menu中<strong>Editor \ Show Document Outline</strong>来启用。</p>
+<p>按着control键从image view拖动到它的superview三次来添加三个约束(constraint)：</p>
+<ol>
+<li>添加一个Top Space to Layout Guide的约束，如果有必要的话，使用Size Inspector来设置约束的constant为0 </li>
+<li>添加一个Center Horizontally in Container的约束(同样也需要设置constant为0)</li>
+<li>添加一个Equal Width约束</li>
+</ol>
+<p>最后，为了约束image view的高度，按着control键从image view拖动到本身，然后添加一个Aspect Ratio约束，使用Size Inspector来设置它的multiplier的值为8:5对应宽高比和constant factor为0。最后，选择<strong>Editor \ Resolve Auto Layout Issues \ All Views in View Controller \ Update Frames</strong>，那么Interface Builder会根据这些约束来更新布局</p>
+<p>下一步，打开Assistant Editor，然后确保它显示<strong>ViewController.swift</strong>。按着control键从UIImageView拖动到刚刚打开的<strong>ViewController</strong>类的大括号。命名outlet为<strong>imageView</strong>，然后点击connect。</p>
+<p>编译和运行这个项目来确保目前进展顺利 - 你应该看到一个空屏。初始化设置完成，现在进入Core Image的世界。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/swift-Core-Image-Tutorial/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-Continuous-Integration-Deployment/">
+                iOS Continuous Integration & Deployment
               </a>
             
           
@@ -178,8 +498,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/08/iOS-Dispatch-async-usages-tips/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Dispatch-async-usages-tips/"></span>
+            <a href="/2015/08/08/iOS-Continuous-Integration-Deployment/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Continuous-Integration-Deployment/"></span>
             </a>
           </span>
           
@@ -194,381 +514,128 @@
 
       
         
-          <p><a href="http://blog.cnbluebox.com/blog/2014/10/20/dispatch-asyncyi-bu-de-xiao-miao-yong/" target="_blank" rel="external">reference</a></p>
-<h2 id="Dispatch_async异步的小妙用">Dispatch_async异步的小妙用</h2><p>GCD 对于cocoa和cocoa Touch的开发者来说已经是在熟悉不过了，相信有些基础的人都能说出一些特性。但是今天我们不是讲GCD的介绍和使用bulabulabula. 本文就介绍下使用<code>dispatch_async</code>的一个小妙用，且看下文分解。</p>
-<p>我们都知道dispatch_async可以用来异步执行代码。你的第一反应的可能是后台、多线程 这样的字眼，但是异步执行不是就代表多线程，它只是代表代码的执行方式，知道这点可以做更多事情。</p>
-<h3 id="afterDelay">afterDelay</h3><p>你是否做过这样的事情，在修改一个bug时，把方法延迟执行，like this:</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(doSomething) <span class="string">withObject:</span>nil <span class="string">afterDelay:</span><span class="number">0.1</span>f];</span><br></pre></td></tr></table></figure>
-<p>Let me guess, 你一定是发现doSomething方法中所依赖的数据或环境还达不到，立即执行的话，可能会有问题。所以你就让doSomething延迟一点时间执行，保证它需要的数据或环境已经处理完成，改完打包测试，bug看起来已经修复了。</p>
-<p>这个问题从大多数场景来说的确已经修复了，但是在强迫症眼里，好像还是有些瑕疵，不是完美方案。</p>
-<p>两个问题，你怎么能100%确保你需要的数据或环境能再0.1s内准备完成呢； 另一个是数据准备完成到doSomething执行中间可能会有一段空白时间，有时是我们不希望的。那如何替代这个方案呢，如果你得doSomething需要的数据和环境是在主线程执行的，那么方案很简单：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self doSomething]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>你可能问了，我本来就在主线程执行任务，为什么还要往main_queue里面提交任务呢。巧妙的地方就在这，我们巧妙的把doSomething作为任务提交到主线程，它会等待主线程的任务一个个执行完成才执行，这样就可以巧妙的解决这个问题。</p>
-<p>不过注意，不是所有场景都适合这个用法，就像上面描述的，你要确保doSomething的依赖条件实在主线程中执行的。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
-                iOS Application Framework Think - Network
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
-<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
-<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
-<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
-<ol>
-<li>无法cancel这个请求</li>
-<li>占用了完整的一个线程</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
-                iOS Best Practices
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-05
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/05/iOS-Best-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Best-Practices/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="iOS_Best_Practices">iOS Best Practices</h1><p>这里总结一下iOS最佳实践，主要参考Futurice developers的文章<a href="https://github.com/futurice/ios-good-practices">iOS Good Practices</a>，同时加上了一些自己的理解</p>
-<h2 id="目录">目录</h2><ul>
-<li><a href="#setup_project">初始化项目</a></li>
-<li><a href="#iOS_architecture">iOS架构</a></li>
-<li><a href="#api_design">API设计</a></li>
-<li><a href="#high_quality_code">高质量代码</a></li>
-<li><a href="#code_style">编码规范</a></li>
-<li><a href="#iOS_open_source_lib">iOS开源库</a></li>
-<li><a href="#iOS_basic_skills">iOS基本技能</a></li>
-<li><a href="#build_automation">自动化构建</a></li>
-<li><a href="#optimiaze_app">优化App</a></li>
-</ul>
-<p><b id="setup_project"></b></p>
-<h2 id="初始化项目">初始化项目</h2><h3 id="UI采用Interface_Builder还是手写代码">UI采用Interface Builder还是手写代码</h3><p>当开始一个iOS项目时，一个常见的问题就是编写所有的views是采用手写代码的方式还是使用Interface Builder的Storyboard或XIB文件。两种方式都可以实现相同UI效果，但几点需要考虑：</p>
-<h4 id="为什么使用代码？">为什么使用代码？</h4><ul>
-<li>当多人协作开发时，由于Storyboard复杂的XML结构，它更容易发生版本冲突，这比手写代码的方式更难合并代码。</li>
-<li>手写代码更容易地结构化和重用views，因此使你的代码库保持<a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>。</li>
-<li>所有的信息都在同一个地方。在Interface Builder中，你必须通过点击所有inspectors才能找到你想要的东西。</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/05/iOS-Best-Practices/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
-                parse crashLog manually
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/parse-crashLog-manually/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/parse-crashLog-manually/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://foggry.com/blog/2015/07/27/ru-he-shou-dong-jie-xi-crashlog/">转自</a></p>
-<h2 id="如何手动解析CrashLog">如何手动解析CrashLog</h2><p>解决崩溃问题是移动应用开发者最日常的工作之一。如果是开发过程中遇到的崩溃，可以根据重现步骤调试，但线上版本就无能为力了。好在目前已经有很多不错的第三方CrashLog搜集平台（如友盟、Crashlytics等）为我们做好了解析工作，甚至在Xcode7里苹果也跟进了解析线上版本崩溃日志的功能，为开发者减轻了不少负担。尽管通常已经不需要我们手工处理CrashLog，了解CrashLog的还原原理和方法还是有必要的。</p>
-<h3 id="-dSYM">.dSYM</h3><p><code>.dSYM(debugging SYMbols)</code>又称为调试符号表，是苹果为了方便调试和定位问题而使用的一种调试方案，本质上使用的是起源于贝尔实验室的DWARF（Debugging With Attributed Record Formats），其在<code>.xcarchive</code>目录中的层次结构为：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.xcarchive</span><br><span class="line"><span class="comment">--dSYMs</span></span><br><span class="line">  |<span class="comment">--Your.app.dSYM</span></span><br><span class="line">    |<span class="comment">--Contents</span></span><br><span class="line">      |<span class="comment">--Resources</span></span><br><span class="line">        |<span class="comment">--DWARF</span></span><br></pre></td></tr></table></figure></p>
-<p>关于DWARF的具体内容以后有机会再说。我们能解析CrashLog全靠.dSYM文件，解析方式见后文。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/parse-crashLog-manually/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
-                iOS NSURLProtocal
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
+          <h2 id="iOS项目的持续集成与管理">iOS项目的持续集成与管理</h2><blockquote>
 <ul>
-<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
-<li>如何优雅地进行流量统计</li>
-<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
-<li>怎么实现HTTP的同步请求</li>
+<li>原文链接 : <a href="https://medium.com/ribot-labs/continuous-integration-deployment-for-ios-projects-7358b72ca2e9">Continuous Integration &amp; Deployment for iOS Projects</a></li>
+<li>原文作者 : <a href="https://medium.com/@matto1990">Matt Oakes</a></li>
+<li><a href="http://www.devtf.cn">译文出自 :  开发技术前线 www.devtf.cn</a></li>
+<li>译者 : <a href="https://github.com/samlaudev">Sam Lau</a> </li>
+<li>校对者: <a href="https://github.com/bboyfeiyu">Mr.Simple</a>  </li>
+<li>状态 :  校正完 </li>
 </ul>
-<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
-<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
+</blockquote>
+<p>当实现新功能时，如果忽略可维护性而引入<a href="http://en.wikipedia.org/wiki/Technical_debt">技术债务</a>，那将会需要延迟解决它或导致增加维护成本。</p>
+<p>最近我们已经思考通过哪些方式来提高代码的质量：</p>
 <ul>
-<li>自定义请求和响应</li>
-<li>提供自定义的全局缓存支持</li>
-<li>重定向网络请求</li>
-<li>提供HTTP Mocking (方便前期测试)</li>
-<li>其他一些全局的网络请求修改需求</li>
+<li>当代码的质量下降时，通过设置一些工具来马上提醒开发者</li>
+<li>文档化一些编码规范和思考在过去的几个项目中如何避免维护性差的问题</li>
 </ul>
+<p><strong>我将会简单地概括我们需要设置什么才能自动监控代码质量.</strong></p>
+<h1 id="基础">基础</h1><p>我们选择一个持续集成工具<a href="https://jenkins-ci.org/">Jenkins</a>，让它运行在一台放在我们工作室的Mac Mini。其实我不怎么喜欢Jenkins，但到目前为止，它是最稳定和最适合的工具来完成这些工作。</p>
+<p>我们已经通过<a href="https://brew.sh/">Homebrew</a>和<a href="https://github.com/sstephenson/rbenv">rbenv</a>来分别安装Jenkins和Ruby，而rbenv能够为我们提供一个最新和稳定的<a href="https://rubygems.org/">Ruby Gems</a>环境。有个Homebrew和Ruby Gems两个包管理工具之后，我们就几乎能够安装所有我们需要的工具，但很少会破坏与原有OS X系统更新提供的Ruby。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
+            <a class="btn" href="/2015/08/08/iOS-Continuous-Integration-Deployment/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/08/iOS-UITableviewCell-Swipeable/">
+                iOS UITableviewCell Swipeable
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-UITableviewCell-Swipeable/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-UITableviewCell-Swipeable/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS开发-可滑动的单元格"><code>iOS开发-可滑动的单元格</code></h2><blockquote>
+<ul>
+<li>原文链接 : <a href="https://medium.com/ios-os-x-development/swipeable-table-view-cells-in-ios-apps-472da0af1935">Swipeable table view cells in iOS apps</a></li>
+<li>译者 : <a href="https://github.com/mrchenhao">Harries Chen</a> </li>
+<li>校对者: <a href="https://github.com/mrchenhao">Mr.Simple</a>  </li>
+</ul>
+</blockquote>
+<p>我在过去的一个月里致力于开发我的创业项目，其中有一个功能就是我想让用户通过左右滑动表格来显示更多的选项（就像系统自带的邮件程序现实更多和删除一样，在这篇文章中我将讨论一些关于这方面的方法，以及如何动手实现它）</p>
+<p>首先，让我们来看一下现有的解决方法。</p>
+<ul>
+<li>UITableViewRowAction (new in iOS 8)</li>
+</ul>
+<p>这是最好的方法如果你只是希望加一些从左滑到右才会出现的按钮。</p>
+<ul>
+<li><a href="https://github.com/CEWendel/SWTableViewCell">SWTableViewCell</a></li>
+</ul>
+<p>这是一个功能很全的按钮库，支持左滑和右滑，同时也可以在iOS8以前的版本中使用</p>
+<ul>
+<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell">MGSwipeTableCell</a></li>
+</ul>
+<p>如果你想要实现表格的左右滑动功能，你可以从上面的解决方按照找到你需要的。但是为什么我们还要自己来实现呢？就我而言，我需要MGSwipeTableCell的一些功能，但是有的功能它对我并没有用，如果你想要自己来实现它，或者仅仅只是想要知道它的原理，那么接下去看。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/08/iOS-UITableviewCell-Swipeable/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -594,7 +661,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/13/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/11/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/13/">&raquo;</a>
   </div>
 
 
@@ -628,7 +695,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

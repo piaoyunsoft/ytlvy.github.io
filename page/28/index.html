@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/06/ios-key-value-coding-and-and-collection-operators/">
-                IOS Key-Value Coding &amp;&amp; Collection Operators
+              <a class="post-title-link" href="/2015/06/16/ios-MRC-ARC/">
+                ios MRC && ARC
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-06
+          發表於 2015-06-16
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/06/ios-key-value-coding-and-and-collection-operators/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-key-value-coding-and-and-collection-operators/"></span>
+            <a href="/2015/06/16/ios-MRC-ARC/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/16/ios-MRC-ARC/"></span>
             </a>
           </span>
           
@@ -194,291 +194,36 @@
 
       
         
-          <h2 id="Key-Value_Coding_&amp;&amp;_Collection_Operators">Key-Value Coding &amp;&amp; Collection Operators</h2><blockquote>
-<p>KVC Collection Operators allows actions to be performed on a collection using key path notation in valueForKeyPath:. @’s in a key path denote an aggregate function whose result can be returned or chained, just like any other key path.</p>
-</blockquote>
-<h3 id="Simple_Collection_Operators">Simple Collection Operators</h3><ol>
-<li>@count: Returns the number of objects in the collection.</li>
-<li>@sum: Converts each object in the collection to a double, computes the sum, and returns the sum.</li>
-<li>@avg: Takes the double value of each object in the collection, and returns the average value.</li>
-<li>@max: Determines the maximum value using compare:. Objects must support mutual comparison for this to work.</li>
-<li>@min: Same as @max, but returns the minimum value.</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/06/ios-key-value-coding-and-and-collection-operators/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/06/c-storage-classes/">
-                C Storage Classes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/C/">C</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/06/c-storage-classes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/c-storage-classes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="C_Storage_Classes">C Storage Classes</h2><p>There are 4 storage classes in C: auto, register, static &amp; extern.</p>
-<h3 id="static">static</h3><p>When it comes to storage classes, static means one of two things.</p>
-<ol>
-<li>A static variable inside a method or function retains its value between invocations.</li>
-<li>A static variable declared globally can called by any function or method, so long as those functions appear in the same file as the static variable. The same goes for static functions.</li>
-</ol>
-<h3 id="Static_Singletons">Static Singletons</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">id</span> _sharedInstance = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    dispath_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">        <span class="comment">//any config</span></span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="keyword">return</span> _sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/06/c-storage-classes/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/06/ios-encodings/">
-                ios encodings
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/06/ios-encodings/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/ios-encodings/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Type_Encodings">Type Encodings</h2><table>
+          <h2 id="ARC">ARC</h2><h3 id="MRC">MRC</h3><h4 id="MRC内存管理原则">MRC内存管理原则</h4><p>􏰀1. You have ownership of any objects you create.<br>2.􏰀 You can take ownership of an object using retain.<br>􏰀3. When no longer needed, you must relinquish ownership of an object you own.<br>􏰀4. You must not relinquish ownership of an object you don’t own.</p>
+<table>
 <thead>
 <tr>
-<th>Code</th>
-<th>Meaning   </th>
+<th>Action for Objective-C Object</th>
+<th>Objective-C Method</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td> c</td>
-<td>A char                                           </td>
+<td>Create and have ownership of it</td>
+<td>alloc/new/copy/mutableCopy group</td>
 </tr>
 <tr>
-<td> i</td>
-<td>An int                                           </td>
+<td>Take ownership of it</td>
+<td>retian</td>
 </tr>
 <tr>
-<td> s</td>
-<td>A short                                          </td>
+<td>Relinquish it</td>
+<td>release</td>
 </tr>
 <tr>
-<td> l</td>
-<td>A longl is treated as a 32-bit quantity on 64-bit programs.</td>
-</tr>
-<tr>
-<td> q</td>
-<td>A long long                                      </td>
-</tr>
-<tr>
-<td> C</td>
-<td>An unsigned char                                 </td>
-</tr>
-<tr>
-<td> I</td>
-<td>An unsigned int                                  </td>
-</tr>
-<tr>
-<td> S</td>
-<td>An unsigned short                                </td>
-</tr>
-<tr>
-<td> L</td>
-<td>An unsigned long                                 </td>
-</tr>
-<tr>
-<td> Q</td>
-<td>An unsigned long long                            </td>
-</tr>
-<tr>
-<td> f</td>
-<td>A float                                          </td>
-</tr>
-<tr>
-<td> d</td>
-<td>A double                                         </td>
-</tr>
-<tr>
-<td> B</td>
-<td>A C++ bool or a C99 _Bool                        </td>
-</tr>
-<tr>
-<td> v</td>
-<td>A void                                           </td>
-</tr>
-<tr>
-<td> *</td>
-<td>A character string (char *)                      </td>
-</tr>
-<tr>
-<td> @</td>
-<td>An object (whether statically typed or typed id) </td>
-</tr>
-<tr>
-<td> #</td>
-<td>A class object (Class)                           </td>
-</tr>
-<tr>
-<td> :</td>
-<td>A method selector (SEL)                          </td>
-</tr>
-<tr>
-<td> [array type]</td>
-<td>An array                                         </td>
-</tr>
-<tr>
-<td> {name=type…}</td>
-<td>A structure                                      </td>
-</tr>
-<tr>
-<td> (name=type…)</td>
-<td>A union                                          </td>
-</tr>
-<tr>
-<td> bnum</td>
-<td>A bit field of num bits                          </td>
-</tr>
-<tr>
-<td> ^type</td>
-<td>A pointer to type                                </td>
-</tr>
-<tr>
-<td> ?</td>
-<td>An unknown type (used for function pointers)     </td>
+<td>Dispose of it</td>
+<td>dealloc</td>
 </tr>
 </tbody>
 </table>
+<h4 id="调用者持有">调用者持有</h4><p>Relinquishing Ownership of a Retained Object. 下面的例子将函数将自己持有的obj, 通过return传递给了调用者,由调用者来来持有此变量<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (id)allocObject</span><br><span class="line">&#123;</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">You</span> create an <span class="keyword">object</span> <span class="keyword">and</span> have ownership. */</span><br><span class="line">  id obj = [[<span class="type">NSObject</span> alloc] init];</span><br><span class="line">  /*</span><br><span class="line">  - <span class="type">At</span> this moment, this <span class="keyword">method</span> has ownership <span class="keyword">of</span> the <span class="keyword">object</span>. */</span><br><span class="line">  <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/06/ios-encodings/#more">
+            <a class="btn" href="/2015/06/16/ios-MRC-ARC/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -511,8 +256,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/06/06/octopress-tutorials/">
-                octopress tutorials
+              <a class="post-title-link" href="/2015/06/15/ios-gcd/">
+                ios gcd
               </a>
             
           
@@ -521,91 +266,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Other/">Other</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/06/octopress-tutorials/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/octopress-tutorials/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Octopress">Octopress</h2><h3 id="官方文档">官方文档</h3><p><a href="http://octopress.org/docs/setup/">官方文档</a></p>
-<h3 id="准备环境">准备环境</h3><p>需要ruby1.9以上,可以选择用rbenv来安装多版本ruby.</p>
-<h4 id="安装rbenv">安装rbenv</h4> <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>update</span><br><span class="line"><span class="keyword">brew </span>install rbenv</span><br><span class="line"><span class="keyword">brew </span>install ruby-<span class="keyword">build</span><br><span class="line"></span></span><br><span class="line"><span class="label">rbenv</span> install <span class="number">1</span>.<span class="number">9</span>.<span class="number">3</span>-<span class="literal">p0</span></span><br><span class="line"><span class="label">rbenv</span> local <span class="number">1</span>.<span class="number">9</span>.<span class="number">3</span>-<span class="literal">p0</span></span><br><span class="line"><span class="label">rbenv</span> rehash</span><br></pre></td></tr></table></figure>
-<p>你有可能需要安装老版本的GCC编译器才能顺利安装Ruby 1.9.3:<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>tap homebrew/dupes</span><br><span class="line"><span class="keyword">brew </span>install apple-gcc42</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/06/octopress-tutorials/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/05/ios-bool-slash-bool-slash-boolean-slash-nscfboolean/">
-                ios BOOL / bool /   Boolean / NSCFBoolean
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-06-05
+          發表於 2015-06-15
         </span>
 
         
@@ -625,8 +286,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/05/ios-bool-slash-bool-slash-boolean-slash-nscfboolean/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/05/ios-bool-slash-bool-slash-boolean-slash-nscfboolean/"></span>
+            <a href="/2015/06/15/ios-gcd/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-gcd/"></span>
             </a>
           </span>
           
@@ -641,11 +302,273 @@
 
       
         
-          <h2 id="BOOL_bool_Boolean_NSCFBoolean">BOOL  bool   Boolean  NSCFBoolean</h2><h3 id="BOOL">BOOL</h3><blockquote>
-<p>Objective-C defines BOOL to encode truth value. It is a typedef of a signed char, with the macros YES and NO to represent true and false, respectively.<br>On a 64-bit iOS, BOOL is defined as a bool, rather than signed char, which precludes the runtime from these type conversion errors.<br>0 is considered “false”, while any other value is considered “true”. Because NULL and nil have a value of 0, they are considered “false” as well.</p>
-</blockquote>
+          <h2 id="GCD">GCD</h2><h3 id="befor_GCD">befor GCD</h3><h4 id="object_method">object method</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorInBackground:</span> <span class="string">withObject:</span></span><br><span class="line">- (<span class="typename">void</span>) <span class="string">performSelectorOnMainThread:</span> <span class="string">withObject:</span> <span class="string">waitUntilDone:</span></span><br></pre></td></tr></table></figure>
+<h3 id="多线程面临的问题">多线程面临的问题</h3><ol>
+<li>race condition</li>
+<li>dead lock</li>
+<li>too much threads consumes two much memory</li>
+</ol>
+<h4 id="多线程的意义">多线程的意义</h4><p>高交互性， 界面编程中，将耗时的操作放入到其他线程执行，避免影响到主线程界面响应</p>
+<h3 id="GCD_基础">GCD 基础</h3><h4 id="Dispatch_Queue_派发队列">Dispatch Queue 派发队列</h4><ol>
+<li>serial dispath queue  顺序派发队列</li>
+<li>concurrent dispath queue  并发派发队列</li>
+</ol>
+<p>和浏览器对同一域名可发起的同时连接数限制一样，可最多同时执行的线程数，也是由系统来决定的<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/05/ios-bool-slash-bool-slash-boolean-slash-nscfboolean/#more">
+            <a class="btn" href="/2015/06/15/ios-gcd/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/15/ios-block/">
+                ios block
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/15/ios-block/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/ios-block/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Block">Block</h2><p>Converting Source Code<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc file_name_of_the_<span class="built_in">source</span>_code</span><br></pre></td></tr></table></figure></p>
+<h3 id="无变量">无变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">struct</span> __block_impl &#123;</span><br><span class="line">  <span class="keyword">void</span> *isa;</span><br><span class="line">  <span class="keyword">int</span> Flags;</span><br><span class="line">  <span class="keyword">int</span> Reserved;</span><br><span class="line">  <span class="keyword">void</span> *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __main_block_impl_0 &#123;</span><br><span class="line">  <span class="keyword">struct</span> __block_impl impl;</span><br><span class="line">  <span class="keyword">struct</span> __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(<span class="keyword">struct</span> __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Block\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">struct</span> __main_block_desc_0 &#123;</span><br><span class="line">  <span class="keyword">size_t</span> reserved;</span><br><span class="line">  <span class="keyword">size_t</span> Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> (*blk)(<span class="keyword">void</span>) = (<span class="keyword">void</span> (*)())&amp;__main_block_impl_0((<span class="keyword">void</span> *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line"></span><br><span class="line">  ((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)blk)-&gt;FuncPtr)((__block_impl *)blk);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/15/ios-block/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/11/wget/">
+                wget
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/linux/">linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/11/wget/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/11/wget/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="wget">wget</h2><h3 id="用wget做站点镜像">用wget做站点镜像</h3><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">wget</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">mirror</span> <span class="literal">-</span><span class="comment">p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">convert</span><span class="literal">-</span><span class="comment">links</span> <span class="literal">-</span><span class="comment">P</span> <span class="title">[</span><span class="comment">本地目录</span><span class="title">]</span> <span class="title">[</span><span class="comment">网站地址</span><span class="title">]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -np -nd <span class="string">http:</span><span class="comment">//appinn.com</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -<span class="tag">p</span> -np -k http:<span class="comment">//dsec.pku.edu.cn/~usr_name/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -m <span class="string">http:</span><span class="comment">//www.tldp.org/LDP/abs/html/</span></span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/11/wget/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/">
+                AutoLayout -- Content Compression Resistance & Content Hugging
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-06-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Content_Compression_Resistance_&amp;&amp;_Content_Hugging">Content Compression Resistance &amp;&amp; Content Hugging</h2><p>Auto Layout中, 存在Content Compression Resistance 和 Content Hugging 这两个概念.这两个概念是在<code>固有内容尺寸</code>（Intrinsic Content Size）之上起作用的.</p>
+<h3 id="Intrinsic_Content_Size">Intrinsic Content Size</h3><p>包含内容的UI控件, 由内容多少而决定的大小规则.</p>
+<h3 id="Content_Compression_Resistance_&amp;_Content_Hugging">Content Compression Resistance &amp; Content Hugging</h3><ol>
+<li>内容大小改变是指, 内容显示内容所占空间的长度来说的.</li>
+<li><code>内容抗压指数</code>，在父视图变小时, 会根据抗压指数来缩小各子控件;</li>
+<li><code>内容拥抱指数</code>, 内容越集中于控件中心, 周围空白越小.</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/08/AutoLayout-Content-Compression-Resistance-Content-Hugging/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -671,7 +594,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/27/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/29/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/27/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/29/">&raquo;</a>
   </div>
 
 
@@ -705,7 +628,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

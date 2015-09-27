@@ -148,8 +148,281 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/ios-GPUImage-simple-use/">
-                ios GPUImage simple use
+              <a class="post-title-link" href="/2015/08/08/iOS-Dispatch-async-usages-tips/">
+                iOS Dispatch_async usages tips
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/08/iOS-Dispatch-async-usages-tips/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/08/iOS-Dispatch-async-usages-tips/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.cnbluebox.com/blog/2014/10/20/dispatch-asyncyi-bu-de-xiao-miao-yong/" target="_blank" rel="external">reference</a></p>
+<h2 id="Dispatch_async异步的小妙用">Dispatch_async异步的小妙用</h2><p>GCD 对于cocoa和cocoa Touch的开发者来说已经是在熟悉不过了，相信有些基础的人都能说出一些特性。但是今天我们不是讲GCD的介绍和使用bulabulabula. 本文就介绍下使用<code>dispatch_async</code>的一个小妙用，且看下文分解。</p>
+<p>我们都知道dispatch_async可以用来异步执行代码。你的第一反应的可能是后台、多线程 这样的字眼，但是异步执行不是就代表多线程，它只是代表代码的执行方式，知道这点可以做更多事情。</p>
+<h3 id="afterDelay">afterDelay</h3><p>你是否做过这样的事情，在修改一个bug时，把方法延迟执行，like this:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(doSomething) <span class="string">withObject:</span>nil <span class="string">afterDelay:</span><span class="number">0.1</span>f];</span><br></pre></td></tr></table></figure>
+<p>Let me guess, 你一定是发现doSomething方法中所依赖的数据或环境还达不到，立即执行的话，可能会有问题。所以你就让doSomething延迟一点时间执行，保证它需要的数据或环境已经处理完成，改完打包测试，bug看起来已经修复了。</p>
+<p>这个问题从大多数场景来说的确已经修复了，但是在强迫症眼里，好像还是有些瑕疵，不是完美方案。</p>
+<p>两个问题，你怎么能100%确保你需要的数据或环境能再0.1s内准备完成呢； 另一个是数据准备完成到doSomething执行中间可能会有一段空白时间，有时是我们不希望的。那如何替代这个方案呢，如果你得doSomething需要的数据和环境是在主线程执行的，那么方案很简单：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//[self doSomething];</span></span><br><span class="line"><span class="tag">dispatch_async</span>(<span class="function">dispatch_get_main_queue</span>(), ^&#123;</span><br><span class="line">    <span class="attr_selector">[self doSomething]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>你可能问了，我本来就在主线程执行任务，为什么还要往main_queue里面提交任务呢。巧妙的地方就在这，我们巧妙的把doSomething作为任务提交到主线程，它会等待主线程的任务一个个执行完成才执行，这样就可以巧妙的解决这个问题。</p>
+<p>不过注意，不是所有场景都适合这个用法，就像上面描述的，你要确保doSomething的依赖条件实在主线程中执行的。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/05/iOS-Application-Framework-Think-Network/">
+                iOS Application Framework Think - Network
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/05/iOS-Application-Framework-Think-Network/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Application-Framework-Think-Network/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.cnbluebox.com/blog/2015/05/07/architecture-ios-1/">reference</a></p>
+<h2 id="IOS应用架构思考一（网络层）">IOS应用架构思考一（网络层）</h2><p>最近看到Casa Taloyum同学的关于IOS架构的文章，分享的概念和观点很值得一看，于是不禁心痒，也做些分享吧，我会从实际设计过程中需要思考的问题的角度着手来讲述，毕竟无论什么样的架构，什么样的设计都是要解决这些问题的。<br>今天就先讲讲网络层的需要思考的问题吧。</p>
+<h3 id="requestOperation的设计">requestOperation的设计</h3><p>我们都知道在客户端发送请求是需要成本的，那么设计异步的请求就是首要的问题。我们知道Cocoa提供了非常丰富和易于使用的异步api, 有<code>NSOperationQueue</code>, <code>dispatch queue</code>, <code>NSThread</code>等。那么如何选择呢，答案毫无疑问的必须是<code>NSOperation</code>。 不信你去看ASIHTTPRequest和AFNetworking. 好像这个理由不够充分是吧，而且很多人就是使用了这些框架，而不清楚它们到底为何优秀，那我就列举下一些它们的优点吧</p>
+<p>首先举个反例吧：曾经有人问过我“为什么要用AFNetworking和ASI这样的框架呢，我直接dispatch到后台用类似dataWithURL:拉数据这样不是很简单？”。 那么这样的使用案例有2个很致命的缺陷：</p>
+<ol>
+<li>无法cancel这个请求</li>
+<li>占用了完整的一个线程</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/05/iOS-Application-Framework-Think-Network/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/05/iOS-Best-Practices/">
+                iOS Best Practices
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/05/iOS-Best-Practices/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/05/iOS-Best-Practices/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="iOS_Best_Practices">iOS Best Practices</h1><p>这里总结一下iOS最佳实践，主要参考Futurice developers的文章<a href="https://github.com/futurice/ios-good-practices">iOS Good Practices</a>，同时加上了一些自己的理解</p>
+<h2 id="目录">目录</h2><ul>
+<li><a href="#setup_project">初始化项目</a></li>
+<li><a href="#iOS_architecture">iOS架构</a></li>
+<li><a href="#api_design">API设计</a></li>
+<li><a href="#high_quality_code">高质量代码</a></li>
+<li><a href="#code_style">编码规范</a></li>
+<li><a href="#iOS_open_source_lib">iOS开源库</a></li>
+<li><a href="#iOS_basic_skills">iOS基本技能</a></li>
+<li><a href="#build_automation">自动化构建</a></li>
+<li><a href="#optimiaze_app">优化App</a></li>
+</ul>
+<p><b id="setup_project"></b></p>
+<h2 id="初始化项目">初始化项目</h2><h3 id="UI采用Interface_Builder还是手写代码">UI采用Interface Builder还是手写代码</h3><p>当开始一个iOS项目时，一个常见的问题就是编写所有的views是采用手写代码的方式还是使用Interface Builder的Storyboard或XIB文件。两种方式都可以实现相同UI效果，但几点需要考虑：</p>
+<h4 id="为什么使用代码？">为什么使用代码？</h4><ul>
+<li>当多人协作开发时，由于Storyboard复杂的XML结构，它更容易发生版本冲突，这比手写代码的方式更难合并代码。</li>
+<li>手写代码更容易地结构化和重用views，因此使你的代码库保持<a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>。</li>
+<li>所有的信息都在同一个地方。在Interface Builder中，你必须通过点击所有inspectors才能找到你想要的东西。</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/05/iOS-Best-Practices/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/parse-crashLog-manually/">
+                parse crashLog manually
               </a>
             
           
@@ -178,8 +451,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/ios-GPUImage-simple-use/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/ios-GPUImage-simple-use/"></span>
+            <a href="/2015/08/04/parse-crashLog-manually/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/parse-crashLog-manually/"></span>
             </a>
           </span>
           
@@ -194,97 +467,12 @@
 
       
         
-          <h2 id="GPUImage">GPUImage</h2><p>GPUImage 作者是 Brad Larson，以 BSD 协议放出，能够在图像、实时摄像头影像和视频上使用 GPU 加速的滤镜和其他效果.</p>
-<h3 id="GPU_vs-_CPU">GPU vs. CPU</h3><p>每只 iPhone 都有两个处理器：一个 CPU，也就是中央处理器，和一个 GPU，也就是图形处理器。每个处理器都有它自己的优势，现代芯片架构（例如 Apple A4）把 CPU 和 GPU 集成在一个物理封装里。</p>
-<p>在 Xcode 里面写 C 和 Objective-C 的时候，产生的指令绝大部分会被 CPU 执行。相对地，GPU 是一枚专用芯片，专门用来做独立的小操作，例如图形渲染。GPU 执行的指令和 CPU 是有很大区别的，因此用特殊的语言来编写：OpenGL（特别地，在 iPhone 和 iPad 上使用 OpenGL ES）</p>
-<h3 id="渲染管线">渲染管线</h3><p><img src="http://nshipster.s3.amazonaws.com/gpuimage-pipeline.png" alt=""></p>
-<p>GPUImage 从本质上来说是一个渲染管线的 <code>Objective-C</code>抽象。从相机、网络或者磁盘上加载的源图像，在经过一系列滤镜处理后，最终输出到了 <code>view</code>、<code>graphics context</code> 或是数据流中。</p>
-<p>例如说，摄像头中的图像可以应用一个 Color Levels 滤镜，来模拟各种色盲效果，然后实时显示在一个 view 中。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GPUImageVideoCamera *videoCamera = [[GPUImageVideoCamera alloc]</span><br><span class="line"><span class="label">    initWithSessionPreset:</span>AVCaptureSessionPreset640x480</span><br><span class="line"><span class="label">           cameraPosition:</span>AVCaptureDevicePositionBack];</span><br><span class="line">videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;</span><br><span class="line"></span><br><span class="line">GPUImageFilter *filter = [[GPUImageLevelsFilter alloc] </span><br><span class="line"><span class="label">                            initWithFragmentShaderFromFile:</span>@<span class="string">"CustomShader"</span>];</span><br><span class="line">[filter <span class="string">setRedMin:</span><span class="number">0.299</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setGreenMin:</span><span class="number">0.587</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setBlueMin:</span><span class="number">0.114</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[videoCamera <span class="string">addTarget:</span>filter];</span><br><span class="line"></span><br><span class="line">GPUImageView *filteredVideoView = [[GPUImageView alloc] <span class="string">initWithFrame:</span>self.view.bounds)];</span><br><span class="line">[filter <span class="string">addTarget:</span>filteredVideoView];</span><br><span class="line">[self.view <span class="string">addSubView:</span>filteredVideoView];</span><br><span class="line"></span><br><span class="line">[videoCamera startCameraCapture];</span><br></pre></td></tr></table></figure></p>
-<p>或者，结合不同的颜色混合模式，图像效果和一些调整，你可以把静止图像转变成可以分享给你时髦的朋友们看看的精美图像（例子来自基于 GPUImage 的 FilterKit）。<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GPUImageFilterGroup *filter = <span class="comment">[<span class="comment">[FKGPUFilterGroup alloc]</span> init]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageSaturationFilter *saturationFilter = <span class="comment">[<span class="comment">[GPUImageSaturationFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[saturationFilter setSaturation:0.5]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageMonochromeFilter *monochromeFilter = <span class="comment">[<span class="comment">[GPUImageMonochromeFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setColor:(GPUVector4)&#123;0.0f, 0.0f, 1.0f, 1.0f&#125;]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setIntensity:0.2]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageVignetteFilter *vignetteFilter = <span class="comment">[<span class="comment">[GPUImageVignetteFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[vignetteFilter setVignetteEnd:0.7]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageExposureFilter *exposureFilter = <span class="comment">[<span class="comment">[GPUImageExposureFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[exposureFilter setExposure:0.3]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">[filter addGPUFilter:exposureFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:monochromeFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:saturationFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:vignetteFilter]</span>;</span><br></pre></td></tr></table></figure></p>
-<p>看完了 GPUImage 的功能，一定很兴奋吧。GPUImage 非常简单，可以马上开始使用（不需要了解 OpenGL），性能上也足够完成你想要的一切。不止是这样，它还自带了非常多的积木一样的部件 — 色彩调整，混合模式，你能想到的想不到的一切视觉效果。</p>
-<p>GPUImage 是开源社区少有的好东西，我们 Mac 和 iOS 开发者非常幸运的能拥有它。用 GPUImage 做些牛逼的东西，向其他人展示一个崭新的世界</p>
-<h3 id="吐槽">吐槽</h3><p>我自己也用过一点 GPUImage，方便是很方便，不光是省掉了 AVFoundation 的许多烦人的 setup 代码，还内置了许多滤镜效果。不过它也有不少坑，我遇到的一个就是占用太多内存，一段时间后就 crash 掉了，毕竟是处理视频，需要不少内存，iPhone 的内存又不太多，就要更加注意。我当时是加了一个 @autoreleasepool 就好多了。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
-                C programe memory management
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Memory/">Memory</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/C-programe-memory-management/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
-<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
-<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+          <p><a href="http://foggry.com/blog/2015/07/27/ru-he-shou-dong-jie-xi-crashlog/">转自</a></p>
+<h2 id="如何手动解析CrashLog">如何手动解析CrashLog</h2><p>解决崩溃问题是移动应用开发者最日常的工作之一。如果是开发过程中遇到的崩溃，可以根据重现步骤调试，但线上版本就无能为力了。好在目前已经有很多不错的第三方CrashLog搜集平台（如友盟、Crashlytics等）为我们做好了解析工作，甚至在Xcode7里苹果也跟进了解析线上版本崩溃日志的功能，为开发者减轻了不少负担。尽管通常已经不需要我们手工处理CrashLog，了解CrashLog的还原原理和方法还是有必要的。</p>
+<h3 id="-dSYM">.dSYM</h3><p><code>.dSYM(debugging SYMbols)</code>又称为调试符号表，是苹果为了方便调试和定位问题而使用的一种调试方案，本质上使用的是起源于贝尔实验室的DWARF（Debugging With Attributed Record Formats），其在<code>.xcarchive</code>目录中的层次结构为：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.xcarchive</span><br><span class="line"><span class="comment">--dSYMs</span></span><br><span class="line">  |<span class="comment">--Your.app.dSYM</span></span><br><span class="line">    |<span class="comment">--Contents</span></span><br><span class="line">      |<span class="comment">--Resources</span></span><br><span class="line">        |<span class="comment">--DWARF</span></span><br></pre></td></tr></table></figure></p>
+<p>关于DWARF的具体内容以后有机会再说。我们能解析CrashLog全靠.dSYM文件，解析方式见后文。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
+            <a class="btn" href="/2015/08/04/parse-crashLog-manually/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -317,8 +505,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
-                iOS application framework -- network layer
+              <a class="post-title-link" href="/2015/08/04/iOS-NSURLProtocal/">
+                iOS NSURLProtocal
               </a>
             
           
@@ -334,7 +522,7 @@
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Framework/">Framework</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -347,8 +535,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
+            <a href="/2015/08/04/iOS-NSURLProtocal/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-NSURLProtocal/"></span>
             </a>
           </span>
           
@@ -363,193 +551,24 @@
 
       
         
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
-<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
-<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
-<p>这篇文章就主要会讲这些方面：</p>
+          <p><a href="http://xiangwangfeng.com/2014/11/29/NSURLProtocol%E5%92%8CNSRunLoop%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">转自</a><br>最近用AFNetworking替换掉了工程里的ASIHttpRequest，结果陆续碰到很多问题：</p>
 <ul>
-<li>网络层跟业务对接部分的设计</li>
-<li>网络层的安全机制实现</li>
-<li>网络层的优化方案</li>
+<li>如何统一地添加全局的HTTP头(不仅仅是UA而已)</li>
+<li>如何优雅地进行流量统计</li>
+<li>对特定的地址进行CDN加速(URL到IP的替换)</li>
+<li>怎么实现HTTP的同步请求</li>
+</ul>
+<p>前三个需求对于ASIHttpReqeust来说都不是问题，只需要在几个统一的点进行修改即可。而使用AFNetworking后就没有那么容易了：一方面AFNetworking中生成NSURLRequest的点比较多，并没有一个统一的路径。其次工程中会有部分直接使用NSURLConnecion的场景，无法统一。经cyzju提醒发现了NSURLProtocol这个大杀器，可惜对应的文档过于简略，唯一比较详细的介绍就只有RW的这篇教程而已，掉了很多坑，值得记上一笔。</p>
+<h2 id="NSURLProtocol">NSURLProtocol</h2><h3 id="概念">概念</h3><p>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</p>
+<ul>
+<li>自定义请求和响应</li>
+<li>提供自定义的全局缓存支持</li>
+<li>重定向网络请求</li>
+<li>提供HTTP Mocking (方便前期测试)</li>
+<li>其他一些全局的网络请求修改需求</li>
 </ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-view-layer/">
-                iOS application framework -- view layer
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-view-layer/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-view-layer/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">reference</a></p>
-<h2 id="iOS应用架构谈_view层的组织和调用方案">iOS应用架构谈 view层的组织和调用方案</h2><h3 id="前言">前言</h3><p>《iOS应用架构谈 开篇》出来之后，很多人来催我赶紧出第二篇。这一篇文章出得相当艰难，因为公司里的破事儿特别多，我自己又有点私事儿，以至于能用来写博客的时间不够充分。</p>
-<p>现在好啦，第二篇出来了。</p>
-<hr>
-<p>当我们开始设计View层的架构时，往往是这个App还没有开始开发，或者这个App已经发过几个版本了，然后此时需要做非常彻底的重构。</p>
-<p>一般也就是这两种时机会去做View层架构，基于这个时机的特殊性，我们在这时候必须清楚认识到：View层的架构一旦实现或定型，在App发版后可修改的余地就已经非常之小了。因为它跟业务关联最为紧密，所以哪怕稍微动一点点，它所引发的蝴蝶效应都不见得是业务方能够hold住的。这样的情况，就要求我们在实现这个架构时，代码必须得改得勤快，不能偷懒。也必须抱着充分的自我怀疑态度，做决策时要拿捏好尺度。</p>
-<hr>
-<p>View层的架构非常之重要，在我看来，这部分架构是这系列文章涉及4个方面最重要的一部分，没有之一。为什么这么说？</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-view-layer/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-first/">
-                iOS application framework -- first
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/iOS-application-framework-first/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-first/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html">reference</a></p>
-<h2 id="iOS应用架构谈_开篇">iOS应用架构谈 开篇</h2><h3 id="缘由">缘由</h3><p>之前安居客iOS app的第二版架构大部分内容是我做的，期间有总结了一些经验。在将近一年之后，前同事zzz在微信朋友圈上发了一个问题：假如问你一个<code>iOS or Android app</code>的架构，你会从哪些方面来说呢？</p>
-<p>当时看到这个问题正好在乘公车回家的路上，闲来无聊就答了一把。在zzz在微信朋友圈上追问了几个问题之后，我觉得有必要开个博客专门来讲讲一些个人见解。</p>
-<p>其实对于iOS客户端应用的架构来说，复杂度不亚于服务端，但侧重点和入手点却跟服务端不太一样。比如客户端应用就不需要考虑类似C10K的问题，正常的app就根本不需要考虑。</p>
-<p>这系列文章我会主要专注在iOS应用架构方面，很多方案也是基于iOS技术栈的特点而建立的。因为我个人不是很喜欢写Java，所以Android这边的我就不太了解了。如果你是Android开发者，你可以侧重看我提出的一些架构思想，毕竟不管做什么，思路是相通的，实现手段不同罢了。</p>
-<h3 id="当我们讨论客户端应用架构的时候，我们在讨论什么？">当我们讨论客户端应用架构的时候，我们在讨论什么？</h3><p>其实市面上大部分应用不外乎就是颠过来倒过去地做以下这些事情：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">|<span class="string"> 调用网络API  </span>|<span class="string"> --&gt; </span>|<span class="string">   展现列表    </span>|<span class="string"> --&gt; </span>|<span class="string">  选择列表    </span>|<span class="string"> --&gt; </span>|<span class="string">   展现单页   </span>|</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">                           ^                                        |<span class="string"></span><br><span class="line">                           </span>|<span class="string">                                        </span>|</span><br><span class="line">                           |<span class="string">                                        </span>|</span><br><span class="line">                           ------------------------------------------</span><br></pre></td></tr></table></figure></p>
-<p>简单来说就是调API，展示页面，然后跳转到别的地方再调API，再展示页面。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/iOS-application-framework-first/#more">
+            <a class="btn" href="/2015/08/04/iOS-NSURLProtocal/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -575,7 +594,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/15/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/13/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/15/">&raquo;</a>
   </div>
 
 
@@ -609,7 +628,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

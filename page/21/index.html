@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/13/iOS-property-attribute/">
-                iOS property attribute
+              <a class="post-title-link" href="/2015/07/17/ios-self-in-arc/">
+                ios self in arc
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-13
+          發表於 2015-07-17
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-property-attribute/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-property-attribute/"></span>
+            <a href="/2015/07/17/ios-self-in-arc/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/ios-self-in-arc/"></span>
             </a>
           </span>
           
@@ -194,294 +194,35 @@
 
       
         
-          <h2 id="iOS_property_&amp;&amp;_ivar_&amp;&amp;_local_variable">iOS property &amp;&amp; ivar &amp;&amp; local variable</h2><h3 id="default_attributes">default attributes</h3><ol>
-<li>property: atomic assign readwrite</li>
-<li>ivar &amp;&amp; local varibal: strong readwrite non-atomic</li>
-</ol>
-<blockquote>
-<p>atomic 在实现中通过加入 lock 的方式来保证多线程安全, 但是这只是很简单的一种线程安全, 只局限于此属性的读写.实际应用场景中, 业务的原子性, 是需要自己来实现的.</p>
-</blockquote>
-<h3 id="when_to_use_copy">when to use copy</h3><ol>
-<li>NSStrings: 为了防止其他地方修改</li>
-<li>block: 防止自动释放</li>
-<li>可变数据类型, 当你想阻止其他拥有者变更数据时.</li>
-</ol>
-<h3 id="尽量使用_copy_关键字">尽量使用 copy 关键字</h3><p>任何实现了<code>NSCopying</code>协议的类型, 都应该尽量采用<code>copy</code>. 因为我们定义的属性,在使用时可能是用一个可变的子属性来赋值的, 例如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Book</span> : <span class="title">NSObject</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stringExample &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSMutableString</span> *bookTitle = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"Best book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    Book *book = [[Book alloc] init];</span><br><span class="line">    book<span class="variable">.title</span> = bookTitle;</span><br><span class="line"> </span><br><span class="line">    [bookTitle setString:<span class="string">@"Worst book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"book title %@"</span>, book<span class="variable">.title</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-property-attribute/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/NSRunLoop深入理解/">
-                NSRunLoop深入理解
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/NSRunLoop深入理解/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/NSRunLoop深入理解/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://www.cocoachina.com/ios/20150601/11970.html">转自</a></p>
-<h2 id="RunLoop">RunLoop</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;RunLoop 是 iOS 和 OS X 开发中非常基础的一个概念，这篇文章将从 CFRunLoop 的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用 RunLoop 实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
-<h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
-<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/NSRunLoop深入理解/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Associated-Objects/">
-                iOS Associated Objects
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Associated-Objects/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Associated-Objects/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS_Associated_Objects">iOS Associated Objects</h2><p>关注以下三个问题:</p>
+          <p><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/" target="_blank" rel="external">转自</a></p>
+<h2 id="ARC对self的内存管理">ARC对self的内存管理</h2><p>记录下前两天的一次讨论，源于网络库<code>YTKNetwork</code>中“YTKRequest.m”的 <code>- start</code> 方法其中的几行代码：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)start &#123;</span><br><span class="line">    // ......</span><br><span class="line">    YTKRequest *<span class="keyword">strongSelf </span>= <span class="keyword">self;</span><br><span class="line"></span>    [<span class="keyword">strongSelf.delegate </span>requestFinished:<span class="keyword">strongSelf];</span><br><span class="line"></span>    <span class="preprocessor">if</span> (<span class="keyword">strongSelf.successCompletionBlock) </span>&#123;</span><br><span class="line">        <span class="keyword">strongSelf.successCompletionBlock(strongSelf);</span><br><span class="line"></span>    &#125;</span><br><span class="line">    [<span class="keyword">strongSelf </span>clearCompletionBlock]<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体的问题大概是这样：</p>
 <ol>
-<li>关联对象被存储在什么地方，是不是存放在被关联对象本身的内存中？</li>
-<li>关联对象的五种关联策略有什么区别，有什么坑？</li>
-<li>关联对象的生命周期是怎样的，什么时候被释放，什么时候被移除？</li>
+<li>调用方（如view controller）实例化并强引用YTKRequest对象，将自己作为其delegate</li>
+<li>调用方调用YTKRequest的 <code>- start</code> 方法发起网络请求</li>
+<li>调用方在 <code>- requestFinished:</code> 中执行了<code>self.request = nil</code>;</li>
+<li>YTKRequest中，<code>- start</code>方法在回调完-<code>requestFinished:</code> 后 BAD_ACCESS了</li>
 </ol>
-<h3 id="使用场景:">使用场景:</h3><p>按照 Mattt Thompson 大神的文章 Associated Objects 中的说法，<a href="http://nshipster.com/associated-objects/">Associated Objects</a> 主要有以下三个使用场景</p>
-<ol>
-<li>为现有的类添加私有变量以帮助实现细节；</li>
-<li>为现有的类添加公有属性；</li>
-<li>为 KVO 创建一个关联的观察者。</li>
-</ol>
-<p>从本质上看，第 1 、2 个场景其实是一个意思，唯一的区别就在于新添加的这个属性是公有的还是私有的而已。就目前来说，我在实际工作中使用得最多的是第 2 个场景，而第 3 个场景我还没有使用过<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Associated-Objects/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/iOS-Category/">
-                iOS Category
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Category/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Category/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="category">category</h2><h3 id="category_简介">category 简介</h3><ul>
-<li>为已存在的类, 添加方法</li>
-<li>将类的实现, 分别存放在不同的文件中. 好处: a) 减少单体文件体积 b)按照功能划分 c)协作开发 d)按需加载</li>
-<li>声明私有方法</li>
-<li>模拟多继承</li>
-<li>把framework的私有方法公开</li>
+<p>也就是说，<code>- start</code>方法还未返回时，<code>self</code>就被外部释放了。作者发现了这个潜在的问题，所以在方法局部增设了一个<code>strongSelf</code>的强引用来保证self的生命周期延续到方法结束。问题是解决了，但是更希望知道原因。</p>
+<p>简化说明就是：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">foo</span> &#123;</span><br><span class="line">    <span class="comment">// self被delegate持有</span></span><br><span class="line">    <span class="attr_selector">[self.delegate callout]</span>; <span class="comment">// 外部释放了这个对象</span></span><br><span class="line">    <span class="comment">// 这里self野指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在想想还是比较不符合常理，入参的self居然不能保证这个函数执行完成。后来查阅了下文档，发现是ARC的(gao)机(de)制(gui)，clang的《这篇ARC文档》中有明确的解释，总结如下：</p>
+<ul>
+<li>ARC下，self既不是strong也不是weak，而是unsafe_unretained的，也就是说，入参的self被表示为：（init系列方法的self除外）</li>
 </ul>
-<h3 id="extension">extension</h3><blockquote>
-<p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
-<p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Category/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)start &#123;</span><br><span class="line">   <span class="keyword">const</span> __unsafe_unretained YTKRequest *<span class="keyword">self</span>;</span><br><span class="line">   <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在方法调用时，ARC不会对self做retain或release，生命周期全由它的调用方来保证，如果调用方没有保证，就会出现上面的crash</li>
+<li>ARC这样做的原因是性能优化，objc中100%的方法（不是函数）调用第一个参数都是self，同时，99%的情况下，调用方都不会在方法执行时把这个对象释放，所以相比于在每个方法中插入对self的引用计数管理：<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)start &#123;</span><br><span class="line">    objc_retain(<span class="keyword">self</span>);</span><br><span class="line">    <span class="regexp">//</span> 其中的代码<span class="keyword">self</span>一定不会被释放</span><br><span class="line">    objc_release(<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>优化了的性能还真是比较可观。 而且，ARC也用了挺多方法来避免开发者进行额外的引用计数控制，比如方法的命名约定，通过判断方法是否以如init，alloc，new，copy等关键字开头来决定其内存管理方式。</p>
+<hr>
+<h4 id="One_more_thing">One more thing</h4><p>在写test时发现，下面两种调用方法会导致不同结果：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">viewDidLoad</span> &#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    <span class="attr_selector">[_request start]</span>; <span class="comment">// crash</span></span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    <span class="attr_selector">[self.request start]</span>; <span class="comment">// 正常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为self.request是一次方法调用，返回的结果被objc_retainAutoreleasedReturnValue方法在局部进行了一次强引用</p>
+
         
       
     </div>
@@ -511,8 +252,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/">
-                iOS Runtime 运行时类与对象的编译处理
+              <a class="post-title-link" href="/2015/07/17/iOS-Class-Clusters/">
+                iOS Class Clusters
               </a>
             
           
@@ -521,7 +262,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-13
+          發表於 2015-07-17
         </span>
 
         
@@ -541,8 +282,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-运行时类与对象的编译处理/"></span>
+            <a href="/2015/07/17/iOS-Class-Clusters/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-Class-Clusters/"></span>
             </a>
           </span>
           
@@ -557,18 +298,452 @@
 
       
         
-          <h2 id="iOS_Runtime运行时类与对象的编译处理">iOS Runtime运行时类与对象的编译处理</h2><p>Objective-C语言是一门动态语言，它将很多静态语言在编译和链接时期做的事放到了运行时来处理。这种动态语言的优势在于：我们写代码时更具灵活性，如我们可以把消息转发给我们想要的对象，或者随意交换一个方法的实现等。<br>这种特性意味着<code>Objective-C</code>不仅需要一个编译器，还需要一个运行时系统来执行编译的代码。对于Objective-C来说，这个运行时系统就像一个操作系统一样：它让所有的工作可以正常的运行。这个运行时系统即Objc Runtime。Objc Runtime其实是一个Runtime库，它基本上是用C和汇编写的，这个库使得C语言有了面向对象的能力。</p>
-<p>Runtime库主要做下面几件事：</p>
-<ol>
-<li>封装：在这个库中，对象可以用C语言中的结构体表示，而方法可以用C函数来实现，另外再加上了一些额外的特性。这些结构体和函数被runtime函数封装后，我们就可以在程序运行时创建，检查，修改类、对象和它们的方法了。</li>
-<li>找出方法的最终执行代码：当程序执行[object doSomething]时，会向消息接收者(object)发送一条消息(doSomething)，runtime会根据消息接收者是否能响应该消息而做出不同的反应。这将在后面详细介绍。</li>
-</ol>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#more">
-              閱讀全文 &raquo;
+          <p><a href="http://blog.sunnyxx.com/2014/12/18/class-cluster/" target="_blank" rel="external">转自</a></p>
+<h2 id="从NSArray看类簇">从NSArray看类簇</h2><h3 id="Class_Clusters">Class Clusters</h3><p>Class Clusters（类簇）是<code>抽象工厂</code>模式在iOS下的一种实现，众多常用类，如NSString，NSArray，NSDictionary，NSNumber都运作在这一模式下，它是接口简单性和扩展性的权衡体现，在我们完全不知情的情况下，偷偷隐藏了很多具体的实现类，只暴露出简单的接口。</p>
+<h3 id="NSArray的类簇">NSArray的类簇</h3><p>虽然<a href="https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/ClassClusters/ClassClusters.html" target="_blank" rel="external">官方文档</a>中拿<code>NSNumber</code>说事儿，但Foundation并没有像图中描述的那样为每个number都弄一个子类，于是研究下NSArray类簇的实现方式。</p>
+<h4 id="__NSPlacehodlerArray">__NSPlacehodlerArray</h4><p>熟悉这个模式的同学很可能看过下面的测试代码，将原有的alloc+init拆开写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> obj1 = [<span class="built_in">NSArray</span> alloc]; <span class="comment">// __NSPlacehodlerArray *</span></span><br><span class="line"><span class="keyword">id</span> obj2 = [<span class="built_in">NSMutableArray</span> alloc];  <span class="comment">// __NSPlacehodlerArray *</span></span><br><span class="line"><span class="keyword">id</span> obj3 = [obj1 init];  <span class="comment">// __NSArrayI *</span></span><br><span class="line"><span class="keyword">id</span> obj4 = [obj2 init];  <span class="comment">// __NSArrayM *</span></span><br></pre></td></tr></table></figure>
+<p>发现<code>+ alloc</code>后并非生成了我们期望的类实例，而是一个<code>__NSPlacehodlerArray</code>的中间对象，后面的<code>- init</code>或<code>- initWithXXXXX</code>消息都是发送给这个中间对象，再由它做工厂，生成真的对象。这里的<code>__NSArrayI</code>和<code>__NSArrayM</code>分别对应Immutable和Mutable（后面的I和M的意思）</p>
+<p>于是顺着思路猜实现，<code>__NSPlacehodlerArray</code>必定用某种方式存储了它是由谁alloc出来的这个信息，才能在init的时候知道要创建的是可变数组还是不可变数组</p>
+<p>于是乎很开心的去看了下*obj1的内存布局：</p>
+<p><img src="http://ww4.sinaimg.cn/large/51530583jw1em3doxs660j20l80j6go3.jpg" alt=""></p>
+<p>下面是32位模拟器中的内存布局（64位太长不好看就临时改32位了- -），第一个箭头是<code>*obj1</code>，第二个是<code>*obj2</code></p>
+<p><img src="http://ww3.sinaimg.cn/mw690/51530583jw1em3dvmuuanj213006maf2.jpg" alt=""></p>
+<p>我们知道，对象的前4字节（32位下）为isa指针，指向类对象地址，上图所示的<code>0x0051E768</code>就是<code>__NSPlacehodlerArray</code>类对象地址，可以从lldb下po这个地址来验证。</p>
+<p>那么问题来了，这个中间对象并没有储存任何信息诶（除了isa外就都是0了），那它init的时候咋知道该创建什么呢？<br>经过研究发现，Foundation用了一个很贱的比较静态实例地址方式来实现，伪代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *GetPlaceholderFor<span class="built_in">NSArray</span>() &#123;</span><br><span class="line">    <span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *instanceFor<span class="built_in">NSArray</span>;</span><br><span class="line">    <span class="keyword">if</span> (!instanceFor<span class="built_in">NSArray</span>) &#123;</span><br><span class="line">        instanceFor<span class="built_in">NSArray</span> = [[__<span class="built_in">NSPlacehodlerArray</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instanceFor<span class="built_in">NSArray</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *GetPlaceholderFor<span class="built_in">NSMutableArray</span>() &#123;</span><br><span class="line">    <span class="keyword">static</span> __<span class="built_in">NSPlacehodlerArray</span> *instanceFor<span class="built_in">NSMutableArray</span>;</span><br><span class="line">    <span class="keyword">if</span> (!instanceFor<span class="built_in">NSMutableArray</span>) &#123;</span><br><span class="line">        instanceFor<span class="built_in">NSMutableArray</span> = [[__<span class="built_in">NSPlacehodlerArray</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instanceFor<span class="built_in">NSMutableArray</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NSArray实现</span></span><br><span class="line">+ (<span class="keyword">id</span>)alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == [<span class="built_in">NSArray</span> class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> GetPlaceholderFor<span class="built_in">NSArray</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NSMutableArray实现</span></span><br><span class="line">+ (<span class="keyword">id</span>)alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == [<span class="built_in">NSMutableArray</span> class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> GetPlaceholderFor<span class="built_in">NSMutableArray</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// __NSPlacehodlerArray实现</span></span><br><span class="line">- (<span class="keyword">id</span>)init</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == GetPlaceholderFor<span class="built_in">NSArray</span>()) &#123;</span><br><span class="line">        <span class="keyword">self</span> = [[__<span class="built_in">NSArrayI</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">self</span> == GetPlaceholderFor<span class="built_in">NSMutableArray</span>()) &#123;</span><br><span class="line">        <span class="keyword">self</span> = [[__<span class="built_in">NSArrayM</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Foundation不是开源的，所以上面的代码是猜测的，思路大概就是这样，可以这样验证下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> obj1 = [<span class="built_in">NSArray</span> alloc]; </span><br><span class="line"><span class="keyword">id</span> obj2 = [<span class="built_in">NSArray</span> alloc];</span><br><span class="line"><span class="keyword">id</span> obj3 = [<span class="built_in">NSMutableArray</span> alloc];</span><br><span class="line"><span class="keyword">id</span> obj4 = [<span class="built_in">NSMutableArray</span> alloc];</span><br><span class="line"><span class="comment">// 1和2地址相同，3和4地址相同，无论多少次都相同，且地址相差16位</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="静态不可变空对象">静态不可变空对象</h4><p>除此之外，Foundation对<code>不可变</code>版本的空数组也做了个小优化：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSArray <span class="keyword">*</span>arr1 = [[NSArray alloc] init];</span><br><span class="line">NSArray <span class="keyword">*</span>arr2 = [[NSArray alloc] init];</span><br><span class="line">NSArray <span class="keyword">*</span>arr3 = <span class="comment">@[];</span></span><br><span class="line">NSArray <span class="keyword">*</span>arr4 = <span class="comment">@[];</span></span><br><span class="line">NSArray <span class="keyword">*</span>arr5 = <span class="comment">@[@1];</span></span><br></pre></td></tr></table></figure>
+<p>上边1-4号都指向了同一个对象，而arr5指向了另一个对象。</p>
+<p>若干个不可变的空数组间没有任何特异性，返回一个静态对象也理所应当。<br>不仅是NSArray，Foundation中如<code>NSString</code>, <code>NSDictionary</code>, <code>NSSet</code>等区分可变和不可变版本的类，空实例都是静态对象（NSString的空实例对象是常量区的@””）</p>
+<p>所以也给用这些方法来测试对象内存管理的同学提个醒，很容易意料之外的。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/17/iOS-interface-dig/">
+                objc@interface的设计哲学与设计技巧
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/17/iOS-interface-dig/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/17/iOS-interface-dig/"></span>
             </a>
-          </div>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://blog.sunnyxx.com/2014/04/13/objc_dig_interface/" target="_blank" rel="external">转自</a></p>
+<h2 id="objc@interface的设计哲学与设计技巧">objc@interface的设计哲学与设计技巧</h2><h3 id="我是前言">我是前言</h3><p>学习objc时，尤其是先学过其他编程语言再来看objc时，总会对objc的类声明的关键字<code>interface</code>感到有点奇怪，在其它面向对象的语言中通常由class关键字来表示，而interface在java中表示的却大约相当于objc的protocol，这个关键字的区别究竟代表了objc语言的设计者怎样的思想呢，在objc类设计中需要注意哪些问题呢？接下来对这个问题进行一些思考和探究.</p>
+<h3 id="interface?">interface?</h3><p>先来段Wiki:</p>
+<blockquote>
+<p>In object-oriented programming, a protocol or interface is a common means for unrelated objects to communicate with each other. These are definitions of methods and values which the objects agree upon in order to cooperate.</p>
+</blockquote>
+<p>接口约定了对象间交互的属性和方法，使得对象间无需了解对方就可以协作。<br>说的洋气点就是解耦嘛，细心点也能发现Wiki中interface和protocol表示了相近的语义。<br>引用我和项目组架构师讨论有关interface的问题时他的说法:</p>
+<blockquote>
+<p>interface就是一个object定义的可以被外界影响的方式</p>
+</blockquote>
+<p>说着他指了下旁边桌子上放着的一把伞，说，这把伞我可以打开它，打开这个动作就是它的一个interface，桌子旁边还放着一个盒子，虽然它和伞都放在这张桌子上，但是它们之间永远不会互相影响，所以：</p>
+<blockquote>
+<p>interface只存在于能互相影响的两者间</p>
+</blockquote>
+<h3 id="@interface生成了class？">@interface生成了class？</h3><p>学习<code>objc</code>时最早接触的就是怎么写一个类了，从.h中写<code>@interface</code>声明类，再从.m中写<code>@implementation</code>实现方法，所以，objc中写一个<code>@interface</code>就相当于c++中写一个class。但这是真的么？</p>
+<p>写个小test验证一下：<br>有两个类，<code>Sark</code>和<code>Dark</code>，<code>Sark</code>类只有.m文件，其中只写<code>@implementation</code>；<code>Dark</code>类只有.h头文件，其中只写<code>@interface</code>，然后如下测试代码：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Class</span> sarkClass = NSClassFromString(@<span class="string">"Sark"</span>);</span><br><span class="line"><span class="keyword">Class</span> darkClass = NSClassFromString(@<span class="string">"Dark"</span>);</span><br></pre></td></tr></table></figure>
+<p><code>NSClassFromString</code>方法调用了runtime方法，根据类名将加载进runtime的这个类找出来，没有这个类就回返回空(Nil)。<br>结果是<code>sarkClass</code>存在，而<code>darkClass</code>为空，说明什么？是否说明其实<code>@implementation</code>才是真正的Class？<br>进一步，不止能取到这个没有<code>@interface</code>的类，还可以正常调用方法（因为万能的runtime）</p>
+<p>如下面的测试代码：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Sark *sark = [Sark new]<span class="comment">;</span></span><br><span class="line">[sark speak]<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>要是没有@interface的声明，类名，方法名都会报错说找不到，但是可以像下面一样绕一下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class cls = <span class="built_in">NSClassFromString</span>(<span class="string">@"Sark"</span>);</span><br><span class="line"><span class="keyword">id</span> obj = [cls performSelector:<span class="built_in">NSSelectorFromString</span>(<span class="string">@"new"</span>)];</span><br><span class="line">[obj performSelector:<span class="built_in">NSSelectorFromString</span>(<span class="string">@"speak"</span>)];</span><br></pre></td></tr></table></figure></p>
+<p>其实，从<code>rewrite</code>后的<code>objc</code>代码可以发现，对于消息的发送，恰恰就是会被处理成类似上面的代码，使用字符串<code>mapping</code>出Class，selctor等再使用<code>objc_msgSend()</code>进行函数调用，如下面所示：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 经过clang -rewrite-objc 命令重写后的代码</span></span><br><span class="line">Sark <span class="built_in">*</span>sark = <span class="params">(<span class="params">(id <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>objc_getClass<span class="params">(<span class="string">"Sark"</span>)</span>, sel_registerName<span class="params">(<span class="string">"new"</span>)</span>)</span>;</span><br><span class="line"><span class="params">(<span class="params">(void <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>sark, sel_registerName<span class="params">(<span class="string">"speak"</span>)</span>)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="对比@interface和@implementation">对比@interface和@implementation</h3><p><code>@interface</code>我们干过的事：</p>
+<ol>
+<li>继承</li>
+<li>声明协议</li>
+<li>定义实例变量（@interface后面加大括号那种）</li>
+<li>定义@property</li>
+<li>声明方法</li>
+</ol>
+<p><code>@implementation</code>我们干过的和可以干的事：</p>
+<ol>
+<li>继承</li>
+<li>定义实例变量</li>
+<li>合成属性（@synthesize和@dynamic）</li>
+<li>实现方法（包括协议方法）</li>
+</ol>
+<p>在<code>@implementation</code>干一些事情用的相对较少，但是是完全合法的，如这样用：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Sark</span> : <span class="title">NSObject</span> </span>&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *_name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过对比可以发现，<code>@interface</code>对objc类结构的合成并无决定性作用，加上无决定性是因为如果没有@interface会丢失一些类自省的原始数据，如属性列表和协议列表，但对于纯粹的对象消息发送并无影响。<br>所以说，可以得出这么一个结论，objc中<code>@interface</code>就是为了给调用者看的，是和调用者的一个protocol，没错，就是<strong>protocol</strong>。</p>
+<h3 id="对比@interface和@protocol">对比@interface和@protocol</h3><p>与其把<code>@implementation</code>扯进来不如对比下<code>@protocol</code></p>
+<p>我理解objc的<code>@interface</code>和<code>@protocal</code>间唯一的区别就是是否和一个类型绑定，这让我想起来鸭子类型(Duck typing), <a href="http://zh.wikipedia.org/wiki/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B" target="_blank" rel="external">wiki链接</a></p>
+<blockquote>
+<p>“当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。”</p>
+</blockquote>
+<p><code>Duck type</code>在objc的体现无疑就是<code>@protocol</code>了，我们常用<code>id&lt;XXXDelegate&gt; delegate</code>的方式声明一个<code>delegate</code>，我们无需care这货到底是什么类型，我们只知道他能干什么就可以work了。同样的功能我也可以使用<code>XXXDelegate *delegate</code>的方式来定义，只不过这样的话这个类又需要耦合一个XXXDelegate类型，而这个delegate类是它原本并不需要关心的。</p>
+<p>所以说，<code>@interface</code>是<code>@protocol</code>的强类型升级版。</p>
+<p>举个NSObject的例子最合适：<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="class"><span class="keyword">interface</span> <span class="title">NSObject</span> &lt;<span class="title">NSObject</span>&gt; &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">Class</span> <span class="title">isa</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>NSObject</code>之所以成为NSObject，绝大多数都是<code>&lt;NSObject&gt;</code>协议定义的方法，实体类<code>@interface</code>定义的唯一一个变量isa指针，为了继承链和消息传递。<br>除了<code>&lt;NSObject&gt;</code>协议外，NSObject还有很多<code>Category</code>来补充它的功能，其实仔细想想，Category更像protocol，一个补充协议，同样不能添加实例变量，但是和<code>@interface</code>一样需要与Class绑定。</p>
+<p>进一步来讲，自从属性能自动合成变量之后，在头文件@interface中写大括号声明实例变量的情况越来越少（可以参见近几个版本iOS SDK中类头文件里这种写法几乎消失），因此，@interface和@protocol的差别进一步缩小。</p>
+<hr>
+<h2 id="类与接口的设计原则_-_电视和遥控器">类与接口的设计原则 - 电视和遥控器</h2><p>我喜欢将<code>Class</code>和<code>interface</code>的关系比喻成电视+遥控器，那么objc中的消息机制就可以理解成：<br>用户（caller）通过遥控器（interface）上的按钮（methods）发送红外线（message）来操纵电视（object）<br>所以，有没有遥控器，电视都在那儿，也就是说，有没有interface，class都是存在的，只是这种存在并没有意义，就好像这个电视没人会打开，没人会用，没人能看，一堆废铁摆在那儿。</p>
+<p><img src="http://ww4.sinaimg.cn/large/51530583tw1efdy7cw48wj20c108qjru.jpg" alt=""></p>
+<p>对比简洁的遥控器，一个拥有很多按钮的老式电视遥控器，我们经常会用到的按钮能有几个呢？</p>
+<p><img src="http://ww4.sinaimg.cn/large/51530583tw1efe08u9hb7j208c0b4jrp.jpg" alt=""></p>
+<p>所以，在设计一个类的interface的时候，如同在设计遥控器应该有怎样功能的按钮，要从调用者的角度出发，区分边界，应该时刻有以下几点考虑：</p>
+<ol>
+<li>这个方法或属性真的属于这个类的职责么？（电视遥控器能遥控空调？）</li>
+<li>这个方法或属性真的必须放在.h中（而不是放在.m的类扩展中）么？</li>
+<li>调用者必须看文档才能知道这个类该如何使用么？（同一个业务需要调用者按顺序调用多次（而不是将这些细节隐藏，同时提供一个简洁的接口）才行）</li>
+<li>调用者是否可以很容易发现类内部的变量和实现方式？（脑补下电视里面一块电路板漏在外面半截- -）</li>
+<li>…</li>
+</ol>
+<hr>
+<h3 id="objc的@interface设计技巧Tips">objc的@interface设计技巧Tips</h3><p>看过不少代码，从@interface设计上多少就能看出作者的水平，分享下我对于这个问题的一些拙见。</p>
+<h4 id="只暴露外部需要看到的">只暴露外部需要看到的</h4><p>比如，有如下一个类(这个类无意义，主要关注写法) :<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sark.h</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SarkViewController</span> : <span class="title">NSObject</span> &lt;<span class="title">NSXMLParserDelegate</span> /*1*/, <span class="title">NSCopying</span>&gt; </span>&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *_name; <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">IBOutlet</span> <span class="built_in">UITextField</span> *_nameTextField; <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSXMLParser</span> *parser; <span class="comment">// 3</span></span><br><span class="line">- (<span class="keyword">IBAction</span>)nameChangedAction:(<span class="keyword">id</span>)sender; <span class="comment">// 4</span></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>这个interface出现的问题：</p>
+<ol>
+<li>类内部自己使用的协议，如<code>&lt;NSXMLParserDelegate&gt;</code>不应该在头文件@interface中声明，而应该在类扩展中声明；公开由外部调用的协议，如<code>&lt;NSCopying&gt;</code>则写在这儿是正确的。</li>
+<li><code>实例变量</code>和<code>IBOutlet</code>不应出现在这儿定义，这将类的内部实现暴露了出去，自从属性可以自动合成后，这里就更应该清净了。</li>
+<li>内部使用的属性对象不要暴露在外，应该移动到类扩展中。</li>
+<li>调用者对IBAction同样不需要关心，那么就不应该放在这儿。</li>
+</ol>
+<h4 id="合理分组子功能">合理分组子功能</h4><ul>
+<li>将相同功能的一组属性或方法写在一起. 使用这个类或者对其进行修改时，一般都是从功能上找，所以把同一功能模块的一组属性或方法写在一块</li>
+<li>纯操作方法的子功能（无需向类添加变量）使用Category分块</li>
+<li>在头文件中也可以使用类扩展将interface按功能分区</li>
+</ul>
+<p><code>Category</code>里不能添加实例变量，但是类扩展可以，一般都在.m中作为私有interface使用，同样在头文件里作为分区使用，如，ReactiveCocoa中的RACStream.h</p>
+<h4 id="避免头文件污染">避免头文件污染</h4><p>首先，类实现内部.m文件中使用的其他interface应该在.m文件import，如果也写在header中就会造成对调用者的污染；当interface中出现其他Class或protocol时，可以使用前置声明<code>@class XXX,</code> <code>@protocol XXX</code>；当模块（一组类）内部间需要有一些定义（如常量、类型）而又不需要模块使用者知道时，使用一个内部头文件在模块中使用。</p>
+<h4 id="避免接口过度设计">避免接口过度设计</h4><p>考虑调用者的使用方便是很必要的，过火了反而增加了复杂度：<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@interface Sark : NSObject</span><br><span class="line">- <span class="params">(instancetype)</span>init;</span><br><span class="line">- <span class="params">(instancetype)</span>initWithName:<span class="params">(NSString *)</span>name;</span><br><span class="line">- <span class="params">(instancetype)</span>initWithName:<span class="params">(NSString *)</span>name sex:<span class="params">(NSString *)</span>sex;</span><br><span class="line">- <span class="params">(instancetype)</span>initWithName:<span class="params">(NSString *)</span>name sex:<span class="params">(NSString *)</span>sex age:<span class="params">(NSInteger)</span>age;</span><br><span class="line">- <span class="params">(instancetype)</span>initWithName:<span class="params">(NSString *)</span>name sex:<span class="params">(NSString *)</span>sex age:<span class="params">(NSInteger)</span>age friends:<span class="params">(NSArray *)</span>friends;</span><br><span class="line"><span class="comment">// 无数多个 //</span></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>提供了一组这样的方法，调用者可能只能用到其中的一个，那这样倒不如只留一个接口。</p>
+<h4 id="避免单例的滥用">避免单例的滥用</h4><p>单例模式固然好用，但感觉有点过度，将接口设计成单例入口前需要考虑一下：</p>
+<ol>
+<li>这个类表达的含义真的只能有一个实例么？（如UIApplication）还是只是为了好调用而已？</li>
+<li>这个单例持有的内存一直存在</li>
+<li>是否能用类方法代替？</li>
+<li>这个单例对象是否能成为另一个单例对象的属性？如果是，应该作为属性</li>
+</ol>
+<h4 id="隐藏继承关系中的私有接口">隐藏继承关系中的私有接口</h4><p>感谢@像条狗在飞在留言中提出的问题，问题大概可以总结为：当子类需要使用父类的一个私有属性（方法）时，需要把这个属性（方法）放到父类的header中，但暴露给子类的同时暴露给了外部调用者，如何解决?</p>
+<p>我的方案是：建立一个私有<code>header</code>，使用类扩展定义父类需要暴露给子类的属性（方法），然后在各自的.m文件中引用，如：</p>
+<p>有Father类和Son类，继承关系，可以考虑建一个如FatherPrivate.h的私有header：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FatherPrivate.h</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Father</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *privateThingSonNeed;</span><br><span class="line">- (<span class="keyword">void</span>)privateMethodNeedsSonOverride;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>同时在Father.m和Son.m中同时import这个私有header，这样，Father和Son内部对于定义的属性和方法都是透明的，而对外部是隐藏的（因为两个类的header中都没有import这个私有header）</p>
+<h3 id="总结">总结</h3><ol>
+<li>@implementation合成了Class，而非@interface，@interface是@protocol的强类型升级版，它们和Category都表示了相近的含义</li>
+<li>我们应该善于面向接口编程，划清边界，将类的实现隐藏在调用者所见之外，使主调和被调者之间保持最少知识原则</li>
+<li>@interface本身就是最好的文档</li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/16/Debug/">
+                Debug
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/Debug/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/Debug/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="调试">调试</h3><h4 id="DTrace">DTrace</h4><p>You can use <code>DTrace</code> to monitor a running application to see the methods and the classes that are called. You can easily monitor an iOS app running in the Simulator using DTrace on the command line, First you will need to find the PID of the application using ps and then you can run a <code>DTrace</code> probe like the following:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:::entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>where 1234 is the process ID of the app.</p>
+<p>If you are only interested in tracing a single class, UIView for example, you could use:<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -q -n <span class="string">'objc1234</span>:UIView::entry &#123; printf(<span class="string">"%s %s\n"</span>, probemod, probefunc); &#125;'</span><br></pre></td></tr></table></figure></p>
+<p>If you wanted to trace all calls to dealloc on all classes, you would use:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234::-dealloc:entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>Obviously, you could combine these to only see UIView deallocs:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:UIView:-dealloc:entry &#123; printf("%s %s\n", probemod, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>If you want to be able to distinguish a specific object of a class you could also print the memory address of the object (self) using the following:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dtrace -<span class="tag">q</span> -n <span class="string">'objc1234:UIView:-dealloc:entry &#123; printf("%s (0x%p) %s\n", probemod, arg0, probefunc); &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="message_logging_好像不可以了">message logging 好像不可以了</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Turn on message logging</span></span><br><span class="line">instrumentObjcMessageSends(<span class="literal">YES</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert code here...</span></span><br><span class="line"><span class="built_in">NSString</span> *string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"This is just %d cool"</span>, <span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now turn it off again</span></span><br><span class="line">instrumentObjcMessageSends(<span class="literal">NO</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="检测是否为主线程">检测是否为主线程</h4><pre><code>[NSThread isMainThread]
+</code></pre><h4 id="打印引用计数">打印引用计数</h4><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSLog<span class="list">(@<span class="string">"retain count = %d"</span>, _objc_rootRetainCount<span class="list">(<span class="keyword">obj</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">NSLog<span class="list">(@<span class="string">"Retain count is %ld"</span>, CFGetRetainCount<span class="list">(<span class="list">(<span class="keyword">__bridge</span> CFTypeRef)</span>myObject)</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h4 id="output_observation_information_for_object">output observation information for object</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">po</span><span class="sqbracket"> [self observationInfo]</span></span><br></pre></td></tr></table></figure>
+<h4 id="lldb_增强">lldb 增强</h4><pre><code>brew install chisel
+
+vim ~/.lldbinit
+command script <span class="keyword">import</span> <span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>chisel<span class="regexp">/1.1.0/</span>libexec/fblldb.py
+</code></pre><h4 id="lldb_命令">lldb 命令</h4><pre><code><span class="function"><span class="title">print</span><span class="params">(p)</span></span>
+po
+call function
+bt   Printing the Stacktrace
+<span class="function"><span class="title">expr</span><span class="params">(e)</span></span> todo<span class="class">.title</span> = @<span class="string">"Changed"</span>
+</code></pre><h4 id="lldb_增强命令">lldb 增强命令</h4><pre><code>pviews  
+    <span class="type">Print</span> the recursive view description <span class="keyword">for</span> the key window.    <span class="type">Yes</span> <span class="type">Yes</span>
+pvc
+    <span class="type">Print</span> the recursive view controller description <span class="keyword">for</span> the key window. <span class="type">Yes</span> <span class="type">No</span>
+visualize
+    <span class="type">Open</span> a <span class="type">UIImage</span>, <span class="type">CGImageRef</span>, <span class="type">UIView</span>, <span class="keyword">or</span> <span class="type">CALayer</span> <span class="keyword">in</span> <span class="type">Preview</span>.app on your <span class="type">Mac</span>.  <span class="type">Yes</span> <span class="type">No</span>
+fv  
+    <span class="type">Find</span> a view <span class="keyword">in</span> the hierarchy whose class name matches the provided regex.   <span class="type">Yes</span> <span class="type">No</span>
+fvc
+    <span class="type">Find</span> a view controller <span class="keyword">in</span> the hierarchy whose class name matches the provided regex.    <span class="type">Yes</span> <span class="type">No</span>
+show/hide
+    <span class="type">Show</span> <span class="keyword">or</span> hide the given view <span class="keyword">or</span> layer. <span class="type">You</span> don't even have to <span class="keyword">continue</span> the process to see the changes!   <span class="type">Yes</span> <span class="type">Yes</span>
+mask/unmask
+    <span class="type">Overlay</span> a view <span class="keyword">or</span> layer <span class="keyword">with</span> a transparent rectangle to visualize where it <span class="keyword">is</span>.  <span class="type">Yes</span> <span class="type">No</span>
+border/unborder
+    <span class="type">Add</span> a border to a view <span class="keyword">or</span> layer to visualize where it <span class="keyword">is</span>.   <span class="type">Yes</span> <span class="type">Yes</span>
+caflush
+    <span class="type">Flush</span> the render server (equivalent to a <span class="string">"repaint"</span> <span class="keyword">if</span> no animations are <span class="keyword">in</span>-flight).)    <span class="type">Yes</span> <span class="type">Yes</span>
+bmessage
+    <span class="type">Set</span> a symbolic breakpoint on the <span class="keyword">method</span> <span class="keyword">of</span> a class <span class="keyword">or</span> the <span class="keyword">method</span> <span class="keyword">of</span> an instance <span class="keyword">without</span> worrying which class <span class="keyword">in</span> the hierarchy actually implements the <span class="keyword">method</span>.   <span class="type">Yes</span> <span class="type">Yes</span>
+wivar
+    <span class="type">Set</span> a watchpoint on an instance variable <span class="keyword">of</span> an <span class="keyword">object</span>.  <span class="type">Yes</span> <span class="type">Yes</span>
+presponder  
+    <span class="type">Print</span> the responder chain starting <span class="keyword">from</span> the given <span class="keyword">object</span>.   <span class="type">Yes</span> <span class="type">Ye</span>
+</code></pre><h4 id="show_frame">show frame</h4><pre><code><span class="tag">p</span> (CGRect)[uiTextFieldObj frame]
+<span class="tag">p</span> self<span class="class">.view</span><span class="class">.layer</span><span class="class">.frame</span>
+</code></pre><h4 id="how_view_hierarchy-">how view hierarchy.</h4><pre><code><span class="id">#ifdef</span> <span class="tag">DEBUG</span>
+  <span class="tag">NSLog</span>(@<span class="string">"Cell recursive description:\n\n%@\n\n"</span>, [cell <span class="attribute">performSelector</span>:<span class="variable">@selector</span>(recursiveDescription)]);
+<span class="id">#endif</span>
+</code></pre><h5 id="显示所有视图">显示所有视图</h5><pre><code>po <span class="comment">[<span class="comment">[UIWindow keyWindow]</span> recursiveDescription]</span>
+</code></pre><h5 id="IOS8_显示单个视图">IOS8 显示单个视图</h5><pre><code>po <span class="comment">[<span class="comment">[<span class="comment">[UIWindow keyWindow]</span> rootViewController]</span> _printHierarchy]</span>
+</code></pre><h5 id="searchbar_视图">searchbar 视图</h5><pre><code>po <span class="attr_selector">[searchbar recursiveDescription]</span> <span class="comment">//查看索引树</span>
+</code></pre><h4 id="LOG">LOG</h4><pre><code><span class="preprocessor">#ifdef DEBUG</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> ddLogLevel = LOG_LEVEL_VERBOSE;
+<span class="preprocessor">#else</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> ddLogLevel = LOG_LEVEL_OFF;
+<span class="preprocessor">#endif</span>
+
+<span class="comment">// 实例化 lumberjack</span>
+[DDLog addLogger:[DDTTYLogger sharedInstance]];
+<span class="comment">// 允许颜色</span>
+[[DDTTYLogger sharedInstance] setColorsEnabled:<span class="literal">YES</span>];
+
+<span class="comment">//lumberjack提供了四种Log方法</span>
+DDLogError(<span class="string">@"错误信息"</span>); <span class="comment">// 红色</span>
+DDLogWarn(<span class="string">@"警告"</span>); <span class="comment">// 橙色</span>
+DDLogInfo(<span class="string">@"提示信息"</span>); <span class="comment">// 默认是黑色</span>
+DDLogVerbose(<span class="string">@"详细信息"</span>); <span class="comment">// 默认是黑色</span>
+
+<span class="comment">//如果要修改Log输出的颜色可以使用如下代码</span>
+[[DDTTYLogger sharedInstance] setForegroundColor:[<span class="built_in">UIColor</span> blueColor]
+                                backgroundColor:<span class="literal">nil</span>
+                                        forFlag:LOG_FLAG_INFO];
+</code></pre><h4 id="调试的技巧">调试的技巧</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>) buttonPressed :(<span class="built_in">UIButton</span> *)button</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Stack trace: %@"</span>, [<span class="built_in">NSThread</span> callStackSymbols]);</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Current selector: %@"</span>, <span class="built_in">NSStringFromSelector</span>(_cmd));  </span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Object class: %@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"Filename: %@"</span>, [[<span class="built_in">NSString</span> stringWithUTF8String:__FILE__] lastPathComponent]);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/16/LLDB/">
+                LLDB
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-07-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/16/LLDB/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/16/LLDB/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="build">build</h3><p>Programs normally have to be compiled with a special option to allow debugging to take place. On UNIX, the option for clang++ is the -g option. For example<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">clang</span><span class="literal">+</span><span class="literal">+</span> <span class="literal">-</span><span class="comment">Wall</span> <span class="literal">-</span><span class="comment">g</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">prog1</span> <span class="comment">prog1</span><span class="string">.</span><span class="comment">cpp</span></span><br></pre></td></tr></table></figure></p>
+<p>We also include the -Wall option, which lists warnings (the ‘all’ is to list all warnings). Note that this option leads to executable files that are larger and slower, so you may not want to use it for final distributions or time-critical programs. But you can always remove the debugging information from an executable without recompiling it with the strip command. For more information on that, see the man page for strip (i.e., run man strip from the command line).</p>
+<p>The -g option causes the compiler to include information about the source file (the .cpp file) that is needed for debugging as part of the executable file. This causes the executable to be larger in size, and slightly slower, but allows for debugging. So when you run the debugger, you specify the executable file (not the source file) as the input to the debugger.</p>
+<h3 id="Start_Using_lldb">Start Using lldb</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lldb pro<span class="keyword">g1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Executing_your_Program">Executing your Program</h3><p>command-line arguments<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">run</span> <span class="bash"><span class="number">100</span> <span class="built_in">test</span>1.dat // prog1 <span class="number">100</span> <span class="built_in">test</span>1.dat</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="help">help</h3><p>(lldb) help</p>
+<h3 id="excution">excution</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>r / run</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>s / step</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>n / next</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>c / continue</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>si / ni</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span>finish  <span class="list">(<span class="keyword">finishes</span> executing the current function and then pauses)</span></span><br></pre></td></tr></table></figure>
+<h3 id="break_point">break point</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb)<span class="tag">b</span> <span class="function"><span class="title">main</span><span class="params">(set a break at all function named main)</span></span></span><br><span class="line">(lldb)<span class="tag">b</span> test<span class="class">.c</span>:<span class="number">12</span></span><br><span class="line">(lldb)<span class="tag">b</span> -[NSString stringWithFormat:]</span><br><span class="line">(lldb)br s -S count /br set -SvtDataCenterFetchComplete:userData:</span><br><span class="line">(lldb)br list</span><br><span class="line">(lldb)br <span class="tag">del</span> [n]</span><br></pre></td></tr></table></figure>
+<h3 id="watch_point">watch point</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">write</span> global_var(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> exp -w <span class="keyword">write</span> -- my_ptr(<span class="keyword">set</span> <span class="keyword">write</span> watchpoint <span class="keyword">in</span> pointer)</span><br><span class="line">(lldb) watch <span class="keyword">set</span> <span class="keyword">var</span> -w <span class="keyword">read</span> global_var(<span class="keyword">set</span> <span class="keyword">read</span> watchpoint)</span><br><span class="line">(lldb) watch modify -c <span class="string">'(global==5)'</span> (<span class="keyword">set</span> condition <span class="keyword">on</span> watch point)</span><br></pre></td></tr></table></figure>
+<h3 id="examining_variables">examining variables</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame variable <span class="list">(<span class="keyword">all</span> the arguments and local variables )</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v -a <span class="list">(<span class="keyword">show</span> local variables for current frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> frame v isChanged</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> target v</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> print a_var / po a_var</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display &lt;var&gt; <span class="list">(<span class="keyword">display</span> that variable<span class="quoted">'s</span> value each time the program execution hits a breakpoint)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> display <span class="list">(<span class="keyword">show</span> all display variable)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> undisplay</span><br></pre></td></tr></table></figure>
+<h3 id="Changing_a_Variable’s_Value">Changing a Variable’s Value</h3><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">expr x </span>=<span class="string"> 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="examining_thread">examining thread</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> f<span class="list">(<span class="keyword">see</span> current and surrounding lines)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> list <span class="list">(<span class="keyword">shows</span> a listing of the source code where the breakpoint occurred)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> thread backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> bt / backtrace</span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> up<span class="list">(<span class="keyword">select</span> the stack frame that called the current stack frame)</span></span><br><span class="line"><span class="list">(<span class="keyword">lldb</span>)</span> down<span class="list">(<span class="keyword">select</span> the stack frame that is called by the current stack frame)</span></span><br></pre></td></tr></table></figure>
+<h3 id="executabe_&amp;&amp;_shared_library">executabe &amp;&amp; shared library</h3><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image list(list the <span class="keyword">main</span> executable andall dependent <span class="literal">shared</span> libraries)</span><br><span class="line">(lldb) image <span class="literal">dump</span> sections (<span class="literal">dump</span> all sectionsf rom the <span class="keyword">main</span> executable <span class="keyword">and</span> any sharedlibraries))</span><br></pre></td></tr></table></figure>
+<h3 id="exaples">exaples</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_subroutine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello world"</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> *p = NULL;</span><br><span class="line">    my_subroutine();</span><br><span class="line">    *p = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">", "</span> &lt;&lt; *p &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type run, and let it run to completion (really until it crashes)</li>
+<li>try the bt and f commands</li>
+<li>set up a break point at line 12, which is the line that is causing the crash</li>
+<li>type run, and confirm that you want to restart the program</li>
+<li>at the breakpoint, try printing out the value in p (p p); note that it is NULL</li>
+<li>set the p pointer, which is currently NULL, to point to a valud value (the int variable - x): expr p = &amp;x</li>
+<li>enter c to let it continue running, and it should finish without crashing this time</li>
+</ul>
+<h3 id="远程调试">远程调试</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect <span class="string">connect:</span><span class="comment">//192.168.1.117:1234</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印进程模块">打印进程模块</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image <span class="keyword">list</span> -o -<span class="literal">f</span></span><br></pre></td></tr></table></figure>
+<h3 id="读取寄存器">读取寄存器</h3><p>register read       读取寄存器<br>x/nfu <addr>        以指定方式读取地址<br>    n 单元格式<br>    f 显示方式, 可取如下值：<br>        x 按十六进制格式显示变量<br>        d 按十进制格式显示变量<br>        u 按十进制格式显示无符号整型<br>        o 按八进制格式显示变量<br>        t 按二进制格式显示变量<br>        a 按十六进制格式显示变量<br>        i 指令地址格式<br>        c 按字符格式显示变量<br>        f 按浮点数格式显示变量<br>    u 地址单元的长度<br>        b 表示单字节<br>        h 表示双字节<br>        w 表示四字节<br>        g 表示八字节</addr></p>
+
         
       
     </div>
@@ -591,7 +766,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/22/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/20/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/22/">&raquo;</a>
   </div>
 
 
@@ -625,7 +800,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

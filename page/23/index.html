@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/06/Random/">
-                Random
+              <a class="post-title-link" href="/2015/07/13/iOS-property-attribute/">
+                iOS property attribute
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-06
+          發表於 2015-07-13
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/06/Random/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Random/"></span>
+            <a href="/2015/07/13/iOS-property-attribute/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-property-attribute/"></span>
             </a>
           </span>
           
@@ -194,11 +194,21 @@
 
       
         
-          <h2 id="arc4random()">arc4random()</h2><h3 id="Random_int_between_0_and_N_-_1">Random int between 0 and N - 1</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Random_int_between_1_and_N">Random int between 1 and N</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSUInteger r = arc4random_uniform<span class="list">(<span class="keyword">N</span>)</span> + <span class="number">1</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Random_double_between_0_and_1">Random double between 0 and 1</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sra<span class="label">nd48</span><span class="comment">(time(0)</span>);</span><br><span class="line">double r = dra<span class="label">nd48</span><span class="comment">()</span>;</span><br></pre></td></tr></table></figure>
+          <h2 id="iOS_property_&amp;&amp;_ivar_&amp;&amp;_local_variable">iOS property &amp;&amp; ivar &amp;&amp; local variable</h2><h3 id="default_attributes">default attributes</h3><ol>
+<li>property: atomic assign readwrite</li>
+<li>ivar &amp;&amp; local varibal: strong readwrite non-atomic</li>
+</ol>
+<blockquote>
+<p>atomic 在实现中通过加入 lock 的方式来保证多线程安全, 但是这只是很简单的一种线程安全, 只局限于此属性的读写.实际应用场景中, 业务的原子性, 是需要自己来实现的.</p>
+</blockquote>
+<h3 id="when_to_use_copy">when to use copy</h3><ol>
+<li>NSStrings: 为了防止其他地方修改</li>
+<li>block: 防止自动释放</li>
+<li>可变数据类型, 当你想阻止其他拥有者变更数据时.</li>
+</ol>
+<h3 id="尽量使用_copy_关键字">尽量使用 copy 关键字</h3><p>任何实现了<code>NSCopying</code>协议的类型, 都应该尽量采用<code>copy</code>. 因为我们定义的属性,在使用时可能是用一个可变的子属性来赋值的, 例如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Book</span> : <span class="title">NSObject</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stringExample &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSMutableString</span> *bookTitle = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"Best book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    Book *book = [[Book alloc] init];</span><br><span class="line">    book<span class="variable">.title</span> = bookTitle;</span><br><span class="line"> </span><br><span class="line">    [bookTitle setString:<span class="string">@"Worst book ever"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"book title %@"</span>, book<span class="variable">.title</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/Random/#more">
+            <a class="btn" href="/2015/07/13/iOS-property-attribute/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -231,8 +241,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/06/progress-memory-map/">
-                progress memory map
+              <a class="post-title-link" href="/2015/07/13/NSRunLoop深入理解/">
+                NSRunLoop深入理解
               </a>
             
           
@@ -241,7 +251,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-06
+          發表於 2015-07-13
         </span>
 
         
@@ -261,8 +271,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/06/progress-memory-map/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/progress-memory-map/"></span>
+            <a href="/2015/07/13/NSRunLoop深入理解/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/NSRunLoop深入理解/"></span>
             </a>
           </span>
           
@@ -277,15 +287,14 @@
 
       
         
-          <p><a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/">翻译子</a></p>
-<h2 id="程序在内存中分布">程序在内存中分布</h2><p>内存管理是操作系统的核心. 对系统和编程人员来说这都是非常重要的.下面用 32位 系统举例.首先介绍程序如何在内存中分布.</p>
-<h3 id="虚拟地址空间">虚拟地址空间</h3><p>在多任务操作系统中, 每个进程拥有自己独立的内存沙箱. 这个沙箱就是指的<code>虚拟地址空间</code>(virtual address space), 在32位系统中, 就是一块4GB 大小的内存地址块. 这些虚拟地址和物理内存通过<code>page tables</code>来完成映射, <code>page tables</code>是由系统核心管理,进程可以进行访问. 一旦虚拟地址被启用, 会应用到所有的程序中, 包括系统核心. 因此虚拟地址的一部分, 需要被划分出来为系统核心保留使用.<br><img src="http://static.duartes.org/img/blogPosts/kernelUserMemorySplit.png" alt=""></p>
-<p>这并不意味着核心会固定占用大量的物理内存, 而是说核心需要按照需要动态映射到足够的物理内存即可.核心空间在 <code>page tables</code>中被标记为被<code>特权码(privilege code)</code>独占, 因此如果用户程序尝试访问此空间, <code>页面错误</code>会被出发并抛出. 在 linux 系统中, 核心空间是常驻内存的, 并且所有程序的核心空间是共享的, 总是映射到同一块物理内存. 核心代码和数据,总是可访问, 并随时准备处理<code>interrupts</code> 或者 系统调用. 相对的用户程序空间块是每个程序独享的, 并在程序切换时, 而随之切换.</p>
-<p><img src="http://static.duartes.org/img/blogPosts/virtualMemoryInProcessSwitch.png" alt=""></p>
-<p>上图中蓝色区域标示, 虚拟地址已经完成映射到实际地址, 白色区域代表还没有完成映射.上例中, 以内存消耗多著名的火狐使用了更多的虚拟地址. 在内存地址中不同的区块代表了不同的内存段: heap, stack, 等等.请注意这些内存段只是简单的内存地址范围, 与<code>Intel-style segments</code>无关. 下面是linux 系统中标准段分布图:</p>
-<p><img src="http://static.duartes.org/img/blogPosts/linuxFlexibleAddressSpaceLayout.png" alt=""><br>
+          <p><a href="http://www.cocoachina.com/ios/20150601/11970.html">转自</a></p>
+<h2 id="RunLoop">RunLoop</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;RunLoop 是 iOS 和 OS X 开发中非常基础的一个概念，这篇文章将从 CFRunLoop 的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用 RunLoop 实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
+<h3 id="RunLoop_的概念">RunLoop 的概念</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> &#123;</span></span><br><span class="line">    initialize<span class="params">()</span>;</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message<span class="params">()</span>;</span><br><span class="line">        process_message<span class="params">(message)</span>;</span><br><span class="line">    &#125; while <span class="params">(message != quit)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这种模型通常被称作 Event Loop。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/progress-memory-map/#more">
+            <a class="btn" href="/2015/07/13/NSRunLoop深入理解/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -318,8 +327,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/06/what-happen-before-main/">
-                what happen before main
+              <a class="post-title-link" href="/2015/07/13/iOS-Associated-Objects/">
+                iOS Associated Objects
               </a>
             
           
@@ -328,7 +337,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-06
+          發表於 2015-07-13
         </span>
 
         
@@ -348,8 +357,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/06/what-happen-before-main/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/what-happen-before-main/"></span>
+            <a href="/2015/07/13/iOS-Associated-Objects/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Associated-Objects/"></span>
             </a>
           </span>
           
@@ -364,12 +373,21 @@
 
       
         
-          <p><a href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/">转自</a></p>
-<h2 id="iOS程序main函数之前发生了什么">iOS程序main函数之前发生了什么</h2><h3 id="前言">前言</h3><p>一个iOS app的<code>main()</code>函数位于<code>main.m</code>中，这是我们熟知的程序入口。但对objc了解更多之后发现，程序在进入我们的main函数前已经执行了很多代码，比如熟知的<code>+ load</code>方法等。本文将跟随程序执行顺序，刨根问底，从<code>dyld</code>到<code>runtime</code>，看看main函数之前都发生了什么。</p>
-<h3 id="从dyld开始">从dyld开始</h3><h4 id="动态链接库">动态链接库</h4><p>iOS中用到的所有系统<code>framework</code>都是动态链接的，类比成插头和插排，静态链接的代码在编译后的静态链接过程就将插头和插排一个个插好，运行时直接执行二进制文件；而动态链接需要在程序启动时去完成“插插销”的过程，所以在我们写的代码执行前，动态连接器需要完成准备工作。</p>
-<p>这个是在xcode中看到的Link列表：<br><img src="http://ww4.sinaimg.cn/mw600/51530583jw1ejx4ul5susj20wg0803zh.jpg" alt=""><br>
+          <h2 id="iOS_Associated_Objects">iOS Associated Objects</h2><p>关注以下三个问题:</p>
+<ol>
+<li>关联对象被存储在什么地方，是不是存放在被关联对象本身的内存中？</li>
+<li>关联对象的五种关联策略有什么区别，有什么坑？</li>
+<li>关联对象的生命周期是怎样的，什么时候被释放，什么时候被移除？</li>
+</ol>
+<h3 id="使用场景:">使用场景:</h3><p>按照 Mattt Thompson 大神的文章 Associated Objects 中的说法，<a href="http://nshipster.com/associated-objects/">Associated Objects</a> 主要有以下三个使用场景</p>
+<ol>
+<li>为现有的类添加私有变量以帮助实现细节；</li>
+<li>为现有的类添加公有属性；</li>
+<li>为 KVO 创建一个关联的观察者。</li>
+</ol>
+<p>从本质上看，第 1 、2 个场景其实是一个意思，唯一的区别就在于新添加的这个属性是公有的还是私有的而已。就目前来说，我在实际工作中使用得最多的是第 2 个场景，而第 3 个场景我还没有使用过<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/what-happen-before-main/#more">
+            <a class="btn" href="/2015/07/13/iOS-Associated-Objects/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -402,8 +420,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/06/Autorelease/">
-                Autorelease
+              <a class="post-title-link" href="/2015/07/13/iOS-Category/">
+                iOS Category
               </a>
             
           
@@ -412,7 +430,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-06
+          發表於 2015-07-13
         </span>
 
         
@@ -432,8 +450,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/06/Autorelease/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/06/Autorelease/"></span>
+            <a href="/2015/07/13/iOS-Category/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Category/"></span>
             </a>
           </span>
           
@@ -448,12 +466,19 @@
 
       
         
-          <h2 id="Autorelease">Autorelease</h2><p><img src="http://blog.sunnyxx.com/tags/objc%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95/page/3/" alt="转自"></p>
-<h3 id="Autorelease对象什么时候释放">Autorelease对象什么时候释放</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;在没有手加Autorelease Pool的情况下，Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop</p>
-<p>小实验<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *str = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"sunnyxx"</span>];</span><br><span class="line">    <span class="comment">// str是一个autorelease对象，设置一个weak的引用来观察它</span></span><br><span class="line">    reference = str;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: sunnyxx</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, reference); <span class="comment">// Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>由于这个vc在loadView之后便add到了window层级上，所以viewDidLoad和viewWillAppear是在同一个runloop调用的，因此在viewWillAppear中，这个autorelease的变量依然有值。<br>
+          <h2 id="category">category</h2><h3 id="category_简介">category 简介</h3><ul>
+<li>为已存在的类, 添加方法</li>
+<li>将类的实现, 分别存放在不同的文件中. 好处: a) 减少单体文件体积 b)按照功能划分 c)协作开发 d)按需加载</li>
+<li>声明私有方法</li>
+<li>模拟多继承</li>
+<li>把framework的私有方法公开</li>
+</ul>
+<h3 id="extension">extension</h3><blockquote>
+<p>extension 很像匿名的category. 差异: a)extension在编译器决议, 是类声明的一部分.b)用来隐藏私有属性或方法.c)只有在有类源码的前提下,才能添加extension</p>
+<p>category 在运行期决议的. category无法添加实例变量, (通过association来模拟添加)</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/06/Autorelease/#more">
+            <a class="btn" href="/2015/07/13/iOS-Category/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -486,8 +511,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/04/IOS-进阶工具篇/">
-                IOS 进阶工具篇
+              <a class="post-title-link" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/">
+                iOS Runtime 运行时类与对象的编译处理
               </a>
             
           
@@ -496,7 +521,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-04
+          發表於 2015-07-13
         </span>
 
         
@@ -516,8 +541,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/04/IOS-进阶工具篇/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/04/IOS-进阶工具篇/"></span>
+            <a href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/13/iOS-Runtime-运行时类与对象的编译处理/"></span>
             </a>
           </span>
           
@@ -532,9 +557,15 @@
 
       
         
-          <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">第一部分：<span class="tag">iOS</span> 开发工具</span><br><span class="line">第2章使用<span class="tag">CocoaPods</span> 做依赖管理</span><br><span class="line">2<span class="class">.1</span> <span class="tag">CocoaPods</span> 简介</span><br><span class="line">2<span class="class">.2</span> <span class="tag">CocoaPods</span> 的安装和使用</span><br><span class="line">2<span class="class">.2</span><span class="class">.1</span> <span class="tag">CocoaPods</span> 的安装</span><br><span class="line">2<span class="class">.2</span><span class="class">.2</span> 使用<span class="tag">CocoaPods</span> 的镜像索引</span><br><span class="line">2<span class="class">.2</span><span class="class">.3</span> 使用<span class="tag">CocoaPods</span></span><br><span class="line">2<span class="class">.2</span><span class="class">.4</span> 查找第三方库</span><br><span class="line">2<span class="class">.3</span> 注意事项</span><br><span class="line">2<span class="class">.3</span><span class="class">.1</span> 关于<span class="class">.gitignore</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.2</span> 为自己的项目创建<span class="tag">podspec</span> 文件</span><br><span class="line">2<span class="class">.3</span><span class="class">.3</span> 使用私有的<span class="tag">pods</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.4</span> 不更新<span class="tag">podspec</span></span><br><span class="line">2<span class="class">.3</span><span class="class">.5</span> 生成第三方库的帮助文档</span><br><span class="line">2<span class="class">.3</span><span class="class">.6</span> 原理</span><br><span class="line">第3章网络封包分析工具<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.1</span> <span class="tag">Charles</span> 简介</span><br><span class="line">3<span class="class">.2</span> <span class="tag">Charles</span> 的安装和使用</span><br><span class="line">3<span class="class">.2</span><span class="class">.1</span> 安装<span class="tag">Charles</span></span><br><span class="line">3<span class="class">.2</span><span class="class">.2</span> 安装<span class="tag">SSL</span> 证书</span><br><span class="line">3<span class="class">.2</span><span class="class">.3</span> 将<span class="tag">Charles</span> 设置成系统代理</span><br><span class="line">3<span class="class">.2</span><span class="class">.4</span> <span class="tag">Charles</span> 主界面介绍</span><br><span class="line">3<span class="class">.2</span><span class="class">.5</span> 过滤网络请求</span><br><span class="line">3<span class="class">.3</span> 使用<span class="tag">Charles</span> 协助<span class="tag">iOS</span> 开发</span><br><span class="line">3<span class="class">.3</span><span class="class">.1</span> 截取<span class="tag">iPhone</span> 上的网络封包</span><br><span class="line">3<span class="class">.3</span><span class="class">.2</span> 模拟慢速网络</span><br><span class="line">3<span class="class">.4</span> 高级功能</span><br><span class="line">3<span class="class">.4</span><span class="class">.1</span> 截取<span class="tag">SSL</span> 信息</span><br><span class="line">3<span class="class">.4</span><span class="class">.2</span> 修改网络请求内容</span><br><span class="line">3<span class="class">.4</span><span class="class">.3</span> 修改服务器返回内容</span><br><span class="line">3<span class="class">.5</span> <span class="tag">Map</span> 功能</span><br><span class="line">3<span class="class">.6</span> <span class="tag">Rewrite</span> 功能</span><br><span class="line">3<span class="class">.7</span> <span class="tag">Breakpoints</span> 功能</span><br><span class="line">3<span class="class">.8</span> 总结</span><br><span class="line">3<span class="class">.9</span> 参考链接</span><br></pre></td></tr></table></figure>
+          <h2 id="iOS_Runtime运行时类与对象的编译处理">iOS Runtime运行时类与对象的编译处理</h2><p>Objective-C语言是一门动态语言，它将很多静态语言在编译和链接时期做的事放到了运行时来处理。这种动态语言的优势在于：我们写代码时更具灵活性，如我们可以把消息转发给我们想要的对象，或者随意交换一个方法的实现等。<br>这种特性意味着<code>Objective-C</code>不仅需要一个编译器，还需要一个运行时系统来执行编译的代码。对于Objective-C来说，这个运行时系统就像一个操作系统一样：它让所有的工作可以正常的运行。这个运行时系统即Objc Runtime。Objc Runtime其实是一个Runtime库，它基本上是用C和汇编写的，这个库使得C语言有了面向对象的能力。</p>
+<p>Runtime库主要做下面几件事：</p>
+<ol>
+<li>封装：在这个库中，对象可以用C语言中的结构体表示，而方法可以用C函数来实现，另外再加上了一些额外的特性。这些结构体和函数被runtime函数封装后，我们就可以在程序运行时创建，检查，修改类、对象和它们的方法了。</li>
+<li>找出方法的最终执行代码：当程序执行[object doSomething]时，会向消息接收者(object)发送一条消息(doSomething)，runtime会根据消息接收者是否能响应该消息而做出不同的反应。这将在后面详细介绍。</li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。<br>在这一系列文章中，我们将介绍runtime的基本工作原理，以及如何利用它让我们的程序变得更加灵活。在本文中，我们先来介绍一下类与对象，这是面向对象的基础，我们看看在Runtime中，类是如何实现的。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/04/IOS-进阶工具篇/#more">
+            <a class="btn" href="/2015/07/13/iOS-Runtime-运行时类与对象的编译处理/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -560,7 +591,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/24/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/22/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/24/">&raquo;</a>
   </div>
 
 
@@ -594,7 +625,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

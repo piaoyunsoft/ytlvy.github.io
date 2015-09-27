@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/01/iOS-optimization/">
-                iOS optimization
+              <a class="post-title-link" href="/2015/09/27/Crash-example/">
+                Crash example
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-01
+          發表於 2015-09-27
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/01/iOS-optimization/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/iOS-optimization/"></span>
+            <a href="/2015/09/27/Crash-example/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/Crash-example/"></span>
             </a>
           </span>
           
@@ -194,19 +194,106 @@
 
       
         
-          <p><a href="http://www.hrchen.com/2013/05/performance-with-instruments/">reference</a></p>
-<h2 id="iOS_App性能优化">iOS App性能优化</h2><h3 id="iOS_App的性能关注点">iOS App的性能关注点</h3><p>虽然iPhone的机能越来越好，但是app的功能也越来越复杂，性能从来都是移动开发的核心关注点之一。我们说一个app性能好，不是简单指感觉运行速度快，而应该是指应用启动快速、UI反馈响应及时、列表滚动操作流畅、内存使用合理，当然更不能随随便便Crash啦。工程师开发应用时除了在设计上要避免性能“坑”的出现，在实际遇到“坑”时也要能很快定位原因所在。定位性能问题原因当然不能靠猜，合理的方法是使用工具测量评估出投资回报最高的问题点，然后再加以优化。</p>
-<p>本文会从以下几点介绍如何分析和优化iOS app的性能：启动时间、用户响应、内存、图形动画、文件和网络I/O。其中会用到Apple出品的性能分析神器“Instruments”。</p>
-<h3 id="启动时间">启动时间</h3><p>应用启动时间长短对用户第一次体验至关重要，同时系统对应用的启动、恢复等状态的运行时间也有严格的要求，在应用超时的情况下系统会直接关闭应用。以下是几个常见场景下系统对app运行时间的要求：</p>
-<ul>
-<li>Launch 20秒</li>
-<li>Resume 10秒</li>
-<li>Suspend 10秒</li>
-<li>Quit 6秒</li>
-<li>Background Task 10分钟</li>
+          <h2 id="Crash_Bug">Crash Bug</h2><p>1) ios7 下没有 <code>ContainString</code> API</p>
+<p>2) NSDictionary &amp; NSArray nil insert </p>
+<p>3) 数组越界 NSArray <code>out of bounds</code></p>
+<p>4) <code>substringwithrange</code> out of bounds</p>
+<p>5) <code>GPUImageView presentBufferForDisplay</code> — 内存泄露 或者 app 进入后台</p>
+<p>6) <code>locationOfTouch: inView:</code> </p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> (gestureRecognizer)<span class="tag">numberOfTouches</span> &gt; <span class="tag">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/27/Crash-example/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/27/CoreAudio-base/">
+                CoreAudio base
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/27/CoreAudio-base/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/CoreAudio-base/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="CoreAudio_-&gt;_基本知识">CoreAudio -&gt; 基本知识</h1><p>自从开始Cocoa编程到现在，总会有人问，iOS，Mac有哪些框架，Cocoa与Cocoa Touch有什么区别？苹果官网早有详细的介绍,见 Mac iOS</p>
+<p>最近在研究CoreAudio&gt;AudioUnit.framework音频处理部分，这部分内容文档少的可怜，可参照的内容有《CoreAudio Overview Mac/iOS》，Sample Code, WWDC, Apple Mailing List. 剩下的就只剩头文件注释和函数返回的错误码了。就像解密一样，如果你知道什么是成功，然后再有较为完备的试错方案，那你离成功应该不远了，剩下的只是时间的问题。</p>
+<p>查文档的时候，有些内容Google一下，甚至只有几页内容。大部分时候都是连续打开20几个链接，却很少发现有价值的内容。有些算法相当神奇，听都没听过，更遗憾的是，我的笨拙的耳朵完全无法区分这对音频有哪些影响。但还是对音频有一定的理解,总结如下：</p>
+<h2 id="基本术语">基本术语</h2><ul>
+<li><strong>Sample(采样)</strong>：某个频道中单次捕获的音频数值（如图，单个紫色方块）</li>
+<li><strong>Frame(一帧)</strong>：同一时间不同声道获取的采样值，例如，对于双声道，一帧包含两个数字，左声道和右声道（如图，第一列的多个声道中的3个紫色方块）</li>
+<li><strong>Packet(包)</strong>：由一个或多个连续帧(Frame)组成, 在线性PCM中，一包总是只包含一帧，但对于其他压缩格式，一包要包含多个帧</li>
+<li><strong>Sample Rate(采样率)</strong>：单个声道一秒内有多少个采样(如图，每个声道一秒内有多少个紫色方块)，例如，CD的采样率为44.1KHz(samples / sec) </li>
+<li><strong>Bit Depth(位深)</strong>：采样值用多少位的数字来表示，例如CD的采样值用16-bit整形来表示 (bits / sample) </li>
+<li><strong>Bit rate(比特率)</strong> = <strong>Bit_Depth x Sample_Rate (bits / sec</strong>) PCM bit rate is constant while oompressed format often usae a variable bit rate</li>
 </ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/01/iOS-optimization/#more">
+            <a class="btn" href="/2015/09/27/CoreAudio-base/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -239,8 +326,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/01/iOS-locksreen-operation/">
-                iOS locksreen operation
+              <a class="post-title-link" href="/2015/09/27/Assembly/">
+                Assembly
               </a>
             
           
@@ -249,7 +336,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-01
+          發表於 2015-09-27
         </span>
 
         
@@ -269,8 +356,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/01/iOS-locksreen-operation/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/iOS-locksreen-operation/"></span>
+            <a href="/2015/09/27/Assembly/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/Assembly/"></span>
             </a>
           </span>
           
@@ -285,9 +372,23 @@
 
       
         
-          <h2 id="iOS_锁屏操作">iOS 锁屏操作</h2><p>如果你的App不需要” 喜欢/书签”等功能的话，直接使用RemoteControl就行。<br>对于RemoteCommand，一个SEL只能对应一个command。<br>另外就是RemoteCommand的callback会先于RemoteControl，不过也就几ms的间隔。而且使用RemoteControl更方便。</p>
+          <h2 id="Assembly">Assembly</h2><h3 id="MOV">MOV</h3><p>MOV A, B            === B =&gt; A</p>
+<h3 id="LEA">LEA</h3><p>LEA A, B            === B =&gt; A</p>
+<ol>
+<li><blockquote>
+<p>LEA, the only instruction that performs memory addressing calculations but doesn’t actually address memory. LEA accepts a standard memory addressing operand, but does nothing more than store the calculated memory offset in the specified register, which may be any general purpose register.<br>What does that give us? Two things that ADD doesn’t provide:</p>
+<ol>
+<li>the ability to perform addition with either two or three operands, and</li>
+<li>the ability to store the result in any register; not just one of the source operands.</li>
+</ol>
+</blockquote>
+</li>
+<li><p>As others have pointed out, LEA (load effective address) is often used as a “trick” to do certain computations, but that’s not its primary purpose. The x86 instruction set was designed to support high-level languages like Pascal and C, where arrays—especially arrays of ints or small structs—are common. Consider, for example, a struct representing (x, y) coordinates:</p>
+</li>
+</ol>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span><br><span class="line"></span>&#123;</span><br><span class="line">     int xcoord;</span><br><span class="line">     int ycoord;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/01/iOS-locksreen-operation/#more">
+            <a class="btn" href="/2015/09/27/Assembly/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -320,8 +421,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/01/code-optimization/">
-                code optimization
+              <a class="post-title-link" href="/2015/09/27/awesome-shell/">
+                awesome shell
               </a>
             
           
@@ -330,7 +431,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-01
+          發表於 2015-09-27
         </span>
 
         
@@ -350,8 +451,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/01/code-optimization/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/code-optimization/"></span>
+            <a href="/2015/09/27/awesome-shell/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/awesome-shell/"></span>
             </a>
           </span>
           
@@ -366,16 +467,16 @@
 
       
         
-          <p><a href="">reference</a></p>
-<h2 id="我是如何收拾代码的">我是如何收拾代码的</h2><h3 id="注释">注释</h3><p>虽说好的代码不用注释,但是那得是好的代码..好记性不如烂笔头，好好写注释可以给自己和自己的小伙伴省下很多时间.<br>注释都是// 或是/<em> 注释 </em>/ ，这样的通用注释不做多说明，这里介绍一些稍带技巧的注释：</p>
-<h4 id="参数的注释">参数的注释</h4><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIButton <span class="keyword">*</span>btnSend;/<span class="keyword">*</span><span class="keyword">*</span><span class="variable">&lt; 发送按钮 */</span></span><br></pre></td></tr></table></figure>
-<p>在调用时可以得到提示，在内容比较多时比较好用，我有时候脑子短路要想好一会才能记得当初定义的变量是做什么用的。</p>
-<h4 id="方法的注释">方法的注释</h4><p>如果你的方法是没有参数的，只需要写一句注释，那只需要在方法前加注释就行了</p>
-<p>type 1<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/<span class="emphasis">** table 相关设置 *</span>/</span></span></span><br><span class="line">-(<span class="keyword">void</span>)configTable&#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>type 2（插件：VVDocument）使用此插件可以很便捷的为自己的代码添加注释<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span>!</span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@author joanfen, 15-05-14 12:05:22</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@brief  相关设置</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">-(void)configTable&#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样的注释 在你调用时会显示你所添加注释，如图<br>
+          <h1 id="终极_Shell">终极 Shell</h1><p><img src="http://macshuo.com/wp-content/uploads/2013/07/zsh1.png" alt=""></p>
+<p>在开始今天的 MacTalk 之前，先问两个问题吧：</p>
+<p>1、相对于其他系统，Mac 的主要优势是什么？<br>2、你们平时用哪种 Shell？<br>……</p>
+<p>第一个童靴可以坐下了，Mac 的最大优势是 GUI 和命令行的完美结合，不要把所有注意力放在 Mac 性感的腰身和明媚的显示屏上好吧，这不是妹纸！第二个童靴你可以出去面壁了，讲了这么多期 MacTalk 你告诉我还在用 Windows 的 cmd， 你让 Mac 君情何以堪？哪怕你就说在用 Linux 的 Bash 我也就原谅你了，踢飞！</p>
+<p>上次在「如何学习一门编程语言」里提到了 Shell，也有读者问到 Shell 的问题，所以这次给大家说说 Shell 的事。</p>
+<p>我在「趣谈个人建站」里介绍过一点 Shell，自己的东西借用下不丢人，把扯淡的拿掉，干货留下，就是如下内容：</p>
+<p>Shell是Linux/Unix的一个外壳，你理解成衣服也行。它负责外界与Linux内核的交互，接收用户或其他应用程序的命令，然后把这些命令转化成内核能理解的语言，传给内核，内核是真正干活的，干完之后再把结果返回用户或应用程序。</p>
+<p>Linux/Unix提供了很多种Shell，为毛要这么多Shell？难道用来炒着吃么？那我问你，你同类型的衣服怎么有那么多件？花色，质地还不一样。写程序比买衣服复杂多了，而且程序员往往负责把复杂的事情搞简单，简单的事情搞复杂。牛程序员看到不爽的Shell，就会自己重新写一套，慢慢形成了一些标准，常用的Shell有这么几种，sh、bash、csh等，想知道你的系统有几种shell，可以通过以下命令查看：</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/01/code-optimization/#more">
+            <a class="btn" href="/2015/09/27/awesome-shell/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -408,8 +509,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/01/get-rid-of-Warnnings/">
-                get rid of Warnnings
+              <a class="post-title-link" href="/2015/09/27/Reveal1-5-1-config/">
+                Reveal1.5.1-config
               </a>
             
           
@@ -418,7 +519,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-01
+          發表於 2015-09-27
         </span>
 
         
@@ -438,8 +539,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/01/get-rid-of-Warnnings/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/get-rid-of-Warnnings/"></span>
+            <a href="/2015/09/27/Reveal1-5-1-config/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/Reveal1-5-1-config/"></span>
             </a>
           </span>
           
@@ -454,100 +555,42 @@
 
       
         
-          <p><a href="http://my.oschina.net/joanfen">reference</a></p>
-<h2 id="干掉_Warnings">干掉 Warnings</h2><h3 id="场景">场景</h3><p>事情是这样的，今天心血来潮想把工程中使用了苹果已弃用方法后得到的警告处理一下，就是这样一段代码，适配 iOS6是很可悲，我知道，你们别说了5555，上个皂片先看下 </p>
-<p><img src="https://static.oschina.net/uploads/img/201508/18095518_EO9H.png" alt=""></p>
-<p>如果要适配低版本，这样的警告应该不少，每次 Build 的时候就感觉它在对我说：我就喜欢你看我不爽又干不掉我的样子。我这暴脾气，赶了好久的版本，好不容易得点空，必须干掉</p>
-<p>其实很多东西都是早就有了解决办法，需要我们去发现而已<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/01/get-rid-of-Warnnings/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
+          <h2 id="最新Reveal_1-5-1_详细配置实战">最新Reveal 1.5.1 详细配置实战</h2><h3 id="Reveal公共配置">Reveal公共配置</h3><p>在当前用户目录下，打开终端中新建一个.lldbinit文件,位置是~/.lldbinit。<br>命令是: <code>vim ~/.lldbinit</code></p>
+<p>然后粘贴下面代码保存：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">command alias reveal_load_sim expr (<span class="keyword">void</span>*)dlopen(<span class="string">"/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/libReveal.dylib"</span>, <span class="number">0x2</span>);</span><br><span class="line"></span><br><span class="line">command alias reveal_load_dev expr (<span class="keyword">void</span>*)dlopen([(<span class="built_in">NSString</span>*)[(<span class="built_in">NSBundle</span>*)[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"libReveal"</span> ofType:<span class="string">@"dylib"</span>] cStringUsingEncoding:<span class="number">0x4</span>], <span class="number">0x2</span>);</span><br><span class="line"></span><br><span class="line">command alias reveal_start expr (<span class="keyword">void</span>)[(<span class="built_in">NSNotificationCenter</span>*)[<span class="built_in">NSNotificationCenter</span> defaultCenter] postNotificationName:<span class="string">@"IBARevealRequestStart"</span> object:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">command alias reveal_stop expr (<span class="keyword">void</span>)[(<span class="built_in">NSNotificationCenter</span>*)[<span class="built_in">NSNotificationCenter</span> defaultCenter] postNotificationName:<span class="string">@"IBARevealRequestStop"</span> object:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></p>
+<h3 id="连接到模拟器调试">连接到模拟器调试</h3><p>在项目代理中的application:didFinishLaunchingWithOptions:方法中，进行以下几步，</p>
+<ol>
+<li>添加一个断点，并右击编辑</li>
+<li>单击“Action”右边的“+”，输入“reveal_load_sim”</li>
+<li>勾选上“Option” 上的选项 “Automatically continue after evaluating”,</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-efd3c90a0222e253.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>然后运行APP在模拟器，打开Reveal就可以看到左上角有个连接调试。</p>
+<h3 id="连接到真机调试">连接到真机调试</h3><ol>
+<li>添加Reveal链接动态库到我们工程：在Reveal菜单“Help”-&gt;”Show Reveal Library in Finder” 找到动态库后拖拽到工程中；</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-62a93777652c1065.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>把这2个文件直接拉到下面</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-67302b500f46992e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>成功拉到库中</p>
+<ol>
+<li>注意Xcode默认是将其设置到“Link Binary With Libraries”中，需要删除它，并添加到 “Copy Bundle Resources”下面；</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-da34f7567ebd834f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原来位置"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-a236d8e05c59a29d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选中上面的libReveal.dylib,直接拽拉到下面"></p>
+<ol>
+<li>选中 Build Settings栏找到Linking下面的Other Linker Flags setting:</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-e48e3976ae254be8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="当前选项为空"></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-ObjC -lz -framework Reveal</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-9aaf294a1f34edc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ol>
+<li>在项目代理中的application:didFinishLaunchingWithOptions:方法中，进行以下几步，</li>
+</ol>
+<p>第一：添加一个断点，并右击编辑<br>第二：单击“Action”右边的“+”，输入“reveal_load_dev”<br>第三：勾选上“Option” 上的选项 “Automatically continue after evaluating”,</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-10ab9560cc4d4c22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>按command+R编译项目，在Reveal中可以看到:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/99517-c474c84f0f453909.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/">
-                Cxx Deleting destructors and virtual operator delete
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-09-01
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://eli.thegreenplace.net/2015/c-deleting-destructors-and-virtual-operator-delete/">reference</a></p>
-<h2 id="C++:_Deleting_destructors_and_virtual_operator_delete">C++: Deleting destructors and virtual operator delete</h2><p>This post starts with a fairly obscure topic - how an overloaded operator delete behaves in light of polymorphism; amazingly, it then gets even more obscure - shedding light on the trickery the compiler employs to make this work, by generating more than one destructor for certain classes. If you’re into such things, read on. If not, sorry about that; I heard that three new Javascript libraries were released this week for MVC JSON-based dynamic CSS layout. Everyone’s switching! Hurry up to keep up with the cool guys and leave this grumpy compiler engineer to mumble to himself.</p>
-<h3 id="Virtual_operator_delete?">Virtual operator delete?</h3><p>Consider this code sample:</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">class <span class="keyword">Animal</span> &#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void <span class="keyword">say</span>() = 0;</span><br><span class="line">  virtual ~<span class="keyword">Animal</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Sheep : public <span class="keyword">Animal</span> &#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void <span class="keyword">say</span>() &#123;</span><br><span class="line">    printf(<span class="string">"Sheep says baaaaa\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual ~Sheep() &#123;</span><br><span class="line">    printf(<span class="string">"Sheep is dead\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  void operator delete(void* p) &#123;</span><br><span class="line">    printf(<span class="string">"Reclaiming Sheep storage from %p\n"</span>, p);</span><br><span class="line">    ::operator delete(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv) &#123;</span><br><span class="line">  <span class="keyword">Animal</span>* ap = new Sheep;</span><br><span class="line">  ap-&gt;<span class="keyword">say</span>();</span><br><span class="line">  delete ap;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -570,7 +613,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
   </div>
 
 
@@ -604,7 +647,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

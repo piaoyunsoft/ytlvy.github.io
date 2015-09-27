@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/SDWebimage-pitfall/">
-                SDWebimage pitfall
+              <a class="post-title-link" href="/2015/09/01/iOS-optimization/">
+                iOS optimization
               </a>
             
           
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-22
+          發表於 2015-09-01
         </span>
 
         
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/SDWebimage-pitfall/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/SDWebimage-pitfall/"></span>
+            <a href="/2015/09/01/iOS-optimization/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/iOS-optimization/"></span>
             </a>
           </span>
           
@@ -194,100 +194,19 @@
 
       
         
-          <h2 id="SDWebImage_缓存相关用法">SDWebImage 缓存相关用法</h2><h3 id="计算缓存大小的方法：">计算缓存大小的方法：</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSUInteger</span>)getSize &#123;  </span><br><span class="line">    __block <span class="built_in">NSUInteger</span> size = <span class="number">0</span>;  </span><br><span class="line">    <span class="built_in">dispatch_sync</span>(<span class="keyword">self</span><span class="variable">.ioQueue</span>, ^&#123;  </span><br><span class="line">        <span class="built_in">NSDirectoryEnumerator</span> *fileEnumerator = [_fileManager enumeratorAtPath:<span class="keyword">self</span><span class="variable">.diskCachePath</span>];  </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSString</span> *fileName <span class="keyword">in</span> fileEnumerator) &#123;  </span><br><span class="line">            <span class="built_in">NSString</span> *filePath = [<span class="keyword">self</span><span class="variable">.diskCachePath</span> stringByAppendingPathComponent:fileName];  </span><br><span class="line">            <span class="built_in">NSDictionary</span> *attrs = [[<span class="built_in">NSFileManager</span> defaultManager] attributesOfItemAtPath:filePath error:<span class="literal">nil</span>];  </span><br><span class="line">            size += [attrs fileSize];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;);  </span><br><span class="line">    <span class="keyword">return</span> size;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="清除缓存">清除缓存</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDImageCache *imageCache = [SDImageCache sharedImageCache]<span class="comment">;</span></span><br><span class="line">[imageCache clearMemory]<span class="comment">;</span></span><br><span class="line">[imageCache clearDisk]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h3 id="关闭解压">关闭解压</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[SDImageCache sharedImageCache]</span> <span class="rule"><span class="attribute">setShouldDecompressImages</span>:<span class="value">NO]</span></span>;</span><br><span class="line"><span class="attr_selector">[[SDWebImageDownloader sharedDownloader]</span> <span class="rule"><span class="attribute">setShouldDecompressImages</span>:<span class="value">NO]</span></span>;</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/22/iOS-Audio-Lockscreen/">
-                iOS Audio Lockscreen 
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/22/iOS-Audio-Lockscreen/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/iOS-Audio-Lockscreen/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="iOS音乐后台播放及锁屏相关">iOS音乐后台播放及锁屏相关</h2><h3 id="音乐后台播放">音乐后台播放</h3><ol>
-<li>首先修改info.plist </li>
-</ol>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Required <span class="attribute">background</span> modes  -- [</span><br><span class="line">  item0   ==&gt; App plays <span class="tag">audio</span> or streams audio/<span class="tag">video</span> using AirPlay</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20150806174938474" alt=""></p>
-<ol>
-<li>其次引入两个需要的框架</li>
-</ol>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;AVFoundation/AVFoundation.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MediaPlayer/MediaPlayer.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>设置播放器及后台播放</li>
-</ol>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"><span class="comment">//    设置后台播放</span></span><br><span class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//    设置播放器</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"那些花儿"</span> ofType:<span class="string">@"mp3"</span>] ];</span><br><span class="line">    _player = [[<span class="built_in">AVPlayer</span> alloc] initWithURL:url];</span><br><span class="line">    [_player play];</span><br><span class="line">    _isPlayingNow = <span class="literal">YES</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//后台播放显示信息设置</span></span><br><span class="line">    [<span class="keyword">self</span> setPlayingInfo];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p><a href="http://www.hrchen.com/2013/05/performance-with-instruments/">reference</a></p>
+<h2 id="iOS_App性能优化">iOS App性能优化</h2><h3 id="iOS_App的性能关注点">iOS App的性能关注点</h3><p>虽然iPhone的机能越来越好，但是app的功能也越来越复杂，性能从来都是移动开发的核心关注点之一。我们说一个app性能好，不是简单指感觉运行速度快，而应该是指应用启动快速、UI反馈响应及时、列表滚动操作流畅、内存使用合理，当然更不能随随便便Crash啦。工程师开发应用时除了在设计上要避免性能“坑”的出现，在实际遇到“坑”时也要能很快定位原因所在。定位性能问题原因当然不能靠猜，合理的方法是使用工具测量评估出投资回报最高的问题点，然后再加以优化。</p>
+<p>本文会从以下几点介绍如何分析和优化iOS app的性能：启动时间、用户响应、内存、图形动画、文件和网络I/O。其中会用到Apple出品的性能分析神器“Instruments”。</p>
+<h3 id="启动时间">启动时间</h3><p>应用启动时间长短对用户第一次体验至关重要，同时系统对应用的启动、恢复等状态的运行时间也有严格的要求，在应用超时的情况下系统会直接关闭应用。以下是几个常见场景下系统对app运行时间的要求：</p>
+<ul>
+<li>Launch 20秒</li>
+<li>Resume 10秒</li>
+<li>Suspend 10秒</li>
+<li>Quit 6秒</li>
+<li>Background Task 10分钟</li>
+</ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/iOS-Audio-Lockscreen/#more">
+            <a class="btn" href="/2015/09/01/iOS-optimization/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -320,8 +239,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/C-programming-Precompile/">
-                C programming -- Precompile
+              <a class="post-title-link" href="/2015/09/01/iOS-locksreen-operation/">
+                iOS locksreen operation
               </a>
             
           
@@ -330,7 +249,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-22
+          發表於 2015-09-01
         </span>
 
         
@@ -350,8 +269,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/C-programming-Precompile/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-Precompile/"></span>
+            <a href="/2015/09/01/iOS-locksreen-operation/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/iOS-locksreen-operation/"></span>
             </a>
           </span>
           
@@ -366,18 +285,9 @@
 
       
         
-          <p><a href="http://www.cnblogs.com/kenshincui/p/3854242.html">reference</a></p>
-<h2 id="C语言之预处理">C语言之预处理</h2><h3 id="概述">概述</h3><p>大家都知道一个C程序的运行包括编译和链接两个阶段，其实在编译之前预处理器首先要进行预处理操作，将处理完产生的一个新的源文件进行编译。由于预处理指令是在编译之前就进行了，因此很多时候它要比在程序运行时进行操作效率高。在C语言中包括三类预处理指令，今天将一一介绍：</p>
-<ul>
-<li>宏定义</li>
-<li>条件编译</li>
-<li>文件包含</li>
-</ul>
-<h3 id="宏定义">宏定义</h3><p>对于程序中经常用到的一些常量或者简短的函数我们通常使用宏定义来处理，这样做的好处是对于程序中所有的配置我们可以统一在宏定义中进行管理，而且由于宏定义是在程序编译之前进行替换相比定义成全局变量或函数效率更高。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  Pretreatment</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by Kenshin Cui on 14-6-28.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2014年 Kenshin Cui. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> PI 3.14 <span class="comment">//宏定义一般大写</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> R 10</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> S 2*PI*R <span class="comment">//在另一个宏里面引用了上面的宏</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> r=<span class="number">10.5</span>;</span><br><span class="line">    <span class="keyword">double</span> area=PI*r*r;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"area=%.2f\n"</span>,area);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">double</span> a=S;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%.2f\n"</span>,a);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"PI=3.14\n"</span>);<span class="comment">//注意输出结果不是3.14=3.14而是PI=3.14，字符串中的PI并不会被替换</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">undef</span> PI <span class="comment">//强制终止宏定义，否则它的范围一直到文件结束</span></span></span><br><span class="line">    <span class="keyword">int</span> PI=<span class="number">3.1415926</span>;</span><br><span class="line">    <span class="keyword">double</span> area2=PI*r*r;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"area2=%.2f\n"</span>,area2);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>宏定义实际的操作就是在预处理时进行对应替换，这个阶段不管语法是否正确，而且对于字符串中出现的宏名不会进行替换。宏定义的功能事实上是非常强大的，除了简单的常量替换还可以传入参数：</p>
+          <h2 id="iOS_锁屏操作">iOS 锁屏操作</h2><p>如果你的App不需要” 喜欢/书签”等功能的话，直接使用RemoteControl就行。<br>对于RemoteCommand，一个SEL只能对应一个command。<br>另外就是RemoteCommand的callback会先于RemoteControl，不过也就几ms的间隔。而且使用RemoteControl更方便。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/C-programming-Precompile/#more">
+            <a class="btn" href="/2015/09/01/iOS-locksreen-operation/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -410,8 +320,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/C-programming-Struct/">
-                C programming -- Struct
+              <a class="post-title-link" href="/2015/09/01/code-optimization/">
+                code optimization
               </a>
             
           
@@ -420,7 +330,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-22
+          發表於 2015-09-01
         </span>
 
         
@@ -440,8 +350,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/C-programming-Struct/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-Struct/"></span>
+            <a href="/2015/09/01/code-optimization/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/code-optimization/"></span>
             </a>
           </span>
           
@@ -456,17 +366,16 @@
 
       
         
-          <p><a href="http://www.cnblogs.com/kenshincui/p/3856543.html">reference</a></p>
-<h2 id="C语言之构造类型">C语言之构造类型</h2><h3 id="概述">概述</h3><p>在第一节中我们就提到C语言的构造类型，分为：数组、结构体、枚举、共用体，当然前面数组的内容已经说了很多了，这一节将会重点说一下其他三种类型。</p>
-<ul>
-<li>结构体</li>
-<li>枚举</li>
-<li>共用体</li>
-</ul>
-<h3 id="结构体">结构体</h3><p>数组中存储的是一系列相同的数据类型，那么如果想让一个变量存储不同的数据类型就要使用结构体，结构体定义类似于C++、C#、Java等高级语言中类的定义，但事实上它们又有着很大的区别。结构体是一种类型，并非一个变量，只是这种类型可以由其他C语言基本类型共同组成。</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  main.c</span><br><span class="line">//  ConstructedType</span><br><span class="line">//</span><br><span class="line">//  Created by Kenshin Cui on 14-7-18.</span><br><span class="line">//  Copyright (c) 2014年 Kenshin Cui. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">//结构体类型Date</span><br><span class="line">struct Date&#123;</span><br><span class="line">    int year;</span><br><span class="line">    int month;</span><br><span class="line">    int day;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct <span class="keyword">Person</span>&#123;</span><br><span class="line">    char *name;</span><br><span class="line">    int age;</span><br><span class="line">    struct Date birthday;//一个结构体中使用了另一个结构体类型，结构体类型变量声明前必须加上struct关键字</span><br><span class="line">    float height;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv<span class="comment">[]</span>) &#123;</span><br><span class="line">    struct <span class="keyword">Person</span> p=&#123;<span class="string">"Kenshin"</span>,28,&#123;1986,8,8&#125;,1.72&#125;;</span><br><span class="line">    //定义结构体变量并初始化,不允许先定义再直接初始化，例如：struct <span class="keyword">Person</span> p;p=&#123;<span class="string">"Kenshin"</span>,28,&#123;1986,8,8&#125;,1.72&#125;;是错误的，但是可以分别赋值，例如p.name=<span class="string">"Kenshin"</span></span><br><span class="line">    </span><br><span class="line">    printf(<span class="string">"name=%s,age=%d,birthday=%d-%d-%d,height=%.2f\n"</span>,p.name,p.age,p.birthday.year,p.birthday.month,p.birthday.day,p.height); </span><br><span class="line">    //结果：name=Kenshin,age=28,birthday=1986-8-8,height=1.72，结构体的引用是通过<span class="string">"结构体变量.成员名称"</span>(注意和结构体指针访问结构体成员变量区分，结构体指针使用p-&gt;a的形式访问)</span><br><span class="line">    </span><br><span class="line">    printf(<span class="string">"len(Date)=%lu,len(Person)=%lu\n"</span>,sizeof(struct Date),sizeof(struct <span class="keyword">Person</span>)); </span><br><span class="line">    //结果：len(Date)=12,len(<span class="keyword">Person</span>)=32</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p><a href="">reference</a></p>
+<h2 id="我是如何收拾代码的">我是如何收拾代码的</h2><h3 id="注释">注释</h3><p>虽说好的代码不用注释,但是那得是好的代码..好记性不如烂笔头，好好写注释可以给自己和自己的小伙伴省下很多时间.<br>注释都是// 或是/<em> 注释 </em>/ ，这样的通用注释不做多说明，这里介绍一些稍带技巧的注释：</p>
+<h4 id="参数的注释">参数的注释</h4><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIButton <span class="keyword">*</span>btnSend;/<span class="keyword">*</span><span class="keyword">*</span><span class="variable">&lt; 发送按钮 */</span></span><br></pre></td></tr></table></figure>
+<p>在调用时可以得到提示，在内容比较多时比较好用，我有时候脑子短路要想好一会才能记得当初定义的变量是做什么用的。</p>
+<h4 id="方法的注释">方法的注释</h4><p>如果你的方法是没有参数的，只需要写一句注释，那只需要在方法前加注释就行了</p>
+<p>type 1<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/<span class="emphasis">** table 相关设置 *</span>/</span></span></span><br><span class="line">-(<span class="keyword">void</span>)configTable&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>type 2（插件：VVDocument）使用此插件可以很便捷的为自己的代码添加注释<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span>!</span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@author joanfen, 15-05-14 12:05:22</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@brief  相关设置</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">-(void)configTable&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的注释 在你调用时会显示你所添加注释，如图<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/C-programming-Struct/#more">
+            <a class="btn" href="/2015/09/01/code-optimization/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -499,8 +408,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/C-programming-Array-String/">
-                C programming -- Array & String
+              <a class="post-title-link" href="/2015/09/01/get-rid-of-Warnnings/">
+                get rid of Warnnings
               </a>
             
           
@@ -509,7 +418,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-22
+          發表於 2015-09-01
         </span>
 
         
@@ -529,8 +438,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/C-programming-Array-String/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/C-programming-Array-String/"></span>
+            <a href="/2015/09/01/get-rid-of-Warnnings/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/get-rid-of-Warnnings/"></span>
             </a>
           </span>
           
@@ -545,17 +454,97 @@
 
       
         
-          <p><a href="http://www.cnblogs.com/kenshincui/p/3843505.html">reference</a></p>
-<h2 id="C语言之数组和字符串">C语言之数组和字符串</h2><h3 id="概览">概览</h3><p>数组在C语言中有着特殊的地位，它有很多特性，例如它的存储是连续的，数组的名称就是数组的地址等。而在C语言中是没有String类型的，那么如果要表示一个字符串，就必须使用字符数组。今天主要就介绍如下三个方面：</p>
-<ul>
-<li>一维数组</li>
-<li>多维数组</li>
-<li>字符串</li>
-</ul>
-<h3 id="一维数组">一维数组</h3><p>一维数组操作比较简单，但是需要注意，数组长度必须是固定的，长度不能使用变量进行初始化；如果声明的同时进行赋值则数组长度可以省略，编译器会自动计算数组长度；同时数组不能先声明再一次性赋值（当然可以对每个元素一一赋值）。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//int a[len] = &#123; 1, 2&#125;;//错误,不能使变量</span></span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">2</span>];<span class="comment">//正确</span></span><br><span class="line">    a[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    a[<span class="number">1</span>] = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//a[2] = 3;//超过数组长度，但是编译器并不会检查，运行报错</span></span><br><span class="line">    <span class="keyword">int</span> b[<span class="string">'a'</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;<span class="comment">//'a'=97，所以可以作为数组长度，但是后面的元素没有初始化，其值默认为0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">97</span>; ++i)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"b[%d]=%d\n"</span>,i,b[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> c[<span class="number">2</span> * <span class="number">3</span>];<span class="comment">//2*3是固定值可以作为数组长度</span></span><br><span class="line">    <span class="keyword">int</span> d[] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> &#125;;<span class="comment">//如果初始化的同时赋值则数组长度可以省略，当前个数为3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p><a href="http://my.oschina.net/joanfen">reference</a></p>
+<h2 id="干掉_Warnings">干掉 Warnings</h2><h3 id="场景">场景</h3><p>事情是这样的，今天心血来潮想把工程中使用了苹果已弃用方法后得到的警告处理一下，就是这样一段代码，适配 iOS6是很可悲，我知道，你们别说了5555，上个皂片先看下 </p>
+<p><img src="https://static.oschina.net/uploads/img/201508/18095518_EO9H.png" alt=""></p>
+<p>如果要适配低版本，这样的警告应该不少，每次 Build 的时候就感觉它在对我说：我就喜欢你看我不爽又干不掉我的样子。我这暴脾气，赶了好久的版本，好不容易得点空，必须干掉</p>
+<p>其实很多东西都是早就有了解决办法，需要我们去发现而已<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/C-programming-Array-String/#more">
+            <a class="btn" href="/2015/09/01/get-rid-of-Warnnings/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/">
+                Cxx Deleting destructors and virtual operator delete
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://eli.thegreenplace.net/2015/c-deleting-destructors-and-virtual-operator-delete/">reference</a></p>
+<h2 id="C++:_Deleting_destructors_and_virtual_operator_delete">C++: Deleting destructors and virtual operator delete</h2><p>This post starts with a fairly obscure topic - how an overloaded operator delete behaves in light of polymorphism; amazingly, it then gets even more obscure - shedding light on the trickery the compiler employs to make this work, by generating more than one destructor for certain classes. If you’re into such things, read on. If not, sorry about that; I heard that three new Javascript libraries were released this week for MVC JSON-based dynamic CSS layout. Everyone’s switching! Hurry up to keep up with the cool guys and leave this grumpy compiler engineer to mumble to himself.</p>
+<h3 id="Virtual_operator_delete?">Virtual operator delete?</h3><p>Consider this code sample:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">class <span class="keyword">Animal</span> &#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void <span class="keyword">say</span>() = 0;</span><br><span class="line">  virtual ~<span class="keyword">Animal</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Sheep : public <span class="keyword">Animal</span> &#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void <span class="keyword">say</span>() &#123;</span><br><span class="line">    printf(<span class="string">"Sheep says baaaaa\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual ~Sheep() &#123;</span><br><span class="line">    printf(<span class="string">"Sheep is dead\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  void operator delete(void* p) &#123;</span><br><span class="line">    printf(<span class="string">"Reclaiming Sheep storage from %p\n"</span>, p);</span><br><span class="line">    ::operator delete(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv) &#123;</span><br><span class="line">  <span class="keyword">Animal</span>* ap = new Sheep;</span><br><span class="line">  ap-&gt;<span class="keyword">say</span>();</span><br><span class="line">  delete ap;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/01/Cxx-Deleting-destructors-and-virtual-operator-delete/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -581,7 +570,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
   </div>
 
 
@@ -615,7 +604,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

@@ -1,0 +1,646 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Assembly // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Assembly
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/27/Assembly/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/Assembly/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Assembly">Assembly</h2><h3 id="MOV">MOV</h3><p>MOV A, B            === B =&gt; A</p>
+<h3 id="LEA">LEA</h3><p>LEA A, B            === B =&gt; A</p>
+<ol>
+<li><blockquote>
+<p>LEA, the only instruction that performs memory addressing calculations but doesn’t actually address memory. LEA accepts a standard memory addressing operand, but does nothing more than store the calculated memory offset in the specified register, which may be any general purpose register.<br>What does that give us? Two things that ADD doesn’t provide:</p>
+<ol>
+<li>the ability to perform addition with either two or three operands, and</li>
+<li>the ability to store the result in any register; not just one of the source operands.</li>
+</ol>
+</blockquote>
+</li>
+<li><p>As others have pointed out, LEA (load effective address) is often used as a “trick” to do certain computations, but that’s not its primary purpose. The x86 instruction set was designed to support high-level languages like Pascal and C, where arrays—especially arrays of ints or small structs—are common. Consider, for example, a struct representing (x, y) coordinates:</p>
+</li>
+</ol>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span><br><span class="line"></span>&#123;</span><br><span class="line">     int xcoord;</span><br><span class="line">     int ycoord;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>Now imagine a statement like:</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> y = points[i].ycoord;</span><br></pre></td></tr></table></figure>
+<p>where points[] is an array of Point. Assuming the base of the array is already in EBX, and variable i is in EAX, and xcoord and ycoord are each 32 bits (so ycoord is at offset 4 bytes in the struct), this statement can be compiled to:</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">MOV</span> <span class="number">EDX</span>, [<span class="number">EBX</span> + <span class="number">8</span>*<span class="number">EAX</span> + <span class="number">4</span>]    <span class="comment">; right side is "effective address"</span></span><br></pre></td></tr></table></figure>
+<p>which will land y in EDX. The scale factor of 8 is because each Point is 8 bytes in size. Now consider the same expression used with the “address of” operator &amp;:</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = &amp;points[i].ycoord;</span><br></pre></td></tr></table></figure>
+<p>In this case, you don’t want the value of ycoord, but its address. That’s where LEA (load effective address) comes in. Instead of a MOV, the compiler can generate</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">LEA</span> <span class="literal">ESI</span>, [<span class="number">EBX</span> + <span class="number">8</span>*<span class="number">EAX</span> + <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<p>which will load the address in ESI.</p>
+<h4 id="section_data">section data</h4><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">section</span> <span class="string">.data</span></span><br><span class="line">    <span class="preprocessor">align</span> <span class="number">16</span></span><br><span class="line"><span class="label">    v1:</span>     <span class="pseudo">dd</span> <span class="number">1.1</span>, <span class="number">2.2</span>, <span class="number">3.3</span>, <span class="number">4.4</span>   <span class="comment">; Four Single precision floats 32 bits each</span></span><br><span class="line"><span class="label">    v1dp:</span>   <span class="pseudo">dq</span> <span class="number">1.1</span>, <span class="number">2.2</span>     <span class="comment">; Two Double precision floats 64 bits each</span></span><br><span class="line"><span class="label">    v2:</span>     <span class="pseudo">dd</span> <span class="number">5.5</span>, <span class="number">6.6</span>, <span class="number">7.7</span>, <span class="number">8.8</span></span><br><span class="line"><span class="label">    v2s1:</span>   <span class="pseudo">dd</span> <span class="number">5.5</span>, <span class="number">6.6</span>, <span class="number">7.7</span>, -<span class="number">8.8</span></span><br><span class="line"><span class="label">    v2s2:</span>   <span class="pseudo">dd</span> <span class="number">5.5</span>, <span class="number">6.6</span>, -<span class="number">7.7</span>, -<span class="number">8.8</span></span><br><span class="line"><span class="label">    v2s3:</span>   <span class="pseudo">dd</span> <span class="number">5.5</span>, -<span class="number">6.6</span>, -<span class="number">7.7</span>, -<span class="number">8.8</span></span><br><span class="line"><span class="label">    v2s4:</span>   <span class="pseudo">dd</span> -<span class="number">5.5</span>, -<span class="number">6.6</span>, -<span class="number">7.7</span>, -<span class="number">8.8</span></span><br><span class="line"><span class="label">    num1:</span>   <span class="pseudo">dd</span> <span class="number">1.2</span></span><br><span class="line"><span class="label">    v3:</span>     <span class="pseudo">dd</span> <span class="number">1.2</span>, <span class="number">2.3</span>, <span class="number">4.5</span>, <span class="number">6.7</span>   <span class="comment">; No longer 16 byte aligned</span></span><br><span class="line"><span class="label">    v3dp:</span>   <span class="pseudo">dq</span> <span class="number">1.2</span>, <span class="number">2.3</span>     <span class="comment">; No longer 16 byte aligned</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">section</span> <span class="string">.bss</span></span><br><span class="line"><span class="label">    mask1:</span>  <span class="pseudo">resd</span> <span class="number">1</span></span><br><span class="line"><span class="label">    mask2:</span>  <span class="pseudo">resd</span> <span class="number">1</span></span><br><span class="line"><span class="label">    mask3:</span>  <span class="pseudo">resd</span> <span class="number">1</span></span><br><span class="line"><span class="label">    mask4:</span>  <span class="pseudo">resd</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">section</span> <span class="string">.text</span></span><br><span class="line"><span class="label">    _start:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;</span></span><br><span class="line"><span class="comment">;   op  dst,  src</span></span><br><span class="line"><span class="comment">;</span></span><br><span class="line">                <span class="comment">;</span></span><br><span class="line">                <span class="comment">; SSE</span></span><br><span class="line">                <span class="comment">;</span></span><br><span class="line">                <span class="comment">; Using movaps since vectors are 16 byte aligned</span></span><br><span class="line">    <span class="keyword">movaps</span>  <span class="literal">xmm0</span>, [v1]  <span class="comment">; Move four 32-bit(single precision) floats to xmm0 </span></span><br><span class="line">    <span class="keyword">movaps</span>  <span class="literal">xmm1</span>, [v2]</span><br><span class="line">    <span class="keyword">movups</span>  <span class="literal">xmm2</span>, [v3]  <span class="comment">; Need to use movups since v3 is not 16 byte aligned</span></span><br><span class="line">    <span class="comment">;movaps xmm3, [v3]  ; This would seg fault if uncommented </span></span><br><span class="line">    <span class="keyword">movss</span>   <span class="literal">xmm3</span>, [num1]    <span class="comment">; Move 32-bit float num1 to the least significant element of xmm3</span></span><br><span class="line">    <span class="keyword">movss</span>   <span class="literal">xmm3</span>, [v3]  <span class="comment">; Move first 32-bit float of v3 to the least significant element of xmm3</span></span><br><span class="line">    <span class="keyword">movlps</span>  <span class="literal">xmm4</span>, [v3]  <span class="comment">; Move 64-bits(two single precision floats) from memory to the lower 64-bit elements of xmm4</span></span><br><span class="line">    <span class="keyword">movhps</span>  <span class="literal">xmm4</span>, [v2]  <span class="comment">; Move 64-bits(two single precision floats) from memory to the higher 64-bit elements of xmm4</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">; Source and destination for movhlps and movlhps must be xmm registers</span></span><br><span class="line">    <span class="keyword">movhlps</span> <span class="literal">xmm5</span>, <span class="literal">xmm4</span>  <span class="comment">; Transfers the higher 64-bits of the source xmm4 to the lower 64-bits of the destination xmm5</span></span><br><span class="line">    <span class="keyword">movlhps</span> <span class="literal">xmm5</span>, <span class="literal">xmm4</span>  <span class="comment">; Transfers the lower 64-bits of the source xmm4 to the higher 64-bits of the destination xmm5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">movaps</span>  <span class="literal">xmm6</span>, [v2s1]</span><br><span class="line">    <span class="keyword">movmskps</span> <span class="number">eax</span>, <span class="literal">xmm6</span>  <span class="comment">; Extract the sign bits from four 32-bits floats in xmm6 and create 4 bit mask in eax </span></span><br><span class="line">    <span class="keyword">mov</span> [mask1], <span class="number">eax</span>    <span class="comment">; Should be 8</span></span><br><span class="line">    <span class="keyword">movaps</span>  <span class="literal">xmm6</span>, [v2s2]</span><br><span class="line">    <span class="keyword">movmskps</span> <span class="number">eax</span>, <span class="literal">xmm6</span>  <span class="comment">; Extract the sign bits from four 32-bits floats in xmm6 and create 4 bit mask in eax</span></span><br><span class="line">    <span class="keyword">mov</span> [mask2], <span class="number">eax</span>    <span class="comment">; Should be 12</span></span><br><span class="line">    <span class="keyword">movaps</span>  <span class="literal">xmm6</span>, [v2s3]</span><br><span class="line">    <span class="keyword">movmskps</span> <span class="number">eax</span>, <span class="literal">xmm6</span>  <span class="comment">; Extract the sign bits from four 32-bits floats in xmm6 and create 4 bit mask in eax</span></span><br><span class="line">    <span class="keyword">mov</span> [mask3], <span class="number">eax</span>    <span class="comment">; Should be 14</span></span><br><span class="line">    <span class="keyword">movaps</span>  <span class="literal">xmm6</span>, [v2s4]</span><br><span class="line">    <span class="keyword">movmskps</span> <span class="number">eax</span>, <span class="literal">xmm6</span>  <span class="comment">; Extract the sign bits from four 32-bits floats in xmm6 and create 4 bit mask in eax</span></span><br><span class="line">    <span class="keyword">mov</span> [mask4], <span class="number">eax</span>    <span class="comment">; Should be 15</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                <span class="comment">;</span></span><br><span class="line">                <span class="comment">; SSE2</span></span><br><span class="line">                <span class="comment">;</span></span><br><span class="line">    <span class="keyword">movapd</span>  <span class="literal">xmm6</span>, [v1dp]    <span class="comment">; Move two 64-bit(double precision) floats to xmm6, using movapd since vector is 16 byte aligned </span></span><br><span class="line">                <span class="comment">; Next two instruction should have equivalent results to movapd xmm6, [vldp]</span></span><br><span class="line">    <span class="keyword">movhpd</span>  <span class="literal">xmm6</span>, [v1dp+<span class="number">8</span>]  <span class="comment">; Move a 64-bit(double precision) float into the higher 64-bit elements of xmm6 </span></span><br><span class="line">    <span class="keyword">movlpd</span>  <span class="literal">xmm6</span>, [v1dp]    <span class="comment">; Move a 64-bit(double precision) float into the lower 64-bit elements of xmm6</span></span><br><span class="line">    <span class="keyword">movupd</span>  <span class="literal">xmm6</span>, [v3dp]    <span class="comment">; Move two 64-bit floats to xmm6, using movupd since vector is not 16 byte aligned</span></span><br></pre></td></tr></table></figure>
+<h4 id="NOP_机器码">NOP 机器码</h4><p>0x90</p>
+<h4 id="AT&amp;T_格式">AT&amp;T 格式</h4><p>AT&amp;T 语法颠倒了源和目的操作数的位置, 目的操作数在源操作数之后。寄存器操作数要有个%的前缀,<br>立即数操作数要有个$符号的前缀。 存储器操作数的大小取决于操作码的最后一个字符。 它们是b<br>(8-bit), w(16-bit), 和 l(32-bit)</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">movw %<span class="number">bx</span>,  %<span class="number">ax</span>          //<span class="keyword">mov</span> <span class="number">ax</span>,  <span class="number">bx</span></span><br><span class="line">xorl %<span class="number">eax</span>, %<span class="number">eax</span>         //<span class="keyword">xor</span> <span class="number">eax</span>, <span class="number">eax</span></span><br><span class="line">movw <span class="number">$1</span>,   %<span class="number">ax</span>          //<span class="keyword">mov</span> <span class="number">ax</span>,  <span class="number">1</span></span><br><span class="line">movb X,    %<span class="number">ah</span>          //<span class="keyword">mov</span> <span class="number">ah</span>,  <span class="preprocessor">byte</span> <span class="preprocessor">ptr</span> X</span><br><span class="line">movw X,    %<span class="number">ax</span>          //<span class="keyword">mov</span> <span class="number">ax</span>,  <span class="preprocessor">word</span> <span class="preprocessor">ptr</span> X</span><br><span class="line">movl X,    %<span class="number">eax</span>         //<span class="keyword">mov</span> <span class="number">eax</span>, X</span><br></pre></td></tr></table></figure>
+<p>S和D分辨代表源和目的操作数后缀。<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">movswl <span class="variable">%ax</span>, <span class="variable">%ecx</span>        <span class="comment">// movsx ecx, ax</span></span><br><span class="line">cbtw                    <span class="comment">// cbw</span></span><br><span class="line">cwtl                    <span class="comment">// cwde </span></span><br><span class="line">cwtd                    <span class="comment">// cwd</span></span><br><span class="line">cltd                    <span class="comment">// cdq</span></span><br><span class="line">lcall  <span class="variable">$S</span>, <span class="variable">$O</span>           <span class="comment">// call far S:O</span></span><br><span class="line">ljmp   <span class="variable">$S</span>, <span class="variable">$O</span>           <span class="comment">// jump far S:O</span></span><br><span class="line">lret   <span class="variable">$V</span>               <span class="comment">// ret far V</span></span><br></pre></td></tr></table></figure></p>
+<p>section: [base + index*scale + disp] 被写成:  section:disp(base,  index, scale) </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">movl <span class="number">4</span>(%<span class="literal">ebp</span>), %<span class="number">eax</span>               // <span class="keyword">mov</span> <span class="number">eax</span>,    [<span class="literal">ebp</span>+<span class="number">4</span>]</span><br><span class="line">addl (%<span class="number">eax</span>, %<span class="number">eax</span>, <span class="number">4</span>), %<span class="number">ecx</span>       // <span class="keyword">add</span> <span class="number">ecx</span>,    [<span class="number">eax</span> + <span class="number">eax</span>*<span class="number">4</span>]</span><br><span class="line">movb <span class="number">$4</span>, %<span class="literal">fs</span>(%<span class="number">eax</span>)               // <span class="keyword">mov</span> <span class="literal">fs</span>:<span class="number">eax</span>, <span class="number">4</span></span><br><span class="line">movl _array(, %<span class="number">eax</span>, <span class="number">4</span>),  %<span class="number">eax</span>    // <span class="keyword">mov</span> <span class="number">eax</span>,    [<span class="number">4</span>*<span class="number">eax</span> + array]</span><br><span class="line">movw _array(%<span class="number">ebx</span>, %<span class="number">eax</span>, <span class="number">4</span>), %<span class="number">cx</span>  // <span class="keyword">mov</span> <span class="number">cx</span>,     [<span class="number">ebx</span> + <span class="number">4</span>*<span class="number">eax</span> + array]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/27/CoreAudio-base/">CoreAudio base</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/27/awesome-shell/">awesome shell</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">228</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Assembly"><span class="nav-number">1.</span> <span class="nav-text">Assembly</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MOV"><span class="nav-number">1.1.</span> <span class="nav-text">MOV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LEA"><span class="nav-number">1.2.</span> <span class="nav-text">LEA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#section_data"><span class="nav-number">1.2.1.</span> <span class="nav-text">section data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NOP_机器码"><span class="nav-number">1.2.2.</span> <span class="nav-text">NOP 机器码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AT&T_格式"><span class="nav-number">1.2.3.</span> <span class="nav-text">AT&T 格式</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/27/Assembly/';
+      var disqus_title = 'Assembly';
+      var disqus_url = 'http://ytlvy.com/2015/09/27/Assembly/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

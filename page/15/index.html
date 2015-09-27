@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/04/jump-out-of-OOP-Package/">
-                jump out of OOP -- Package
+              <a class="post-title-link" href="/2015/08/04/dSYM-parse-tool/">
+                dSYM parse tool
               </a>
             
           
@@ -159,263 +159,6 @@
       <div class="post-meta">
         <span class="post-time">
           發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/jump-out-of-OOP-Package/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Package/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-san-feng-zhuang.html">reference</a></p>
-<h2 id="跳出面向对象思想(三)_封装">跳出面向对象思想(三) 封装</h2><h3 id="简述">简述</h3><p>我认为”封装”的概念在面向对象思想中是最基础的概念，它实质上是通过将相关的一堆函数和一堆对象放在一起，对外有函数作为操作通道，对内则以变量作为操作原料。只留给外部程序员操作方式，而不暴露具体执行细节。大部分书举的典型例子就是汽车和灯泡的例子：你不需要知道不同车子的发动机原理，只要踩油门就可以跑；你不需要知道你的灯泡是那种灯泡，打开开关就会亮。我们都会很直觉地认为这种做法非常棒，是吧？</p>
-<p>但是有的时候还是会觉得有哪些地方不对劲，使用面向对象语言的时候，我隐约觉得封装也许并没有我们直觉中认为的那么好，也就是说，面向对象其实并没有我们直觉中的那么好，虽然它已经流行了很多很多年。</p>
-<h3 id="1-_将数据结构和函数放在一起是否真的合理？">1. 将数据结构和函数放在一起是否真的合理？</h3><p>函数就是做事情的，它们有输入，有执行逻辑，有输出。 数据结构就是用来表达数据的，要么作为输入，要么作为输出。</p>
-<p>两者本质上是属于完全不同的东西，面向对象思想将他们放到一起，使得函数的作用被限制在某一个区域里，这样做虽然能够很好地将操作归类，但是这种归类方法是根据”作用领域”来归类的，在现实世界中可以，但在程序的世界中，有些不妥。</p>
-<p>不妥的理由有如下几个：</p>
-<blockquote>
-<p>在并行计算时，由于执行部分和数据部分被绑定在一起，这就使得这种方案制约了并行程度。在为了更好地实现并行的时候，业界的工程师们发现了一个新的思路：函数式编程。将函数作为数据来使用，这样就能保证执行的功能在时序上的正确性了。但你不觉得，只要把数据表达和执行部分分开，形成流水线，这不就能够非常方便地将并行数提高了么？</p>
-</blockquote>
-<p>我来举个例子： 在数据和函数没有分开时，程序的执行流程是这样：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="function"><span class="title">function1</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">function2</span><span class="params">()</span></span> -&gt; A.<span class="function"><span class="title">function3</span><span class="params">()</span></span>     最后得到经过处理的A</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/jump-out-of-OOP-Package/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/jump-out-of-OOP-Polymorphic/">
-                jump out of OOP -- Polymorphic
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/jump-out-of-OOP-Polymorphic/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Polymorphic/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-er-duo-tai.html">reference</a></p>
-<h2 id="跳出面向对象思想(二)_多态">跳出面向对象思想(二) 多态</h2><h3 id="简述">简述</h3><p>多态一般都要跟继承结合起来说，其本质是子类通过覆盖或重载（在下文里我会多次用到覆盖或重载，我打算把它简化成覆重，意思到就好，不要太纠结这种名词。）父类的方法，来使得对同一类对象同一方法的调用产生不同的结果。这里需要辨析的地方在：同一类对象指的是继承层级再上一层的对象，更加泛化。</p>
-<p>举个例子：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Animal</span> -&gt; Cat</span><br><span class="line"><span class="keyword">Animal</span> -&gt; Dog</span><br><span class="line"></span><br><span class="line"><span class="keyword">Animal</span>.speak()  // I'm an <span class="keyword">Animal</span></span><br><span class="line">Cat.speak()     // I'm a Cat</span><br><span class="line">Dog.speak()     // I'm a Dog</span><br></pre></td></tr></table></figure></p>
-<p>此处Cat和Dog虽然不是同一种对象，但它们算是同一类对象，因为他们的父类都是Animal。种和类的表达可能不是很对，其实我也不知道谁更大一点，在文章中我打算用这样的符号来表示两者区别：^和^^</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/jump-out-of-OOP-Polymorphic/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/jump-out-of-OOP-Inherit/">
-                jump out of OOP -- Inherit
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-08-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/Framework/">Framework</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/04/jump-out-of-OOP-Inherit/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/jump-out-of-OOP-Inherit/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><a href="http://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-yi-ji-cheng.html">reference</a></p>
-<h2 id="跳出面向对象思想(一)_继承">跳出面向对象思想(一) 继承</h2><h3 id="简述">简述</h3><p>这一系列文章中谈谈面向对象思想的几个部分，并且给出对应的解决方案，这些解决方案有些是用面向过程的思路解决的，有些也还是停留在面向对象中。到最后我会给大家一个比较，然后给出结论。</p>
-<h4 id="上下文规范">上下文规范</h4><p>在进一步地讨论这些概念之前，我需要跟大家达成一个表达上的共识，我会采用下面的语法来表达对象相关的信息<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">所有的大写字母都是类或对象，小写字母表示属性或方法。</span><br><span class="line"></span><br><span class="line"><span class="type">FOO</span>:&#123; isLoading, _data, render<span class="literal">()</span>, _switch<span class="literal">()</span> &#125;   这表示一个<span class="type">FOO</span>对象，isLoading、_data是它的属性，render<span class="literal">()</span>、_switch<span class="literal">()</span>是它的方法，加下划线表示私有。</span><br><span class="line"></span><br><span class="line"><span class="type">A</span> -&gt; <span class="type">B</span>                                          这表示从<span class="type">A</span>派生出了<span class="type">B</span>，<span class="type">A</span>是父类。</span><br><span class="line"></span><br><span class="line"><span class="type">A</span> -&gt; <span class="type">B</span>:&#123; [a, b, c<span class="literal">()</span>, d<span class="literal">()</span>], e, f<span class="literal">()</span> &#125;             <span class="literal">[]</span>里面是父类的东西，e、f<span class="literal">()</span>是派生类的东西</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span> ], e, f<span class="literal">()</span> &#125;                             省略了对父类的描述，用类名<span class="type">A</span>代替，其他同上</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span> ], e, f<span class="literal">()</span>, @c<span class="literal">()</span> &#125;                       省略了对父类的描述，函数前加@表示重载了父类的方法。</span><br><span class="line"></span><br><span class="line"><span class="type">B</span>:&#123; [ <span class="type">A</span>,<span class="type">D</span> ], e, f<span class="literal">()</span> &#125;                           多继承，<span class="type">B</span>继承了<span class="type">A</span>和<span class="type">D</span></span><br><span class="line"></span><br><span class="line"><span class="type">B</span>&lt;protocol&gt;                                     符合某个protocol接口的对象。</span><br><span class="line"></span><br><span class="line">&lt;protocol&gt;:&#123;foo<span class="literal">()</span>, bar&#125;                         protocol这个接口中包含foo<span class="literal">()</span>这个方法，bar这个属性。</span><br><span class="line"></span><br><span class="line">foo(<span class="type">A</span>, <span class="built_in">int</span>)                                     foo这个函数，接收<span class="type">A</span>类和<span class="built_in">int</span>类型作为参数。</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/jump-out-of-OOP-Inherit/#more">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/Chun-notes/">
-                Chun notes
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
         </span>
 
         
@@ -435,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/Chun-notes/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Chun-notes/"></span>
+            <a href="/2015/08/04/dSYM-parse-tool/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/dSYM-parse-tool/"></span>
             </a>
           </span>
           
@@ -451,11 +194,10 @@
 
       
         
-          <p><a href="http://blog.callmewhy.com/2015/05/25/note-about-chun/">转自</a></p>
-<h2 id="Chun_阅读笔记_-_如何做一个图片缓存库">Chun 阅读笔记 - 如何做一个图片缓存库</h2><p><a href="https://github.com/yechunjun/Chun">Chun</a> 是 <a href="http://chun.tips/">叶纯俊</a> 在 Github 上开源的一个图片缓存库，基于 Swift 编写。学习 Swift 有一段时间了，记录一些阅读源码的一些收获。</p>
-<h3 id="代码组织">代码组织</h3><p>Swift 中通过 <code>extension</code> 组织代码会让整个类更加清晰可读，尤其是对于 <code>UITableViewDataSource</code> 和 <code>UITableViewDelegate</code> 这种情况。在 Chun 这个项目中的 Demo 文件就是这样的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span>: <span class="title">UITableViewDataSource</span>, <span class="title">UITableViewDelegate</span> </span>&#123;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">CGFloat</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <h2 id="dSYM_文件">dSYM 文件</h2><h3 id="什么是_dSYM_文件">什么是 dSYM 文件</h3><p>Xcode编译项目后，我们会看到一个同名的 <code>dSYM</code> <code>文件，dSYM</code> 是保存 16 进制函数地址映射信息的中转文件，我们调试的 symbols 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 dSYM 文件，位于 <code>/Users/&lt;用户名&gt;/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 ( AUTOMATICALLY SAVE THE DSYM FILES 这篇文章介绍了通过脚本每次编译后都自动保存 dSYM 文件)。</p>
+<h3 id="dSYM_文件有什么作用">dSYM 文件有什么作用</h3><p>当我们软件 release 模式打包或上线后，不会像我们在 Xcode 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 crash report 文件了，iOS 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 Xcode 的 Organizer 可以将 iOS 设备中的 DeviceLog 导出成 crash 文件，这个时候我们就可以通过出错的函数地址去查询 dSYM 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 dSYM 文件，这也是为什么我们很有必要保存每个发布版本的 Archives 文件了。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Chun-notes/#more">
+            <a class="btn" href="/2015/08/04/dSYM-parse-tool/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -488,8 +230,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS-NSTimer-Overflow/">
-                iOS NSTimer Overflow
+              <a class="post-title-link" href="/2015/08/04/Variable-Argument-Lists/">
+                Variable Argument Lists
               </a>
             
           
@@ -498,7 +240,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
@@ -518,8 +260,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-NSTimer-Overflow/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-NSTimer-Overflow/"></span>
+            <a href="/2015/08/04/Variable-Argument-Lists/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/Variable-Argument-Lists/"></span>
             </a>
           </span>
           
@@ -534,13 +276,286 @@
 
       
         
-          <h2 id="NSTimer">NSTimer</h2><h3 id="fire">fire</h3><p>我们先用 NSTimer 来做个简单的计时器，每隔5秒钟在控制台输出 Fire 。比较想当然的做法是这样的：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DetailViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSTimer</span> *timer;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DetailViewController</span></span></span><br><span class="line">- (<span class="keyword">IBAction</span>)fireButtonPressed:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    _timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">3.0</span>f</span><br><span class="line">                                              target:<span class="keyword">self</span></span><br><span class="line">                                            selector:<span class="keyword">@selector</span>(timerFire:)</span><br><span class="line">                                            userInfo:<span class="literal">nil</span></span><br><span class="line">                                             repeats:<span class="literal">YES</span>];</span><br><span class="line">    [_timer fire];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)timerFire:(<span class="keyword">id</span>)userinfo &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Fire"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>运行之后确实在控制台每隔3秒钟输出一次 <code>Fire</code> ，然而当我们从这个界面跳转到其他界面的时候却发现：控制台还在源源不断的输出着 Fire 。看来 Timer 并没有停止。</p>
+          <p><a href="http://gracelancy.com/blog/2014/05/05/variable-argument-lists/">转自</a></p>
+<h2 id="Variable_Argument_Lists">Variable Argument Lists</h2><h3 id="Variable_argument_lists_使用方法">Variable argument lists 使用方法</h3><p>可变参数函数（<code>Variadic Function</code>），即是指一个可以接受可变数量的参数的函数。在C语言中，对该特性的支持，即是通过可变参数列表（Variable Argument list）来实现的，其定义在stdarg.h头文件。(若使用C++则在cstdarg头文件)。</p>
+<p>以如下C代码为例说明，该函数接受可变数量的整数作为参数，求和：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> addemUp (<span class="keyword">int</span> firstNum, ...) &#123;</span><br><span class="line">  <span class="comment">// 1. 参数后面添加省略号...</span></span><br><span class="line">    va_list args;  <span class="comment">// 2. 创建一个va_list类型的变量</span></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = firstNum;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    va_start(args, firstNum); <span class="comment">// 3. 初始化va_list，此时va_list指向firstNum之后的第一个参数</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        number = va_arg(args, <span class="keyword">int</span>); <span class="comment">// 4. 获取当前指向的参数的值，并移动到下一个参数</span></span><br><span class="line">        <span class="keyword">sum</span> += number;</span><br><span class="line">        <span class="keyword">if</span> (number == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 用0表示结束</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args); <span class="comment">// 5. 清理</span></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="keyword">sum</span> = addemUp(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// sum = 15</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>要创建一个可变参数函数，需要把一个省略号（…)放在函数的参数列表后面。</li>
+<li>接着需要声明一个一个<code>va_list</code>类型的变量，这个<code>va_list</code>类型的变量类似于一个指向参数的指针。</li>
+<li>接着我们调用<code>va_start()</code>并传入函数的最后一个声明的参数的变量名，来使得<code>va_list</code>变量指向第一个附加的参数。</li>
+<li>接着我们调用<code>va_arg()</code>并传入我们期待的参数类型，程序就会返回与该类型匹配数量的字节（即参数的值），并且移动va_list指向下一个参数。之后不断的调用<code>va_arg()</code>，获得更多的参数的值，直到完成整个参数处理的过程。</li>
+<li>最后调用<code>va_end()</code>来进行清理。</li>
+</ol>
+<h3 id="variable_argument_lists_的内部机制">variable argument lists 的内部机制</h3><p>如我们之前所说，当我们调用 <code>va_start()</code> 并将 <code>va_list</code> 和函数最后定义的参数传入时，实际上是将 <code>va_list</code> 内在的一个指针指向函数调用栈 （<code>call stack</code>）中参数所在的区域的一端，每一次我们调用<code>va_arg()</code>，其都会根据提供的类型，返回当前指针所指向的地址开始对应的字节数的数据，即参数的值，并移动指针相应字节数的距离。我们传给<code>va_arg()</code>的类型，即是其用来判定需要取得得数据的大小，以及指针需要移动的距离。如图描述了这个过程：</p>
+<p><img src="http://gracelancy.com/assets/post/val0.png" alt=""></p>
+<p>事实上，这是一个很危险的事情，你总是需要提供正确的类型来让va_arg()正确执行，而且va_arg()并不知道何时停止，你需要提供一个标记或一个参数的总数来停止va_arg()继续执行。若你提供了不正确的类型，或者没有在该停止的时候停止，你将会获得不可预测的值，并且很有可能导致程序崩溃。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-NSTimer-Overflow/#more">
+            <a class="btn" href="/2015/08/04/Variable-Argument-Lists/#more">
               閱讀全文 &raquo;
             </a>
           </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-bit-computing/">
+                iOS bit computing
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-bit-computing/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-bit-computing/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="iOS_位与位运算">iOS 位与位运算</h2><h3 id="介绍">介绍</h3><p>位操作是程序设计中对位模式或二进制数的一元和二元操作. 在许多古老的微处理器上, 位运算比加减运算略快, 通常位运算比乘除法运算要快很多. 在现代架构中, 情况并非如此:位运算的运算速度通常与加法运算相同(仍然快于乘法运算).（摘自wikipedia）<br>OC作为c的扩展和超集，位运算自然使用的是c的操作符。c提供了6个位操作符，$，|，^，~，&lt;&lt;，&gt;&gt;。本文不打算做位运算的基础教学，只介绍一些开发中能用到的场景。</p>
+<h3 id="提高运算速度">提高运算速度</h3><p>如前一段所说，位运算的运算速度是通常与加法速度相当，但是快于乘法运算的。故而如果我们的程序对性能有要求，我们可以使用位运算来提高运算速度。比如：</p>
+<ul>
+<li>乘以2：n &lt;&lt; 1;</li>
+<li>除以2：n &gt;&gt; 1;</li>
+<li>乘以2的m次方：n &lt;&lt; m;</li>
+<li>除以2的m次方：n &gt;&gt; m;</li>
+<li>判断奇偶：(n &amp; 1) == 1;</li>
+<li>求平均数：(a + b) &gt;&gt; 1;</li>
+<li>……</li>
+</ul>
+<p>基于乘除法的位运算提速还有很多，这里不一一列举。需要注意的是，你应当只在遇到性能瓶颈的时候，并且瓶颈的确是计算的时候才这么做。因为使用位运算并不利于程序的可读性和可维护性。（科学计算除外）</p>
+<h3 id="压缩空间">压缩空间</h3><p>以前接触过ACM的筒子们应该对状态压缩不陌生，状态压缩的目的在于把一个大数据用有限的内存空间来进行表示。比如 Programming Pearls 里面的一个经典示例：如何对最多有一千万条不重复的7位整数（电话号码）进行排序？且可使用的内存空间有大约1MB多。</p>
+<p>显而易见的常规做法既是做一个基于磁盘操作的外排序。然而如果转换一下思路，充分的使用内存中的每一个位，加上不存在重复的电话号码，以及不存在0和1开头的电话号码。我们只需要使用1000万个位（大约1.2mb），就能以集合的方式在内存里标记下所有的数据，从而轻松的实现位排序。此种方法大幅度的减少了IO时间，从而获得巨大的性能提升。</p>
+<p>ACM里面有大量的如果使用位来压缩空间的示例，状态压缩的动态规划等，此处不做展开，只告诉读者，充分的使用内存的每一个位，经常能带来意想不到的收获。但需要注意的是，状态的压缩和提取，都需要一定的计算量，有时一味的追求状态压缩，反而会降低效率。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-bit-computing/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-Toll-Free-Bridging/">
+                iOS Toll-Free Bridging
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-Toll-Free-Bridging/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-Toll-Free-Bridging/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://gracelancy.com/blog/2014/04/21/toll-free-bridging/">reference</a></p>
+<h2 id="Toll-Free_Bridging">Toll-Free Bridging</h2><h3 id="什么是_Toll-Free_Bridging">什么是 Toll-Free Bridging</h3><p>有一些数据类型是能够在 <code>Core Foundation Framework</code> 和 <code>Foundation Framework</code> 之间交换使用的。这意味着，对于同一个数据类型，你既可以将其作为参数传入 <code>Core Foundation</code>函数，也可以将其作为接收者对其发送 <code>Objective-C</code> 消息（即调用ObjC类方法）。这种在 <code>Core Foundation 和 Foundation</code> 之间交换使用数据类型的技术就叫 <code>Toll-Free Bridging</code>.</p>
+<p>举例说明，<code>NSString</code>和<code>CFStringRef</code>即是一对可以相互转换的数据类型：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ARC 环境下</span></span><br><span class="line"><span class="comment">// Bridging from ObjC to CF</span></span><br><span class="line"><span class="built_in">NSString</span> *hello = <span class="string">@"world"</span>;</span><br><span class="line"><span class="built_in">CFStringRef</span> world = (__bridge <span class="built_in">CFStringRef</span>)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, <span class="built_in">CFStringGetLength</span>(world));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bridging from CF to ObjC</span></span><br><span class="line"><span class="built_in">CFStringRef</span> hello = <span class="built_in">CFStringCreateWithCString</span>(k<span class="built_in">CFAllocatorDefault</span>, <span class="string">"hello"</span>, k<span class="built_in">CFStringEncodingUTF8</span>);</span><br><span class="line"><span class="built_in">NSString</span> *world = (__bridge <span class="built_in">NSString</span> *)(hello);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, world<span class="variable">.length</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(hello);</span><br></pre></td></tr></table></figure>
+<p>大部分（但不是所有！）<code>Core Foundation</code> 和 <code>Foundation</code> 的数据类型可以使用这个技术相互转换，Apple 的文档里有一个列表（<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html">传送门</a>），列出了支持这项技术的数据类型。<br>MRC 下的 <code>Toll-Free Bridging</code> 因为不涉及内存管理的转移，可以直接相互 <code>bridge</code> 而不必使用类似<code>__bridge</code>修饰字，我们之后再讨论这个问题。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-Toll-Free-Bridging/#more">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/iOS-attribute-objc-designated-initializer/">
+                iOS attribute objc_designated_initializer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/iOS-attribute-objc-designated-initializer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-attribute-objc-designated-initializer/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="https://leafduo.com/articles/2014/03/20/objc-designated-initializer/" target="_blank" rel="external">reference</a></p>
+<h2 id="attribute((objc_designated_initializer))"><strong>attribute</strong>((objc_designated_initializer))</h2><p>指定初始化器（<code>designated initializer</code>）是 Objective-C 中的一个重要的概念，但是很可惜的是，很多开发者（不知道为什么）并没能正确遵守关于指定初始化器的一些惯例。 </p>
+<p>之前，我们只能通过 code review 之类的方法来找出、修正这些问题；现在，clang 为我们提供了编译器级别的支持，能够找出不遵守管理的地方并给出警告，我们需要做的是标记出哪个初始化器是指定初始化器，例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">interface</span> FTBObject</span><br><span class="line"></span><br><span class="line">- (instancetype)init __<span class="function">attribute__</span>((objc_designated_initializer))</span>;</span><br><span class="line"></span><br><span class="line"><span class="at_rule">@<span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<p>通过在接口定义中指定指定初始化器，不仅编译器能够给出相关的警告，而且需要继承该类的开发者也可以不参考文档就知道哪个初始化器是指定初始化器。</p>
+<p>目前，clang 可以提供一系列警告，例如非指定初始化器没有调用其他初始化器、指定初始化器没有调用父类的指定初始化器、指定初始化器调用了非指定初始化器、子类没有复写父类的指定初始化器等。 具体的例子可以看这个<a href="https://llvm.org/svn/llvm-project/cfe/trunk/test/SemaObjC/attr-designated-init.m" target="_blank" rel="external">测试用例</a>。</p>
+<p>不幸的是，目前系统库的接口还没有这个属性，也就是说只有继承自己的代码和标记了这个指令的第三方库中的类才有用。</p>
+
         
       
     </div>
@@ -563,7 +578,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
   </div>
 
 
@@ -597,7 +612,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

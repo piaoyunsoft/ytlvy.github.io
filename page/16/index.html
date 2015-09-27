@@ -148,8 +148,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/Swift-Exception-Handle/">
-                Swift Exception Handle
+              <a class="post-title-link" href="/2015/08/04/ios-GPUImage-simple-use/">
+                ios GPUImage simple use
               </a>
             
           
@@ -158,14 +158,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Swift/">Swift</a>
+              <a href="/categories/IOS/">IOS</a>
 
               
               
@@ -178,8 +178,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/Swift-Exception-Handle/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/Swift-Exception-Handle/"></span>
+            <a href="/2015/08/04/ios-GPUImage-simple-use/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/ios-GPUImage-simple-use/"></span>
             </a>
           </span>
           
@@ -194,27 +194,97 @@
 
       
         
-          <p><a href="http://blog.callmewhy.com/2015/04/20/error-handling-in-swift/">转自</a></p>
-<h2 id="Swift_中的异常处理">Swift 中的异常处理</h2><h3 id="问题">问题</h3><p>在开发过程中，异常处理算是比较常见的问题了。</p>
-<p>举一个比较常见的例子：用户修改注册的邮箱，大概分为以下几个步骤：</p>
-<ul>
-<li>接收到一个用户的请求：我要修改邮箱地址</li>
-<li>验证一下请求是否合法，将请求进行格式转化</li>
-<li>更新以前的邮箱地址记录</li>
-<li>给新的邮箱地址发送验证邮件</li>
-<li>将结果返回给用户</li>
-</ul>
-<p>上面的步骤如果一切顺利，那代码肯定干净利落，但是人生不如意十有八九，上面的步骤很容易出现问题：</p>
-<ul>
-<li>用户把邮箱地址填成了家庭地址</li>
-<li>用户是个黑客，没登录就发送了更新请求</li>
-<li>发送验证邮件的时候服务器爆炸了，发送邮件失败</li>
-</ul>
-<p>各种异常都会导致这次操作的失败。</p>
-<h3 id="方案一">方案一</h3><p>在传统的处理方案里，一般是遇到异常就往上抛：<br><img src="http://segmentfault.com/img/bVlsK9" alt=""></p>
-<p>这种方案想必大家都不陌生，比如下面这段代码：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSError</span> *err = <span class="keyword">nil</span>;</span><br><span class="line"><span class="type">CGFloat</span> <span class="literal">result</span> = [<span class="type">MathTool</span> divide:<span class="number">2</span>.<span class="number">5</span> by:<span class="number">3</span>.<span class="number">0</span> error:&amp;err];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">"%@"</span>, err)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    [<span class="type">MathTool</span> doSomethingWithResult:<span class="literal">result</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <h2 id="GPUImage">GPUImage</h2><p>GPUImage 作者是 Brad Larson，以 BSD 协议放出，能够在图像、实时摄像头影像和视频上使用 GPU 加速的滤镜和其他效果.</p>
+<h3 id="GPU_vs-_CPU">GPU vs. CPU</h3><p>每只 iPhone 都有两个处理器：一个 CPU，也就是中央处理器，和一个 GPU，也就是图形处理器。每个处理器都有它自己的优势，现代芯片架构（例如 Apple A4）把 CPU 和 GPU 集成在一个物理封装里。</p>
+<p>在 Xcode 里面写 C 和 Objective-C 的时候，产生的指令绝大部分会被 CPU 执行。相对地，GPU 是一枚专用芯片，专门用来做独立的小操作，例如图形渲染。GPU 执行的指令和 CPU 是有很大区别的，因此用特殊的语言来编写：OpenGL（特别地，在 iPhone 和 iPad 上使用 OpenGL ES）</p>
+<h3 id="渲染管线">渲染管线</h3><p><img src="http://nshipster.s3.amazonaws.com/gpuimage-pipeline.png" alt=""></p>
+<p>GPUImage 从本质上来说是一个渲染管线的 <code>Objective-C</code>抽象。从相机、网络或者磁盘上加载的源图像，在经过一系列滤镜处理后，最终输出到了 <code>view</code>、<code>graphics context</code> 或是数据流中。</p>
+<p>例如说，摄像头中的图像可以应用一个 Color Levels 滤镜，来模拟各种色盲效果，然后实时显示在一个 view 中。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GPUImageVideoCamera *videoCamera = [[GPUImageVideoCamera alloc]</span><br><span class="line"><span class="label">    initWithSessionPreset:</span>AVCaptureSessionPreset640x480</span><br><span class="line"><span class="label">           cameraPosition:</span>AVCaptureDevicePositionBack];</span><br><span class="line">videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;</span><br><span class="line"></span><br><span class="line">GPUImageFilter *filter = [[GPUImageLevelsFilter alloc] </span><br><span class="line"><span class="label">                            initWithFragmentShaderFromFile:</span>@<span class="string">"CustomShader"</span>];</span><br><span class="line">[filter <span class="string">setRedMin:</span><span class="number">0.299</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setGreenMin:</span><span class="number">0.587</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[filter <span class="string">setBlueMin:</span><span class="number">0.114</span> <span class="string">gamma:</span><span class="number">1.0</span> <span class="string">max:</span><span class="number">1.0</span> <span class="string">minOut:</span><span class="number">0.0</span> <span class="string">maxOut:</span><span class="number">1.0</span>];</span><br><span class="line">[videoCamera <span class="string">addTarget:</span>filter];</span><br><span class="line"></span><br><span class="line">GPUImageView *filteredVideoView = [[GPUImageView alloc] <span class="string">initWithFrame:</span>self.view.bounds)];</span><br><span class="line">[filter <span class="string">addTarget:</span>filteredVideoView];</span><br><span class="line">[self.view <span class="string">addSubView:</span>filteredVideoView];</span><br><span class="line"></span><br><span class="line">[videoCamera startCameraCapture];</span><br></pre></td></tr></table></figure></p>
+<p>或者，结合不同的颜色混合模式，图像效果和一些调整，你可以把静止图像转变成可以分享给你时髦的朋友们看看的精美图像（例子来自基于 GPUImage 的 FilterKit）。<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GPUImageFilterGroup *filter = <span class="comment">[<span class="comment">[FKGPUFilterGroup alloc]</span> init]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageSaturationFilter *saturationFilter = <span class="comment">[<span class="comment">[GPUImageSaturationFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[saturationFilter setSaturation:0.5]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageMonochromeFilter *monochromeFilter = <span class="comment">[<span class="comment">[GPUImageMonochromeFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setColor:(GPUVector4)&#123;0.0f, 0.0f, 1.0f, 1.0f&#125;]</span>;</span><br><span class="line"><span class="comment">[monochromeFilter setIntensity:0.2]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageVignetteFilter *vignetteFilter = <span class="comment">[<span class="comment">[GPUImageVignetteFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[vignetteFilter setVignetteEnd:0.7]</span>;</span><br><span class="line"></span><br><span class="line">GPUImageExposureFilter *exposureFilter = <span class="comment">[<span class="comment">[GPUImageExposureFilter alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[exposureFilter setExposure:0.3]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">[filter addGPUFilter:exposureFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:monochromeFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:saturationFilter]</span>;</span><br><span class="line"><span class="comment">[filter addGPUFilter:vignetteFilter]</span>;</span><br></pre></td></tr></table></figure></p>
+<p>看完了 GPUImage 的功能，一定很兴奋吧。GPUImage 非常简单，可以马上开始使用（不需要了解 OpenGL），性能上也足够完成你想要的一切。不止是这样，它还自带了非常多的积木一样的部件 — 色彩调整，混合模式，你能想到的想不到的一切视觉效果。</p>
+<p>GPUImage 是开源社区少有的好东西，我们 Mac 和 iOS 开发者非常幸运的能拥有它。用 GPUImage 做些牛逼的东西，向其他人展示一个崭新的世界</p>
+<h3 id="吐槽">吐槽</h3><p>我自己也用过一点 GPUImage，方便是很方便，不光是省掉了 AVFoundation 的许多烦人的 setup 代码，还内置了许多滤镜效果。不过它也有不少坑，我遇到的一个就是占用太多内存，一段时间后就 crash 掉了，毕竟是处理视频，需要不少内存，iPhone 的内存又不太多，就要更加注意。我当时是加了一个 @autoreleasepool 就好多了。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/04/C-programe-memory-management/">
+                C programe memory management
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Memory/">Memory</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/C-programe-memory-management/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/C-programe-memory-management/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="http://casatwy.com/ccheng-xu-de-nei-cun-guan-li.html">reference</a></p>
+<h2 id="C程序的内存管理">C程序的内存管理</h2><h3 id="简述">简述</h3><p>自从自动内存管理嵌入到各种各样的语言之后，我们就很少会去关注这方面的事情了，这些功能的设计者和实现者们为此付出的努力值得我们称赞，期间也涌现了多种不同的内存管理方案。目前大部分语言的主流内存管理方案是Garbage Collector。苹果推出的Auto Reference Count也因为基于编译器自动添加手工计数的代码而带来了更好的性能提升。我在这里总结了一些从上古时代到如今在C程序下进行内存管理的技术。同时，也为你更深入地了解其他语言中内存管理模块的原理提供了知识背景。</p>
+<h3 id="管理固定大小的内存">管理固定大小的内存</h3><h4 id="栈内存">栈内存</h4><p>栈内存应该是最容易管理的了，只要理解<code>生存域</code>就能理解占内存的管理方式。生存域就是这样：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int main ()</span><br><span class="line">    &#123;</span><br><span class="line">        int array[] = &#123;1,2,3,4,5&#125;;</span><br><span class="line">                              ------------------|<span class="string"></span><br><span class="line">        if ( i &gt; 0 ) &#123;                          </span>|</span><br><span class="line">            ...                                 |<span class="string"></span><br><span class="line">            ...                                 </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">        foo(array);                             </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">        &#123;                                       </span>|</span><br><span class="line">            int k = 9;        ---               |<span class="string"></span><br><span class="line">            array[1] = k;       </span>|<span class="string">-&gt;k的生存域     </span>|<span class="string">-&gt;array的生存域</span><br><span class="line">            ...               ---               </span>|</span><br><span class="line">        &#125;                                       |<span class="string"></span><br><span class="line">    &#125;                                           </span>|</span><br><span class="line">                                                |<span class="string"></span><br><span class="line">    void foo(int * const number) &#123;              </span>|</span><br><span class="line">        int j = 0;                              |<span class="string"></span><br><span class="line">                              ---               </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">        number[2] = j;          |<span class="string">-&gt;j的生存域     </span>|</span><br><span class="line">        ...                     |<span class="string">               </span>|</span><br><span class="line">                              -------------------</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/Swift-Exception-Handle/#more">
+            <a class="btn" href="/2015/08/04/C-programe-memory-management/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -247,8 +317,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS-ARC-Practices/">
-                iOS ARC Practices
+              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-network-layer/">
+                iOS application framework -- network layer
               </a>
             
           
@@ -257,14 +327,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Framework/">Framework</a>
 
               
               
@@ -277,8 +347,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS-ARC-Practices/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS-ARC-Practices/"></span>
+            <a href="/2015/08/04/iOS-application-framework-network-layer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-network-layer/"></span>
             </a>
           </span>
           
@@ -293,22 +363,18 @@
 
       
         
-          <p><a href="http://amattn.com/p/arc_best_practices.html">转自</a></p>
-<h2 id="ARC_最佳实践">ARC 最佳实践</h2><h3 id="General">General</h3><p>1) 数值变量应该使用 assign：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> scalarInt;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> scalarFloat;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGPoint</span> scalarStruct;</span><br></pre></td></tr></table></figure></p>
-<p>2) 在层次结构上属于下一级的对象应该使用 strong ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">id</span> childObject;</span><br></pre></td></tr></table></figure></p>
-<p>3) 在层次结构上属于上一级的对象应该使用 weak ，另外，当出现循环引用的时候也应该使用 weak ：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> parentObject;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSObject</span> &lt;SomeDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure></p>
-<p>4) 闭包应该使用 copy ：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) SomeBlockType someBlock;</span><br></pre></td></tr></table></figure>
-<p>5) 在 dealloc 里：</p>
+          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html">reference</a></p>
+<h2 id="iOS应用架构谈_网络层设计方案">iOS应用架构谈 网络层设计方案</h2><h3 id="前言">前言</h3><p>网络层在一个App中也是一个不可缺少的部分，工程师们在网络层能够发挥的空间也比较大。另外，苹果对网络请求部分已经做了很好的封装，业界的AFNetworking也被广泛使用。其它的ASIHttpRequest，MKNetworkKit啥的其实也都还不错，但前者已经弃坑，后者也在弃坑的边缘。在实际的App开发中，Afnetworking已经成为了事实上各大App的标准配置。</p>
+<p>网络层在一个App中承载了API调用，用户操作日志记录，甚至是即时通讯等任务。我接触过一些App（开源的和不开源的）的代码，在看到网络层这一块时，尤其是在看到各位架构师各显神通展示了各种技巧，我非常为之感到兴奋。但有的时候，往往也对于其中的一些缺陷感到失望。</p>
+<p>关于网络层的设计方案会有很多，需要权衡的地方也会有很多，甚至于争议的地方都会有很多。但无论如何，我都不会对这些问题做出任何逃避，我会在这篇文章中给出我对它们的看法和解决方案，观点绝不中立，不会跟大家打太极。</p>
+<p>这篇文章就主要会讲这些方面：</p>
 <ul>
-<li>从观察者中移除 (remove observers)</li>
-<li>取消订阅通知 (unregister for notifications)</li>
-<li>设置非 weak 的委托为 nil (set any non-weak delegates to nil)</li>
-<li>关闭所有的计时器 (invalidate any timers)</li>
+<li>网络层跟业务对接部分的设计</li>
+<li>网络层的安全机制实现</li>
+<li>网络层的优化方案</li>
 </ul>
-<p>6) 所有的 IBOutlet 都应该是 weak 的。除非顶层的 IBOutlet 应该是 strong 的，比如 UIViewController 的 View 是需要直接拥有的，所以应该设置成 strong </p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS-ARC-Practices/#more">
+            <a class="btn" href="/2015/08/04/iOS-application-framework-network-layer/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -341,8 +407,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/">
-                iOS9 NSAppTransportSecurity Bypass
+              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-view-layer/">
+                iOS application framework -- view layer
               </a>
             
           
@@ -351,14 +417,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/IOS/">IOS</a>
+              <a href="/categories/Framework/">Framework</a>
 
               
               
@@ -371,8 +437,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/iOS9-NSAppTransportSecurity-Bypass/"></span>
+            <a href="/2015/08/04/iOS-application-framework-view-layer/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-view-layer/"></span>
             </a>
           </span>
           
@@ -387,18 +453,16 @@
 
       
         
-          <h2 id="Configuring_App_Transport_Security_Exceptions_in_iOS_9_and_OSX_10-11">Configuring App Transport Security Exceptions in iOS 9 and OSX 10.11</h2><h3 id="What_is_App_Transport_Security_(ATS)?">What is App Transport Security (ATS)?</h3><p>At WWDC 2015, Apple announced “App Transport Security” for iOS 9 and OSX 10.11 El Capitan. The <a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-SW1">“What’s New in iOS”</a> guide for iOS 9 explains:</p>
-<blockquote>
-<p>App Transport Security (ATS) lets an app add a declaration to its Info.plist file that specifies the domains with which it needs secure communication. ATS prevents accidental disclosure, provides secure default behavior, and is easy to adopt. You should adopt ATS as soon as possible, regardless of whether you’re creating a new app or updating an existing one.<br>If you’re developing a new app, you should use HTTPS exclusively. If you have an existing app, you should use HTTPS as much as you can right now, and create a plan for migrating the rest of your app as soon as possible.</p>
-</blockquote>
-<p>In simple terms, this means that if your application attempts to connect to any HTTP server (in this example, yourserver.com) that doesn’t support the latest SSL technology (TLSv1.2), your connections will fail with an error like this:<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CFNetwork SSLHandshake failed (-<span class="number">9801</span>)</span><br><span class="line">Error <span class="variable">Domain=</span>NSURLErrorDomain <span class="variable">Code=</span>-<span class="number">1200</span> <span class="string">"An SSL error has occurred and a secure connection to the server cannot be made."</span> <span class="variable">UserInfo=</span><span class="number">0</span>x7fb080442170 &#123;<span class="variable">NSURLErrorFailingURLPeerTrustErrorKey=</span>&lt;SecTrustRef: <span class="number">0</span>x7fb08043b380&gt;, <span class="variable">NSLocalizedRecoverySuggestion=</span>Would you like to connect to the server anyway?, <span class="variable">_kCFStreamErrorCodeKey=</span>-<span class="number">9802</span>, <span class="variable">NSUnderlyingError=</span><span class="number">0</span>x7fb08055bc00 <span class="string">"The operation couldn’t be completed. (kCFErrorDomainCFNetwork error -1200.)"</span>, <span class="variable">NSLocalizedDescription=</span>An SSL error has occurred <span class="constant">and</span> a secure connection to the server cannot be made., <span class="variable">NSErrorFailingURLKey=</span>https://yourserver.com, <span class="variable">NSErrorFailingURLStringKey=</span>https://yourserver.com, <span class="variable">_kCFStreamErrorDomainKey=</span><span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Curiously, you’ll notice that the connection attempts to change the http protocol to https to protect against mistakes in your code where you may have accidentally misconfigured the URL. In some cases, this might actually work, but it’s also confusing.</p>
-<h3 id="WARNING:_ATS_is_good_for_you_and_your_users_and_you_shouldn’t_disable_it!"><strong>WARNING: ATS is good for you and your users and you shouldn’t disable it!</strong></h3><p>The reason why Apple is pushing so aggressively to force secure connections is because it’s the right thing to do. Protecting personal data from being compromised over insecure wireless connections, among other things, is great for users. Just because these exceptions exist doesn’t mean you should actually use them.</p>
-<p>If your application is connecting to third party APIs that you can’t control (such as in my case, where my application Routesy connects to public transit APIs that don’t yet support SSL) or serving as a means to load syndicated content (a browser or a news reader, for instance), these techniques might be useful to you.</p>
-<p>The bottom line is, if you run your own API server, FIX YOUR SSL. Thanks to Dave DeLong for reminding me that I should clarify that disabling ATS is a bad idea.</p>
-<p>That being said…<br>
+          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">reference</a></p>
+<h2 id="iOS应用架构谈_view层的组织和调用方案">iOS应用架构谈 view层的组织和调用方案</h2><h3 id="前言">前言</h3><p>《iOS应用架构谈 开篇》出来之后，很多人来催我赶紧出第二篇。这一篇文章出得相当艰难，因为公司里的破事儿特别多，我自己又有点私事儿，以至于能用来写博客的时间不够充分。</p>
+<p>现在好啦，第二篇出来了。</p>
+<hr>
+<p>当我们开始设计View层的架构时，往往是这个App还没有开始开发，或者这个App已经发过几个版本了，然后此时需要做非常彻底的重构。</p>
+<p>一般也就是这两种时机会去做View层架构，基于这个时机的特殊性，我们在这时候必须清楚认识到：View层的架构一旦实现或定型，在App发版后可修改的余地就已经非常之小了。因为它跟业务关联最为紧密，所以哪怕稍微动一点点，它所引发的蝴蝶效应都不见得是业务方能够hold住的。这样的情况，就要求我们在实现这个架构时，代码必须得改得勤快，不能偷懒。也必须抱着充分的自我怀疑态度，做决策时要拿捏好尺度。</p>
+<hr>
+<p>View层的架构非常之重要，在我看来，这部分架构是这系列文章涉及4个方面最重要的一部分，没有之一。为什么这么说？</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/28/iOS9-NSAppTransportSecurity-Bypass/#more">
+            <a class="btn" href="/2015/08/04/iOS-application-framework-view-layer/#more">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -431,8 +495,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/28/sqlite-insert-replace/">
-                sqlite insert replace
+              <a class="post-title-link" href="/2015/08/04/iOS-application-framework-first/">
+                iOS application framework -- first
               </a>
             
           
@@ -441,14 +505,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-28
+          發表於 2015-08-04
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Sqlite/">Sqlite</a>
+              <a href="/categories/Framework/">Framework</a>
 
               
               
@@ -461,8 +525,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/28/sqlite-insert-replace/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/sqlite-insert-replace/"></span>
+            <a href="/2015/08/04/iOS-application-framework-first/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/04/iOS-application-framework-first/"></span>
             </a>
           </span>
           
@@ -477,90 +541,18 @@
 
       
         
-          <h2 id="Sqlite_insert_&amp;&amp;_replace">Sqlite insert &amp;&amp; replace</h2><p>Assuming 3 columns in the table.. ID, NAME, ROLE</p>
-<h3 id="BAD:_This_will_insert_or_replace_all_columns_with_new_values_for_ID=1:">BAD: This will insert or replace all columns with new values for ID=1:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, name, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'John Foo'</span>, <span class="string">'CEO'</span>);</span></span><br></pre></td></tr></table></figure>
-<h3 id="BAD:_This_will_insert_or_replace_2_of_the_columns…_the_NAME_column_will_be_set_to_NULL_or_the_default_value:">BAD: This will insert or replace 2 of the columns… the NAME column will be set to NULL or the default value:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'code monkey'</span>);</span></span><br></pre></td></tr></table></figure>
-<h3 id="GOOD:_This_will_update_2_of_the_columns-_When_ID=1_exists,_the_NAME_will_be_unaffected-_When_ID=1_does_not_exist,_the_name_will_be_default_(NULL)-">GOOD: This will update 2 of the columns. When ID=1 exists, the NAME will be unaffected. When ID=1 does not exist, the name will be default (NULL).</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, role, name) </span><br><span class="line">  <span class="keyword">VALUES</span> (  <span class="number">1</span>, </span><br><span class="line">            <span class="string">'code monkey'</span>,</span><br><span class="line">            (<span class="keyword">SELECT</span> name <span class="keyword">FROM</span> Employee <span class="keyword">WHERE</span> id = <span class="number">1</span>)</span><br><span class="line">          );</span></span><br></pre></td></tr></table></figure>
-<h3 id="GOOD:_This_will_update_2_of_the_columns-_When_ID=1_exists,_the_ROLE_will_be_unaffected-_When_ID=1_does_not_exist,_the_role_will_be_set_to_‘Benchwarmer’_instead_of_the_default_value-">GOOD: This will update 2 of the columns. When ID=1 exists, the ROLE will be unaffected. When ID=1 does not exist, the role will be set to ‘Benchwarmer’ instead of the default value.</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">INTO</span> Employee (id, name, role) </span><br><span class="line">  <span class="keyword">VALUES</span> (  <span class="number">1</span>, </span><br><span class="line">            <span class="string">'Susan Bar'</span>,</span><br><span class="line">            <span class="keyword">COALESCE</span>((<span class="keyword">SELECT</span> role <span class="keyword">FROM</span> Employee <span class="keyword">WHERE</span> id = <span class="number">1</span>), <span class="string">'Benchwarmer'</span>)</span><br><span class="line">          );</span></span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/28/xcode-condition-breakpoint-non-ascii/">
-                xcode condition breakpoint non-ascii
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於 2015-07-28
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分類於
-            
-              <a href="/categories/IOS/">IOS</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/28/xcode-condition-breakpoint-non-ascii/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/28/xcode-condition-breakpoint-non-ascii/"></span>
+          <p><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html">reference</a></p>
+<h2 id="iOS应用架构谈_开篇">iOS应用架构谈 开篇</h2><h3 id="缘由">缘由</h3><p>之前安居客iOS app的第二版架构大部分内容是我做的，期间有总结了一些经验。在将近一年之后，前同事zzz在微信朋友圈上发了一个问题：假如问你一个<code>iOS or Android app</code>的架构，你会从哪些方面来说呢？</p>
+<p>当时看到这个问题正好在乘公车回家的路上，闲来无聊就答了一把。在zzz在微信朋友圈上追问了几个问题之后，我觉得有必要开个博客专门来讲讲一些个人见解。</p>
+<p>其实对于iOS客户端应用的架构来说，复杂度不亚于服务端，但侧重点和入手点却跟服务端不太一样。比如客户端应用就不需要考虑类似C10K的问题，正常的app就根本不需要考虑。</p>
+<p>这系列文章我会主要专注在iOS应用架构方面，很多方案也是基于iOS技术栈的特点而建立的。因为我个人不是很喜欢写Java，所以Android这边的我就不太了解了。如果你是Android开发者，你可以侧重看我提出的一些架构思想，毕竟不管做什么，思路是相通的，实现手段不同罢了。</p>
+<h3 id="当我们讨论客户端应用架构的时候，我们在讨论什么？">当我们讨论客户端应用架构的时候，我们在讨论什么？</h3><p>其实市面上大部分应用不外乎就是颠过来倒过去地做以下这些事情：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">|<span class="string"> 调用网络API  </span>|<span class="string"> --&gt; </span>|<span class="string">   展现列表    </span>|<span class="string"> --&gt; </span>|<span class="string">  选择列表    </span>|<span class="string"> --&gt; </span>|<span class="string">   展现单页   </span>|</span><br><span class="line">|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|<span class="string">     </span>|<span class="string">             </span>|</span><br><span class="line">---------------     ---------------     ---------------     ---------------</span><br><span class="line">                           ^                                        |<span class="string"></span><br><span class="line">                           </span>|<span class="string">                                        </span>|</span><br><span class="line">                           |<span class="string">                                        </span>|</span><br><span class="line">                           ------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>简单来说就是调API，展示页面，然后跳转到别的地方再调API，再展示页面。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/04/iOS-application-framework-first/#more">
+              閱讀全文 &raquo;
             </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h4 id="设置变量">设置变量</h4><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">expr</span> username = @<span class="string">"username"</span></span><br><span class="line"><span class="type">expr</span> password = @<span class="string">"badpassword"</span></span><br></pre></td></tr></table></figure>
-<h4 id="条件断点">条件断点</h4><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">BOOL</span>)</span><span class="list">[<span class="keyword">item</span> isEqualToString:@<span class="string">"three"</span>]</span><br><span class="line"></span><br><span class="line">//非 ASCII 码写法</span><br><span class="line"><span class="list">(<span class="keyword">BOOL</span>)</span><span class="list">[<span class="list">(<span class="keyword">NSString*</span>)</span>titleName isEqualToString:<span class="list">[<span class="keyword">NSString</span> stringWithUTF8String:<span class="string">"消息"</span>]]</span></span></span></span><br></pre></td></tr></table></figure>
-
+          </div>
         
       
     </div>
@@ -583,7 +575,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/17/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/15/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/17/">&raquo;</a>
   </div>
 
 
@@ -617,7 +609,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">228</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

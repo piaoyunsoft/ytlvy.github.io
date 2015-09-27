@@ -1,0 +1,669 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Crash example // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Crash example
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/27/Crash-example/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/Crash-example/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Crash_Bug">Crash Bug</h2><p>1) ios7 下没有 <code>ContainString</code> API</p>
+<p>2) NSDictionary &amp; NSArray nil insert </p>
+<p>3) 数组越界 NSArray <code>out of bounds</code></p>
+<p>4) <code>substringwithrange</code> out of bounds</p>
+<p>5) <code>GPUImageView presentBufferForDisplay</code> — 内存泄露 或者 app 进入后台</p>
+<p>6) <code>locationOfTouch: inView:</code> </p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> (gestureRecognizer)<span class="tag">numberOfTouches</span> &gt; <span class="tag">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>7) “[NSPlaceholderMutableString initWithString:]: nil argument” - NSString的<code>initWithString:</code>或者<code>stringWithString:</code> 传入了 nil 参数</p>
+<p>8) 调用为 nil 的block<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="comment">(block)</span> &#123;</span><br><span class="line">    block<span class="comment">()</span>;    <span class="comment">//确定不为空之后才放心地调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>9) 调用了不存在的方法<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">if</span> ([a <span class="attribute">respondsToSelector</span>:<span class="variable">@selector</span>(aaa)]) &#123;</span><br><span class="line">    <span class="attr_selector">[a aaa]</span>;            <span class="comment">//确定有该方法之后才放心地调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>10) 在cellForRowAtIndexPath中返回了nil</p>
+<p>出现这种情况的原因有：</p>
+<p><code>numberOfRowsInSection</code>返回的数目不正确，导致行数比<code>cellForRowAtIndexPath</code>预期的多，于是<code>cellForRowAtIndexPath</code>就不能正确返回超出预期的cell了。<br><code>cellForRowAtIndexPath</code>中逻辑有误，漏了一些情况，导致有些cell不能正确返回。</p>
+<p>11) NSJSONSerialization 识别失败 为 NSNull </p>
+<p>12) <code>tableView:commitEditingStyle:forRowAtIndexPath:</code> indexPath 传入了 nil. </p>
+<blockquote>
+<p>Check for a nil indexPath in tableView: commitEditingStyle: forRowAtIndexPath:, even though Apple doesn’t document it as possible. from <a href="https://twitter.com/tewha/status/469537407801368576" target="_blank" rel="external">@tewha</a><br><a href="http://www.openradar.appspot.com/16386709" target="_blank" rel="external">tableView:commitEditingStyle:forRowAtIndexPath is called with indexPath == nil when deleting</a> </p>
+</blockquote>
+<p>13) dismissViewControllerAnimated crash<br>if (![self isBeingDismissed]) {<br>    [self dismissViewControllerAnimated:YES completion:^{<br>    }];<br>}</p>
+<p>14) gpus_ReturnNotPermittedKillClient 错误 </p>
+<blockquote>
+<p>Anytime you see gpus_ReturnNotPermittedKillClient in a stack trace, you’re most likely being killed for trying to render OpenGL ES content while your application is in the background or is transitioning to the background. To avoid this, you’ll want to make sure that the camera feed is suspended as soon as your application is notified that it is going to the background and resume when you come back to the foreground.</p>
+</blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)observeGlobalNotifications</span><br><span class="line">&#123;</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(onApplicationWillResignActive) name:<span class="built_in">UIApplicationWillResignActiveNotification</span> object:<span class="literal">nil</span>];</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(onApplicationDidBecomeActive) name:<span class="built_in">UIApplicationDidBecomeActiveNotification</span> object:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)unobserveGlobalNotifications</span><br><span class="line">&#123;</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="built_in">UIApplicationWillResignActiveNotification</span> object:<span class="literal">nil</span>];</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="built_in">UIApplicationDidBecomeActiveNotification</span> object:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)onApplicationWillResignActive</span><br><span class="line">&#123;     </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.camera</span> pauseCameraCapture];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.camera</span> stopCameraCapture];</span><br><span class="line"></span><br><span class="line">    runSynchronouslyOnVideoProcessingQueue(^&#123;</span><br><span class="line">        glFinish();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)onApplicationDidBecomeActive</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.camera</span> resumeCameraCapture];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.camera</span> startCameraCapture];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15) NSNotification</p>
+<ol>
+<li>在init 中注册 在dealloc中 注销</li>
+<li>在主线程发送</li>
+<li>小心 多次注册 不要再viewDidLoad中注册 会导致多次注册</li>
+</ol>
+<p>16) init dealloc 中不要使用 property 调用 直接用 ivars 调用方式</p>
+<p>实例:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)destroy</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.placeholderImage</span> = <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此 set 方法后续调用了另一个方法 该方法设置了一个delegate = self. 但是 self 已经进行释放了 所以 crash</p>
+<blockquote>
+<p>Cannot form weak reference to instance (0x615000436a00) of class CycleScrollView</p>
+</blockquote>
+<p>17)  drawing code in an autoreleasepool<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">    <span class="built_in">UIGraphicsBeginImageContext</span>(<span class="keyword">self</span><span class="variable">.view</span><span class="variable">.frame</span><span class="variable">.size</span>);</span><br><span class="line">    [drawImage<span class="variable">.image</span> drawInRect:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.frame</span><span class="variable">.size</span><span class="variable">.width</span>, <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.frame</span><span class="variable">.size</span><span class="variable">.height</span>)];</span><br><span class="line">    <span class="built_in">CGContextSetLineCap</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(), k<span class="built_in">CGLineCapRound</span>);</span><br><span class="line">    <span class="built_in">CGContextSetLineWidth</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(), <span class="number">5.0</span>);</span><br><span class="line">    <span class="built_in">CGContextSetRGBStrokeColor</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(), <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">    <span class="built_in">CGContextBeginPath</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>());</span><br><span class="line">    <span class="built_in">CGContextMoveToPoint</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(), lastPoint<span class="variable">.x</span>, lastPoint<span class="variable">.y</span>);</span><br><span class="line">    <span class="built_in">CGContextAddLineToPoint</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(), currentPoint<span class="variable">.x</span>, currentPoint<span class="variable">.y</span>);</span><br><span class="line">    <span class="built_in">CGContextStrokePath</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>());</span><br><span class="line">    drawImage<span class="variable">.image</span> = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line">    <span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>18) SDWebImage </p>
+<p>didReceiveMemoryWarning<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDImageCache *imageCache = [SDImageCache sharedImageCache]<span class="comment">;</span></span><br><span class="line">[imageCache clearMemory]<span class="comment">;</span></span><br><span class="line">[imageCache clearDisk]<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>19) NSTimer invalidate</p>
+<p>UIView<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-(void)willMoveToSupervie<span class="variable">w:</span>(UIView *)newSuperview - sent immediately before the <span class="keyword">view</span> <span class="keyword">is</span> added <span class="keyword">as</span> <span class="keyword">a</span> subview <span class="keyword">to</span> another <span class="keyword">view</span>; newSuperview may <span class="keyword">be</span> nil when you <span class="built_in">remove</span> the <span class="keyword">view</span> from its superview;</span><br><span class="line">-(void)willMoveToWindo<span class="variable">w:</span>(UIWindow *)newWindow - sent immediately before the <span class="keyword">view</span> (<span class="built_in">or</span> its superview) <span class="keyword">is</span> added <span class="keyword">to</span> <span class="keyword">a</span> window; newWindow may <span class="keyword">be</span> nil when you <span class="built_in">remove</span> the <span class="keyword">view</span> from <span class="keyword">a</span> window;</span><br><span class="line">-(void)didMoveToSuperview - sent immediately after the <span class="keyword">view</span> <span class="keyword">is</span> inserted into <span class="keyword">a</span> <span class="keyword">view</span> hierarchy;</span><br><span class="line">-(void)didMoveToWindow - sent immediately after the <span class="keyword">view</span> gets its window property <span class="keyword">set</span>. -</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>)<span class="string">willMoveToWindow:</span>(UIWindow *)newWindow &#123;</span><br><span class="line">    [<span class="keyword">super</span> <span class="string">willMoveToWindow:</span>newWindow];</span><br><span class="line">    <span class="keyword">if</span> (newWindow == (id)[NSNull <span class="literal">null</span>] || newWindow == nil) &#123;</span><br><span class="line">        [scrollTimer invalidate];</span><br><span class="line">        <span class="comment">//            scrollTimer = nil;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (scrollTimer &amp;&amp; scrollTimer.isValid) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        scrollTimer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span>autoScrollInterval <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(showNextHeadImage) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>20) couldn’t add the Keychain Item</p>
+<p>添加以下配置语句<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="literal">self</span>.keychainItemWrapper <span class="built_in">set</span>Object:@<span class="string">"MY_APP_CREDENTIALS"</span> <span class="keyword">for</span>Key:(id)kSecAttrService];</span><br><span class="line">//@<span class="string">"MY_APP_CREDENTIALS"</span> can be <span class="literal">any</span> string.</span><br></pre></td></tr></table></figure></p>
+<p>21) SDWebImage 内存问题 </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[SDImageCache sharedImageCache]</span> <span class="rule"><span class="attribute">setShouldDecompressImages</span>:<span class="value">NO]</span></span>;</span><br><span class="line"><span class="attr_selector">[[SDWebImageDownloader sharedDownloader]</span> <span class="rule"><span class="attribute">setShouldDecompressImages</span>:<span class="value">NO]</span></span>;</span><br></pre></td></tr></table></figure>
+<p>22) 类型转化 防止未知 方法重名 Bug</p>
+<p>比如:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="literal">result</span> = [[someArray objectAtIndex:<span class="number">0</span>] currentPoint];</span><br></pre></td></tr></table></figure></p>
+<p>可能导致系统调用 <code>NSBezierPath</code> 的 <code>currentPoint</code> 方法 而不是我们自己的类.修复如下:  引出了 泛类型问题</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="literal">result</span> = [(<span class="type">MyClass</span> *)[someArray objectAtIndex:<span class="number">0</span>] currentPoint];</span><br></pre></td></tr></table></figure>
+<p>23) 过滤控制字符<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">+(NSString *)filterControl:(NSString *)<span class="keyword">source</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> NSArray *controlChars;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> dispatch_once_t once_token;</span><br><span class="line">    </span><br><span class="line">    dispatch_once(&amp;once_token, ^&#123;</span><br><span class="line">        controlChars = @[@<span class="string">"\x00"</span>, @<span class="string">"\x01"</span>, @<span class="string">"\x02"</span>, @<span class="string">"\x03"</span>, @<span class="string">"\x04"</span>, @<span class="string">"\x05"</span>, @<span class="string">"\x06"</span>, @<span class="string">"\x07"</span>, @<span class="string">"\x08"</span>, @<span class="string">"\x09"</span>, @<span class="string">"\x0a"</span>, @<span class="string">"\x0b"</span>, @<span class="string">"\x0c"</span>, @<span class="string">"\x0d"</span>, @<span class="string">"\x0e"</span>, @<span class="string">"\x0f"</span>, @<span class="string">"\x10"</span>, @<span class="string">"\x11"</span>, @<span class="string">"\x12"</span>, @<span class="string">"\x13"</span>, @<span class="string">"\x14"</span>, @<span class="string">"\x15"</span>, @<span class="string">"\x16"</span>, @<span class="string">"\x17"</span>, @<span class="string">"\x18"</span>, @<span class="string">"\x19"</span>, @<span class="string">"\x1a"</span>, @<span class="string">"\x1b"</span>, @<span class="string">"\x1c"</span>, @<span class="string">"\x1d"</span>, @<span class="string">"\x1e"</span>, @<span class="string">"\x1f"</span>, @<span class="string">"\x7f"</span>];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (uint n = <span class="number">0</span>; n &lt; [controlChars <span class="keyword">count</span>]; ++n)</span><br><span class="line">        <span class="keyword">source</span> = [<span class="keyword">source</span> stringByReplacingOccurrencesOfString:[controlChars objectAtIndex:n] withString:@<span class="string">" "</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">source</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dataString = <span class="comment">[dataString stringByTrimmingCharactersInSet:<span class="comment">[NSCharacterSet controlCharacterSet]</span>]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">[NSCharacterSet whitespaceCharacterSet]</span></span><br><span class="line"><span class="comment">[NSCharacterSet whitespaceAndNewlineCharacterSet]</span></span><br><span class="line"><span class="comment">[NSCharacterSet illegalCharacterSet]</span></span><br><span class="line"><span class="comment">[NSCharacterSet symbolCharacterSet]</span></span><br></pre></td></tr></table></figure>
+<p>24) NSString stringWithUtf8String crash NSInvalidArgumentException’, reason: ‘<em>*</em> +[NSString stringWithUTF8String:]: NULL cString’</p>
+<p>判定 Utf8String 是否为 NULL </p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/27/Integer-Promotion/">Integer Promotion</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/27/CoreAudio-base/">CoreAudio base</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">228</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crash_Bug"><span class="nav-number">1.</span> <span class="nav-text">Crash Bug</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/27/Crash-example/';
+      var disqus_title = 'Crash example';
+      var disqus_url = 'http://ytlvy.com/2015/09/27/Crash-example/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="notes for study" />
+
+
+
+  <meta name="keywords" content="IOS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yt's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8a916e09c6b39221eb089c8ad75ede9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Integer Promotion // Yt's Blog </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Yt's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分類
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          關於
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Integer Promotion
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/IOS/">IOS</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/27/Integer-Promotion/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/27/Integer-Promotion/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Integer_Promotion">Integer Promotion</h2><p>Almost every programmer has learned about C, and a lot of them use it for their career. It is certainly one of the most popular programming languages on TIOBE (first place in November 2012). Yet, C can be really tricky and behave unexpectedly sometimes. One of those dodgy side of C is integer promotion. See the following example that illustrate the issue:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> a = <span class="number">0xff</span>;</span><br><span class="line">    <span class="keyword">char</span> b = <span class="number">0xff</span>;</span><br><span class="line">    <span class="keyword">int</span> c = a==b; <span class="comment">// true, or false?</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"C: %d\n"</span>,c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You might think the output is 1, yet the answer is 0. Oops.</p>
+<a id="more"></a>
+<h3 id="C99_SPEC">C99 SPEC</h3><p>In the prior implementation of K&amp;R and C89, arithmetic operands on short and char fell into two major camps and may produce different results from the above C snippet. In C99, integer promotion is clearly defined in following rule (6.3.1.1):</p>
+<blockquote>
+<p>If an int can represent all values of the original type, the value is converted to an int; otherwise, it is converted to an unsigned int. These are called the integer promotions. All other types are unchanged by the integer promotions.</p>
+</blockquote>
+<p>Recall that the range of integer types:</p>
+<ul>
+<li>signed char: -127 to 127</li>
+<li>unsigned char: 0 to 255</li>
+<li>signed short: -32767 to 32767</li>
+<li>unsigned short: 0 to 65535</li>
+<li>signed int: -2147483647 to 2147483647</li>
+</ul>
+<p>You can see that signed and unsigned char, short all can be represented in signed int, so they are all converted to signed int when doing arithmetic operations.</p>
+<p>In the previous example, <code>unsigned char a = 0xff</code> is presenting 255. However, <code>char b = 0xff</code> is presenting -1. When both converted to int type, <code>a</code> remains 255, or <code>0x000000ff</code>; <code>b</code> will be <code>0xffffffff</code> which is -1 represented in int type. You can see how it works in this C snippet:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> a = <span class="number">0xff</span>;</span><br><span class="line">    <span class="keyword">char</span> b = <span class="number">0xff</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"A: %08x, B: %08x\n"</span>, a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The output would be:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">A:</span> <span class="number">000000</span>ff, <span class="string">B:</span> ffffffff</span><br></pre></td></tr></table></figure></p>
+<p>This is why the result of expression a==b is 0.</p>
+<h3 id="Understand_it_at_assembly_level">Understand it at assembly level</h3><p>When I first understood integer promotion rules, I got even more confused: why is this rule so awkward? To understand why it is designed like so, you must dig into compiled assembly code.</p>
+<p>Let’s start with an easy example:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> a = <span class="number">0xff</span>;</span><br><span class="line">    <span class="keyword">char</span> b = <span class="number">0xff</span>;</span><br><span class="line">    <span class="keyword">int</span> c = a + b;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The compiled assembly is:</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">movl    <span class="variable">$0</span>, -<span class="number">4</span>(<span class="variable">%rbp</span>)        <span class="comment"># The return value of main is 0</span></span><br><span class="line">movb    <span class="variable">$-</span><span class="number">1</span>, -<span class="number">5</span>(<span class="variable">%rbp</span>)       <span class="comment"># unsigned char a = 0xff;</span></span><br><span class="line">movb    <span class="variable">$-</span><span class="number">1</span>, -<span class="number">6</span>(<span class="variable">%rbp</span>)       <span class="comment"># char b = 0xff;</span></span><br><span class="line">movzbl  -<span class="number">5</span>(<span class="variable">%rbp</span>), <span class="variable">%eax</span></span><br><span class="line">movsbl  -<span class="number">6</span>(<span class="variable">%rbp</span>), <span class="variable">%ecx</span></span><br><span class="line">addl    <span class="variable">%eax</span>, <span class="variable">%ecx</span>          <span class="comment"># int c = a + b</span></span><br><span class="line">movl    <span class="variable">%ecx</span>, -<span class="number">12</span>(<span class="variable">%rbp</span>)     <span class="comment"># store c onto the stack</span></span><br><span class="line">movl    -<span class="number">4</span>(<span class="variable">%rbp</span>), <span class="variable">%eax</span></span><br><span class="line">popq    <span class="variable">%rbp</span></span><br><span class="line">ret                         <span class="comment"># return value 0 from eax</span></span><br></pre></td></tr></table></figure>
+<p>If you are not familiar with GAS syntax, you can check out  <a href="https://en.wikibooks.org/wiki/X86_Assembly/GAS_Syntax" target="_blank" rel="external">X86 Assembly/GAS Syntax</a>. GAS assembly instructions are generally suffixed with the letters “b”, “s”, “w”, “l”, “q” or “t” to determine what size operand is being manipulated.</p>
+<ul>
+<li>b = byte (8 bit)</li>
+<li>s = short (16 bit integer) or single (32-bit floating point)</li>
+<li>w = word (16 bit)</li>
+<li>l = long (32 bit integer or 64-bit floating point)</li>
+<li>q = quad (64 bit)</li>
+<li>t = ten bytes (80-bit floating point)</li>
+</ul>
+<p>GAS convention is to push parameter from left-to-right. For instance, movl $0, -4(%rbp) means to move 0x00000000 to address -4(%rbp).</p>
+<p>The instruction movzbl means moving a byte to long (32 bit int) with zero fill. movzbl -5(%rbp), %eax take 0xff to %eax and fill the rest with zero. %eax is now 0x000000ff.</p>
+<p>The instruction movsbl means moving a byte to long with signed fill. movsbl -6(%rbp), %ecx take 0xff to %eax and fill the rest with signed value, which will cause %ecx to be 0xffffffff. Finally, addl %eax, %ecx do the add operation, and movl %ecx, -12(%rbp) store the result onto the stack.</p>
+<p>Now, you understand that integer promotion is a rule how C types being mapped directly to machine instructions. All arithmetics operands are applied to smaller integers after they are transformed into int with signed or unsigned fill. You can think it this way: though short and char are stored in one or two byte, they are treated as int when you use it with arithmetic operations. The rule how they are transformed to int is called integer promotion.</p>
+<h3 id="What_is_type_systems">What is type systems</h3><p>Type is the methods that interpret and process your data. Sounds familiar to OOP? Definiing a class IS defining a method. In C, expressions on different data type produces different instructions. What instruction to generate? Depends on the data type. (int is different than float, for example).</p>
+<p>A chunk of data in memory or register can mean anything on a CPU. The type system defines how operators works on different types. Given the example below:</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="number">0x00007ffffffffcc0</span>;</span><br><span class="line"><span class="keyword">int</span>  i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span>* q = p + i; <span class="comment">// =&gt; 0x00007fffffffffcc4 because the type "pointer to int"</span></span><br><span class="line">                <span class="comment">// defines the multiplier of the offset is 4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>* r = p + q; <span class="comment">// Invalid in C type system.</span></span><br></pre></td></tr></table></figure>
+<p>When adding an integer to a pointer, the compiler knows the offset multiplier by the type of the pointer points to. If <code>p</code> where defined as <code>char* p</code>, then the multiplier would be 1. Also, the <code>+</code> operator only make sense to add an offset to a pointer, therefore adding two pointer together is invalid in C syntax.</p>
+<h3 id="Review_C_integer_promotion_rules">Review C integer promotion rules</h3><p>The standard integer promotion rules in C99 is listed below</p>
+<blockquote>
+<p>If an int can represent all values of the original type, the value is converted to an int; otherwise, it is converted to an unsigned int. These are called the integer promotions. All other types are unchanged by the integer promotions.</p>
+</blockquote>
+<p>This is called value preserving. On machine level, the arithmetic works best on a whole register (or 32 bit register). Remember that C’s philosophy is to make your program runs as fast as possible, so it loads your small data chunk into the whole register, then do the calculation.</p>
+<p>However, things worked differently on K&amp;R C. It’s was defined as unsigned preserving. When mixing a signed and unsigned integer, the result is unsigned type. Below is the example copied from Expert C Programming book.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( -<span class="number">1</span> &lt; (<span class="keyword">unsigned</span> <span class="keyword">char</span>) <span class="number">1</span> ) &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"C dialect after ANSI C, including C89, C99, and after\n"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Pre ANSI C (K&amp;R) dialect. -1 is treated as unsigned value 0xFFFFFFFF and thus greater than 1 ! \n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Mixing_unsigned_and_signed_integer_in_modern_C">Mixing unsigned and signed integer in modern C</h3><p>Although most of the time C will preserve the value of the type for you, you can still get surprising result. When the signed integer can’t hold the unsigned value, everything is converted to unsigned integer.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( -<span class="number">1</span> &lt; <span class="keyword">sizeof</span>(<span class="keyword">int</span>) ) &#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"-1 is less than 4\n"</span>);</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"-1 is treated as 0xffffffff. Because sizeof returns size_t which is an unsigned int\n"</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>This program will execute the else branch and print:<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="number">1</span> <span class="keyword">is</span> treated <span class="keyword">as</span> <span class="number">0xffffffff</span>. Because <span class="keyword">sizeof</span> returns size_t which <span class="keyword">is</span> an unsigned <span class="keyword">int</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Conclusion">Conclusion</h3><p>Always be careful when you mix unsigned and signed integer in expressions. When possible, type cast it to signed int. C is designed to make program fast, but not safe for beginners. Additional checks would create a lot of overhead in the runtime, so the developer need to know the system and language well to avoid shooting at their own foot. Another possible reason may be that the original C developers were all operating system writers and compiler writers. Therefore, the mappings between Assembly and C langauge is straight forward to them.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/"> #IOS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/27/iOS-Protocol-Pattern/">iOS Protocol Pattern</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/27/Crash-example/">Crash example</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/avatar.png" alt="Yt" />
+          <p class="site-author-name">Yt</p>
+        </div>
+        <p class="site-description motion-element">notes for study</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">228</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/ytlvy" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/ytlvy" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://nshipster.com" target="_blank">NSHipster</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.mikeash.com/pyblog" target="_blank">NSBlog</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.objc.io" target="_blank">objcio</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.raywenderlich.com" target="_blank">raywenderlich</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Integer_Promotion"><span class="nav-number">1.</span> <span class="nav-text">Integer Promotion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C99_SPEC"><span class="nav-number">1.1.</span> <span class="nav-text">C99 SPEC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Understand_it_at_assembly_level"><span class="nav-number">1.2.</span> <span class="nav-text">Understand it at assembly level</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What_is_type_systems"><span class="nav-number">1.3.</span> <span class="nav-text">What is type systems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Review_C_integer_promotion_rules"><span class="nav-number">1.4.</span> <span class="nav-text">Review C integer promotion rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mixing_unsigned_and_signed_integer_in_modern_C"><span class="nav-number">1.5.</span> <span class="nav-text">Mixing unsigned and signed integer in modern C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.6.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="theme-info">
+  <span id="busuanzi_container_site_uv">
+    &nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp Total <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> views.
+您是本站的第<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>个小伙伴
+<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Hits
+  </span>
+<div>
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js" id="motion.global"></script>
+
+
+
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'ytlvy';
+      var disqus_identifier = '2015/09/27/Integer-Promotion/';
+      var disqus_title = 'Integer Promotion';
+      var disqus_url = 'http://ytlvy.com/2015/09/27/Integer-Promotion/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+
+</body>
+</html>
